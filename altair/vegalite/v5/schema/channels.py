@@ -257,7 +257,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -271,18 +271,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -303,10 +303,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -340,12 +340,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -361,7 +360,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -372,7 +371,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -383,14 +382,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -401,14 +400,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -417,7 +416,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -431,8 +429,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -441,14 +438,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -463,9 +459,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1058,14 +1054,14 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -1076,14 +1072,14 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -1092,7 +1088,6 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -1106,8 +1101,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -1116,14 +1110,13 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -1138,9 +1131,9 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -1366,7 +1359,7 @@ class Color(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -1380,18 +1373,18 @@ class Color(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -1412,10 +1405,10 @@ class Color(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -1449,12 +1442,11 @@ class Color(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -1470,7 +1462,7 @@ class Color(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -1481,7 +1473,7 @@ class Color(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -1492,14 +1484,14 @@ class Color(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -1510,14 +1502,14 @@ class Color(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -1526,7 +1518,6 @@ class Color(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -1540,8 +1531,7 @@ class Color(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -1550,14 +1540,13 @@ class Color(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -1572,9 +1561,9 @@ class Color(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2169,14 +2158,14 @@ class ColorDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -2187,14 +2176,14 @@ class ColorDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -2203,7 +2192,6 @@ class ColorDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -2217,8 +2205,7 @@ class ColorDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -2227,14 +2214,13 @@ class ColorDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -2249,9 +2235,9 @@ class ColorDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -2475,7 +2461,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -2484,7 +2470,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     align : :class:`LayoutAlign`, Literal['all', 'each', 'none']
         The alignment to apply to row/column facet's subplot. The supported string values
         are ``"all"``, ``"each"``, and ``"none"``.
-
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
           placed one after the other.
@@ -2503,18 +2488,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -2533,10 +2518,10 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -2550,7 +2535,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A sort field definition
@@ -2563,7 +2547,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -2572,11 +2556,11 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     spacing : float
         The spacing in pixels between facet's sub-views.
 
-        **Default value** : Depends on ``"spacing"`` property of `the view composition
-        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
-        ``20`` by default)
+        **Default value**: Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
+        (``20`` by default)
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -2587,14 +2571,14 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -2605,14 +2589,14 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -2621,7 +2605,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -2635,8 +2618,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -2645,14 +2627,13 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -2667,9 +2648,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -3081,7 +3062,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -3095,18 +3076,18 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -3127,17 +3108,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
-
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
@@ -3164,12 +3144,11 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -3180,14 +3159,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -3198,14 +3177,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -3214,7 +3193,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -3228,8 +3206,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -3238,14 +3215,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -3260,9 +3236,9 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -3749,7 +3725,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -3763,18 +3739,18 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -3788,15 +3764,15 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -3807,14 +3783,14 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -3825,14 +3801,14 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -3841,7 +3817,6 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -3855,8 +3830,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -3865,14 +3839,13 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -3887,9 +3860,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -4196,7 +4169,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -4205,7 +4178,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     align : dict, :class:`LayoutAlign`, :class:`RowColLayoutAlign`, Literal['all', 'each', 'none']
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
-
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
           placed one after the other.
@@ -4227,18 +4199,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -4247,7 +4219,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     bounds : Literal['full', 'flush']
         The bounds calculation method to use for determining the extent of a sub-plot. One
         of ``full`` (the default) or ``flush``.
-
 
         * If set to ``full``, the entire calculated bounds (including axes, title, and
           legend) will be used.
@@ -4267,21 +4238,20 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     columns : float
         The number of columns to include in the view composition layout.
 
-        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
-        will be assumed. This is equivalent to ``hconcat`` (for ``concat`` ) and to using
-        the ``column`` channel (for ``facet`` and ``repeat`` ).
+        **Default value**: ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to ``hconcat`` (for ``concat``) and to using the
+        ``column`` channel (for ``facet`` and ``repeat``).
 
-        **Note** :
+        **Note**:
 
         1) This property is only for:
 
-
-        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the general (wrappable) ``concat`` operator (not ``hconcat``/``vconcat``)
         * the ``facet`` and ``repeat`` operator with one field/repetition definition
           (without row/column nesting)
 
-        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
-        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat``)
+        and to using the ``row`` channel (for ``facet`` and ``repeat``).
     field : str, dict, :class:`Field`, :class:`FieldName`, :class:`RepeatRef`
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
@@ -4290,10 +4260,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -4307,7 +4277,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A sort field definition
@@ -4320,7 +4289,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -4331,11 +4300,11 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         the form ``{"row": number, "column": number}`` can be used to set different spacing
         values for rows and columns.
 
-        **Default value** : Depends on ``"spacing"`` property of `the view composition
-        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
-        ``20`` by default)
+        **Default value**: Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
+        (``20`` by default)
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -4346,14 +4315,14 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -4364,14 +4333,14 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -4380,7 +4349,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -4394,8 +4362,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -4404,14 +4371,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -4426,9 +4392,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -4877,7 +4843,7 @@ class Fill(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -4891,18 +4857,18 @@ class Fill(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -4923,10 +4889,10 @@ class Fill(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -4960,12 +4926,11 @@ class Fill(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -4981,7 +4946,7 @@ class Fill(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -4992,7 +4957,7 @@ class Fill(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -5003,14 +4968,14 @@ class Fill(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -5021,14 +4986,14 @@ class Fill(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -5037,7 +5002,6 @@ class Fill(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -5051,8 +5015,7 @@ class Fill(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -5061,14 +5024,13 @@ class Fill(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -5083,9 +5045,9 @@ class Fill(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5680,14 +5642,14 @@ class FillDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -5698,14 +5660,14 @@ class FillDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -5714,7 +5676,6 @@ class FillDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -5728,8 +5689,7 @@ class FillDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -5738,14 +5698,13 @@ class FillDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -5760,9 +5719,9 @@ class FillDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -5988,7 +5947,7 @@ class FillOpacity(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -6002,18 +5961,18 @@ class FillOpacity(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -6034,10 +5993,10 @@ class FillOpacity(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -6071,12 +6030,11 @@ class FillOpacity(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -6092,7 +6050,7 @@ class FillOpacity(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -6103,7 +6061,7 @@ class FillOpacity(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -6114,14 +6072,14 @@ class FillOpacity(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -6132,14 +6090,14 @@ class FillOpacity(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -6148,7 +6106,6 @@ class FillOpacity(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -6162,8 +6119,7 @@ class FillOpacity(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -6172,14 +6128,13 @@ class FillOpacity(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -6194,9 +6149,9 @@ class FillOpacity(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -6791,14 +6746,14 @@ class FillOpacityDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -6809,14 +6764,14 @@ class FillOpacityDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -6825,7 +6780,6 @@ class FillOpacityDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -6839,8 +6793,7 @@ class FillOpacityDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -6849,14 +6802,13 @@ class FillOpacityDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -6871,9 +6823,9 @@ class FillOpacityDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -7096,7 +7048,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -7110,18 +7062,18 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -7142,17 +7094,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
-
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
@@ -7179,12 +7130,11 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -7195,14 +7145,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -7213,14 +7163,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -7229,7 +7179,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -7243,8 +7192,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -7253,14 +7201,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -7275,9 +7222,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -7764,7 +7711,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -7778,18 +7725,18 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -7803,15 +7750,15 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -7822,14 +7769,14 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -7840,14 +7787,14 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -7856,7 +7803,6 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -7870,8 +7816,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -7880,14 +7825,13 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -7902,9 +7846,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8211,7 +8155,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -8225,18 +8169,18 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -8250,15 +8194,15 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -8269,14 +8213,14 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -8287,14 +8231,14 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : str
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -8303,7 +8247,6 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -8317,8 +8260,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -8327,14 +8269,13 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -8349,9 +8290,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8639,14 +8580,14 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -8657,14 +8598,14 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -8673,7 +8614,6 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -8687,8 +8627,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -8697,14 +8636,13 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -8719,9 +8657,9 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -8776,7 +8714,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -8790,18 +8728,18 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -8815,15 +8753,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -8834,14 +8772,14 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -9130,14 +9068,14 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -9148,14 +9086,14 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -9164,7 +9102,6 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -9178,8 +9115,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -9188,14 +9124,13 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -9210,9 +9145,9 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -9287,7 +9222,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -9301,18 +9236,18 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -9326,15 +9261,15 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -9345,14 +9280,14 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -9363,14 +9298,14 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : str
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -9379,7 +9314,6 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -9393,8 +9327,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -9403,14 +9336,13 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -9425,9 +9357,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -9715,14 +9647,14 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -9733,14 +9665,14 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -9749,7 +9681,6 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -9763,8 +9694,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -9773,14 +9703,13 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -9795,9 +9724,9 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -9852,7 +9781,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -9866,18 +9795,18 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -9891,15 +9820,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -9910,14 +9839,14 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -10206,14 +10135,14 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -10224,14 +10153,14 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -10240,7 +10169,6 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -10254,8 +10182,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -10264,14 +10191,13 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -10286,9 +10212,9 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -10365,7 +10291,7 @@ class Opacity(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -10379,18 +10305,18 @@ class Opacity(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -10411,10 +10337,10 @@ class Opacity(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -10448,12 +10374,11 @@ class Opacity(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -10469,7 +10394,7 @@ class Opacity(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -10480,7 +10405,7 @@ class Opacity(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -10491,14 +10416,14 @@ class Opacity(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -10509,14 +10434,14 @@ class Opacity(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -10525,7 +10450,6 @@ class Opacity(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -10539,8 +10463,7 @@ class Opacity(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -10549,14 +10472,13 @@ class Opacity(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -10571,9 +10493,9 @@ class Opacity(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -11166,14 +11088,14 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -11184,14 +11106,14 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -11200,7 +11122,6 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -11214,8 +11135,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -11224,14 +11144,13 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -11246,9 +11165,9 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -11471,7 +11390,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -11485,18 +11404,18 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -11510,17 +11429,17 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`, Literal['ascending', 'descending']
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -11531,14 +11450,14 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -11549,14 +11468,14 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -11565,7 +11484,6 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -11579,8 +11497,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -11589,14 +11506,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -11611,9 +11527,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -11981,7 +11897,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -11995,18 +11911,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -12020,10 +11936,10 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -12048,12 +11964,11 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -12069,7 +11984,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -12087,31 +12002,30 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -12122,14 +12036,14 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -12140,14 +12054,14 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -12156,7 +12070,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -12170,8 +12083,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -12180,14 +12092,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -12202,9 +12113,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -12681,25 +12592,24 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
@@ -12707,14 +12617,14 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -12725,14 +12635,14 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -12741,7 +12651,6 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -12755,8 +12664,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -12765,14 +12673,13 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -12787,9 +12694,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -12934,7 +12841,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -12948,18 +12855,18 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -12973,15 +12880,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -12992,14 +12899,14 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -13288,14 +13195,14 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -13306,14 +13213,14 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -13322,7 +13229,6 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -13336,8 +13242,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -13346,14 +13251,13 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -13368,9 +13272,9 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -13445,7 +13349,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -13454,7 +13358,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     align : :class:`LayoutAlign`, Literal['all', 'each', 'none']
         The alignment to apply to row/column facet's subplot. The supported string values
         are ``"all"``, ``"each"``, and ``"none"``.
-
 
         * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
           placed one after the other.
@@ -13473,18 +13376,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -13503,10 +13406,10 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -13520,7 +13423,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A sort field definition
@@ -13533,7 +13435,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -13542,11 +13444,11 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     spacing : float
         The spacing in pixels between facet's sub-views.
 
-        **Default value** : Depends on ``"spacing"`` property of `the view composition
-        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
-        ``20`` by default)
+        **Default value**: Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
+        (``20`` by default)
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -13557,14 +13459,14 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -13575,14 +13477,14 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -13591,7 +13493,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -13605,8 +13506,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -13615,14 +13515,13 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -13637,9 +13536,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -14054,7 +13953,7 @@ class Shape(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -14068,18 +13967,18 @@ class Shape(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -14100,10 +13999,10 @@ class Shape(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -14137,12 +14036,11 @@ class Shape(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -14158,7 +14056,7 @@ class Shape(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -14169,7 +14067,7 @@ class Shape(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -14180,14 +14078,14 @@ class Shape(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -14198,14 +14096,14 @@ class Shape(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`TypeForShape`, Literal['nominal', 'ordinal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -14214,7 +14112,6 @@ class Shape(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -14228,8 +14125,7 @@ class Shape(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -14238,14 +14134,13 @@ class Shape(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -14260,9 +14155,9 @@ class Shape(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -14855,14 +14750,14 @@ class ShapeDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -14873,14 +14768,14 @@ class ShapeDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -14889,7 +14784,6 @@ class ShapeDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -14903,8 +14797,7 @@ class ShapeDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -14913,14 +14806,13 @@ class ShapeDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -14935,9 +14827,9 @@ class ShapeDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -15161,7 +15053,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -15175,18 +15067,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -15207,10 +15099,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -15244,12 +15136,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -15265,7 +15156,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -15276,7 +15167,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -15287,14 +15178,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -15305,14 +15196,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -15321,7 +15212,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -15335,8 +15225,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -15345,14 +15234,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -15367,9 +15255,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -15962,14 +15850,14 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -15980,14 +15868,14 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -15996,7 +15884,6 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -16010,8 +15897,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -16020,14 +15906,13 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -16042,9 +15927,9 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -16270,7 +16155,7 @@ class Stroke(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -16284,18 +16169,18 @@ class Stroke(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -16316,10 +16201,10 @@ class Stroke(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -16353,12 +16238,11 @@ class Stroke(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -16374,7 +16258,7 @@ class Stroke(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -16385,7 +16269,7 @@ class Stroke(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -16396,14 +16280,14 @@ class Stroke(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -16414,14 +16298,14 @@ class Stroke(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -16430,7 +16314,6 @@ class Stroke(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -16444,8 +16327,7 @@ class Stroke(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -16454,14 +16336,13 @@ class Stroke(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -16476,9 +16357,9 @@ class Stroke(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -17073,14 +16954,14 @@ class StrokeDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -17091,14 +16972,14 @@ class StrokeDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -17107,7 +16988,6 @@ class StrokeDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -17121,8 +17001,7 @@ class StrokeDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -17131,14 +17010,13 @@ class StrokeDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -17153,9 +17031,9 @@ class StrokeDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -17381,7 +17259,7 @@ class StrokeDash(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -17395,18 +17273,18 @@ class StrokeDash(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -17427,10 +17305,10 @@ class StrokeDash(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -17464,12 +17342,11 @@ class StrokeDash(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -17485,7 +17362,7 @@ class StrokeDash(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -17496,7 +17373,7 @@ class StrokeDash(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -17507,14 +17384,14 @@ class StrokeDash(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -17525,14 +17402,14 @@ class StrokeDash(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -17541,7 +17418,6 @@ class StrokeDash(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -17555,8 +17431,7 @@ class StrokeDash(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -17565,14 +17440,13 @@ class StrokeDash(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -17587,9 +17461,9 @@ class StrokeDash(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -18184,14 +18058,14 @@ class StrokeDashDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -18202,14 +18076,14 @@ class StrokeDashDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -18218,7 +18092,6 @@ class StrokeDashDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -18232,8 +18105,7 @@ class StrokeDashDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -18242,14 +18114,13 @@ class StrokeDashDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -18264,9 +18135,9 @@ class StrokeDashDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -18491,7 +18362,7 @@ class StrokeOpacity(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -18505,18 +18376,18 @@ class StrokeOpacity(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -18537,10 +18408,10 @@ class StrokeOpacity(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -18574,12 +18445,11 @@ class StrokeOpacity(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -18595,7 +18465,7 @@ class StrokeOpacity(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -18606,7 +18476,7 @@ class StrokeOpacity(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -18617,14 +18487,14 @@ class StrokeOpacity(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -18635,14 +18505,14 @@ class StrokeOpacity(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -18651,7 +18521,6 @@ class StrokeOpacity(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -18665,8 +18534,7 @@ class StrokeOpacity(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -18675,14 +18543,13 @@ class StrokeOpacity(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -18697,9 +18564,9 @@ class StrokeOpacity(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -19294,14 +19161,14 @@ class StrokeOpacityDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -19312,14 +19179,14 @@ class StrokeOpacityDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -19328,7 +19195,6 @@ class StrokeOpacityDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -19342,8 +19208,7 @@ class StrokeOpacityDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -19352,14 +19217,13 @@ class StrokeOpacityDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -19374,9 +19238,9 @@ class StrokeOpacityDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -19601,7 +19465,7 @@ class StrokeWidth(
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -19615,18 +19479,18 @@ class StrokeWidth(
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -19647,10 +19511,10 @@ class StrokeWidth(
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -19684,12 +19548,11 @@ class StrokeWidth(
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -19705,7 +19568,7 @@ class StrokeWidth(
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -19716,7 +19579,7 @@ class StrokeWidth(
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -19727,14 +19590,14 @@ class StrokeWidth(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -19745,14 +19608,14 @@ class StrokeWidth(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -19761,7 +19624,6 @@ class StrokeWidth(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -19775,8 +19637,7 @@ class StrokeWidth(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -19785,14 +19646,13 @@ class StrokeWidth(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -19807,9 +19667,9 @@ class StrokeWidth(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -20404,14 +20264,14 @@ class StrokeWidthDatum(
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -20422,14 +20282,14 @@ class StrokeWidthDatum(
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -20438,7 +20298,6 @@ class StrokeWidthDatum(
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -20452,8 +20311,7 @@ class StrokeWidthDatum(
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -20462,14 +20320,13 @@ class StrokeWidthDatum(
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -20484,9 +20341,9 @@ class StrokeWidthDatum(
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -20709,7 +20566,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -20723,18 +20580,18 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -20755,17 +20612,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
-
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
@@ -20792,12 +20648,11 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -20808,14 +20663,14 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -20826,14 +20681,14 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -20842,7 +20697,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -20856,8 +20710,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -20866,14 +20719,13 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -20888,9 +20740,9 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -21253,7 +21105,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
-
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
         * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
@@ -21279,21 +21130,20 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -21304,14 +21154,14 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -21320,7 +21170,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -21334,8 +21183,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -21344,14 +21192,13 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -21366,9 +21213,9 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -21559,7 +21406,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -21573,18 +21420,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -21598,10 +21445,10 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -21626,12 +21473,11 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -21647,7 +21493,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -21665,31 +21511,30 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -21700,14 +21545,14 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -21718,14 +21563,14 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -21734,7 +21579,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -21748,8 +21592,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -21758,14 +21601,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -21780,9 +21622,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -22259,25 +22101,24 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
@@ -22285,14 +22126,14 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -22303,14 +22144,14 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -22319,7 +22160,6 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -22333,8 +22173,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -22343,14 +22182,13 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -22365,9 +22203,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -22512,7 +22350,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -22526,18 +22364,18 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -22551,15 +22389,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -22570,14 +22408,14 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -22866,14 +22704,14 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -22884,14 +22722,14 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -22900,7 +22738,6 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -22914,8 +22751,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -22924,14 +22760,13 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -22946,9 +22781,9 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -23023,7 +22858,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -23037,18 +22872,18 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -23069,17 +22904,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
-
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
@@ -23106,12 +22940,11 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -23122,14 +22955,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -23140,14 +22973,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -23156,7 +22989,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -23170,8 +23002,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -23180,14 +23011,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -23202,9 +23032,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -23689,7 +23519,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -23703,18 +23533,18 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -23735,17 +23565,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
-
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
           `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
@@ -23772,12 +23601,11 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:**
 
-
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -23788,14 +23616,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -23806,14 +23634,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -23822,7 +23650,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -23836,8 +23663,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -23846,14 +23672,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -23868,9 +23693,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -24355,7 +24180,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -24378,18 +24203,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -24403,10 +24228,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -24439,12 +24264,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -24460,7 +24284,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -24478,31 +24302,30 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -24513,14 +24336,14 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -24531,14 +24354,14 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -24547,7 +24370,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -24561,8 +24383,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -24571,14 +24392,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -24593,9 +24413,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -25227,25 +25047,24 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
@@ -25253,14 +25072,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -25271,14 +25090,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -25287,7 +25106,6 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -25301,8 +25119,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -25311,14 +25128,13 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -25333,9 +25149,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -25616,7 +25432,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -25630,18 +25446,18 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -25655,15 +25471,15 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -25674,14 +25490,14 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -25970,14 +25786,14 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -25988,14 +25804,14 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -26004,7 +25820,6 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -26018,8 +25833,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -26028,14 +25842,13 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -26050,9 +25863,9 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -26130,7 +25943,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -26144,18 +25957,18 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -26169,15 +25982,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -26188,14 +26001,14 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -26505,7 +26318,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -26519,18 +26332,18 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -26544,15 +26357,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -26563,14 +26376,14 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -26877,7 +26690,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -26891,18 +26704,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -26916,10 +26729,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -26944,12 +26757,11 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -26965,7 +26777,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -26976,7 +26788,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -26987,14 +26799,14 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -27005,14 +26817,14 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -27021,7 +26833,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -27035,8 +26846,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -27045,14 +26855,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -27067,9 +26876,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -27527,14 +27336,14 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -27545,14 +27354,14 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -27561,7 +27370,6 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -27575,8 +27383,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -27585,14 +27392,13 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -27607,9 +27413,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -27738,7 +27544,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -27761,18 +27567,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -27786,10 +27592,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -27822,12 +27628,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -27843,7 +27648,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -27861,31 +27666,30 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -27896,14 +27700,14 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -27914,14 +27718,14 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -27930,7 +27734,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -27944,8 +27747,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -27954,14 +27756,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -27976,9 +27777,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -28610,25 +28411,24 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         ``stack`` can be one of the following values:
 
-
-        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
-          (for creating typical stacked
-          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+        * ``"zero"`` or ``true``: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#bar>`__ and `area
           <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__ ). :raw-html:`<br/>`
-        * ``"center"`` - stacking with center baseline (for `streamgraph
-          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
+          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
         **Default value:** ``zero`` for plots with all of the following conditions are true:
-        (1) the mark is ``bar``, ``area``, or ``arc`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
+        (1) the mark is ``bar``, ``area``, or ``arc``; (2) the stacked measure channel (x or
+        y) has a linear scale; (3) At least one of non-position channels mapped to an
         unaggregated field that is different from x and y. Otherwise, ``null`` by default.
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
@@ -28636,14 +28436,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -28654,14 +28454,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -28670,7 +28470,6 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -28684,8 +28483,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -28694,14 +28492,13 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -28716,9 +28513,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -28999,7 +28796,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -29013,18 +28810,18 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -29038,15 +28835,15 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -29057,14 +28854,14 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -29353,14 +29150,14 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -29371,14 +29168,14 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -29387,7 +29184,6 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -29401,8 +29197,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -29411,14 +29206,13 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -29433,9 +29227,9 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -29513,7 +29307,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -29527,18 +29321,18 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -29552,15 +29346,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -29571,14 +29365,14 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -29888,7 +29682,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -29902,18 +29696,18 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -29927,15 +29721,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -29946,14 +29740,14 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -30260,7 +30054,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
-        ``"min"``, ``"max"``, ``"count"`` ).
+        ``"min"``, ``"max"``, ``"count"``).
 
         **Default value:** ``undefined`` (None)
 
@@ -30274,18 +30068,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
-        Vega-Lite ( ``"binned"`` ).
+        Vega-Lite (``"binned"``).
 
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
 
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be applied.
-
-        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
-        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
-        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
-        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
-        set the axis's `tickMinStep
-        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
 
@@ -30299,10 +30093,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
         documentation.
 
-        **Notes:** 1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
         field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
@@ -30327,12 +30121,11 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         For discrete fields, ``sort`` can be one of the following:
 
-
         * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
           JavaScript.
         * `A string indicating an encoding channel name to sort by
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
-          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
           ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
           sort-by-encoding definition
           <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
@@ -30348,7 +30141,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
           `date-time definition objects
           <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
           units ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
         * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
@@ -30359,7 +30152,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
@@ -30370,14 +30163,14 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -30388,14 +30181,14 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -30404,7 +30197,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -30418,8 +30210,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -30428,14 +30219,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -30450,9 +30240,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -30910,14 +30700,14 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     title : str, None, :class:`Text`, Sequence[str]
         A title for the field. If ``null``, the title will be removed.
 
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
         field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
         Otherwise, the title is simply the field name.
 
-        **Notes** :
+        **Notes**:
 
         1) You can customize the default field title format by providing the `fieldTitle
         <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
@@ -30928,14 +30718,14 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
     type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
-        The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
-        ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
-        be a ``"geojson"`` type for encoding `'geoshape'
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
         Vega-Lite automatically infers data types in many cases as discussed below. However,
         type is required for a field if: (1) the field is not nominal and the field encoding
-        has no specified ``aggregate`` (except ``argmin`` and ``argmax`` ), ``bin``, scale
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
         type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
         scale for a field with ``bin`` or ``timeUnit``.
 
@@ -30944,7 +30734,6 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         1) For a data ``field``, ``"nominal"`` is the default data type unless the field
         encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
         ``timeUnit`` that satisfies the following criteria:
-
 
         * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
           or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
@@ -30958,8 +30747,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
           (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
           channel is ``order``.
 
-        2) For a constant value in data domain ( ``datum`` ):
-
+        2) For a constant value in data domain (``datum``):
 
         * ``"quantitative"`` if the datum is a number
         * ``"nominal"`` if the datum is a string
@@ -30968,14 +30756,13 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **Note:**
 
-
         * Data ``type`` describes the semantics of the data rather than the primitive data
           types (number, string, etc.). The same primitive data type can have different
           types of measurement. For example, numeric data can represent quantitative,
           ordinal, or nominal data.
         * Data values for a temporal field can be either a date-time string (e.g.,
-          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
-          timestamp number (e.g., ``1552199579097`` ).
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
         * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
           ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
           or `"ordinal" (for using an ordinal bin scale)
@@ -30990,9 +30777,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
           refers to the post-aggregation data type. For example, we can calculate count
           ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
           "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
-        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
           ``type`` as they must have exactly the same type as their primary channels (e.g.,
-          ``x``, ``y`` ).
+          ``x``, ``y``).
 
         **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
         documentation.
@@ -31189,7 +30976,7 @@ class _EncodingMixin:
             and ``"square"`` / stroke color for ``"line"`` and ``"point"``.
 
             **Default value:** If undefined, the default color depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``color`` property.
 
             *Note:* 1) For fine-grained control over both fill and stroke colors of the
@@ -31215,7 +31002,7 @@ class _EncodingMixin:
         fill : str, :class:`Fill`, Dict, :class:`FillDatum`, :class:`FillValue`
             Fill color of the marks. **Default value:** If undefined, the default color
             depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``color`` property.
 
             *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
@@ -31224,7 +31011,7 @@ class _EncodingMixin:
             Fill opacity of the marks.
 
             **Default value:** If undefined, the default opacity depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``fillOpacity`` property.
         href : str, :class:`Href`, Dict, :class:`HrefValue`
             A URL to load upon mouse click.
@@ -31247,11 +31034,10 @@ class _EncodingMixin:
             Opacity of the marks.
 
             **Default value:** If undefined, the default opacity depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``opacity`` property.
         order : str, :class:`Order`, Dict, List, :class:`OrderValue`
             Order of the marks.
-
 
             * For stacked marks, this ``order`` channel encodes `stack order
               <https://vega.github.io/vega-lite/docs/stack.html#order>`__.
@@ -31263,7 +31049,7 @@ class _EncodingMixin:
               original order in the data sources.
             * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-            **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to
+            **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to
             avoid creating additional aggregation grouping.
         radius : str, :class:`Radius`, Dict, :class:`RadiusDatum`, :class:`RadiusValue`
             The outer radius in pixels of arc marks.
@@ -31274,9 +31060,7 @@ class _EncodingMixin:
         shape : str, :class:`Shape`, Dict, :class:`ShapeDatum`, :class:`ShapeValue`
             Shape of the mark.
 
-
-            #.
-            For ``point`` marks the supported values include:   - plotting shapes:
+            1. For ``point`` marks the supported values include:   - plotting shapes:
             ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
             ``"triangle-down"``, ``"triangle-right"``, or ``"triangle-left"``.   - the
             line symbol ``"stroke"``   - centered directional shapes ``"arrow"``,
@@ -31286,15 +31070,14 @@ class _EncodingMixin:
             bounding box with coordinates ranging from -1 to 1 along both the x and y
             dimensions.)
 
-            #.
-            For ``geoshape`` marks it should be a field definition of the geojson data
+            2. For ``geoshape`` marks it should be a field definition of the geojson
+            data
 
             **Default value:** If undefined, the default shape depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's
-            ``shape`` property. ( ``"circle"`` if unset.)
+            <https://vega.github.io/vega-lite/docs/config.html#point-config>`__'s
+            ``shape`` property. (``"circle"`` if unset.)
         size : str, :class:`Size`, Dict, :class:`SizeDatum`, :class:`SizeValue`
             Size of the mark.
-
 
             * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or
               pixel area of the mark.
@@ -31305,7 +31088,7 @@ class _EncodingMixin:
         stroke : str, :class:`Stroke`, Dict, :class:`StrokeDatum`, :class:`StrokeValue`
             Stroke color of the marks. **Default value:** If undefined, the default
             color depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``color`` property.
 
             *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus
@@ -31318,22 +31101,22 @@ class _EncodingMixin:
             Stroke opacity of the marks.
 
             **Default value:** If undefined, the default opacity depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``strokeOpacity`` property.
         strokeWidth : str, :class:`StrokeWidth`, Dict, :class:`StrokeWidthDatum`, :class:`StrokeWidthValue`
             Stroke width of the marks.
 
             **Default value:** If undefined, the default stroke width depends on `mark
-            config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
             ``strokeWidth`` property.
         text : str, :class:`Text`, Dict, :class:`TextDatum`, :class:`TextValue`
             Text of the ``text`` mark.
         theta : str, :class:`Theta`, Dict, :class:`ThetaDatum`, :class:`ThetaValue`
-            For arc marks, the arc length in radians if theta2 is not specified,
-            otherwise the start arc angle. (A value of 0 indicates up or “north”,
-            increasing values proceed clockwise.)
+            * For arc marks, the arc length in radians if theta2 is not specified,
+              otherwise the start arc angle. (A value of 0 indicates up or “north”,
+              increasing values proceed clockwise.)
 
-            For text marks, polar coordinate angle in radians.
+            * For text marks, polar coordinate angle in radians.
         theta2 : str, :class:`Theta2`, Dict, :class:`Theta2Datum`, :class:`Theta2Value`
             The end angle of arc marks in radians. A value of 0 indicates up or “north”,
             increasing values proceed clockwise.

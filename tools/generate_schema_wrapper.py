@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from typing import Final, Iterable, Literal, Iterator
 from itertools import chain
 from urllib import request
-import m2r
 
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import codegen, CodeSnippet, SchemaInfo
@@ -23,6 +22,7 @@ from tools.schemapi.utils import (
     rst_syntax_for_class,
     indent_docstring,
     ruff_write_lint_format_str,
+    rst_parse,
 )
 
 
@@ -271,26 +271,20 @@ class SchemaGenerator(codegen.SchemaGenerator):
 
 
 def process_description(description: str) -> str:
+    # remove formatting from links
     description = "".join(
         [
             reSpecial.sub("", d) if i % 2 else d
             for i, d in enumerate(reLink.split(description))
         ]
-    )  # remove formatting from links
-    description = m2r.convert(description)
-    description = description.replace(m2r.prolog, "")
-    description = description.replace(":raw-html-m2r:", ":raw-html:")
-    description = description.replace(r"\ ,", ",")
-    description = description.replace(r"\ ", " ")
-    # turn explicit references into anonymous references
-    description = description.replace(">`_", ">`__")
+    )
+    description = rst_parse(description)
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
     # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
     description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
     description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
     description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
-    description += "\n"
     return description.strip()
 
 
