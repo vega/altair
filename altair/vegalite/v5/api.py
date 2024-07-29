@@ -1589,7 +1589,9 @@ def condition(
 # Top-level objects
 
 
-def _top_schema_base(obj: Any, /):  # -> <subclass of SchemaBase and TopLevelMixin>
+def _top_schema_base(  # noqa: ANN202
+    obj: Any, /
+):  # -> <subclass of SchemaBase and TopLevelMixin>
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
@@ -3341,13 +3343,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     @utils.deprecated(version="4.1.0", alternative="show")
     def serve(
         self,
-        ip="127.0.0.1",
-        port=8888,
-        n_retries=50,
-        files=None,
-        jupyter_warning=True,
-        open_browser=True,
-        http_server=None,
+        ip="127.0.0.1",  # noqa: ANN001
+        port=8888,  # noqa: ANN001
+        n_retries=50,  # noqa: ANN001
+        files=None,  # noqa: ANN001
+        jupyter_warning=True,  # noqa: ANN001
+        open_browser=True,  # noqa: ANN001
+        http_server=None,  # noqa: ANN001
         **kwargs,
     ) -> None:
         """
