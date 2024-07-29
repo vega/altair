@@ -797,11 +797,14 @@ class When(_BaseWhen):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     def __init__(self, condition: _ConditionType, /) -> None:
         self._condition = condition
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self._condition!r})"
 
     @overload
     def then(self, statement: str, /, **kwds: Any) -> Then[_Condition]: ...
@@ -828,6 +831,22 @@ class When(_BaseWhen):
         Returns
         -------
         :class:`Then`
+
+        Examples
+        --------
+        Simple conditions may be expressed without defining a default::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.movies()
+            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+
+            alt.Chart(source).mark_point(invalid=None).encode(
+                x="IMDB_Rating:Q",
+                y="Rotten_Tomatoes_Rating:Q",
+                color=alt.when(predicate).then(alt.value("grey")),
+            )
         """
         condition = self._when_then(statement, kwds)
         if _is_condition_extra(condition, statement, kwds=kwds):
@@ -849,7 +868,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     _schema = {"type": "object"}
@@ -888,6 +907,24 @@ class Then(core.SchemaBase, t.Generic[_C]):
                 ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
+
+
+        Examples
+        --------
+        Points outside of ``brush`` will not appear highlighted::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.cars()
+            brush = alt.selection_interval()
+            color = alt.when(brush).then("Origin:N").otherwise(alt.value("grey"))
+
+            alt.Chart(source).mark_point().encode(
+                x="Horsepower:Q",
+                y="Miles_per_Gallon:Q",
+                color=color,
+            ).add_params(brush)
         """
         conditions: _Conditional[Any]
         is_extra = functools.partial(_is_condition_extra, kwds=kwds)
@@ -896,7 +933,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             if isinstance(current, list) and len(current) == 1:
                 # This case is guaranteed to have come from `When` and not `ChainedWhen`
                 # The `list` isn't needed if we complete the condition here
-                conditions = _Conditional(condition=current[0])
+                conditions = _Conditional(condition=current[0])  # pyright: ignore[reportArgumentType]
             elif isinstance(current, dict):
                 if not is_extra(statement):
                     conditions = self.to_dict()
@@ -937,12 +974,16 @@ class Then(core.SchemaBase, t.Generic[_C]):
             A selection or test predicate. ``str`` input will be treated as a test operand.
 
             .. note::
-                accepts the same range of inputs as in :func:`.condition()`.
+                Accepts the same range of inputs as in :func:`.condition()`.
         *more_predicates
             Additional predicates, restricted to types supporting ``&``.
         empty
             For selection parameters, the predicate of empty selections returns ``True`` by default.
             Override this behavior, with ``empty=False``.
+
+            .. note::
+                When ``predicate`` is a ``Parameter`` that is used more than once,
+                ``alt.when().then().when(..., empty=...)`` provides granular control for each occurrence.
         **constraints
             Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
             Shortcut for ``alt.datum.field_name == value``, see examples for usage.
@@ -951,6 +992,25 @@ class Then(core.SchemaBase, t.Generic[_C]):
         -------
         :class:`ChainedWhen`
             A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
+
+
+        Examples
+        --------
+        Chain calls to express precise queries::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.cars()
+            color = (
+                alt.when(alt.datum.Miles_per_Gallon >= 30, Origin="Europe")
+                .then(alt.value("crimson"))
+                .when(alt.datum.Horsepower > 150)
+                .then(alt.value("goldenrod"))
+                .otherwise(alt.value("grey"))
+            )
+
+            alt.Chart(source).mark_point().encode(x="Horsepower", y="Miles_per_Gallon", color=color)
         """
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         conditions = self.to_dict()
@@ -988,7 +1048,7 @@ class ChainedWhen(_BaseWhen):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     def __init__(
@@ -999,6 +1059,13 @@ class ChainedWhen(_BaseWhen):
     ) -> None:
         self._condition = condition
         self._conditions = conditions
+
+    def __repr__(self) -> str:
+        return (
+            f"{type(self).__name__}(\n"
+            f"  {self._conditions!r},\n  {self._condition!r}\n"
+            ")"
+        )
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
         """
@@ -1017,6 +1084,26 @@ class ChainedWhen(_BaseWhen):
         Returns
         -------
         :class:`Then`
+
+        Examples
+        --------
+        Multiple conditions with an implicit default::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.movies()
+            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            color = (
+                alt.when(predicate)
+                .then(alt.value("grey"))
+                .when(alt.datum.IMDB_Votes < 5000)
+                .then(alt.value("lightblue"))
+            )
+
+            alt.Chart(source).mark_point(invalid=None).encode(
+                x="IMDB_Rating:Q", y="Rotten_Tomatoes_Rating:Q", color=color
+            )
         """
         condition = self._when_then(statement, kwds)
         conditions = self._conditions.copy()
@@ -1047,6 +1134,10 @@ def when(
     empty
         For selection parameters, the predicate of empty selections returns ``True`` by default.
         Override this behavior, with ``empty=False``.
+
+        .. note::
+            When ``predicate`` is a ``Parameter`` that is used more than once,
+            ``alt.when(..., empty=...)`` provides granular control for each occurrence.
     **constraints
         Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
@@ -1066,9 +1157,40 @@ def when(
 
     Examples
     --------
-    Using keyword-argument ``constraints`` can simplify compositions like::
+    Setting up a common chart::
 
         import altair as alt
+        from vega_datasets import data
+
+        source = data.cars()
+        brush = alt.selection_interval()
+        points = (
+            alt.Chart(source)
+            .mark_point()
+            .encode(x="Horsepower", y="Miles_per_Gallon")
+            .add_params(brush)
+        )
+        points
+
+    Basic ``if-then-else`` conditions translate directly to ``when-then-otherwise``::
+
+        points.encode(color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray")))
+
+    Omitting the ``.otherwise()`` clause will use the channel default instead::
+
+        points.encode(color=alt.when(brush).then("Origin"))
+
+    Predicates passed as positional arguments will be reduced with ``&``::
+
+        points.encode(
+            color=alt.when(
+                brush, (alt.datum.Miles_per_Gallon >= 30) | (alt.datum.Horsepower >= 130)
+            )
+            .then("Origin")
+            .otherwise(alt.value("lightgray"))
+        )
+
+    Using keyword-argument ``constraints`` can simplify compositions like::
 
         verbose_composition = (
             (alt.datum.Name == "Name_1")
