@@ -114,6 +114,7 @@ if TYPE_CHECKING:
         Expression,
         GetAttrExpression,
         GetItemExpression,
+        IntoExpression,
     )
     from .schema._typing import (
         ImputeMethod_T,
@@ -368,13 +369,13 @@ class Parameter(_expr_core.OperatorMixin):
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
 
-    def __invert__(self):
+    def __invert__(self) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             return SelectionPredicateComposition({"not": {"param": self.name}})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
-    def __and__(self, other):
+    def __and__(self, other: Any) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
@@ -382,7 +383,7 @@ class Parameter(_expr_core.OperatorMixin):
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
-    def __or__(self, other):
+    def __or__(self, other: Any) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
@@ -396,7 +397,7 @@ class Parameter(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return self.name
 
-    def _from_expr(self, expr) -> ParameterExpression:
+    def _from_expr(self, expr: IntoExpression) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
     def __getattr__(self, field_name: str) -> GetAttrExpression | SelectionExpression:
@@ -417,18 +418,18 @@ class Parameter(_expr_core.OperatorMixin):
 
 # Enables use of ~, &, | with compositions of selection objects.
 class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self):
+    def __invert__(self) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"not": self.to_dict()})
 
-    def __and__(self, other):
+    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
 
-    def __or__(self, other):
+    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
-    def __init__(self, expr) -> None:
+    def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
     def to_dict(self) -> dict[str, str]:
@@ -437,12 +438,12 @@ class ParameterExpression(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> ParameterExpression:
+    def _from_expr(self, expr: IntoExpression) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
 
 class SelectionExpression(_expr_core.OperatorMixin):
-    def __init__(self, expr) -> None:
+    def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
     def to_dict(self) -> dict[str, str]:
@@ -451,7 +452,7 @@ class SelectionExpression(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> SelectionExpression:
+    def _from_expr(self, expr: IntoExpression) -> SelectionExpression:
         return SelectionExpression(expr=expr)
 
 

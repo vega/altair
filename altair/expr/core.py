@@ -1,5 +1,9 @@
 from __future__ import annotations
-from typing import Any
+
+from typing import Any, Union, Dict
+
+from typing_extensions import TypeAlias
+
 from ..utils import SchemaBase
 
 
@@ -232,3 +236,6 @@ class GetItemExpression(Expression):
 
     def __repr__(self) -> str:
         return f"{self.group}[{self.name!r}]"
+
+
+IntoExpression: TypeAlias = Union[bool, None, str, OperatorMixin, Dict[str, Any]]
