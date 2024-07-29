@@ -2062,7 +2062,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             repeat_arg = core.RepeatMapping(row=row, column=column)
 
-        return RepeatChart(spec=self, repeat=repeat_arg, columns=columns, **kwargs)
+        return RepeatChart(
+            spec=t.cast("ChartType", self), repeat=repeat_arg, columns=columns, **kwargs
+        )
 
     def properties(self, **kwargs) -> Self:
         """
@@ -3583,10 +3585,10 @@ class Chart(
         height: Optional[int | str | dict | Step] = Undefined,
         **kwargs,
     ) -> None:
-        super().__init__(
             # Data type hints won't match with what TopLevelUnitSpec expects
             # as there is some data processing happening when converting to
             # a VL spec
+        super().__init__(
             data=data,  # type: ignore[arg-type]
             encoding=encoding,
             mark=mark,
@@ -3833,22 +3835,18 @@ def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes."""
 
-    # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
-    # we set the arguments explicitly here.
-    # TODO: Should we instead use tools/schemapi/codegen.get_args?
-    @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
-        repeat=Undefined,
-        spec=Undefined,
+        repeat: Optional[list[str] | LayerRepeatMapping | RepeatMapping] = Undefined,
+        spec: Optional[ChartType] = Undefined,
         align=Undefined,
         autosize=Undefined,
         background=Undefined,
         bounds=Undefined,
         center=Undefined,
-        columns=Undefined,
+        columns: Optional[int] = Undefined,
         config=Undefined,
-        data=Undefined,
+        data: Optional[ChartDataType] = Undefined,
         datasets=Undefined,
         description=Undefined,
         name=Undefined,
@@ -3860,12 +3858,19 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         transform=Undefined,
         usermeta=Undefined,
         **kwds,
-    ):
+    ) -> None:
+        tp_name = type(self).__name__
+        if utils.is_undefined(spec):
+            msg = f"{tp_name!r} requires a `spec`, but got: {spec!r}"
+            raise TypeError(msg)
         _check_if_valid_subspec(spec, "RepeatChart")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
         if isinstance(spec, (Chart, LayerChart)):
+            if utils.is_undefined(repeat):
+                msg = f"{tp_name!r} requires a `repeat`, but got: {repeat!r}"
+                raise TypeError(msg)
             params = _repeat_names(params, repeat, spec)
         super().__init__(
             repeat=repeat,
@@ -3983,11 +3988,20 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelConcatSpec)
-    def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        concat: Sequence[ConcatType] = (),
+        columns: Optional[float] = Undefined,
+        **kwargs,
+    ) -> None:
         # TODO: move common data to top level?
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
-        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)
+        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)  # type: ignore[arg-type]
+        self.concat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
@@ -4071,7 +4085,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self.add_params(*selections)
 
 
-def concat(*charts, **kwargs) -> ConcatChart:
+def concat(*charts: ConcatType, **kwargs: Any) -> ConcatChart:
     """Concatenate charts horizontally."""
     return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
 
@@ -4080,11 +4094,19 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelHConcatSpec)
-    def __init__(self, data=Undefined, hconcat=(), **kwargs):
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        hconcat: Sequence[ConcatType] = (),
+        **kwargs,
+    ) -> None:
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
-        super().__init__(data=data, hconcat=list(hconcat), **kwargs)
+        super().__init__(data=data, hconcat=list(hconcat), **kwargs)  # type: ignore[arg-type]
+        self.hconcat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
@@ -4168,7 +4190,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self.add_params(*selections)
 
 
-def hconcat(*charts, **kwargs) -> HConcatChart:
+def hconcat(*charts: ConcatType, **kwargs: Any) -> HConcatChart:
     """Concatenate charts horizontally."""
     return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
 
@@ -4177,11 +4199,19 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets."""
 
     @utils.use_signature(core.TopLevelVConcatSpec)
-    def __init__(self, data=Undefined, vconcat=(), **kwargs):
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        vconcat: Sequence[ConcatType] = (),
+        **kwargs,
+    ) -> None:
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
-        super().__init__(data=data, vconcat=list(vconcat), **kwargs)
+        super().__init__(data=data, vconcat=list(vconcat), **kwargs)  # type: ignore[arg-type]
+        self.vconcat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
@@ -4267,7 +4297,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self.add_params(*selections)
 
 
-def vconcat(*charts, **kwargs) -> VConcatChart:
+def vconcat(*charts: ConcatType, **kwargs: Any) -> VConcatChart:
     """Concatenate charts vertically."""
     return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
 
@@ -4276,13 +4306,21 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel."""
 
     @utils.use_signature(core.TopLevelLayerSpec)
-    def __init__(self, data=Undefined, layer=(), **kwargs):
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        layer: Sequence[LayerType] = (),
+        **kwargs,
+    ) -> None:
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
             _check_if_can_be_layered(spec)
-        super().__init__(data=data, layer=list(layer), **kwargs)
+        super().__init__(data=data, layer=list(layer), **kwargs)  # type: ignore[arg-type]
+        self.layer: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         # Currently (Vega-Lite 5.5) the same param can't occur on two layers
         self.layer = _remove_duplicate_params(self.layer)
@@ -4386,7 +4424,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return self.add_params(*selections)
 
 
-def layer(*charts, **kwargs) -> LayerChart:
+def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
     """Layer multiple charts."""
     return LayerChart(layer=charts, **kwargs)  # pyright: ignore
 
@@ -4397,17 +4435,21 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
         self,
-        data=Undefined,
-        spec=Undefined,
-        facet=Undefined,
-        params=Undefined,
+        data: Optional[ChartDataType] = Undefined,
+        spec: Optional[ChartType] = Undefined,
+        facet: Optional[dict | SchemaBase] = Undefined,
+        params: Optional[Sequence[_Parameter]] = Undefined,
         **kwargs,
-    ):
+    ) -> None:
+        if utils.is_undefined(spec):
+            msg = f"{type(self).__name__!r} requires a `spec`, but got: {spec!r}"
+            raise TypeError(msg)
         _check_if_valid_subspec(spec, "FacetChart")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
+        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)  # type: ignore[arg-type]
+        self.data: Optional[ChartDataType]
 
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
@@ -4522,7 +4564,10 @@ def _combine_subchart_data(data, subcharts):
     return data, subcharts
 
 
-def _viewless_dict(param: Parameter) -> dict:
+_Parameter: TypeAlias = Union[
+    core.VariableParameter, core.TopLevelSelectionParameter, core.SelectionParameter
+]
+
     d = param.to_dict()
     d.pop("views", None)
     return d
@@ -4793,6 +4838,21 @@ def sphere() -> SphereGenerator:
 ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
+ConcatType: TypeAlias = Union[
+    ChartType,
+    core.FacetSpec,
+    core.LayerSpec,
+    core.RepeatSpec,
+    core.FacetedUnitSpec,
+    core.LayerRepeatSpec,
+    core.NonNormalizedSpec,
+    core.NonLayerRepeatSpec,
+    core.ConcatSpecGenericSpec,
+    core.ConcatSpecGenericSpec,
+    core.HConcatSpecGenericSpec,
+    core.VConcatSpecGenericSpec,
+]
+LayerType: TypeAlias = Union[ChartType, core.UnitSpec, core.LayerSpec]
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:

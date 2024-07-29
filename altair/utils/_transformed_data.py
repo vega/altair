@@ -30,6 +30,7 @@ from altair.utils.schemapi import Undefined
 
 if TYPE_CHECKING:
     from altair.utils.core import DataFrameLike
+    from altair.vegalite.v5.api import ChartType
 
 Scope: TypeAlias = Tuple[int, ...]
 FacetMapping: TypeAlias = Dict[Tuple[str, Scope], Tuple[str, Scope]]
@@ -154,9 +155,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
 # The same error appeared when trying it with Protocols for the concat and layer charts.
 # This function is only used internally and so we accept this inconsistency for now.
 def name_views(
-    chart: Chart | FacetChart | LayerChart | HConcatChart | VConcatChart | ConcatChart,
-    i: int = 0,
-    exclude: Iterable[str] | None = None,
+    chart: ChartType, i: int = 0, exclude: Iterable[str] | None = None
 ) -> list[str]:
     """
     Name unnamed chart views.
@@ -193,6 +192,7 @@ def name_views(
         else:
             return []
     else:
+        subcharts: list[Any]
         if isinstance(chart, _chart_class_mapping[LayerChart]):
             subcharts = chart.layer
         elif isinstance(chart, _chart_class_mapping[HConcatChart]):
