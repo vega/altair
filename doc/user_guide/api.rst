@@ -156,11 +156,8 @@ API Functions
    layer
    param
    repeat
-   selection
    selection_interval
-   selection_multi
    selection_point
-   selection_single
    sequence
    sphere
    topo_feature
