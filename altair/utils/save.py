@@ -83,7 +83,6 @@ def save(
     vegalite_version: str | None = None,
     embed_options: dict | None = None,
     json_kwds: dict | None = None,
-    webdriver: Literal["chrome", "firefox"] | None = None,
     scale_factor: float = 1,
     engine: Literal["vl-convert"] | None = None,
     inline: bool = False,
@@ -119,8 +118,6 @@ def save(
     json_kwds : dict (optional)
         Additional keyword arguments are passed to the output method
         associated with the specified format.
-    webdriver : string {'chrome' | 'firefox'} (optional)
-        This argument is deprecated as it's not relevant for the new vl-convert engine.
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert'}
@@ -134,7 +131,7 @@ def save(
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
-    if webdriver is not None:
+    if _ := kwargs.pop("webdriver", None):
         deprecated_warn(
             "The webdriver argument is not relevant for the new vl-convert engine which replaced altair_saver. "
             "The argument will be removed in a future release.",
