@@ -1980,7 +1980,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         vegaembed_version: str = VEGAEMBED_VERSION,
         embed_options: dict | None = None,
         json_kwds: dict | None = None,
-        webdriver: str | None = None,
         engine: str | None = None,
         inline=False,
         **kwargs,
@@ -2020,8 +2019,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds : dict (optional)
             Additional keyword arguments are passed to the output method
             associated with the specified format.
-        webdriver : string {'chrome' | 'firefox'} (optional)
-            This argument is deprecated as it's not relevant for the new vl-convert engine.
         engine: string {'vl-convert', 'altair_saver'}
             the conversion engine to use for 'png', 'svg', and 'pdf' formats
         inline: bool (optional)
@@ -2033,7 +2030,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs :
             additional kwargs passed to spec_to_mimebundle.
         """
-        if webdriver is not None:
+        if _ := kwargs.pop("webdriver", None):
             utils.deprecated_warn(
                 "The webdriver argument is not relevant for the new vl-convert engine which replaced altair_saver. "
                 "The argument will be removed in a future release.",
