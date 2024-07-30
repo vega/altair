@@ -350,7 +350,7 @@ class Parameter(_expr_core.OperatorMixin):
 
     @utils.deprecated(version="5.0.0", alternative="to_dict")
     def ref(self) -> dict:
-        """'ref' is deprecated. No need to call '.ref()' anymore."""
+        """'ref' is deprecated. Use '.to_dict()' instead."""
         return self.to_dict()
 
     def to_dict(self) -> dict[str, str | dict]:
@@ -1332,24 +1332,7 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter
     message="These functions also include more helpful docstrings.",
 )
 def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
-    """
-    Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
-
-    Create a selection parameter.
-
-    Parameters
-    ----------
-    type : enum('point', 'interval') (required)
-        Determines the default event processing and data query for the
-        selection. Vega-Lite currently supports two selection types:
-        * "point" - to select multiple discrete data values; the first
-        value is selected on click and additional values toggled on
-        shift-click.
-        * "interval" - to select a continuous range of data values on
-        drag.
-    **kwds :
-        additional keywords to control the selection.
-    """
+    """'selection' is deprecated use 'selection_point' or 'selection_interval' instead, depending on the type of parameter you want to create."""
     return _selection(type=type, **kwds)
 
 
@@ -3461,36 +3444,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         http_server=None,
         **kwargs,
     ):
-        """
-        'serve' is deprecated. Use 'show' instead.
-
-        Open a browser window and display a rendering of the chart
-
-        Parameters
-        ----------
-        html : string
-            HTML to serve
-        ip : string (default = '127.0.0.1')
-            ip address at which the HTML will be served.
-        port : int (default = 8888)
-            the port at which to serve the HTML
-        n_retries : int (default = 50)
-            the number of nearby ports to search if the specified port
-            is already in use.
-        files : dictionary (optional)
-            dictionary of extra content to serve
-        jupyter_warning : bool (optional)
-            if True (default), then print a warning if this is used
-            within the Jupyter notebook
-        open_browser : bool (optional)
-            if True (default), then open a web browser to the given HTML
-        http_server : class (optional)
-            optionally specify an HTTPServer class to use for showing the
-            figure. The default is Python's basic HTTPServer.
-        **kwargs :
-            additional keyword arguments passed to the save() method
-
-        """
+        """'serve' is deprecated. Use 'show' instead."""
         from ...utils.server import serve
 
         html = io.StringIO()
