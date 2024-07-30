@@ -348,9 +348,13 @@ class Parameter(_expr_core.OperatorMixin):
         self.param = param
         self.param_type = param_type
 
-    @utils.deprecated(version="5.0.0", alternative="to_dict")
+    @utils.deprecated(
+        version="5.0.0",
+        alternative="to_dict",
+        message="No need to call '.ref()' anymore.",
+    )
     def ref(self) -> dict:
-        """'ref' is deprecated. Use '.to_dict()' instead."""
+        """'ref' is deprecated. No need to call '.ref()' anymore."""
         return self.to_dict()
 
     def to_dict(self) -> dict[str, str | dict]:
