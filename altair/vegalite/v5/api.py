@@ -2040,7 +2040,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds : dict (optional)
             Additional keyword arguments are passed to the output method
             associated with the specified format.
-        engine: string {'vl-convert', 'altair_saver'}
+        engine: string {'vl-convert'}
             the conversion engine to use for 'png', 'svg', and 'pdf' formats
         inline: bool (optional)
             If False (default), the required JavaScript libraries are loaded
