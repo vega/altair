@@ -4528,6 +4528,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         spec = _spec_as_list[0]
         super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)  # type: ignore[arg-type]
         self.data: Optional[ChartDataType]
+        self.spec: ChartType
+        self.params: Optional[Sequence[_Parameter]]
 
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
