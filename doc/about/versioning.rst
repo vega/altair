@@ -7,6 +7,10 @@ Such changes would allow Vega-Altair to address technical debt and improve upon 
 
 To ensure future releases clearly communicate changes, Vega-Altair will be working towards adopting SemVer_.
 
+Public API
+----------
+Functionality documented in :ref:`api` defines the Vega-Altair public API.
+
 Version numbers
 ---------------
 
