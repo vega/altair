@@ -34,5 +34,8 @@ Where possible, deprecation warnings *may* specify:
 * an alternative function/method/parameter/class to use instead
 * an explanation for why this change had to be made
 
+Deprecated functionality *may* be removed from the Vega-Altair documentation, if there is a 
+suitable replacement and we believe inclusion of both could confuse new users.
+
 .. _Vega-Lite: https://github.com/vega/vega-lite
 .. _SemVer: https://semver.org/
