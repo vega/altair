@@ -90,6 +90,8 @@ def iter_objects(
             not (isinstance(obj, type) and issubclass(obj, restrict_to_subclass))
         ):
             continue
+        if hasattr(obj, "__deprecated__"):
+            continue
         yield name
 
 
