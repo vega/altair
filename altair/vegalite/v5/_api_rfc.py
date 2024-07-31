@@ -129,138 +129,6 @@ def _one_of_variance(val_1: Any, *rest: OneOfType) -> Sequence[Any]:
         raise TypeError(msg)
 
 
-class _FieldMeta(type):
-    def __new__(  # type: ignore[misc]
-        cls, shorthand: dict[str, Any] | str, /, data: DataFrameLike | None = None
-    ) -> dict[str, Any]:
-        return _parse(shorthand=shorthand, data=data)
-
-    def argmin(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("argmin", col_name, type)
-
-    def argmax(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("argmax", col_name, type)
-
-    def average(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("average", col_name, type)
-
-    def count(
-        self, col_name: str | None = None, /, type: EncodeType = "Q"
-    ) -> dict[str, Any]:
-        return _parse_aggregate("count", col_name, type)
-
-    def distinct(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("distinct", col_name, type)
-
-    def max(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("max", col_name, type)
-
-    def mean(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("mean", col_name, type)
-
-    def median(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("median", col_name, type)
-
-    def min(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("min", col_name, type)
-
-    def missing(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("missing", col_name, type)
-
-    def product(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("product", col_name, type)
-
-    def q1(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("q1", col_name, type)
-
-    def q3(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("q3", col_name, type)
-
-    def ci0(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("ci0", col_name, type)
-
-    def ci1(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("ci1", col_name, type)
-
-    def stderr(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("stderr", col_name, type)
-
-    def stdev(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("stdev", col_name, type)
-
-    def stdevp(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("stdevp", col_name, type)
-
-    def sum(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("sum", col_name, type)
-
-    def valid(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("valid", col_name, type)
-
-    def values(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("values", col_name, type)
-
-    def variance(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("variance", col_name, type)
-
-    def variancep(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("variancep", col_name, type)
-
-    def exponential(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("exponential", col_name, type)
-
-    def exponentialb(
-        self, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
-        return _parse_aggregate("exponentialb", col_name, type)
-
-
 class agg:
     """
     Utility class providing autocomplete for shorthand.
@@ -506,6 +374,9 @@ class field:
     ) -> SelectionPredicateComposition:
         p = FieldRangePredicate(field=field, range=value, timeUnit=timeUnit)
         return _wrap_composition(p)
+
+
+# NOTE: Ignore everything below
 
 
 class field_into:
