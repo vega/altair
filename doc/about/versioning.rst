@@ -26,6 +26,7 @@ Deprecation
 -----------
 Deprecation warnings may be introduced in **MAJOR** and **MINOR** versions, 
 but the removal of deprecated functionality will not occur until *at least* the next **MAJOR** version.
+
 For upstream breaking changes that trigger a **MAJOR** version, 
 we *may* provide a deprecation warning if we consider the change especially disruptive.
 
