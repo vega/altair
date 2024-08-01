@@ -376,10 +376,32 @@ class field:
         return _wrap_composition(p)
 
 
-# NOTE: Ignore everything below
+# NOTE: Ignore everything below #
+# ----------------------------- #
 
 
 class field_into:
+    """
+    Return wrapper for `agg`, `field` shorthand dicts.
+
+    Idea
+    ----
+    Rather than something like::
+
+        op_1 = alt.X(alt.agg.min("Cost", "Q")).scale(None)
+
+    You could chain entirely from the agg::
+
+        # the internal unpacking will avoid double-checking the shorthand
+        op_2 = alt.agg.min("Cost", "Q").x().scale(None)
+
+    Optionally, use the chained constructor::
+
+        op_2_1 = alt.agg.min("Cost", "Q").x(scale=None)
+
+
+    """
+
     def __init__(self, arg: Map, /) -> None:
         self._arg: Map = arg
 
@@ -433,13 +455,8 @@ class field_into:
     def y_offset(self, *args: Any, **kwds: Any) -> channels.YOffset: ...
 
 
-# field_out = agg.q1()
-# wrapped = field_into(field_out).value.x()
-## efg = field2.angle()
-## some_field = field2.min("Cost", "Q")
-# some_field = field_into(field("Cost:Q"))
-# beeeee = some_field.x()
-# cee = some_field.value.x()
-#
-#
-# ffff = field_into(field("Cost:Q")).x2().bandPosition(4.7)
+def example_field():
+    field_out = agg.q1()
+    wrapped = field_into(field_out).x()  # noqa: F841
+    some_field = field_into(agg.min("Cost", "Q"))
+    beeeee = some_field.x().scale(None).impute(None).axis(None)  # noqa: F841
