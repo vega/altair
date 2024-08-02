@@ -229,7 +229,9 @@ extend-safe-fixes=[
     # escape-sequence-in-docstring
     "D301",
     # ends-in-period
-    "D400"
+    "D400",
+    # missing-return-type-special-method 
+    "ANN204"
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
@@ -307,6 +309,8 @@ select = [
     "D213",
     # numpy-specific-rules
     "NPY",
+    # flake8-annotations
+    "ANN",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -351,6 +355,8 @@ ignore = [
     "D413",
     # doc-line-too-long
     "W505",
+    # Any as annotation
+    "ANN401" 
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 pydocstyle={ convention="numpy" }
@@ -360,6 +366,10 @@ mccabe={ max-complexity=18 }
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
 "typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have a similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
+
+[tool.ruff.lint.per-file-ignores]
+# Only enforce type annotation rules on public api
+"!altair/vegalite/v5/api.py" = ["ANN"]
 
 
 [tool.ruff.format]
