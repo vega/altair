@@ -311,6 +311,10 @@ select = [
     "NPY",
     # flake8-annotations
     "ANN",
+    # unsorted-imports
+    "I001",
+    # missing-required-import
+    # "I002",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -362,6 +366,18 @@ ignore = [
 pydocstyle={ convention="numpy" }
 mccabe={ max-complexity=18 }
 
+[tool.ruff.lint.isort]
+classes = ["expr", "datum"]
+extra-standard-library = ["typing_extensions"]
+known-first-party=[
+    "altair_tiles",
+    "sphinxext_altair",
+    "vega_datasets",
+    "vegafusion",
+    "vl_convert",
+]
+required-imports = ["from __future__ import annotations"]
+split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
