@@ -1,4 +1,5 @@
-from typing import Callable, Dict, Any
+from typing import Any, Callable, Dict
+
 from altair.utils import PluginRegistry
 
 # ==============================================================================

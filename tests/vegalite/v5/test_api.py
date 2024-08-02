@@ -2,25 +2,24 @@
 
 from __future__ import annotations
 
-
-from datetime import date
 import io
-import ibis
-import sys
 import json
 import operator
 import os
 import pathlib
 import re
+import sys
 import tempfile
+from datetime import date
 from importlib.metadata import version as importlib_version
-from packaging.version import Version
 
+import ibis
 import jsonschema
 import narwhals.stable.v1 as nw
-import pytest
 import pandas as pd
 import polars as pl
+import pytest
+from packaging.version import Version
 
 import altair as alt
 from altair.utils.schemapi import Undefined
@@ -528,6 +527,7 @@ def test_when_labels_position_based_on_condition() -> None:
     """
     import numpy as np
     import pandas as pd
+
     from altair.utils.schemapi import SchemaValidationError
 
     rand = np.random.RandomState(42)

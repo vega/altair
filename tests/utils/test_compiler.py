@@ -1,6 +1,8 @@
 import json
+
 import pytest
-from altair import vegalite_compilers, Chart
+
+from altair import Chart, vegalite_compilers
 
 try:
     import vl_convert as vlc

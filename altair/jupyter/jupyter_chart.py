@@ -1,17 +1,19 @@
 from __future__ import annotations
+
 import json
-import anywidget
-import traitlets
 import pathlib
 from typing import Any
 
+import anywidget
+import traitlets
+
 import altair as alt
-from altair.utils._vegafusion_data import (
-    using_vegafusion,
-    compile_to_vegafusion_chart_state,
-)
 from altair import TopLevelSpec
-from altair.utils.selection import IndexSelection, PointSelection, IntervalSelection
+from altair.utils._vegafusion_data import (
+    compile_to_vegafusion_chart_state,
+    using_vegafusion,
+)
+from altair.utils.selection import IndexSelection, IntervalSelection, PointSelection
 
 _here = pathlib.Path(__file__).parent
 

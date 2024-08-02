@@ -1,30 +1,30 @@
 """Generate a schema wrapper from a schema."""
 
 from __future__ import annotations
+
 import argparse
 import copy
 import json
-from pathlib import Path
 import re
 import sys
 import textwrap
 from dataclasses import dataclass
-from typing import Final, Iterable, Literal, Iterator
 from itertools import chain
+from pathlib import Path
+from typing import Final, Iterable, Iterator, Literal
 from urllib import request
 
 sys.path.insert(0, str(Path.cwd()))
-from tools.schemapi import codegen, CodeSnippet, SchemaInfo
+from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
     get_valid_identifier,
-    resolve_references,
-    ruff_format_py,
-    rst_syntax_for_class,
     indent_docstring,
-    ruff_write_lint_format_str,
+    resolve_references,
     rst_parse,
+    rst_syntax_for_class,
+    ruff_format_py,
+    ruff_write_lint_format_str,
 )
-
 
 SCHEMA_VERSION: Final = "v5.19.0"
 

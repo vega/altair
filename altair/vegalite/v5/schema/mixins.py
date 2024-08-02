@@ -14,7 +14,6 @@ from . import core
 if TYPE_CHECKING:
     from altair import Parameter, SchemaBase
 
-
 if sys.version_info >= (3, 11):
     from typing import Self
 else:

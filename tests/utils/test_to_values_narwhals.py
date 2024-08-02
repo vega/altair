@@ -1,9 +1,10 @@
+import sys
 from datetime import datetime
 from pathlib import Path
+
+import narwhals.stable.v1 as nw
 import pandas as pd
 import pytest
-import sys
-import narwhals.stable.v1 as nw
 
 try:
     import pyarrow as pa

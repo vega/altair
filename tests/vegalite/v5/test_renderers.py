@@ -6,7 +6,6 @@ import pytest
 
 import altair.vegalite.v5 as alt
 
-
 try:
     import vl_convert as vlc
 except ImportError:

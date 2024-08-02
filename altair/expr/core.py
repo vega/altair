@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from typing import Any, Union, Dict
-
+from typing import Any, Dict, Union
 from typing_extensions import TypeAlias
 
-from ..utils import SchemaBase
+from altair.utils import SchemaBase
 
 
 class DatumType:

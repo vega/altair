@@ -1,15 +1,17 @@
 from __future__ import annotations
+
 import importlib
 import re
-from typing import Any, Iterator, Sequence
 import warnings
-from docutils import nodes, utils, frontend
+from typing import Any, Iterator, Sequence
+
+from docutils import frontend, nodes, utils
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
-from tools.schemapi.utils import fix_docstring_issues, SchemaInfo
+from tools.schemapi.utils import SchemaInfo, fix_docstring_issues
 
 
 def type_description(schema: dict[str, Any]) -> str:

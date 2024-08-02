@@ -1,33 +1,32 @@
 from __future__ import annotations
 
+import collections
 import hashlib
 import json
-from pathlib import Path
 import random
-import collections
-from operator import itemgetter
-import warnings
 import shutil
-from typing import Any, TYPE_CHECKING
+import warnings
+from operator import itemgetter
+from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 import jinja2
-
 from docutils import nodes
-from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
-
+from docutils.statemachine import ViewList
 from sphinx.util.nodes import nested_parse_with_titles
 
-from .utils import (
-    get_docstring_and_rest,
-    prev_this_next,
-    create_thumbnail,
-    create_generic_image,
-)
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 from tests.examples_methods_syntax import iter_examples_methods_syntax
+
+from .utils import (
+    create_generic_image,
+    create_thumbnail,
+    get_docstring_and_rest,
+    prev_this_next,
+)
 
 if TYPE_CHECKING:
     from docutils.nodes import Node
