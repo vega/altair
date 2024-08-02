@@ -1,15 +1,16 @@
 """Utilities for working with schemas."""
 
 from __future__ import annotations
-from itertools import chain
+
 import keyword
 import re
 import subprocess
 import textwrap
 import urllib
-from typing import Any, Final, Iterable, TYPE_CHECKING, Iterator, Sequence
-from operator import itemgetter
 from html import unescape
+from itertools import chain
+from operator import itemgetter
+from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Sequence
 
 import mistune
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
@@ -17,9 +18,10 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from mistune import BlockState
-    from typing_extensions import LiteralString
     from pathlib import Path
+    from typing_extensions import LiteralString
+
+    from mistune import BlockState
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 

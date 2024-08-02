@@ -1,31 +1,33 @@
 from __future__ import annotations
+
 import uuid
-from weakref import WeakValueDictionary
 from typing import (
+    TYPE_CHECKING,
     Any,
-    Union,
+    Callable,
+    Final,
     MutableMapping,
     TypedDict,
-    Final,
-    TYPE_CHECKING,
+    Union,
     overload,
-    Callable,
 )
+from weakref import WeakValueDictionary
 
 import narwhals.stable.v1 as nw
 
 from altair.utils._importers import import_vegafusion
+from altair.utils.core import DataFrameLike
 from altair.utils.data import (
     DataType,
-    ToValuesReturnType,
     MaxRowsError,
     SupportsGeoInterface,
+    ToValuesReturnType,
 )
-from altair.utils.core import DataFrameLike
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
     from narwhals.typing import IntoDataFrame
+
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
@@ -182,7 +184,7 @@ def compile_to_vegafusion_chart_state(
         A VegaFusion ChartState object
     """
     # Local import to avoid circular ImportError
-    from altair import vegalite_compilers, data_transformers
+    from altair import data_transformers, vegalite_compilers
 
     vf = import_vegafusion()
 
@@ -234,7 +236,7 @@ def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict[str, Any]:
         A Vega spec that has been pre-transformed by VegaFusion
     """
     # Local import to avoid circular ImportError
-    from altair import vegalite_compilers, data_transformers
+    from altair import data_transformers, vegalite_compilers
 
     vf = import_vegafusion()
 

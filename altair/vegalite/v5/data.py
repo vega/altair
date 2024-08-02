@@ -1,4 +1,8 @@
-from ..data import (
+from typing import Final
+
+from altair.utils._vegafusion_data import vegafusion_data_transformer
+from altair.vegalite.data import (
+    DataTransformerRegistry,
     MaxRowsError,
     default_data_transformer,
     limit_rows,
@@ -6,13 +10,7 @@ from ..data import (
     to_csv,
     to_json,
     to_values,
-    DataTransformerRegistry,
 )
-
-from ...utils._vegafusion_data import vegafusion_data_transformer
-
-from typing import Final
-
 
 # ==============================================================================
 # VegaLite 5 data transformers

@@ -1,16 +1,16 @@
 from __future__ import annotations
+
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Any, Dict, Tuple, Union
-from typing_extensions import TypeAlias
 import uuid
+from typing import Any, Callable, Dict, Tuple, Union
+from typing_extensions import TypeAlias
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
-from .plugin_registry import PluginRegistry, PluginEnabler
 from .mimebundle import spec_to_mimebundle
+from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
-
 
 # ==============================================================================
 # Renderer registry

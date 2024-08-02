@@ -1,4 +1,5 @@
 import pytest
+
 import altair.vegalite.v5 as alt
 
 

@@ -6,28 +6,29 @@ import contextlib
 import copy
 import inspect
 import json
+import sys
 import textwrap
-from math import ceil
 from collections import defaultdict
+from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
-import sys
+from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
     Final,
     Iterable,
     Iterator,
+    List,
     Literal,
     Sequence,
     TypeVar,
     Union,
     overload,
-    List,
-    Dict,
 )
 from typing_extensions import TypeAlias
-from functools import partial
+
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
@@ -39,10 +40,11 @@ from packaging.version import Version
 from altair import vegalite
 
 if TYPE_CHECKING:
+    from typing import ClassVar
+
     from referencing import Registry
 
     from altair import ChartType
-    from typing import ClassVar
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -50,9 +52,9 @@ if TYPE_CHECKING:
         from typing_extensions import TypeIs
 
     if sys.version_info >= (3, 11):
-        from typing import Self, Never
+        from typing import Never, Self
     else:
-        from typing_extensions import Self, Never
+        from typing_extensions import Never, Self
 
 ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]

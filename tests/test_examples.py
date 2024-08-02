@@ -21,15 +21,15 @@ from __future__ import annotations
 
 import io
 import pkgutil
+import re
 import sys
 from typing import Any, Iterable, Iterator
-import re
+
 import pytest
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_arguments_syntax
-from tests import examples_methods_syntax
+from tests import examples_arguments_syntax, examples_methods_syntax
 
 try:
     import vl_convert as vlc  # noqa: F401, RUF100

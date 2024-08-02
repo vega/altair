@@ -1,28 +1,28 @@
 # ruff: noqa: W291
 import copy
-import io
 import inspect
+import io
 import json
-import jsonschema
-import jsonschema.exceptions
 import pickle
 import warnings
 
+import jsonschema
+import jsonschema.exceptions
 import numpy as np
 import pandas as pd
 import pytest
-from vega_datasets import data
 
 import altair as alt
 from altair import load_schema
 from altair.utils.schemapi import (
-    UndefinedType,
-    SchemaBase,
-    Undefined,
-    _FromDict,
-    SchemaValidationError,
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
+    SchemaBase,
+    SchemaValidationError,
+    Undefined,
+    UndefinedType,
+    _FromDict,
 )
+from vega_datasets import data
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't

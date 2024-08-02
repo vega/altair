@@ -311,6 +311,8 @@ select = [
     "NPY",
     # flake8-annotations
     "ANN",
+    # unsorted-imports
+    "I001",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -319,8 +321,6 @@ ignore = [
     "E266",
     # Line too long
     "E501",
-    # Relative imports are banned
-    "TID252",
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
@@ -362,6 +362,17 @@ ignore = [
 pydocstyle={ convention="numpy" }
 mccabe={ max-complexity=18 }
 
+[tool.ruff.lint.isort]
+classes = ["expr", "datum"]
+extra-standard-library = ["typing_extensions"]
+known-first-party=[
+    "altair_tiles",
+    "sphinxext_altair",
+    "vega_datasets",
+    "vegafusion",
+    "vl_convert",
+]
+split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api

@@ -1,28 +1,30 @@
 from __future__ import annotations
-from typing import Any, Iterable, overload, TYPE_CHECKING, Dict, Tuple
+
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Tuple, overload
 from typing_extensions import TypeAlias
+
 from altair import (
     Chart,
-    FacetChart,
-    LayerChart,
-    HConcatChart,
-    VConcatChart,
     ConcatChart,
-    TopLevelUnitSpec,
+    ConcatSpecGenericSpec,
+    FacetChart,
     FacetedUnitSpec,
+    FacetSpec,
+    HConcatChart,
+    HConcatSpecGenericSpec,
+    LayerChart,
+    LayerSpec,
+    NonNormalizedSpec,
+    TopLevelConcatSpec,
+    TopLevelFacetSpec,
+    TopLevelHConcatSpec,
+    TopLevelLayerSpec,
+    TopLevelUnitSpec,
+    TopLevelVConcatSpec,
     UnitSpec,
     UnitSpecWithFrame,
-    NonNormalizedSpec,
-    TopLevelLayerSpec,
-    LayerSpec,
-    TopLevelConcatSpec,
-    ConcatSpecGenericSpec,
-    TopLevelHConcatSpec,
-    HConcatSpecGenericSpec,
-    TopLevelVConcatSpec,
+    VConcatChart,
     VConcatSpecGenericSpec,
-    TopLevelFacetSpec,
-    FacetSpec,
     data_transformers,
 )
 from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
