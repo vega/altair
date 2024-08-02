@@ -321,8 +321,6 @@ ignore = [
     "E266",
     # Line too long
     "E501",
-    # Relative imports are banned
-    "TID252",
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
