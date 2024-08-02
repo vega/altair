@@ -1,9 +1,11 @@
 from __future__ import annotations
+
+import struct
 from typing import Any, Literal, cast, overload
 from typing_extensions import TypeAlias
-from .html import spec_to_html
+
 from ._importers import import_vl_convert, vl_version_for_vl_convert
-import struct
+from .html import spec_to_html
 
 MimeBundleFormat: TypeAlias = Literal[
     "html", "json", "png", "svg", "pdf", "vega", "vega-lite"
@@ -108,11 +110,8 @@ def spec_to_mimebundle(
     The png, svg, pdf, and vega outputs require the vl-convert package
     """
     # Local import to avoid circular ImportError
-    from altair.utils.display import (
-        compile_with_vegafusion,
-        using_vegafusion,
-    )
     from altair import renderers
+    from altair.utils.display import compile_with_vegafusion, using_vegafusion
 
     if mode != "vega-lite":
         msg = "mode must be 'vega-lite'"

@@ -1,14 +1,14 @@
 import types
-from packaging.version import Version
 from importlib.metadata import version as importlib_version
 
 import numpy as np
 import pandas as pd
 import pytest
+from packaging.version import Version
+from pandas.api.types import infer_dtype
 
 import altair as alt
-from altair.utils.core import parse_shorthand, update_nested, infer_encoding_types
-from pandas.api.types import infer_dtype
+from altair.utils.core import infer_encoding_types, parse_shorthand, update_nested
 
 json_schema_specification = alt.load_schema()["$schema"]
 json_schema_dict_str = f'{{"$schema": "{json_schema_specification}"}}'

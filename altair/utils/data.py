@@ -1,27 +1,28 @@
 from __future__ import annotations
+
+import hashlib
 import json
 import random
-import hashlib
+import sys
+from functools import partial
+from pathlib import Path
 from typing import (
-    Any,
-    List,
-    MutableMapping,
-    Sequence,
     TYPE_CHECKING,
-    Protocol,
-    TypedDict,
+    Any,
+    Callable,
+    Dict,
+    List,
     Literal,
+    MutableMapping,
+    Protocol,
+    Sequence,
+    TypedDict,
     TypeVar,
     Union,
-    Dict,
     overload,
     runtime_checkable,
-    Callable,
 )
-from typing_extensions import TypeAlias, ParamSpec, Concatenate
-from pathlib import Path
-from functools import partial
-import sys
+from typing_extensions import Concatenate, ParamSpec, TypeAlias
 
 import narwhals.stable.v1 as nw
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
@@ -29,12 +30,12 @@ from narwhals.typing import IntoDataFrame
 
 from ._importers import import_pyarrow_interchange
 from .core import (
-    sanitize_pandas_dataframe,
     DataFrameLike,
+    sanitize_geo_interface,
     sanitize_narwhals_dataframe,
+    sanitize_pandas_dataframe,
     to_eager_narwhals_dataframe,
 )
-from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
 
 if sys.version_info >= (3, 13):
@@ -43,8 +44,8 @@ else:
     from typing_extensions import TypeIs
 
 if TYPE_CHECKING:
-    import pyarrow as pa
     import pandas as pd
+    import pyarrow as pa
 
 
 @runtime_checkable

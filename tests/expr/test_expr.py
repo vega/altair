@@ -8,7 +8,7 @@ from typing import Any, Iterator
 import pytest
 from jsonschema.exceptions import ValidationError
 
-from altair import ExprRef, datum, expr
+from altair import datum, expr, ExprRef
 from altair.expr import _ConstExpressionType
 
 # This maps vega expression function names to the Python name

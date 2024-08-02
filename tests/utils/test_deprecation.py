@@ -1,5 +1,7 @@
-import pytest
 import re
+
+import pytest
+
 from altair.utils.deprecation import (
     AltairDeprecationWarning,
     deprecated,

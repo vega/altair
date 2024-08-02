@@ -10,8 +10,8 @@ import pytest
 
 from altair.utils import (
     infer_vegalite_type_for_pandas,
-    sanitize_pandas_dataframe,
     sanitize_narwhals_dataframe,
+    sanitize_pandas_dataframe,
 )
 
 try:

@@ -1,6 +1,6 @@
 """Test http server."""
 
-from altair.utils.server import serve, MockServer
+from altair.utils.server import MockServer, serve
 
 
 def test_serve():

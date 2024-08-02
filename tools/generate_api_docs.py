@@ -1,10 +1,11 @@
 """Fills the contents of doc/user_guide/api.rst based on the updated Altair schema."""
 
 from __future__ import annotations
-from pathlib import Path
+
 import types
-from typing import Final, Iterator
+from pathlib import Path
 from types import ModuleType
+from typing import Final, Iterator
 
 import altair as alt
 

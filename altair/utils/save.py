@@ -1,13 +1,15 @@
 from __future__ import annotations
+
 import json
 import pathlib
 import warnings
-from typing import IO, Any, Literal, TYPE_CHECKING
+from typing import IO, TYPE_CHECKING, Any, Literal
 
-from .mimebundle import spec_to_mimebundle
-from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
 from altair.utils.deprecation import deprecated_warn
+from altair.vegalite.v5.data import data_transformers
+
+from .mimebundle import spec_to_mimebundle
 
 if TYPE_CHECKING:
     from pathlib import Path

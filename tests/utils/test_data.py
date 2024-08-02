@@ -1,17 +1,18 @@
 from pathlib import Path
-
 from typing import Any, Callable
-import pytest
+
+import narwhals.stable.v1 as nw
 import pandas as pd
 import polars as pl
-import narwhals.stable.v1 as nw
+import pytest
+
 from altair.utils.data import (
-    limit_rows,
     MaxRowsError,
+    limit_rows,
     sample,
-    to_values,
-    to_json,
     to_csv,
+    to_json,
+    to_values,
 )
 
 

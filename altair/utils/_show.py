@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Iterable

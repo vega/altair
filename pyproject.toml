@@ -229,7 +229,9 @@ extend-safe-fixes=[
     # escape-sequence-in-docstring
     "D301",
     # ends-in-period
-    "D400"
+    "D400",
+    # missing-return-type-special-method 
+    "ANN204"
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
@@ -307,6 +309,10 @@ select = [
     "D213",
     # numpy-specific-rules
     "NPY",
+    # flake8-annotations
+    "ANN",
+    # unsorted-imports
+    "I001",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -315,8 +321,6 @@ ignore = [
     "E266",
     # Line too long
     "E501",
-    # Relative imports are banned
-    "TID252",
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
@@ -351,15 +355,32 @@ ignore = [
     "D413",
     # doc-line-too-long
     "W505",
+    # Any as annotation
+    "ANN401" 
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 pydocstyle={ convention="numpy" }
 mccabe={ max-complexity=18 }
 
+[tool.ruff.lint.isort]
+classes = ["expr", "datum"]
+extra-standard-library = ["typing_extensions"]
+known-first-party=[
+    "altair_tiles",
+    "sphinxext_altair",
+    "vega_datasets",
+    "vegafusion",
+    "vl_convert",
+]
+split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
 "typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have a similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
+
+[tool.ruff.lint.per-file-ignores]
+# Only enforce type annotation rules on public api
+"!altair/vegalite/v5/api.py" = ["ANN"]
 
 
 [tool.ruff.format]
