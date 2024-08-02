@@ -313,8 +313,6 @@ select = [
     "ANN",
     # unsorted-imports
     "I001",
-    # missing-required-import
-    # "I002",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -376,7 +374,6 @@ known-first-party=[
     "vegafusion",
     "vl_convert",
 ]
-required-imports = ["from __future__ import annotations"]
 split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
