@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Final
 
-from ...utils.theme import ThemeRegistry
+from altair.utils.theme import ThemeRegistry
 
 VEGA_THEMES = [
     "ggplot2",

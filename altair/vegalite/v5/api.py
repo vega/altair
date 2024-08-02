@@ -24,19 +24,19 @@ from typing_extensions import TypeAlias
 
 import jsonschema
 
+from altair import utils
+from altair.expr import core as _expr_core
 from altair.utils import Optional, Undefined
+from altair.utils._vegafusion_data import (
+    compile_with_vegafusion as _compile_with_vegafusion,
+)
+from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.core import (
     to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
 )
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
 
-from ... import utils
-from ...expr import core as _expr_core
-from ...utils._vegafusion_data import (
-    compile_with_vegafusion as _compile_with_vegafusion,
-)
-from ...utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from .compiler import vegalite_compilers
 from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
@@ -53,7 +53,7 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import IO, Iterable, Iterator
 
-    from ...utils.core import DataFrameLike
+    from altair.utils.core import DataFrameLike
 
     if sys.version_info >= (3, 13):
         from typing import Required, TypeIs
@@ -1972,7 +1972,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
         """
-        from ...utils._importers import import_vl_convert
+        from altair.utils._importers import import_vl_convert
 
         vlc = import_vl_convert()
         if _using_vegafusion():
@@ -2062,7 +2062,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 version="5.0.0",
             )
 
-        from ...utils.save import save
+        from altair.utils.save import save
 
         kwds: dict[str, Any] = dict(
             chart=self,
@@ -3469,7 +3469,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs,  # noqa: ANN003
     ) -> None:
         """'serve' is deprecated. Use 'show' instead."""
-        from ...utils.server import serve
+        from altair.utils.server import serve
 
         html = io.StringIO()
         self.save(html, format="html", **kwargs)

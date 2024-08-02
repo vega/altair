@@ -3,18 +3,19 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Final
 
-from ...utils.mimebundle import spec_to_mimebundle
-from ..display import (
+from altair.utils.mimebundle import spec_to_mimebundle
+from altair.vegalite.display import (
     Displayable,
     HTMLRenderer,
     RendererRegistry,
     default_renderer_base,
     json_renderer_base,
 )
+
 from .schema import SCHEMA_VERSION
 
 if TYPE_CHECKING:
-    from ..display import DefaultRendererReturnType
+    from altair.vegalite.display import DefaultRendererReturnType
 
 
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")

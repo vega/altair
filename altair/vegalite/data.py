@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Callable, overload
 
-from ..utils.core import sanitize_pandas_dataframe
-from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
-from ..utils.data import (
+from altair.utils.core import sanitize_pandas_dataframe
+from altair.utils.data import DataTransformerRegistry as _DataTransformerRegistry
+from altair.utils.data import (
     MaxRowsError,
     check_data_type,
     limit_rows,
@@ -15,8 +15,8 @@ from ..utils.data import (
 )
 
 if TYPE_CHECKING:
-    from ..utils.data import DataType, ToValuesReturnType
-    from ..utils.plugin_registry import PluginEnabler
+    from altair.utils.data import DataType, ToValuesReturnType
+    from altair.utils.plugin_registry import PluginEnabler
 
 
 @overload

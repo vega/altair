@@ -1,7 +1,7 @@
 from typing import Final
 
-from ...utils._vegafusion_data import vegafusion_data_transformer
-from ..data import (
+from altair.utils._vegafusion_data import vegafusion_data_transformer
+from altair.vegalite.data import (
     DataTransformerRegistry,
     MaxRowsError,
     default_data_transformer,

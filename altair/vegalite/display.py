@@ -1,4 +1,4 @@
-from ..utils.display import (
+from altair.utils.display import (
     DefaultRendererReturnType,
     Displayable,
     HTMLRenderer,
