@@ -1,7 +1,8 @@
-import altair as alt
-from vega_datasets import data
 import pandas as pd
 import pytest
+
+import altair as alt
+from vega_datasets import data
 
 # If anywidget is not installed, we will skip the tests in this file.
 try:

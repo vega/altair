@@ -1,16 +1,16 @@
 from __future__ import annotations
+
 from pathlib import Path
-from typing import Final, TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from ...utils.mimebundle import spec_to_mimebundle
 from ..display import (
     Displayable,
+    HTMLRenderer,
+    RendererRegistry,
     default_renderer_base,
     json_renderer_base,
-    RendererRegistry,
-    HTMLRenderer,
 )
-
 from .schema import SCHEMA_VERSION
 
 if TYPE_CHECKING:

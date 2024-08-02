@@ -1,46 +1,48 @@
 from __future__ import annotations
 
-import sys
-import warnings
+import functools
 import hashlib
 import io
-import json
-import jsonschema
 import itertools
+import json
+import operator
+import sys
+import typing as t
+import warnings
+from copy import deepcopy as _deepcopy
 from typing import (
-    Any,
-    overload,
-    Literal,
-    Union,
     TYPE_CHECKING,
-    TypeVar,
+    Any,
+    Literal,
     Protocol,
     Sequence,
+    TypeVar,
+    Union,
+    overload,
 )
 from typing_extensions import TypeAlias
-import typing as t
-import functools
-import operator
-from copy import deepcopy as _deepcopy
 
-from .schema import core, channels, mixins, SCHEMA_URL
+import jsonschema
 
 from altair.utils import Optional, Undefined
-from .data import data_transformers
-from ... import utils
-from ...expr import core as _expr_core
-from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
-from .theme import themes
-from .compiler import vegalite_compilers
-from ...utils._vegafusion_data import (
-    using_vegafusion as _using_vegafusion,
-    compile_with_vegafusion as _compile_with_vegafusion,
-)
-from altair.utils.data import DataType, is_data_type as _is_data_type
 from altair.utils.core import (
     to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
 )
+from altair.utils.data import DataType
+from altair.utils.data import is_data_type as _is_data_type
+
+from ... import utils
+from ...expr import core as _expr_core
+from ...utils._vegafusion_data import (
+    compile_with_vegafusion as _compile_with_vegafusion,
+)
+from ...utils._vegafusion_data import using_vegafusion as _using_vegafusion
+from .compiler import vegalite_compilers
+from .data import data_transformers
+from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
+from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
+from .theme import themes
 
 if sys.version_info >= (3, 13):
     from typing import TypedDict
@@ -48,69 +50,20 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    from ...utils.core import DataFrameLike
     from pathlib import Path
-    from typing import Iterable, IO, Iterator
+    from typing import IO, Iterable, Iterator
+
+    from ...utils.core import DataFrameLike
 
     if sys.version_info >= (3, 13):
-        from typing import TypeIs, Required
+        from typing import Required, TypeIs
     else:
-        from typing_extensions import TypeIs, Required
+        from typing_extensions import Required, TypeIs
     if sys.version_info >= (3, 11):
-        from typing import Self, Never
+        from typing import Never, Self
     else:
-        from typing_extensions import Self, Never
+        from typing_extensions import Never, Self
 
-    from .schema.channels import Facet, Row, Column
-    from .schema.core import (
-        SchemaBase,
-        Expr,
-        PredicateComposition,
-        Binding,
-        IntervalSelectionConfig,
-        PointSelectionConfig,
-        Mark,
-        LayerRepeatMapping,
-        RepeatMapping,
-        ProjectionType,
-        ExprRef,
-        Vector2number,
-        Vector2Vector2number,
-        Vector3number,
-        Transform,
-        AggregatedFieldDef,
-        FieldName,
-        BinParams,
-        ImputeSequence,
-        ImputeMethod,
-        JoinAggregateFieldDef,
-        ParameterName,
-        Predicate,
-        LookupSelection,
-        AggregateOp,
-        SortField,
-        TimeUnit,
-        WindowFieldDef,
-        FacetFieldDef,
-        FacetedEncoding,
-        AnyMark,
-        Step,
-        RepeatRef,
-        UrlData,
-        SequenceGenerator,
-        GraticuleGenerator,
-        SphereGenerator,
-        VariableParameter,
-        TopLevelSelectionParameter,
-        SelectionParameter,
-        InlineDataset,
-        NamedData,
-        InlineData,
-        BindCheckbox,
-        BindRadioSelect,
-        BindRange,
-    )
-    from altair.utils.display import MimeBundleType
     from altair.expr.core import (
         BinaryExpression,
         Expression,
@@ -118,21 +71,72 @@ if TYPE_CHECKING:
         GetItemExpression,
         IntoExpression,
     )
+    from altair.utils.display import MimeBundleType
+
     from .schema._typing import (
-        ImputeMethod_T,
-        SelectionType_T,
-        SelectionResolution_T,
-        SingleDefUnitChannel_T,
-        StackOffset_T,
-        ResolveMode_T,
-        ProjectionType_T,
         AggregateOp_T,
-        MultiTimeUnit_T,
-        SingleTimeUnit_T,
-        OneOrSeq,
         AutosizeType_T,
         ColorName_T,
+        ImputeMethod_T,
         LayoutAlign_T,
+        MultiTimeUnit_T,
+        OneOrSeq,
+        ProjectionType_T,
+        ResolveMode_T,
+        SelectionResolution_T,
+        SelectionType_T,
+        SingleDefUnitChannel_T,
+        SingleTimeUnit_T,
+        StackOffset_T,
+    )
+    from .schema.channels import Column, Facet, Row
+    from .schema.core import (
+        AggregatedFieldDef,
+        AggregateOp,
+        AnyMark,
+        BindCheckbox,
+        Binding,
+        BindRadioSelect,
+        BindRange,
+        BinParams,
+        Expr,
+        ExprRef,
+        FacetedEncoding,
+        FacetFieldDef,
+        FieldName,
+        GraticuleGenerator,
+        ImputeMethod,
+        ImputeSequence,
+        InlineData,
+        InlineDataset,
+        IntervalSelectionConfig,
+        JoinAggregateFieldDef,
+        LayerRepeatMapping,
+        LookupSelection,
+        Mark,
+        NamedData,
+        ParameterName,
+        PointSelectionConfig,
+        Predicate,
+        PredicateComposition,
+        ProjectionType,
+        RepeatMapping,
+        RepeatRef,
+        SchemaBase,
+        SelectionParameter,
+        SequenceGenerator,
+        SortField,
+        SphereGenerator,
+        Step,
+        TimeUnit,
+        TopLevelSelectionParameter,
+        Transform,
+        UrlData,
+        VariableParameter,
+        Vector2number,
+        Vector2Vector2number,
+        Vector3number,
+        WindowFieldDef,
     )
 
 __all__ = [

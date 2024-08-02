@@ -1,6 +1,7 @@
 """Tools for enabling and registering chart themes."""
 
 from __future__ import annotations
+
 from typing import Final
 
 from ...utils.theme import ThemeRegistry

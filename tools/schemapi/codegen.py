@@ -1,17 +1,18 @@
 """Code generation utilities."""
 
 from __future__ import annotations
+
 import re
 import textwrap
-from typing import Final
 from dataclasses import dataclass
+from typing import Final
 
 from .utils import (
     SchemaInfo,
-    is_valid_identifier,
-    indent_docstring,
-    jsonschema_to_python_types,
     flatten,
+    indent_docstring,
+    is_valid_identifier,
+    jsonschema_to_python_types,
 )
 
 

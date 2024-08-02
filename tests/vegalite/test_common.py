@@ -1,8 +1,7 @@
 """Tests of functionality that should work in all vegalite versions."""
 
-import pytest
-
 import pandas as pd
+import pytest
 
 from altair.vegalite import v5
 

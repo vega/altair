@@ -2,29 +2,29 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableMapping
-from copy import deepcopy
-import json
 import itertools
+import json
 import re
 import sys
 import traceback
 import warnings
-from typing import Callable, TypeVar, Any, Iterator, cast, Literal, TYPE_CHECKING
+from collections.abc import Mapping, MutableMapping
+from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
+from typing import TYPE_CHECKING, Any, Callable, Iterator, Literal, TypeVar, cast
 
 import jsonschema
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import is_pandas_dataframe, get_polars
+from narwhals.dependencies import get_polars, is_pandas_dataframe
 from narwhals.typing import IntoDataFrame
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
 if sys.version_info >= (3, 12):
-    from typing import runtime_checkable, Protocol
+    from typing import Protocol, runtime_checkable
 else:
-    from typing_extensions import runtime_checkable, Protocol
+    from typing_extensions import Protocol, runtime_checkable
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
@@ -32,12 +32,14 @@ else:
 
 
 if TYPE_CHECKING:
-    from types import ModuleType
     import typing as t
-    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
-    from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from narwhals.typing import IntoExpr
+    from types import ModuleType
+
     import pandas as pd
+    from narwhals.typing import IntoExpr
+
+    from altair.utils._dfi_types import DataFrame as DfiDataFrame
+    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
 
 V = TypeVar("V")
 P = ParamSpec("P")
@@ -337,8 +339,8 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """
     # This is safe to import here, as this function is only called on pandas input.
     # NumPy is a required dependency of pandas so is also safe to import.
-    import pandas as pd
     import numpy as np
+    import pandas as pd
 
     df = df.copy()
 

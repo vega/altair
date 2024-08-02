@@ -1,4 +1,5 @@
 import json
+
 import pytest
 
 try:
@@ -9,7 +10,6 @@ except ImportError:
     IPYTHON_AVAILABLE = False
 
 from altair.vegalite.v5 import VegaLite
-
 
 DATA_RECORDS = [
     {"amount": 28, "category": "A"},

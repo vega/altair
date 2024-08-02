@@ -1,5 +1,4 @@
 import altair as alt
-
 from tools import update_init_file
 
 

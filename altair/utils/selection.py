@@ -1,7 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import List, Dict, Any, NewType
 
+from dataclasses import dataclass
+from typing import Any, Dict, List, NewType
 
 # Type representing the "{selection}_store" dataset that corresponds to a
 # Vega-Lite selection
