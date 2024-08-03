@@ -562,18 +562,29 @@ def _type_checking_only_imports(*imports: str) -> str:
 class ChannelInfo:
     supports_arrays: bool
     deep_description: str
-    field_class_name: str | None = None
+    field_class_name: str
     datum_class_name: str | None = None
     value_class_name: str | None = None
 
     @property
+    def is_field_only(self) -> bool:
+        return not (self.datum_class_name or self.value_class_name)
+
+    @property
     def all_names(self) -> Iterator[str]:
-        if self.field_class_name:
-            yield self.field_class_name
-        if self.datum_class_name:
-            yield self.datum_class_name
-        if self.value_class_name:
-            yield self.value_class_name
+        """All channels are expected to have a field class."""
+        yield self.field_class_name
+        yield from self.non_field_names
+
+    @property
+    def non_field_names(self) -> Iterator[str]:
+        if self.is_field_only:
+            yield from ()
+        else:
+            if self.datum_class_name:
+                yield self.datum_class_name
+            if self.value_class_name:
+                yield self.value_class_name
 
 
 def generate_vegalite_channel_wrappers(
@@ -595,50 +606,38 @@ def generate_vegalite_channel_wrappers(
         supports_arrays = any(
             schema_info.is_array() for schema_info in propschema.anyOf
         )
+        classname: str = prop[0].upper() + prop[1:]
         channel_info = ChannelInfo(
             supports_arrays=supports_arrays,
             deep_description=propschema.deep_description,
+            field_class_name=classname,
         )
 
         for encoding_spec, definition in def_dict.items():
-            classname = prop[0].upper() + prop[1:]
             basename = definition.rsplit("/", maxsplit=1)[-1]
             basename = get_valid_identifier(basename)
 
+            gen: SchemaGenerator
             defschema = {"$ref": definition}
-
-            Generator: (
-                type[FieldSchemaGenerator]
-                | type[DatumSchemaGenerator]
-                | type[ValueSchemaGenerator]
-            )
+            kwds = {
+                "basename": basename,
+                "schema": defschema,
+                "rootschema": schema,
+                "encodingname": prop,
+                "haspropsetters": True,
+                "altair_classes_prefix": "core",
+            }
             if encoding_spec == "field":
-                Generator = FieldSchemaGenerator
-                nodefault = []
-                channel_info.field_class_name = classname
-
+                gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)
             elif encoding_spec == "datum":
-                Generator = DatumSchemaGenerator
-                classname += "Datum"
-                nodefault = ["datum"]
-                channel_info.datum_class_name = classname
-
+                temp_name = f"{classname}Datum"
+                channel_info.datum_class_name = temp_name
+                gen = DatumSchemaGenerator(temp_name, nodefault=["datum"], **kwds)
             elif encoding_spec == "value":
-                Generator = ValueSchemaGenerator
-                classname += "Value"
-                nodefault = ["value"]
-                channel_info.value_class_name = classname
+                temp_name = f"{classname}Value"
+                channel_info.value_class_name = temp_name
+                gen = ValueSchemaGenerator(temp_name, nodefault=["value"], **kwds)
 
-            gen = Generator(
-                classname=classname,
-                basename=basename,
-                schema=defschema,
-                rootschema=schema,
-                encodingname=prop,
-                nodefault=nodefault,
-                haspropsetters=True,
-                altair_classes_prefix="core",
-            )
             class_defs.append(gen.schema_class())
 
         channel_infos[prop] = channel_info
@@ -872,42 +871,26 @@ def _create_encode_signature(
     typed_dict_args: list[str] = []
 
     for channel, info in channel_infos.items():
-        field_class_name = info.field_class_name
-        assert (
-            field_class_name is not None
-        ), "All channels are expected to have a field class"
-        datum_and_value_class_names = []
-        if info.datum_class_name is not None:
-            datum_and_value_class_names.append(info.datum_class_name)
-
-        if info.value_class_name is not None:
-            datum_and_value_class_names.append(info.value_class_name)
-
-        # dict stands for the return types of alt.datum, alt.value as well as
+        # `Map` stands for the return types of alt.datum, alt.value as well as
         # the dictionary representation of an encoding channel class. See
         # discussions in https://github.com/vega/altair/pull/3208
         # for more background.
-        union_types = ["str", field_class_name, "Map"]
-        docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]
-        tp_inner: str = " | ".join(chain(union_types, datum_and_value_class_names))
+        union_types = ["str", info.field_class_name, "Map"]
+        it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
+        docstring_union_types = ["str", next(it_rst_names), "Dict"]
+        tp_inner: str = " | ".join(chain(union_types, info.non_field_names))
         if info.supports_arrays:
             # We could be more specific about what types are accepted in the list
             # but then the signatures would get rather long and less useful
             # to a user when it shows up in their IDE.
             docstring_union_types.append("List")
-
-            # NOTE: Currently triggered only for `detail`, `order`, `tooltip`
-            # I think the `tooltip` one especially we should be more specific
             tp_inner = f"OneOrSeq[{tp_inner}]"
 
         signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
         typed_dict_args.append(f"{channel}: {tp_inner}")
-        docstring_union_types = docstring_union_types + [
-            rst_syntax_for_class(c) for c in datum_and_value_class_names
-        ]
         docstring_parameters.extend(
             (
-                f"{channel} : {', '.join(docstring_union_types)}",
+                f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
                 f"    {process_description(info.deep_description)}",
             )
         )

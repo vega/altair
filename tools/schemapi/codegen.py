@@ -226,12 +226,7 @@ class SchemaGenerator:
             ):
                 propinfo = info.properties[prop]
                 doc += [
-                    "{} : {}".format(
-                        prop,
-                        propinfo.get_python_type_representation(
-                            altair_classes_prefix=self.altair_classes_prefix,
-                        ),
-                    ),
+                    f"{prop} : {propinfo.get_python_type_representation()}",
                     f"    {self._process_description(propinfo.deep_description)}",
                 ]
         if len(doc) > 1:
@@ -279,9 +274,7 @@ class SchemaGenerator:
                 [
                     *additional_types,
                     *info.properties[p].get_python_type_representation(
-                        for_type_hints=True,
-                        altair_classes_prefix=self.altair_classes_prefix,
-                        return_as_str=False,
+                        for_type_hints=True, return_as_str=False
                     ),
                 ]
             )
@@ -315,9 +308,7 @@ class SchemaGenerator:
                 [
                     f"{p}: "
                     + info.get_python_type_representation(
-                        for_type_hints=True,
-                        altair_classes_prefix=self.altair_classes_prefix,
-                        additional_type_hints=["UndefinedType"],
+                        for_type_hints=True, additional_type_hints=["UndefinedType"]
                     )
                     + " = Undefined"
                     for p, info in prop_infos.items()
