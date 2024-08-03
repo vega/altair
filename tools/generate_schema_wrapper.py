@@ -866,6 +866,11 @@ def _create_encode_signature(
 ) -> str:
     signature_args: list[str] = ["self", "*args: Any"]
     docstring_parameters: list[str] = ["", "Parameters", "----------"]
+
+    # TODO: refactor so extracting the `TypedDict` here makes sense
+    # - Want to avoid simply returning tuple[str, str]
+    typed_dict_args: list[str] = []
+
     for channel, info in channel_infos.items():
         field_class_name = info.field_class_name
         assert (
@@ -896,6 +901,7 @@ def _create_encode_signature(
             tp_inner = f"OneOrSeq[{tp_inner}]"
 
         signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
+        typed_dict_args.append(f"{channel}: {tp_inner}")
         docstring_union_types = docstring_union_types + [
             rst_syntax_for_class(c) for c in datum_and_value_class_names
         ]
