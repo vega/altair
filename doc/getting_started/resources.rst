@@ -135,7 +135,7 @@ nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a si
 Altair Ally is a companion package to Altair, which provides a few shortcuts to create common plots for exploratory data analysis, particularly those involving visualization of an entire dataframe.
 
 .. List of links.
-.. _`Altair Ally`: https://joelostblom.github.io/altair_ally
+.. _`Altair Ally`: https://github.com/vega/altair_ally
 
 gif_
 ~~~~
