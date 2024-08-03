@@ -888,6 +888,9 @@ def _create_encode_signature(
             # We could be more specific about what types are accepted in the list
             # but then the signatures would get rather long and less useful
             # to a user when it shows up in their IDE.
+
+            # NOTE: Currently triggered only for `detail`, `order`, `tooltip`
+            # I think the `tooltip` one especially we should be more specific
             union_types.append("list")
             docstring_union_types.append("List")
 
