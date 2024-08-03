@@ -7,6 +7,10 @@ from typing import Final
 from altair.utils.theme import ThemeRegistry
 
 VEGA_THEMES = [
+    "carbonwhite",
+    "carbong10",
+    "carbong90",
+    "carbong100",
     "dark",
     "excel",
     "fivethirtyeight",
