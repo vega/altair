@@ -634,6 +634,7 @@ __all__ = [
     "to_json",
     "to_values",
     "topo_feature",
+    "typing",
     "utils",
     "v5",
     "value",
@@ -654,6 +655,7 @@ from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Optional, Undefined
+from altair import typing
 
 
 def load_ipython_extension(ipython):
