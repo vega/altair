@@ -2,9 +2,36 @@
 
 from __future__ import annotations
 
-from typing import Final
+from typing import TYPE_CHECKING, Final, Literal
 
 from altair.utils.theme import ThemeRegistry
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
+    _ThemeName: TypeAlias = Literal[
+        "default",
+        "carbonwhite",
+        "carbong10",
+        "carbong90",
+        "carbong100",
+        "dark",
+        "excel",
+        "fivethirtyeight",
+        "ggplot2",
+        "googlecharts",
+        "latimes",
+        "opaque",
+        "powerbi",
+        "quartz",
+        "urbaninstitute",
+        "vox",
+    ]
 
 VEGA_THEMES = [
     "carbonwhite",
