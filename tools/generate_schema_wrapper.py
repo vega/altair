@@ -625,7 +625,6 @@ def generate_vegalite_channel_wrappers(
                 "rootschema": schema,
                 "encodingname": prop,
                 "haspropsetters": True,
-                "altair_classes_prefix": "core",
             }
             if encoding_spec == "field":
                 gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)

@@ -105,7 +105,6 @@ class SchemaGenerator:
     rootschemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit root
         schema.
-    altair_classes_prefix : string, optional
     **kwargs : dict
         Additional keywords for derived classes.
     """
@@ -141,7 +140,6 @@ class SchemaGenerator:
         rootschemarepr: object | None = None,
         nodefault: list[str] | None = None,
         haspropsetters: bool = False,
-        altair_classes_prefix: str | None = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -153,7 +151,6 @@ class SchemaGenerator:
         self.nodefault = nodefault or ()
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
-        self.altair_classes_prefix = altair_classes_prefix
 
     def subclasses(self) -> list[str]:
         """Return a list of subclass names, if any."""
