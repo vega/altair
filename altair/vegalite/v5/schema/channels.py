@@ -30905,7 +30905,7 @@ class _EncodingMixin:
         color: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
         column: Optional[str | Column | Map] = Undefined,
         description: Optional[str | Description | Map | DescriptionValue] = Undefined,
-        detail: Optional[str | Detail | Map | list] = Undefined,
+        detail: Optional[OneOrSeq[str | Detail | Map]] = Undefined,
         facet: Optional[str | Facet | Map] = Undefined,
         fill: Optional[str | Fill | Map | FillDatum | FillValue] = Undefined,
         fillOpacity: Optional[
@@ -30924,7 +30924,7 @@ class _EncodingMixin:
         opacity: Optional[
             str | Opacity | Map | OpacityDatum | OpacityValue
         ] = Undefined,
-        order: Optional[str | Order | Map | list | OrderValue] = Undefined,
+        order: Optional[OneOrSeq[str | Order | Map | OrderValue]] = Undefined,
         radius: Optional[str | Radius | Map | RadiusDatum | RadiusValue] = Undefined,
         radius2: Optional[
             str | Radius2 | Map | Radius2Datum | Radius2Value
@@ -30945,7 +30945,7 @@ class _EncodingMixin:
         text: Optional[str | Text | Map | TextDatum | TextValue] = Undefined,
         theta: Optional[str | Theta | Map | ThetaDatum | ThetaValue] = Undefined,
         theta2: Optional[str | Theta2 | Map | Theta2Datum | Theta2Value] = Undefined,
-        tooltip: Optional[str | Tooltip | Map | list | TooltipValue] = Undefined,
+        tooltip: Optional[OneOrSeq[str | Tooltip | Map | TooltipValue]] = Undefined,
         url: Optional[str | Url | Map | UrlValue] = Undefined,
         x: Optional[str | X | Map | XDatum | XValue] = Undefined,
         x2: Optional[str | X2 | Map | X2Datum | X2Value] = Undefined,
