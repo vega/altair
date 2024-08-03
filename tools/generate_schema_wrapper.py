@@ -209,7 +209,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
-    def encode({encode_method_args}) -> Self:
+    def encode({method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
         # Compat prep for `infer_encoding_types` signature
@@ -231,6 +231,13 @@ class _EncodingMixin:
         encoding.update(kwargs)
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
+'''
+
+ENCODE_TYPED_DICT: Final = '''
+class _EncodeKwds(TypedDict, total=False):
+    """{docstring}"""
+    {channels}
+
 '''
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
@@ -654,7 +661,7 @@ def generate_vegalite_channel_wrappers(
 
     imports = imports or [
         "from __future__ import annotations\n",
-        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
+        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
@@ -674,11 +681,8 @@ def generate_vegalite_channel_wrappers(
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
         *class_defs,
+        *EncodingArtifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
     ]
-
-    # Generate the type signature for the encode method
-    encode_signature = _create_encode_signature(channel_infos)
-    contents.append(encode_signature)
     return "\n".join(contents)
 
 
@@ -859,48 +863,64 @@ def vegalite_main(skip_download: bool = False) -> None:
         ruff_write_lint_format_str(fp, contents)
 
 
-def _create_encode_signature(
-    channel_infos: dict[str, ChannelInfo],
-) -> str:
-    signature_args: list[str] = ["self", "*args: Any"]
-    docstring_parameters: list[str] = ["", "Parameters", "----------"]
+@dataclass
+class EncodingArtifacts:
+    """
+    Wrapper for what was previously `_create_encode_signature()`.
 
-    # TODO: refactor so extracting the `TypedDict` here makes sense
-    # - Want to avoid simply returning tuple[str, str]
-    typed_dict_args: list[str] = []
+    Now also creates a `TypedDict` as part of https://github.com/pola-rs/polars/pull/17995
+    """
 
-    for channel, info in channel_infos.items():
-        # `Map` stands for the return types of alt.datum, alt.value as well as
-        # the dictionary representation of an encoding channel class. See
-        # discussions in https://github.com/vega/altair/pull/3208
-        # for more background.
-        union_types = ["str", info.field_class_name, "Map"]
-        it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
-        docstring_union_types = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = " | ".join(chain(union_types, info.non_field_names))
-        if info.supports_arrays:
-            # We could be more specific about what types are accepted in the list
-            # but then the signatures would get rather long and less useful
-            # to a user when it shows up in their IDE.
-            docstring_union_types.append("List")
-            tp_inner = f"OneOrSeq[{tp_inner}]"
+    channel_infos: dict[str, ChannelInfo]
+    fmt_method: str
+    fmt_typed_dict: str
 
-        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
-        typed_dict_args.append(f"{channel}: {tp_inner}")
-        docstring_parameters.extend(
-            (
-                f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
-                f"    {process_description(info.deep_description)}",
+    def __iter__(self) -> Iterator[str]:
+        """After construction, this allows for unpacking (`*`)."""
+        yield from self._gen_artifacts()
+
+    def _gen_artifacts(self) -> None:
+        """
+        Generate `.encode()` related things.
+
+        Notes
+        -----
+        - `Map`/`Dict` stands for the return types of `alt.(datum|value)`, and any encoding channel class.
+            - See discussions in https://github.com/vega/altair/pull/3208
+        - We could be more specific about what types are accepted in the `List`
+            - but this translates poorly to an IDE
+            - `info.supports_arrays`
+        """
+        signature_args: list[str] = ["self", "*args: Any"]
+        docstring_parameters: list[str] = ["", "Parameters", "----------"]
+        typed_dict_args: list[str] = []
+        for channel, info in self.channel_infos.items():
+            it = info.all_names
+            it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
+
+            docstring_union_types = ["str", next(it_rst_names), "Dict"]
+            tp_inner: str = " | ".join(chain(("str", next(it), "Map"), it))
+            if info.supports_arrays:
+                docstring_union_types.append("List")
+                tp_inner = f"OneOrSeq[{tp_inner}]"
+            signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
+            typed_dict_args.append(f"{channel}: {tp_inner}")
+            docstring_parameters.extend(
+                (
+                    f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
+                    f"    {process_description(info.deep_description)}",
+                )
             )
-        )
-    if len(docstring_parameters) > 1:
         docstring_parameters += [""]
-    docstring = indent_docstring(
-        docstring_parameters, indent_level=8, width=100, lstrip=False
-    )
-    return ENCODE_METHOD.format(
-        encode_method_args=", ".join(signature_args), docstring=docstring
-    )
+        doc = indent_docstring(
+            docstring_parameters, indent_level=8, width=100, lstrip=False
+        )
+        yield self.fmt_method.format(
+            method_args=", ".join(signature_args), docstring=doc
+        )
+        yield self.fmt_typed_dict.format(
+            channels="\n    ".join(typed_dict_args), docstring="Placeholder (FIXME)"
+        )
 
 
 def main() -> None:
