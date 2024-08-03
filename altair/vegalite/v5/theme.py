@@ -7,16 +7,16 @@ from typing import Final
 from altair.utils.theme import ThemeRegistry
 
 VEGA_THEMES = [
-    "ggplot2",
-    "quartz",
-    "vox",
-    "fivethirtyeight",
     "dark",
-    "latimes",
-    "urbaninstitute",
     "excel",
+    "fivethirtyeight",
+    "ggplot2",
     "googlecharts",
+    "latimes",
     "powerbi",
+    "quartz",
+    "urbaninstitute",
+    "vox",
 ]
 
 
