@@ -11,7 +11,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Literal, Sequence, overload
+from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, overload
 
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
 
@@ -31189,3 +31189,48 @@ class _EncodingMixin:
         encoding.update(kwargs)
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
+
+
+class _EncodeKwds(TypedDict, total=False):
+    """Placeholder (FIXME)."""
+
+    angle: str | Angle | Map | AngleDatum | AngleValue
+    color: str | Color | Map | ColorDatum | ColorValue
+    column: str | Column | Map
+    description: str | Description | Map | DescriptionValue
+    detail: OneOrSeq[str | Detail | Map]
+    facet: str | Facet | Map
+    fill: str | Fill | Map | FillDatum | FillValue
+    fillOpacity: str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
+    href: str | Href | Map | HrefValue
+    key: str | Key | Map
+    latitude: str | Latitude | Map | LatitudeDatum
+    latitude2: str | Latitude2 | Map | Latitude2Datum | Latitude2Value
+    longitude: str | Longitude | Map | LongitudeDatum
+    longitude2: str | Longitude2 | Map | Longitude2Datum | Longitude2Value
+    opacity: str | Opacity | Map | OpacityDatum | OpacityValue
+    order: OneOrSeq[str | Order | Map | OrderValue]
+    radius: str | Radius | Map | RadiusDatum | RadiusValue
+    radius2: str | Radius2 | Map | Radius2Datum | Radius2Value
+    row: str | Row | Map
+    shape: str | Shape | Map | ShapeDatum | ShapeValue
+    size: str | Size | Map | SizeDatum | SizeValue
+    stroke: str | Stroke | Map | StrokeDatum | StrokeValue
+    strokeDash: str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
+    strokeOpacity: str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
+    strokeWidth: str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
+    text: str | Text | Map | TextDatum | TextValue
+    theta: str | Theta | Map | ThetaDatum | ThetaValue
+    theta2: str | Theta2 | Map | Theta2Datum | Theta2Value
+    tooltip: OneOrSeq[str | Tooltip | Map | TooltipValue]
+    url: str | Url | Map | UrlValue
+    x: str | X | Map | XDatum | XValue
+    x2: str | X2 | Map | X2Datum | X2Value
+    xError: str | XError | Map | XErrorValue
+    xError2: str | XError2 | Map | XError2Value
+    xOffset: str | XOffset | Map | XOffsetDatum | XOffsetValue
+    y: str | Y | Map | YDatum | YValue
+    y2: str | Y2 | Map | Y2Datum | Y2Value
+    yError: str | YError | Map | YErrorValue
+    yError2: str | YError2 | Map | YError2Value
+    yOffset: str | YOffset | Map | YOffsetDatum | YOffsetValue
