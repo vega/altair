@@ -884,25 +884,21 @@ def _create_encode_signature(
         # for more background.
         union_types = ["str", field_class_name, "Map"]
         docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]
+        tp_inner: str = " | ".join(chain(union_types, datum_and_value_class_names))
         if info.supports_arrays:
             # We could be more specific about what types are accepted in the list
             # but then the signatures would get rather long and less useful
             # to a user when it shows up in their IDE.
+            docstring_union_types.append("List")
 
             # NOTE: Currently triggered only for `detail`, `order`, `tooltip`
             # I think the `tooltip` one especially we should be more specific
-            union_types.append("list")
-            docstring_union_types.append("List")
+            tp_inner = f"OneOrSeq[{tp_inner}]"
 
-        union_types = union_types + datum_and_value_class_names
+        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
         docstring_union_types = docstring_union_types + [
             rst_syntax_for_class(c) for c in datum_and_value_class_names
         ]
-
-        signature_args.append(
-            f"{channel}: Optional[Union[{', '.join(union_types)}]] = Undefined"
-        )
-
         docstring_parameters.extend(
             (
                 f"{channel} : {', '.join(docstring_union_types)}",
