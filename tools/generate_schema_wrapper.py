@@ -290,7 +290,9 @@ def process_description(description: str) -> str:
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
     # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
+    description = description.replace(
+        "’", "'"
+    )  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
     description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
     description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
     return description.strip()
@@ -682,7 +684,7 @@ def generate_vegalite_channel_wrappers(
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
         *class_defs,
-        *EncodingArtifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
+        *generate_encoding_artifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
     ]
     return "\n".join(contents)
 
@@ -864,75 +866,65 @@ def vegalite_main(skip_download: bool = False) -> None:
         ruff_write_lint_format_str(fp, contents)
 
 
-@dataclass
-class EncodingArtifacts:
+def generate_encoding_artifacts(
+    channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
+) -> tuple[str, str]:
     """
-    Wrapper for what was previously `_create_encode_signature()`.
+    Generate `.encode()` related things.
 
-    Now also creates a `TypedDict` as part of https://github.com/pola-rs/polars/pull/17995
+    This was previously `_create_encode_signature()`. Now also creates a `TypedDict` as
+    part of https://github.com/pola-rs/polars/pull/17995.
+
+    Notes
+    -----
+    - `Map`/`Dict` stands for the return types of `alt.(datum|value)`, and any encoding channel class.
+        - See discussions in https://github.com/vega/altair/pull/3208
+    - We could be more specific about what types are accepted in the `List`
+        - but this translates poorly to an IDE
+        - `info.supports_arrays`
     """
+    signature_args: list[str] = ["self", "*args: Any"]
+    signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    typed_dict_args: list[str] = []
+    for channel, info in channel_infos.items():
+        it = info.all_names
+        it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
 
-    channel_infos: dict[str, ChannelInfo]
-    fmt_method: str
-    fmt_typed_dict: str
-
-    def __iter__(self) -> Iterator[str]:
-        """After construction, this allows for unpacking (`*`)."""
-        yield from self._gen_artifacts()
-
-    def _gen_artifacts(self) -> None:
-        """
-        Generate `.encode()` related things.
-
-        Notes
-        -----
-        - `Map`/`Dict` stands for the return types of `alt.(datum|value)`, and any encoding channel class.
-            - See discussions in https://github.com/vega/altair/pull/3208
-        - We could be more specific about what types are accepted in the `List`
-            - but this translates poorly to an IDE
-            - `info.supports_arrays`
-        """
-        signature_args: list[str] = ["self", "*args: Any"]
-        signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
-        typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
-        typed_dict_args: list[str] = []
-        for channel, info in self.channel_infos.items():
-            it = info.all_names
-            it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
-
-            docstring_union_types = ["str", next(it_rst_names), "Dict"]
-            tp_inner: str = " | ".join(chain(("str", next(it), "Map"), it))
-            if info.supports_arrays:
-                docstring_union_types.append("List")
-                tp_inner = f"OneOrSeq[{tp_inner}]"
-            signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
-            typed_dict_args.append(f"{channel}: {tp_inner}")
-            signature_docstring_parameters.extend(
-                (
-                    f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
-                    f"    {process_description(info.deep_description)}",
-                )
+        docstring_union_types = ["str", next(it_rst_names), "Dict"]
+        tp_inner: str = " | ".join(chain(("str", next(it), "Map"), it))
+        if info.supports_arrays:
+            docstring_union_types.append("List")
+            tp_inner = f"OneOrSeq[{tp_inner}]"
+        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
+        typed_dict_args.append(f"{channel}: {tp_inner}")
+        signature_docstring_parameters.extend(
+            (
+                f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
+                f"    {process_description(info.deep_description)}",
             )
-            typed_dict_docstring_parameters.extend(
-                (
-                    f"{channel} :",
-                    f"    {process_description(info.deep_description)}",
-                )
+        )
+        typed_dict_docstring_parameters.extend(
+            (
+                f"{channel} :",
+                f"    {process_description(info.deep_description)}",
             )
-        signature_docstring_parameters += [""]
-        typed_dict_docstring_parameters += [""]
-        signature_doc = indent_docstring(
-            signature_docstring_parameters, indent_level=8, width=100, lstrip=False
         )
-        typed_dict_doc = indent_docstring(
-            typed_dict_docstring_parameters, indent_level=8, width=100, lstrip=False
-        )
-        yield self.fmt_method.format(
-            method_args=", ".join(signature_args), docstring=signature_doc
-        )
-        yield self.fmt_typed_dict.format(
-            channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
-        )
+    signature_docstring_parameters += [""]
+    typed_dict_docstring_parameters += [""]
+    signature_doc = indent_docstring(
+        signature_docstring_parameters, indent_level=8, width=100, lstrip=False
+    )
+    typed_dict_doc = indent_docstring(
+        typed_dict_docstring_parameters, indent_level=8, width=100, lstrip=False
+    )
+    encode_method = fmt_method.format(
+        method_args=", ".join(signature_args), docstring=signature_doc
+    )
+    encode_typed_dict = fmt_typed_dict.format(
+        channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
+    )
+    return encode_method, encode_typed_dict
 
 
 def main() -> None:
