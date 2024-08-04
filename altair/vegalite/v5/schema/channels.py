@@ -31200,39 +31200,36 @@ class _EncodeKwds(TypedDict, total=False):
     angle :
         Rotation angle of point and text marks.
     color :
-        Color of the marks - either fill or stroke color based on  the ``filled``
-        property of mark definition. By default, ``color`` represents fill color for
-        ``"area"``, ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``,
-        and ``"square"`` / stroke color for ``"line"`` and ``"point"``.
+        Color of the marks - either fill or stroke color based on  the ``filled`` property
+        of mark definition. By default, ``color`` represents fill color for ``"area"``,
+        ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
+        stroke color for ``"line"`` and ``"point"``.
 
         **Default value:** If undefined, the default color depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
-        ``color`` property.
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``color``
+        property.
 
-        *Note:* 1) For fine-grained control over both fill and stroke colors of the
-        marks, please use the ``fill`` and ``stroke`` channels. The ``fill`` or
-        ``stroke`` encodings have higher precedence than ``color``, thus may
-        override the ``color`` encoding if conflicting encodings are specified. 2)
-        See the scale documentation for more information about customizing `color
-        scheme <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
+        *Note:* 1) For fine-grained control over both fill and stroke colors of the marks,
+        please use the ``fill`` and ``stroke`` channels. The ``fill`` or ``stroke``
+        encodings have higher precedence than ``color``, thus may override the ``color``
+        encoding if conflicting encodings are specified. 2) See the scale documentation for
+        more information about customizing `color scheme
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
     column :
         A field definition for the horizontal facet of trellis plots.
     description :
-        A text description of this mark for ARIA accessibility (SVG output only).
-        For SVG output the ``"aria-label"`` attribute will be set to this
-        description.
+        A text description of this mark for ARIA accessibility (SVG output only). For SVG
+        output the ``"aria-label"`` attribute will be set to this description.
     detail :
-        Additional levels of detail for grouping data in aggregate views and in
-        line, trail, and area marks without mapping data to a specific visual
-        channel.
+        Additional levels of detail for grouping data in aggregate views and in line, trail,
+        and area marks without mapping data to a specific visual channel.
     facet :
         A field definition for the (flexible) facet of trellis plots.
 
         If either ``row`` or ``column`` is specified, this channel will be ignored.
     fill :
-        Fill color of the marks. **Default value:** If undefined, the default color
-        depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
+        Fill color of the marks. **Default value:** If undefined, the default color depends
+        on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
         ``color`` property.
 
         *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
@@ -31241,46 +31238,45 @@ class _EncodeKwds(TypedDict, total=False):
         Fill opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
-        ``fillOpacity`` property.
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``fillOpacity``
+        property.
     href :
         A URL to load upon mouse click.
     key :
-        A data field to use as a unique key for data binding. When a visualization's
-        data is updated, the key value will be used to match data elements to
-        existing mark instances. Use a key channel to enable object constancy for
-        transitions over dynamic data.
+        A data field to use as a unique key for data binding. When a visualization's data is
+        updated, the key value will be used to match data elements to existing mark
+        instances. Use a key channel to enable object constancy for transitions over dynamic
+        data.
     latitude :
         Latitude position of geographically projected marks.
     latitude2 :
-        Latitude-2 position for geographically projected ranged ``"area"``,
-        ``"bar"``, ``"rect"``, and  ``"rule"``.
+        Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
+        ``"rect"``, and  ``"rule"``.
     longitude :
         Longitude position of geographically projected marks.
     longitude2 :
-        Longitude-2 position for geographically projected ranged ``"area"``,
-        ``"bar"``, ``"rect"``, and  ``"rule"``.
+        Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
+        ``"rect"``, and  ``"rule"``.
     opacity :
         Opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
-        ``opacity`` property.
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``opacity``
+        property.
     order :
         Order of the marks.
 
         * For stacked marks, this ``order`` channel encodes `stack order
           <https://vega.github.io/vega-lite/docs/stack.html#order>`__.
-        * For line and trail marks, this ``order`` channel encodes order of data
-          points in the lines. This can be useful for creating `a connected
-          scatterplot
-          <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`__.
-          Setting ``order`` to ``{"value": null}`` makes the line marks use the
-          original order in the data sources.
+        * For line and trail marks, this ``order`` channel encodes order of data points in
+          the lines. This can be useful for creating `a connected scatterplot
+          <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`__. Setting
+          ``order`` to ``{"value": null}`` makes the line marks use the original order in
+          the data sources.
         * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to
-        avoid creating additional aggregation grouping.
+        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
+        creating additional aggregation grouping.
     radius :
         The outer radius in pixels of arc marks.
     radius2 :
@@ -31292,37 +31288,35 @@ class _EncodeKwds(TypedDict, total=False):
 
         1. For ``point`` marks the supported values include:   - plotting shapes:
         ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
-        ``"triangle-down"``, ``"triangle-right"``, or ``"triangle-left"``.   - the
-        line symbol ``"stroke"``   - centered directional shapes ``"arrow"``,
-        ``"wedge"``, or ``"triangle"``   - a custom `SVG path string
-        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For
-        correct sizing, custom shape paths should be defined within a square
-        bounding box with coordinates ranging from -1 to 1 along both the x and y
-        dimensions.)
+        ``"triangle-down"``, ``"triangle-right"``, or ``"triangle-left"``.   - the line
+        symbol ``"stroke"``   - centered directional shapes ``"arrow"``, ``"wedge"``, or
+        ``"triangle"``   - a custom `SVG path string
+        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+        sizing, custom shape paths should be defined within a square bounding box with
+        coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
-        2. For ``geoshape`` marks it should be a field definition of the geojson
-        data
+        2. For ``geoshape`` marks it should be a field definition of the geojson data
 
         **Default value:** If undefined, the default shape depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#point-config>`__'s
-        ``shape`` property. (``"circle"`` if unset.)
+        <https://vega.github.io/vega-lite/docs/config.html#point-config>`__'s ``shape``
+        property. (``"circle"`` if unset.)
     size :
         Size of the mark.
 
-        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or
-          pixel area of the mark.
+        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
+          of the mark.
         * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
         * For ``"text"`` - the text's font size.
-        * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use
-          ``"trail"`` instead of line with varying size)
+        * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
+          instead of line with varying size)
     stroke :
-        Stroke color of the marks. **Default value:** If undefined, the default
-        color depends on `mark config
-        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
-        ``color`` property.
+        Stroke color of the marks. **Default value:** If undefined, the default color
+        depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``color``
+        property.
 
-        *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus
-        may override the ``color`` encoding if conflicting encodings are specified.
+        *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus may
+        override the ``color`` encoding if conflicting encodings are specified.
     strokeDash :
         Stroke dash of the marks.
 
@@ -31336,23 +31330,23 @@ class _EncodeKwds(TypedDict, total=False):
     strokeWidth :
         Stroke width of the marks.
 
-        **Default value:** If undefined, the default stroke width depends on `mark
-        config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
-        ``strokeWidth`` property.
+        **Default value:** If undefined, the default stroke width depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``strokeWidth``
+        property.
     text :
         Text of the ``text`` mark.
     theta :
-        * For arc marks, the arc length in radians if theta2 is not specified,
-          otherwise the start arc angle. (A value of 0 indicates up or “north”,
-          increasing values proceed clockwise.)
+        * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
+          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 :
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
     tooltip :
-        The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding
-        overrides `the tooltip property in the mark definition
+        The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
+        `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
 
         See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
@@ -31360,43 +31354,39 @@ class _EncodeKwds(TypedDict, total=False):
     url :
         The URL of an image mark.
     x :
-        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"``
-        without specified ``x2`` or ``width``.
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        specified ``x2`` or ``width``.
 
-        The ``value`` of this channel can be a number or a string ``"width"`` for
-        the width of the plot.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     x2 :
-        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and
-        ``"rule"``.
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"width"`` for
-        the width of the plot.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     xError :
-        Error value of x coordinates for error specified ``"errorbar"`` and
-        ``"errorband"``.
+        Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     xError2 :
-        Secondary error value of x coordinates for error specified ``"errorbar"``
-        and ``"errorband"``.
+        Secondary error value of x coordinates for error specified ``"errorbar"`` and
+        ``"errorband"``.
     xOffset :
         Offset of x-position of the marks
     y :
-        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"``
-        without specified ``y2`` or ``height``.
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        specified ``y2`` or ``height``.
 
-        The ``value`` of this channel can be a number or a string ``"height"`` for
-        the height of the plot.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     y2 :
-        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and
-        ``"rule"``.
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"height"`` for
-        the height of the plot.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     yError :
-        Error value of y coordinates for error specified ``"errorbar"`` and
-        ``"errorband"``.
+        Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     yError2 :
-        Secondary error value of y coordinates for error specified ``"errorbar"``
-        and ``"errorband"``.
+        Secondary error value of y coordinates for error specified ``"errorbar"`` and
+        ``"errorband"``.
     yOffset :
         Offset of y-position of the marks
     """

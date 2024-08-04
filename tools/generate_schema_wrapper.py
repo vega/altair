@@ -917,7 +917,7 @@ def generate_encoding_artifacts(
         signature_docstring_parameters, indent_level=8, width=100, lstrip=False
     )
     typed_dict_doc = indent_docstring(
-        typed_dict_docstring_parameters, indent_level=8, width=100, lstrip=False
+        typed_dict_docstring_parameters, indent_level=4, width=100, lstrip=False
     )
     encode_method = fmt_method.format(
         method_args=", ".join(signature_args), docstring=signature_doc
