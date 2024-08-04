@@ -235,7 +235,8 @@ class _EncodingMixin:
 
 ENCODE_TYPED_DICT: Final = '''
 class _EncodeKwds(TypedDict, total=False):
-    """{docstring}"""
+    """Encoding channels map properties of the data to visual properties of the chart.
+    {docstring}"""
     {channels}
 
 '''
@@ -892,7 +893,8 @@ class EncodingArtifacts:
             - `info.supports_arrays`
         """
         signature_args: list[str] = ["self", "*args: Any"]
-        docstring_parameters: list[str] = ["", "Parameters", "----------"]
+        signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+        typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
         typed_dict_args: list[str] = []
         for channel, info in self.channel_infos.items():
             it = info.all_names
@@ -905,21 +907,31 @@ class EncodingArtifacts:
                 tp_inner = f"OneOrSeq[{tp_inner}]"
             signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
             typed_dict_args.append(f"{channel}: {tp_inner}")
-            docstring_parameters.extend(
+            signature_docstring_parameters.extend(
                 (
                     f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
                     f"    {process_description(info.deep_description)}",
                 )
             )
-        docstring_parameters += [""]
-        doc = indent_docstring(
-            docstring_parameters, indent_level=8, width=100, lstrip=False
+            typed_dict_docstring_parameters.extend(
+                (
+                    f"{channel} :",
+                    f"    {process_description(info.deep_description)}",
+                )
+            )
+        signature_docstring_parameters += [""]
+        typed_dict_docstring_parameters += [""]
+        signature_doc = indent_docstring(
+            signature_docstring_parameters, indent_level=8, width=100, lstrip=False
+        )
+        typed_dict_doc = indent_docstring(
+            typed_dict_docstring_parameters, indent_level=8, width=100, lstrip=False
         )
         yield self.fmt_method.format(
-            method_args=", ".join(signature_args), docstring=doc
+            method_args=", ".join(signature_args), docstring=signature_doc
         )
         yield self.fmt_typed_dict.format(
-            channels="\n    ".join(typed_dict_args), docstring="Placeholder (FIXME)"
+            channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
         )
 
 
