@@ -13,3 +13,4 @@ The roadmap for Vega-Altair and related projects can be found in
    code_of_conduct
    governance
    citing
+   versioning
