@@ -42,7 +42,7 @@ if TYPE_CHECKING:
 
     from referencing import Registry
 
-    from altair import ChartType
+    from altair.typing import ChartType
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
