@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
+    # If you add a theme here, also add it in `VEGA_THEMES` below.
     _ThemeName: TypeAlias = Literal[
         "default",
         "carbonwhite",
@@ -33,6 +34,7 @@ if TYPE_CHECKING:
         "vox",
     ]
 
+# If you add a theme here, also add it in `_ThemeName` above.
 VEGA_THEMES = [
     "carbonwhite",
     "carbong10",
