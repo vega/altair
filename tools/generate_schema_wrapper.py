@@ -869,7 +869,7 @@ def vegalite_main(skip_download: bool = False) -> None:
 
 def generate_encoding_artifacts(
     channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
-) -> tuple[str, str]:
+) -> Iterator[str]:
     """
     Generate `.encode()` related things.
 
@@ -925,7 +925,8 @@ def generate_encoding_artifacts(
     encode_typed_dict = fmt_typed_dict.format(
         channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
     )
-    return encode_method, encode_typed_dict
+    artifacts = [encode_method, encode_typed_dict]
+    yield from artifacts
 
 
 def main() -> None:
