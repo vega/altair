@@ -2,21 +2,54 @@
 
 from __future__ import annotations
 
-from typing import Final
+from typing import TYPE_CHECKING, Final, Literal
 
 from altair.utils.theme import ThemeRegistry
 
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
+    # If you add a theme here, also add it in `VEGA_THEMES` below.
+    _ThemeName: TypeAlias = Literal[
+        "default",
+        "carbonwhite",
+        "carbong10",
+        "carbong90",
+        "carbong100",
+        "dark",
+        "excel",
+        "fivethirtyeight",
+        "ggplot2",
+        "googlecharts",
+        "latimes",
+        "opaque",
+        "powerbi",
+        "quartz",
+        "urbaninstitute",
+        "vox",
+    ]
+
+# If you add a theme here, also add it in `_ThemeName` above.
 VEGA_THEMES = [
-    "ggplot2",
-    "quartz",
-    "vox",
-    "fivethirtyeight",
+    "carbonwhite",
+    "carbong10",
+    "carbong90",
+    "carbong100",
     "dark",
-    "latimes",
-    "urbaninstitute",
     "excel",
+    "fivethirtyeight",
+    "ggplot2",
     "googlecharts",
+    "latimes",
     "powerbi",
+    "quartz",
+    "urbaninstitute",
+    "vox",
 ]
 
 
@@ -38,7 +71,7 @@ class VegaTheme:
 
 # The entry point group that can be used by other packages to declare other
 # themes that will be auto-detected. Explicit registration is also
-# allowed by the PluginRegistery API.
+# allowed by the PluginRegistry API.
 ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.theme"
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
