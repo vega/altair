@@ -290,10 +290,7 @@ def process_description(description: str) -> str:
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
     # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace(
-        "’",  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
-        "'",
-    )
+    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
     description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
     description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
     return description.strip()
