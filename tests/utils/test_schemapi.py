@@ -989,6 +989,27 @@ def test_to_dict_iterables(
     expected: Sequence[Any],
     schema_param: tuple[Callable[..., SchemaBase], str],
 ) -> None:
+    """
+    Confirm `SchemaBase` can convert common `(Sequence|Iterable)` types to `list`.
+
+    Parameters
+    ----------
+    tp
+        Constructor for test `Iterable`.
+    expected
+        Values wrapped by `tp`.
+    schema_param
+        Constructor for `SchemaBase` subclass, and target parameter name.
+
+    Notes
+    -----
+    `partial` can be used to reshape the `SchemaBase` constructor.
+
+    References
+    ----------
+    - https://github.com/vega/altair/issues/2808
+    - https://github.com/vega/altair/issues/2877
+    """
     tp_schema, param = schema_param
     validated = tp_schema(**{param: tp(expected)}).to_dict()
     actual = validated[param]
