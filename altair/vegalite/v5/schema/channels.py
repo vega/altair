@@ -11,7 +11,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, overload
+from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
 from typing_extensions import TypeAlias
 
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
@@ -30897,56 +30897,56 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super().__init__(value=value, **kwds)
 
 
-ChannelAngle: TypeAlias = str | Angle | Map | AngleDatum | AngleValue
-ChannelColor: TypeAlias = str | Color | Map | ColorDatum | ColorValue
-ChannelColumn: TypeAlias = str | Column | Map
-ChannelDescription: TypeAlias = str | Description | Map | DescriptionValue
-ChannelDetail: TypeAlias = OneOrSeq[str | Detail | Map]
-ChannelFacet: TypeAlias = str | Facet | Map
-ChannelFill: TypeAlias = str | Fill | Map | FillDatum | FillValue
-ChannelFillOpacity: TypeAlias = (
-    str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
-)
-ChannelHref: TypeAlias = str | Href | Map | HrefValue
-ChannelKey: TypeAlias = str | Key | Map
-ChannelLatitude: TypeAlias = str | Latitude | Map | LatitudeDatum
-ChannelLatitude2: TypeAlias = str | Latitude2 | Map | Latitude2Datum | Latitude2Value
-ChannelLongitude: TypeAlias = str | Longitude | Map | LongitudeDatum
-ChannelLongitude2: TypeAlias = (
-    str | Longitude2 | Map | Longitude2Datum | Longitude2Value
-)
-ChannelOpacity: TypeAlias = str | Opacity | Map | OpacityDatum | OpacityValue
-ChannelOrder: TypeAlias = OneOrSeq[str | Order | Map | OrderValue]
-ChannelRadius: TypeAlias = str | Radius | Map | RadiusDatum | RadiusValue
-ChannelRadius2: TypeAlias = str | Radius2 | Map | Radius2Datum | Radius2Value
-ChannelRow: TypeAlias = str | Row | Map
-ChannelShape: TypeAlias = str | Shape | Map | ShapeDatum | ShapeValue
-ChannelSize: TypeAlias = str | Size | Map | SizeDatum | SizeValue
-ChannelStroke: TypeAlias = str | Stroke | Map | StrokeDatum | StrokeValue
-ChannelStrokeDash: TypeAlias = (
-    str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
-)
-ChannelStrokeOpacity: TypeAlias = (
-    str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
-)
-ChannelStrokeWidth: TypeAlias = (
-    str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
-)
-ChannelText: TypeAlias = str | Text | Map | TextDatum | TextValue
-ChannelTheta: TypeAlias = str | Theta | Map | ThetaDatum | ThetaValue
-ChannelTheta2: TypeAlias = str | Theta2 | Map | Theta2Datum | Theta2Value
-ChannelTooltip: TypeAlias = OneOrSeq[str | Tooltip | Map | TooltipValue]
-ChannelUrl: TypeAlias = str | Url | Map | UrlValue
-ChannelX: TypeAlias = str | X | Map | XDatum | XValue
-ChannelX2: TypeAlias = str | X2 | Map | X2Datum | X2Value
-ChannelXError: TypeAlias = str | XError | Map | XErrorValue
-ChannelXError2: TypeAlias = str | XError2 | Map | XError2Value
-ChannelXOffset: TypeAlias = str | XOffset | Map | XOffsetDatum | XOffsetValue
-ChannelY: TypeAlias = str | Y | Map | YDatum | YValue
-ChannelY2: TypeAlias = str | Y2 | Map | Y2Datum | Y2Value
-ChannelYError: TypeAlias = str | YError | Map | YErrorValue
-ChannelYError2: TypeAlias = str | YError2 | Map | YError2Value
-ChannelYOffset: TypeAlias = str | YOffset | Map | YOffsetDatum | YOffsetValue
+ChannelAngle: TypeAlias = Union[str, Angle, Map, AngleDatum, AngleValue]
+ChannelColor: TypeAlias = Union[str, Color, Map, ColorDatum, ColorValue]
+ChannelColumn: TypeAlias = Union[str, Column, Map]
+ChannelDescription: TypeAlias = Union[str, Description, Map, DescriptionValue]
+ChannelDetail: TypeAlias = OneOrSeq[Union[str, Detail, Map]]
+ChannelFacet: TypeAlias = Union[str, Facet, Map]
+ChannelFill: TypeAlias = Union[str, Fill, Map, FillDatum, FillValue]
+ChannelFillOpacity: TypeAlias = Union[
+    str, FillOpacity, Map, FillOpacityDatum, FillOpacityValue
+]
+ChannelHref: TypeAlias = Union[str, Href, Map, HrefValue]
+ChannelKey: TypeAlias = Union[str, Key, Map]
+ChannelLatitude: TypeAlias = Union[str, Latitude, Map, LatitudeDatum]
+ChannelLatitude2: TypeAlias = Union[str, Latitude2, Map, Latitude2Datum, Latitude2Value]
+ChannelLongitude: TypeAlias = Union[str, Longitude, Map, LongitudeDatum]
+ChannelLongitude2: TypeAlias = Union[
+    str, Longitude2, Map, Longitude2Datum, Longitude2Value
+]
+ChannelOpacity: TypeAlias = Union[str, Opacity, Map, OpacityDatum, OpacityValue]
+ChannelOrder: TypeAlias = OneOrSeq[Union[str, Order, Map, OrderValue]]
+ChannelRadius: TypeAlias = Union[str, Radius, Map, RadiusDatum, RadiusValue]
+ChannelRadius2: TypeAlias = Union[str, Radius2, Map, Radius2Datum, Radius2Value]
+ChannelRow: TypeAlias = Union[str, Row, Map]
+ChannelShape: TypeAlias = Union[str, Shape, Map, ShapeDatum, ShapeValue]
+ChannelSize: TypeAlias = Union[str, Size, Map, SizeDatum, SizeValue]
+ChannelStroke: TypeAlias = Union[str, Stroke, Map, StrokeDatum, StrokeValue]
+ChannelStrokeDash: TypeAlias = Union[
+    str, StrokeDash, Map, StrokeDashDatum, StrokeDashValue
+]
+ChannelStrokeOpacity: TypeAlias = Union[
+    str, StrokeOpacity, Map, StrokeOpacityDatum, StrokeOpacityValue
+]
+ChannelStrokeWidth: TypeAlias = Union[
+    str, StrokeWidth, Map, StrokeWidthDatum, StrokeWidthValue
+]
+ChannelText: TypeAlias = Union[str, Text, Map, TextDatum, TextValue]
+ChannelTheta: TypeAlias = Union[str, Theta, Map, ThetaDatum, ThetaValue]
+ChannelTheta2: TypeAlias = Union[str, Theta2, Map, Theta2Datum, Theta2Value]
+ChannelTooltip: TypeAlias = OneOrSeq[Union[str, Tooltip, Map, TooltipValue]]
+ChannelUrl: TypeAlias = Union[str, Url, Map, UrlValue]
+ChannelX: TypeAlias = Union[str, X, Map, XDatum, XValue]
+ChannelX2: TypeAlias = Union[str, X2, Map, X2Datum, X2Value]
+ChannelXError: TypeAlias = Union[str, XError, Map, XErrorValue]
+ChannelXError2: TypeAlias = Union[str, XError2, Map, XError2Value]
+ChannelXOffset: TypeAlias = Union[str, XOffset, Map, XOffsetDatum, XOffsetValue]
+ChannelY: TypeAlias = Union[str, Y, Map, YDatum, YValue]
+ChannelY2: TypeAlias = Union[str, Y2, Map, Y2Datum, Y2Value]
+ChannelYError: TypeAlias = Union[str, YError, Map, YErrorValue]
+ChannelYError2: TypeAlias = Union[str, YError2, Map, YError2Value]
+ChannelYOffset: TypeAlias = Union[str, YOffset, Map, YOffsetDatum, YOffsetValue]
 
 
 class _EncodingMixin:

@@ -892,7 +892,7 @@ def generate_encoding_artifacts(
         it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
 
         docstring_union_types = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = " | ".join(chain(("str", next(it), "Map"), it))
+        tp_inner: str = "Union[" + ", ".join(chain(("str", next(it), "Map"), it)) + "]"
         if info.supports_arrays:
             docstring_union_types.append("List")
             tp_inner = f"OneOrSeq[{tp_inner}]"
