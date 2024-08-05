@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Final, Iterable, Iterator, Literal
 from urllib import request
 
+import vl_convert as vlc
+
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
@@ -357,6 +359,10 @@ def download_schemafile(
         msg = f"Cannot skip download: {fp!s} does not exist"
         raise ValueError(msg)
     return fp
+
+
+def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
+    fp.write_text(json.dumps(vlc.get_themes(), indent=indent), encoding="utf8")
 
 
 def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
@@ -859,6 +865,9 @@ def vegalite_main(skip_download: bool = False) -> None:
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
         ruff_write_lint_format_str(fp, contents)
+    fp_themes = schemapath / "vega-themes.json"
+    print(f"Updating themes\n {schemafile!s}\n  ->{fp_themes!s}")
+    update_vega_themes(fp_themes)
 
 
 def _create_encode_signature(
