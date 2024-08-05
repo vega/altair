@@ -902,7 +902,7 @@ def generate_encoding_artifacts(
         typed_dict_args.append(f"{channel}: {alias_name}")
 
         signature_args.append(f"{channel}: Optional[{alias_name}] = Undefined")
-        
+
         signature_docstring_parameters.extend(
             (
                 f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
