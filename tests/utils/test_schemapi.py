@@ -9,6 +9,7 @@ import pickle
 import warnings
 from collections import deque
 from functools import partial
+from typing import Any, Callable, Iterable, Sequence
 
 import jsonschema
 import jsonschema.exceptions
@@ -27,6 +28,8 @@ from altair.utils.schemapi import (
     UndefinedType,
     _FromDict,
 )
+from altair.vegalite.v5.schema.channels import X
+from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
@@ -973,9 +976,22 @@ def test_to_dict_expand_mark_spec():
         np.array,
     ],
 )
-def test_to_dict_iterables(tp, expected) -> None:
-    x_dict = alt.X("x:N", sort=tp(expected)).to_dict()
-    actual = x_dict["sort"]  # type: ignore
+@pytest.mark.parametrize(
+    "schema_param",
+    [
+        (partial(X, "x:N"), "sort"),
+        (partial(FieldOneOfPredicate, "name"), "oneOf"),
+        (Legend, "values"),
+    ],
+)
+def test_to_dict_iterables(
+    tp: Callable[..., Iterable[Any]],
+    expected: Sequence[Any],
+    schema_param: tuple[Callable[..., SchemaBase], str],
+) -> None:
+    tp_schema, param = schema_param
+    validated = tp_schema(**{param: tp(expected)}).to_dict()
+    actual = validated[param]
     assert actual == expected
 
 
