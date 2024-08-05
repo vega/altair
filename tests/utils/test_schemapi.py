@@ -532,7 +532,7 @@ def chart_error_example__wrong_tooltip_type_in_faceted_chart():
     return (
         alt.Chart(pd.DataFrame({"a": [1]}))
         .mark_point()
-        .encode(tooltip=[{5000}])
+        .encode(tooltip=[{"wrong"}])
         .facet()
     )
 
@@ -540,7 +540,7 @@ def chart_error_example__wrong_tooltip_type_in_faceted_chart():
 def chart_error_example__wrong_tooltip_type_in_layered_chart():
     # Error: Wrong data type to pass to tooltip
     return alt.layer(
-        alt.Chart().mark_point().encode(tooltip=[{5000}]),
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
     )
 
 
@@ -548,7 +548,7 @@ def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: `Color` has no parameter named 'invalidArgument'
     return alt.layer(
-        alt.Chart().mark_point().encode(tooltip=[{5000}]),
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
         alt.Chart().mark_line().encode(alt.Color(invalidArgument="unknown")),
     )
 
@@ -664,13 +664,13 @@ def chart_error_example__four_errors():
         (
             chart_error_example__wrong_tooltip_type_in_faceted_chart,
             inspect.cleandoc(
-                r"""'\[5000\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
             ),
         ),
         (
             chart_error_example__wrong_tooltip_type_in_layered_chart,
             inspect.cleandoc(
-                r"""'\[5000\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
+                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
             ),
         ),
         (
@@ -678,7 +678,7 @@ def chart_error_example__four_errors():
             inspect.cleandoc(
                 r"""Multiple errors were found.
 
-                Error 1: '\[5000\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: `Color` has no parameter named 'invalidArgument'
 
@@ -695,7 +695,7 @@ def chart_error_example__four_errors():
             inspect.cleandoc(
                 r"""Multiple errors were found.
 
-                Error 1: '\[5000\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
@@ -705,7 +705,7 @@ def chart_error_example__four_errors():
             inspect.cleandoc(
                 r"""Multiple errors were found.
 
-                Error 1: '\[5000\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
                 Error 2: `Color` has no parameter named 'invalidArgument'
 
