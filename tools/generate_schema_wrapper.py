@@ -663,11 +663,13 @@ def generate_vegalite_channel_wrappers(
     imports = imports or [
         "from __future__ import annotations\n",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
+        "from typing_extensions import TypeAlias",
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
         "from . import core",
+        "from ._typing import * # noqa: F403",
     ]
     contents = [
         HEADER,
@@ -676,7 +678,6 @@ def generate_vegalite_channel_wrappers(
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
             "from altair.utils.schemapi import Optional",
-            "from ._typing import * # noqa: F403",
             "from typing_extensions import Self",
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
@@ -883,6 +884,7 @@ def generate_encoding_artifacts(
     """
     signature_args: list[str] = ["self", "*args: Any"]
     signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    channel_type_aliases: list[str] = []
     typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
     typed_dict_args: list[str] = []
     for channel, info in channel_infos.items():
@@ -894,8 +896,13 @@ def generate_encoding_artifacts(
         if info.supports_arrays:
             docstring_union_types.append("List")
             tp_inner = f"OneOrSeq[{tp_inner}]"
-        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
-        typed_dict_args.append(f"{channel}: {tp_inner}")
+
+        alias_name = f"Channel{channel[0].upper()}{channel[1:]}"
+        channel_type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        typed_dict_args.append(f"{channel}: {alias_name}")
+
+        signature_args.append(f"{channel}: Optional[{alias_name}] = Undefined")
+        
         signature_docstring_parameters.extend(
             (
                 f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
@@ -922,7 +929,7 @@ def generate_encoding_artifacts(
     encode_typed_dict = fmt_typed_dict.format(
         channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
     )
-    artifacts = [encode_method, encode_typed_dict]
+    artifacts = [*channel_type_aliases, encode_method, encode_typed_dict]
     yield from artifacts
 
 
