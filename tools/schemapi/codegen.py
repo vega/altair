@@ -226,8 +226,6 @@ class SchemaGenerator:
                     f"{prop} : {propinfo.get_python_type_representation()}",
                     f"    {self._process_description(propinfo.deep_description)}",
                 ]
-        if len(doc) > 1:
-            doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent: int = 0) -> str:

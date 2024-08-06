@@ -917,8 +917,6 @@ def generate_encoding_artifacts(
                 f"    {process_description(info.deep_description)}",
             )
         )
-    signature_docstring_parameters += [""]
-    typed_dict_docstring_parameters += [""]
     signature_doc = indent_docstring(
         signature_docstring_parameters, indent_level=8, width=100, lstrip=False
     )

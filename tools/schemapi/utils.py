@@ -687,6 +687,8 @@ def indent_docstring(
 ) -> str:
     """Indent a docstring for use in generated code."""
     final_lines = []
+    if len(lines) > 1:
+        lines += [""]
 
     for i, line in enumerate(lines):
         stripped = line.lstrip()
