@@ -152,7 +152,6 @@ API Functions
    condition
    graticule
    hconcat
-   is_chart_type
    layer
    param
    repeat
@@ -638,3 +637,56 @@ API Utility Classes
    When
    Then
    ChainedWhen
+
+Type Hints
+----------
+.. currentmodule:: altair.typing
+
+.. autosummary::
+   :toctree: generated/typing/
+   :nosignatures:
+
+   ChannelAngle
+   ChannelColor
+   ChannelColumn
+   ChannelDescription
+   ChannelDetail
+   ChannelFacet
+   ChannelFill
+   ChannelFillOpacity
+   ChannelHref
+   ChannelKey
+   ChannelLatitude
+   ChannelLatitude2
+   ChannelLongitude
+   ChannelLongitude2
+   ChannelOpacity
+   ChannelOrder
+   ChannelRadius
+   ChannelRadius2
+   ChannelRow
+   ChannelShape
+   ChannelSize
+   ChannelStroke
+   ChannelStrokeDash
+   ChannelStrokeOpacity
+   ChannelStrokeWidth
+   ChannelText
+   ChannelTheta
+   ChannelTheta2
+   ChannelTooltip
+   ChannelUrl
+   ChannelX
+   ChannelX2
+   ChannelXError
+   ChannelXError2
+   ChannelXOffset
+   ChannelY
+   ChannelY2
+   ChannelYError
+   ChannelYError2
+   ChannelYOffset
+   ChartType
+   EncodeKwds
+   is_chart_type
+

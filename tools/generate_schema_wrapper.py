@@ -234,7 +234,7 @@ class _EncodingMixin:
 '''
 
 ENCODE_TYPED_DICT: Final = '''
-class _EncodeKwds(TypedDict, total=False):
+class EncodeKwds(TypedDict, total=False):
     """Encoding channels map properties of the data to visual properties of the chart.
     {docstring}"""
     {channels}
@@ -898,7 +898,9 @@ def generate_encoding_artifacts(
             tp_inner = f"OneOrSeq[{tp_inner}]"
 
         alias_name = f"Channel{channel[0].upper()}{channel[1:]}"
-        channel_type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        channel_type_aliases.append(
+            f"{alias_name}: TypeAlias = {tp_inner}",
+        )
         typed_dict_args.append(f"{channel}: {alias_name}")
 
         signature_args.append(f"{channel}: Optional[{alias_name}] = Undefined")

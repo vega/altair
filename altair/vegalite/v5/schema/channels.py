@@ -31223,7 +31223,7 @@ class _EncodingMixin:
         return copy
 
 
-class _EncodeKwds(TypedDict, total=False):
+class EncodeKwds(TypedDict, total=False):
     """
     Encoding channels map properties of the data to visual properties of the chart.
 

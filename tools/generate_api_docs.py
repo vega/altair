@@ -72,6 +72,17 @@ API Utility Classes
    :nosignatures:
 
    {api_classes}
+
+Type Hints
+----------
+.. currentmodule:: altair.typing
+
+.. autosummary::
+   :toctree: generated/typing/
+   :nosignatures:
+
+   {typing_objects}
+
 """
 
 
@@ -109,7 +120,8 @@ def api_functions() -> list[str]:
     altair_api_functions = [
         obj_name
         for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
-        if obj_name not in {"cast", "overload", "NamedTuple", "TypedDict"}
+        if obj_name
+        not in {"cast", "overload", "NamedTuple", "TypedDict", "is_chart_type"}
     ]
     return sorted(altair_api_functions)
 
@@ -117,6 +129,10 @@ def api_functions() -> list[str]:
 def api_classes() -> list[str]:
     # Part of the Public API, but are not inherited from `vega-lite`.
     return ["expr", "When", "Then", "ChainedWhen"]
+
+
+def type_hints() -> list[str]:
+    return [s for s in sorted(iter_objects(alt.typing)) if s != "annotations"]
 
 
 def lowlevel_wrappers() -> list[str]:
@@ -140,6 +156,7 @@ def write_api_file() -> None:
             encoding_wrappers=sep.join(encoding_wrappers()),
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
             api_classes=sep.join(api_classes()),
+            typing_objects=sep.join(type_hints()),
         ),
         encoding="utf-8",
     )
