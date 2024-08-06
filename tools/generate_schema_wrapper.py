@@ -869,10 +869,11 @@ def generate_encoding_artifacts(
     channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
 ) -> Iterator[str]:
     """
-    Generate `.encode()` related things.
+    Generate ``Chart.encode()`` and related typing structures.
 
-    This was previously `_create_encode_signature()`. Now also creates a `TypedDict` as
-    part of https://github.com/pola-rs/polars/pull/17995.
+    - `TypeAlias`(s) for each parameter to ``Chart.encode()``
+    - Mixin class that provides the ``Chart.encode()`` method
+    - `TypedDict`, utilising/describing these structures as part of https://github.com/pola-rs/polars/pull/17995.
 
     Notes
     -----
