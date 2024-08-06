@@ -362,7 +362,8 @@ def download_schemafile(
 
 
 def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
-    fp.write_text(json.dumps(vlc.get_themes(), indent=indent), encoding="utf8")
+    data = json.dumps(vlc.get_themes(), indent=indent, sort_keys=True)
+    fp.write_text(data, encoding="utf8")
 
 
 def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
