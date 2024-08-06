@@ -42,6 +42,7 @@ jobs:
           pip install pandas==0.25.3 numpy==1.17.5
       - name: Test that schema generation has no effect
         run: |
+          pip install vl-convert-python
           python tools/generate_schema_wrapper.py
           # This gets the paths of all files which were either deleted, modified
           # or are not yet tracked by Git
