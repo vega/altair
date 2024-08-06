@@ -913,7 +913,7 @@ def generate_encoding_artifacts(
         )
         typed_dict_docstring_parameters.extend(
             (
-                f"{channel} :",
+                f"{channel}",
                 f"    {process_description(info.deep_description)}",
             )
         )
