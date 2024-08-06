@@ -300,7 +300,6 @@ __all__ = [
     "Opacity",
     "OpacityDatum",
     "OpacityValue",
-    "Optional",
     "Order",
     "OrderFieldDef",
     "OrderOnlyDef",
@@ -652,7 +651,7 @@ from altair.vegalite import *
 from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
-from altair.utils import AltairDeprecationWarning, parse_shorthand, Optional, Undefined
+from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
 from altair import typing
 
 

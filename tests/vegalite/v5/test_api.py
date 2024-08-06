@@ -22,7 +22,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from altair.utils.schemapi import Undefined
+from altair.utils.schemapi import Optional, Undefined
 
 try:
     import vl_convert as vlc
@@ -667,9 +667,9 @@ def test_when_multiple_fields():
         alt.selection_point(fields=["Horsepower"]),
     ],
 )
-@pytest.mark.parametrize("empty", [alt.Undefined, True, False])
+@pytest.mark.parametrize("empty", [Undefined, True, False])
 def test_when_condition_parity(
-    cars, channel: str, when, empty: alt.Optional[bool], then, otherwise
+    cars, channel: str, when, empty: Optional[bool], then, otherwise
 ):
     params = [when] if isinstance(when, alt.Parameter) else ()
     kwds = {"x": "Cylinders:N", "y": "Origin:N"}

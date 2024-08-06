@@ -537,7 +537,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         _type_checking_only_imports(
             "from altair import Parameter",
-            "from altair.utils.schemapi import Optional",
+            "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
@@ -677,7 +677,7 @@ def generate_vegalite_channel_wrappers(
         *imports,
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional",
+            "from altair.typing import Optional",
             "from typing_extensions import Self",
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
@@ -836,7 +836,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional",
+            "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
         ),
         "\n\n\n",

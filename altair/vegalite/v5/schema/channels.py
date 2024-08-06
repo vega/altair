@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from altair import Parameter, SchemaBase
-    from altair.utils.schemapi import Optional
+    from altair.typing import Optional
 
 
 __all__ = [

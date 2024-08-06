@@ -688,5 +688,6 @@ Type Hints
    ChannelYOffset
    ChartType
    EncodeKwds
+   Optional
    is_chart_type
 

@@ -45,9 +45,11 @@ __all__ = [
     "ChannelYOffset",
     "ChartType",
     "EncodeKwds",
+    "Optional",
     "is_chart_type",
 ]
 
+from altair.utils.schemapi import Optional
 from altair.vegalite.v5.api import ChartType, is_chart_type
 from altair.vegalite.v5.schema.channels import (
     ChannelAngle,
