@@ -883,40 +883,38 @@ def generate_encoding_artifacts(
         - `info.supports_arrays`
     """
     signature_args: list[str] = ["self", "*args: Any"]
-    signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
-    channel_type_aliases: list[str] = []
-    typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    type_aliases: list[str] = []
     typed_dict_args: list[str] = []
-    for channel, info in channel_infos.items():
-        it = info.all_names
-        it_rst_names = (rst_syntax_for_class(c) for c in info.all_names)
+    signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
 
-        docstring_union_types = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = "Union[" + ", ".join(chain(("str", next(it), "Map"), it)) + "]"
+    for channel, info in channel_infos.items():
+        alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
+
+        it: Iterator[str] = info.all_names
+        it_rst_names: Iterator[str] = (rst_syntax_for_class(c) for c in info.all_names)
+
+        docstring_types: list[str] = ["str", next(it_rst_names), "Dict"]
+        tp_inner: str = ", ".join(chain(("str", next(it), "Map"), it))
+        tp_inner = f"Union[{tp_inner}]"
+
         if info.supports_arrays:
-            docstring_union_types.append("List")
+            docstring_types.append("List")
             tp_inner = f"OneOrSeq[{tp_inner}]"
 
-        alias_name = f"Channel{channel[0].upper()}{channel[1:]}"
-        channel_type_aliases.append(
-            f"{alias_name}: TypeAlias = {tp_inner}",
-        )
-        typed_dict_args.append(f"{channel}: {alias_name}")
+        doc_types_flat: str = ", ".join(chain(docstring_types, it_rst_names))
 
+        type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        typed_dict_args.append(f"{channel}: {alias_name}")
         signature_args.append(f"{channel}: Optional[{alias_name}] = Undefined")
 
+        description: str = f"    {process_description(info.deep_description)}"
+
         signature_docstring_parameters.extend(
-            (
-                f"{channel} : {', '.join(chain(docstring_union_types, it_rst_names))}",
-                f"    {process_description(info.deep_description)}",
-            )
+            (f"{channel} : {doc_types_flat}", description)
         )
-        typed_dict_docstring_parameters.extend(
-            (
-                f"{channel}",
-                f"    {process_description(info.deep_description)}",
-            )
-        )
+        typed_dict_docstring_parameters.extend((f"{channel}", description))
+
     signature_doc = indent_docstring(
         signature_docstring_parameters, indent_level=8, width=100, lstrip=False
     )
@@ -929,7 +927,7 @@ def generate_encoding_artifacts(
     encode_typed_dict = fmt_typed_dict.format(
         channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
     )
-    artifacts = [*channel_type_aliases, encode_method, encode_typed_dict]
+    artifacts = *type_aliases, encode_method, encode_typed_dict
     yield from artifacts
 
 
