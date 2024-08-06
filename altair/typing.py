@@ -1,7 +1,5 @@
 """Public types to ease integrating with `altair`."""
 
-# ruff: noqa: F401
-
 from __future__ import annotations
 
 __all__ = [
