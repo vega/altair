@@ -8,11 +8,21 @@
     },
     "axis": {
       "grid": true,
-      "gridColor": "#525252",
+      "gridColor": "#e0e0e0",
       "labelAngle": 0,
-      "labelColor": "#161616",
+      "labelColor": "#525252",
+      "labelFont": "IBM Plex Sans Condensed, system-ui, -apple-system, BlinkMacSystemFont, \".SFNSText-Regular\", sans-serif",
       "labelFontSize": 12,
-      "titleColor": "#161616"
+      "labelFontWeight": 400,
+      "titleColor": "#161616",
+      "titleFontSize": 12,
+      "titleFontWeight": 600
+    },
+    "axisX": {
+      "titlePadding": 10
+    },
+    "axisY": {
+      "titlePadding": 2.5
     },
     "background": "#f4f4f4",
     "circle": {
@@ -80,12 +90,12 @@
     },
     "style": {
       "guide-label": {
-        "fill": "#161616",
+        "fill": "#525252",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       },
       "guide-title": {
-        "fill": "#161616",
+        "fill": "#525252",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
@@ -115,11 +125,21 @@
     },
     "axis": {
       "grid": true,
-      "gridColor": "#525252",
+      "gridColor": "#393939",
       "labelAngle": 0,
-      "labelColor": "#f4f4f4",
+      "labelColor": "#c6c6c6",
+      "labelFont": "IBM Plex Sans Condensed, system-ui, -apple-system, BlinkMacSystemFont, \".SFNSText-Regular\", sans-serif",
       "labelFontSize": 12,
-      "titleColor": "#f4f4f4"
+      "labelFontWeight": 400,
+      "titleColor": "#f4f4f4",
+      "titleFontSize": 12,
+      "titleFontWeight": 600
+    },
+    "axisX": {
+      "titlePadding": 10
+    },
+    "axisY": {
+      "titlePadding": 2.5
     },
     "background": "#161616",
     "circle": {
@@ -187,12 +207,12 @@
     },
     "style": {
       "guide-label": {
-        "fill": "#f4f4f4",
+        "fill": "#c6c6c6",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       },
       "guide-title": {
-        "fill": "#f4f4f4",
+        "fill": "#c6c6c6",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
@@ -224,9 +244,19 @@
       "grid": true,
       "gridColor": "#525252",
       "labelAngle": 0,
-      "labelColor": "#f4f4f4",
+      "labelColor": "#c6c6c6",
+      "labelFont": "IBM Plex Sans Condensed, system-ui, -apple-system, BlinkMacSystemFont, \".SFNSText-Regular\", sans-serif",
       "labelFontSize": 12,
-      "titleColor": "#f4f4f4"
+      "labelFontWeight": 400,
+      "titleColor": "#f4f4f4",
+      "titleFontSize": 12,
+      "titleFontWeight": 600
+    },
+    "axisX": {
+      "titlePadding": 10
+    },
+    "axisY": {
+      "titlePadding": 2.5
     },
     "background": "#262626",
     "circle": {
@@ -294,12 +324,12 @@
     },
     "style": {
       "guide-label": {
-        "fill": "#f4f4f4",
+        "fill": "#c6c6c6",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       },
       "guide-title": {
-        "fill": "#f4f4f4",
+        "fill": "#c6c6c6",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
@@ -329,11 +359,21 @@
     },
     "axis": {
       "grid": true,
-      "gridColor": "#525252",
+      "gridColor": "#e0e0e0",
       "labelAngle": 0,
-      "labelColor": "#161616",
+      "labelColor": "#525252",
+      "labelFont": "IBM Plex Sans Condensed, system-ui, -apple-system, BlinkMacSystemFont, \".SFNSText-Regular\", sans-serif",
       "labelFontSize": 12,
-      "titleColor": "#161616"
+      "labelFontWeight": 400,
+      "titleColor": "#161616",
+      "titleFontSize": 12,
+      "titleFontWeight": 600
+    },
+    "axisX": {
+      "titlePadding": 10
+    },
+    "axisY": {
+      "titlePadding": 2.5
     },
     "background": "#ffffff",
     "circle": {
@@ -401,12 +441,12 @@
     },
     "style": {
       "guide-label": {
-        "fill": "#161616",
+        "fill": "#525252",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       },
       "guide-title": {
-        "fill": "#161616",
+        "fill": "#525252",
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
