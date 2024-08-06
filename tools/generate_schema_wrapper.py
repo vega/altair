@@ -885,8 +885,8 @@ def generate_encoding_artifacts(
     signature_args: list[str] = ["self", "*args: Any"]
     type_aliases: list[str] = []
     typed_dict_args: list[str] = []
-    signature_docstring_parameters: list[str] = ["", "Parameters", "----------"]
-    typed_dict_docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    signature_doc_params: list[str] = ["", "Parameters", "----------"]
+    typed_dict_doc_params: list[str] = ["", "Parameters", "----------"]
 
     for channel, info in channel_infos.items():
         alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
@@ -910,24 +910,18 @@ def generate_encoding_artifacts(
 
         description: str = f"    {process_description(info.deep_description)}"
 
-        signature_docstring_parameters.extend(
-            (f"{channel} : {doc_types_flat}", description)
-        )
-        typed_dict_docstring_parameters.extend((f"{channel}", description))
+        signature_doc_params.extend((f"{channel} : {doc_types_flat}", description))
+        typed_dict_doc_params.extend((f"{channel}", description))
 
-    signature_doc = indent_docstring(
-        signature_docstring_parameters, indent_level=8, width=100, lstrip=False
+    method: str = fmt_method.format(
+        method_args=", ".join(signature_args),
+        docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
     )
-    typed_dict_doc = indent_docstring(
-        typed_dict_docstring_parameters, indent_level=4, width=100, lstrip=False
+    typed_dict: str = fmt_typed_dict.format(
+        channels="\n    ".join(typed_dict_args),
+        docstring=indent_docstring(typed_dict_doc_params, indent_level=4, lstrip=False),
     )
-    encode_method = fmt_method.format(
-        method_args=", ".join(signature_args), docstring=signature_doc
-    )
-    encode_typed_dict = fmt_typed_dict.format(
-        channels="\n    ".join(typed_dict_args), docstring=typed_dict_doc
-    )
-    artifacts = *type_aliases, encode_method, encode_typed_dict
+    artifacts: Iterable[str] = *type_aliases, method, typed_dict
     yield from artifacts
 
 
