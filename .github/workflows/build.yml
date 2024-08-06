@@ -61,6 +61,7 @@ jobs:
           if [ ${#files_cleaned[@]} -gt 0 ]; then
               echo "The code generation modified the following files:"
               echo $files
+              git diff
               exit 1
           fi
       - name: Test with pytest
