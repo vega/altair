@@ -14,14 +14,14 @@ else:
 
 if TYPE_CHECKING:
     from altair.utils.plugin_registry import PluginEnabler
-    from altair.vegalite.v5.theme import _ThemeName
+    from altair.vegalite.v5.theme import AltairThemes, VegaThemes
 
 ThemeType = Callable[..., dict]
 
 
 class ThemeRegistry(PluginRegistry[ThemeType, dict]):
     def enable(
-        self, name: LiteralString | _ThemeName | None = None, **options
+        self, name: LiteralString | AltairThemes | VegaThemes | None = None, **options
     ) -> PluginEnabler:
         """
         Enable a theme by name.
