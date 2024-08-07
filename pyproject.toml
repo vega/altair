@@ -56,7 +56,7 @@ Source = "https://github.com/vega/altair"
 [project.optional-dependencies]
 all = [
     "vega_datasets>=0.9.0",
-    "vl-convert-python>=1.5.0",
+    "vl-convert-python>=1.6.0",
     "pandas>=0.25.3",
     "numpy",
     "pyarrow>=11",
@@ -82,7 +82,7 @@ dev = [
     "polars>=0.20.3",
 ]
 doc = [
-    "sphinx",
+    "sphinx>=8.0.0",
     "docutils",
     "sphinxext_altair",
     "jinja2",
