@@ -82,7 +82,7 @@ dev = [
     "polars>=0.20.3",
 ]
 doc = [
-    "sphinx",
+    "sphinx>=8.0.0",
     "docutils",
     "sphinxext_altair",
     "jinja2",
