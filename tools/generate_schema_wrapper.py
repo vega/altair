@@ -906,8 +906,11 @@ def generate_encoding_artifacts(
         doc_types_flat: str = ", ".join(chain(docstring_types, it_rst_names))
 
         type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
-        typed_dict_args.append(f"{channel}: {alias_name}")
-        signature_args.append(f"{channel}: Optional[{alias_name}] = Undefined")
+        # We use the full type hints instead of the alias in the signatures below
+        # as IDEs such as VS Code would else show the name of the alias instead
+        # of the expanded full type hints. The later are more useful to users.
+        typed_dict_args.append(f"{channel}: {tp_inner}")
+        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
 
         description: str = f"    {process_description(info.deep_description)}"
 

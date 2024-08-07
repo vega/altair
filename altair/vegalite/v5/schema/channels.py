@@ -30953,46 +30953,66 @@ class _EncodingMixin:
     def encode(
         self,
         *args: Any,
-        angle: Optional[ChannelAngle] = Undefined,
-        color: Optional[ChannelColor] = Undefined,
-        column: Optional[ChannelColumn] = Undefined,
-        description: Optional[ChannelDescription] = Undefined,
-        detail: Optional[ChannelDetail] = Undefined,
-        facet: Optional[ChannelFacet] = Undefined,
-        fill: Optional[ChannelFill] = Undefined,
-        fillOpacity: Optional[ChannelFillOpacity] = Undefined,
-        href: Optional[ChannelHref] = Undefined,
-        key: Optional[ChannelKey] = Undefined,
-        latitude: Optional[ChannelLatitude] = Undefined,
-        latitude2: Optional[ChannelLatitude2] = Undefined,
-        longitude: Optional[ChannelLongitude] = Undefined,
-        longitude2: Optional[ChannelLongitude2] = Undefined,
-        opacity: Optional[ChannelOpacity] = Undefined,
-        order: Optional[ChannelOrder] = Undefined,
-        radius: Optional[ChannelRadius] = Undefined,
-        radius2: Optional[ChannelRadius2] = Undefined,
-        row: Optional[ChannelRow] = Undefined,
-        shape: Optional[ChannelShape] = Undefined,
-        size: Optional[ChannelSize] = Undefined,
-        stroke: Optional[ChannelStroke] = Undefined,
-        strokeDash: Optional[ChannelStrokeDash] = Undefined,
-        strokeOpacity: Optional[ChannelStrokeOpacity] = Undefined,
-        strokeWidth: Optional[ChannelStrokeWidth] = Undefined,
-        text: Optional[ChannelText] = Undefined,
-        theta: Optional[ChannelTheta] = Undefined,
-        theta2: Optional[ChannelTheta2] = Undefined,
-        tooltip: Optional[ChannelTooltip] = Undefined,
-        url: Optional[ChannelUrl] = Undefined,
-        x: Optional[ChannelX] = Undefined,
-        x2: Optional[ChannelX2] = Undefined,
-        xError: Optional[ChannelXError] = Undefined,
-        xError2: Optional[ChannelXError2] = Undefined,
-        xOffset: Optional[ChannelXOffset] = Undefined,
-        y: Optional[ChannelY] = Undefined,
-        y2: Optional[ChannelY2] = Undefined,
-        yError: Optional[ChannelYError] = Undefined,
-        yError2: Optional[ChannelYError2] = Undefined,
-        yOffset: Optional[ChannelYOffset] = Undefined,
+        angle: Optional[str | Angle | Map | AngleDatum | AngleValue] = Undefined,
+        color: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
+        column: Optional[str | Column | Map] = Undefined,
+        description: Optional[str | Description | Map | DescriptionValue] = Undefined,
+        detail: Optional[OneOrSeq[str | Detail | Map]] = Undefined,
+        facet: Optional[str | Facet | Map] = Undefined,
+        fill: Optional[str | Fill | Map | FillDatum | FillValue] = Undefined,
+        fillOpacity: Optional[
+            str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
+        ] = Undefined,
+        href: Optional[str | Href | Map | HrefValue] = Undefined,
+        key: Optional[str | Key | Map] = Undefined,
+        latitude: Optional[str | Latitude | Map | LatitudeDatum] = Undefined,
+        latitude2: Optional[
+            str | Latitude2 | Map | Latitude2Datum | Latitude2Value
+        ] = Undefined,
+        longitude: Optional[str | Longitude | Map | LongitudeDatum] = Undefined,
+        longitude2: Optional[
+            str | Longitude2 | Map | Longitude2Datum | Longitude2Value
+        ] = Undefined,
+        opacity: Optional[
+            str | Opacity | Map | OpacityDatum | OpacityValue
+        ] = Undefined,
+        order: Optional[OneOrSeq[str | Order | Map | OrderValue]] = Undefined,
+        radius: Optional[str | Radius | Map | RadiusDatum | RadiusValue] = Undefined,
+        radius2: Optional[
+            str | Radius2 | Map | Radius2Datum | Radius2Value
+        ] = Undefined,
+        row: Optional[str | Row | Map] = Undefined,
+        shape: Optional[str | Shape | Map | ShapeDatum | ShapeValue] = Undefined,
+        size: Optional[str | Size | Map | SizeDatum | SizeValue] = Undefined,
+        stroke: Optional[str | Stroke | Map | StrokeDatum | StrokeValue] = Undefined,
+        strokeDash: Optional[
+            str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
+        ] = Undefined,
+        strokeOpacity: Optional[
+            str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
+        ] = Undefined,
+        strokeWidth: Optional[
+            str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
+        ] = Undefined,
+        text: Optional[str | Text | Map | TextDatum | TextValue] = Undefined,
+        theta: Optional[str | Theta | Map | ThetaDatum | ThetaValue] = Undefined,
+        theta2: Optional[str | Theta2 | Map | Theta2Datum | Theta2Value] = Undefined,
+        tooltip: Optional[OneOrSeq[str | Tooltip | Map | TooltipValue]] = Undefined,
+        url: Optional[str | Url | Map | UrlValue] = Undefined,
+        x: Optional[str | X | Map | XDatum | XValue] = Undefined,
+        x2: Optional[str | X2 | Map | X2Datum | X2Value] = Undefined,
+        xError: Optional[str | XError | Map | XErrorValue] = Undefined,
+        xError2: Optional[str | XError2 | Map | XError2Value] = Undefined,
+        xOffset: Optional[
+            str | XOffset | Map | XOffsetDatum | XOffsetValue
+        ] = Undefined,
+        y: Optional[str | Y | Map | YDatum | YValue] = Undefined,
+        y2: Optional[str | Y2 | Map | Y2Datum | Y2Value] = Undefined,
+        yError: Optional[str | YError | Map | YErrorValue] = Undefined,
+        yError2: Optional[str | YError2 | Map | YError2Value] = Undefined,
+        yOffset: Optional[
+            str | YOffset | Map | YOffsetDatum | YOffsetValue
+        ] = Undefined,
     ) -> Self:
         """
         Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`).
@@ -31423,43 +31443,43 @@ class EncodeKwds(TypedDict, total=False):
         Offset of y-position of the marks
     """
 
-    angle: ChannelAngle
-    color: ChannelColor
-    column: ChannelColumn
-    description: ChannelDescription
-    detail: ChannelDetail
-    facet: ChannelFacet
-    fill: ChannelFill
-    fillOpacity: ChannelFillOpacity
-    href: ChannelHref
-    key: ChannelKey
-    latitude: ChannelLatitude
-    latitude2: ChannelLatitude2
-    longitude: ChannelLongitude
-    longitude2: ChannelLongitude2
-    opacity: ChannelOpacity
-    order: ChannelOrder
-    radius: ChannelRadius
-    radius2: ChannelRadius2
-    row: ChannelRow
-    shape: ChannelShape
-    size: ChannelSize
-    stroke: ChannelStroke
-    strokeDash: ChannelStrokeDash
-    strokeOpacity: ChannelStrokeOpacity
-    strokeWidth: ChannelStrokeWidth
-    text: ChannelText
-    theta: ChannelTheta
-    theta2: ChannelTheta2
-    tooltip: ChannelTooltip
-    url: ChannelUrl
-    x: ChannelX
-    x2: ChannelX2
-    xError: ChannelXError
-    xError2: ChannelXError2
-    xOffset: ChannelXOffset
-    y: ChannelY
-    y2: ChannelY2
-    yError: ChannelYError
-    yError2: ChannelYError2
-    yOffset: ChannelYOffset
+    angle: str | Angle | Map | AngleDatum | AngleValue
+    color: str | Color | Map | ColorDatum | ColorValue
+    column: str | Column | Map
+    description: str | Description | Map | DescriptionValue
+    detail: OneOrSeq[str | Detail | Map]
+    facet: str | Facet | Map
+    fill: str | Fill | Map | FillDatum | FillValue
+    fillOpacity: str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
+    href: str | Href | Map | HrefValue
+    key: str | Key | Map
+    latitude: str | Latitude | Map | LatitudeDatum
+    latitude2: str | Latitude2 | Map | Latitude2Datum | Latitude2Value
+    longitude: str | Longitude | Map | LongitudeDatum
+    longitude2: str | Longitude2 | Map | Longitude2Datum | Longitude2Value
+    opacity: str | Opacity | Map | OpacityDatum | OpacityValue
+    order: OneOrSeq[str | Order | Map | OrderValue]
+    radius: str | Radius | Map | RadiusDatum | RadiusValue
+    radius2: str | Radius2 | Map | Radius2Datum | Radius2Value
+    row: str | Row | Map
+    shape: str | Shape | Map | ShapeDatum | ShapeValue
+    size: str | Size | Map | SizeDatum | SizeValue
+    stroke: str | Stroke | Map | StrokeDatum | StrokeValue
+    strokeDash: str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
+    strokeOpacity: str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
+    strokeWidth: str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
+    text: str | Text | Map | TextDatum | TextValue
+    theta: str | Theta | Map | ThetaDatum | ThetaValue
+    theta2: str | Theta2 | Map | Theta2Datum | Theta2Value
+    tooltip: OneOrSeq[str | Tooltip | Map | TooltipValue]
+    url: str | Url | Map | UrlValue
+    x: str | X | Map | XDatum | XValue
+    x2: str | X2 | Map | X2Datum | X2Value
+    xError: str | XError | Map | XErrorValue
+    xError2: str | XError2 | Map | XError2Value
+    xOffset: str | XOffset | Map | XOffsetDatum | XOffsetValue
+    y: str | Y | Map | YDatum | YValue
+    y2: str | Y2 | Map | Y2Datum | Y2Value
+    yError: str | YError | Map | YErrorValue
+    yError2: str | YError2 | Map | YError2Value
+    yOffset: str | YOffset | Map | YOffsetDatum | YOffsetValue
