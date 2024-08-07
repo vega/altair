@@ -26,7 +26,7 @@ from tools.schemapi.utils import (
     ruff_write_lint_format_str,
 )
 
-SCHEMA_VERSION: Final = "v5.19.0"
+SCHEMA_VERSION: Final = "v5.20.1"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
