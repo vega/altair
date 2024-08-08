@@ -676,20 +676,15 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__wrong_tooltip_type_in_faceted_chart,
-        inspect.cleandoc(
-            r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
-        ),
+        r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
     ),
     (
         chart_error_example__wrong_tooltip_type_in_layered_chart,
-        inspect.cleandoc(
-            r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
-        ),
+        r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
     ),
     (
         chart_error_example__two_errors_in_layered_chart,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
@@ -700,23 +695,19 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                     aggregate      condition   scale    title      
                     bandPosition   field       sort     type       
 
-                    See the help for `Color` to read the full description of these parameters$"""
-        ),
+                    See the help for `Color` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__two_errors_in_complex_concat_layered_chart,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
-        ),
+                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
     ),
     (
         chart_error_example__three_errors_in_complex_concat_layered_chart,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
@@ -729,13 +720,11 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
 
                     See the help for `Color` to read the full description of these parameters
 
-                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
-        ),
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
     ),
     (
         chart_error_example__two_errors_with_one_in_nested_layered_chart,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: `Scale` has no parameter named 'invalidOption'
 
@@ -755,13 +744,11 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                     aggregate      condition   scale    title      
                     bandPosition   field       sort     type       
 
-                    See the help for `Color` to read the full description of these parameters$"""
-        ),
+                    See the help for `Color` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__layer,
-        inspect.cleandoc(
-            r"""`VConcatChart` has no parameter named 'width'
+        r"""`VConcatChart` has no parameter named 'width'
 
                 Existing parameter names are:
                 vconcat      center     description   params    title       
@@ -769,37 +756,29 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters$"""
-        ),
+                See the help for `VConcatChart` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_y_option_value,
-        inspect.cleandoc(
-            r"""'asdf' is an invalid value for `stack`. Valid values are:
+        r"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$"""
-        ),
+                - Of type 'null' or 'boolean'$""",
     ),
     (
         chart_error_example__invalid_y_option_value_with_condition,
-        inspect.cleandoc(
-            r"""'asdf' is an invalid value for `stack`. Valid values are:
+        r"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$"""
-        ),
+                - Of type 'null' or 'boolean'$""",
     ),
     (
         chart_error_example__hconcat,
-        inspect.cleandoc(
-            r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
-        ),
+        r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$""",
     ),
     (
         chart_error_example__invalid_timeunit_value,
-        inspect.cleandoc(
-            r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
+        r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
                 - One of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
                 - One of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
@@ -807,36 +786,28 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
                 - One of \['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'\]
                 - One of \['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'\]
-                - Of type 'object'$"""
-        ),
+                - Of type 'object'$""",
     ),
     (
         chart_error_example__invalid_sort_value,
-        inspect.cleandoc(
-            r"""'invalid_value' is an invalid value for `sort`. Valid values are:
+        r"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
                 - One of \['ascending', 'descending'\]
                 - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
                 - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
-                - Of type 'array', 'object', or 'null'$"""
-        ),
+                - Of type 'array', 'object', or 'null'$""",
     ),
     (
         chart_error_example__invalid_bandposition_value,
-        inspect.cleandoc(
-            r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
-        ),
+        r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
     ),
     (
         chart_error_example__invalid_type,
-        inspect.cleandoc(
-            r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$"""
-        ),
+        r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$""",
     ),
     (
         chart_error_example__additional_datum_argument,
-        inspect.cleandoc(
-            r"""`X` has no parameter named 'wrong_argument'
+        r"""`X` has no parameter named 'wrong_argument'
 
                 Existing parameter names are:
                 shorthand      bin      scale   timeUnit   
@@ -844,19 +815,15 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters$"""
-        ),
+                See the help for `X` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_value_type,
-        inspect.cleandoc(
-            r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
-        ),
+        r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$""",
     ),
     (
         chart_error_example__four_errors,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: `Color` has no parameter named 'another_unknown'
 
@@ -884,8 +851,7 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                     axis           impute   stack   type       
                     bandPosition                               
 
-                    See the help for `X` to read the full description of these parameters$"""
-        ),
+                    See the help for `X` to read the full description of these parameters$""",
     ),
 ]
 
@@ -901,6 +867,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         chart = chart_func()
+    expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
 
