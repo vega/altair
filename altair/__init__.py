@@ -50,7 +50,6 @@ __all__ = [
     "ChainedWhen",
     "Chart",
     "ChartDataType",
-    "ChartType",
     "Color",
     "ColorDatum",
     "ColorDef",
@@ -301,7 +300,6 @@ __all__ = [
     "Opacity",
     "OpacityDatum",
     "OpacityValue",
-    "Optional",
     "Order",
     "OrderFieldDef",
     "OrderOnlyDef",
@@ -611,7 +609,6 @@ __all__ = [
     "expr",
     "graticule",
     "hconcat",
-    "is_chart_type",
     "jupyter",
     "layer",
     "limit_rows",
@@ -635,6 +632,7 @@ __all__ = [
     "to_json",
     "to_values",
     "topo_feature",
+    "typing",
     "utils",
     "v5",
     "value",
@@ -654,7 +652,8 @@ from altair.vegalite import *
 from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
-from altair.utils import AltairDeprecationWarning, parse_shorthand, Optional, Undefined
+from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
+from altair import typing
 
 
 def load_ipython_extension(ipython):

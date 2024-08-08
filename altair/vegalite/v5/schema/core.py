@@ -17,7 +17,7 @@ from altair.utils.schemapi import (  # noqa: F401
 # ruff: noqa: F405
 if TYPE_CHECKING:
     from altair import Parameter
-    from altair.utils.schemapi import Optional
+    from altair.typing import Optional
 
     from ._typing import *  # noqa: F403
 
