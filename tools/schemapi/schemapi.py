@@ -1023,6 +1023,7 @@ class SchemaBase:
             )
         elif not self._args:
             kwds = self._kwds.copy()
+            exclude = {*ignore, "shorthand"}
             # parsed_shorthand is added by FieldChannelMixin.
             # It's used below to replace shorthand with its long form equivalent
             # parsed_shorthand is removed from context if it exists so that it is
@@ -1041,11 +1042,9 @@ class SchemaBase:
                 for k, v in parsed_shorthand.items()
                 if kwds.get(k, Undefined) is Undefined
             )
-            kwds = {
-                k: v for k, v in kwds.items() if k not in {*list(ignore), "shorthand"}
-            }
-            if "mark" in kwds and isinstance(kwds["mark"], str):
-                kwds["mark"] = {"type": kwds["mark"]}
+            kwds = {k: v for k, v in kwds.items() if k not in exclude}
+            if (mark := kwds.get("mark")) and isinstance(mark, str):
+                kwds["mark"] = {"type": mark}
             result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
         else:
             msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
