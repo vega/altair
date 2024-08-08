@@ -1022,24 +1022,8 @@ class SchemaBase:
         elif not self._args:
             kwds = self._kwds.copy()
             exclude = {*ignore, "shorthand"}
-            # parsed_shorthand is added by FieldChannelMixin.
-            # It's used below to replace shorthand with its long form equivalent
-            # parsed_shorthand is removed from context if it exists so that it is
-            # not passed to child to_dict function calls
-            parsed_shorthand = context.pop("parsed_shorthand", {})
-            # Prevent that pandas categorical data is automatically sorted
-            # when a non-ordinal data type is specifed manually
-            # or if the encoding channel does not support sorting
-            if "sort" in parsed_shorthand and (
-                "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
-            ):
-                parsed_shorthand.pop("sort")
-
-            kwds.update(
-                (k, v)
-                for k, v in parsed_shorthand.items()
-                if kwds.get(k, Undefined) is Undefined
-            )
+            if parsed := context.pop("parsed_shorthand", None):
+                kwds = _replace_parsed_shorthand(parsed, kwds)
             kwds = {k: v for k, v in kwds.items() if k not in exclude}
             if (mark := kwds.get("mark")) and isinstance(mark, str):
                 kwds["mark"] = {"type": mark}
@@ -1208,6 +1192,32 @@ class SchemaBase:
 
     def __dir__(self) -> list[str]:
         return sorted(chain(super().__dir__(), self._kwds))
+
+
+def _replace_parsed_shorthand(
+    parsed_shorthand: dict[str, Any], kwds: dict[str, Any]
+) -> dict[str, Any]:
+    """
+    `parsed_shorthand` is added by `FieldChannelMixin`.
+
+    It's used below to replace shorthand with its long form equivalent
+    `parsed_shorthand` is removed from `context` if it exists so that it is
+    not passed to child `to_dict` function calls.
+    """
+    # Prevent that pandas categorical data is automatically sorted
+    # when a non-ordinal data type is specifed manually
+    # or if the encoding channel does not support sorting
+    if "sort" in parsed_shorthand and (
+        "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
+    ):
+        parsed_shorthand.pop("sort")
+
+    kwds.update(
+        (k, v)
+        for k, v in parsed_shorthand.items()
+        if kwds.get(k, Undefined) is Undefined
+    )
+    return kwds
 
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
