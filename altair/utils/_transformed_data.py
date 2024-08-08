@@ -31,8 +31,8 @@ from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
 from altair.utils.schemapi import Undefined
 
 if TYPE_CHECKING:
+    from altair.typing import ChartType
     from altair.utils.core import DataFrameLike
-    from altair.vegalite.v5.api import ChartType
 
 Scope: TypeAlias = Tuple[int, ...]
 FacetMapping: TypeAlias = Dict[Tuple[str, Scope], Tuple[str, Scope]]
@@ -452,7 +452,7 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
                         group, facet_data, scope
                     )
                     if definition_scope is not None:
-                        facet_mapping[(facet_name, group_scope)] = (
+                        facet_mapping[facet_name, group_scope] = (
                             facet_data,
                             definition_scope,
                         )
