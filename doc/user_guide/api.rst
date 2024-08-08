@@ -638,8 +638,8 @@ API Utility Classes
    Then
    ChainedWhen
 
-Type Hints
-----------
+Typing
+------
 .. currentmodule:: altair.typing
 
 .. autosummary::

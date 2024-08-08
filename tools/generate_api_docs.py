@@ -73,8 +73,8 @@ API Utility Classes
 
    {api_classes}
 
-Type Hints
-----------
+Typing
+------
 .. currentmodule:: altair.typing
 
 .. autosummary::
