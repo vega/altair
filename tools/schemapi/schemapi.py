@@ -541,9 +541,25 @@ def _resolve_references(
 
 
 class SchemaValidationError(jsonschema.ValidationError):
-    """A wrapper for jsonschema.ValidationError with friendlier traceback."""
-
     def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
+        """
+        A wrapper for ``jsonschema.ValidationError`` with friendlier traceback.
+
+        Parameters
+        ----------
+        obj
+            The instance that failed ``self.validate(...)``.
+        err
+            The original ``ValidationError``.
+
+        Notes
+        -----
+        We do not raise `from err` as else the resulting traceback is very long
+        as it contains part of the Vega-Lite schema.
+
+        It would also first show the less helpful `ValidationError` instead of
+        the more user friendly `SchemaValidationError`.
+        """
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
@@ -1053,11 +1069,6 @@ class SchemaBase:
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                # We do not raise `from err` as else the resulting
-                # traceback is very long as it contains part
-                # of the Vega-Lite schema. It would also first
-                # show the less helpful ValidationError instead of
-                # the more user friendly SchemaValidationError
                 raise SchemaValidationError(self, err) from None
         return result
 
