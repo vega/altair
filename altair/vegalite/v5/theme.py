@@ -4,15 +4,16 @@ from __future__ import annotations
 
 import sys
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Literal, TypeVar, get_args
+
+from altair.utils.theme import ThemeRegistry
+from altair.vegalite.v5.schema._typing import VegaThemes
 
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
     from typing_extensions import ParamSpec
 
-
-from altair.utils.theme import ThemeRegistry
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 11):
@@ -24,47 +25,10 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    # If you add a theme here, also add it in `VEGA_THEMES` below.
-    _ThemeName: TypeAlias = Literal[
-        "default",
-        "carbonwhite",
-        "carbong10",
-        "carbong90",
-        "carbong100",
-        "dark",
-        "excel",
-        "fivethirtyeight",
-        "ggplot2",
-        "googlecharts",
-        "latimes",
-        "opaque",
-        "powerbi",
-        "quartz",
-        "urbaninstitute",
-        "vox",
-    ]
-
-# If you add a theme here, also add it in `_ThemeName` above.
-VEGA_THEMES: list[LiteralString] = [
-    "carbonwhite",
-    "carbong10",
-    "carbong90",
-    "carbong100",
-    "dark",
-    "excel",
-    "fivethirtyeight",
-    "ggplot2",
-    "googlecharts",
-    "latimes",
-    "powerbi",
-    "quartz",
-    "urbaninstitute",
-    "vox",
-]
-
-
 P = ParamSpec("P")
 R = TypeVar("R", bound=Dict[str, Any])
+AltairThemes: TypeAlias = Literal["default", "opaque"]
+VEGA_THEMES: list[LiteralString] = list(get_args(VegaThemes))
 
 
 class VegaTheme:
