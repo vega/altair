@@ -1020,9 +1020,7 @@ class SchemaBase:
         np_opt = sys.modules.get("numpy")
 
         if self._args and not self._kwds:
-            result = _todict(
-                self._args[0], context=context, np_opt=np_opt, pd_opt=pd_opt
-            )
+            kwds = self._args[0]
         elif not self._args:
             kwds = self._kwds.copy()
             exclude = {*ignore, "shorthand"}
@@ -1047,10 +1045,10 @@ class SchemaBase:
             kwds = {k: v for k, v in kwds.items() if k not in exclude}
             if (mark := kwds.get("mark")) and isinstance(mark, str):
                 kwds["mark"] = {"type": mark}
-            result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
         else:
             msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
             raise ValueError(msg)
+        result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
         if validate:
             try:
                 self.validate(result)
