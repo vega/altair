@@ -1054,10 +1054,7 @@ class SchemaBase:
                 kwds["mark"] = {"type": kwds["mark"]}
             result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
         else:
-            msg = (
-                f"{self.__class__} instance has both a value and properties : "
-                "cannot serialize to dict"
-            )
+            msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
             raise ValueError(msg)
         if validate:
             try:
