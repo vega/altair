@@ -1039,11 +1039,9 @@ class SchemaBase:
                 parsed_shorthand.pop("sort")
 
             kwds.update(
-                {
-                    k: v
-                    for k, v in parsed_shorthand.items()
-                    if kwds.get(k, Undefined) is Undefined
-                }
+                (k, v)
+                for k, v in parsed_shorthand.items()
+                if kwds.get(k, Undefined) is Undefined
             )
             kwds = {
                 k: v for k, v in kwds.items() if k not in {*list(ignore), "shorthand"}
