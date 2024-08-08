@@ -14,9 +14,12 @@ from pathlib import Path
 from typing import Final, Iterable, Iterator, Literal
 from urllib import request
 
+import vl_convert as vlc
+
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
+    TypeAliasTracer,
     get_valid_identifier,
     indent_docstring,
     resolve_references,
@@ -24,6 +27,7 @@ from tools.schemapi.utils import (
     rst_syntax_for_class,
     ruff_format_py,
     ruff_write_lint_format_str,
+    spell_literal,
 )
 
 SCHEMA_VERSION: Final = "v5.19.0"
@@ -365,6 +369,15 @@ def download_schemafile(
         msg = f"Cannot skip download: {fp!s} does not exist"
         raise ValueError(msg)
     return fp
+
+
+def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
+    themes = vlc.get_themes()
+    data = json.dumps(themes, indent=indent, sort_keys=True)
+    fp.write_text(data, encoding="utf8")
+
+    theme_names = sorted(iter(themes))
+    TypeAliasTracer.update_aliases(("VegaThemes", spell_literal(theme_names)))
 
 
 def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
@@ -790,6 +803,10 @@ def vegalite_main(skip_download: bool = False) -> None:
         skip_download=skip_download,
     )
 
+    fp_themes = schemapath / "vega-themes.json"
+    print(f"Updating themes\n {schemafile!s}\n  ->{fp_themes!s}")
+    update_vega_themes(fp_themes)
+
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"
     print(f"Writing {outfile!s}")
@@ -847,8 +864,6 @@ def vegalite_main(skip_download: bool = False) -> None:
     files[fp_mixins] = content_mixins
 
     # Write `_typing.py` TypeAlias, for import in generated modules
-    from tools.schemapi.utils import TypeAliasTracer
-
     fp_typing = schemapath / "_typing.py"
     msg = (
         f"Generating\n {schemafile!s}\n  ->{fp_typing!s}\n"

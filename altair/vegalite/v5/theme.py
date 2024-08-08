@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Final, Literal
+from typing import TYPE_CHECKING, Final, Literal, get_args
 
 from altair.utils.theme import ThemeRegistry
+from altair.vegalite.v5.schema._typing import VegaThemes
 
 if TYPE_CHECKING:
     import sys
@@ -14,43 +15,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    # If you add a theme here, also add it in `VEGA_THEMES` below.
-    _ThemeName: TypeAlias = Literal[
-        "default",
-        "carbonwhite",
-        "carbong10",
-        "carbong90",
-        "carbong100",
-        "dark",
-        "excel",
-        "fivethirtyeight",
-        "ggplot2",
-        "googlecharts",
-        "latimes",
-        "opaque",
-        "powerbi",
-        "quartz",
-        "urbaninstitute",
-        "vox",
-    ]
-
-# If you add a theme here, also add it in `_ThemeName` above.
-VEGA_THEMES = [
-    "carbonwhite",
-    "carbong10",
-    "carbong90",
-    "carbong100",
-    "dark",
-    "excel",
-    "fivethirtyeight",
-    "ggplot2",
-    "googlecharts",
-    "latimes",
-    "powerbi",
-    "quartz",
-    "urbaninstitute",
-    "vox",
-]
+AltairThemes: TypeAlias = Literal["default", "opaque"]
+VEGA_THEMES: list[str] = list(get_args(VegaThemes))
 
 
 class VegaTheme:
