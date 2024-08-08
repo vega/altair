@@ -452,7 +452,7 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
                         group, facet_data, scope
                     )
                     if definition_scope is not None:
-                        facet_mapping[(facet_name, group_scope)] = (
+                        facet_mapping[facet_name, group_scope] = (
                             facet_data,
                             definition_scope,
                         )
