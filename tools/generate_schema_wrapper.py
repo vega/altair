@@ -213,7 +213,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
-    def encode({encode_method_args}) -> Self:
+    def encode({method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
         # Compat prep for `infer_encoding_types` signature
@@ -235,6 +235,14 @@ class _EncodingMixin:
         encoding.update(kwargs)
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
+'''
+
+ENCODE_TYPED_DICT: Final = '''
+class EncodeKwds(TypedDict, total=False):
+    """Encoding channels map properties of the data to visual properties of the chart.
+    {docstring}"""
+    {channels}
+
 '''
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
@@ -542,7 +550,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         _type_checking_only_imports(
             "from altair import Parameter",
-            "from altair.utils.schemapi import Optional",
+            "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
@@ -575,18 +583,29 @@ def _type_checking_only_imports(*imports: str) -> str:
 class ChannelInfo:
     supports_arrays: bool
     deep_description: str
-    field_class_name: str | None = None
+    field_class_name: str
     datum_class_name: str | None = None
     value_class_name: str | None = None
 
     @property
+    def is_field_only(self) -> bool:
+        return not (self.datum_class_name or self.value_class_name)
+
+    @property
     def all_names(self) -> Iterator[str]:
-        if self.field_class_name:
-            yield self.field_class_name
-        if self.datum_class_name:
-            yield self.datum_class_name
-        if self.value_class_name:
-            yield self.value_class_name
+        """All channels are expected to have a field class."""
+        yield self.field_class_name
+        yield from self.non_field_names
+
+    @property
+    def non_field_names(self) -> Iterator[str]:
+        if self.is_field_only:
+            yield from ()
+        else:
+            if self.datum_class_name:
+                yield self.datum_class_name
+            if self.value_class_name:
+                yield self.value_class_name
 
 
 def generate_vegalite_channel_wrappers(
@@ -608,50 +627,37 @@ def generate_vegalite_channel_wrappers(
         supports_arrays = any(
             schema_info.is_array() for schema_info in propschema.anyOf
         )
+        classname: str = prop[0].upper() + prop[1:]
         channel_info = ChannelInfo(
             supports_arrays=supports_arrays,
             deep_description=propschema.deep_description,
+            field_class_name=classname,
         )
 
         for encoding_spec, definition in def_dict.items():
-            classname = prop[0].upper() + prop[1:]
             basename = definition.rsplit("/", maxsplit=1)[-1]
             basename = get_valid_identifier(basename)
 
+            gen: SchemaGenerator
             defschema = {"$ref": definition}
-
-            Generator: (
-                type[FieldSchemaGenerator]
-                | type[DatumSchemaGenerator]
-                | type[ValueSchemaGenerator]
-            )
+            kwds = {
+                "basename": basename,
+                "schema": defschema,
+                "rootschema": schema,
+                "encodingname": prop,
+                "haspropsetters": True,
+            }
             if encoding_spec == "field":
-                Generator = FieldSchemaGenerator
-                nodefault = []
-                channel_info.field_class_name = classname
-
+                gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)
             elif encoding_spec == "datum":
-                Generator = DatumSchemaGenerator
-                classname += "Datum"
-                nodefault = ["datum"]
-                channel_info.datum_class_name = classname
-
+                temp_name = f"{classname}Datum"
+                channel_info.datum_class_name = temp_name
+                gen = DatumSchemaGenerator(temp_name, nodefault=["datum"], **kwds)
             elif encoding_spec == "value":
-                Generator = ValueSchemaGenerator
-                classname += "Value"
-                nodefault = ["value"]
-                channel_info.value_class_name = classname
+                temp_name = f"{classname}Value"
+                channel_info.value_class_name = temp_name
+                gen = ValueSchemaGenerator(temp_name, nodefault=["value"], **kwds)
 
-            gen = Generator(
-                classname=classname,
-                basename=basename,
-                schema=defschema,
-                rootschema=schema,
-                encodingname=prop,
-                nodefault=nodefault,
-                haspropsetters=True,
-                altair_classes_prefix="core",
-            )
             class_defs.append(gen.schema_class())
 
         channel_infos[prop] = channel_info
@@ -669,12 +675,14 @@ def generate_vegalite_channel_wrappers(
 
     imports = imports or [
         "from __future__ import annotations\n",
-        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
+        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
+        "from typing_extensions import TypeAlias",
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
         "from . import core",
+        "from ._typing import * # noqa: F403",
     ]
     contents = [
         HEADER,
@@ -682,18 +690,14 @@ def generate_vegalite_channel_wrappers(
         *imports,
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional",
-            "from ._typing import * # noqa: F403",
+            "from altair.typing import Optional",
             "from typing_extensions import Self",
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
         *class_defs,
+        *generate_encoding_artifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
     ]
-
-    # Generate the type signature for the encode method
-    encode_signature = _create_encode_signature(channel_infos)
-    contents.append(encode_signature)
     return "\n".join(contents)
 
 
@@ -849,7 +853,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional",
+            "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
         ),
         "\n\n\n",
@@ -876,59 +880,68 @@ def vegalite_main(skip_download: bool = False) -> None:
         ruff_write_lint_format_str(fp, contents)
 
 
-def _create_encode_signature(
-    channel_infos: dict[str, ChannelInfo],
-) -> str:
+def generate_encoding_artifacts(
+    channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
+) -> Iterator[str]:
+    """
+    Generate ``Chart.encode()`` and related typing structures.
+
+    - `TypeAlias`(s) for each parameter to ``Chart.encode()``
+    - Mixin class that provides the ``Chart.encode()`` method
+    - `TypedDict`, utilising/describing these structures as part of https://github.com/pola-rs/polars/pull/17995.
+
+    Notes
+    -----
+    - `Map`/`Dict` stands for the return types of `alt.(datum|value)`, and any encoding channel class.
+        - See discussions in https://github.com/vega/altair/pull/3208
+    - We could be more specific about what types are accepted in the `List`
+        - but this translates poorly to an IDE
+        - `info.supports_arrays`
+    """
     signature_args: list[str] = ["self", "*args: Any"]
-    docstring_parameters: list[str] = ["", "Parameters", "----------"]
+    type_aliases: list[str] = []
+    typed_dict_args: list[str] = []
+    signature_doc_params: list[str] = ["", "Parameters", "----------"]
+    typed_dict_doc_params: list[str] = ["", "Parameters", "----------"]
+
     for channel, info in channel_infos.items():
-        field_class_name = info.field_class_name
-        assert (
-            field_class_name is not None
-        ), "All channels are expected to have a field class"
-        datum_and_value_class_names = []
-        if info.datum_class_name is not None:
-            datum_and_value_class_names.append(info.datum_class_name)
+        alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
 
-        if info.value_class_name is not None:
-            datum_and_value_class_names.append(info.value_class_name)
+        it: Iterator[str] = info.all_names
+        it_rst_names: Iterator[str] = (rst_syntax_for_class(c) for c in info.all_names)
 
-        # dict stands for the return types of alt.datum, alt.value as well as
-        # the dictionary representation of an encoding channel class. See
-        # discussions in https://github.com/vega/altair/pull/3208
-        # for more background.
-        union_types = ["str", field_class_name, "Map"]
-        docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]
+        docstring_types: list[str] = ["str", next(it_rst_names), "Dict"]
+        tp_inner: str = ", ".join(chain(("str", next(it), "Map"), it))
+        tp_inner = f"Union[{tp_inner}]"
+
         if info.supports_arrays:
-            # We could be more specific about what types are accepted in the list
-            # but then the signatures would get rather long and less useful
-            # to a user when it shows up in their IDE.
-            union_types.append("list")
-            docstring_union_types.append("List")
+            docstring_types.append("List")
+            tp_inner = f"OneOrSeq[{tp_inner}]"
 
-        union_types = union_types + datum_and_value_class_names
-        docstring_union_types = docstring_union_types + [
-            rst_syntax_for_class(c) for c in datum_and_value_class_names
-        ]
+        doc_types_flat: str = ", ".join(chain(docstring_types, it_rst_names))
 
-        signature_args.append(
-            f"{channel}: Optional[Union[{', '.join(union_types)}]] = Undefined"
-        )
+        type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        # We use the full type hints instead of the alias in the signatures below
+        # as IDEs such as VS Code would else show the name of the alias instead
+        # of the expanded full type hints. The later are more useful to users.
+        typed_dict_args.append(f"{channel}: {tp_inner}")
+        signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
 
-        docstring_parameters.extend(
-            (
-                f"{channel} : {', '.join(docstring_union_types)}",
-                f"    {process_description(info.deep_description)}",
-            )
-        )
-    if len(docstring_parameters) > 1:
-        docstring_parameters += [""]
-    docstring = indent_docstring(
-        docstring_parameters, indent_level=8, width=100, lstrip=False
+        description: str = f"    {process_description(info.deep_description)}"
+
+        signature_doc_params.extend((f"{channel} : {doc_types_flat}", description))
+        typed_dict_doc_params.extend((f"{channel}", description))
+
+    method: str = fmt_method.format(
+        method_args=", ".join(signature_args),
+        docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
     )
-    return ENCODE_METHOD.format(
-        encode_method_args=", ".join(signature_args), docstring=docstring
+    typed_dict: str = fmt_typed_dict.format(
+        channels="\n    ".join(typed_dict_args),
+        docstring=indent_docstring(typed_dict_doc_params, indent_level=4, lstrip=False),
     )
+    artifacts: Iterable[str] = *type_aliases, method, typed_dict
+    yield from artifacts
 
 
 def main() -> None:
