@@ -496,6 +496,11 @@ def chart_error_example__invalid_bandposition_value():
     )
 
 
+def test_to_dict_huge_traceback():
+    # Error: Invalid value for type
+    return alt.Chart().encode(alt.X(type="unknown")).to_dict()
+
+
 def chart_error_example__invalid_type():
     # Error: Invalid value for type
     return alt.Chart().encode(alt.X(type="unknown"))
