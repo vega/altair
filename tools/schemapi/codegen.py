@@ -105,7 +105,6 @@ class SchemaGenerator:
     rootschemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit root
         schema.
-    altair_classes_prefix : string, optional
     **kwargs : dict
         Additional keywords for derived classes.
     """
@@ -141,7 +140,6 @@ class SchemaGenerator:
         rootschemarepr: object | None = None,
         nodefault: list[str] | None = None,
         haspropsetters: bool = False,
-        altair_classes_prefix: str | None = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -153,7 +151,6 @@ class SchemaGenerator:
         self.nodefault = nodefault or ()
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
-        self.altair_classes_prefix = altair_classes_prefix
 
     def subclasses(self) -> list[str]:
         """Return a list of subclass names, if any."""
@@ -226,16 +223,9 @@ class SchemaGenerator:
             ):
                 propinfo = info.properties[prop]
                 doc += [
-                    "{} : {}".format(
-                        prop,
-                        propinfo.get_python_type_representation(
-                            altair_classes_prefix=self.altair_classes_prefix,
-                        ),
-                    ),
+                    f"{prop} : {propinfo.get_python_type_representation()}",
                     f"    {self._process_description(propinfo.deep_description)}",
                 ]
-        if len(doc) > 1:
-            doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent: int = 0) -> str:
@@ -279,9 +269,7 @@ class SchemaGenerator:
                 [
                     *additional_types,
                     *info.properties[p].get_python_type_representation(
-                        for_type_hints=True,
-                        altair_classes_prefix=self.altair_classes_prefix,
-                        return_as_str=False,
+                        for_type_hints=True, return_as_str=False
                     ),
                 ]
             )
@@ -315,9 +303,7 @@ class SchemaGenerator:
                 [
                     f"{p}: "
                     + info.get_python_type_representation(
-                        for_type_hints=True,
-                        altair_classes_prefix=self.altair_classes_prefix,
-                        additional_type_hints=["UndefinedType"],
+                        for_type_hints=True, additional_type_hints=["UndefinedType"]
                     )
                     + " = Undefined"
                     for p, info in prop_infos.items()
