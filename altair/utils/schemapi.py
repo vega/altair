@@ -1010,10 +1010,8 @@ class SchemaBase:
         - ``ignore``, ``context`` are usually not needed to be specified as a user.
         - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
-        if context is None:
-            context = {}
-        if ignore is None:
-            ignore = []
+        context = context or {}
+        ignore = ignore or []
         # The following return the package only if it has already been
         # imported - otherwise they return None. This is useful for
         # isinstance checks - for example, if pandas has not been imported,
