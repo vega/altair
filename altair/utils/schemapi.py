@@ -994,29 +994,21 @@ class SchemaBase:
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this object
+            A context dictionary.
 
         Raises
         ------
         SchemaValidationError :
-            if validate=True and the dict does not conform to the schema
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if context is None:
             context = {}
