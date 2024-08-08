@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Any, Dict
 
-from .plugin_registry import PluginRegistry
+from .plugin_registry import Plugin, PluginRegistry
 
 if sys.version_info >= (3, 11):
     from typing import LiteralString
@@ -16,10 +16,10 @@ if TYPE_CHECKING:
     from altair.utils.plugin_registry import PluginEnabler
     from altair.vegalite.v5.theme import _ThemeName
 
-ThemeType = Callable[..., dict]
+ThemeType = Plugin[Dict[str, Any]]
 
 
-class ThemeRegistry(PluginRegistry[ThemeType, dict]):
+class ThemeRegistry(PluginRegistry[ThemeType, Dict[str, Any]]):
     def enable(
         self, name: LiteralString | _ThemeName | None = None, **options
     ) -> PluginEnabler:

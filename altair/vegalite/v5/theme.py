@@ -45,7 +45,7 @@ if TYPE_CHECKING:
     ]
 
 # If you add a theme here, also add it in `_ThemeName` above.
-VEGA_THEMES = [
+VEGA_THEMES: list[LiteralString] = [
     "carbonwhite",
     "carbong10",
     "carbong90",
