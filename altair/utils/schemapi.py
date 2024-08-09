@@ -32,6 +32,7 @@ from typing_extensions import TypeAlias
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
+import narwhals.stable.v1 as nw
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -489,6 +490,14 @@ def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
             yield cls
 
 
+def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
+    try:
+        ser = nw.from_native(obj, strict=True, series_only=True)
+        return ser.to_list()
+    except TypeError:
+        return list(obj)
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:
     """Convert an object to a dict representation."""
     if np_opt is not None:
@@ -513,10 +522,16 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
             for k, v in obj.items()
             if v is not Undefined
         }
-    elif hasattr(obj, "to_dict"):
+    elif (
+        hasattr(obj, "to_dict")
+        and (module_name := obj.__module__)
+        and module_name.startswith("altair")
+    ):
         return obj.to_dict()
     elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
         return pd_opt.Timestamp(obj).isoformat()
+    elif _is_iterable(obj, exclude=(str, bytes)):
+        return _todict(_from_array_like(obj), context, np_opt, pd_opt)
     else:
         return obj
 
@@ -1240,6 +1255,12 @@ def _is_dict(obj: Any | dict[Any, Any]) -> TypeIs[dict[Any, Any]]:
 
 def _is_list(obj: Any | list[Any]) -> TypeIs[list[Any]]:
     return isinstance(obj, list)
+
+
+def _is_iterable(
+    obj: Any, *, exclude: type | tuple[type, ...] = (str, bytes)
+) -> TypeIs[Iterable[Any]]:
+    return not isinstance(obj, exclude) and isinstance(obj, Iterable)
 
 
 def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
