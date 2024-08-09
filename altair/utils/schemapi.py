@@ -1052,30 +1052,27 @@ class SchemaBase:
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
+            A context dictionary.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
+        Raises
+        ------
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
         Notes
         -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        str
-            The JSON specification of the chart object.
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if ignore is None:
             ignore = []
@@ -1103,15 +1100,10 @@ class SchemaBase:
         validate : boolean
             If True (default), then validate the input against the schema.
 
-        Returns
-        -------
-        obj : Schema object
-            The wrapped schema
-
         Raises
         ------
         jsonschema.ValidationError :
-            if validate=True and dct does not conform to the schema
+            If ``validate`` and ``dct`` does not conform to the schema
         """
         if validate:
             cls.validate(dct)
