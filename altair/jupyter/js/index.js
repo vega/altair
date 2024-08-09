@@ -1,4 +1,4 @@
-import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.19.0";
+import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.20.1";
 import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
 // Note: For offline support, the import lines above are removed and the remaining script

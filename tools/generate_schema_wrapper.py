@@ -30,7 +30,7 @@ from tools.schemapi.utils import (
     spell_literal,
 )
 
-SCHEMA_VERSION: Final = "v5.19.0"
+SCHEMA_VERSION: Final = "v5.20.1"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
