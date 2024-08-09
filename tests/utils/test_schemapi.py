@@ -655,8 +655,7 @@ def id_func(val) -> str:
 chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     (
         chart_error_example__invalid_y_option_value_unknown_x_option,
-        inspect.cleandoc(
-            r"""Multiple errors were found.
+        r"""Multiple errors were found.
 
                 Error 1: `X` has no parameter named 'unknown'
 
@@ -671,8 +670,7 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                     - One of \['zero', 'center', 'normalize'\]
-                    - Of type 'null' or 'boolean'$"""
-        ),
+                    - Of type 'null' or 'boolean'$""",
     ),
     (
         chart_error_example__wrong_tooltip_type_in_faceted_chart,
