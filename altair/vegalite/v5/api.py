@@ -3819,7 +3819,7 @@ class Chart(
         bind_x: bool = True,
         bind_y: bool = True,
         tooltip: bool = True,
-        legend: Union[bool, list] = True,
+        legend: bool | str = True,
     ) -> Self:
         """
         Add common interactive elements to the chart.
@@ -3828,22 +3828,21 @@ class Chart(
         ----------
         name : string
             The parameter name to use for the axes scales. This name should be
-            unique among all parameters within the chart.
+            unique among all parameters within the chart
         bind_x : boolean, default True
             Bind the interactive scales to the x-axis
         bind_y : boolean, default True
             Bind the interactive scales to the y-axis
         tooltip : boolean, default True,
             Add a tooltip containing the encodings used in the chart
-        legend : boolean or list, default True
-            Make the legend clickable and control the opacity of the marks.
-            Can be set to a list indicating which encodings the legend
-            interactivity should include.
+        legend : boolean or string, default True
+            A single encoding channel to be used to create a clickable legend.
+            The deafult is to guess from the spec based on the most commonly used legend encodings.
 
         Returns
         -------
         chart :
-            copy of self, with interactive axes added
+            copy of self, with interactivity added
 
         """
         encodings: list[SingleDefUnitChannel_T] = []
@@ -3864,8 +3863,11 @@ class Chart(
                 }
             else:
                 interactive_chart.mark.tooltip = tooltip
+
         if legend:
-            if not isinstance(legend, list):
+            if isinstance(legend, str):
+                legend_encoding = legend
+            else:
                 # Set the legend to commonly used encodings by default
                 possible_legend_encodings = [
                     "color",
@@ -3876,36 +3878,36 @@ class Chart(
                     "radius",  # TODO Untested
                     # "size",  # TODO Currently size is not working, renders empty legend
                 ]
-                defined_legend_encodings = [
-                    enc for enc in possible_legend_encodings
-                    if not isinstance(interactive_chart.encoding[enc], utils.schemapi.UndefinedType)
-                ]
-            else:
-                defined_legend_encodings = legend
-            legend_selection = selection_point(
-                bind="legend",
-                encodings=defined_legend_encodings
-            )
-            for legend_encoding in defined_legend_encodings:
-                if not isinstance(
+                legend_encoding = next(
+                    (
+                        enc for enc in possible_legend_encodings
+                        if not isinstance(interactive_chart.encoding[enc], utils.schemapi.UndefinedType)
+                    ),
+                    None
+                )
+
+            if legend_encoding is not None:
+                if isinstance(
                     interactive_chart.encoding[legend_encoding]['type'],
                     utils.schemapi.UndefinedType
                 ):
-                    legend_encoding_type = interactive_chart.encoding[legend_encoding]['type']
-                else:
                     legend_encoding_type = interactive_chart.encoding[legend_encoding].to_dict(
                         context={'data': interactive_chart.data}
                     )['type']
+                else:
+                    legend_encoding_type = interactive_chart.encoding[legend_encoding]['type']
                 if legend_encoding_type == 'nominal':  # TODO Ideally this would work for ordinal data too
+                    legend_selection = selection_point(
+                        bind="legend",
+                        encodings=[legend_encoding]
+                    )
                     initial_computed_domain = param(expr=f"domain('{legend_encoding}')")
                     nonreactive_domain = param(react=False, expr=initial_computed_domain.name)
                     if isinstance(
                         interactive_chart.encoding[legend_encoding]['scale'],
                         utils.schemapi.UndefinedType
                     ):
-                        interactive_chart.encoding[legend_encoding]['scale'] = {
-                            'domain': nonreactive_domain
-                        }
+                        interactive_chart.encoding[legend_encoding]['scale'] = {'domain': nonreactive_domain}
                     else:
                         interactive_chart.encoding[legend_encoding]['scale']['domain'] = nonreactive_domain
 
