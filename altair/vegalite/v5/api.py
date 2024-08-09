@@ -3866,14 +3866,14 @@ class Chart(
         if legend:
             if not isinstance(legend, list):
                 # Set the legend to commonly used encodings by default
-                legend = [
-                    "angle",
-                    "radius",
+                possible_legend_encodings = [
                     "color",
                     "fill",
                     "shape",
-                    "size",
                     "stroke",
+                    "angle",  # TODO Untested
+                    "radius",  # TODO Untested
+                    # "size",  # TODO Currently size is not working, renders empty legend
                 ]
                 defined_legend_encodings = [
                     enc for enc in possible_legend_encodings
