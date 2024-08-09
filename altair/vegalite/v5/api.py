@@ -3880,44 +3880,53 @@ class Chart(
                 ]
                 legend_encoding = next(
                     (
-                        enc for enc in possible_legend_encodings
-                        if not isinstance(interactive_chart.encoding[enc], utils.schemapi.UndefinedType)
+                        enc
+                        for enc in possible_legend_encodings
+                        if not isinstance(
+                            interactive_chart.encoding[enc],
+                            utils.schemapi.UndefinedType,
+                        )
                     ),
-                    None
+                    None,
                 )
 
             if legend_encoding is not None:
                 if isinstance(
-                    interactive_chart.encoding[legend_encoding]['type'],
-                    utils.schemapi.UndefinedType
+                    interactive_chart.encoding[legend_encoding]["type"],
+                    utils.schemapi.UndefinedType,
                 ):
-                    legend_encoding_type = interactive_chart.encoding[legend_encoding].to_dict(
-                        context={'data': interactive_chart.data}
-                    )['type']
+                    legend_encoding_type = interactive_chart.encoding[
+                        legend_encoding
+                    ].to_dict(context={"data": interactive_chart.data})["type"]
                 else:
-                    legend_encoding_type = interactive_chart.encoding[legend_encoding]['type']
-                if legend_encoding_type == 'nominal':  # TODO Ideally this would work for ordinal data too
+                    legend_encoding_type = interactive_chart.encoding[legend_encoding][
+                        "type"
+                    ]
+                if (
+                    legend_encoding_type == "nominal"
+                ):  # TODO Ideally this would work for ordinal data too
                     legend_selection = selection_point(
-                        bind="legend",
-                        encodings=[legend_encoding]
+                        bind="legend", encodings=[legend_encoding]
                     )
                     initial_computed_domain = param(expr=f"domain('{legend_encoding}')")
-                    nonreactive_domain = param(react=False, expr=initial_computed_domain.name)
+                    nonreactive_domain = param(
+                        react=False, expr=initial_computed_domain.name
+                    )
                     if isinstance(
-                        interactive_chart.encoding[legend_encoding]['scale'],
-                        utils.schemapi.UndefinedType
+                        interactive_chart.encoding[legend_encoding]["scale"],
+                        utils.schemapi.UndefinedType,
                     ):
-                        interactive_chart.encoding[legend_encoding]['scale'] = {'domain': nonreactive_domain}
+                        interactive_chart.encoding[legend_encoding]["scale"] = {
+                            "domain": nonreactive_domain
+                        }
                     else:
-                        interactive_chart.encoding[legend_encoding]['scale']['domain'] = nonreactive_domain
+                        interactive_chart.encoding[legend_encoding]["scale"][
+                            "domain"
+                        ] = nonreactive_domain
 
                     interactive_chart = interactive_chart.add_params(
-                        legend_selection,
-                        initial_computed_domain,
-                        nonreactive_domain
-                    ).transform_filter(
-                        legend_selection
-                    )
+                        legend_selection, initial_computed_domain, nonreactive_domain
+                    ).transform_filter(legend_selection)
         return interactive_chart
 
 
