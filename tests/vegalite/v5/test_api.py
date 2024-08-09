@@ -1404,39 +1404,20 @@ def test_layer_errors():
 
     simple_chart = alt.Chart("data.txt").mark_point()
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r".config. attribute cannot.+LayerChart"):
         toplevel_chart + simple_chart
-    assert str(err.value).startswith(
-        'Objects with "config" attribute cannot be used within LayerChart.'
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Concat.+cannot.+layered.+before concat"):
         alt.hconcat(simple_chart) + simple_chart
-    assert (
-        str(err.value)
-        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Repeat.+cannot.+layered.+before repeat"):
         repeat_chart + simple_chart
-    assert (
-        str(err.value)
-        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         facet_chart1 + simple_chart
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         alt.layer(simple_chart) + facet_chart2
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
 
 @pytest.mark.parametrize(
