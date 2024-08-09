@@ -386,7 +386,7 @@ class SchemaInfo:
         return_as_str: Literal[False] = ...,
         additional_type_hints: list[str] | None = ...,
     ) -> list[str]: ...
-    def get_python_type_representation(
+    def get_python_type_representation(  # noqa: C901
         self,
         for_type_hints: bool = False,
         return_as_str: bool = True,
@@ -682,7 +682,7 @@ class RSTParse(mistune.Markdown):
 rst_parse: RSTParse = RSTParse(RSTRenderer())
 
 
-def indent_docstring(
+def indent_docstring(  # noqa: C901
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
     """Indent a docstring for use in generated code."""

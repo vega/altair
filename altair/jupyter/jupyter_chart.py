@@ -218,7 +218,7 @@ class JupyterChart(anywidget.AnyWidget):
         )
 
     @traitlets.observe("chart")
-    def _on_change_chart(self, change):
+    def _on_change_chart(self, change):  # noqa: C901
         """Updates the JupyterChart's internal state when the wrapped Chart instance changes."""
         new_chart = change.new
         selection_watches = []
