@@ -1735,7 +1735,7 @@ def _top_schema_base(  # noqa: ANN202
     ):
         return obj
     else:
-        msg = f"{type(obj).__name__!r} does not derive from {type(core.SchemaBase).__name__!r}"
+        msg = f"{type(obj).__name__!r} does not derive from {SchemaBase.__name__!r}"
         raise TypeError(msg)
 
 
