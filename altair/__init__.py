@@ -617,6 +617,7 @@ __all__ = [
     "mixins",
     "param",
     "parse_shorthand",
+    "register_theme",
     "renderers",
     "repeat",
     "sample",

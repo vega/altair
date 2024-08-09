@@ -21,4 +21,4 @@ from .display import (
     renderers,
 )
 from .schema import *
-from .theme import themes
+from .theme import register_theme, themes
