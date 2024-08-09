@@ -40,6 +40,7 @@ from packaging.version import Version
 from altair import vegalite
 
 if TYPE_CHECKING:
+    from types import ModuleType
     from typing import ClassVar
 
     from referencing import Registry
@@ -1012,12 +1013,7 @@ class SchemaBase:
         """
         context = context or {}
         ignore = ignore or []
-        # The following return the package only if it has already been
-        # imported - otherwise they return None. This is useful for
-        # isinstance checks - for example, if pandas has not been imported,
-        # then an object is definitely not a `pandas.Timestamp`.
-        pd_opt = sys.modules.get("pandas")
-        np_opt = sys.modules.get("numpy")
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
 
         if self._args and not self._kwds:
             kwds = self._args[0]
@@ -1032,7 +1028,7 @@ class SchemaBase:
         else:
             msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
             raise ValueError(msg)
-        result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
+        result = _todict(kwds, context=context, **opts)
         if validate:
             try:
                 self.validate(result)
@@ -1180,13 +1176,8 @@ class SchemaBase:
         cls, name: str, value: Any, schema: dict[str, Any] | None = None
     ) -> None:
         """Validate a property against property schema in the context of the rootschema."""
-        # The following return the package only if it has already been
-        # imported - otherwise they return None. This is useful for
-        # isinstance checks - for example, if pandas has not been imported,
-        # then an object is definitely not a `pandas.Timestamp`.
-        pd_opt = sys.modules.get("pandas")
-        np_opt = sys.modules.get("numpy")
-        value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
+        value = _todict(value, context={}, **opts)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         return validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
@@ -1194,6 +1185,30 @@ class SchemaBase:
 
     def __dir__(self) -> list[str]:
         return sorted(chain(super().__dir__(), self._kwds))
+
+
+def _get_optional_modules(**modules: str) -> dict[str, ModuleType | None]:
+    """
+    Returns packages only if they have already been imported - otherwise they return `None`.
+
+    This is useful for `isinstance` checks.
+
+    For example, if `pandas` has not been imported, then an object is
+    definitely not a `pandas.Timestamp`.
+
+    Parameters
+    ----------
+    **modules
+        Keyword-only binding from `{alias: module_name}`.
+
+    Examples
+    --------
+    ::
+
+        ResultType = dict[Literal["pd", "pl"], ModuleType | None]
+        r: ResultType = _get_optional_modules(pd="pandas", pl="polars")
+    """
+    return {k: sys.modules.get(v) for k, v in modules.items()}
 
 
 def _replace_parsed_shorthand(
