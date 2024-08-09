@@ -1712,9 +1712,27 @@ def _top_schema_base(  # noqa: ANN202
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
-    Use for instance methods.
+    Use for methods, called from `TopLevelMixin` that are defined in `SchemaBase`.
+
+    Notes
+    -----
+    - The `super` sub-branch is not statically checked *here*.
+        - It would widen the inferred intersection to:
+            - `(<subclass of SchemaBase and TopLevelMixin> | super)`
+        - Both dunder attributes are not in the `super` type stubs
+            - Requiring 2x *# type: ignore[attr-defined]*
+    - However it is required at runtime for any cases that use `super(..., copy)`.
+    - The inferred type **is** used statically **outside** of this function.
     """
-    if isinstance(obj, core.SchemaBase) and isinstance(obj, TopLevelMixin):
+    SchemaBase = core.SchemaBase
+    if (isinstance(obj, SchemaBase) and isinstance(obj, TopLevelMixin)) or (
+        not TYPE_CHECKING
+        and (
+            isinstance(obj, super)
+            and issubclass(obj.__self_class__, SchemaBase)
+            and obj.__thisclass__ is TopLevelMixin
+        )
+    ):
         return obj
     else:
         msg = f"{type(obj).__name__!r} does not derive from {type(core.SchemaBase).__name__!r}"
@@ -1803,10 +1821,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        # TopLevelMixin instance does not necessarily have to_dict defined
-        # but due to how Altair is set up this should hold.
-        # Too complex to type hint right now
-        vegalite_spec: Any = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
