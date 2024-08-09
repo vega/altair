@@ -3821,7 +3821,8 @@ class Chart(
         tooltip: bool = True,
         legend: Union[bool, list] = True,
     ) -> Self:
-        """Add common interactive elements to the chart
+        """
+        Add common interactive elements to the chart.
 
         Parameters
         ----------
