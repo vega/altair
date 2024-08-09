@@ -17,7 +17,6 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning"
 )
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
@@ -29,7 +28,7 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("bar_chart_faceted_compact.py", 27, ["p", "p_end"]),
     ("beckers_barley_facet.py", 120, ["year", "site"]),
     ("beckers_barley_wrapped_facet.py", 120, ["site", "median_yield"]),
-    ("bump_chart.py", 100, ["rank", "yearmonth_date"]),
+    ("bump_chart.py", 96, ["rank", "yearmonth_date"]),
     ("comet_chart.py", 120, ["variety", "delta"]),
     ("diverging_stacked_bar_chart.py", 40, ["value", "percentage_start"]),
     ("donut_chart.py", 6, ["value_start", "value_end"]),
