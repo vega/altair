@@ -3820,7 +3820,6 @@ class Chart(
         bind_y: bool = True,
         tooltip: bool = True,
         legend: Union[bool, list] = True,
-        legend_opacity: tuple = (0.7, 0.1),
     ) -> Self:
         """Add common interactive elements to the chart
 
@@ -3839,8 +3838,6 @@ class Chart(
             Make the legend clickable and control the opacity of the marks.
             Can be set to a list indicating which encodings the legend
             interactivity should include.
-        legend_opacity : tuple, default (0.7, 0.1)
-            The default opacity values for the clicked and unclicked marks
 
         Returns
         -------
@@ -3878,30 +3875,12 @@ class Chart(
                     "size",
                     "stroke",
                 ]
-                # Detect common legend encodings used in the spec
-                # legend = [
-                #     enc
-                #     for enc in interactive_chart.encoding.to_dict(validate=False).keys()
-                #     if enc
-                #     in [
-                #         "angle",
-                #         "radius",
-                #         "color",
-                #         "fill",
-                #         "shape",
-                #         "size",
-                #         "stroke",
-                #     ]
-                # ]
-            legend_selection = selection_point(bind="legend", encodings=legend)
-            interactive_chart = interactive_chart.add_params(
-                legend_selection,
-            ).encode(
-                opacity=condition(
-                    legend_selection,
-                    value(legend_opacity[0]),
-                    value(legend_opacity[1]),
-                )
+                defined_legend_encodings = [
+                    enc for enc in possible_legend_encodings
+                    if not isinstance(interactive_chart.encoding[enc], utils.schemapi.UndefinedType)
+                ]
+            else:
+                defined_legend_encodings = legend
             )
         return interactive_chart
 
