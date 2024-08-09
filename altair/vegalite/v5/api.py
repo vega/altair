@@ -1710,12 +1710,30 @@ def _top_schema_base(  # noqa: ANN202
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
-    Use for instance methods.
+    Use for methods, called from `TopLevelMixin` that are defined in `SchemaBase`.
+
+    Notes
+    -----
+    - The `super` sub-branch is not statically checked *here*.
+        - It would widen the inferred intersection to:
+            - `(<subclass of SchemaBase and TopLevelMixin> | super)`
+        - Both dunder attributes are not in the `super` type stubs
+            - Requiring 2x *# type: ignore[attr-defined]*
+    - However it is required at runtime for any cases that use `super(..., copy)`.
+    - The inferred type **is** used statically **outside** of this function.
     """
-    if isinstance(obj, core.SchemaBase) and isinstance(obj, TopLevelMixin):
+    SchemaBase = core.SchemaBase
+    if (isinstance(obj, SchemaBase) and isinstance(obj, TopLevelMixin)) or (
+        not TYPE_CHECKING
+        and (
+            isinstance(obj, super)
+            and issubclass(obj.__self_class__, SchemaBase)
+            and obj.__thisclass__ is TopLevelMixin
+        )
+    ):
         return obj
     else:
-        msg = f"{type(obj).__name__!r} does not derive from {type(core.SchemaBase).__name__!r}"
+        msg = f"{type(obj).__name__!r} does not derive from {SchemaBase.__name__!r}"
         raise TypeError(msg)
 
 
@@ -1729,7 +1747,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         validate: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
@@ -1739,31 +1757,25 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
-        format : str, optional
-            Chart specification format, one of "vega-lite" (default) or "vega"
+            If True (default), then validate the result against the schema.
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this chart
+            A context dictionary.
 
         Raises
         ------
-        SchemaValidationError
-            if validate=True and the dict does not conform to the schema
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         # Validate format
         if format not in {"vega-lite", "vega"}:
@@ -1801,10 +1813,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        # TopLevelMixin instance does not necessarily have to_dict defined
-        # but due to how Altair is set up this should hold.
-        # Too complex to type hint right now
-        vegalite_spec: Any = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
@@ -1856,7 +1865,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
         **kwargs: Any,
@@ -1867,24 +1876,31 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
-        format : str, optional
-            The chart specification format. One of "vega-lite" (default) or "vega".
-            The "vega" format relies on the active Vega-Lite compiler plugin, which
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
             by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
+            A context dictionary.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
+
+        Raises
+        ------
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if ignore is None:
             ignore = []
@@ -3691,24 +3707,19 @@ class Chart(
         cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> _TSchemaBase:
         """
-        Construct class from a dictionary representation.
+        Construct a ``Chart`` from a dictionary representation.
 
         Parameters
         ----------
         dct : dictionary
-            The dict from which to construct the class
+            The dict from which to construct the ``Chart``.
         validate : boolean
             If True (default), then validate the input against the schema.
-
-        Returns
-        -------
-        obj : Chart object
-            The wrapped schema
 
         Raises
         ------
         jsonschema.ValidationError :
-            if validate=True and dct does not conform to the schema
+            If ``validate`` and ``dct`` does not conform to the schema
         """
         _tp: Any
         for tp in TopLevelMixin.__subclasses__():
@@ -3725,41 +3736,35 @@ class Chart(
         self,
         validate: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """
-        Convert the chart to a dictionary suitable for JSON export.
+        Convert the ``Chart`` to a dictionary suitable for JSON export.
 
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
-        format : str, optional
-            Chart specification format, one of "vega-lite" (default) or "vega"
+            If True (default), then validate the result against the schema.
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this chart
+            A context dictionary.
 
         Raises
         ------
-        SchemaValidationError
-            if validate=True and the dict does not conform to the schema
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         context = context or {}
         kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
