@@ -420,7 +420,7 @@ options available to change the sort order:
 - Passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
   sorting by that channel. An optional minus prefix can be used for a descending
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
-- Passing an ordered `Sequence <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`_ to ``sort`` allows you to explicitly set the order in which
+- Passing a `Sequence <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`_ to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
 - Using the ``field`` and ``op`` parameters to specify a field and aggregation operation to sort by.
 
