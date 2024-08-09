@@ -56,6 +56,7 @@ __all__ = [
     "TitleOrient_T",
     "TypeForShape_T",
     "Type_T",
+    "VegaThemes",
     "WindowOnlyOp_T",
 ]
 
@@ -76,6 +77,22 @@ The parameters ``short``, ``long`` accept the same range of types::
     ): ...
 """
 
+VegaThemes: TypeAlias = Literal[
+    "carbong10",
+    "carbong100",
+    "carbong90",
+    "carbonwhite",
+    "dark",
+    "excel",
+    "fivethirtyeight",
+    "ggplot2",
+    "googlecharts",
+    "latimes",
+    "powerbi",
+    "quartz",
+    "urbaninstitute",
+    "vox",
+]
 Map: TypeAlias = Mapping[str, Any]
 AggregateOp_T: TypeAlias = Literal[
     "argmax",

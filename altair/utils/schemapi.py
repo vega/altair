@@ -45,7 +45,7 @@ if TYPE_CHECKING:
 
     from referencing import Registry
 
-    from altair import ChartType
+    from altair.typing import ChartType
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -794,7 +794,7 @@ Examples
 The parameters ``short``, ``long`` accept the same range of types::
 
     # ruff: noqa: UP006, UP007
-    from altair import Optional
+    from altair.typing import Optional
 
     def func_1(
         short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
@@ -803,10 +803,12 @@ The parameters ``short``, ``long`` accept the same range of types::
         ] = Undefined,
     ): ...
 
-This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__ as ``altair.Optional`` treats ``None`` like any other type::
+This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__.
+
+``altair.typing.Optional`` treats ``None`` like any other type::
 
     # ruff: noqa: UP006, UP007
-    from altair import Optional
+    from altair.typing import Optional
 
     def func_2(
         short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
