@@ -3819,14 +3819,29 @@ class Chart(
         bind_x: bool = True,
         bind_y: bool = True,
         tooltip: bool = True,
-        legend: bool | str = True,
+        legend: bool
+        | Literal[
+            "radius",
+            "radius2",
+            "color",
+            "fill",
+            "stroke",
+            "opacity",
+            "fillOpacity",
+            "strokeOpacity",
+            "strokeWidth",
+            "strokeDash",
+            "size",
+            "angle",
+            "shape",
+        ] = True,
     ) -> Self:
         """
         Add common interactive elements to the chart.
 
         Parameters
         ----------
-        name : string
+        name : string or None
             The parameter name to use for the axes scales. This name should be
             unique among all parameters within the chart
         bind_x : boolean, default True
@@ -3874,6 +3889,11 @@ class Chart(
                     "fill",
                     "shape",
                     "stroke",
+                    "opacity",
+                    "fillOpacity",
+                    "strokeOpacity",
+                    "strokeWidth",
+                    "strokeDash",
                     "angle",  # TODO Untested
                     "radius",  # TODO Untested
                     # "size",  # TODO Currently size is not working, renders empty legend
