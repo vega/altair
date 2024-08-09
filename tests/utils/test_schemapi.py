@@ -872,14 +872,13 @@ def test_multiple_field_strings_in_condition():
     selection = alt.selection_point()
     expected_error_message = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
     with pytest.raises(ValueError, match=expected_error_message):
-        (
+        chart = (  # noqa: F841
             alt.Chart(data.cars())
             .mark_circle()
             .add_params(selection)
-            .encode(
-                color=alt.condition(selection, "Origin", "Origin"),
-            )
-        ).to_dict()
+            .encode(color=alt.condition(selection, "Origin", "Origin"))
+            .to_dict()
+        )
 
 
 def test_serialize_numpy_types():
