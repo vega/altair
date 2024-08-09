@@ -3887,7 +3887,7 @@ class Chart(
                             utils.schemapi.UndefinedType,
                         )
                     ),
-                    None,
+                    None,  # type: ignore
                 )
 
             if legend_encoding is not None:
