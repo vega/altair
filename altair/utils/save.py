@@ -140,8 +140,7 @@ def save(
             version="5.0.0",
         )
 
-    if json_kwds is None:
-        json_kwds = {}
+    json_kwds = json_kwds or {}
     encoding = kwargs.get("encoding", "utf-8")
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
