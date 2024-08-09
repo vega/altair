@@ -761,10 +761,12 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         # Add unformatted messages of any remaining errors which were not
         # considered so far. This is not expected to be used but more exists
         # as a fallback for cases which were not known during development.
-        for validator, errors in errors_by_validator.items():
-            if validator not in {"enum", "type"}:
-                message += "\n".join([e.message for e in errors])
-
+        it = (
+            "\n".join(e.message for e in errors)
+            for validator, errors in errors_by_validator.items()
+            if validator not in {"enum", "type"}
+        )
+        message += "".join(it)
         return message
 
 
