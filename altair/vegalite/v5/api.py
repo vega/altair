@@ -1743,7 +1743,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     _class_is_valid_at_instantiation: bool = False
     data: Any
 
-    def to_dict(
+    def to_dict(  # noqa: C901
         self,
         validate: bool = True,
         *,
@@ -3881,7 +3881,8 @@ def _check_if_valid_subspec(
             raise ValueError(err.format(attr, classname))
 
 
-def _check_if_can_be_layered(spec: LayerType | dict[str, Any]) -> None:
+# C901 fixed in https://github.com/vega/altair/pull/3520
+def _check_if_can_be_layered(spec: LayerType | dict[str, Any]) -> None:  # noqa: C901
     """Check if the spec can be layered."""
 
     def _get(spec: LayerType | dict[str, Any], attr: str) -> Any:
@@ -4720,7 +4721,7 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     return subcharts
 
 
-def _combine_subchart_params(
+def _combine_subchart_params(  # noqa: C901
     params: Optional[Sequence[_Parameter]], subcharts: list[ChartType]
 ) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
     if utils.is_undefined(params):
@@ -4857,7 +4858,7 @@ def _repeat_names(
     return params_named
 
 
-def _remove_layer_props(
+def _remove_layer_props(  # noqa: C901
     chart: LayerChart, subcharts: list[ChartType], layer_props: Iterable[str]
 ) -> tuple[dict[str, Any], list[ChartType]]:
     def remove_prop(subchart: ChartType, prop: str) -> ChartType:
