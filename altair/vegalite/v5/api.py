@@ -3873,10 +3873,6 @@ def _check_if_can_be_layered(spec: LayerType) -> None:
     def _get_any(spec: LayerType, *attrs: str) -> bool:
         return any(spec._get(attr) is not Undefined for attr in attrs)
 
-    if not isinstance(spec, core.SchemaBase):
-        msg = "Only chart objects can be layered."
-        raise TypeError(msg)
-
     base_msg = "charts cannot be layered. Instead, layer the charts before"
 
     encoding: Any = spec._get("encoding")
