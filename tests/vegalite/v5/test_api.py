@@ -328,11 +328,10 @@ def test_multiple_encodings(args, kwargs):
     assert dct["encoding"]["tooltip"] == encoding_dct
 
 
-@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_operations():
     data = pd.DataFrame(
         {
-            "x": pd.date_range("2012", periods=10, freq="Y"),
+            "x": pd.date_range("2012", periods=10, freq="YS"),
             "y": range(10),
             "c": list("abcabcabca"),
         }
