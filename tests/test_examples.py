@@ -82,7 +82,6 @@ def id_func(val) -> str:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
@@ -102,7 +101,6 @@ def test_render_examples_to_chart(source, filename) -> None:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
@@ -134,7 +132,6 @@ def test_from_and_to_json_roundtrip(source, filename) -> None:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
