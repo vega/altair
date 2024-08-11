@@ -3,6 +3,6 @@
 from .core import *
 from .channels import *
 
-SCHEMA_VERSION = "v5.19.0"
+SCHEMA_VERSION = "v5.20.1"
 
-SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v5.19.0.json"
+SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v5.20.1.json"

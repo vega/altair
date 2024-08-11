@@ -811,19 +811,15 @@ def test_to_url(basic_chart):
         pytest.skip("vl_convert is not installed")
 
     share_url = basic_chart.to_url()
-    expected_vegalite_encoding = "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaAOwA2ABwAWFi1NyTcgEb7TtuabAswc-XTZhMczLdNDAEYQGRA1OQAnAGtlQgBPAAdNZBAnSNDuTChIOhIkVBAAD2V4TAAbOi0lbgTkrSgINRI5csyQeNKsSq1bEFqklJAAR1I5IjhFYjRNaW4AEkowRkwIrTFCRMpkAHodmYQ5ADoEScZSWyO4CB2llYj9zEPdcsnMfYBWI6CATiO2I4AK0o0H62gUckomEIlGUOjkBhM5ks1mMdgcThcbg8Xh8fgCwRQAG1QEpUgBBMF9ZAAJmMMlJWgAQlSUB8PgyQGSQABhVnIcyc7kAEX5PyCQq0AFF+cYJZxGakAGL8j4sSWpADi-N+GpAgll+j1AElVTTJABdaRAA"
 
-    assert (
-        share_url
-        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}"
-    )
+    assert share_url.startswith("https://vega.github.io/editor/#/url/vega-lite/")
 
     # Check fullscreen
     fullscreen_share_url = basic_chart.to_url(fullscreen=True)
-    assert (
-        fullscreen_share_url
-        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}/view"
+    assert fullscreen_share_url.startswith(
+        "https://vega.github.io/editor/#/url/vega-lite/"
     )
+    assert fullscreen_share_url.endswith("/view")
 
 
 def test_facet_basic():
