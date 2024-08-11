@@ -3821,19 +3821,19 @@ class Chart(
         tooltip: bool = True,
         legend: bool
         | Literal[
-            "radius",
-            "radius2",
             "color",
             "fill",
+            "shape",
             "stroke",
             "opacity",
             "fillOpacity",
             "strokeOpacity",
             "strokeWidth",
             "strokeDash",
-            "size",
-            "angle",
-            "shape",
+            "angle",  # TODO Untested
+            "radius",  # TODO Untested
+            "radius2",  # TODO Untested
+            # "size",  # TODO Currently size is not working, renders empty legend
         ] = True,
     ) -> Self:
         """
@@ -3884,7 +3884,23 @@ class Chart(
                 legend_encoding = legend
             else:
                 # Set the legend to commonly used encodings by default
-                possible_legend_encodings: list[SingleDefUnitChannel_T] = [
+                possible_legend_encodings: list[
+                    Literal[
+                        "color",
+                        "fill",
+                        "shape",
+                        "stroke",
+                        "opacity",
+                        "fillOpacity",
+                        "strokeOpacity",
+                        "strokeWidth",
+                        "strokeDash",
+                        "angle",  # TODO Untested
+                        "radius",  # TODO Untested
+                        "radius2",  # TODO Untested
+                        # "size",  # TODO Currently size is not working, renders empty legend
+                    ]
+                ] = [
                     "color",
                     "fill",
                     "shape",
@@ -3896,6 +3912,7 @@ class Chart(
                     "strokeDash",
                     "angle",  # TODO Untested
                     "radius",  # TODO Untested
+                    "radius2",  # TODO Untested
                     # "size",  # TODO Currently size is not working, renders empty legend
                 ]
                 legend_encoding = next(
