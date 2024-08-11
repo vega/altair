@@ -3813,29 +3813,14 @@ class Chart(
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
-    def interactive(  # noqa: C901
+    def interactive(
         self,
         name: str | None = None,
         bind_x: bool = True,
         bind_y: bool = True,
         tooltip: bool = True,
-        legend: bool
-        | Literal[
-            "color",
-            "fill",
-            "shape",
-            "stroke",
-            "opacity",
-            "fillOpacity",
-            "strokeOpacity",
-            "strokeWidth",
-            "strokeDash",
-            "angle",  # TODO Untested
-            "radius",  # TODO Untested
-            "radius2",  # TODO Untested
-            # "size",  # TODO Currently size is not working, renders empty legend
-        ] = True,
-    ) -> Self:
+        legend: bool | LegendChannel_T = False,
+    ) -> Chart:
         """
         Add common interactive elements to the chart.
 
@@ -3865,101 +3850,81 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        interactive_chart = self.add_params(
+        chart: Chart = self.copy().add_params(
             selection_interval(bind="scales", encodings=encodings)
-        ).copy()
+        )
         # We can't simply use configure_mark since configure methods
         # are not allowed in layered specs
         if tooltip:
-            if isinstance(interactive_chart.mark, str):
-                interactive_chart.mark = {
-                    "type": interactive_chart.mark,
-                    "tooltip": tooltip,
-                }
-            else:
-                interactive_chart.mark.tooltip = tooltip
-
+            chart = _add_tooltip(chart)
         if legend:
-            if isinstance(legend, str):
-                legend_encoding = legend
-            else:
-                # Set the legend to commonly used encodings by default
-                possible_legend_encodings: list[
-                    Literal[
-                        "color",
-                        "fill",
-                        "shape",
-                        "stroke",
-                        "opacity",
-                        "fillOpacity",
-                        "strokeOpacity",
-                        "strokeWidth",
-                        "strokeDash",
-                        "angle",  # TODO Untested
-                        "radius",  # TODO Untested
-                        "radius2",  # TODO Untested
-                        # "size",  # TODO Currently size is not working, renders empty legend
-                    ]
-                ] = [
-                    "color",
-                    "fill",
-                    "shape",
-                    "stroke",
-                    "opacity",
-                    "fillOpacity",
-                    "strokeOpacity",
-                    "strokeWidth",
-                    "strokeDash",
-                    "angle",  # TODO Untested
-                    "radius",  # TODO Untested
-                    "radius2",  # TODO Untested
-                    # "size",  # TODO Currently size is not working, renders empty legend
-                ]
-                legend_encoding = next(
-                    (
-                        enc
-                        for enc in possible_legend_encodings
-                        if not utils.is_undefined(interactive_chart.encoding[enc])
-                    ),
-                    None,  # type: ignore
+            facet_encoding: FacetedEncoding = chart.encoding
+            if not isinstance(legend, str):
+                legend = _infer_legend_encoding(facet_encoding)
+
+            facet_legend = facet_encoding[legend]
+            legend_type = facet_legend["type"]
+            if utils.is_undefined(legend_type):
+                legend_type = facet_legend.to_dict(context={"data": chart.data})["type"]
+
+            if legend_type == "nominal":
+                # TODO Ideally this would work for ordinal data too
+                legend_selection = selection_point(bind="legend", encodings=[legend])
+                initial_computed_domain = param(expr=f"domain('{legend}')")
+                nonreactive_domain = param(
+                    react=False, expr=initial_computed_domain.name
                 )
-
-            if legend_encoding is not None:
-                if utils.is_undefined(
-                    interactive_chart.encoding[legend_encoding]["type"]
-                ):
-                    legend_encoding_type = interactive_chart.encoding[
-                        legend_encoding
-                    ].to_dict(context={"data": interactive_chart.data})["type"]
+                scale = facet_legend["scale"]
+                if utils.is_undefined(scale):
+                    scale = {"domain": nonreactive_domain}
                 else:
-                    legend_encoding_type = interactive_chart.encoding[legend_encoding][
-                        "type"
-                    ]
-                if (
-                    legend_encoding_type == "nominal"
-                ):  # TODO Ideally this would work for ordinal data too
-                    legend_selection = selection_point(
-                        bind="legend", encodings=[legend_encoding]
-                    )
-                    initial_computed_domain = param(expr=f"domain('{legend_encoding}')")
-                    nonreactive_domain = param(
-                        react=False, expr=initial_computed_domain.name
-                    )
-                    if utils.is_undefined(
-                        interactive_chart.encoding[legend_encoding]["scale"]
-                    ):
-                        interactive_chart.encoding[legend_encoding]["scale"] = {
-                            "domain": nonreactive_domain
-                        }
-                    else:
-                        interactive_chart.encoding[legend_encoding]["scale"][
-                            "domain"
-                        ] = nonreactive_domain
+                    scale["domain"] = nonreactive_domain
+                chart = chart.add_params(
+                    legend_selection,
+                    initial_computed_domain,
+                    nonreactive_domain,
+                ).transform_filter(legend_selection)
+            else:
+                msg = f"Expected only 'nominal' legend type but got {legend_type!r}"
+                raise NotImplementedError(msg)
+        return chart
 
-                    interactive_chart = interactive_chart.add_params(
-                        legend_selection, initial_computed_domain, nonreactive_domain
-                    ).transform_filter(legend_selection)
-        return interactive_chart
+
+LegendChannel_T: TypeAlias = Literal[
+    "color",
+    "fill",
+    "shape",
+    "stroke",
+    "opacity",
+    "fillOpacity",
+    "strokeOpacity",
+    "strokeWidth",
+    "strokeDash",
+    "angle",  # TODO Untested
+    "radius",  # TODO Untested
+    "radius2",  # TODO Untested
+    # "size",  # TODO Currently size is not working, renders empty legend
+]
+
+
+def _add_tooltip(chart: _TChart, /) -> _TChart:
+    mark = chart.mark
+    if isinstance(mark, str):
+        mark = {"type": mark, "tooltip": True}
+    else:
+        mark.tooltip = True
+    return chart
+
+
+def _infer_legend_encoding(encoding: FacetedEncoding, /) -> LegendChannel_T:
+    """Set the legend to commonly used encodings by default."""
+    _channels = t.get_args(LegendChannel_T)
+    it = (ch for ch in _channels if not utils.is_undefined(encoding[ch]))
+    if legend := next(it, None):
+        return legend
+    else:
+        msg = f"Unable to infer target channel for 'legend'.\n\n{encoding!r}"
+        raise NotImplementedError(msg)
 
 
 def _check_if_valid_subspec(
@@ -5039,6 +5004,16 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
+_TChart = TypeVar(
+    "_TChart",
+    Chart,
+    RepeatChart,
+    ConcatChart,
+    HConcatChart,
+    VConcatChart,
+    FacetChart,
+    LayerChart,
+)
 ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
