@@ -3884,7 +3884,7 @@ class Chart(
                 legend_encoding = legend
             else:
                 # Set the legend to commonly used encodings by default
-                possible_legend_encodings: SingleDefUnitChannel_T = [
+                possible_legend_encodings: list[SingleDefUnitChannel_T] = [
                     "color",
                     "fill",
                     "shape",
