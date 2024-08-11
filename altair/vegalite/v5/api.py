@@ -3849,7 +3849,7 @@ class Chart(
 
 
 def _check_if_valid_subspec(
-    spec: ConcatType | LayerType | dict[str, Any],
+    spec: ConcatType | LayerType,
     classname: Literal[
         "ConcatChart",
         "FacetChart",
@@ -3859,65 +3859,50 @@ def _check_if_valid_subspec(
         "VConcatChart",
     ],
 ) -> None:
-    """
-    Check if the spec is a valid sub-spec.
-
-    If it is not, then raise a ValueError
-    """
-    err = (
-        'Objects with "{0}" attribute cannot be used within {1}. '
-        "Consider defining the {0} attribute in the {1} object instead."
-    )
-
-    if not isinstance(spec, (core.SchemaBase, dict)):
+    """Raise a `TypeError` if `spec` is not a valid sub-spec."""
+    if not isinstance(spec, core.SchemaBase):
         msg = f"Only chart objects can be used in {classname}."
-        raise ValueError(msg)
+        raise TypeError(msg)
     for attr in TOPLEVEL_ONLY_KEYS:
-        if isinstance(spec, core.SchemaBase):
-            val = getattr(spec, attr, Undefined)
-        else:
-            val = spec.get(attr, Undefined)
-        if val is not Undefined:
-            raise ValueError(err.format(attr, classname))
+        if spec._get(attr) is not Undefined:
+            msg = (
+                f"Objects with {attr!r} attribute cannot be used within {classname}. "
+                f"Consider defining the {attr} attribute in the {classname} object instead."
+            )
+            raise TypeError(msg)
 
 
-# C901 fixed in https://github.com/vega/altair/pull/3520
-def _check_if_can_be_layered(spec: LayerType | dict[str, Any]) -> None:  # noqa: C901
-    """Check if the spec can be layered."""
+def _check_if_can_be_layered(spec: LayerType) -> None:
+    """Raise a `TypeError` if `spec` cannot be layered."""
 
-    def _get(spec: LayerType | dict[str, Any], attr: str) -> Any:
-        if isinstance(spec, core.SchemaBase):
-            return spec._get(attr)
-        else:
-            return spec.get(attr, Undefined)
-
-    def _get_any(spec: LayerType | dict[str, Any], *attrs: str) -> bool:
-        return any(_get(spec, attr) is not Undefined for attr in attrs)
+    def _get_any(spec: LayerType, *attrs: str) -> bool:
+        return any(spec._get(attr) is not Undefined for attr in attrs)
 
     base_msg = "charts cannot be layered. Instead, layer the charts before"
 
-    encoding = _get(spec, "encoding")
-    if encoding is not Undefined:
+    encoding: Any = spec._get("encoding")
+    if not utils.is_undefined(encoding):
         for channel in ["row", "column", "facet"]:
-            if _get(encoding, channel) is not Undefined:
+            if encoding._get(channel) is not Undefined:
                 msg = f"Faceted {base_msg} faceting."
-                raise ValueError(msg)
+                raise TypeError(msg)
     if isinstance(spec, (Chart, LayerChart)):
         return
-
-    if not isinstance(spec, (core.SchemaBase, dict)):
-        msg = "Only chart objects can be layered."
-        raise ValueError(msg)
-    if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        msg = f"Faceted {base_msg} faceting."
-        raise ValueError(msg)
-    if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        msg = f"Repeat {base_msg} repeating."
-        raise ValueError(msg)
-    _concat = ConcatChart, HConcatChart, VConcatChart
-    if isinstance(spec, _concat) or _get_any(spec, "concat", "hconcat", "vconcat"):
-        msg = f"Concatenated {base_msg} concatenating."
-        raise ValueError(msg)
+    elif is_chart_type(spec) or _get_any(
+        spec, "facet", "repeat", "concat", "hconcat", "vconcat"
+    ):
+        if isinstance(spec, FacetChart) or spec._get("facet") is not Undefined:
+            msg = f"Faceted {base_msg} faceting."
+        elif isinstance(spec, RepeatChart) or spec._get("repeat") is not Undefined:
+            msg = f"Repeat {base_msg} repeating."
+        elif isinstance(spec, (ConcatChart, HConcatChart, VConcatChart)) or _get_any(
+            spec, "concat", "hconcat", "vconcat"
+        ):
+            msg = f"Concatenated {base_msg} concatenating."
+        else:
+            msg = "Should be unreachable"
+            raise NotImplementedError(msg)
+        raise TypeError(msg)
 
 
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
