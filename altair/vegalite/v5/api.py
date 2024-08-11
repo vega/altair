@@ -3813,7 +3813,7 @@ class Chart(
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
-    def interactive(
+    def interactive(  # noqa: C901
         self,
         name: str | None = None,
         bind_x: bool = True,
