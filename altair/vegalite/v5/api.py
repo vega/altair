@@ -3815,7 +3815,7 @@ class Chart(
 
     def interactive(
         self,
-        name: Optional[str] | None = None,
+        name: str | None = None,
         bind_x: bool = True,
         bind_y: bool = True,
         tooltip: bool = True,
