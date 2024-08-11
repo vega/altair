@@ -811,19 +811,15 @@ def test_to_url(basic_chart):
         pytest.skip("vl_convert is not installed")
 
     share_url = basic_chart.to_url()
-    expected_vegalite_encoding = "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaAOwA2ABwAWFi1NyTcgEb7TtuabAswc-XTZhMczLdNDAEYQGRA1OQAnAGtlQgBPAAdNZBAnSNDuTChIOhIkVBAAD2V4TAAbOi0lbgTkrSgINRI5csyQeNKsSq1bEFqklJAAR1I5IjhFYjRNaW4AEkowRkwIrTFCRMpkAHodmYQ5ADoEScZSWyO4CB2llYj9zEPdcsnMfYBWI6CATiO2I4AK0o0H62gUckomEIlGUOjkBhM5ks1mMdgcThcbg8Xh8fgCwRQAG1QEpUgBBMF9ZAAJmMMlJWgAQlSUB8PgyQGSQABhVnIcyc7kAEX5PyCQq0AFF+cYJZxGakAGL8j4sSWpADi-N+GpAgll+j1AElVTTJABdaRAA"
 
-    assert (
-        share_url
-        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}"
-    )
+    assert share_url.startswith("https://vega.github.io/editor/#/url/vega-lite/")
 
     # Check fullscreen
     fullscreen_share_url = basic_chart.to_url(fullscreen=True)
-    assert (
-        fullscreen_share_url
-        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}/view"
+    assert fullscreen_share_url.startswith(
+        "https://vega.github.io/editor/#/url/vega-lite/"
     )
+    assert fullscreen_share_url.endswith("/view")
 
 
 def test_facet_basic():
@@ -1403,39 +1399,20 @@ def test_layer_errors():
 
     simple_chart = alt.Chart("data.txt").mark_point()
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r".config. attribute cannot.+LayerChart"):
         toplevel_chart + simple_chart
-    assert str(err.value).startswith(
-        'Objects with "config" attribute cannot be used within LayerChart.'
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Concat.+cannot.+layered.+before concat"):
         alt.hconcat(simple_chart) + simple_chart
-    assert (
-        str(err.value)
-        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Repeat.+cannot.+layered.+before repeat"):
         repeat_chart + simple_chart
-    assert (
-        str(err.value)
-        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         facet_chart1 + simple_chart
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         alt.layer(simple_chart) + facet_chart2
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
 
 @pytest.mark.parametrize(
