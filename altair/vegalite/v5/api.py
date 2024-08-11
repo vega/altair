@@ -3902,18 +3902,14 @@ class Chart(
                     (
                         enc
                         for enc in possible_legend_encodings
-                        if not isinstance(
-                            interactive_chart.encoding[enc],
-                            utils.schemapi.UndefinedType,
-                        )
+                        if not utils.is_undefined(interactive_chart.encoding[enc])
                     ),
                     None,  # type: ignore
                 )
 
             if legend_encoding is not None:
-                if isinstance(
-                    interactive_chart.encoding[legend_encoding]["type"],
-                    utils.schemapi.UndefinedType,
+                if utils.is_undefined(
+                    interactive_chart.encoding[legend_encoding]["type"]
                 ):
                     legend_encoding_type = interactive_chart.encoding[
                         legend_encoding
@@ -3932,9 +3928,8 @@ class Chart(
                     nonreactive_domain = param(
                         react=False, expr=initial_computed_domain.name
                     )
-                    if isinstance(
-                        interactive_chart.encoding[legend_encoding]["scale"],
-                        utils.schemapi.UndefinedType,
+                    if utils.is_undefined(
+                        interactive_chart.encoding[legend_encoding]["scale"]
                     ):
                         interactive_chart.encoding[legend_encoding]["scale"] = {
                             "domain": nonreactive_domain
