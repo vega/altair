@@ -10,7 +10,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import Any, Callable, Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
 
 import jsonschema
 import jsonschema.exceptions
@@ -32,6 +32,9 @@ from altair.utils.schemapi import (
 from altair.vegalite.v5.schema.channels import X
 from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
+
+if TYPE_CHECKING:
+    from narwhals.typing import IntoDataFrame
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
@@ -881,8 +884,9 @@ def test_multiple_field_strings_in_condition():
         )
 
 
-def test_non_existent_column_name():
-    df = pd.DataFrame({"a": [1, 2], "b": [4, 5]})
+@pytest.mark.parametrize("tp", [pd.DataFrame, pl.DataFrame])
+def test_non_existent_column_name(tp: Callable[..., IntoDataFrame]) -> None:
+    df = tp({"a": [1, 2], "b": [4, 5]})
     msg = (
         'Unable to determine data type for the field "c"; verify that the field name '
         "is not misspelled. If you are referencing a field from a transform, also "
