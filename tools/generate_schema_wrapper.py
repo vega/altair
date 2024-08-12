@@ -218,6 +218,21 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 
+CONFIG_TYPED_DICT: Final = '''
+class ThemeConfig(TypedDict, total=False):
+    """Placeholder doc."""
+    {typed_dict_args}
+
+'''
+
+CONFIG_SUB_TYPED_DICT: Final = '''
+class {name}(TypedDict, total=False):
+    """Placeholder doc."""
+
+    {typed_dict_args}
+'''
+
+
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
     def encode({method_args}) -> Self:
@@ -770,6 +785,50 @@ def generate_mark_args(
     }
 
 
+def gen_config_typed_dict(prop_info: SchemaInfo) -> str:
+    arg_info = codegen.get_args(prop_info)
+    args = sorted(arg_info.kwds)
+    props = prop_info.properties
+    return "\n    ".join(_generate_sig_args(args, props, kind="typed_dict"))
+
+
+def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
+    """TODO - Tidy up and use consistent naming."""
+    with schemafile.open(encoding="utf8") as f:
+        schema = json.load(f)
+    config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
+    top_dict_annotations: list[str] = []
+    sub_dicts: dict[str, str] = {}
+
+    for prop, prop_info in config.properties.items():
+        if (classname := prop_info.refname) and classname.endswith("Config"):
+            name = f"{classname}Kwds"
+            top_dict_annotations.append(f"{prop}: {name}")
+            if name not in sub_dicts:
+                # Ensure no references to actual `...Config` classes exist
+                args = re.sub(
+                    r"Config\b", r"ConfigKwds", gen_config_typed_dict(prop_info)
+                )
+                sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
+                    name=name, typed_dict_args=args
+                )
+
+        else:
+            top_dict_annotations.append(f"{prop}: Any # TODO")
+    top_dict = CONFIG_TYPED_DICT.format(
+        typed_dict_args="\n    ".join(top_dict_annotations)
+    )
+    nested_config = SchemaInfo(
+        {"$ref": "#/definitions/ScaleInvalidDataConfig"}, rootschema=schema
+    )
+    name = f"{nested_config.refname}Kwds"
+    sub_nested = CONFIG_SUB_TYPED_DICT.format(
+        name=name, typed_dict_args=gen_config_typed_dict(nested_config)
+    )
+    sub_dicts[name] = f"# TODO: Non-`TypedDict` arg\n{sub_nested}"
+    yield "\n".join(sub_dicts.values())
+    yield top_dict
+
 
 def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
     imports = [
@@ -870,6 +929,23 @@ def vegalite_main(skip_download: bool = False) -> None:
         config_mixin,
     ]
     files[fp_mixins] = content_mixins
+
+    # Generate theme-related Config hierarchy of TypedDict
+    fp_theme_config: Path = schemapath / "_config.py"
+    content_theme_config = [
+        HEADER,
+        "\n".join(stdlib_imports),
+        "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
+        "\n\n",
+        _type_checking_only_imports(
+            "from ._typing import * # noqa: F403",
+            "from .core import Dict",
+            "from .core import * # noqa: F403",
+        ),
+        "\n\n",
+        *gen_each_config_typed_dict(schemafile),
+    ]
+    files[fp_theme_config] = content_theme_config
 
     # Write `_typing.py` TypeAlias, for import in generated modules
     fp_typing = schemapath / "_typing.py"
