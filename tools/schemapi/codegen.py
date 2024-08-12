@@ -5,7 +5,8 @@ from __future__ import annotations
 import re
 import textwrap
 from dataclasses import dataclass
-from typing import Final
+from itertools import chain
+from typing import Final, Iterator
 
 from .utils import (
     SchemaInfo,
@@ -13,6 +14,7 @@ from .utils import (
     indent_docstring,
     is_valid_identifier,
     jsonschema_to_python_types,
+    spell_literal,
 )
 
 
@@ -47,12 +49,12 @@ def get_args(info: SchemaInfo) -> ArgInfo:
 
     if info.is_allOf():
         # recursively call function on all children
-        arginfo = [get_args(child) for child in info.allOf]
+        arginfo: list[ArgInfo] = [get_args(child) for child in info.allOf]
         nonkeyword = all(args.nonkeyword for args in arginfo)
-        required = set.union(set(), *(args.required for args in arginfo))
-        kwds = set.union(set(), *(args.kwds for args in arginfo))
+        required = {args.required for args in arginfo}
+        kwds = {args.kwds for args in arginfo}
         kwds -= required
-        invalid_kwds = set.union(set(), *(args.invalid_kwds for args in arginfo))
+        invalid_kwds = {args.invalid_kwds for args in arginfo}
         additional = all(args.additional for args in arginfo)
     elif info.is_empty() or info.is_compound():
         nonkeyword = True
@@ -152,19 +154,16 @@ class SchemaGenerator:
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
-    def subclasses(self) -> list[str]:
-        """Return a list of subclass names, if any."""
-        info = SchemaInfo(self.schema, self.rootschema)
-        return [child.refname for child in info.anyOf if child.is_reference()]
+    def subclasses(self) -> Iterator[str]:
+        """Return an Iterator over subclass names, if any."""
+        for child in SchemaInfo(self.schema, self.rootschema).anyOf:
+            if child.is_reference():
+                yield child.refname
 
     def schema_class(self) -> str:
         """Generate code for a schema class."""
-        rootschema: dict = (
-            self.rootschema if self.rootschema is not None else self.schema
-        )
-        schemarepr: object = (
-            self.schemarepr if self.schemarepr is not None else self.schema
-        )
+        rootschema: dict = self.rootschema or self.schema
+        schemarepr: object = self.schemarepr or self.schema
         rootschemarepr = self.rootschemarepr
         if rootschemarepr is None:
             if rootschema is self.schema:
@@ -255,10 +254,12 @@ class SchemaGenerator:
         args: list[str] = ["self"]
         super_args: list[str] = []
 
-        self.init_kwds = sorted(arg_info.kwds)
+        self.init_kwds: list[str] = sorted(arg_info.kwds)
+        init_required: list[str] = sorted(arg_info.required)
+        _nodefault: list[str] = sorted(nodefault)
 
         if nodefault:
-            args.extend(sorted(nodefault))
+            args.extend(_nodefault)
         elif arg_info.nonkeyword:
             args.append("*args")
             super_args.append("*args")
@@ -277,10 +278,7 @@ class SchemaGenerator:
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
-            f"{p}={p}"
-            for p in sorted(nodefault)
-            + sorted(arg_info.required)
-            + sorted(arg_info.kwds)
+            f"{p}={p}" for p in chain(_nodefault, init_required, self.init_kwds)
         )
 
         if arg_info.additional:
@@ -326,8 +324,7 @@ class SchemaGenerator:
             elif si.is_enum():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable
-                enum_values = [f'"{v}"' for v in si.enum]
-                py_type = f"Literal[{', '.join(enum_values)}]"
+                py_type = spell_literal(si.enum)
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
@@ -372,6 +369,6 @@ class SchemaGenerator:
         if not self.haspropsetters:
             return None
         args = self.init_kwds
-        type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
+        type_hints = (hint for a in args for hint in self.setter_hint(a, indent))
 
         return ("\n" + indent * " ").join(type_hints)
