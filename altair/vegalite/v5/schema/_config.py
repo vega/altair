@@ -799,6 +799,7 @@ class ScaleConfigKwds(TypedDict, total=False):
     quantizeCount: float
     rectBandPaddingInner: float
     round: bool
+    tickBandPaddingInner: float
     useUnaggregatedDomain: bool
     xReverse: bool
     zero: bool
