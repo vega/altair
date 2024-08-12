@@ -313,6 +313,8 @@ select = [
     "ANN",
     # unsorted-imports
     "I001",
+    # complex-structure
+    "C901",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -360,7 +362,7 @@ ignore = [
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 pydocstyle={ convention="numpy" }
-mccabe={ max-complexity=18 }
+mccabe={ max-complexity=10 }
 
 [tool.ruff.lint.isort]
 classes = ["expr", "datum"]
@@ -386,6 +388,8 @@ See https://github.com/vega/altair/pull/3449
 [tool.ruff.lint.per-file-ignores]
 # Only enforce type annotation rules on public api
 "!altair/vegalite/v5/api.py" = ["ANN"]
+# Allow complex if/elif branching during tests
+"tests/**/*.py"= ["C901"]
 
 
 [tool.ruff.format]
@@ -430,3 +434,4 @@ ignore_missing_imports = true
 extraPaths=["./tools"]
 pythonPlatform="All"
 pythonVersion="3.8"
+reportUnusedExpression="none"

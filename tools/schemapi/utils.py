@@ -395,7 +395,7 @@ class SchemaInfo:
         use_concrete: bool = False,
         use_undefined: bool = False,
     ) -> list[str]: ...
-    def to_type_repr(
+    def to_type_repr(  # noqa: C901
         self,
         *,
         as_str: bool = True,
@@ -653,7 +653,7 @@ class RSTParse(mistune.Markdown):
 rst_parse: RSTParse = RSTParse(RSTRenderer())
 
 
-def indent_docstring(
+def indent_docstring(  # noqa: C901
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
     """Indent a docstring for use in generated code."""

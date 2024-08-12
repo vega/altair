@@ -497,7 +497,7 @@ def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
         return list(obj)
 
 
-def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:
+def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
         np = np_opt
@@ -761,10 +761,12 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         # Add unformatted messages of any remaining errors which were not
         # considered so far. This is not expected to be used but more exists
         # as a fallback for cases which were not known during development.
-        for validator, errors in errors_by_validator.items():
-            if validator not in {"enum", "type"}:
-                message += "\n".join([e.message for e in errors])
-
+        it = (
+            "\n".join(e.message for e in errors)
+            for validator, errors in errors_by_validator.items()
+            if validator not in {"enum", "type"}
+        )
+        message += "".join(it)
         return message
 
 
@@ -868,7 +870,7 @@ class SchemaBase:
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
 
-    def copy(
+    def copy(  # noqa: C901
         self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
         """

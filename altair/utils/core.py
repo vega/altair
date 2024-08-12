@@ -319,7 +319,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     """
     Sanitize a DataFrame to prepare it for serialization.
 
@@ -502,9 +502,9 @@ def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
     return data_nw
 
 
-def parse_shorthand(
+def parse_shorthand(  # noqa: C901
     shorthand: dict[str, Any] | str,
-    data: pd.DataFrame | DataFrameLike | None = None,
+    data: IntoDataFrame | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
