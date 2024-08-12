@@ -29,9 +29,11 @@ from tools.schemapi.schemapi import _resolve_references as resolve_references
 if TYPE_CHECKING:
     from _collections_abc import dict_keys
     from pathlib import Path
-    from typing_extensions import LiteralString
+    from typing_extensions import LiteralString, TypeAlias
 
     from mistune import BlockState
+
+TargetType: TypeAlias = Literal["annotation", "doc"]
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
@@ -154,13 +156,15 @@ class _TypeAliasTracer:
         for name, statement in self._aliases.items():
             yield f"{name}: TypeAlias = {statement}"
 
-    def is_cached(self, tp: str, /) -> bool:
+    def is_cached(self, tp: str, /, *, include_concrete: bool = False) -> bool:
         """
         Applies to both docstring and type hints.
 
         Currently used as a sort key, to place literals/aliases last.
         """
-        return tp in self._literals_invert or tp in self._literals
+        return (tp in self._literals_invert or tp in self._literals) or (
+            include_concrete and self.fmt.format(tp) in self._literals
+        )
 
     def write_module(
         self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString
@@ -376,68 +380,61 @@ class SchemaInfo:
     @overload
     def get_python_type_representation(
         self,
-        for_type_hints: bool = ...,
-        return_as_str: Literal[True] = ...,
-        additional_type_hints: list[str] | None = ...,
+        *,
+        as_str: Literal[True] = ...,
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+        target: TargetType = "doc",
     ) -> str: ...
     @overload
     def get_python_type_representation(
         self,
-        for_type_hints: bool = ...,
-        return_as_str: Literal[False] = ...,
-        additional_type_hints: list[str] | None = ...,
+        *,
+        as_str: Literal[False],
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+        target: TargetType = "doc",
     ) -> list[str]: ...
     def get_python_type_representation(
         self,
-        for_type_hints: bool = False,
-        return_as_str: bool = True,
-        additional_type_hints: list[str] | None = None,
+        *,
+        as_str: bool = True,
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+        target: TargetType = "doc",
     ) -> str | list[str]:
-        type_representations: list[str] = []
+        tps: set[str] = set()
         """
         All types which can be used for the current `SchemaInfo`.
         Including `altair` classes, standard `python` types, etc.
         """
+        for_type_hints = target == "annotation"
 
         if self.title:
-            if for_type_hints:
-                # To keep type hints simple, we only use the SchemaBase class
-                # as the type hint for all classes which inherit from it.
-                class_names = ["SchemaBase"]
-                if self.title in {"ExprRef", "ParameterExtent"}:
-                    class_names.append("Parameter")
-                    # In these cases, a value parameter is also always accepted.
-                    # It would be quite complex to further differentiate
-                    # between a value and a selection parameter based on
-                    # the type system (one could
-                    # try to check for the type of the Parameter.param attribute
-                    # but then we would need to write some overload signatures for
-                    # api.param).
-
-                type_representations.extend(class_names)
-            else:
-                # use RST syntax for generated sphinx docs
-                type_representations.append(rst_syntax_for_class(self.title))
+            if target == "annotation":
+                tps.update(types_from_title(self, use_concrete=use_concrete))
+            elif target == "doc":
+                tps.add(rst_syntax_for_class(self.title))
 
         if self.is_empty():
-            type_representations.append("Any")
+            tps.add("Any")
         elif self.is_enum():
             tp_str = spell_literal(self.enum)
             if for_type_hints:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
-            type_representations.append(tp_str)
+            tps.add(tp_str)
         elif for_type_hints and self.is_union_enum():
             it = chain.from_iterable(el.enum for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
-            type_representations.append(tp_str)
+            tps.add(tp_str)
         elif self.is_anyOf():
             it = (
                 s.get_python_type_representation(
-                    for_type_hints=for_type_hints, return_as_str=False
+                    target=target, as_str=False, use_concrete=use_concrete
                 )
                 for s in self.anyOf
             )
-            type_representations.extend(it)
+            tps.update(chain.from_iterable(it))
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
@@ -446,68 +443,28 @@ class SchemaInfo:
                 # We always use title if possible for nested objects
                 options.append(
                     subschema.get_python_type_representation(
-                        for_type_hints=for_type_hints
+                        target=target, use_concrete=use_concrete
                     )
                 )
-            type_representations.extend(options)
-        elif self.is_object():
-            type_representations.append("dict")
+            tps.update(options)
+        elif self.is_object() and not use_concrete:
+            tps.add("dict")
         elif self.is_array():
-            # A list is invariant in its type parameter. This means that e.g.
-            # List[str] is not a subtype of List[Union[core.FieldName, str]]
-            # and hence we would need to explicitly write out the combinations,
-            # so in this case:
-            # List[core.FieldName], List[str], List[core.FieldName, str]
-            # However, this can easily explode to too many combinations.
-            # Furthermore, we would also need to add additional entries
-            # for e.g. int wherever a float is accepted which would lead to very
-            # long code.
-            # As suggested in the mypy docs,
-            # https://mypy.readthedocs.io/en/stable/common_issues.html#variance,
-            # we revert to using Sequence which works as well for lists and also
-            # includes tuples which are also supported by the SchemaBase.to_dict
-            # method. However, it is not entirely accurate as some sequences
-            # such as e.g. a range are not supported by SchemaBase.to_dict but
-            # this tradeoff seems worth it.
-            s = self.child(self.items).get_python_type_representation(
-                for_type_hints=for_type_hints
+            tps.add(
+                spell_nested_sequence(self, target=target, use_concrete=use_concrete)
             )
-            type_representations.append(f"Sequence[{s}]")
         elif self.type in jsonschema_to_python_types:
-            type_representations.append(jsonschema_to_python_types[self.type])
+            tps.add(jsonschema_to_python_types[self.type])
         else:
             msg = "No Python type representation available for this schema"
             raise ValueError(msg)
 
-        # Shorter types are usually the more relevant ones, e.g. `str` instead
-        # of `SchemaBase`. Output order from set is non-deterministic -> If
-        # types have same length names, order would be non-deterministic as it is
-        # returned from sort. Hence, we sort as well by type name as a tie-breaker,
-        # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
-        # for more infos.
-        # Using lower as we don't want to prefer uppercase such as "None" over
-        it = sorted(set(flatten(type_representations)), key=str.lower)  # Tertiary sort
-        it = sorted(it, key=len)  # Secondary sort
-        type_representations = sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
-        if additional_type_hints:
-            type_representations.extend(additional_type_hints)
-
-        if return_as_str:
-            type_representations_str = ", ".join(type_representations)
-            # If it's not for_type_hints but instead for the docstrings, we don't want
-            # to include Union as it just clutters the docstrings.
-            if len(type_representations) > 1 and for_type_hints:
-                # Use parameterised `TypeAlias` instead of exposing `UndefinedType`
-                # `Union` is collapsed by `ruff` later
-                if type_representations_str.endswith(", UndefinedType"):
-                    s = type_representations_str.replace(", UndefinedType", "")
-                    s = f"Optional[Union[{s}]]"
-                else:
-                    s = f"Union[{type_representations_str}]"
-                return s
-            return type_representations_str
-        else:
-            return type_representations
+        type_reprs = sort_type_reprs(tps)
+        return (
+            collapse_type_repr(type_reprs, target=target, use_undefined=use_undefined)
+            if as_str
+            else type_reprs
+        )
 
     @property
     def properties(self) -> SchemaProperties:
@@ -803,6 +760,118 @@ def flatten(container: Iterable) -> Iterable:
             yield from flatten(i)
         else:
             yield i
+
+
+def collapse_type_repr(
+    tps: Iterable[str],
+    /,
+    *,
+    target: TargetType,
+    use_undefined: bool = False,
+) -> str:
+    """
+    Returns collected types as `str`.
+
+    Parameters
+    ----------
+    tps
+        Unique, sorted, `type_representations`
+    target
+        Destination for the type.
+        `'doc'` skips `Union`, `Optional` parts.
+    use_undefined
+        Wrap the result in `altair.typing.Optional`.
+        Avoids exposing `UndefinedType`.
+    """
+    tp_str = ", ".join(tps)
+    if target == "doc":
+        return tp_str
+    elif target == "annotation":
+        if "," in tp_str:
+            tp_str = f"Union[{tp_str}]"
+        return f"Optional[{tp_str}]" if use_undefined else tp_str
+    else:
+        msg = f"Unexpected {target=}.\nUse one of {['annotation', 'doc']!r}"
+        raise TypeError(msg)
+
+
+def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
+    tp_param: set[str] = {"ExprRef", "ParameterExtent"}
+    # In these cases, a value parameter is also always accepted.
+    # It would be quite complex to further differentiate
+    # between a value and a selection parameter based on
+    # the type system (one could
+    # try to check for the type of the Parameter.param attribute
+    # but then we would need to write some overload signatures for
+    # api.param).
+    title: str = info.title
+    tps: set[str] = set()
+    if not use_concrete:
+        tps.add("SchemaBase")
+        # To keep type hints simple, we only use the SchemaBase class
+        # as the type hint for all classes which inherit from it.
+        if title in tp_param:
+            tps.add("Parameter")
+    elif (
+        (title not in tp_param)
+        and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
+        and not info.is_union()
+        and not info.is_format()
+    ):
+        tps.add(title)
+    return tps
+
+
+def spell_nested_sequence(
+    info: SchemaInfo, *, target: TargetType, use_concrete: bool
+) -> str:
+    """
+    Summary.
+
+    Notes
+    -----
+    A list is invariant in its type parameter.
+
+    This means that ``list[str]`` is not a subtype of ``list[FieldName | str]``
+    and hence we would need to explicitly write out the combinations,
+    so in this case:
+
+        Accepted: list[FieldName] | list[str] | list[FieldName | str]
+
+    However, this can easily explode to too many combinations.
+
+    Furthermore, we would also need to add additional entries
+    for e.g. ``int`` wherever a ``float`` is accepted which would lead to very
+    long code.
+
+    As suggested in the `mypy docs`_ we revert to using ``Sequence``.
+
+    This includes ``list``, ``tuple`` and many others supported by ``SchemaBase.to_dict``.
+
+    The original example becomes:
+
+        Accepted: Sequence[FieldName | str]
+
+    .. _mypy docs:
+        https://mypy.readthedocs.io/en/stable/common_issues.html#variance
+
+    """
+    child: SchemaInfo = info.child(info.items)
+    s = child.get_python_type_representation(target=target, use_concrete=use_concrete)
+    return f"Sequence[{s}]"
+
+
+def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
+    # Shorter types are usually the more relevant ones, e.g. `str` instead
+    # of `SchemaBase`. Output order from set is non-deterministic -> If
+    # types have same length names, order would be non-deterministic as it is
+    # returned from sort. Hence, we sort as well by type name as a tie-breaker,
+    # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
+    # for more infos.
+    # Using lower as we don't want to prefer uppercase such as "None" over
+    it = sorted(tps, key=str.lower)  # Tertiary sort
+    it = sorted(it, key=len)  # Secondary sort
+    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
 
 
 def spell_literal(it: Iterable[str], /) -> str:
