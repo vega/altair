@@ -408,7 +408,7 @@ class SchemaInfo:
         All types which can be used for the current `SchemaInfo`.
         Including `altair` classes, standard `python` types, etc.
         """
-        for_type_hints = target == "annotation"
+        for_type_hints: bool = target == "annotation"
 
         if self.title:
             if target == "annotation":
@@ -443,8 +443,6 @@ class SchemaInfo:
                     subschema.to_type_repr(target=target, use_concrete=use_concrete)
                 )
             tps.update(options)
-        elif self.is_object() and not use_concrete:
-            tps.add("dict")
         elif self.is_array():
             tps.add(
                 spell_nested_sequence(self, target=target, use_concrete=use_concrete)
