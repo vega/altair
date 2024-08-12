@@ -654,6 +654,18 @@ class SchemaInfo:
         """
         return self.is_union() and all(el.is_enum() for el in self.anyOf)
 
+    def is_format(self) -> bool:
+        """
+        Represents a string format specifier.
+
+        These do not currently produce useful classes (e.g. ``HexColor``, ``URI``).
+
+        See Also
+        --------
+        [python-jsonschema](https://python-jsonschema.readthedocs.io/en/latest/faq/#my-schema-specifies-format-validation-why-do-invalid-instances-seem-valid)
+        """
+        return (self.schema.keys() == {"format", "type"}) and self.type == "string"
+
 
 class RSTRenderer(_RSTRenderer):
     def __init__(self) -> None:
