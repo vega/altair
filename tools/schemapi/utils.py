@@ -811,6 +811,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
         and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
         and not info.is_union()
         and not info.is_format()
+        and not info.is_array()
     ):
         tps.add(title)
     return tps
