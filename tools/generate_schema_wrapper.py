@@ -749,11 +749,11 @@ def _generate_sig_args(
     if kind == "method":
         yield "self"
         for p in args:
-            yield f"{p}: {props[p].get_python_type_representation(target="annotation", use_undefined=True)} = Undefined"
+            yield f"{p}: {props[p].to_type_repr(target="annotation", use_undefined=True)} = Undefined"
         yield "**kwds"
     elif kind == "typed_dict":
         for p in args:
-            yield f"{p}: {props[p].get_python_type_representation(target="annotation", use_concrete=True)}"
+            yield f"{p}: {props[p].to_type_repr(target="annotation", use_concrete=True)}"
     else:
         raise NotImplementedError
 

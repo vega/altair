@@ -378,7 +378,7 @@ class SchemaInfo:
             return ""
 
     @overload
-    def get_python_type_representation(
+    def to_type_repr(
         self,
         *,
         as_str: Literal[True] = ...,
@@ -387,7 +387,7 @@ class SchemaInfo:
         use_undefined: bool = False,
     ) -> str: ...
     @overload
-    def get_python_type_representation(
+    def to_type_repr(
         self,
         *,
         as_str: Literal[False],
@@ -395,7 +395,7 @@ class SchemaInfo:
         use_concrete: bool = False,
         use_undefined: bool = False,
     ) -> list[str]: ...
-    def get_python_type_representation(
+    def to_type_repr(
         self,
         *,
         as_str: bool = True,
@@ -429,9 +429,7 @@ class SchemaInfo:
             tps.add(tp_str)
         elif self.is_anyOf():
             it = (
-                s.get_python_type_representation(
-                    target=target, as_str=False, use_concrete=use_concrete
-                )
+                s.to_type_repr(target=target, as_str=False, use_concrete=use_concrete)
                 for s in self.anyOf
             )
             tps.update(chain.from_iterable(it))
@@ -442,9 +440,7 @@ class SchemaInfo:
                 subschema.schema["type"] = typ_
                 # We always use title if possible for nested objects
                 options.append(
-                    subschema.get_python_type_representation(
-                        target=target, use_concrete=use_concrete
-                    )
+                    subschema.to_type_repr(target=target, use_concrete=use_concrete)
                 )
             tps.update(options)
         elif self.is_object() and not use_concrete:
@@ -857,7 +853,7 @@ def spell_nested_sequence(
 
     """
     child: SchemaInfo = info.child(info.items)
-    s = child.get_python_type_representation(target=target, use_concrete=use_concrete)
+    s = child.to_type_repr(target=target, use_concrete=use_concrete)
     return f"Sequence[{s}]"
 
 

@@ -222,7 +222,7 @@ class SchemaGenerator:
             ):
                 propinfo = info.properties[prop]
                 doc += [
-                    f"{prop} : {propinfo.get_python_type_representation()}",
+                    f"{prop} : {propinfo.to_type_repr()}",
                     f"    {self._process_description(propinfo.deep_description)}",
                 ]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
@@ -262,7 +262,7 @@ class SchemaGenerator:
             super_args.append("*args")
 
         it = (
-            f"{p}: {info.properties[p].get_python_type_representation(target='annotation', use_undefined=True)} = Undefined"
+            f"{p}: {info.properties[p].to_type_repr(target='annotation', use_undefined=True)} = Undefined"
             for p in chain(init_required, self.init_kwds)
         )
         args.extend(it)
@@ -287,7 +287,7 @@ class SchemaGenerator:
 
         if prop_infos:
             contents.extend(
-                f"{p}: {info.get_python_type_representation(target='annotation', use_undefined=True)} = Undefined"
+                f"{p}: {info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
                 for p, info in prop_infos.items()
             )
         elif si.type:
