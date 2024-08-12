@@ -382,26 +382,26 @@ class SchemaInfo:
         self,
         *,
         as_str: Literal[True] = ...,
+        target: TargetType = "doc",
         use_concrete: bool = False,
         use_undefined: bool = False,
-        target: TargetType = "doc",
     ) -> str: ...
     @overload
     def get_python_type_representation(
         self,
         *,
         as_str: Literal[False],
+        target: TargetType = "doc",
         use_concrete: bool = False,
         use_undefined: bool = False,
-        target: TargetType = "doc",
     ) -> list[str]: ...
     def get_python_type_representation(
         self,
         *,
         as_str: bool = True,
+        target: TargetType = "doc",
         use_concrete: bool = False,
         use_undefined: bool = False,
-        target: TargetType = "doc",
     ) -> str | list[str]:
         tps: set[str] = set()
         """
