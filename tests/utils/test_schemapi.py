@@ -881,6 +881,17 @@ def test_multiple_field_strings_in_condition():
         )
 
 
+def test_non_existent_column_name():
+    df = pd.DataFrame({"a": [1, 2], "b": [4, 5]})
+    msg = (
+        'Unable to determine data type for the field "c"; verify that the field name '
+        "is not misspelled. If you are referencing a field from a transform, also "
+        "confirm that the data type is specified correctly."
+    )
+    with pytest.raises(ValueError, match=msg):
+        alt.Chart(df).mark_line().encode(x="a", y="c").to_json()
+
+
 def test_serialize_numpy_types():
     m = MySchema(
         a={"date": np.datetime64("2019-01-01")},
