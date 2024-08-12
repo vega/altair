@@ -240,10 +240,7 @@ class SchemaGenerator:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
 
-    def init_args(
-        self, additional_types: list[str] | None = None
-    ) -> tuple[list[str], list[str]]:
-        additional_types = additional_types or []
+    def init_args(self) -> tuple[list[str], list[str]]:
         info = self.info
         arg_info = self.arg_info
 
@@ -264,19 +261,11 @@ class SchemaGenerator:
             args.append("*args")
             super_args.append("*args")
 
-        args.extend(
-            f"{p}: Optional[Union["
-            + ", ".join(
-                [
-                    *additional_types,
-                    *info.properties[p].get_python_type_representation(
-                        for_type_hints=True, return_as_str=False
-                    ),
-                ]
-            )
-            + "]] = Undefined"
-            for p in sorted(arg_info.required) + sorted(arg_info.kwds)
+        it = (
+            f"{p}: {info.properties[p].get_python_type_representation(target='annotation', use_undefined=True)} = Undefined"
+            for p in chain(init_required, self.init_kwds)
         )
+        args.extend(it)
         super_args.extend(
             f"{p}={p}" for p in chain(_nodefault, init_required, self.init_kwds)
         )
@@ -298,14 +287,8 @@ class SchemaGenerator:
 
         if prop_infos:
             contents.extend(
-                [
-                    f"{p}: "
-                    + info.get_python_type_representation(
-                        for_type_hints=True, additional_type_hints=["UndefinedType"]
-                    )
-                    + " = Undefined"
-                    for p, info in prop_infos.items()
-                ]
+                f"{p}: {info.get_python_type_representation(target='annotation', use_undefined=True)} = Undefined"
+                for p, info in prop_infos.items()
             )
         elif si.type:
             py_type = jsonschema_to_python_types[si.type]
