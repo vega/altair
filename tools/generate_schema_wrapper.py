@@ -11,7 +11,7 @@ import textwrap
 from dataclasses import dataclass
 from itertools import chain
 from pathlib import Path
-from typing import Final, Iterable, Iterator, Literal
+from typing import Any, Final, Iterable, Iterator, Literal
 from urllib import request
 
 import vl_convert as vlc
@@ -19,6 +19,7 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
+    SchemaProperties,
     TypeAliasTracer,
     get_valid_identifier,
     indent_docstring,
@@ -180,11 +181,17 @@ class DatumChannelMixin:
         )
 """
 
+MARK_MIXIN: Final = '''
+class MarkMethodMixin:
+    """A mixin class that defines mark methods"""
+
+{methods}
+'''
+
 MARK_METHOD: Final = '''
-def mark_{mark}({def_arglist}) -> Self:
-    """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
-    """
-    kwds = dict({dict_arglist})
+def mark_{mark}({method_args}) -> Self:
+    """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
+    kwds = dict({dict_args})
     copy = self.copy(deep=False)  # type: ignore[attr-defined]
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
@@ -707,60 +714,61 @@ def generate_vegalite_mark_mixin(
     with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
 
-    class_name = "MarkMethodMixin"
-
     imports = [
         "from typing import Any, Sequence, List, Literal, Union",
         "",
-        "from altair.utils.schemapi import Undefined, UndefinedType",
+        "from altair.utils.schemapi import Undefined",
         "from . import core",
     ]
 
-    code = [
-        f"class {class_name}:",
-        '    """A mixin class that defines mark methods"""',
-    ]
+    code = []
 
     for mark_enum, mark_def in markdefs.items():
-        if "enum" in schema["definitions"][mark_enum]:
-            marks = schema["definitions"][mark_enum]["enum"]
-        else:
-            marks = [schema["definitions"][mark_enum]["const"]]
+        _def = schema["definitions"][mark_enum]
+        marks: list[Any] = _def["enum"] if "enum" in _def else [_def["const"]]
         info = SchemaInfo({"$ref": f"#/definitions/{mark_def}"}, rootschema=schema)
 
         # adapted from SchemaInfo.init_code
-        arg_info = codegen.get_args(info)
-        arg_info.required -= {"type"}
-        arg_info.kwds -= {"type"}
-
-        def_args = ["self"] + [
-            f"{p}: "
-            + info.properties[p].get_python_type_representation(
-                for_type_hints=True,
-                additional_type_hints=["UndefinedType"],
-            )
-            + " = Undefined"
-            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
-        ]
-        dict_args = [
-            f"{p}={p}" for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
-        ]
-
-        if arg_info.additional or arg_info.invalid_kwds:
-            def_args.append("**kwds")
-            dict_args.append("**kwds")
+        mark_args = generate_mark_args(info)
 
         for mark in marks:
             # TODO: only include args relevant to given type?
-            mark_method = MARK_METHOD.format(
-                mark=mark,
-                mark_def=mark_def,
-                def_arglist=", ".join(def_args),
-                dict_arglist=", ".join(dict_args),
-            )
+            mark_method = MARK_METHOD.format(mark=mark, mark_def=mark_def, **mark_args)
             code.append("\n    ".join(mark_method.splitlines()))
 
-    return imports, "\n".join(code)
+    return imports, MARK_MIXIN.format(methods="\n".join(code))
+
+
+def _generate_sig_args(
+    args: Iterable[str],
+    props: SchemaProperties,
+    *,
+    kind: Literal["method", "typed_dict"] = "method",
+) -> Iterator[str]:
+    """Lazily build a typed argument list."""
+    if kind == "method":
+        yield "self"
+        for p in args:
+            yield f"{p}: {props[p].get_python_type_representation(target="annotation", use_undefined=True)} = Undefined"
+        yield "**kwds"
+    elif kind == "typed_dict":
+        for p in args:
+            yield f"{p}: {props[p].get_python_type_representation(target="annotation", use_concrete=True)}"
+    else:
+        raise NotImplementedError
+
+
+def generate_mark_args(
+    info: SchemaInfo,
+) -> dict[Literal["method_args", "dict_args"], str]:
+    arg_info = codegen.get_args(info)
+    args = sorted((arg_info.required | arg_info.kwds) - {"type"})
+    dict_args = (f"{p}={p}" for p in args)
+    return {
+        "method_args": ", ".join(_generate_sig_args(args, info.properties)),
+        "dict_args": ", ".join(chain(dict_args, ("**kwds",))),
+    }
+
 
 
 def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
