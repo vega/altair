@@ -403,11 +403,24 @@ class SchemaInfo:
         use_concrete: bool = False,
         use_undefined: bool = False,
     ) -> str | list[str]:
+        """
+        Return the python type representation of ``SchemaInfo``.
+
+        Includes `altair` classes, standard `python` types, etc.
+
+        Parameters
+        ----------
+        as_str
+            Return as a string.
+            Should only be ``False`` during internal recursive calls.
+        target: {"annotation", "doc"}
+            Where the representation will be used.
+        use_concrete
+            Avoid base classes/wrappers that don't provide type info.
+        use_undefined
+            Wrap the result in ``altair.typing.Optional``.
+        """
         tps: set[str] = set()
-        """
-        All types which can be used for the current `SchemaInfo`.
-        Including `altair` classes, standard `python` types, etc.
-        """
         for_type_hints: bool = target == "annotation"
 
         if self.title:
