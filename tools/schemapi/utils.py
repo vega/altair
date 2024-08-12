@@ -349,9 +349,9 @@ class SchemaInfo:
     ) -> None:
         if not rootschema:
             rootschema = schema
-        self.raw_schema = schema
-        self.rootschema = rootschema
-        self.schema = resolve_references(schema, rootschema)
+        self.raw_schema: dict[str, Any] = schema
+        self.rootschema: dict[str, Any] = rootschema
+        self.schema: dict[str, Any] = resolve_references(schema, rootschema)
 
     def child(self, schema: dict) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
