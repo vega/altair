@@ -27,6 +27,7 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
+    from _collections_abc import dict_keys
     from pathlib import Path
     from typing_extensions import LiteralString
 
@@ -298,12 +299,12 @@ class SchemaProperties:
     def __init__(
         self,
         properties: dict[str, Any],
-        schema: dict,
-        rootschema: dict | None = None,
+        schema: dict[str, Any],
+        rootschema: dict[str, Any] | None = None,
     ) -> None:
-        self._properties = properties
-        self._schema = schema
-        self._rootschema = rootschema or schema
+        self._properties: dict[str, Any] = properties
+        self._schema: dict[str, Any] = schema
+        self._rootschema: dict[str, Any] = rootschema or schema
 
     def __bool__(self) -> bool:
         return bool(self._properties)
@@ -317,22 +318,22 @@ class SchemaProperties:
         except KeyError:
             return super().__getattr__(attr)
 
-    def __getitem__(self, attr):
+    def __getitem__(self, attr) -> SchemaInfo:
         dct = self._properties[attr]
         if "definitions" in self._schema and "definitions" not in dct:
             dct = dict(definitions=self._schema["definitions"], **dct)
         return SchemaInfo(dct, self._rootschema)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._properties)
 
-    def items(self):
+    def items(self) -> Iterator[tuple[str, SchemaInfo]]:
         return ((key, self[key]) for key in self)
 
-    def keys(self):
+    def keys(self) -> dict_keys[str, Any]:
         return self._properties.keys()
 
-    def values(self):
+    def values(self) -> Iterator[SchemaInfo]:
         return (self[key] for key in self)
 
 
