@@ -448,11 +448,18 @@ class SchemaInfo:
                 spell_nested_sequence(self, target=target, use_concrete=use_concrete)
             )
         elif self.type in jsonschema_to_python_types:
-            tps.add(jsonschema_to_python_types[self.type])
+            if self.is_object() and use_concrete:
+                ...  # HACK: Fall-through case to avoid `dict` added to `TypedDict`
+            else:
+                tps.add(jsonschema_to_python_types[self.type])
         else:
             msg = "No Python type representation available for this schema"
             raise ValueError(msg)
 
+        if use_concrete and len(tps) == 0 and as_str:
+            # HACK: There is a single case that ends up empty here
+            # (LegendConfig.layout)
+            tps = {"Map"}
         type_reprs = sort_type_reprs(tps)
         return (
             collapse_type_repr(type_reprs, target=target, use_undefined=use_undefined)
