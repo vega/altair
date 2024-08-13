@@ -59,10 +59,10 @@ def get_args(info: SchemaInfo) -> ArgInfo:
     elif info.is_empty() or info.is_compound():
         nonkeyword = True
         additional = True
-    elif info.is_value():
+    elif not info.is_object():
         nonkeyword = True
         additional = False
-    elif info.is_object():
+    else:
         invalid_kwds = {p for p in info.required if not is_valid_identifier(p)} | {
             p for p in info.properties if not is_valid_identifier(p)
         }
@@ -72,9 +72,6 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         nonkeyword = False
         additional = True
         # additional = info.additionalProperties or info.patternProperties
-    else:
-        msg = "Schema object not understood"
-        raise ValueError(msg)
 
     return ArgInfo(
         nonkeyword=nonkeyword,

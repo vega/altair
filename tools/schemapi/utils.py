@@ -605,7 +605,7 @@ class SchemaInfo:
             raise ValueError(msg)
 
     def is_value(self) -> bool:
-        return not self.is_object()
+        raise NotImplementedError
 
     def is_array(self) -> bool:
         return self.type == "array"
