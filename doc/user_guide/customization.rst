@@ -180,7 +180,9 @@ The subtitle can run to two lines by passing a list where each list item is a li
        color="source:N"
    )
 
-The ``Title`` object can also configure a number of other attributes, e.g., the position of the title and subtitle (see see :ref:`user-guide-customization` for details).
+The ``Title`` object can also configure a number of other attributes,
+e.g., to ``anchor`` it to the ``'start'`` (left) of the chart,
+and to ``orient`` it at the ``'bottom'`` of the chart (see :ref:`user-guide-configuration` for more options).
 
 .. altair-plot::
 
@@ -188,7 +190,7 @@ The ``Title`` object can also configure a number of other attributes, e.g., the 
       iowa,
       title=alt.Title(
           "Iowa's green energy boom",
-          subtitle=["A growing share of the state's energy", "has come from renewable sources"],
+          subtitle="A growing share of the state's energy has come from renewable sources",
           anchor='start',
           orient='bottom',
           offset=20
@@ -199,6 +201,31 @@ The ``Title`` object can also configure a number of other attributes, e.g., the 
        color="source:N"
    )
 
+In the chart above,
+you can see that the title is positioned all the way to the left,
+so that it lines up with the label on the y-axis.
+You can align the title to the axis line instead
+by setting the reference ``frame`` for the anchor position
+to be relative to the ``'group'`` (i.e. the data portion of the chart, excluding labels and titles).
+
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy has come from", "renewable sources"],
+          anchor='start',
+          frame='group',
+          orient='bottom',
+          offset=20
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q").stack("normalize"),
+       color="source:N"
+   )
 
 Adjusting Axis Limits
 ---------------------
