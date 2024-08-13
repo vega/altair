@@ -4,31 +4,33 @@ import contextlib
 import copy
 import inspect
 import json
+import sys
 import textwrap
-from math import ceil
 from collections import defaultdict
+from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
-import sys
+from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
     Final,
     Iterable,
     Iterator,
+    List,
     Literal,
     Sequence,
     TypeVar,
     Union,
     overload,
-    List,
-    Dict,
 )
 from typing_extensions import TypeAlias
-from functools import partial
+
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
+import narwhals.stable.v1 as nw
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -37,10 +39,11 @@ from packaging.version import Version
 from altair import vegalite
 
 if TYPE_CHECKING:
+    from typing import ClassVar
+
     from referencing import Registry
 
-    from altair import ChartType
-    from typing import ClassVar
+    from altair.typing import ChartType
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -48,9 +51,9 @@ if TYPE_CHECKING:
         from typing_extensions import TypeIs
 
     if sys.version_info >= (3, 11):
-        from typing import Self, Never
+        from typing import Never, Self
     else:
-        from typing_extensions import Self, Never
+        from typing_extensions import Never, Self
 
 ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
@@ -484,7 +487,15 @@ def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
             yield cls
 
 
-def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:
+def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
+    try:
+        ser = nw.from_native(obj, strict=True, series_only=True)
+        return ser.to_list()
+    except TypeError:
+        return list(obj)
+
+
+def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
         np = np_opt
@@ -508,10 +519,16 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
             for k, v in obj.items()
             if v is not Undefined
         }
-    elif hasattr(obj, "to_dict"):
+    elif (
+        hasattr(obj, "to_dict")
+        and (module_name := obj.__module__)
+        and module_name.startswith("altair")
+    ):
         return obj.to_dict()
     elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
         return pd_opt.Timestamp(obj).isoformat()
+    elif _is_iterable(obj, exclude=(str, bytes)):
+        return _todict(_from_array_like(obj), context, np_opt, pd_opt)
     else:
         return obj
 
@@ -742,10 +759,12 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         # Add unformatted messages of any remaining errors which were not
         # considered so far. This is not expected to be used but more exists
         # as a fallback for cases which were not known during development.
-        for validator, errors in errors_by_validator.items():
-            if validator not in {"enum", "type"}:
-                message += "\n".join([e.message for e in errors])
-
+        it = (
+            "\n".join(e.message for e in errors)
+            for validator, errors in errors_by_validator.items()
+            if validator not in {"enum", "type"}
+        )
+        message += "".join(it)
         return message
 
 
@@ -773,7 +792,7 @@ Examples
 The parameters ``short``, ``long`` accept the same range of types::
 
     # ruff: noqa: UP006, UP007
-    from altair import Optional
+    from altair.typing import Optional
 
     def func_1(
         short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
@@ -782,10 +801,12 @@ The parameters ``short``, ``long`` accept the same range of types::
         ] = Undefined,
     ): ...
 
-This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__ as ``altair.Optional`` treats ``None`` like any other type::
+This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__.
+
+``altair.typing.Optional`` treats ``None`` like any other type::
 
     # ruff: noqa: UP006, UP007
-    from altair import Optional
+    from altair.typing import Optional
 
     def func_2(
         short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
@@ -847,7 +868,7 @@ class SchemaBase:
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
 
-    def copy(
+    def copy(  # noqa: C901
         self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
         """
@@ -1224,6 +1245,12 @@ def _is_dict(obj: Any | dict[Any, Any]) -> TypeIs[dict[Any, Any]]:
 
 def _is_list(obj: Any | list[Any]) -> TypeIs[list[Any]]:
     return isinstance(obj, list)
+
+
+def _is_iterable(
+    obj: Any, *, exclude: type | tuple[type, ...] = (str, bytes)
+) -> TypeIs[Iterable[Any]]:
+    return not isinstance(obj, exclude) and isinstance(obj, Iterable)
 
 
 def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:

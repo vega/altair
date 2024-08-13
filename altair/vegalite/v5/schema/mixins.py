@@ -14,7 +14,6 @@ from . import core
 if TYPE_CHECKING:
     from altair import Parameter, SchemaBase
 
-
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -23,7 +22,7 @@ else:
 
 # ruff: noqa: F405
 if TYPE_CHECKING:
-    from altair.utils.schemapi import Optional
+    from altair.typing import Optional
 
     from ._typing import *  # noqa: F403
 

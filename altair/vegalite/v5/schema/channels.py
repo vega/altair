@@ -11,24 +11,24 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Literal, Sequence, overload
+from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
+from typing_extensions import TypeAlias
 
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
+import narwhals.stable.v1 as nw
 
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, with_property_setters
 
 from . import core
+from ._typing import *  # noqa: F403
 
 # ruff: noqa: F405
 if TYPE_CHECKING:
     from typing_extensions import Self
 
     from altair import Parameter, SchemaBase
-    from altair.utils.schemapi import Optional
-
-    from ._typing import *  # noqa: F403
+    from altair.typing import Optional
 
 
 __all__ = [
@@ -170,7 +170,8 @@ class FieldChannelMixin:
         if shorthand is Undefined:
             parsed = {}
         elif isinstance(shorthand, (str, dict)):
-            parsed = parse_shorthand(shorthand, data=context.get("data", None))
+            data: nw.DataFrame | Any = context.get("data", None)
+            parsed = parse_shorthand(shorthand, data=data)
             type_required = "type" in self._kwds  # type: ignore[attr-defined]
             type_in_shorthand = "type" in parsed
             type_defined_explicitly = self._get("type") is not Undefined  # type: ignore[attr-defined]
@@ -179,7 +180,7 @@ class FieldChannelMixin:
                 # We still parse it out of the shorthand, but drop it here.
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
-                if _is_pandas_dataframe(context.get("data", None)):
+                if isinstance(data, nw.DataFrame):
                     msg = (
                         f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
@@ -30897,6 +30898,58 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super().__init__(value=value, **kwds)
 
 
+ChannelAngle: TypeAlias = Union[str, Angle, Map, AngleDatum, AngleValue]
+ChannelColor: TypeAlias = Union[str, Color, Map, ColorDatum, ColorValue]
+ChannelColumn: TypeAlias = Union[str, Column, Map]
+ChannelDescription: TypeAlias = Union[str, Description, Map, DescriptionValue]
+ChannelDetail: TypeAlias = OneOrSeq[Union[str, Detail, Map]]
+ChannelFacet: TypeAlias = Union[str, Facet, Map]
+ChannelFill: TypeAlias = Union[str, Fill, Map, FillDatum, FillValue]
+ChannelFillOpacity: TypeAlias = Union[
+    str, FillOpacity, Map, FillOpacityDatum, FillOpacityValue
+]
+ChannelHref: TypeAlias = Union[str, Href, Map, HrefValue]
+ChannelKey: TypeAlias = Union[str, Key, Map]
+ChannelLatitude: TypeAlias = Union[str, Latitude, Map, LatitudeDatum]
+ChannelLatitude2: TypeAlias = Union[str, Latitude2, Map, Latitude2Datum, Latitude2Value]
+ChannelLongitude: TypeAlias = Union[str, Longitude, Map, LongitudeDatum]
+ChannelLongitude2: TypeAlias = Union[
+    str, Longitude2, Map, Longitude2Datum, Longitude2Value
+]
+ChannelOpacity: TypeAlias = Union[str, Opacity, Map, OpacityDatum, OpacityValue]
+ChannelOrder: TypeAlias = OneOrSeq[Union[str, Order, Map, OrderValue]]
+ChannelRadius: TypeAlias = Union[str, Radius, Map, RadiusDatum, RadiusValue]
+ChannelRadius2: TypeAlias = Union[str, Radius2, Map, Radius2Datum, Radius2Value]
+ChannelRow: TypeAlias = Union[str, Row, Map]
+ChannelShape: TypeAlias = Union[str, Shape, Map, ShapeDatum, ShapeValue]
+ChannelSize: TypeAlias = Union[str, Size, Map, SizeDatum, SizeValue]
+ChannelStroke: TypeAlias = Union[str, Stroke, Map, StrokeDatum, StrokeValue]
+ChannelStrokeDash: TypeAlias = Union[
+    str, StrokeDash, Map, StrokeDashDatum, StrokeDashValue
+]
+ChannelStrokeOpacity: TypeAlias = Union[
+    str, StrokeOpacity, Map, StrokeOpacityDatum, StrokeOpacityValue
+]
+ChannelStrokeWidth: TypeAlias = Union[
+    str, StrokeWidth, Map, StrokeWidthDatum, StrokeWidthValue
+]
+ChannelText: TypeAlias = Union[str, Text, Map, TextDatum, TextValue]
+ChannelTheta: TypeAlias = Union[str, Theta, Map, ThetaDatum, ThetaValue]
+ChannelTheta2: TypeAlias = Union[str, Theta2, Map, Theta2Datum, Theta2Value]
+ChannelTooltip: TypeAlias = OneOrSeq[Union[str, Tooltip, Map, TooltipValue]]
+ChannelUrl: TypeAlias = Union[str, Url, Map, UrlValue]
+ChannelX: TypeAlias = Union[str, X, Map, XDatum, XValue]
+ChannelX2: TypeAlias = Union[str, X2, Map, X2Datum, X2Value]
+ChannelXError: TypeAlias = Union[str, XError, Map, XErrorValue]
+ChannelXError2: TypeAlias = Union[str, XError2, Map, XError2Value]
+ChannelXOffset: TypeAlias = Union[str, XOffset, Map, XOffsetDatum, XOffsetValue]
+ChannelY: TypeAlias = Union[str, Y, Map, YDatum, YValue]
+ChannelY2: TypeAlias = Union[str, Y2, Map, Y2Datum, Y2Value]
+ChannelYError: TypeAlias = Union[str, YError, Map, YErrorValue]
+ChannelYError2: TypeAlias = Union[str, YError2, Map, YError2Value]
+ChannelYOffset: TypeAlias = Union[str, YOffset, Map, YOffsetDatum, YOffsetValue]
+
+
 class _EncodingMixin:
     def encode(
         self,
@@ -30905,7 +30958,7 @@ class _EncodingMixin:
         color: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
         column: Optional[str | Column | Map] = Undefined,
         description: Optional[str | Description | Map | DescriptionValue] = Undefined,
-        detail: Optional[str | Detail | Map | list] = Undefined,
+        detail: Optional[OneOrSeq[str | Detail | Map]] = Undefined,
         facet: Optional[str | Facet | Map] = Undefined,
         fill: Optional[str | Fill | Map | FillDatum | FillValue] = Undefined,
         fillOpacity: Optional[
@@ -30924,7 +30977,7 @@ class _EncodingMixin:
         opacity: Optional[
             str | Opacity | Map | OpacityDatum | OpacityValue
         ] = Undefined,
-        order: Optional[str | Order | Map | list | OrderValue] = Undefined,
+        order: Optional[OneOrSeq[str | Order | Map | OrderValue]] = Undefined,
         radius: Optional[str | Radius | Map | RadiusDatum | RadiusValue] = Undefined,
         radius2: Optional[
             str | Radius2 | Map | Radius2Datum | Radius2Value
@@ -30945,7 +30998,7 @@ class _EncodingMixin:
         text: Optional[str | Text | Map | TextDatum | TextValue] = Undefined,
         theta: Optional[str | Theta | Map | ThetaDatum | ThetaValue] = Undefined,
         theta2: Optional[str | Theta2 | Map | Theta2Datum | Theta2Value] = Undefined,
-        tooltip: Optional[str | Tooltip | Map | list | TooltipValue] = Undefined,
+        tooltip: Optional[OneOrSeq[str | Tooltip | Map | TooltipValue]] = Undefined,
         url: Optional[str | Url | Map | UrlValue] = Undefined,
         x: Optional[str | X | Map | XDatum | XValue] = Undefined,
         x2: Optional[str | X2 | Map | X2Datum | X2Value] = Undefined,
@@ -31189,3 +31242,245 @@ class _EncodingMixin:
         encoding.update(kwargs)
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
+
+
+class EncodeKwds(TypedDict, total=False):
+    """
+    Encoding channels map properties of the data to visual properties of the chart.
+
+    Parameters
+    ----------
+    angle
+        Rotation angle of point and text marks.
+    color
+        Color of the marks - either fill or stroke color based on  the ``filled`` property
+        of mark definition. By default, ``color`` represents fill color for ``"area"``,
+        ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
+        stroke color for ``"line"`` and ``"point"``.
+
+        **Default value:** If undefined, the default color depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``color``
+        property.
+
+        *Note:* 1) For fine-grained control over both fill and stroke colors of the marks,
+        please use the ``fill`` and ``stroke`` channels. The ``fill`` or ``stroke``
+        encodings have higher precedence than ``color``, thus may override the ``color``
+        encoding if conflicting encodings are specified. 2) See the scale documentation for
+        more information about customizing `color scheme
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
+    column
+        A field definition for the horizontal facet of trellis plots.
+    description
+        A text description of this mark for ARIA accessibility (SVG output only). For SVG
+        output the ``"aria-label"`` attribute will be set to this description.
+    detail
+        Additional levels of detail for grouping data in aggregate views and in line, trail,
+        and area marks without mapping data to a specific visual channel.
+    facet
+        A field definition for the (flexible) facet of trellis plots.
+
+        If either ``row`` or ``column`` is specified, this channel will be ignored.
+    fill
+        Fill color of the marks. **Default value:** If undefined, the default color depends
+        on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
+        ``color`` property.
+
+        *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
+        override the ``color`` encoding if conflicting encodings are specified.
+    fillOpacity
+        Fill opacity of the marks.
+
+        **Default value:** If undefined, the default opacity depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``fillOpacity``
+        property.
+    href
+        A URL to load upon mouse click.
+    key
+        A data field to use as a unique key for data binding. When a visualization's data is
+        updated, the key value will be used to match data elements to existing mark
+        instances. Use a key channel to enable object constancy for transitions over dynamic
+        data.
+    latitude
+        Latitude position of geographically projected marks.
+    latitude2
+        Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
+        ``"rect"``, and  ``"rule"``.
+    longitude
+        Longitude position of geographically projected marks.
+    longitude2
+        Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
+        ``"rect"``, and  ``"rule"``.
+    opacity
+        Opacity of the marks.
+
+        **Default value:** If undefined, the default opacity depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``opacity``
+        property.
+    order
+        Order of the marks.
+
+        * For stacked marks, this ``order`` channel encodes `stack order
+          <https://vega.github.io/vega-lite/docs/stack.html#order>`__.
+        * For line and trail marks, this ``order`` channel encodes order of data points in
+          the lines. This can be useful for creating `a connected scatterplot
+          <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`__. Setting
+          ``order`` to ``{"value": null}`` makes the line marks use the original order in
+          the data sources.
+        * Otherwise, this ``order`` channel encodes layer order of the marks.
+
+        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
+        creating additional aggregation grouping.
+    radius
+        The outer radius in pixels of arc marks.
+    radius2
+        The inner radius in pixels of arc marks.
+    row
+        A field definition for the vertical facet of trellis plots.
+    shape
+        Shape of the mark.
+
+        1. For ``point`` marks the supported values include:   - plotting shapes:
+        ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
+        ``"triangle-down"``, ``"triangle-right"``, or ``"triangle-left"``.   - the line
+        symbol ``"stroke"``   - centered directional shapes ``"arrow"``, ``"wedge"``, or
+        ``"triangle"``   - a custom `SVG path string
+        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+        sizing, custom shape paths should be defined within a square bounding box with
+        coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        2. For ``geoshape`` marks it should be a field definition of the geojson data
+
+        **Default value:** If undefined, the default shape depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#point-config>`__'s ``shape``
+        property. (``"circle"`` if unset.)
+    size
+        Size of the mark.
+
+        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
+          of the mark.
+        * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
+        * For ``"text"`` - the text's font size.
+        * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
+          instead of line with varying size)
+    stroke
+        Stroke color of the marks. **Default value:** If undefined, the default color
+        depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``color``
+        property.
+
+        *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus may
+        override the ``color`` encoding if conflicting encodings are specified.
+    strokeDash
+        Stroke dash of the marks.
+
+        **Default value:** ``[1,0]`` (No dash).
+    strokeOpacity
+        Stroke opacity of the marks.
+
+        **Default value:** If undefined, the default opacity depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s
+        ``strokeOpacity`` property.
+    strokeWidth
+        Stroke width of the marks.
+
+        **Default value:** If undefined, the default stroke width depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__'s ``strokeWidth``
+        property.
+    text
+        Text of the ``text`` mark.
+    theta
+        * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
+          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          clockwise.)
+
+        * For text marks, polar coordinate angle in radians.
+    theta2
+        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        increasing values proceed clockwise.
+    tooltip
+        The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
+        `the tooltip property in the mark definition
+        <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
+
+        See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
+        documentation for a detailed discussion about tooltip in Vega-Lite.
+    url
+        The URL of an image mark.
+    x
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    xError
+        Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
+    xError2
+        Secondary error value of x coordinates for error specified ``"errorbar"`` and
+        ``"errorband"``.
+    xOffset
+        Offset of x-position of the marks
+    y
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    yError
+        Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
+    yError2
+        Secondary error value of y coordinates for error specified ``"errorbar"`` and
+        ``"errorband"``.
+    yOffset
+        Offset of y-position of the marks
+    """
+
+    angle: str | Angle | Map | AngleDatum | AngleValue
+    color: str | Color | Map | ColorDatum | ColorValue
+    column: str | Column | Map
+    description: str | Description | Map | DescriptionValue
+    detail: OneOrSeq[str | Detail | Map]
+    facet: str | Facet | Map
+    fill: str | Fill | Map | FillDatum | FillValue
+    fillOpacity: str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
+    href: str | Href | Map | HrefValue
+    key: str | Key | Map
+    latitude: str | Latitude | Map | LatitudeDatum
+    latitude2: str | Latitude2 | Map | Latitude2Datum | Latitude2Value
+    longitude: str | Longitude | Map | LongitudeDatum
+    longitude2: str | Longitude2 | Map | Longitude2Datum | Longitude2Value
+    opacity: str | Opacity | Map | OpacityDatum | OpacityValue
+    order: OneOrSeq[str | Order | Map | OrderValue]
+    radius: str | Radius | Map | RadiusDatum | RadiusValue
+    radius2: str | Radius2 | Map | Radius2Datum | Radius2Value
+    row: str | Row | Map
+    shape: str | Shape | Map | ShapeDatum | ShapeValue
+    size: str | Size | Map | SizeDatum | SizeValue
+    stroke: str | Stroke | Map | StrokeDatum | StrokeValue
+    strokeDash: str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
+    strokeOpacity: str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
+    strokeWidth: str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
+    text: str | Text | Map | TextDatum | TextValue
+    theta: str | Theta | Map | ThetaDatum | ThetaValue
+    theta2: str | Theta2 | Map | Theta2Datum | Theta2Value
+    tooltip: OneOrSeq[str | Tooltip | Map | TooltipValue]
+    url: str | Url | Map | UrlValue
+    x: str | X | Map | XDatum | XValue
+    x2: str | X2 | Map | X2Datum | X2Value
+    xError: str | XError | Map | XErrorValue
+    xError2: str | XError2 | Map | XError2Value
+    xOffset: str | XOffset | Map | XOffsetDatum | XOffsetValue
+    y: str | Y | Map | YDatum | YValue
+    y2: str | Y2 | Map | Y2Datum | Y2Value
+    yError: str | YError | Map | YErrorValue
+    yError2: str | YError2 | Map | YError2Value
+    yOffset: str | YOffset | Map | YOffsetDatum | YOffsetValue

@@ -5,14 +5,14 @@ This is adapted from the mpld3 package; see
 https://github.com/mpld3/mpld3/blob/master/mpld3/_server.py
 """
 
+import itertools
+import random
+import socket
 import sys
 import threading
 import webbrowser
-import socket
 from http import server
 from io import BytesIO as IO
-import itertools
-import random
 
 JUPYTER_WARNING = """
 Note: if you're in the Jupyter notebook, Chart.serve() is not the best

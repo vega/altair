@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 CONST_LISTING = {
     "NaN": "not a number (same as JavaScript literal NaN)",
     "LN10": "the natural log of 10 (alias to Math.LN10)",

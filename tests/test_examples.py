@@ -21,15 +21,15 @@ from __future__ import annotations
 
 import io
 import pkgutil
+import re
 import sys
 from typing import Any, Iterable, Iterator
-import re
+
 import pytest
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_arguments_syntax
-from tests import examples_methods_syntax
+from tests import examples_arguments_syntax, examples_methods_syntax
 
 try:
     import vl_convert as vlc  # noqa: F401, RUF100
@@ -82,7 +82,6 @@ def id_func(val) -> str:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
@@ -102,7 +101,6 @@ def test_render_examples_to_chart(source, filename) -> None:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
@@ -134,7 +132,6 @@ def test_from_and_to_json_roundtrip(source, filename) -> None:
 
 
 @pytest.mark.filterwarnings(
-    "ignore:'M' is deprecated.*:FutureWarning",
     "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)

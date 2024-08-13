@@ -1,34 +1,37 @@
 from __future__ import annotations
-from typing import Any, Iterable, overload, TYPE_CHECKING, Dict, Tuple
+
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Tuple, overload
 from typing_extensions import TypeAlias
+
 from altair import (
     Chart,
-    FacetChart,
-    LayerChart,
-    HConcatChart,
-    VConcatChart,
     ConcatChart,
-    TopLevelUnitSpec,
+    ConcatSpecGenericSpec,
+    FacetChart,
     FacetedUnitSpec,
+    FacetSpec,
+    HConcatChart,
+    HConcatSpecGenericSpec,
+    LayerChart,
+    LayerSpec,
+    NonNormalizedSpec,
+    TopLevelConcatSpec,
+    TopLevelFacetSpec,
+    TopLevelHConcatSpec,
+    TopLevelLayerSpec,
+    TopLevelUnitSpec,
+    TopLevelVConcatSpec,
     UnitSpec,
     UnitSpecWithFrame,
-    NonNormalizedSpec,
-    TopLevelLayerSpec,
-    LayerSpec,
-    TopLevelConcatSpec,
-    ConcatSpecGenericSpec,
-    TopLevelHConcatSpec,
-    HConcatSpecGenericSpec,
-    TopLevelVConcatSpec,
+    VConcatChart,
     VConcatSpecGenericSpec,
-    TopLevelFacetSpec,
-    FacetSpec,
     data_transformers,
 )
 from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
 from altair.utils.schemapi import Undefined
 
 if TYPE_CHECKING:
+    from altair.typing import ChartType
     from altair.utils.core import DataFrameLike
 
 Scope: TypeAlias = Tuple[int, ...]
@@ -154,9 +157,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
 # The same error appeared when trying it with Protocols for the concat and layer charts.
 # This function is only used internally and so we accept this inconsistency for now.
 def name_views(
-    chart: Chart | FacetChart | LayerChart | HConcatChart | VConcatChart | ConcatChart,
-    i: int = 0,
-    exclude: Iterable[str] | None = None,
+    chart: ChartType, i: int = 0, exclude: Iterable[str] | None = None
 ) -> list[str]:
     """
     Name unnamed chart views.
@@ -193,6 +194,7 @@ def name_views(
         else:
             return []
     else:
+        subcharts: list[Any]
         if isinstance(chart, _chart_class_mapping[LayerChart]):
             subcharts = chart.layer
         elif isinstance(chart, _chart_class_mapping[HConcatChart]):
@@ -450,7 +452,7 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
                         group, facet_data, scope
                     )
                     if definition_scope is not None:
-                        facet_mapping[(facet_name, group_scope)] = (
+                        facet_mapping[facet_name, group_scope] = (
                             facet_data,
                             definition_scope,
                         )

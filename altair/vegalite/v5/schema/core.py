@@ -17,7 +17,7 @@ from altair.utils.schemapi import (  # noqa: F401
 # ruff: noqa: F405
 if TYPE_CHECKING:
     from altair import Parameter
-    from altair.utils.schemapi import Optional
+    from altair.typing import Optional
 
     from ._typing import *  # noqa: F403
 
@@ -18532,6 +18532,10 @@ class ScaleConfig(VegaLiteSchema):
     round : bool, dict, :class:`ExprRef`
         If true, rounds numeric output values to integers. This can be helpful for snapping
         to the pixel grid. (Only available for ``x``, ``y``, and ``size`` scales.)
+    tickBandPaddingInner : dict, float, :class:`ExprRef`
+        Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"tick"`` marks.
+
+        **Default value:** ``0.25``
     useUnaggregatedDomain : bool
         Use the source data range before aggregation as scale domain instead of aggregated
         data for aggregate axis.
@@ -18596,6 +18600,9 @@ class ScaleConfig(VegaLiteSchema):
             dict | float | Parameter | SchemaBase
         ] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        tickBandPaddingInner: Optional[
+            dict | float | Parameter | SchemaBase
+        ] = Undefined,
         useUnaggregatedDomain: Optional[bool] = Undefined,
         xReverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         zero: Optional[bool] = Undefined,
@@ -18627,6 +18634,7 @@ class ScaleConfig(VegaLiteSchema):
             quantizeCount=quantizeCount,
             rectBandPaddingInner=rectBandPaddingInner,
             round=round,
+            tickBandPaddingInner=tickBandPaddingInner,
             useUnaggregatedDomain=useUnaggregatedDomain,
             xReverse=xReverse,
             zero=zero,
@@ -26730,6 +26738,13 @@ class VariableParameter(TopLevelParameter):
         An expression for the value of the parameter. This expression may include other
         parameters, in which case the parameter will automatically update in response to
         upstream parameter changes.
+    react : bool
+        A boolean flag (default ``true``) indicating if the update expression should be
+        automatically re-evaluated when any upstream signal dependencies update. If
+        ``false``, the update expression will not register any dependencies on other
+        signals, even for initialization.
+
+        **Default value:** ``true``
     value : Any
         The `initial value <http://vega.github.io/vega-lite/docs/value.html>`__ of the
         parameter.
@@ -26744,10 +26759,13 @@ class VariableParameter(TopLevelParameter):
         name: Optional[str | SchemaBase] = Undefined,
         bind: Optional[dict | SchemaBase] = Undefined,
         expr: Optional[str | SchemaBase] = Undefined,
+        react: Optional[bool] = Undefined,
         value: Optional[Any] = Undefined,
         **kwds,
     ):
-        super().__init__(name=name, bind=bind, expr=expr, value=value, **kwds)
+        super().__init__(
+            name=name, bind=bind, expr=expr, react=react, value=value, **kwds
+        )
 
 
 class Vector10string(VegaLiteSchema):

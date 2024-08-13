@@ -14,19 +14,19 @@ The rest are to define aliases only.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, Literal, Mapping, Sequence, Union
-
 from typing_extensions import TypeAlias
 
 from altair.utils.core import TYPECODE_MAP as _TYPE_CODE
 from altair.utils.core import parse_shorthand as _parse
 from altair.utils.schemapi import Optional, SchemaBase, Undefined
 from altair.vegalite.v5.api import Parameter, SelectionPredicateComposition
+from altair.vegalite.v5.schema import channels
 from altair.vegalite.v5.schema._typing import (
     BinnedTimeUnit_T,
+    Map,
     MultiTimeUnit_T,
     SingleTimeUnit_T,
     Type_T,
-    Map,
 )
 from altair.vegalite.v5.schema.core import (
     FieldEqualPredicate,
@@ -38,7 +38,6 @@ from altair.vegalite.v5.schema.core import (
     FieldRangePredicate,
     FieldValidPredicate,
 )
-from altair.vegalite.v5.schema import channels
 
 if TYPE_CHECKING:
     from altair.utils.core import DataFrameLike

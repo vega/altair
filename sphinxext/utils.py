@@ -4,8 +4,8 @@ import ast
 import hashlib
 import itertools
 import json
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import Any
 
 
@@ -38,8 +38,8 @@ def create_generic_image(
     filename: Path, shape: tuple[float, float] = (200, 300), gradient: bool = True
 ) -> None:
     """Create a generic image."""
-    from PIL import Image
     import numpy as np
+    from PIL import Image
 
     assert len(shape) == 2
 

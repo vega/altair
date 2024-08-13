@@ -41,7 +41,7 @@ def import_vegafusion() -> ModuleType:
 
 
 def import_vl_convert() -> ModuleType:
-    min_version = "1.5.0"
+    min_version = "1.6.0"
     try:
         version = importlib_version("vl-convert-python")
         if Version(version) < Version(min_version):
@@ -67,7 +67,7 @@ def import_vl_convert() -> ModuleType:
 
 
 def vl_version_for_vl_convert() -> str:
-    from ..vegalite import SCHEMA_VERSION
+    from altair.vegalite import SCHEMA_VERSION
 
     # Compute VlConvert's vl_version string (of the form 'v5_2')
     # from SCHEMA_VERSION (of the form 'v5.2.0')

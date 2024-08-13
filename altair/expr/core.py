@@ -1,6 +1,9 @@
 from __future__ import annotations
-from typing import Any
-from ..utils import SchemaBase
+
+from typing import Any, Dict, Union
+from typing_extensions import TypeAlias
+
+from altair.utils import SchemaBase
 
 
 class DatumType:
@@ -232,3 +235,6 @@ class GetItemExpression(Expression):
 
     def __repr__(self) -> str:
         return f"{self.group}[{self.name!r}]"
+
+
+IntoExpression: TypeAlias = Union[bool, None, str, OperatorMixin, Dict[str, Any]]

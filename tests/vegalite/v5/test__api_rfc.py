@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 # ruff: noqa: F401
 import re
+from typing import TYPE_CHECKING
+
 import pytest
 
 import altair as alt
-
-from altair.vegalite.v5._api_rfc import agg, field, EncodeType
-from altair.utils.core import TYPECODE_MAP, INV_TYPECODE_MAP
+from altair.utils.core import INV_TYPECODE_MAP, TYPECODE_MAP
+from altair.vegalite.v5._api_rfc import EncodeType, agg, field
 
 if TYPE_CHECKING:
     from altair.vegalite.v5.schema._typing import AggregateOp_T

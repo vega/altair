@@ -1,11 +1,10 @@
 """Tests for variable parameters and selection parameters."""
 
-import pandas as pd
-
-import warnings
-import pytest
-
 import re
+import warnings
+
+import pandas as pd
+import pytest
 
 import altair.vegalite.v5 as alt
 from altair.utils.deprecation import AltairDeprecationWarning

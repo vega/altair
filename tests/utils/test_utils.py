@@ -10,8 +10,8 @@ import pytest
 
 from altair.utils import (
     infer_vegalite_type_for_pandas,
-    sanitize_pandas_dataframe,
     sanitize_narwhals_dataframe,
+    sanitize_pandas_dataframe,
 )
 
 try:
@@ -45,7 +45,6 @@ def test_infer_vegalite_type():
             _check([], "nominal")
 
 
-@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 def test_sanitize_dataframe():
     # create a dataframe with various types
     df = pd.DataFrame(
@@ -129,7 +128,6 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
-@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 @pytest.mark.xfail(
     sys.platform == "win32", reason="Timezone database is not installed on Windows"

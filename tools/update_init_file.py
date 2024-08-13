@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from inspect import ismodule, getattr_static
-from pathlib import Path
-from typing import TYPE_CHECKING
 import typing as t
 import typing_extensions as te
+from inspect import getattr_static, ismodule
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 from tools.schemapi.utils import ruff_write_lint_format_str
 

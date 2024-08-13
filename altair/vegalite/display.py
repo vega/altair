@@ -1,11 +1,11 @@
-from ..utils.display import (
+from altair.utils.display import (
+    DefaultRendererReturnType,
     Displayable,
+    HTMLRenderer,
+    RendererRegistry,
     default_renderer_base,
     json_renderer_base,
-    DefaultRendererReturnType,
 )
-from ..utils.display import RendererRegistry, HTMLRenderer
-
 
 __all__ = (
     "DefaultRendererReturnType",

@@ -1,15 +1,25 @@
 """Utilities for working with schemas."""
 
 from __future__ import annotations
-from itertools import chain
+
 import keyword
 import re
 import subprocess
 import textwrap
 import urllib
-from typing import Any, Final, Iterable, TYPE_CHECKING, Iterator, Sequence
-from operator import itemgetter
 from html import unescape
+from itertools import chain
+from operator import itemgetter
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Final,
+    Iterable,
+    Iterator,
+    Literal,
+    Sequence,
+    overload,
+)
 
 import mistune
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
@@ -17,9 +27,10 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from mistune import BlockState
-    from typing_extensions import LiteralString
     from pathlib import Path
+    from typing_extensions import LiteralString
+
+    from mistune import BlockState
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
@@ -361,21 +372,30 @@ class SchemaInfo:
         else:
             return ""
 
+    @overload
     def get_python_type_representation(
         self,
+        for_type_hints: bool = ...,
+        return_as_str: Literal[True] = ...,
+        additional_type_hints: list[str] | None = ...,
+    ) -> str: ...
+    @overload
+    def get_python_type_representation(
+        self,
+        for_type_hints: bool = ...,
+        return_as_str: Literal[False] = ...,
+        additional_type_hints: list[str] | None = ...,
+    ) -> list[str]: ...
+    def get_python_type_representation(  # noqa: C901
+        self,
         for_type_hints: bool = False,
-        altair_classes_prefix: str | None = None,
         return_as_str: bool = True,
         additional_type_hints: list[str] | None = None,
     ) -> str | list[str]:
-        # This is a list of all types which can be used for the current SchemaInfo.
-        # This includes Altair classes, standard Python types, etc.
         type_representations: list[str] = []
-        TP_CHECK_ONLY = {"Parameter", "SchemaBase"}
-        """Most common annotations are include in `TYPE_CHECKING` block.
-        They do not require `core.` prefix, and this saves many lines of code.
-
-        Eventually a more robust solution would apply to more types from `core`.
+        """
+        All types which can be used for the current `SchemaInfo`.
+        Including `altair` classes, standard `python` types, etc.
         """
 
         if self.title:
@@ -383,7 +403,8 @@ class SchemaInfo:
                 # To keep type hints simple, we only use the SchemaBase class
                 # as the type hint for all classes which inherit from it.
                 class_names = ["SchemaBase"]
-                if self.title == "ExprRef":
+                if self.title in {"ExprRef", "ParameterExtent"}:
+                    class_names.append("Parameter")
                     # In these cases, a value parameter is also always accepted.
                     # It would be quite complex to further differentiate
                     # between a value and a selection parameter based on
@@ -391,23 +412,7 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append("Parameter")
-                if self.title == "ParameterExtent":
-                    class_names.append("Parameter")
 
-                prefix = (
-                    "" if not altair_classes_prefix else altair_classes_prefix + "."
-                )
-                # If there is no prefix, it might be that the class is defined
-                # in the same script and potentially after this line -> We use
-                # deferred type annotations using quotation marks.
-                if not prefix:
-                    class_names = [f'"{n}"' for n in class_names]
-                else:
-                    class_names = (
-                        n if n in TP_CHECK_ONLY else f"{prefix}{n}" for n in class_names
-                    )
-                    # class_names = [f"{prefix}{n}" for n in class_names]
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs
@@ -425,26 +430,22 @@ class SchemaInfo:
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             type_representations.append(tp_str)
         elif self.is_anyOf():
-            type_representations.extend(
-                [
-                    s.get_python_type_representation(
-                        for_type_hints=for_type_hints,
-                        altair_classes_prefix=altair_classes_prefix,
-                        return_as_str=False,
-                    )
-                    for s in self.anyOf
-                ]
+            it = (
+                s.get_python_type_representation(
+                    for_type_hints=for_type_hints, return_as_str=False
+                )
+                for s in self.anyOf
             )
+            type_representations.extend(it)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema["type"] = typ_
+                # We always use title if possible for nested objects
                 options.append(
                     subschema.get_python_type_representation(
-                        # We always use title if possible for nested objects
-                        for_type_hints=for_type_hints,
-                        altair_classes_prefix=altair_classes_prefix,
+                        for_type_hints=for_type_hints
                     )
                 )
             type_representations.extend(options)
@@ -467,14 +468,10 @@ class SchemaInfo:
             # method. However, it is not entirely accurate as some sequences
             # such as e.g. a range are not supported by SchemaBase.to_dict but
             # this tradeoff seems worth it.
-            type_representations.append(
-                "Sequence[{}]".format(
-                    self.child(self.items).get_python_type_representation(
-                        for_type_hints=for_type_hints,
-                        altair_classes_prefix=altair_classes_prefix,
-                    )
-                )
+            s = self.child(self.items).get_python_type_representation(
+                for_type_hints=for_type_hints
             )
+            type_representations.append(f"Sequence[{s}]")
         elif self.type in jsonschema_to_python_types:
             type_representations.append(jsonschema_to_python_types[self.type])
         else:
@@ -685,11 +682,13 @@ class RSTParse(mistune.Markdown):
 rst_parse: RSTParse = RSTParse(RSTRenderer())
 
 
-def indent_docstring(
+def indent_docstring(  # noqa: C901
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
     """Indent a docstring for use in generated code."""
     final_lines = []
+    if len(lines) > 1:
+        lines += [""]
 
     for i, line in enumerate(lines):
         stripped = line.lstrip()

@@ -1,45 +1,48 @@
 from __future__ import annotations
 
-import sys
-import warnings
+import functools
 import hashlib
 import io
-import json
-import jsonschema
 import itertools
+import json
+import operator
+import sys
+import typing as t
+import warnings
+from copy import deepcopy as _deepcopy
 from typing import (
-    Any,
-    overload,
-    Literal,
-    Union,
     TYPE_CHECKING,
-    TypeVar,
+    Any,
+    Literal,
     Protocol,
+    Sequence,
+    TypeVar,
+    Union,
+    overload,
 )
 from typing_extensions import TypeAlias
-import typing as t
-import functools
-import operator
-from copy import deepcopy as _deepcopy
 
-from .schema import core, channels, mixins, SCHEMA_URL
+import jsonschema
 
+from altair import utils
+from altair.expr import core as _expr_core
 from altair.utils import Optional, Undefined
-from .data import data_transformers
-from ... import utils
-from ...expr import core as _expr_core
-from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
-from .theme import themes
-from .compiler import vegalite_compilers
-from ...utils._vegafusion_data import (
-    using_vegafusion as _using_vegafusion,
+from altair.utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from altair.utils.data import DataType, is_data_type as _is_data_type
+from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.core import (
     to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
 )
+from altair.utils.data import DataType
+from altair.utils.data import is_data_type as _is_data_type
+
+from .compiler import vegalite_compilers
+from .data import data_transformers
+from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
+from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
+from .theme import themes
 
 if sys.version_info >= (3, 13):
     from typing import TypedDict
@@ -47,81 +50,93 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    from ...utils.core import DataFrameLike
     from pathlib import Path
-    from typing import Iterable, IO, Iterator
+    from typing import IO, Iterable, Iterator
+
+    from altair.utils.core import DataFrameLike
 
     if sys.version_info >= (3, 13):
-        from typing import TypeIs, Required
+        from typing import Required, TypeIs
     else:
-        from typing_extensions import TypeIs, Required
+        from typing_extensions import Required, TypeIs
     if sys.version_info >= (3, 11):
-        from typing import Self, Never
+        from typing import Never, Self
     else:
-        from typing_extensions import Self, Never
+        from typing_extensions import Never, Self
 
-    from .schema.channels import Facet, Row, Column
-    from .schema.core import (
-        SchemaBase,
-        Expr,
-        PredicateComposition,
-        Binding,
-        IntervalSelectionConfig,
-        PointSelectionConfig,
-        Mark,
-        LayerRepeatMapping,
-        RepeatMapping,
-        ProjectionType,
-        ExprRef,
-        Vector2number,
-        Vector2Vector2number,
-        Vector3number,
-        Transform,
-        AggregatedFieldDef,
-        FieldName,
-        BinParams,
-        ImputeSequence,
-        ImputeMethod,
-        JoinAggregateFieldDef,
-        ParameterName,
-        Predicate,
-        LookupSelection,
-        AggregateOp,
-        SortField,
-        TimeUnit,
-        WindowFieldDef,
-        FacetFieldDef,
-        FacetedEncoding,
-        AnyMark,
-        Step,
-        RepeatRef,
-        UrlData,
-        SequenceGenerator,
-        GraticuleGenerator,
-        SphereGenerator,
-        VariableParameter,
-        TopLevelSelectionParameter,
-        SelectionParameter,
-        InlineDataset,
-    )
     from altair.expr.core import (
         BinaryExpression,
         Expression,
         GetAttrExpression,
         GetItemExpression,
+        IntoExpression,
     )
+    from altair.utils.display import MimeBundleType
+
     from .schema._typing import (
-        ImputeMethod_T,
-        SelectionType_T,
-        SelectionResolution_T,
-        SingleDefUnitChannel_T,
-        StackOffset_T,
-        ResolveMode_T,
-        ProjectionType_T,
         AggregateOp_T,
+        AutosizeType_T,
+        ColorName_T,
+        ImputeMethod_T,
+        LayoutAlign_T,
         MultiTimeUnit_T,
-        SingleTimeUnit_T,
         OneOrSeq,
+        ProjectionType_T,
+        ResolveMode_T,
+        SelectionResolution_T,
+        SelectionType_T,
+        SingleDefUnitChannel_T,
+        SingleTimeUnit_T,
+        StackOffset_T,
+    )
+    from .schema.channels import Column, Facet, Row
+    from .schema.core import (
+        AggregatedFieldDef,
+        AggregateOp,
+        AnyMark,
+        BindCheckbox,
+        Binding,
+        BindRadioSelect,
+        BindRange,
+        BinParams,
+        Expr,
+        ExprRef,
+        FacetedEncoding,
+        FacetFieldDef,
+        FieldName,
+        GraticuleGenerator,
+        ImputeMethod,
+        ImputeSequence,
+        InlineData,
+        InlineDataset,
+        IntervalSelectionConfig,
+        JoinAggregateFieldDef,
+        LayerRepeatMapping,
+        LookupSelection,
+        Mark,
+        NamedData,
+        ParameterName,
+        PointSelectionConfig,
+        Predicate,
+        PredicateComposition,
+        ProjectionType,
+        RepeatMapping,
+        RepeatRef,
+        SchemaBase,
+        SelectionParameter,
+        SequenceGenerator,
+        SortField,
+        SphereGenerator,
+        Step,
+        TimeUnit,
+        TopLevelSelectionParameter,
+        Transform,
+        UrlData,
+        VariableParameter,
+        Vector2number,
+        Vector2Vector2number,
+        Vector3number,
+        WindowFieldDef,
     )
 
 __all__ = [
@@ -130,7 +145,6 @@ __all__ = [
     "ChainedWhen",
     "Chart",
     "ChartDataType",
-    "ChartType",
     "ConcatChart",
     "DataType",
     "FacetChart",
@@ -159,7 +173,6 @@ __all__ = [
     "condition",
     "graticule",
     "hconcat",
-    "is_chart_type",
     "layer",
     "mixins",
     "param",
@@ -183,7 +196,7 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(values: dict | list | InlineDataset) -> str:
+def _dataset_name(values: dict[str, Any] | list | InlineDataset) -> str:
     """
     Generate a unique hash of the data.
 
@@ -206,7 +219,9 @@ def _dataset_name(values: dict | list | InlineDataset) -> str:
     return "data-" + hsh
 
 
-def _consolidate_data(data: Any, context: Any) -> Any:
+def _consolidate_data(
+    data: ChartDataType | UrlData, context: dict[str, Any]
+) -> ChartDataType | NamedData | InlineData | UrlData:
     """
     If data is specified inline, then move it to context['datasets'].
 
@@ -235,7 +250,9 @@ def _consolidate_data(data: Any, context: Any) -> Any:
     return data
 
 
-def _prepare_data(data, context=None):
+def _prepare_data(
+    data: ChartDataType, context: dict[str, Any] | None = None
+) -> ChartDataType | NamedData | InlineData | UrlData | Any:
     """
     Convert input data to data for use within schema.
 
@@ -281,10 +298,10 @@ Title = core.TitleParams
 
 class LookupData(core.LookupData):
     @utils.use_signature(core.LookupData)
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
@@ -295,10 +312,10 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
         context = kwargs.get("context", {})
         data = context.get("data", None)
@@ -353,11 +370,11 @@ class Parameter(_expr_core.OperatorMixin):
         alternative="to_dict",
         message="No need to call '.ref()' anymore.",
     )
-    def ref(self) -> dict:
+    def ref(self) -> dict[str, Any]:
         """'ref' is deprecated. No need to call '.ref()' anymore."""
         return self.to_dict()
 
-    def to_dict(self) -> dict[str, str | dict]:
+    def to_dict(self) -> dict[str, str | dict[str, Any]]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -367,13 +384,13 @@ class Parameter(_expr_core.OperatorMixin):
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
 
-    def __invert__(self):
+    def __invert__(self) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             return SelectionPredicateComposition({"not": {"param": self.name}})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
-    def __and__(self, other):
+    def __and__(self, other: Any) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
@@ -381,7 +398,7 @@ class Parameter(_expr_core.OperatorMixin):
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
-    def __or__(self, other):
+    def __or__(self, other: Any) -> SelectionPredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
@@ -395,7 +412,7 @@ class Parameter(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return self.name
 
-    def _from_expr(self, expr) -> ParameterExpression:
+    def _from_expr(self, expr: IntoExpression) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
     def __getattr__(self, field_name: str) -> GetAttrExpression | SelectionExpression:
@@ -416,18 +433,18 @@ class Parameter(_expr_core.OperatorMixin):
 
 # Enables use of ~, &, | with compositions of selection objects.
 class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self):
+    def __invert__(self) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"not": self.to_dict()})
 
-    def __and__(self, other):
+    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
 
-    def __or__(self, other):
+    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
-    def __init__(self, expr) -> None:
+    def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
     def to_dict(self) -> dict[str, str]:
@@ -436,12 +453,12 @@ class ParameterExpression(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> ParameterExpression:
+    def _from_expr(self, expr: IntoExpression) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
 
 class SelectionExpression(_expr_core.OperatorMixin):
-    def __init__(self, expr) -> None:
+    def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
     def to_dict(self) -> dict[str, str]:
@@ -450,7 +467,7 @@ class SelectionExpression(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> SelectionExpression:
+    def _from_expr(self, expr: IntoExpression) -> SelectionExpression:
         return SelectionExpression(expr=expr)
 
 
@@ -1037,7 +1054,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args, **kwds) -> _Conditional[_C]:  # type: ignore[override]
+    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
         m = super().to_dict(*args, **kwds)
         return _Conditional(condition=m["condition"])
 
@@ -1213,7 +1230,7 @@ def when(
 # Top-Level Functions
 
 
-def value(value, **kwargs) -> _Value:
+def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
     return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
@@ -1224,7 +1241,7 @@ def param(
     bind: Optional[Binding] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create a named parameter, see https://altair-viz.github.io/user_guide/interactions.html for examples.
@@ -1305,7 +1322,7 @@ def param(
     return parameter
 
 
-def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
+def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
 
     select_kwds = {"name", "bind", "value", "empty", "init", "views"}
@@ -1335,7 +1352,7 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter
     alternative="'selection_point()' or 'selection_interval()'",
     message="These functions also include more helpful docstrings.",
 )
-def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
+def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     """'selection' is deprecated use 'selection_point' or 'selection_interval' instead, depending on the type of parameter you want to create."""
     return _selection(type=type, **kwds)
 
@@ -1353,7 +1370,7 @@ def selection_interval(
     mark: Optional[Mark] = Undefined,
     translate: Optional[str | bool] = Undefined,
     zoom: Optional[str | bool] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.).
@@ -1466,7 +1483,7 @@ def selection_point(
     resolve: Optional[SelectionResolution_T] = Undefined,
     toggle: Optional[str | bool] = Undefined,
     nearest: Optional[bool] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
@@ -1571,43 +1588,43 @@ def selection_point(
 
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
-def selection_multi(**kwargs):
+def selection_multi(**kwargs: Any) -> Parameter:
     """'selection_multi' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
-def selection_single(**kwargs):
+def selection_single(**kwargs: Any) -> Parameter:
     """'selection_single' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
-def binding(input, **kwargs):
+def binding(input: Any, **kwargs: Any) -> Binding:
     """A generic binding."""
     return core.Binding(input=input, **kwargs)
 
 
 @utils.use_signature(core.BindCheckbox)
-def binding_checkbox(**kwargs):
+def binding_checkbox(**kwargs: Any) -> BindCheckbox:
     """A checkbox binding."""
     return core.BindCheckbox(input="checkbox", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
-def binding_radio(**kwargs):
+def binding_radio(**kwargs: Any) -> BindRadioSelect:
     """A radio button binding."""
     return core.BindRadioSelect(input="radio", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
-def binding_select(**kwargs):
+def binding_select(**kwargs: Any) -> BindRadioSelect:
     """A select binding."""
     return core.BindRadioSelect(input="select", **kwargs)
 
 
 @utils.use_signature(core.BindRange)
-def binding_range(**kwargs):
+def binding_range(**kwargs: Any) -> BindRange:
     """A range binding."""
     return core.BindRange(input="range", **kwargs)
 
@@ -1619,7 +1636,7 @@ def condition(
     if_false: _TSchemaBase,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> _TSchemaBase: ...
 @overload
 def condition(
@@ -1628,7 +1645,7 @@ def condition(
     if_false: Map | str,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
@@ -1637,11 +1654,11 @@ def condition(
     if_false: Map,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any
 ) -> Never: ...
 # TODO: update the docstring
 def condition(
@@ -1650,7 +1667,7 @@ def condition(
     if_false: _StatementType,
     *,
     empty: Optional[bool] = Undefined,
-    **kwargs,
+    **kwargs: Any,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
     """
     A conditional attribute or encoding.
@@ -1687,7 +1704,9 @@ def condition(
 # Top-level objects
 
 
-def _top_schema_base(obj: Any, /):  # -> <subclass of SchemaBase and TopLevelMixin>
+def _top_schema_base(  # noqa: ANN202
+    obj: Any, /
+):  # -> <subclass of SchemaBase and TopLevelMixin>
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
@@ -1706,14 +1725,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     _class_is_valid_at_instantiation: bool = False
     data: Any
 
-    def to_dict(
+    def to_dict(  # noqa: C901
         self,
         validate: bool = True,
         *,
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Convert the chart to a dictionary suitable for JSON export.
 
@@ -1840,7 +1859,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> str:
         """
         Convert a chart to a JSON string.
@@ -1885,7 +1904,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fullhtml: bool = True,
         requirejs: bool = False,
         inline: bool = False,
-        **kwargs,
+        **kwargs: Any,
     ) -> str:
         """
         Embed a Vega/Vega-Lite spec into an HTML page.
@@ -1951,7 +1970,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
         """
-        from ...utils._importers import import_vl_convert
+        from altair.utils._importers import import_vl_convert
 
         vlc = import_vl_convert()
         if _using_vegafusion():
@@ -1985,8 +2004,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         embed_options: dict | None = None,
         json_kwds: dict | None = None,
         engine: str | None = None,
-        inline=False,
-        **kwargs,
+        inline: bool = False,
+        **kwargs: Any,
     ) -> None:
         """
         Save a chart to file in a variety of formats.
@@ -2041,7 +2060,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 version="5.0.0",
             )
 
-        from ...utils.save import save
+        from altair.utils.save import save
 
         kwds: dict[str, Any] = dict(
             chart=self,
@@ -2074,27 +2093,27 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return f"alt.{self.__class__.__name__}(...)"
 
     # Layering and stacking
-    def __add__(self, other) -> LayerChart:
-        if not isinstance(other, TopLevelMixin):
+    def __add__(self, other: ChartType) -> LayerChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be layered."
             raise ValueError(msg)
-        return layer(self, other)
+        return layer(t.cast("ChartType", self), other)
 
-    def __and__(self, other) -> VConcatChart:
-        if not isinstance(other, TopLevelMixin):
+    def __and__(self, other: ChartType) -> VConcatChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
         # Too difficult to type check this
-        return vconcat(self, other)
+        return vconcat(t.cast("ChartType", self), other)
 
-    def __or__(self, other) -> HConcatChart | ConcatChart:
-        if not isinstance(other, TopLevelMixin):
+    def __or__(self, other: ChartType) -> HConcatChart | ConcatChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
         elif isinstance(self, ConcatChart):
             return concat(self, other)
         else:
-            return hconcat(self, other)
+            return hconcat(t.cast("ChartType", self), other)
 
     def repeat(
         self,
@@ -2103,7 +2122,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         column: Optional[list[str]] = Undefined,
         layer: Optional[list[str]] = Undefined,
         columns: Optional[int] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> RepeatChart:
         """
         Return a RepeatChart built from the chart.
@@ -2154,9 +2173,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             repeat_arg = core.RepeatMapping(row=row, column=column)
 
-        return RepeatChart(spec=self, repeat=repeat_arg, columns=columns, **kwargs)
+        return RepeatChart(
+            spec=t.cast("ChartType", self), repeat=repeat_arg, columns=columns, **kwargs
+        )
 
-    def properties(self, **kwargs) -> Self:
+    def properties(self, **kwargs: Any) -> Self:
         """
         Set top-level properties of the Chart.
 
@@ -2204,7 +2225,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         translate: Optional[
             list[float] | Vector2number | ExprRef | Parameter
         ] = Undefined,
-        **kwds,
+        **kwds: Any,
     ) -> Self:
         """
         Add a geographic projection to the chart.
@@ -2419,7 +2440,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
         field: Optional[str | FieldName] = Undefined,
         bin: Literal[True] | BinParams = True,
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`BinTransform` to the schema.
@@ -2629,7 +2650,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby: Optional[list[str | FieldName]] = Undefined,
         keyvals: Optional[list[Any] | ImputeSequence] = Undefined,
         method: Optional[ImputeMethod_T | ImputeMethod] = Undefined,
-        value=Undefined,
+        value: Optional[Any] = Undefined,
     ) -> Self:
         """
         Add an :class:`ImputeTransform` to the schema.
@@ -2779,7 +2800,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         | Parameter
         | PredicateComposition
         | dict[str, Predicate | str | list | bool],
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
@@ -2918,7 +2939,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         from_: Optional[LookupData | LookupSelection] = Undefined,
         as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
         default: Optional[str] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart.
@@ -3376,7 +3397,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, include=None, exclude=None):
+    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN002, ANN003
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -3394,7 +3415,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         renderer: Optional[Literal["canvas", "svg"]] = Undefined,
         theme: Optional[str] = Undefined,
         actions: Optional[bool | dict] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         """
         Display chart in Jupyter notebook or JupyterLab.
@@ -3436,17 +3457,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     @utils.deprecated(version="4.1.0", alternative="show")
     def serve(
         self,
-        ip="127.0.0.1",
-        port=8888,
-        n_retries=50,
-        files=None,
-        jupyter_warning=True,
-        open_browser=True,
-        http_server=None,
-        **kwargs,
-    ):
+        ip="127.0.0.1",  # noqa: ANN001
+        port=8888,  # noqa: ANN001
+        n_retries=50,  # noqa: ANN001
+        files=None,  # noqa: ANN001
+        jupyter_warning=True,  # noqa: ANN001
+        open_browser=True,  # noqa: ANN001
+        http_server=None,  # noqa: ANN001
+        **kwargs,  # noqa: ANN003
+    ) -> None:
         """'serve' is deprecated. Use 'show' instead."""
-        from ...utils.server import serve
+        from altair.utils.server import serve
 
         html = io.StringIO()
         self.save(html, format="html", **kwargs)
@@ -3476,7 +3497,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             display(self)
 
     @utils.use_signature(core.Resolve)
-    def _set_resolve(self, **kwargs):
+    def _set_resolve(self, **kwargs: Any):  # noqa: ANN202
         """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
             msg = f"{self.__class__} object has no attribute " "'resolve'"
@@ -3489,19 +3510,19 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs) -> Self:
+    def resolve_axis(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs) -> Self:
+    def resolve_legend(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs) -> Self:
+    def resolve_scale(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
         return t.cast("Self", r)
@@ -3517,7 +3538,7 @@ class _EncodingMixin(channels._EncodingMixin):
         column: Optional[str | FacetFieldDef | Column] = Undefined,
         data: Optional[ChartDataType] = Undefined,
         columns: Optional[int] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> FacetChart:
         """
         Create a facet chart from the current chart.
@@ -3644,12 +3665,12 @@ class Chart(
         mark: Optional[str | AnyMark] = Undefined,
         width: Optional[int | str | dict | Step] = Undefined,
         height: Optional[int | str | dict | Step] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
+        # Data type hints won't match with what TopLevelUnitSpec expects
+        # as there is some data processing happening when converting to
+        # a VL spec
         super().__init__(
-            # Data type hints won't match with what TopLevelUnitSpec expects
-            # as there is some data processing happening when converting to
-            # a VL spec
             data=data,  # type: ignore[arg-type]
             encoding=encoding,
             mark=mark,
@@ -3707,7 +3728,7 @@ class Chart(
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Convert the chart to a dictionary suitable for JSON export.
 
@@ -3788,7 +3809,7 @@ class Chart(
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *params) -> Self:
+    def add_selection(self, *params) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
@@ -3823,7 +3844,7 @@ class Chart(
 
 
 def _check_if_valid_subspec(
-    spec: Optional[SchemaBase | dict],
+    spec: ConcatType | LayerType,
     classname: Literal[
         "ConcatChart",
         "FacetChart",
@@ -3833,102 +3854,93 @@ def _check_if_valid_subspec(
         "VConcatChart",
     ],
 ) -> None:
-    """
-    Check if the spec is a valid sub-spec.
-
-    If it is not, then raise a ValueError
-    """
-    err = (
-        'Objects with "{0}" attribute cannot be used within {1}. '
-        "Consider defining the {0} attribute in the {1} object instead."
-    )
-
-    if not isinstance(spec, (core.SchemaBase, dict)):
+    """Raise a `TypeError` if `spec` is not a valid sub-spec."""
+    if not isinstance(spec, core.SchemaBase):
         msg = f"Only chart objects can be used in {classname}."
-        raise ValueError(msg)
+        raise TypeError(msg)
     for attr in TOPLEVEL_ONLY_KEYS:
-        if isinstance(spec, core.SchemaBase):
-            val = getattr(spec, attr, Undefined)
-        else:
-            val = spec.get(attr, Undefined)
-        if val is not Undefined:
-            raise ValueError(err.format(attr, classname))
+        if spec._get(attr) is not Undefined:
+            msg = (
+                f"Objects with {attr!r} attribute cannot be used within {classname}. "
+                f"Consider defining the {attr} attribute in the {classname} object instead."
+            )
+            raise TypeError(msg)
 
 
-def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
-    """Check if the spec can be layered."""
+def _check_if_can_be_layered(spec: LayerType) -> None:
+    """Raise a `TypeError` if `spec` cannot be layered."""
 
-    def _get(spec, attr):
-        if isinstance(spec, core.SchemaBase):
-            return spec._get(attr)
-        else:
-            return spec.get(attr, Undefined)
-
-    def _get_any(spec: dict | SchemaBase, *attrs: str) -> bool:
-        return any(_get(spec, attr) is not Undefined for attr in attrs)
+    def _get_any(spec: LayerType, *attrs: str) -> bool:
+        return any(spec._get(attr) is not Undefined for attr in attrs)
 
     base_msg = "charts cannot be layered. Instead, layer the charts before"
 
-    encoding = _get(spec, "encoding")
-    if encoding is not Undefined:
+    encoding: Any = spec._get("encoding")
+    if not utils.is_undefined(encoding):
         for channel in ["row", "column", "facet"]:
-            if _get(encoding, channel) is not Undefined:
+            if encoding._get(channel) is not Undefined:
                 msg = f"Faceted {base_msg} faceting."
-                raise ValueError(msg)
+                raise TypeError(msg)
     if isinstance(spec, (Chart, LayerChart)):
         return
-
-    if not isinstance(spec, (core.SchemaBase, dict)):
-        msg = "Only chart objects can be layered."
-        raise ValueError(msg)
-    if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        msg = f"Faceted {base_msg} faceting."
-        raise ValueError(msg)
-    if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        msg = f"Repeat {base_msg} repeating."
-        raise ValueError(msg)
-    _concat = ConcatChart, HConcatChart, VConcatChart
-    if isinstance(spec, _concat) or _get_any(spec, "concat", "hconcat", "vconcat"):
-        msg = f"Concatenated {base_msg} concatenating."
-        raise ValueError(msg)
+    elif is_chart_type(spec) or _get_any(
+        spec, "facet", "repeat", "concat", "hconcat", "vconcat"
+    ):
+        if isinstance(spec, FacetChart) or spec._get("facet") is not Undefined:
+            msg = f"Faceted {base_msg} faceting."
+        elif isinstance(spec, RepeatChart) or spec._get("repeat") is not Undefined:
+            msg = f"Repeat {base_msg} repeating."
+        elif isinstance(spec, (ConcatChart, HConcatChart, VConcatChart)) or _get_any(
+            spec, "concat", "hconcat", "vconcat"
+        ):
+            msg = f"Concatenated {base_msg} concatenating."
+        else:
+            msg = "Should be unreachable"
+            raise NotImplementedError(msg)
+        raise TypeError(msg)
 
 
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes."""
 
-    # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
-    # we set the arguments explicitly here.
-    # TODO: Should we instead use tools/schemapi/codegen.get_args?
-    @utils.use_signature(core.TopLevelRepeatSpec)
     def __init__(
         self,
-        repeat=Undefined,
-        spec=Undefined,
-        align=Undefined,
-        autosize=Undefined,
-        background=Undefined,
-        bounds=Undefined,
-        center=Undefined,
-        columns=Undefined,
-        config=Undefined,
-        data=Undefined,
-        datasets=Undefined,
-        description=Undefined,
-        name=Undefined,
-        padding=Undefined,
-        params=Undefined,
-        resolve=Undefined,
-        spacing=Undefined,
-        title=Undefined,
-        transform=Undefined,
-        usermeta=Undefined,
-        **kwds,
-    ):
+        repeat: Optional[list[str] | LayerRepeatMapping | RepeatMapping] = Undefined,
+        spec: Optional[ChartType] = Undefined,
+        align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
+        autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
+        background: Optional[
+            str | dict | Parameter | SchemaBase | ColorName_T
+        ] = Undefined,
+        bounds: Optional[Literal["full", "flush"]] = Undefined,
+        center: Optional[bool | dict | SchemaBase] = Undefined,
+        columns: Optional[int] = Undefined,
+        config: Optional[dict | SchemaBase] = Undefined,
+        data: Optional[ChartDataType] = Undefined,
+        datasets: Optional[dict | SchemaBase] = Undefined,
+        description: Optional[str] = Undefined,
+        name: Optional[str] = Undefined,
+        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        params: Optional[Sequence[_Parameter]] = Undefined,
+        resolve: Optional[dict | SchemaBase] = Undefined,
+        spacing: Optional[dict | float | SchemaBase] = Undefined,
+        title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
+        transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
+        usermeta: Optional[dict | SchemaBase] = Undefined,
+        **kwds: Any,
+    ) -> None:
+        tp_name = type(self).__name__
+        if utils.is_undefined(spec):
+            msg = f"{tp_name!r} requires a `spec`, but got: {spec!r}"
+            raise TypeError(msg)
         _check_if_valid_subspec(spec, "RepeatChart")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
         if isinstance(spec, (Chart, LayerChart)):
+            if utils.is_undefined(repeat):
+                msg = f"{tp_name!r} requires a `repeat`, but got: {repeat!r}"
+                raise TypeError(msg)
             params = _repeat_names(params, repeat, spec)
         super().__init__(
             repeat=repeat,
@@ -4013,7 +4025,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4046,22 +4058,30 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelConcatSpec)
-    def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
-        # TODO: move common data to top level?
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        concat: Sequence[ConcatType] = (),
+        columns: Optional[float] = Undefined,
+        **kwargs: Any,
+    ) -> None:
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
-        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)
+        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)  # type: ignore[arg-type]
+        self.concat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
-    def __ior__(self, other) -> Self:
+    def __ior__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "ConcatChart")
         self.concat.append(other)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
         return self
 
-    def __or__(self, other) -> Self:
+    def __or__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
@@ -4129,12 +4149,12 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
-def concat(*charts, **kwargs) -> ConcatChart:
+def concat(*charts: ConcatType, **kwargs: Any) -> ConcatChart:
     """Concatenate charts horizontally."""
     return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
 
@@ -4143,22 +4163,29 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelHConcatSpec)
-    def __init__(self, data=Undefined, hconcat=(), **kwargs):
-        # TODO: move common data to top level?
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        hconcat: Sequence[ConcatType] = (),
+        **kwargs: Any,
+    ) -> None:
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
-        super().__init__(data=data, hconcat=list(hconcat), **kwargs)
+        super().__init__(data=data, hconcat=list(hconcat), **kwargs)  # type: ignore[arg-type]
+        self.hconcat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
-    def __ior__(self, other) -> Self:
+    def __ior__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
-    def __or__(self, other) -> Self:
+    def __or__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
@@ -4226,12 +4253,12 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
-def hconcat(*charts, **kwargs) -> HConcatChart:
+def hconcat(*charts: ConcatType, **kwargs: Any) -> HConcatChart:
     """Concatenate charts horizontally."""
     return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
 
@@ -4240,22 +4267,29 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets."""
 
     @utils.use_signature(core.TopLevelVConcatSpec)
-    def __init__(self, data=Undefined, vconcat=(), **kwargs):
-        # TODO: move common data to top level?
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        vconcat: Sequence[ConcatType] = (),
+        **kwargs: Any,
+    ) -> None:
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
-        super().__init__(data=data, vconcat=list(vconcat), **kwargs)
+        super().__init__(data=data, vconcat=list(vconcat), **kwargs)  # type: ignore[arg-type]
+        self.vconcat: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
-    def __iand__(self, other) -> Self:
+    def __iand__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
-    def __and__(self, other) -> Self:
+    def __and__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
@@ -4325,12 +4359,12 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
-def vconcat(*charts, **kwargs) -> VConcatChart:
+def vconcat(*charts: ConcatType, **kwargs: Any) -> VConcatChart:
     """Concatenate charts vertically."""
     return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
 
@@ -4339,13 +4373,20 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel."""
 
     @utils.use_signature(core.TopLevelLayerSpec)
-    def __init__(self, data=Undefined, layer=(), **kwargs):
-        # TODO: move common data to top level?
+    def __init__(
+        self,
+        data: Optional[ChartDataType] = Undefined,
+        layer: Sequence[LayerType] = (),
+        **kwargs: Any,
+    ) -> None:
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
             _check_if_can_be_layered(spec)
-        super().__init__(data=data, layer=list(layer), **kwargs)
+        super().__init__(data=data, layer=list(layer), **kwargs)  # type: ignore[arg-type]
+        self.layer: list[ChartType]
+        self.params: Optional[Sequence[_Parameter]]
+        self.data: Optional[ChartDataType]
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         # Currently (Vega-Lite 5.5) the same param can't occur on two layers
         self.layer = _remove_duplicate_params(self.layer)
@@ -4385,7 +4426,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other: LayerChart | Chart) -> Self:
+    def __iadd__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -4393,7 +4434,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other: LayerChart | Chart) -> Self:
+    def __add__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
@@ -4444,12 +4485,12 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
-def layer(*charts, **kwargs) -> LayerChart:
+def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
     """Layer multiple charts."""
     return LayerChart(layer=charts, **kwargs)  # pyright: ignore
 
@@ -4460,17 +4501,23 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
         self,
-        data=Undefined,
-        spec=Undefined,
-        facet=Undefined,
-        params=Undefined,
-        **kwargs,
-    ):
+        data: Optional[ChartDataType] = Undefined,
+        spec: Optional[ChartType] = Undefined,
+        facet: Optional[dict | SchemaBase] = Undefined,
+        params: Optional[Sequence[_Parameter]] = Undefined,
+        **kwargs: Any,
+    ) -> None:
+        if utils.is_undefined(spec):
+            msg = f"{type(self).__name__!r} requires a `spec`, but got: {spec!r}"
+            raise TypeError(msg)
         _check_if_valid_subspec(spec, "FacetChart")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
+        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)  # type: ignore[arg-type]
+        self.data: Optional[ChartDataType]
+        self.spec: ChartType
+        self.params: Optional[Sequence[_Parameter]]
 
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
@@ -4532,12 +4579,12 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
 
-def topo_feature(url: str, feature: str, **kwargs) -> UrlData:
+def topo_feature(url: str, feature: str, **kwargs: Any) -> UrlData:
     """
     A convenience function for extracting features from a topojson url.
 
@@ -4560,8 +4607,10 @@ def topo_feature(url: str, feature: str, **kwargs) -> UrlData:
     )
 
 
-def _combine_subchart_data(data, subcharts):
-    def remove_data(subchart):
+def _combine_subchart_data(
+    data: Optional[ChartDataType], subcharts: list[ChartType]
+) -> tuple[Optional[ChartDataType], list[ChartType]]:
+    def remove_data(subchart: _TSchemaBase) -> _TSchemaBase:
         if subchart.data is not Undefined:
             subchart = subchart.copy()
             subchart.data = Undefined
@@ -4585,13 +4634,18 @@ def _combine_subchart_data(data, subcharts):
     return data, subcharts
 
 
-def _viewless_dict(param: Parameter) -> dict:
+_Parameter: TypeAlias = Union[
+    core.VariableParameter, core.TopLevelSelectionParameter, core.SelectionParameter
+]
+
+
+def _viewless_dict(param: _Parameter) -> dict[str, Any]:
     d = param.to_dict()
     d.pop("views", None)
     return d
 
 
-def _needs_name(subchart):
+def _needs_name(subchart: ChartType) -> bool:
     # Only `Chart` objects need a name
     if (subchart.name is not Undefined) or (not isinstance(subchart, Chart)):
         return False
@@ -4601,7 +4655,7 @@ def _needs_name(subchart):
 
 
 # Convert SelectionParameters to TopLevelSelectionParameters with a views property.
-def _prepare_to_lift(param: Any) -> Any:
+def _prepare_to_lift(param: _Parameter) -> _Parameter:
     param = param.copy()
 
     if isinstance(param, core.VariableParameter):
@@ -4616,15 +4670,15 @@ def _prepare_to_lift(param: Any) -> Any:
     return param
 
 
-def _remove_duplicate_params(layer):
+def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     subcharts = [subchart.copy() for subchart in layer]
     found_params = []
 
     for subchart in subcharts:
-        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+        if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
-        params = []
+        params: list[_Parameter] = []
 
         # Ensure the same selection parameter doesn't appear twice
         for param in subchart.params:
@@ -4647,12 +4701,14 @@ def _remove_duplicate_params(layer):
     return subcharts
 
 
-def _combine_subchart_params(params, subcharts):
-    if params is Undefined:
+def _combine_subchart_params(  # noqa: C901
+    params: Optional[Sequence[_Parameter]], subcharts: list[ChartType]
+) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
+    if utils.is_undefined(params):
         params = []
 
     # List of triples related to params, (param, dictionary minus views, views)
-    param_info = []
+    param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
     # Put parameters already found into `param_info` list.
     for param in params:
@@ -4668,7 +4724,7 @@ def _combine_subchart_params(params, subcharts):
     subcharts = [subchart.copy() for subchart in subcharts]
 
     for subchart in subcharts:
-        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+        if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
         if _needs_name(subchart):
@@ -4707,7 +4763,7 @@ def _combine_subchart_params(params, subcharts):
         if len(v) > 0:
             p.views = v
 
-    subparams = [p for p, _, _ in param_info]
+    subparams: Any = [p for p, _, _ in param_info]
 
     if len(subparams) == 0:
         subparams = Undefined
@@ -4715,7 +4771,9 @@ def _combine_subchart_params(params, subcharts):
     return subparams, subcharts
 
 
-def _get_repeat_strings(repeat):
+def _get_repeat_strings(
+    repeat: list[str] | LayerRepeatMapping | RepeatMapping,
+) -> list[str]:
     if isinstance(repeat, list):
         return repeat
     elif isinstance(repeat, core.LayerRepeatMapping):
@@ -4727,7 +4785,7 @@ def _get_repeat_strings(repeat):
     return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
-def _extend_view_name(v, r, spec):
+def _extend_view_name(v: str, r: str, spec: Chart | LayerChart) -> str:
     # prevent the same extension from happening more than once
     if isinstance(spec, Chart):
         if v.endswith("child__" + r):
@@ -4739,14 +4797,21 @@ def _extend_view_name(v, r, spec):
             return v
         else:
             return f"child__{r}_{v}"
+    else:
+        msg = f"Expected 'Chart | LayerChart', but got: {type(spec).__name__!r}"
+        raise TypeError(msg)
 
 
-def _repeat_names(params, repeat, spec):
-    if params is Undefined:
+def _repeat_names(
+    params: Optional[Sequence[_Parameter]],
+    repeat: list[str] | LayerRepeatMapping | RepeatMapping,
+    spec: Chart | LayerChart,
+) -> Optional[Sequence[_Parameter]]:
+    if utils.is_undefined(params):
         return params
 
     repeat = _get_repeat_strings(repeat)
-    params_named = []
+    params_named: list[_Parameter] = []
 
     for param in params:
         if not isinstance(param, core.TopLevelSelectionParameter):
@@ -4773,8 +4838,10 @@ def _repeat_names(params, repeat, spec):
     return params_named
 
 
-def _remove_layer_props(chart, subcharts, layer_props):
-    def remove_prop(subchart, prop):
+def _remove_layer_props(  # noqa: C901
+    chart: LayerChart, subcharts: list[ChartType], layer_props: Iterable[str]
+) -> tuple[dict[str, Any], list[ChartType]]:
+    def remove_prop(subchart: ChartType, prop: str) -> ChartType:
         # If subchart is a UnitSpec, then subchart["height"] raises a KeyError
         try:
             if subchart[prop] is not Undefined:
@@ -4784,7 +4851,7 @@ def _remove_layer_props(chart, subcharts, layer_props):
             pass
         return subchart
 
-    output_dict = {}
+    output_dict: dict[str, Any] = {}
 
     if not subcharts:
         # No subcharts = nothing to do.
@@ -4827,7 +4894,11 @@ def _remove_layer_props(chart, subcharts, layer_props):
 
 @utils.use_signature(core.SequenceParams)
 def sequence(
-    start, stop=None, step=Undefined, as_=Undefined, **kwds
+    start: Optional[float],
+    stop: Optional[float | None] = None,
+    step: Optional[float] = Undefined,
+    as_: Optional[str] = Undefined,
+    **kwds: Any,
 ) -> SequenceGenerator:
     """Sequence generator."""
     if stop is None:
@@ -4837,7 +4908,7 @@ def sequence(
 
 
 @utils.use_signature(core.GraticuleParams)
-def graticule(**kwds) -> GraticuleGenerator:
+def graticule(**kwds: Any) -> GraticuleGenerator:
     """Graticule generator."""
     # graticule: True indicates default parameters
     graticule: Any = core.GraticuleParams(**kwds) if kwds else True
@@ -4849,9 +4920,24 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType = Union[
+ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
+ConcatType: TypeAlias = Union[
+    ChartType,
+    core.FacetSpec,
+    core.LayerSpec,
+    core.RepeatSpec,
+    core.FacetedUnitSpec,
+    core.LayerRepeatSpec,
+    core.NonNormalizedSpec,
+    core.NonLayerRepeatSpec,
+    core.ConcatSpecGenericSpec,
+    core.ConcatSpecGenericSpec,
+    core.HConcatSpecGenericSpec,
+    core.VConcatSpecGenericSpec,
+]
+LayerType: TypeAlias = Union[ChartType, core.UnitSpec, core.LayerSpec]
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:
