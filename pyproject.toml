@@ -195,6 +195,7 @@ exclude = [
     "tests/examples_methods_syntax",
     "tests/test_transformed_data.py",
 ]
+extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
 # https://docs.astral.sh/ruff/preview/
