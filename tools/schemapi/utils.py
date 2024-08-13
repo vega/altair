@@ -818,7 +818,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
     # try to check for the type of the Parameter.param attribute
     # but then we would need to write some overload signatures for
     # api.param).
-    EXCLUDE_TITLE: set[str] = tp_param | {"Dict"}
+    EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
     title: str = info.title
     tps: set[str] = set()
     if not use_concrete:

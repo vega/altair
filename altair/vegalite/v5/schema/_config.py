@@ -33,7 +33,7 @@ class RectConfigKwds(TypedDict, total=False):
     cursor: Cursor_T
     description: str
     dir: TextDirection_T
-    discreteBandSize: float | RelativeBandSize
+    discreteBandSize: float
     dx: float
     dy: float
     ellipsis: str
@@ -272,7 +272,7 @@ class BarConfigKwds(TypedDict, total=False):
     cursor: Cursor_T
     description: str
     dir: TextDirection_T
-    discreteBandSize: float | RelativeBandSize
+    discreteBandSize: float
     dx: float
     dy: float
     ellipsis: str
