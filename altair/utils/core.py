@@ -504,7 +504,7 @@ def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
 
 def parse_shorthand(  # noqa: C901
     shorthand: dict[str, Any] | str,
-    data: pd.DataFrame | DataFrameLike | None = None,
+    data: IntoDataFrame | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,

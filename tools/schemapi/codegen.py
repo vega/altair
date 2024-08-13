@@ -9,10 +9,12 @@ from typing import Final
 
 from .utils import (
     SchemaInfo,
+    TypeAliasTracer,
     flatten,
     indent_docstring,
     is_valid_identifier,
     jsonschema_to_python_types,
+    spell_literal,
 )
 
 
@@ -326,8 +328,9 @@ class SchemaGenerator:
             elif si.is_enum():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable
-                enum_values = [f'"{v}"' for v in si.enum]
-                py_type = f"Literal[{', '.join(enum_values)}]"
+                py_type = TypeAliasTracer.add_literal(
+                    si, spell_literal(si.enum), replace=True
+                )
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
