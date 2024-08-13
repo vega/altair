@@ -202,7 +202,7 @@ and to ``orient`` it at the ``'bottom'`` of the chart (see :ref:`user-guide-conf
    )
 
 In the chart above,
-you can see that title is positioned all the way to the left,
+you can see that the title is positioned all the way to the left,
 so that it lines up with the label on the y-axis.
 You can align the title to the axis line instead
 by setting the reference ``frame`` for the anchor position
