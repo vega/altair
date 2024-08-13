@@ -286,6 +286,22 @@ The parameters ``short``, ``long`` accept the same range of types::
         long: Union[str, bool, float, Sequence[Union[str, bool, float]],
     ): ...
 """
+
+class Value(TypedDict, Generic[T]):
+    """
+    A `Generic`_ single item ``dict``.
+
+    Parameters
+    ----------
+    value: T
+        Wrapped value.
+
+    .. _Generic:
+        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+
+    """
+
+    value: T
 '''
 
 
@@ -957,7 +973,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     print(msg)
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
     TypeAliasTracer.write_module(
-        fp_typing, "OneOrSeq", header=HEADER, extra=TYPING_EXTRA
+        fp_typing, "OneOrSeq", "Value", header=HEADER, extra=TYPING_EXTRA
     )
     # Write the pre-generated modules
     for fp, contents in files.items():

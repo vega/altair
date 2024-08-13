@@ -92,8 +92,11 @@ class _TypeAliasTracer:
         self._aliases: dict[str, str] = {}
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
-            "from typing import Any, Literal, Mapping, TypeVar, Sequence, Union",
-            "from typing_extensions import TypeAlias, TypeAliasType",
+            "import sys",
+            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "if sys.version_info >= (3, 13):\n    from typing import TypedDict\nelse:\n    from typing_extensions import TypedDict",
+            "if sys.version_info >= (3, 12):\n    from typing import TypeAliasType\nelse:\n    from typing_extensions import TypeAliasType",
+            "if sys.version_info >= (3, 10):\n    from typing import TypeAlias\nelse:\n    from typing_extensions import TypeAlias",
         )
         self._cmd_check: list[str] = ["--fix"]
         self._cmd_format: Sequence[str] = ruff_format or ()
@@ -605,7 +608,7 @@ class SchemaInfo:
             raise ValueError(msg)
 
     def is_value(self) -> bool:
-        raise NotImplementedError
+        return self.is_object() and self.properties.keys() == {"value"}
 
     def is_array(self) -> bool:
         return self.type == "array"
@@ -827,6 +830,10 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
         # as the type hint for all classes which inherit from it.
         if title in tp_param:
             tps.add("Parameter")
+    elif info.is_value():
+        value = info.properties["value"]
+        t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
+        tps.add(f"Value[{t}]")
     elif (
         (title not in EXCLUDE_TITLE)
         and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
