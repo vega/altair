@@ -180,7 +180,7 @@ The subtitle can run to two lines by passing a list where each list item is a li
        color="source:N"
    )
 
-The ``Title`` object can also configure a number of other attributes, e.g., the position of the title and subtitle (see see :ref:`user-guide-customization` for details).
+The ``Title`` object can also configure a number of other attributes, e.g., to ``anchor`` it to the ``'start'`` (left) of the chart, to ``orient`` it at the ``'bottom'`` of the chart, and to set the reference ``frame`` for the anchor position to be relative to the ``'group'``, or the portion of the chart excluding the axis (see see :ref:`user-guide-configuration` for details)
 
 .. altair-plot::
 
@@ -190,6 +190,7 @@ The ``Title`` object can also configure a number of other attributes, e.g., the 
           "Iowa's green energy boom",
           subtitle=["A growing share of the state's energy", "has come from renewable sources"],
           anchor='start',
+          frame='group',
           orient='bottom',
           offset=20
       )
