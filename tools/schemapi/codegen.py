@@ -10,6 +10,7 @@ from typing import Final, Iterator
 
 from .utils import (
     SchemaInfo,
+    TypeAliasTracer,
     flatten,
     indent_docstring,
     is_valid_identifier,
@@ -304,7 +305,9 @@ class SchemaGenerator:
             elif si.is_enum():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable
-                py_type = spell_literal(si.enum)
+                py_type = TypeAliasTracer.add_literal(
+                    si, spell_literal(si.enum), replace=True
+                )
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
