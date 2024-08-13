@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict
 if TYPE_CHECKING:
     from ._typing import *  # noqa: F403
     from .core import *  # noqa: F403
-    from .core import Dict
 
 
 class RectConfigKwds(TypedDict, total=False):
@@ -180,7 +179,7 @@ class AxisConfigKwds(TypedDict, total=False):
     domainDashOffset: float
     domainOpacity: float
     domainWidth: float
-    format: str | Dict
+    format: str
     formatType: str
     grid: bool
     gridCap: StrokeCap_T
@@ -517,7 +516,7 @@ class ErrorBarConfigKwds(TypedDict, total=False):
 class HeaderConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    format: str | Dict
+    format: str
     formatType: str
     labelAlign: Align_T
     labelAnchor: TitleAnchor_T

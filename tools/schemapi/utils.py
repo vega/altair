@@ -818,6 +818,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
     # try to check for the type of the Parameter.param attribute
     # but then we would need to write some overload signatures for
     # api.param).
+    EXCLUDE_TITLE: set[str] = tp_param | {"Dict"}
     title: str = info.title
     tps: set[str] = set()
     if not use_concrete:
@@ -827,7 +828,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
         if title in tp_param:
             tps.add("Parameter")
     elif (
-        (title not in tp_param)
+        (title not in EXCLUDE_TITLE)
         and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
         and not info.is_union()
         and not info.is_format()
