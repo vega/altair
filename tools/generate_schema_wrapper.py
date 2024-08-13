@@ -104,7 +104,8 @@ class FieldChannelMixin:
         if shorthand is Undefined:
             parsed = {}
         elif isinstance(shorthand, str):
-            parsed = parse_shorthand(shorthand, data=context.get("data", None))
+            data: nw.DataFrame | Any = context.get("data", None)
+            parsed = parse_shorthand(shorthand, data=data)
             type_required = "type" in self._kwds  # type: ignore[attr-defined]
             type_in_shorthand = "type" in parsed
             type_defined_explicitly = self._get("type") is not Undefined  # type: ignore[attr-defined]
@@ -113,7 +114,7 @@ class FieldChannelMixin:
                 # We still parse it out of the shorthand, but drop it here.
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
-                if _is_pandas_dataframe(context.get("data", None)):
+                if isinstance(data, nw.DataFrame):
                     msg = (
                         f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
@@ -677,7 +678,7 @@ def generate_vegalite_channel_wrappers(
         "from __future__ import annotations\n",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
         "from typing_extensions import TypeAlias",
-        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
+        "import narwhals.stable.v1 as nw",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
