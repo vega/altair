@@ -190,7 +190,32 @@ and to ``orient`` it at the ``'bottom'`` of the chart (see :ref:`user-guide-conf
       iowa,
       title=alt.Title(
           "Iowa's green energy boom",
-          subtitle=["A growing share of the state's energy", "has come from renewable sources"],
+          subtitle="A growing share of the state's energy has come from renewable sources",
+          anchor='start',
+          orient='bottom',
+          offset=20
+      )
+   ).mark_area().encode(
+       x="year:T",
+       y=alt.Y("net_generation:Q").stack("normalize"),
+       color="source:N"
+   )
+
+In the chart above,
+you can see that title is positioned all the way to the left,
+so that it lines up with the label on the y-axis.
+You can align the title to the axis line instead
+by setting the reference ``frame`` for the anchor position
+to be relative to the ``'group'`` (i.e. the data portion of the chart, excluding labels and titles).
+
+
+.. altair-plot::
+
+   alt.Chart(
+      iowa,
+      title=alt.Title(
+          "Iowa's green energy boom",
+          subtitle=["A growing share of the state's energy has come from", "renewable sources"],
           anchor='start',
           frame='group',
           orient='bottom',
@@ -201,7 +226,6 @@ and to ``orient`` it at the ``'bottom'`` of the chart (see :ref:`user-guide-conf
        y=alt.Y("net_generation:Q").stack("normalize"),
        color="source:N"
    )
-
 
 Adjusting Axis Limits
 ---------------------
