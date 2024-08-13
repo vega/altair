@@ -4,8 +4,22 @@
 
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping, Sequence, TypeVar, Union
-from typing_extensions import TypeAlias, TypeAliasType
+import sys
+from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
+
+if sys.version_info >= (3, 13):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
+
 
 __all__ = [
     "AggregateOp_T",
@@ -56,6 +70,7 @@ __all__ = [
     "TitleOrient_T",
     "TypeForShape_T",
     "Type_T",
+    "Value",
     "VegaThemes",
     "WindowOnlyOp_T",
 ]
@@ -76,6 +91,24 @@ The parameters ``short``, ``long`` accept the same range of types::
         long: Union[str, bool, float, Sequence[Union[str, bool, float]],
     ): ...
 """
+
+
+class Value(TypedDict, Generic[T]):
+    """
+    A `Generic`_ single item ``dict``.
+
+    Parameters
+    ----------
+    value: T
+        Wrapped value.
+
+    .. _Generic:
+        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+
+    """
+
+    value: T
+
 
 VegaThemes: TypeAlias = Literal[
     "carbong10",

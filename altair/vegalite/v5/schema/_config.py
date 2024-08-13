@@ -958,23 +958,23 @@ class ViewConfigKwds(TypedDict, total=False):
 class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    angle: str | ScaleInvalidDataShowAsValueangle
-    color: str | ScaleInvalidDataShowAsValuecolor
-    fill: str | ScaleInvalidDataShowAsValuefill
-    fillOpacity: str | ScaleInvalidDataShowAsValuefillOpacity
-    opacity: str | ScaleInvalidDataShowAsValueopacity
-    radius: str | ScaleInvalidDataShowAsValueradius
-    shape: str | ScaleInvalidDataShowAsValueshape
-    size: str | ScaleInvalidDataShowAsValuesize
-    stroke: str | ScaleInvalidDataShowAsValuestroke
-    strokeDash: str | ScaleInvalidDataShowAsValuestrokeDash
-    strokeOpacity: str | ScaleInvalidDataShowAsValuestrokeOpacity
-    strokeWidth: str | ScaleInvalidDataShowAsValuestrokeWidth
-    theta: str | ScaleInvalidDataShowAsValuetheta
-    x: str | ScaleInvalidDataShowAsValuex
-    xOffset: str | ScaleInvalidDataShowAsValuexOffset
-    y: str | ScaleInvalidDataShowAsValuey
-    yOffset: str | ScaleInvalidDataShowAsValueyOffset
+    angle: str | Value[float]
+    color: str | Value[str | LinearGradient | RadialGradient | ColorName_T]
+    fill: str | Value[str | None | LinearGradient | RadialGradient | ColorName_T]
+    fillOpacity: str | Value[float]
+    opacity: str | Value[float]
+    radius: str | Value[float]
+    shape: str | Value[str | SymbolShape]
+    size: str | Value[float]
+    stroke: str | Value[str | None | LinearGradient | RadialGradient | ColorName_T]
+    strokeDash: str | Value[Sequence[float]]
+    strokeOpacity: str | Value[float]
+    strokeWidth: str | Value[float]
+    theta: str | Value[float]
+    x: str | Value[str | float]
+    xOffset: str | Value[float]
+    y: str | Value[str | float]
+    yOffset: str | Value[float]
 
 
 class ThemeConfig(TypedDict, total=False):
