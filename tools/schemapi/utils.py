@@ -468,10 +468,14 @@ class SchemaInfo:
             msg = "No Python type representation available for this schema"
             raise ValueError(msg)
 
-        if use_concrete and len(tps) == 0 and as_str:
-            # HACK: There is a single case that ends up empty here
-            # (LegendConfig.layout)
-            tps = {"Map"}
+        if use_concrete:
+            if tps >= {"ColorHex", "ColorName_T", "str"}:
+                # HACK: Remove regular `str` if HEX & CSS color codes are present as well
+                tps.discard("str")
+            elif len(tps) == 0 and as_str:
+                # HACK: There is a single case that ends up empty here
+                # (LegendConfig.layout)
+                tps = {"Map"}
         type_reprs = sort_type_reprs(tps)
         return (
             collapse_type_repr(type_reprs, target=target, use_undefined=use_undefined)
@@ -839,6 +843,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
     # but then we would need to write some overload signatures for
     # api.param).
     EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
+    REMAP_TITLE: dict[str, str] = {"HexColor": "ColorHex"}
     title: str = info.title
     tps: set[str] = set()
     if not use_concrete:
@@ -851,6 +856,8 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
         value = info.properties["value"]
         t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
         tps.add(f"Value[{t}]")
+    elif title in REMAP_TITLE:
+        tps.add(REMAP_TITLE[title])
     elif (
         (title not in EXCLUDE_TITLE)
         and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
