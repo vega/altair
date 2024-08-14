@@ -10,7 +10,16 @@ import urllib
 from html import unescape
 from itertools import chain
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Iterable,
+    Iterator,
+    Literal,
+    Sequence,
+    overload,
+)
 
 import mistune
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
@@ -340,6 +349,8 @@ class SchemaProperties:
 class SchemaInfo:
     """A wrapper for inspecting a JSON schema."""
 
+    _remap_title: ClassVar[dict[str, str]] = {}
+
     def __init__(
         self, schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> None:
@@ -498,10 +509,7 @@ class SchemaInfo:
         # but then we would need to write some overload signatures for
         # api.param).
         EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
-        REMAP_TITLE: dict[str, str] = {
-            "HexColor": "ColorHex",
-            "OverlayMarkDef": "OverlayMarkDefKwds",
-        }
+        REMAP_TITLE: dict[str, str] = SchemaInfo._remap_title
         title: str = self.title
         tps: set[str] = set()
         if not use_concrete:

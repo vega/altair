@@ -846,7 +846,14 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
     sub_dicts: dict[str, str] = {}
-    MANUAL_DEFS = "ScaleInvalidDataConfig", "OverlayMarkDef"
+    MANUAL_DEFS = (
+        "ScaleInvalidDataConfig",
+        "OverlayMarkDef",
+        "LinearGradient",
+        "RadialGradient",
+    )
+    SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
+    SchemaInfo._remap_title.update((k, f"{k}Kwds") for k in MANUAL_DEFS)
 
     for prop, prop_info in config.properties.items():
         if (classname := prop_info.refname) and classname.endswith("Config"):
