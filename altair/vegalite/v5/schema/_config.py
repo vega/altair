@@ -23,7 +23,7 @@ class RectConfigKwds(TypedDict, total=False):
     baseline: str | Baseline_T
     binSpacing: float
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     continuousBandSize: float
     cornerRadius: float
     cornerRadiusBottomLeft: float
@@ -38,7 +38,7 @@ class RectConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -65,7 +65,7 @@ class RectConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -100,7 +100,7 @@ class AreaConfigKwds(TypedDict, total=False):
     aspect: bool
     baseline: str | Baseline_T
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -113,7 +113,7 @@ class AreaConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -141,7 +141,7 @@ class AreaConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -261,7 +261,7 @@ class BarConfigKwds(TypedDict, total=False):
     baseline: str | Baseline_T
     binSpacing: float
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     continuousBandSize: float
     cornerRadius: float
     cornerRadiusBottomLeft: float
@@ -277,7 +277,7 @@ class BarConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -304,7 +304,7 @@ class BarConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -391,7 +391,7 @@ class MarkConfigKwds(TypedDict, total=False):
     aspect: bool
     baseline: str | Baseline_T
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -404,7 +404,7 @@ class MarkConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -430,7 +430,7 @@ class MarkConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -641,7 +641,7 @@ class LineConfigKwds(TypedDict, total=False):
     aspect: bool
     baseline: str | Baseline_T
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -654,7 +654,7 @@ class LineConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -681,7 +681,7 @@ class LineConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -823,7 +823,7 @@ class TickConfigKwds(TypedDict, total=False):
     bandSize: float
     baseline: str | Baseline_T
     blend: Blend_T
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -836,7 +836,7 @@ class TickConfigKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -862,7 +862,7 @@ class TickConfigKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -956,14 +956,20 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
     angle: str | Value[float]
-    color: str | Value[ColorHex | LinearGradient | RadialGradient | ColorName_T]
-    fill: str | Value[None | ColorHex | LinearGradient | RadialGradient | ColorName_T]
+    color: str | Value[ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
+    fill: (
+        str
+        | Value[None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
+    )
     fillOpacity: str | Value[float]
     opacity: str | Value[float]
     radius: str | Value[float]
     shape: str | Value[str]
     size: str | Value[float]
-    stroke: str | Value[None | ColorHex | LinearGradient | RadialGradient | ColorName_T]
+    stroke: (
+        str
+        | Value[None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
+    )
     strokeDash: str | Value[Sequence[float]]
     strokeOpacity: str | Value[float]
     strokeWidth: str | Value[float]
@@ -986,7 +992,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     baseline: str | Baseline_T
     blend: Blend_T
     clip: bool
-    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -999,7 +1005,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     dy: float
     ellipsis: str
     endAngle: float
-    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fill: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     fillOpacity: float
     filled: bool
     font: str
@@ -1027,7 +1033,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     size: float
     smooth: bool
     startAngle: float
-    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    stroke: None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     strokeCap: StrokeCap_T
     strokeDash: Sequence[float]
     strokeDashOffset: float
@@ -1056,6 +1062,28 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     y2: str | float
     y2Offset: float
     yOffset: float
+
+
+class LinearGradientKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    id: str
+    x1: float
+    x2: float
+    y1: float
+    y2: float
+
+
+class RadialGradientKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    id: str
+    r1: float
+    r2: float
+    x1: float
+    x2: float
+    y1: float
+    y2: float
 
 
 # TODO: Non-`TypedDict` args
