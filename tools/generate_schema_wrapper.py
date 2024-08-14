@@ -303,6 +303,41 @@ class Value(TypedDict, Generic[T]):
     """
 
     value: T
+
+
+ColorHex = Annotated[
+    LiteralString,
+    re.compile(r"#[0-9a-f]{{2}}[0-9a-f]{{2}}[0-9a-f]{{2}}([0-9a-f]{{2}})?", re.IGNORECASE),
+]
+"""
+A `hexadecimal`_ color code.
+
+Corresponds to the ``json-schema`` string format:
+
+    {"format": "color-hex", "type": "string"}
+
+Examples
+--------
+:
+
+    "#f0f8ff"
+    "#7fffd4"
+    "#000000"
+    "#0000FF"
+
+.. _hexadecimal:
+    https://www.w3schools.com/html/html_colors_hex.asp
+"""
+
+def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
+    """Return ``True`` if the object is a hexadecimal color code."""
+    # NOTE: Extracts compiled pattern from metadata,
+    # to avoid defining  in multiple places.
+    it = iter(get_args(ColorHex))
+    next(it)
+    pattern: re.Pattern[str] = next(it)
+    return bool(pattern.match(obj))
+
 '''
 
 
@@ -966,7 +1001,13 @@ def vegalite_main(skip_download: bool = False) -> None:
     print(msg)
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
     TypeAliasTracer.write_module(
-        fp_typing, "OneOrSeq", "Value", header=HEADER, extra=TYPING_EXTRA
+        fp_typing,
+        "OneOrSeq",
+        "Value",
+        "ColorHex",
+        "is_color_hex",
+        header=HEADER,
+        extra=TYPING_EXTRA,
     )
     # Write the pre-generated modules
     for fp, contents in files.items():

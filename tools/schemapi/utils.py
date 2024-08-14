@@ -94,13 +94,17 @@ class _TypeAliasTracer:
             "from __future__ import annotations\n",
             "import sys",
             "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "import re",
             import_typing_extensions(
-                (3, 13), "TypedDict", reason="`TypedDict` had multiple revisions."
+                (3, 13),
+                "TypedDict",
+                "TypeIs",
+                reason="`TypedDict` had multiple revisions.",
             ),
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated"),
+            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
         self._cmd_check: list[str] = ["--fix"]
         self._cmd_format: Sequence[str] = ruff_format or ()
