@@ -133,9 +133,7 @@ class Value(TypedDict, Generic[T]):
 
 ColorHex = Annotated[
     LiteralString,
-    re.compile(
-        r"#[0-9a-f]{{2}}[0-9a-f]{{2}}[0-9a-f]{{2}}([0-9a-f]{{2}})?", re.IGNORECASE
-    ),
+    re.compile(r"#[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}([0-9a-f]{2})?", re.IGNORECASE),
 ]
 """
 A `hexadecimal`_ color code.
@@ -165,7 +163,7 @@ def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
     it = iter(get_args(ColorHex))
     next(it)
     pattern: re.Pattern[str] = next(it)
-    return bool(pattern.match(obj))
+    return bool(pattern.fullmatch(obj))
 
 
 VegaThemes: TypeAlias = Literal[
