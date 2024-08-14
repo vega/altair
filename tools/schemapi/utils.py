@@ -424,7 +424,7 @@ class SchemaInfo:
 
         if self.title:
             if target == "annotation":
-                tps.update(title_to_type_reprs(self, use_concrete=use_concrete))
+                tps.update(self.title_to_type_reprs(use_concrete=use_concrete))
             elif target == "doc":
                 tps.add(rst_syntax_for_class(self.title))
 
@@ -482,6 +482,53 @@ class SchemaInfo:
             if as_str
             else type_reprs
         )
+
+    def title_to_type_reprs(self, *, use_concrete: bool) -> set[str]:
+        """
+        Possibly use ``self.title`` as a type, or provide alternative(s).
+
+        Parameters
+        ----------
+        use_concrete
+            Avoid base classes/wrappers that don't provide type info.
+        """
+        tp_param: set[str] = {"ExprRef", "ParameterExtent"}
+        # In these cases, a value parameter is also always accepted.
+        # It would be quite complex to further differentiate
+        # between a value and a selection parameter based on
+        # the type system (one could
+        # try to check for the type of the Parameter.param attribute
+        # but then we would need to write some overload signatures for
+        # api.param).
+        EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
+        REMAP_TITLE: dict[str, str] = {
+            "HexColor": "ColorHex",
+            "OverlayMarkDef": "OverlayMarkDefKwds",
+        }
+        title: str = self.title
+        tps: set[str] = set()
+        if not use_concrete:
+            tps.add("SchemaBase")
+            # To keep type hints simple, we only use the SchemaBase class
+            # as the type hint for all classes which inherit from it.
+            if title in tp_param:
+                tps.add("Parameter")
+        elif self.is_value():
+            value = self.properties["value"]
+            t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
+            tps.add(f"Value[{t}]")
+        elif title in REMAP_TITLE:
+            tps.add(REMAP_TITLE[title])
+        elif (
+            (title not in EXCLUDE_TITLE)
+            and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
+            and not self.is_union()
+            and not self.is_format()
+            and not self.is_array()
+            and not self.is_type_alias()
+        ):
+            tps.add(title)
+        return tps
 
     @property
     def properties(self) -> SchemaProperties:
@@ -831,56 +878,6 @@ def collapse_type_repr(
     else:
         msg = f"Unexpected {target=}.\nUse one of {['annotation', 'doc']!r}"
         raise TypeError(msg)
-
-
-def title_to_type_reprs(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
-    """
-    Possibly use ``info.title`` as a type, or provide alternative(s).
-
-    Parameters
-    ----------
-    info
-        Target schema.
-    use_concrete
-        Avoid base classes/wrappers that don't provide type info.
-    """
-    tp_param: set[str] = {"ExprRef", "ParameterExtent"}
-    # In these cases, a value parameter is also always accepted.
-    # It would be quite complex to further differentiate
-    # between a value and a selection parameter based on
-    # the type system (one could
-    # try to check for the type of the Parameter.param attribute
-    # but then we would need to write some overload signatures for
-    # api.param).
-    EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
-    REMAP_TITLE: dict[str, str] = {
-        "HexColor": "ColorHex",
-        "OverlayMarkDef": "OverlayMarkDefKwds",
-    }
-    title: str = info.title
-    tps: set[str] = set()
-    if not use_concrete:
-        tps.add("SchemaBase")
-        # To keep type hints simple, we only use the SchemaBase class
-        # as the type hint for all classes which inherit from it.
-        if title in tp_param:
-            tps.add("Parameter")
-    elif info.is_value():
-        value = info.properties["value"]
-        t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
-        tps.add(f"Value[{t}]")
-    elif title in REMAP_TITLE:
-        tps.add(REMAP_TITLE[title])
-    elif (
-        (title not in EXCLUDE_TITLE)
-        and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
-        and not info.is_union()
-        and not info.is_format()
-        and not info.is_array()
-        and not info.is_type_alias()
-    ):
-        tps.add(title)
-    return tps
 
 
 def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
