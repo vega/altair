@@ -851,7 +851,8 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
             name = f"{classname}Kwds"
             top_dict_annotations.append(f"{prop}: {name}")
             if name not in sub_dicts:
-                # Ensure no references to actual `...Config` classes exist
+                # HACK: Ensure no references to actual `...Config` classes exist
+                # - Using regex due to forward references
                 args = re.sub(
                     r"Config\b", r"ConfigKwds", gen_config_typed_dict(prop_info)
                 )
