@@ -43,7 +43,7 @@ class RectConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -61,7 +61,7 @@ class RectConfigKwds(TypedDict, total=False):
     padAngle: float
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -118,7 +118,7 @@ class AreaConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -137,7 +137,7 @@ class AreaConfigKwds(TypedDict, total=False):
     point: str | bool | OverlayMarkDef
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -198,7 +198,7 @@ class AxisConfigKwds(TypedDict, total=False):
     labelFlushOffset: float
     labelFont: str
     labelFontSize: float
-    labelFontStyle: str | FontStyle
+    labelFontStyle: str
     labelFontWeight: FontWeight_T
     labelLimit: float
     labelLineHeight: float
@@ -236,7 +236,7 @@ class AxisConfigKwds(TypedDict, total=False):
     titleColor: str | None | ColorName_T
     titleFont: str
     titleFontSize: float
-    titleFontStyle: str | FontStyle
+    titleFontStyle: str
     titleFontWeight: FontWeight_T
     titleLimit: float
     titleLineHeight: float
@@ -282,7 +282,7 @@ class BarConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -300,7 +300,7 @@ class BarConfigKwds(TypedDict, total=False):
     padAngle: float
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -409,7 +409,7 @@ class MarkConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -426,7 +426,7 @@ class MarkConfigKwds(TypedDict, total=False):
     padAngle: float
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -526,7 +526,7 @@ class HeaderConfigKwds(TypedDict, total=False):
     labelExpr: str
     labelFont: str
     labelFontSize: float
-    labelFontStyle: str | FontStyle
+    labelFontStyle: str
     labelFontWeight: FontWeight_T
     labelLimit: float
     labelLineHeight: float
@@ -542,7 +542,7 @@ class HeaderConfigKwds(TypedDict, total=False):
     titleColor: str | ColorName_T
     titleFont: str
     titleFontSize: float
-    titleFontStyle: str | FontStyle
+    titleFontStyle: str
     titleFontWeight: FontWeight_T
     titleLimit: float
     titleLineHeight: float
@@ -580,7 +580,7 @@ class LegendConfigKwds(TypedDict, total=False):
     labelColor: str | None | ColorName_T
     labelFont: str
     labelFontSize: float
-    labelFontStyle: str | FontStyle
+    labelFontStyle: str
     labelFontWeight: FontWeight_T
     labelLimit: float
     labelOffset: float
@@ -610,7 +610,7 @@ class LegendConfigKwds(TypedDict, total=False):
     symbolSize: float
     symbolStrokeColor: str | None | ColorName_T
     symbolStrokeWidth: float
-    symbolType: str | SymbolShape
+    symbolType: str
     tickCount: float | TimeIntervalStep | TimeInterval_T
     title: None
     titleAlign: Align_T
@@ -619,7 +619,7 @@ class LegendConfigKwds(TypedDict, total=False):
     titleColor: str | None | ColorName_T
     titleFont: str
     titleFontSize: float
-    titleFontStyle: str | FontStyle
+    titleFontStyle: str
     titleFontWeight: FontWeight_T
     titleLimit: float
     titleLineHeight: float
@@ -659,7 +659,7 @@ class LineConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -677,7 +677,7 @@ class LineConfigKwds(TypedDict, total=False):
     point: str | bool | OverlayMarkDef
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -767,7 +767,7 @@ class RangeConfigKwds(TypedDict, total=False):
         | Sequence[str | bool | None | float | Sequence[float]]
         | RangeEnum_T
     )
-    symbol: Sequence[str | SymbolShape]
+    symbol: Sequence[str]
 
 
 class ScaleConfigKwds(TypedDict, total=False):
@@ -841,7 +841,7 @@ class TickConfigKwds(TypedDict, total=False):
     filled: bool
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     height: float
     href: str
@@ -858,7 +858,7 @@ class TickConfigKwds(TypedDict, total=False):
     padAngle: float
     radius: float
     radius2: float
-    shape: str | SymbolShape
+    shape: str
     size: float
     smooth: bool
     startAngle: float
@@ -900,7 +900,7 @@ class TitleConfigKwds(TypedDict, total=False):
     dy: float
     font: str
     fontSize: float
-    fontStyle: str | FontStyle
+    fontStyle: str
     fontWeight: FontWeight_T
     frame: str | TitleFrame_T
     limit: float
@@ -910,7 +910,7 @@ class TitleConfigKwds(TypedDict, total=False):
     subtitleColor: str | None | ColorName_T
     subtitleFont: str
     subtitleFontSize: float
-    subtitleFontStyle: str | FontStyle
+    subtitleFontStyle: str
     subtitleFontWeight: FontWeight_T
     subtitleLineHeight: float
     subtitlePadding: float
@@ -964,7 +964,7 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     fillOpacity: str | Value[float]
     opacity: str | Value[float]
     radius: str | Value[float]
-    shape: str | Value[str | SymbolShape]
+    shape: str | Value[str]
     size: str | Value[float]
     stroke: str | Value[str | None | LinearGradient | RadialGradient | ColorName_T]
     strokeDash: str | Value[Sequence[float]]
