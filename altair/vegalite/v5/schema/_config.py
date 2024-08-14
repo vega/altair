@@ -126,7 +126,7 @@ class AreaConfigKwds(TypedDict, total=False):
     interpolate: Interpolate_T
     invalid: None | MarkInvalidDataMode_T
     limit: float
-    line: bool | OverlayMarkDef
+    line: bool | OverlayMarkDefKwds
     lineBreak: str
     lineHeight: float
     opacity: float
@@ -134,7 +134,7 @@ class AreaConfigKwds(TypedDict, total=False):
     orient: Orientation_T
     outerRadius: float
     padAngle: float
-    point: str | bool | OverlayMarkDef
+    point: str | bool | OverlayMarkDefKwds
     radius: float
     radius2: float
     shape: str
@@ -674,7 +674,7 @@ class LineConfigKwds(TypedDict, total=False):
     orient: Orientation_T
     outerRadius: float
     padAngle: float
-    point: str | bool | OverlayMarkDef
+    point: str | bool | OverlayMarkDefKwds
     radius: float
     radius2: float
     shape: str
@@ -972,6 +972,90 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     xOffset: str | Value[float]
     y: str | Value[str | float]
     yOffset: str | Value[float]
+
+
+class OverlayMarkDefKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    align: Align_T
+    angle: float
+    aria: bool
+    ariaRole: str
+    ariaRoleDescription: str
+    aspect: bool
+    baseline: str | Baseline_T
+    blend: Blend_T
+    clip: bool
+    color: ColorHex | LinearGradient | RadialGradient | ColorName_T
+    cornerRadius: float
+    cornerRadiusBottomLeft: float
+    cornerRadiusBottomRight: float
+    cornerRadiusTopLeft: float
+    cornerRadiusTopRight: float
+    cursor: Cursor_T
+    description: str
+    dir: TextDirection_T
+    dx: float
+    dy: float
+    ellipsis: str
+    endAngle: float
+    fill: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    fillOpacity: float
+    filled: bool
+    font: str
+    fontSize: float
+    fontStyle: str
+    fontWeight: FontWeight_T
+    height: float
+    href: str
+    innerRadius: float
+    interpolate: Interpolate_T
+    invalid: None | MarkInvalidDataMode_T
+    limit: float
+    lineBreak: str
+    lineHeight: float
+    opacity: float
+    order: bool | None
+    orient: Orientation_T
+    outerRadius: float
+    padAngle: float
+    radius: float
+    radius2: float
+    radius2Offset: float
+    radiusOffset: float
+    shape: str
+    size: float
+    smooth: bool
+    startAngle: float
+    stroke: None | ColorHex | LinearGradient | RadialGradient | ColorName_T
+    strokeCap: StrokeCap_T
+    strokeDash: Sequence[float]
+    strokeDashOffset: float
+    strokeJoin: StrokeJoin_T
+    strokeMiterLimit: float
+    strokeOffset: float
+    strokeOpacity: float
+    strokeWidth: float
+    style: str | Sequence[str]
+    tension: float
+    text: str | Sequence[str]
+    theta: float
+    theta2: float
+    theta2Offset: float
+    thetaOffset: float
+    timeUnitBandPosition: float
+    timeUnitBandSize: float
+    tooltip: str | bool | None | float | TooltipContent
+    url: str
+    width: float
+    x: str | float
+    x2: str | float
+    x2Offset: float
+    xOffset: float
+    y: str | float
+    y2: str | float
+    y2Offset: float
+    yOffset: float
 
 
 # TODO: Non-`TypedDict` args

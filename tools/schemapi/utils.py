@@ -843,7 +843,10 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
     # but then we would need to write some overload signatures for
     # api.param).
     EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
-    REMAP_TITLE: dict[str, str] = {"HexColor": "ColorHex"}
+    REMAP_TITLE: dict[str, str] = {
+        "HexColor": "ColorHex",
+        "OverlayMarkDef": "OverlayMarkDefKwds",
+    }
     title: str = info.title
     tps: set[str] = set()
     if not use_concrete:

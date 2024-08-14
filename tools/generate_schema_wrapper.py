@@ -845,6 +845,7 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
     sub_dicts: dict[str, str] = {}
+    MANUAL_DEFS = "ScaleInvalidDataConfig", "OverlayMarkDef"
 
     for prop, prop_info in config.properties.items():
         if (classname := prop_info.refname) and classname.endswith("Config"):
@@ -862,20 +863,17 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
 
         else:
             top_dict_annotations.append(f"{prop}: Any # TODO")
-    top_dict = CONFIG_TYPED_DICT.format(
-        typed_dict_args="\n    ".join(top_dict_annotations)
-    )
-    nested_config = SchemaInfo(
-        {"$ref": "#/definitions/ScaleInvalidDataConfig"}, rootschema=schema
-    )
-    name = f"{nested_config.refname}Kwds"
-    sub_nested = CONFIG_SUB_TYPED_DICT.format(
-        name=name, typed_dict_args=gen_config_typed_dict(nested_config)
-    )
-    sub_dicts[name] = sub_nested
+
+    for d_name in MANUAL_DEFS:
+        info = SchemaInfo({"$ref": f"#/definitions/{d_name}"}, rootschema=schema)
+        name = f"{info.refname}Kwds"
+        td = CONFIG_SUB_TYPED_DICT.format(
+            name=name, typed_dict_args=gen_config_typed_dict(info)
+        )
+        sub_dicts[name] = td
     yield "\n".join(sub_dicts.values())
     yield "# TODO: Non-`TypedDict` args"
-    yield top_dict
+    yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
 def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
