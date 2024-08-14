@@ -150,6 +150,7 @@ Examples
     "#7fffd4"
     "#000000"
     "#0000FF"
+    "#0000ff80"
 
 .. _hexadecimal:
     https://www.w3schools.com/html/html_colors_hex.asp
