@@ -424,7 +424,7 @@ class SchemaInfo:
 
         if self.title:
             if target == "annotation":
-                tps.update(types_from_title(self, use_concrete=use_concrete))
+                tps.update(title_to_type_reprs(self, use_concrete=use_concrete))
             elif target == "doc":
                 tps.add(rst_syntax_for_class(self.title))
 
@@ -833,7 +833,17 @@ def collapse_type_repr(
         raise TypeError(msg)
 
 
-def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
+def title_to_type_reprs(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
+    """
+    Possibly use ``info.title`` as a type, or provide alternative(s).
+
+    Parameters
+    ----------
+    info
+        Target schema.
+    use_concrete
+        Avoid base classes/wrappers that don't provide type info.
+    """
     tp_param: set[str] = {"ExprRef", "ParameterExtent"}
     # In these cases, a value parameter is also always accepted.
     # It would be quite complex to further differentiate
@@ -873,6 +883,19 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
     return tps
 
 
+def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
+    # Shorter types are usually the more relevant ones, e.g. `str` instead
+    # of `SchemaBase`. Output order from set is non-deterministic -> If
+    # types have same length names, order would be non-deterministic as it is
+    # returned from sort. Hence, we sort as well by type name as a tie-breaker,
+    # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
+    # for more infos.
+    # Using lower as we don't want to prefer uppercase such as "None" over
+    it = sorted(tps, key=str.lower)  # Tertiary sort
+    it = sorted(it, key=len)  # Secondary sort
+    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
+
+
 def spell_nested_sequence(
     info: SchemaInfo, *, target: TargetType, use_concrete: bool
 ) -> str:
@@ -910,19 +933,6 @@ def spell_nested_sequence(
     child: SchemaInfo = info.child(info.items)
     s = child.to_type_repr(target=target, use_concrete=use_concrete)
     return f"Sequence[{s}]"
-
-
-def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
-    # Shorter types are usually the more relevant ones, e.g. `str` instead
-    # of `SchemaBase`. Output order from set is non-deterministic -> If
-    # types have same length names, order would be non-deterministic as it is
-    # returned from sort. Hence, we sort as well by type name as a tie-breaker,
-    # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
-    # for more infos.
-    # Using lower as we don't want to prefer uppercase such as "None" over
-    it = sorted(tps, key=str.lower)  # Tertiary sort
-    it = sorted(it, key=len)  # Secondary sort
-    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
 
 
 def spell_literal(it: Iterable[str], /) -> str:
