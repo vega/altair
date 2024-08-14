@@ -641,6 +641,30 @@ class SchemaInfo:
         """
         return (self.schema.keys() == {"format", "type"}) and self.type == "string"
 
+    def is_type_alias(self) -> bool:
+        """
+        Represents a name assigned to a literal type.
+
+        At the time of writing, all of these are:
+
+            SchemaInfo.schema = {"type": "string"}
+
+        The resulting annotation then becomes, e.g. ``FieldName``:
+
+            arg: str | FieldName
+
+        Where both of the above represent:
+
+            arg = "name 1"
+            arg = FieldName("name 1")
+
+        The latter is not useful and adds noise.
+        """
+        TP = "type"
+        return (
+            self.schema.keys() == {TP} and self.schema[TP] in jsonschema_to_python_types
+        )
+
 
 class RSTRenderer(_RSTRenderer):
     def __init__(self) -> None:
@@ -840,6 +864,7 @@ def types_from_title(info: SchemaInfo, *, use_concrete: bool) -> set[str]:
         and not info.is_union()
         and not info.is_format()
         and not info.is_array()
+        and not info.is_type_alias()
     ):
         tps.add(title)
     return tps
