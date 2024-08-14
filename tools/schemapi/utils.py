@@ -10,16 +10,7 @@ import urllib
 from html import unescape
 from itertools import chain
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Final,
-    Iterable,
-    Iterator,
-    Literal,
-    Sequence,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
 
 import mistune
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
@@ -35,9 +26,15 @@ if TYPE_CHECKING:
 
 TargetType: TypeAlias = Literal["annotation", "doc"]
 
-EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
-
-jsonschema_to_python_types = {
+EXCLUDE_KEYS: frozenset[
+    Literal["definitions", "title", "description", "$schema", "id"]
+] = frozenset(("definitions", "title", "description", "$schema", "id"))
+COMPOUND_KEYS: tuple[Literal["anyOf"], Literal["oneOf"], Literal["allOf"]] = (
+    "anyOf",
+    "oneOf",
+    "allOf",
+)
+jsonschema_to_python_types: dict[str, str] = {
     "string": "str",
     "number": "float",
     "integer": "int",
@@ -559,16 +556,19 @@ class SchemaInfo:
         return self.schema.get("type", None)
 
     @property
-    def anyOf(self) -> list[SchemaInfo]:
-        return [self.child(s) for s in self.schema.get("anyOf", [])]
+    def anyOf(self) -> Iterator[SchemaInfo]:
+        for s in self.schema.get("anyOf", []):
+            yield self.child(s)
 
     @property
-    def oneOf(self) -> list[SchemaInfo]:
-        return [self.child(s) for s in self.schema.get("oneOf", [])]
+    def oneOf(self) -> Iterator[SchemaInfo]:
+        for s in self.schema.get("oneOf", []):
+            yield self.child(s)
 
     @property
-    def allOf(self) -> list[SchemaInfo]:
-        return [self.child(s) for s in self.schema.get("allOf", [])]
+    def allOf(self) -> Iterator[SchemaInfo]:
+        for s in self.schema.get("allOf", []):
+            yield self.child(s)
 
     @property
     def not_(self) -> SchemaInfo:
@@ -621,10 +621,10 @@ class SchemaInfo:
         return "enum" in self.schema
 
     def is_empty(self) -> bool:
-        return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
+        return not (self.schema.keys() - EXCLUDE_KEYS)
 
     def is_compound(self) -> bool:
-        return any(key in self.schema for key in ["anyOf", "allOf", "oneOf"])
+        return any(key in self.schema for key in COMPOUND_KEYS)
 
     def is_anyOf(self) -> bool:
         return "anyOf" in self.schema
@@ -641,13 +641,13 @@ class SchemaInfo:
     def is_object(self) -> bool:
         if self.type == "object":
             return True
-        elif self.type is not None:
+        elif self.type:
             return False
         elif (
             self.properties
             or self.required
-            or self.patternProperties
             or self.additionalProperties
+            or self.patternProperties
         ):
             return True
         else:
