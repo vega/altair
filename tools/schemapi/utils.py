@@ -982,3 +982,12 @@ def ruff_write_lint_format_str(
         r = subprocess.run(cmd, check=True)
         r.check_returncode()
     ruff_format_py(fp)
+
+
+def import_type_checking(*imports: str) -> str:
+    """Write an `if TYPE_CHECKING` block."""
+    return (
+        "\n# ruff: noqa: F405\nif TYPE_CHECKING:\n"
+        + "\n".join(f"    {s}" for s in imports)
+        + "\n"
+    )

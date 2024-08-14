@@ -22,6 +22,7 @@ from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
     get_valid_identifier,
+    import_type_checking,
     indent_docstring,
     resolve_references,
     rst_parse,
@@ -587,7 +588,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "import json\n",
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
-        _type_checking_only_imports(
+        import_type_checking(
             "from altair import Parameter",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -608,14 +609,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     contents.append("")  # end with newline
     return "\n".join(contents)
-
-
-def _type_checking_only_imports(*imports: str) -> str:
-    return (
-        "\n# ruff: noqa: F405\nif TYPE_CHECKING:\n"
-        + "\n".join(f"    {s}" for s in imports)
-        + "\n"
-    )
 
 
 @dataclass
@@ -727,7 +720,7 @@ def generate_vegalite_channel_wrappers(
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
-        _type_checking_only_imports(
+        import_type_checking(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             "from typing_extensions import Self",
@@ -935,7 +928,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         "\n".join(try_except_imports),
         "\n\n",
-        _type_checking_only_imports(
+        import_type_checking(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -954,7 +947,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n".join(stdlib_imports),
         "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
         "\n\n",
-        _type_checking_only_imports(
+        import_type_checking(
             "from ._typing import * # noqa: F403",
             "from .core import Dict",
             "from .core import * # noqa: F403",
