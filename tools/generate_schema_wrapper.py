@@ -274,7 +274,8 @@ class EncodeKwds(TypedDict, total=False):
 TYPING_EXTRA: Final = '''
 T = TypeVar("T")
 OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
-"""One of ``T`` specified type(s), or a `Sequence` of such.
+"""
+One of ``T`` specified type(s), or a `Sequence` of such.
 
 Examples
 --------

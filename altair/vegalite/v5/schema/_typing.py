@@ -4,21 +4,34 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
 
-if sys.version_info >= (3, 13):
-    from typing import TypedDict
+if sys.version_info >= (3, 13):  # `TypedDict` had multiple revisions.
+    from typing import TypedDict, TypeIs
 else:
-    from typing_extensions import TypedDict
+    from typing_extensions import TypedDict, TypeIs
+
 if sys.version_info >= (3, 12):
     from typing import TypeAliasType
 else:
     from typing_extensions import TypeAliasType
+
+if sys.version_info >= (3, 11):
+    from typing import LiteralString
+else:
+    from typing_extensions import LiteralString
+
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     from typing_extensions import TypeAlias
+
+if sys.version_info >= (3, 9):
+    from typing import Annotated, get_args
+else:
+    from typing_extensions import Annotated, get_args
 
 
 __all__ = [
@@ -30,6 +43,7 @@ __all__ = [
     "Baseline_T",
     "BinnedTimeUnit_T",
     "Blend_T",
+    "ColorHex",
     "ColorName_T",
     "ColorScheme_T",
     "Cursor_T",
@@ -78,12 +92,14 @@ __all__ = [
     "Value",
     "VegaThemes",
     "WindowOnlyOp_T",
+    "is_color_hex",
 ]
 
 
 T = TypeVar("T")
 OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
-"""One of ``T`` specified type(s), or a `Sequence` of such.
+"""
+One of ``T`` specified type(s), or a `Sequence` of such.
 
 Examples
 --------
@@ -113,6 +129,43 @@ class Value(TypedDict, Generic[T]):
     """
 
     value: T
+
+
+ColorHex = Annotated[
+    LiteralString,
+    re.compile(
+        r"#[0-9a-f]{{2}}[0-9a-f]{{2}}[0-9a-f]{{2}}([0-9a-f]{{2}})?", re.IGNORECASE
+    ),
+]
+"""
+A `hexadecimal`_ color code.
+
+Corresponds to the ``json-schema`` string format:
+
+    {"format": "color-hex", "type": "string"}
+
+Examples
+--------
+:
+
+    "#f0f8ff"
+    "#7fffd4"
+    "#000000"
+    "#0000FF"
+
+.. _hexadecimal:
+    https://www.w3schools.com/html/html_colors_hex.asp
+"""
+
+
+def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
+    """Return ``True`` if the object is a hexadecimal color code."""
+    # NOTE: Extracts compiled pattern from metadata,
+    # to avoid defining  in multiple places.
+    it = iter(get_args(ColorHex))
+    next(it)
+    pattern: re.Pattern[str] = next(it)
+    return bool(pattern.match(obj))
 
 
 VegaThemes: TypeAlias = Literal[
