@@ -94,9 +94,13 @@ class _TypeAliasTracer:
             "from __future__ import annotations\n",
             "import sys",
             "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
-            "if sys.version_info >= (3, 13):\n    from typing import TypedDict\nelse:\n    from typing_extensions import TypedDict",
-            "if sys.version_info >= (3, 12):\n    from typing import TypeAliasType\nelse:\n    from typing_extensions import TypeAliasType",
-            "if sys.version_info >= (3, 10):\n    from typing import TypeAlias\nelse:\n    from typing_extensions import TypeAlias",
+            import_typing_extensions(
+                (3, 13), "TypedDict", reason="`TypedDict` had multiple revisions."
+            ),
+            import_typing_extensions((3, 12), "TypeAliasType"),
+            import_typing_extensions((3, 11), "LiteralString"),
+            import_typing_extensions((3, 10), "TypeAlias"),
+            import_typing_extensions((3, 9), "Annotated"),
         )
         self._cmd_check: list[str] = ["--fix"]
         self._cmd_format: Sequence[str] = ruff_format or ()
@@ -207,18 +211,6 @@ class _TypeAliasTracer:
     def n_entries(self) -> int:
         """Number of unique `TypeAlias` defintions collected."""
         return len(self._literals)
-
-
-TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
-"""An instance of `_TypeAliasTracer`.
-
-Collects a cache of unique `Literal` types used globally.
-
-These are then converted to `TypeAlias` statements, written to another module.
-
-Allows for a single definition to be reused multiple times,
-rather than repeating long literals in every method definition.
-"""
 
 
 def get_valid_identifier(
@@ -690,9 +682,6 @@ class RSTParse(mistune.Markdown):
         return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
 
 
-rst_parse: RSTParse = RSTParse(RSTRenderer())
-
-
 def indent_docstring(  # noqa: C901
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
@@ -991,3 +980,37 @@ def import_type_checking(*imports: str) -> str:
         + "\n".join(f"    {s}" for s in imports)
         + "\n"
     )
+
+
+def import_typing_extensions(
+    version_added: tuple[float, float],
+    /,
+    *symbol_names: str,
+    reason: str | None = None,
+    include_sys: bool = False,
+) -> str:
+    major, minor = version_added
+    names = ", ".join(symbol_names)
+    line_1 = "import sys\n" if include_sys else "\n"
+    comment = f" # {reason}" if reason else ""
+    return (
+        f"{line_1}"
+        f"if sys.version_info >= ({major}, {minor}):{comment}\n    "
+        f"from typing import {names}\n"
+        f"else:\n    "
+        f"from typing_extensions import {names}"
+    )
+
+
+TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+"""An instance of `_TypeAliasTracer`.
+
+Collects a cache of unique `Literal` types used globally.
+
+These are then converted to `TypeAlias` statements, written to another module.
+
+Allows for a single definition to be reused multiple times,
+rather than repeating long literals in every method definition.
+"""
+
+rst_parse: RSTParse = RSTParse(RSTRenderer())
