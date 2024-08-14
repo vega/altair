@@ -871,8 +871,9 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
     sub_nested = CONFIG_SUB_TYPED_DICT.format(
         name=name, typed_dict_args=gen_config_typed_dict(nested_config)
     )
-    sub_dicts[name] = f"# TODO: Non-`TypedDict` arg\n{sub_nested}"
+    sub_dicts[name] = sub_nested
     yield "\n".join(sub_dicts.values())
+    yield "# TODO: Non-`TypedDict` args"
     yield top_dict
 
 

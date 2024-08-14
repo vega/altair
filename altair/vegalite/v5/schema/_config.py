@@ -952,9 +952,6 @@ class ViewConfigKwds(TypedDict, total=False):
     strokeWidth: float
 
 
-# TODO: Non-`TypedDict` arg
-
-
 class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
@@ -975,6 +972,9 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     xOffset: str | Value[float]
     y: str | Value[str | float]
     yOffset: str | Value[float]
+
+
+# TODO: Non-`TypedDict` args
 
 
 class ThemeConfig(TypedDict, total=False):
