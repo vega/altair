@@ -732,7 +732,9 @@ class SchemaInfo:
         """
         TP = "type"
         return (
-            self.schema.keys() == {TP} and self.schema[TP] in jsonschema_to_python_types
+            self.schema.keys() == {TP}
+            and isinstance(self.type, str)
+            and self.type in jsonschema_to_python_types
         )
 
 

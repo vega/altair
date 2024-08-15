@@ -865,6 +865,20 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
         "BrushConfig",
         "MergedStream",
         "DerivedStream",
+        "AutoSizeParams",
+        "Locale",
+        "VariableParameter",
+        "TopLevelSelectionParameter",
+        "PointSelectionConfig",
+        "IntervalSelectionConfig",
+        "BindInput",
+        "BindRange",
+        "BindDirect",
+        "BindCheckbox",
+        "BindRadioSelect",
+        "NumberLocale",
+        "TimeLocale",
+        "LegendStreamBinding",
     )
     MANUAL_DEFS_VALID = (get_valid_identifier(k) for k in MANUAL_DEFS)
     KWDS: Literal["Kwds"] = "Kwds"
@@ -886,7 +900,8 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
                 )
 
         else:
-            top_dict_annotations.append(f"{prop}: Any # TODO")
+            ann: str = prop_info.to_type_repr(target="annotation", use_concrete=True)
+            top_dict_annotations.append(f"{prop}: {ann}")
 
     for d_name in MANUAL_DEFS:
         info = SchemaInfo({"$ref": f"#/definitions/{d_name}"}, rootschema=schema)
@@ -895,7 +910,6 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
             name=name, typed_dict_args=generate_typed_dict_args(info)
         )
     yield "\n".join(sub_dicts.values())
-    yield "# TODO: Non-`TypedDict` args"
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
@@ -998,10 +1012,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         HEADER,
         "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
         "\n\n",
-        import_type_checking(
-            "from ._typing import * # noqa: F403",
-            "from .core import * # noqa: F403",
-        ),
+        import_type_checking("from ._typing import * # noqa: F403"),
         "\n\n",
         *generate_config_typed_dicts(schemafile),
     ]

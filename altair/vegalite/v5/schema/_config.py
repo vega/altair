@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict
 if TYPE_CHECKING:
     # ruff: noqa: F405
     from ._typing import *  # noqa: F403
-    from .core import *  # noqa: F403
 
 
 class RectConfigKwds(TypedDict, total=False):
@@ -1304,7 +1303,163 @@ class DerivedStreamKwds(TypedDict, total=False):
     throttle: float
 
 
-# TODO: Non-`TypedDict` args
+class AutoSizeParamsKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    contains: Literal["content", "padding"]
+    resize: bool
+    type: AutosizeType_T
+
+
+class LocaleKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    number: NumberLocaleKwds
+    time: TimeLocaleKwds
+
+
+class VariableParameterKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    name: str
+    bind: (
+        BindInputKwds
+        | BindRangeKwds
+        | BindDirectKwds
+        | BindCheckboxKwds
+        | BindRadioSelectKwds
+    )
+    expr: str
+    react: bool
+    value: Any
+
+
+class TopLevelSelectionParameterKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    name: str
+    select: PointSelectionConfigKwds | IntervalSelectionConfigKwds | SelectionType_T
+    bind: (
+        BindInputKwds
+        | BindRangeKwds
+        | BindDirectKwds
+        | BindCheckboxKwds
+        | BindRadioSelectKwds
+        | LegendStreamBindingKwds
+        | Literal["legend", "scales"]
+    )
+    value: str | bool | None | float | DateTimeKwds | Sequence[Map]
+    views: Sequence[str]
+
+
+class PointSelectionConfigKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    type: Literal["point"]
+    clear: str | bool | MergedStreamKwds | DerivedStreamKwds
+    encodings: Sequence[SingleDefUnitChannel_T]
+    fields: Sequence[str]
+    nearest: bool
+    on: str | MergedStreamKwds | DerivedStreamKwds
+    resolve: SelectionResolution_T
+    toggle: str | bool
+
+
+class IntervalSelectionConfigKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    type: Literal["interval"]
+    clear: str | bool | MergedStreamKwds | DerivedStreamKwds
+    encodings: Sequence[SingleDefUnitChannel_T]
+    fields: Sequence[str]
+    mark: BrushConfigKwds
+    on: str | MergedStreamKwds | DerivedStreamKwds
+    resolve: SelectionResolution_T
+    translate: str | bool
+    zoom: str | bool
+
+
+class BindInputKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    autocomplete: str
+    debounce: float
+    element: str
+    input: str
+    name: str
+    placeholder: str
+
+
+class BindRangeKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    input: Literal["range"]
+    debounce: float
+    element: str
+    max: float
+    min: float
+    name: str
+    step: float
+
+
+class BindDirectKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    element: str
+    debounce: float
+    event: str
+
+
+class BindCheckboxKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    input: Literal["checkbox"]
+    debounce: float
+    element: str
+    name: str
+
+
+class BindRadioSelectKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    input: Literal["radio", "select"]
+    options: Sequence[Any]
+    debounce: float
+    element: str
+    labels: Sequence[str]
+    name: str
+
+
+class NumberLocaleKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    currency: Sequence[str]
+    decimal: str
+    grouping: Sequence[float]
+    thousands: str
+    minus: str
+    nan: str
+    numerals: Sequence[str]
+    percent: str
+
+
+class TimeLocaleKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    date: str
+    dateTime: str
+    days: Sequence[str]
+    months: Sequence[str]
+    periods: Sequence[str]
+    shortDays: Sequence[str]
+    shortMonths: Sequence[str]
+    time: str
+
+
+class LegendStreamBindingKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    legend: str | MergedStreamKwds | DerivedStreamKwds
 
 
 class ThemeConfig(TypedDict, total=False):
@@ -1312,8 +1467,8 @@ class ThemeConfig(TypedDict, total=False):
 
     arc: RectConfigKwds
     area: AreaConfigKwds
-    aria: Any  # TODO
-    autosize: Any  # TODO
+    aria: bool
+    autosize: AutoSizeParamsKwds | AutosizeType_T
     axis: AxisConfigKwds
     axisBand: AxisConfigKwds
     axisBottom: AxisConfigKwds
@@ -1336,18 +1491,18 @@ class ThemeConfig(TypedDict, total=False):
     axisYPoint: AxisConfigKwds
     axisYQuantitative: AxisConfigKwds
     axisYTemporal: AxisConfigKwds
-    background: Any  # TODO
+    background: ColorHex | ColorName_T
     bar: BarConfigKwds
     boxplot: BoxPlotConfigKwds
     circle: MarkConfigKwds
     concat: CompositionConfigKwds
-    countTitle: Any  # TODO
-    customFormatTypes: Any  # TODO
+    countTitle: str
+    customFormatTypes: bool
     errorband: ErrorBandConfigKwds
     errorbar: ErrorBarConfigKwds
     facet: CompositionConfigKwds
-    fieldTitle: Any  # TODO
-    font: Any  # TODO
+    fieldTitle: Literal["verbal", "functional", "plain"]
+    font: str
     geoshape: MarkConfigKwds
     header: HeaderConfigKwds
     headerColumn: HeaderConfigKwds
@@ -1356,15 +1511,15 @@ class ThemeConfig(TypedDict, total=False):
     image: RectConfigKwds
     legend: LegendConfigKwds
     line: LineConfigKwds
-    lineBreak: Any  # TODO
-    locale: Any  # TODO
+    lineBreak: str
+    locale: LocaleKwds
     mark: MarkConfigKwds
-    normalizedNumberFormat: Any  # TODO
-    normalizedNumberFormatType: Any  # TODO
-    numberFormat: Any  # TODO
-    numberFormatType: Any  # TODO
-    padding: Any  # TODO
-    params: Any  # TODO
+    normalizedNumberFormat: str
+    normalizedNumberFormatType: str
+    numberFormat: str
+    numberFormatType: str
+    padding: float
+    params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     point: MarkConfigKwds
     projection: ProjectionConfigKwds
     range: RangeConfigKwds
@@ -1373,11 +1528,11 @@ class ThemeConfig(TypedDict, total=False):
     scale: ScaleConfigKwds
     selection: SelectionConfigKwds
     square: MarkConfigKwds
-    style: Any  # TODO
+    style: Map
     text: MarkConfigKwds
     tick: TickConfigKwds
-    timeFormat: Any  # TODO
-    timeFormatType: Any  # TODO
+    timeFormat: str
+    timeFormatType: str
     title: TitleConfigKwds
     tooltipFormat: FormatConfigKwds
     trail: LineConfigKwds
