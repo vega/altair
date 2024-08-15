@@ -808,7 +808,7 @@ def flatten(container: Iterable) -> Iterable:
 
 def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
     """
-    Combine individual string type reprs into a single ``Literal``.
+    Combine individual ``str`` type reprs into a single ``Literal``.
 
     Parameters
     ----------
