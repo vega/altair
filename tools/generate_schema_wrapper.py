@@ -851,6 +851,7 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
         "OverlayMarkDef",
         "LinearGradient",
         "RadialGradient",
+        "GradientStop",
     )
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
     SchemaInfo._remap_title.update((k, f"{k}Kwds") for k in MANUAL_DEFS)

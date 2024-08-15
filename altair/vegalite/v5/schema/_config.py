@@ -1068,7 +1068,7 @@ class LinearGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
     gradient: str
-    stops: Sequence[GradientStop]
+    stops: Sequence[GradientStopKwds]
     id: str
     x1: float
     x2: float
@@ -1080,7 +1080,7 @@ class RadialGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
     gradient: str
-    stops: Sequence[GradientStop]
+    stops: Sequence[GradientStopKwds]
     id: str
     r1: float
     r2: float
@@ -1088,6 +1088,13 @@ class RadialGradientKwds(TypedDict, total=False):
     x2: float
     y1: float
     y2: float
+
+
+class GradientStopKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    color: ColorHex | ColorName_T
+    offset: float
 
 
 # TODO: Non-`TypedDict` args
