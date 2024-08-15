@@ -5,8 +5,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict
 
-# ruff: noqa: F405
 if TYPE_CHECKING:
+    # ruff: noqa: F405
     from ._typing import *  # noqa: F403
     from .core import *  # noqa: F403
 
