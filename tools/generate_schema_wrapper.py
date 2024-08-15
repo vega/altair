@@ -846,15 +846,35 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
     sub_dicts: dict[str, str] = {}
+    # FIXME: Replace with a recursive/graph approach
     MANUAL_DEFS = (
         "ScaleInvalidDataConfig",
         "OverlayMarkDef",
         "LinearGradient",
         "RadialGradient",
         "GradientStop",
+        "TooltipContent",
+        "DateTime",
+        "TimeIntervalStep",
+        "IntervalSelectionConfigWithoutType",
+        "PointSelectionConfigWithoutType",
+        "Feature<Geometry,GeoJsonProperties>",
+        "GeoJsonFeature",
+        "GeoJsonFeatureCollection",
+        "GeometryCollection",
+        "Point",
+        "Polygon",
+        "LineString",
+        "MultiPoint",
+        "MultiPolygon",
+        "MultiLineString",
+        "BrushConfig",
+        "MergedStream",
+        "DerivedStream",
     )
+    MANUAL_DEFS_VALID = (get_valid_identifier(k) for k in MANUAL_DEFS)
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
-    SchemaInfo._remap_title.update((k, f"{k}Kwds") for k in MANUAL_DEFS)
+    SchemaInfo._remap_title.update((k, f"{k}Kwds") for k in MANUAL_DEFS_VALID)
 
     for prop, prop_info in config.properties.items():
         if (classname := prop_info.refname) and classname.endswith("Config"):
@@ -875,7 +895,7 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
 
     for d_name in MANUAL_DEFS:
         info = SchemaInfo({"$ref": f"#/definitions/{d_name}"}, rootschema=schema)
-        name = f"{info.refname}Kwds"
+        name = f"{info.title}Kwds"
         td = CONFIG_SUB_TYPED_DICT.format(
             name=name, typed_dict_args=gen_config_typed_dict(info)
         )
