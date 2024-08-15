@@ -837,7 +837,7 @@ def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:
         else:
             yield s
     if seen:
-        yield spell_literal(seen, quote=False)
+        yield spell_literal(sorted(seen), quote=False)
 
 
 def unwrap_literal(tp: str, /) -> str:
