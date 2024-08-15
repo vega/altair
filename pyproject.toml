@@ -66,7 +66,7 @@ all = [
 ]
 dev = [
     "hatch",
-    "ruff>=0.5.7",
+    "ruff>=0.6.0",
     "ibis-framework[polars]",
     "ipython[kernel]",
     "pandas>=0.25.3",
@@ -231,7 +231,9 @@ extend-safe-fixes=[
     # ends-in-period
     "D400",
     # missing-return-type-special-method 
-    "ANN204"
+    "ANN204",
+    # unnecessary-dict-comprehension-for-iterable
+    "C420",
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
