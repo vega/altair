@@ -231,7 +231,9 @@ extend-safe-fixes=[
     # ends-in-period
     "D400",
     # missing-return-type-special-method 
-    "ANN204"
+    "ANN204",
+    # unnecessary-dict-comprehension-for-iterable
+    "C420",
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
