@@ -23,6 +23,7 @@ from tools.schemapi.utils import (
     TypeAliasTracer,
     get_valid_identifier,
     import_type_checking,
+    import_typing_extensions,
     indent_docstring,
     resolve_references,
     rst_parse,
@@ -37,9 +38,13 @@ SCHEMA_VERSION: Final = "v5.20.1"
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 
-HEADER: Final = """\
+HEADER_COMMENT = """\
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
+"""
+
+HEADER: Final = f"""{HEADER_COMMENT}
+from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
@@ -505,7 +510,7 @@ def copy_schemapi_util() -> None:
     with source_fp.open(encoding="utf8") as source, destination_fp.open(
         "w", encoding="utf8"
     ) as dest:
-        dest.write(HEADER)
+        dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":
         ruff_format_py(destination_fp)
@@ -619,7 +624,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     contents = [
         HEADER,
-        "from __future__ import annotations\n"
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
         "import pkgutil",
         "import json\n",
@@ -743,9 +747,9 @@ def generate_vegalite_channel_wrappers(
     all_ = list(chain(it, COMPAT_EXPORTS))
 
     imports = imports or [
-        "from __future__ import annotations\n",
+        "import sys",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
-        "from typing_extensions import TypeAlias",
+        import_typing_extensions((3, 10), "TypeAlias"),
         "import narwhals.stable.v1 as nw",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
@@ -760,7 +764,7 @@ def generate_vegalite_channel_wrappers(
         import_type_checking(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            "from typing_extensions import Self",
+            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
@@ -770,18 +774,9 @@ def generate_vegalite_channel_wrappers(
     return "\n".join(contents)
 
 
-def generate_vegalite_mark_mixin(
-    schemafile: Path, markdefs: dict[str, str]
-) -> tuple[list[str], str]:
+def generate_vegalite_mark_mixin(schemafile: Path, markdefs: dict[str, str]) -> str:
     with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
-
-    imports = [
-        "from typing import Any, Sequence, List, Literal, Union",
-        "",
-        "from altair.utils.schemapi import Undefined",
-        "from . import core",
-    ]
 
     code = []
 
@@ -798,7 +793,7 @@ def generate_vegalite_mark_mixin(
             mark_method = MARK_METHOD.format(mark=mark, mark_def=mark_def, **mark_args)
             code.append("\n    ".join(mark_method.splitlines()))
 
-    return imports, MARK_MIXIN.format(methods="\n".join(code))
+    return MARK_MIXIN.format(methods="\n".join(code))
 
 
 def _signature_args(
@@ -904,12 +899,7 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
-def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
-    imports = [
-        "from . import core",
-        "from altair.utils import use_signature",
-    ]
-
+def generate_vegalite_config_mixin(schemafile: Path) -> str:
     class_name = "ConfigMethodMixin"
 
     code = [
@@ -930,7 +920,7 @@ def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
         if classname and classname.endswith("Config"):
             method = CONFIG_PROP_METHOD.format(classname=classname, prop=prop)
             code.append("\n    ".join(method.splitlines()))
-    return imports, "\n".join(code)
+    return "\n".join(code)
 
 
 def vegalite_main(skip_download: bool = False) -> None:
@@ -975,27 +965,25 @@ def vegalite_main(skip_download: bool = False) -> None:
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
     fp_mixins = schemapath / "mixins.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
-    mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
-    config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
-    try_except_imports = [
-        "if sys.version_info >= (3, 11):",
-        "    from typing import Self",
-        "else:",
-        "    from typing_extensions import Self",
-    ]
-    stdlib_imports = ["from __future__ import annotations\n", "import sys"]
+    mixins_imports = (
+        "from typing import Any, Sequence, List, Literal, Union",
+        "from altair.utils import use_signature, Undefined",
+        "from . import core",
+    )
+
+    mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+    config_mixin = generate_vegalite_config_mixin(schemafile)
     content_mixins = [
         HEADER,
-        "\n".join(stdlib_imports),
         "\n\n",
-        "\n".join(sorted({*mark_imports, *config_imports})),
-        "\n\n",
-        "\n".join(try_except_imports),
+        "\n".join(mixins_imports),
         "\n\n",
         import_type_checking(
-            "from altair import Parameter, SchemaBase",
+            "import sys",
+            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
+            "from altair import Parameter, SchemaBase",
         ),
         "\n\n\n",
         mark_mixin,
@@ -1008,12 +996,10 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_theme_config: Path = schemapath / "_config.py"
     content_theme_config = [
         HEADER,
-        "\n".join(stdlib_imports),
         "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
         "\n\n",
         import_type_checking(
             "from ._typing import * # noqa: F403",
-            "from .core import Dict",
             "from .core import * # noqa: F403",
         ),
         "\n\n",

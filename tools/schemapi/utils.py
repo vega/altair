@@ -1053,11 +1053,8 @@ def ruff_write_lint_format_str(
 
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
-    return (
-        "\n# ruff: noqa: F405\nif TYPE_CHECKING:\n"
-        + "\n".join(f"    {s}" for s in imports)
-        + "\n"
-    )
+    imports = "\n".join(f"    {s}" for s in imports)
+    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imports}\n"
 
 
 def import_typing_extensions(
