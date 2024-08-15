@@ -531,6 +531,7 @@ class SchemaInfo:
             and not self.is_format()
             and not self.is_array()
             and not self.is_type_alias()
+            and not self.additionalProperties
         ):
             tps.add(title)
         return tps
