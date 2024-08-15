@@ -80,7 +80,7 @@ class RectConfigKwds(TypedDict, total=False):
     theta2: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -156,7 +156,7 @@ class AreaConfigKwds(TypedDict, total=False):
     theta2: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -217,7 +217,7 @@ class AxisConfigKwds(TypedDict, total=False):
     tickBand: Literal["center", "extent"]
     tickCap: StrokeCap_T
     tickColor: None | ColorHex | ColorName_T
-    tickCount: float | TimeIntervalStep | TimeInterval_T
+    tickCount: float | TimeIntervalStepKwds | TimeInterval_T
     tickDash: Sequence[float]
     tickDashOffset: float
     tickExtra: bool
@@ -245,7 +245,7 @@ class AxisConfigKwds(TypedDict, total=False):
     titleX: float
     titleY: float
     translate: float
-    values: Sequence[str] | Sequence[bool] | Sequence[float] | Sequence[DateTime]
+    values: Sequence[str] | Sequence[bool] | Sequence[float] | Sequence[DateTimeKwds]
     zindex: float
 
 
@@ -319,7 +319,7 @@ class BarConfigKwds(TypedDict, total=False):
     theta2: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -445,7 +445,7 @@ class MarkConfigKwds(TypedDict, total=False):
     theta2: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -611,7 +611,7 @@ class LegendConfigKwds(TypedDict, total=False):
     symbolStrokeColor: None | ColorHex | ColorName_T
     symbolStrokeWidth: float
     symbolType: str
-    tickCount: float | TimeIntervalStep | TimeInterval_T
+    tickCount: float | TimeIntervalStepKwds | TimeInterval_T
     title: None
     titleAlign: Align_T
     titleAnchor: TitleAnchor_T
@@ -696,7 +696,7 @@ class LineConfigKwds(TypedDict, total=False):
     theta2: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -715,10 +715,14 @@ class ProjectionConfigKwds(TypedDict, total=False):
     distance: float
     extent: Sequence[Sequence[float]]
     fit: (
-        GeoJsonFeature
-        | GeoJsonFeatureCollection
-        | Sequence[GeoJsonFeature]
-        | Sequence[GeoJsonFeature | GeoJsonFeatureCollection | Sequence[GeoJsonFeature]]
+        GeoJsonFeatureKwds
+        | GeoJsonFeatureCollectionKwds
+        | Sequence[GeoJsonFeatureKwds]
+        | Sequence[
+            GeoJsonFeatureKwds
+            | GeoJsonFeatureCollectionKwds
+            | Sequence[GeoJsonFeatureKwds]
+        ]
     )
     fraction: float
     lobes: float
@@ -807,8 +811,8 @@ class ScaleConfigKwds(TypedDict, total=False):
 class SelectionConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    interval: IntervalSelectionConfigWithoutType
-    point: PointSelectionConfigWithoutType
+    interval: IntervalSelectionConfigWithoutTypeKwds
+    point: PointSelectionConfigWithoutTypeKwds
 
 
 class TickConfigKwds(TypedDict, total=False):
@@ -878,7 +882,7 @@ class TickConfigKwds(TypedDict, total=False):
     thickness: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -1054,7 +1058,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     thetaOffset: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
-    tooltip: str | bool | None | float | TooltipContent
+    tooltip: str | bool | None | float | TooltipContentKwds
     url: str
     width: float
     x: float | Literal["width"]
@@ -1098,6 +1102,206 @@ class GradientStopKwds(TypedDict, total=False):
 
     color: ColorHex | ColorName_T
     offset: float
+
+
+class TooltipContentKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    content: Literal["encoding", "data"]
+
+
+class DateTimeKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    date: float
+    day: str | float
+    hours: float
+    milliseconds: float
+    minutes: float
+    month: str | float
+    quarter: float
+    seconds: float
+    utc: bool
+    year: float
+
+
+class TimeIntervalStepKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    interval: TimeInterval_T
+    step: float
+
+
+class IntervalSelectionConfigWithoutTypeKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    clear: str | bool | MergedStreamKwds | DerivedStreamKwds
+    encodings: Sequence[SingleDefUnitChannel_T]
+    fields: Sequence[str]
+    mark: BrushConfigKwds
+    on: str | MergedStreamKwds | DerivedStreamKwds
+    resolve: SelectionResolution_T
+    translate: str | bool
+    zoom: str | bool
+
+
+class PointSelectionConfigWithoutTypeKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    clear: str | bool | MergedStreamKwds | DerivedStreamKwds
+    encodings: Sequence[SingleDefUnitChannel_T]
+    fields: Sequence[str]
+    nearest: bool
+    on: str | MergedStreamKwds | DerivedStreamKwds
+    resolve: SelectionResolution_T
+    toggle: str | bool
+
+
+class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    geometry: (
+        PointKwds
+        | PolygonKwds
+        | LineStringKwds
+        | MultiPointKwds
+        | MultiPolygonKwds
+        | MultiLineStringKwds
+        | GeometryCollectionKwds
+    )
+    properties: None
+    type: Literal["Feature"]
+    bbox: Sequence[float]
+    id: str | float
+
+
+class GeoJsonFeatureKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    geometry: (
+        PointKwds
+        | PolygonKwds
+        | LineStringKwds
+        | MultiPointKwds
+        | MultiPolygonKwds
+        | MultiLineStringKwds
+        | GeometryCollectionKwds
+    )
+    properties: None
+    type: Literal["Feature"]
+    bbox: Sequence[float]
+    id: str | float
+
+
+class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    features: Sequence[FeatureGeometryGeoJsonPropertiesKwds]
+    type: Literal["FeatureCollection"]
+    bbox: Sequence[float]
+
+
+class GeometryCollectionKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    geometries: Sequence[
+        PointKwds
+        | PolygonKwds
+        | LineStringKwds
+        | MultiPointKwds
+        | MultiPolygonKwds
+        | MultiLineStringKwds
+        | GeometryCollectionKwds
+    ]
+    type: Literal["GeometryCollection"]
+    bbox: Sequence[float]
+
+
+class PointKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[float]
+    type: Literal["Point"]
+    bbox: Sequence[float]
+
+
+class PolygonKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[Sequence[Sequence[float]]]
+    type: Literal["Polygon"]
+    bbox: Sequence[float]
+
+
+class LineStringKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[Sequence[float]]
+    type: Literal["LineString"]
+    bbox: Sequence[float]
+
+
+class MultiPointKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[Sequence[float]]
+    type: Literal["MultiPoint"]
+    bbox: Sequence[float]
+
+
+class MultiPolygonKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[Sequence[Sequence[Sequence[float]]]]
+    type: Literal["MultiPolygon"]
+    bbox: Sequence[float]
+
+
+class MultiLineStringKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    coordinates: Sequence[Sequence[Sequence[float]]]
+    type: Literal["MultiLineString"]
+    bbox: Sequence[float]
+
+
+class BrushConfigKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    cursor: Cursor_T
+    fill: ColorHex | ColorName_T
+    fillOpacity: float
+    stroke: ColorHex | ColorName_T
+    strokeDash: Sequence[float]
+    strokeDashOffset: float
+    strokeOpacity: float
+    strokeWidth: float
+
+
+class MergedStreamKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    merge: Sequence[MergedStreamKwds | DerivedStreamKwds]
+    between: Sequence[MergedStreamKwds | DerivedStreamKwds]
+    consume: bool
+    debounce: float
+    filter: str | Sequence[str]
+    markname: str
+    marktype: MarkType_T
+    throttle: float
+
+
+class DerivedStreamKwds(TypedDict, total=False):
+    """Placeholder doc."""
+
+    stream: MergedStreamKwds | DerivedStreamKwds
+    between: Sequence[MergedStreamKwds | DerivedStreamKwds]
+    consume: bool
+    debounce: float
+    filter: str | Sequence[str]
+    markname: str
+    marktype: MarkType_T
+    throttle: float
 
 
 # TODO: Non-`TypedDict` args
