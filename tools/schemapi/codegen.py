@@ -325,11 +325,11 @@ class SchemaGenerator:
                     altair_class_name = item_si.title
                     item_type = f"core.{altair_class_name}"
                 py_type = f"List[{item_type}]"
-            elif si.is_enum():
+            elif si.is_literal():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable
                 py_type = TypeAliasTracer.add_literal(
-                    si, spell_literal(si.enum), replace=True
+                    si, spell_literal(si.literal), replace=True
                 )
             contents.append(f"_: {py_type}")
 

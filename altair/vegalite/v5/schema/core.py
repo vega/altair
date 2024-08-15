@@ -612,7 +612,7 @@ class AreaConfig(AnyMarkConfig):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -826,7 +826,7 @@ class AreaConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : dict, float, :class:`ExprRef`
         The angular padding applied to sides of the arc, in radians.
-    point : str, bool, dict, :class:`OverlayMarkDef`
+    point : bool, dict, Literal['transparent'], :class:`OverlayMarkDef`
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -958,24 +958,24 @@ class AreaConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -992,9 +992,7 @@ class AreaConfig(AnyMarkConfig):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1042,7 +1040,7 @@ class AreaConfig(AnyMarkConfig):
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         shape: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1073,10 +1071,18 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -1353,7 +1359,7 @@ class Axis(VegaLiteSchema):
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
@@ -1414,7 +1420,7 @@ class Axis(VegaLiteSchema):
         **Default value:** ``0``
     labelOpacity : dict, float, :class:`ExprRef`, :class:`ConditionalAxisNumber`
         The opacity of the labels.
-    labelOverlap : str, bool, dict, :class:`ExprRef`, :class:`LabelOverlap`
+    labelOverlap : bool, dict, :class:`ExprRef`, :class:`LabelOverlap`, Literal['greedy', 'parity']
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
         default), no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
         strategy of removing every other label is used (this works well for standard linear
@@ -1561,7 +1567,7 @@ class Axis(VegaLiteSchema):
         Text anchor position for placing axis titles.
     titleAngle : dict, float, :class:`ExprRef`
         Angle in degrees of axis titles.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -1642,7 +1648,7 @@ class Axis(VegaLiteSchema):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -1661,7 +1667,9 @@ class Axis(VegaLiteSchema):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -1698,7 +1706,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -1929,7 +1937,7 @@ class AxisConfig(VegaLiteSchema):
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
@@ -1990,7 +1998,7 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** ``0``
     labelOpacity : dict, float, :class:`ExprRef`, :class:`ConditionalAxisNumber`
         The opacity of the labels.
-    labelOverlap : str, bool, dict, :class:`ExprRef`, :class:`LabelOverlap`
+    labelOverlap : bool, dict, :class:`ExprRef`, :class:`LabelOverlap`, Literal['greedy', 'parity']
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
         default), no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
         strategy of removing every other label is used (this works well for standard linear
@@ -2137,7 +2145,7 @@ class AxisConfig(VegaLiteSchema):
         Text anchor position for placing axis titles.
     titleAngle : dict, float, :class:`ExprRef`
         Angle in degrees of axis titles.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for axis titles. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -2219,7 +2227,7 @@ class AxisConfig(VegaLiteSchema):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -2238,7 +2246,9 @@ class AxisConfig(VegaLiteSchema):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -2275,7 +2285,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -2465,7 +2475,7 @@ class BarConfig(AnyMarkConfig):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -2805,24 +2815,24 @@ class BarConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -2839,9 +2849,7 @@ class BarConfig(AnyMarkConfig):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
@@ -2923,10 +2931,18 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -3030,7 +3046,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         the output SVG group, removing the title from the ARIA accessibility tree.
 
         **Default value:** ``true``
-    baseline : str, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
@@ -3097,7 +3113,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         anchor: Optional[dict | Parameter | SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
+        baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
@@ -3260,7 +3276,7 @@ class BindCheckbox(Binding):
 
     Parameters
     ----------
-    input : str
+    input : Literal['checkbox']
 
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
@@ -3278,7 +3294,7 @@ class BindCheckbox(Binding):
 
     def __init__(
         self,
-        input: Optional[str] = Undefined,
+        input: Optional[Literal["checkbox"]] = Undefined,
         debounce: Optional[float] = Undefined,
         element: Optional[str | SchemaBase] = Undefined,
         name: Optional[str] = Undefined,
@@ -3427,7 +3443,7 @@ class BindRange(Binding):
 
     Parameters
     ----------
-    input : str
+    input : Literal['range']
 
     debounce : float
         If defined, delays event handling until the specified milliseconds have elapsed
@@ -3454,7 +3470,7 @@ class BindRange(Binding):
 
     def __init__(
         self,
-        input: Optional[str] = Undefined,
+        input: Optional[Literal["range"]] = Undefined,
         debounce: Optional[float] = Undefined,
         element: Optional[str | SchemaBase] = Undefined,
         max: Optional[float] = Undefined,
@@ -3501,7 +3517,7 @@ class BoxPlotConfig(VegaLiteSchema):
     ----------
     box : bool, dict, :class:`BarConfig`, :class:`AreaConfig`, :class:`LineConfig`, :class:`MarkConfig`, :class:`RectConfig`, :class:`TickConfig`, :class:`AnyMarkConfig`
 
-    extent : str, float
+    extent : float, Literal['min-max']
         The extent of the whiskers. Available options include:
 
         * ``"min-max"``: min and max are the lower and upper whiskers respectively.
@@ -3529,7 +3545,7 @@ class BoxPlotConfig(VegaLiteSchema):
     def __init__(
         self,
         box: Optional[bool | dict | SchemaBase] = Undefined,
-        extent: Optional[str | float] = Undefined,
+        extent: Optional[float | Literal["min-max"]] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
         outliers: Optional[bool | dict | SchemaBase] = Undefined,
         rule: Optional[bool | dict | SchemaBase] = Undefined,
@@ -3686,7 +3702,7 @@ class BoxPlotDef(CompositeMarkDef):
 
     Parameters
     ----------
-    type : str, :class:`BoxPlot`
+    type : :class:`BoxPlot`, Literal['boxplot']
         The mark type. This could a primitive mark type (one of ``"bar"``, ``"circle"``,
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"``) or a composite mark type (``"boxplot"``,
@@ -3707,7 +3723,7 @@ class BoxPlotDef(CompositeMarkDef):
           <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
-    extent : str, float
+    extent : float, Literal['min-max']
         The extent of the whiskers. Available options include:
 
         * ``"min-max"``: min and max are the lower and upper whiskers respectively.
@@ -3773,11 +3789,11 @@ class BoxPlotDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Optional[str | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | BoxPlot_T] = Undefined,
         box: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
-        extent: Optional[str | float] = Undefined,
+        extent: Optional[float | Literal["min-max"]] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
         opacity: Optional[float] = Undefined,
@@ -4158,7 +4174,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4229,7 +4245,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4333,7 +4349,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         param: Optional[str | SchemaBase] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
@@ -4381,7 +4397,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4449,7 +4465,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4553,7 +4569,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         test: Optional[str | dict | SchemaBase] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -5679,7 +5695,7 @@ class DsvDataFormat(DataFormat):
         UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}``).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
-    type : str
+    type : Literal['dsv']
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -5692,7 +5708,7 @@ class DsvDataFormat(DataFormat):
         self,
         delimiter: Optional[str] = Undefined,
         parse: Optional[dict | None | SchemaBase] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["dsv"]] = Undefined,
         **kwds,
     ):
         super().__init__(delimiter=delimiter, parse=parse, type=type, **kwds)
@@ -6069,7 +6085,7 @@ class ErrorBandDef(CompositeMarkDef):
 
     Parameters
     ----------
-    type : str, :class:`ErrorBand`
+    type : :class:`ErrorBand`, Literal['errorband']
         The mark type. This could a primitive mark type (one of ``"bar"``, ``"circle"``,
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"``) or a composite mark type (``"boxplot"``,
@@ -6138,7 +6154,7 @@ class ErrorBandDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Optional[str | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | ErrorBand_T] = Undefined,
         band: Optional[bool | dict | SchemaBase] = Undefined,
         borders: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
@@ -6228,7 +6244,7 @@ class ErrorBarDef(CompositeMarkDef):
 
     Parameters
     ----------
-    type : str, :class:`ErrorBar`
+    type : :class:`ErrorBar`, Literal['errorbar']
         The mark type. This could a primitive mark type (one of ``"bar"``, ``"circle"``,
         ``"square"``, ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"geoshape"``,
         ``"rule"``, and ``"text"``) or a composite mark type (``"boxplot"``,
@@ -6277,7 +6293,7 @@ class ErrorBarDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Optional[str | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | ErrorBar_T] = Undefined,
         clip: Optional[bool] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
@@ -6482,7 +6498,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         **Default value**: Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
         (``20`` by default)
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6713,7 +6729,7 @@ class FacetFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7179,7 +7195,7 @@ class Feature(VegaLiteSchema):
         The feature's geometry
     properties : dict, None, :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : str
+    type : Literal['Feature']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -7195,7 +7211,7 @@ class Feature(VegaLiteSchema):
         self,
         geometry: Optional[dict | SchemaBase] = Undefined,
         properties: Optional[dict | None | SchemaBase] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
         **kwds,
@@ -7220,7 +7236,7 @@ class FeatureCollection(VegaLiteSchema):
     ----------
     features : Sequence[dict, :class:`FeatureGeometryGeoJsonProperties`]
 
-    type : str
+    type : Literal['FeatureCollection']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -7232,7 +7248,7 @@ class FeatureCollection(VegaLiteSchema):
     def __init__(
         self,
         features: Optional[Sequence[dict | SchemaBase]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["FeatureCollection"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -7252,7 +7268,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         The feature's geometry
     properties : dict, None, :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : str
+    type : Literal['Feature']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -7268,7 +7284,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         self,
         geometry: Optional[dict | SchemaBase] = Undefined,
         properties: Optional[dict | None | SchemaBase] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
         **kwds,
@@ -7314,7 +7330,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7350,7 +7366,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7454,7 +7470,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -7503,7 +7519,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7578,7 +7594,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7683,7 +7699,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         self,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -7856,7 +7872,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
 
     Parameters
     ----------
-    mark : str, dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
+    mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
@@ -7887,7 +7903,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
+        mark: Optional[dict | SchemaBase | Mark_T | CompositeMark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
@@ -7925,7 +7941,7 @@ class GeoJsonFeature(Fit):
         The feature's geometry
     properties : dict, None, :class:`GeoJsonProperties`
         Properties associated with this feature.
-    type : str
+    type : Literal['Feature']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -7941,7 +7957,7 @@ class GeoJsonFeature(Fit):
         self,
         geometry: Optional[dict | SchemaBase] = Undefined,
         properties: Optional[dict | None | SchemaBase] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
         **kwds,
@@ -7966,7 +7982,7 @@ class GeoJsonFeatureCollection(Fit):
     ----------
     features : Sequence[dict, :class:`FeatureGeometryGeoJsonProperties`]
 
-    type : str
+    type : Literal['FeatureCollection']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -7978,7 +7994,7 @@ class GeoJsonFeatureCollection(Fit):
     def __init__(
         self,
         features: Optional[Sequence[dict | SchemaBase]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["FeatureCollection"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -8017,7 +8033,7 @@ class GeometryCollection(Geometry):
     ----------
     geometries : Sequence[dict, :class:`Point`, :class:`Polygon`, :class:`Geometry`, :class:`LineString`, :class:`MultiPoint`, :class:`MultiPolygon`, :class:`MultiLineString`, :class:`GeometryCollection`]
 
-    type : str
+    type : Literal['GeometryCollection']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -8029,7 +8045,7 @@ class GeometryCollection(Geometry):
     def __init__(
         self,
         geometries: Optional[Sequence[dict | SchemaBase]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["GeometryCollection"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -8074,7 +8090,7 @@ class GraticuleGenerator(Generator):
 
     Parameters
     ----------
-    graticule : bool, dict, :class:`GraticuleParams`
+    graticule : dict, Literal[True], :class:`GraticuleParams`
         Generate graticule GeoJSON data for geographic reference lines.
     name : str
         Provide a placeholder name and bind data at runtime.
@@ -8084,7 +8100,7 @@ class GraticuleGenerator(Generator):
 
     def __init__(
         self,
-        graticule: Optional[bool | dict | SchemaBase] = Undefined,
+        graticule: Optional[dict | SchemaBase | Literal[True]] = Undefined,
         name: Optional[str] = Undefined,
         **kwds,
     ):
@@ -8201,7 +8217,7 @@ class Header(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The vertical text baseline for the header labels. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -8274,7 +8290,7 @@ class Header(VegaLiteSchema):
         The rotation angle of the header title.
 
         **Default value:** ``0``.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The vertical text baseline for the header title. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -8321,7 +8337,7 @@ class Header(VegaLiteSchema):
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -8344,7 +8360,7 @@ class Header(VegaLiteSchema):
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -8447,7 +8463,7 @@ class HeaderConfig(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The vertical text baseline for the header labels. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -8502,7 +8518,7 @@ class HeaderConfig(VegaLiteSchema):
         The rotation angle of the header title.
 
         **Default value:** ``0``.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The vertical text baseline for the header title. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -8549,7 +8565,7 @@ class HeaderConfig(VegaLiteSchema):
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -8572,7 +8588,7 @@ class HeaderConfig(VegaLiteSchema):
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -8782,7 +8798,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
     Parameters
     ----------
-    type : str
+    type : Literal['interval']
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -8879,7 +8895,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["interval"]] = Undefined,
         clear: Optional[str | bool | dict | SchemaBase] = Undefined,
         encodings: Optional[Sequence[SchemaBase | SingleDefUnitChannel_T]] = Undefined,
         fields: Optional[Sequence[str | SchemaBase]] = Undefined,
@@ -9078,7 +9094,7 @@ class JsonDataFormat(DataFormat):
         loaded JSON file may have surrounding structure or meta-data. For example
         ``"property": "values.features"`` is equivalent to retrieving
         ``json.values.features`` from the loaded JSON object.
-    type : str
+    type : Literal['json']
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -9091,7 +9107,7 @@ class JsonDataFormat(DataFormat):
         self,
         parse: Optional[dict | None | SchemaBase] = Undefined,
         property: Optional[str] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["json"]] = Undefined,
         **kwds,
     ):
         super().__init__(parse=parse, property=property, type=type, **kwds)
@@ -9171,7 +9187,7 @@ class LatLongFieldDef(LatLongDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9200,7 +9216,7 @@ class LatLongFieldDef(LatLongDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : str
+    type : Literal['quantitative']
         The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
         ``"geojson"`` type for encoding `'geoshape'
@@ -9281,7 +9297,7 @@ class LatLongFieldDef(LatLongDef):
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -9436,7 +9452,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``"each"``.
     labelAlign : dict, :class:`Align`, :class:`ExprRef`, Literal['left', 'center', 'right']
         The alignment of the legend label, can be left, center, or right.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
         ``"bottom"``, or ``"alphabetic"``.
 
@@ -9469,7 +9485,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``4``.
     labelOpacity : dict, float, :class:`ExprRef`
         Opacity of labels.
-    labelOverlap : str, bool, dict, :class:`ExprRef`, :class:`LabelOverlap`
+    labelOverlap : bool, dict, :class:`ExprRef`, :class:`LabelOverlap`, Literal['greedy', 'parity']
         The strategy to use for resolving overlap of labels in gradient legends. If
         ``false``, no overlap reduction is attempted. If set to ``true`` (default) or
         ``"parity"``, a strategy of removing every other label is used. If set to
@@ -9579,7 +9595,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``"left"``.
     titleAnchor : dict, :class:`ExprRef`, :class:`TitleAnchor`, Literal[None, 'start', 'middle', 'end']
         Text anchor position for placing legend titles.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -9655,7 +9671,7 @@ class Legend(VegaLiteSchema):
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -9670,7 +9686,9 @@ class Legend(VegaLiteSchema):
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -9708,7 +9726,7 @@ class Legend(VegaLiteSchema):
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -9919,7 +9937,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``"each"``.
     labelAlign : dict, :class:`Align`, :class:`ExprRef`, Literal['left', 'center', 'right']
         The alignment of the legend label, can be left, center, or right.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    labelBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         The position of the baseline of legend label, can be ``"top"``, ``"middle"``,
         ``"bottom"``, or ``"alphabetic"``.
 
@@ -9946,7 +9964,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``4``.
     labelOpacity : dict, float, :class:`ExprRef`
         Opacity of labels.
-    labelOverlap : str, bool, dict, :class:`ExprRef`, :class:`LabelOverlap`
+    labelOverlap : bool, dict, :class:`ExprRef`, :class:`LabelOverlap`, Literal['greedy', 'parity']
         The strategy to use for resolving overlap of labels in gradient legends. If
         ``false``, no overlap reduction is attempted. If set to ``true`` or ``"parity"``, a
         strategy of removing every other label is used. If set to ``"greedy"``, a linear
@@ -10051,7 +10069,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``"left"``.
     titleAnchor : dict, :class:`ExprRef`, :class:`TitleAnchor`, Literal[None, 'start', 'middle', 'end']
         Text anchor position for placing legend titles.
-    titleBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    titleBaseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for legend titles.  One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
@@ -10133,7 +10151,7 @@ class LegendConfig(VegaLiteSchema):
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -10147,7 +10165,9 @@ class LegendConfig(VegaLiteSchema):
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         layout: Optional[dict | Parameter | SchemaBase] = Undefined,
@@ -10198,7 +10218,7 @@ class LegendConfig(VegaLiteSchema):
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -10417,7 +10437,7 @@ class LineConfig(AnyMarkConfig):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -10621,7 +10641,7 @@ class LineConfig(AnyMarkConfig):
         **Default value:** ``0``
     padAngle : dict, float, :class:`ExprRef`
         The angular padding applied to sides of the arc, in radians.
-    point : str, bool, dict, :class:`OverlayMarkDef`
+    point : bool, dict, Literal['transparent'], :class:`OverlayMarkDef`
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -10753,24 +10773,24 @@ class LineConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -10787,9 +10807,7 @@ class LineConfig(AnyMarkConfig):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10836,7 +10854,7 @@ class LineConfig(AnyMarkConfig):
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         shape: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -10867,10 +10885,18 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -10958,7 +10984,7 @@ class LineString(Geometry):
     ----------
     coordinates : Sequence[Sequence[float], :class:`Position`]
 
-    type : str
+    type : Literal['LineString']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -10970,7 +10996,7 @@ class LineString(Geometry):
     def __init__(
         self,
         coordinates: Optional[Sequence[SchemaBase | Sequence[float]]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["LineString"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -10983,7 +11009,7 @@ class LinearGradient(Gradient):
 
     Parameters
     ----------
-    gradient : str
+    gradient : Literal['linear']
         The type of gradient. Use ``"linear"`` for a linear gradient.
     stops : Sequence[dict, :class:`GradientStop`]
         An array of gradient stops defining the gradient color sequence.
@@ -11011,7 +11037,7 @@ class LinearGradient(Gradient):
 
     def __init__(
         self,
-        gradient: Optional[str] = Undefined,
+        gradient: Optional[Literal["linear"]] = Undefined,
         stops: Optional[Sequence[dict | SchemaBase]] = Undefined,
         id: Optional[str] = Undefined,
         x1: Optional[float] = Undefined,
@@ -11146,7 +11172,7 @@ class MarkConfig(AnyMarkConfig):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -11468,24 +11494,24 @@ class MarkConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -11502,9 +11528,7 @@ class MarkConfig(AnyMarkConfig):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -11581,10 +11605,18 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -11702,7 +11734,7 @@ class MarkDef(AnyMark):
 
         **Default value:**  3/4 of step (width step for horizontal ticks and height step for
         vertical ticks).
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -11938,7 +11970,7 @@ class MarkDef(AnyMark):
         **Default value:** ``0``
     padAngle : dict, float, :class:`ExprRef`
         The angular padding applied to sides of the arc, in radians.
-    point : str, bool, dict, :class:`OverlayMarkDef`
+    point : bool, dict, Literal['transparent'], :class:`OverlayMarkDef`
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -12098,13 +12130,13 @@ class MarkDef(AnyMark):
 
         * A relative band size definition.  For example, ``{band: 0.5}`` represents half of
           the band.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
@@ -12113,13 +12145,13 @@ class MarkDef(AnyMark):
         Offset for x2-position.
     xOffset : dict, float, :class:`ExprRef`
         Offset for x-position.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -12142,9 +12174,7 @@ class MarkDef(AnyMark):
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -12197,7 +12227,7 @@ class MarkDef(AnyMark):
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -12233,12 +12263,20 @@ class MarkDef(AnyMark):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -12576,7 +12614,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12614,7 +12652,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12816,7 +12854,7 @@ class MultiLineString(Geometry):
     ----------
     coordinates : Sequence[Sequence[Sequence[float], :class:`Position`]]
 
-    type : str
+    type : Literal['MultiLineString']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -12830,7 +12868,7 @@ class MultiLineString(Geometry):
         coordinates: Optional[
             Sequence[Sequence[SchemaBase | Sequence[float]]]
         ] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["MultiLineString"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -12847,7 +12885,7 @@ class MultiPoint(Geometry):
     ----------
     coordinates : Sequence[Sequence[float], :class:`Position`]
 
-    type : str
+    type : Literal['MultiPoint']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -12859,7 +12897,7 @@ class MultiPoint(Geometry):
     def __init__(
         self,
         coordinates: Optional[Sequence[SchemaBase | Sequence[float]]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["MultiPoint"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -12876,7 +12914,7 @@ class MultiPolygon(Geometry):
     ----------
     coordinates : Sequence[Sequence[Sequence[Sequence[float], :class:`Position`]]]
 
-    type : str
+    type : Literal['MultiPolygon']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -12890,7 +12928,7 @@ class MultiPolygon(Geometry):
         coordinates: Optional[
             Sequence[Sequence[Sequence[SchemaBase | Sequence[float]]]]
         ] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["MultiPolygon"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -13230,7 +13268,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13268,7 +13306,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13643,7 +13681,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13681,7 +13719,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13857,7 +13895,7 @@ class OrderFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13895,7 +13933,7 @@ class OrderFieldDef(VegaLiteSchema):
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`, Literal['ascending', 'descending']
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13999,7 +14037,7 @@ class OrderFieldDef(VegaLiteSchema):
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
@@ -14120,7 +14158,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -14466,13 +14504,13 @@ class OverlayMarkDef(VegaLiteSchema):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
@@ -14481,13 +14519,13 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for x2-position.
     xOffset : dict, float, :class:`ExprRef`
         Offset for x-position.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -14508,9 +14546,7 @@ class OverlayMarkDef(VegaLiteSchema):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
@@ -14593,12 +14629,20 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -14746,7 +14790,7 @@ class Point(Geometry):
         and three elements. The previous GeoJSON specification allowed more elements (e.g.,
         which could be used to represent M values), but the current specification only
         allows X, Y, and (optionally) Z to be defined.
-    type : str
+    type : Literal['Point']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -14758,7 +14802,7 @@ class Point(Geometry):
     def __init__(
         self,
         coordinates: Optional[SchemaBase | Sequence[float]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["Point"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -14771,7 +14815,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
     Parameters
     ----------
-    type : str
+    type : Literal['point']
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -14867,7 +14911,7 @@ class PointSelectionConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["point"]] = Undefined,
         clear: Optional[str | bool | dict | SchemaBase] = Undefined,
         encodings: Optional[Sequence[SchemaBase | SingleDefUnitChannel_T]] = Undefined,
         fields: Optional[Sequence[str | SchemaBase]] = Undefined,
@@ -15025,7 +15069,7 @@ class Polygon(Geometry):
     ----------
     coordinates : Sequence[Sequence[Sequence[float], :class:`Position`]]
 
-    type : str
+    type : Literal['Polygon']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
@@ -15039,7 +15083,7 @@ class Polygon(Geometry):
         coordinates: Optional[
             Sequence[Sequence[SchemaBase | Sequence[float]]]
         ] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["Polygon"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         **kwds,
     ):
@@ -15583,7 +15627,7 @@ class PositionFieldDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15640,7 +15684,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15708,7 +15752,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15813,7 +15857,7 @@ class PositionFieldDef(PositionDef):
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         axis: Optional[dict | None | SchemaBase] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         impute: Optional[dict | None | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
@@ -15873,7 +15917,7 @@ class PositionFieldDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15922,7 +15966,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15990,7 +16034,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16094,7 +16138,7 @@ class PositionFieldDefBase(PolarDef):
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         sort: Optional[
@@ -16140,7 +16184,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -16150,7 +16194,9 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 
     def __init__(
         self,
-        value: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height", "width"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -16232,7 +16278,7 @@ class FieldEqualPredicate(Predicate):
         The value that the field should be equal to.
     field : str, :class:`FieldName`
         Field to be tested.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16260,7 +16306,7 @@ class FieldGTEPredicate(Predicate):
         Field to be tested.
     gte : str, dict, float, :class:`ExprRef`, :class:`DateTime`
         The value that the field should be greater than or equals to.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16288,7 +16334,7 @@ class FieldGTPredicate(Predicate):
         Field to be tested.
     gt : str, dict, float, :class:`ExprRef`, :class:`DateTime`
         The value that the field should be greater than.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16316,7 +16362,7 @@ class FieldLTEPredicate(Predicate):
         Field to be tested.
     lte : str, dict, float, :class:`ExprRef`, :class:`DateTime`
         The value that the field should be less than or equals to.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16344,7 +16390,7 @@ class FieldLTPredicate(Predicate):
         Field to be tested.
     lt : str, dict, float, :class:`ExprRef`, :class:`DateTime`
         The value that the field should be less than.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16373,7 +16419,7 @@ class FieldOneOfPredicate(Predicate):
     oneOf : Sequence[str], Sequence[bool], Sequence[float], Sequence[dict, :class:`DateTime`]
         A set of values that the ``field``'s value should be a member of, for a data item
         included in the filtered data.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16407,7 +16453,7 @@ class FieldRangePredicate(Predicate):
     range : dict, :class:`ExprRef`, Sequence[dict, None, float, :class:`ExprRef`, :class:`DateTime`]
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16442,7 +16488,7 @@ class FieldValidPredicate(Predicate):
         If set to true the field's value has to be valid, meaning both not ``null`` and not
         `NaN
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN>`__.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit for the field to be tested.
     """
 
@@ -16861,7 +16907,7 @@ class RadialGradient(Gradient):
 
     Parameters
     ----------
-    gradient : str
+    gradient : Literal['radial']
         The type of gradient. Use ``"radial"`` for a radial gradient.
     stops : Sequence[dict, :class:`GradientStop`]
         An array of gradient stops defining the gradient color sequence.
@@ -16903,7 +16949,7 @@ class RadialGradient(Gradient):
 
     def __init__(
         self,
-        gradient: Optional[str] = Undefined,
+        gradient: Optional[Literal["radial"]] = Undefined,
         stops: Optional[Sequence[dict | SchemaBase]] = Undefined,
         id: Optional[str] = Undefined,
         r1: Optional[float] = Undefined,
@@ -17074,7 +17120,7 @@ class RectConfig(AnyMarkConfig):
         Warning: this property is experimental and may be changed in the future.
     aspect : bool, dict, :class:`ExprRef`
         Whether to keep aspect ratio of image marks.
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -17410,24 +17456,24 @@ class RectConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -17444,9 +17490,7 @@ class RectConfig(AnyMarkConfig):
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
@@ -17527,10 +17571,18 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -17889,7 +17941,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         **Default value**: Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
         (``20`` by default)
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18076,7 +18128,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : str, dict, :class:`ExprRef`, :class:`DomainUnionWith`, :class:`ParameterExtent`, Sequence[str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`]
+    domain : dict, :class:`ExprRef`, Literal['unaggregated'], :class:`DomainUnionWith`, :class:`ParameterExtent`, Sequence[str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`]
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -18239,7 +18291,7 @@ class Scale(VegaLiteSchema):
         snapping to the pixel grid.
 
         **Default value:** ``false``.
-    scheme : dict, :class:`ExprRef`, :class:`Cyclical`, :class:`Diverging`, :class:`Categorical`, :class:`ColorScheme`, :class:`SchemeParams`, :class:`SequentialMultiHue`, :class:`SequentialSingleHue`, Literal['rainbow', 'sinebow'], Literal['blues', 'tealblues', 'teals', 'greens', 'browns', 'greys', 'purples', 'warmgreys', 'reds', 'oranges'], Literal['accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20'], Literal['blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6', 'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11', 'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5', 'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9', 'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4', 'purplegreen-5', 'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9', 'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3', 'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7', 'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11', 'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6', 'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11', 'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8', 'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5', 'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11', 'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6', 'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10', 'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4', 'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8', 'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3', 'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9', 'spectral-10', 'spectral-11'], Literal['turbo', 'viridis', 'inferno', 'magma', 'plasma', 'cividis', 'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6', 'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4', 'bluepurple-5', 'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen', 'goldgreen-3', 'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8', 'goldgreen-9', 'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6', 'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4', 'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3', 'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9', 'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7', 'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4', 'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8', 'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5', 'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3', 'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9', 'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7', 'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4', 'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8', 'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5', 'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown', 'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6', 'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered', 'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6', 'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3', 'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9', 'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7', 'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5', 'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3', 'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9', 'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8', 'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5', 'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal', 'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6', 'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3', 'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8', 'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5', 'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue', 'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6', 'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
+    scheme : dict, :class:`ExprRef`, :class:`Cyclical`, :class:`Diverging`, :class:`Categorical`, :class:`ColorScheme`, :class:`SchemeParams`, :class:`SequentialMultiHue`, :class:`SequentialSingleHue`, Literal['accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20', 'blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6', 'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11', 'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5', 'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9', 'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4', 'purplegreen-5', 'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9', 'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3', 'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7', 'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11', 'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6', 'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11', 'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8', 'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5', 'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11', 'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6', 'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10', 'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4', 'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8', 'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3', 'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9', 'spectral-10', 'spectral-11', 'blues', 'tealblues', 'teals', 'greens', 'browns', 'greys', 'purples', 'warmgreys', 'reds', 'oranges', 'rainbow', 'sinebow', 'turbo', 'viridis', 'inferno', 'magma', 'plasma', 'cividis', 'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6', 'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4', 'bluepurple-5', 'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen', 'goldgreen-3', 'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8', 'goldgreen-9', 'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6', 'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4', 'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3', 'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9', 'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7', 'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4', 'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8', 'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5', 'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3', 'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9', 'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7', 'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4', 'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8', 'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5', 'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown', 'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6', 'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered', 'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6', 'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3', 'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9', 'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7', 'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5', 'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3', 'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9', 'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8', 'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5', 'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal', 'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6', 'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3', 'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8', 'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5', 'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue', 'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6', 'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
         A string indicating a color `scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__ name (e.g.,
         ``"category10"`` or ``"blues"``) or a `scheme parameter object
@@ -18304,10 +18356,10 @@ class Scale(VegaLiteSchema):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -18847,7 +18899,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18885,7 +18937,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -19062,39 +19114,39 @@ class ScaleInvalidDataConfig(VegaLiteSchema):
 
     Parameters
     ----------
-    angle : str, dict, :class:`ScaleInvalidDataShowAsangle`, :class:`ScaleInvalidDataShowAsValueangle`
+    angle : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsangle`, :class:`ScaleInvalidDataShowAsValueangle`
 
-    color : str, dict, :class:`ScaleInvalidDataShowAscolor`, :class:`ScaleInvalidDataShowAsValuecolor`
+    color : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAscolor`, :class:`ScaleInvalidDataShowAsValuecolor`
 
-    fill : str, dict, :class:`ScaleInvalidDataShowAsfill`, :class:`ScaleInvalidDataShowAsValuefill`
+    fill : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsfill`, :class:`ScaleInvalidDataShowAsValuefill`
 
-    fillOpacity : str, dict, :class:`ScaleInvalidDataShowAsfillOpacity`, :class:`ScaleInvalidDataShowAsValuefillOpacity`
+    fillOpacity : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsfillOpacity`, :class:`ScaleInvalidDataShowAsValuefillOpacity`
 
-    opacity : str, dict, :class:`ScaleInvalidDataShowAsopacity`, :class:`ScaleInvalidDataShowAsValueopacity`
+    opacity : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsopacity`, :class:`ScaleInvalidDataShowAsValueopacity`
 
-    radius : str, dict, :class:`ScaleInvalidDataShowAsradius`, :class:`ScaleInvalidDataShowAsValueradius`
+    radius : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsradius`, :class:`ScaleInvalidDataShowAsValueradius`
 
-    shape : str, dict, :class:`ScaleInvalidDataShowAsshape`, :class:`ScaleInvalidDataShowAsValueshape`
+    shape : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsshape`, :class:`ScaleInvalidDataShowAsValueshape`
 
-    size : str, dict, :class:`ScaleInvalidDataShowAssize`, :class:`ScaleInvalidDataShowAsValuesize`
+    size : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAssize`, :class:`ScaleInvalidDataShowAsValuesize`
 
-    stroke : str, dict, :class:`ScaleInvalidDataShowAsstroke`, :class:`ScaleInvalidDataShowAsValuestroke`
+    stroke : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsstroke`, :class:`ScaleInvalidDataShowAsValuestroke`
 
-    strokeDash : str, dict, :class:`ScaleInvalidDataShowAsstrokeDash`, :class:`ScaleInvalidDataShowAsValuestrokeDash`
+    strokeDash : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsstrokeDash`, :class:`ScaleInvalidDataShowAsValuestrokeDash`
 
-    strokeOpacity : str, dict, :class:`ScaleInvalidDataShowAsstrokeOpacity`, :class:`ScaleInvalidDataShowAsValuestrokeOpacity`
+    strokeOpacity : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsstrokeOpacity`, :class:`ScaleInvalidDataShowAsValuestrokeOpacity`
 
-    strokeWidth : str, dict, :class:`ScaleInvalidDataShowAsstrokeWidth`, :class:`ScaleInvalidDataShowAsValuestrokeWidth`
+    strokeWidth : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsstrokeWidth`, :class:`ScaleInvalidDataShowAsValuestrokeWidth`
 
-    theta : str, dict, :class:`ScaleInvalidDataShowAstheta`, :class:`ScaleInvalidDataShowAsValuetheta`
+    theta : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAstheta`, :class:`ScaleInvalidDataShowAsValuetheta`
 
-    x : str, dict, :class:`ScaleInvalidDataShowAsx`, :class:`ScaleInvalidDataShowAsValuex`
+    x : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsx`, :class:`ScaleInvalidDataShowAsValuex`
 
-    xOffset : str, dict, :class:`ScaleInvalidDataShowAsxOffset`, :class:`ScaleInvalidDataShowAsValuexOffset`
+    xOffset : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsxOffset`, :class:`ScaleInvalidDataShowAsValuexOffset`
 
-    y : str, dict, :class:`ScaleInvalidDataShowAsy`, :class:`ScaleInvalidDataShowAsValuey`
+    y : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsy`, :class:`ScaleInvalidDataShowAsValuey`
 
-    yOffset : str, dict, :class:`ScaleInvalidDataShowAsyOffset`, :class:`ScaleInvalidDataShowAsValueyOffset`
+    yOffset : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsyOffset`, :class:`ScaleInvalidDataShowAsValueyOffset`
 
     """
 
@@ -19102,23 +19154,23 @@ class ScaleInvalidDataConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        angle: Optional[str | dict | SchemaBase] = Undefined,
-        color: Optional[str | dict | SchemaBase] = Undefined,
-        fill: Optional[str | dict | SchemaBase] = Undefined,
-        fillOpacity: Optional[str | dict | SchemaBase] = Undefined,
-        opacity: Optional[str | dict | SchemaBase] = Undefined,
-        radius: Optional[str | dict | SchemaBase] = Undefined,
-        shape: Optional[str | dict | SchemaBase] = Undefined,
-        size: Optional[str | dict | SchemaBase] = Undefined,
-        stroke: Optional[str | dict | SchemaBase] = Undefined,
-        strokeDash: Optional[str | dict | SchemaBase] = Undefined,
-        strokeOpacity: Optional[str | dict | SchemaBase] = Undefined,
-        strokeWidth: Optional[str | dict | SchemaBase] = Undefined,
-        theta: Optional[str | dict | SchemaBase] = Undefined,
-        x: Optional[str | dict | SchemaBase] = Undefined,
-        xOffset: Optional[str | dict | SchemaBase] = Undefined,
-        y: Optional[str | dict | SchemaBase] = Undefined,
-        yOffset: Optional[str | dict | SchemaBase] = Undefined,
+        angle: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        color: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        fill: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        fillOpacity: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        opacity: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        radius: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        shape: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        size: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        stroke: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        strokeDash: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        strokeOpacity: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        strokeWidth: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        theta: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        x: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        xOffset: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        y: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
+        yOffset: Optional[dict | SchemaBase | Literal["zero-or-min"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -19550,7 +19602,7 @@ class ScaleInvalidDataShowAsValuex(ScaleInvalidDataShowAsx):
 
     Parameters
     ----------
-    value : str, float
+    value : float, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
@@ -19560,7 +19612,7 @@ class ScaleInvalidDataShowAsValuex(ScaleInvalidDataShowAsx):
 
     _schema = {"$ref": '#/definitions/ScaleInvalidDataShowAsValue<"x">'}
 
-    def __init__(self, value: Optional[str | float] = Undefined, **kwds):
+    def __init__(self, value: Optional[float | Literal["width"]] = Undefined, **kwds):
         super().__init__(value=value, **kwds)
 
 
@@ -19604,7 +19656,7 @@ class ScaleInvalidDataShowAsValuey(ScaleInvalidDataShowAsy):
 
     Parameters
     ----------
-    value : str, float
+    value : float, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
@@ -19614,7 +19666,7 @@ class ScaleInvalidDataShowAsValuey(ScaleInvalidDataShowAsy):
 
     _schema = {"$ref": '#/definitions/ScaleInvalidDataShowAsValue<"y">'}
 
-    def __init__(self, value: Optional[str | float] = Undefined, **kwds):
+    def __init__(self, value: Optional[float | Literal["height"]] = Undefined, **kwds):
         super().__init__(value=value, **kwds)
 
 
@@ -19745,7 +19797,7 @@ class SchemeParams(VegaLiteSchema):
 
     Parameters
     ----------
-    name : :class:`Cyclical`, :class:`Diverging`, :class:`Categorical`, :class:`ColorScheme`, :class:`SequentialMultiHue`, :class:`SequentialSingleHue`, Literal['rainbow', 'sinebow'], Literal['blues', 'tealblues', 'teals', 'greens', 'browns', 'greys', 'purples', 'warmgreys', 'reds', 'oranges'], Literal['accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20'], Literal['blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6', 'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11', 'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5', 'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9', 'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4', 'purplegreen-5', 'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9', 'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3', 'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7', 'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11', 'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6', 'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11', 'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8', 'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5', 'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11', 'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6', 'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10', 'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4', 'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8', 'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3', 'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9', 'spectral-10', 'spectral-11'], Literal['turbo', 'viridis', 'inferno', 'magma', 'plasma', 'cividis', 'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6', 'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4', 'bluepurple-5', 'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen', 'goldgreen-3', 'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8', 'goldgreen-9', 'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6', 'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4', 'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3', 'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9', 'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7', 'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4', 'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8', 'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5', 'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3', 'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9', 'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7', 'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4', 'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8', 'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5', 'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown', 'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6', 'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered', 'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6', 'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3', 'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9', 'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7', 'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5', 'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3', 'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9', 'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8', 'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5', 'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal', 'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6', 'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3', 'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8', 'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5', 'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue', 'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6', 'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
+    name : :class:`Cyclical`, :class:`Diverging`, :class:`Categorical`, :class:`ColorScheme`, :class:`SequentialMultiHue`, :class:`SequentialSingleHue`, Literal['accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20', 'blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6', 'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11', 'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5', 'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9', 'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4', 'purplegreen-5', 'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9', 'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3', 'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7', 'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11', 'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6', 'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11', 'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8', 'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5', 'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11', 'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6', 'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10', 'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4', 'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8', 'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3', 'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9', 'spectral-10', 'spectral-11', 'blues', 'tealblues', 'teals', 'greens', 'browns', 'greys', 'purples', 'warmgreys', 'reds', 'oranges', 'rainbow', 'sinebow', 'turbo', 'viridis', 'inferno', 'magma', 'plasma', 'cividis', 'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6', 'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4', 'bluepurple-5', 'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen', 'goldgreen-3', 'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8', 'goldgreen-9', 'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6', 'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4', 'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3', 'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9', 'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7', 'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4', 'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8', 'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5', 'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3', 'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9', 'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7', 'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4', 'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8', 'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5', 'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown', 'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6', 'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered', 'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6', 'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3', 'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9', 'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7', 'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5', 'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3', 'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9', 'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8', 'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5', 'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal', 'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6', 'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3', 'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8', 'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5', 'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue', 'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6', 'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
         A color scheme name for ordinal scales (e.g., ``"category10"`` or ``"blues"``).
 
         For the full list of supported schemes, please refer to the `Vega Scheme
@@ -19831,7 +19883,7 @@ class SecondaryFieldDef(Position2Def):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -20058,7 +20110,7 @@ class SelectionParameter(VegaLiteSchema):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : str, dict, :class:`Binding`, :class:`BindInput`, :class:`BindRange`, :class:`BindDirect`, :class:`BindCheckbox`, :class:`LegendBinding`, :class:`BindRadioSelect`, :class:`LegendStreamBinding`
+    bind : dict, :class:`Binding`, :class:`BindInput`, :class:`BindRange`, :class:`BindDirect`, :class:`BindCheckbox`, :class:`LegendBinding`, :class:`BindRadioSelect`, Literal['legend', 'scales'], :class:`LegendStreamBinding`
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -20089,7 +20141,7 @@ class SelectionParameter(VegaLiteSchema):
         self,
         name: Optional[str | SchemaBase] = Undefined,
         select: Optional[dict | SchemaBase | SelectionType_T] = Undefined,
-        bind: Optional[str | dict | SchemaBase] = Undefined,
+        bind: Optional[dict | SchemaBase | Literal["legend", "scales"]] = Undefined,
         value: Optional[
             str | bool | dict | None | float | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -20421,7 +20473,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -20459,7 +20511,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -21220,7 +21272,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
 
     Parameters
     ----------
-    mark : str, dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
+    mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
@@ -21267,7 +21319,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         Description of this mark for commenting purpose.
     encoding : dict, :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : str, dict, float, :class:`Step`
+    height : dict, float, :class:`Step`, Literal['container']
         The height of a visualization.
 
         * For a plot with a continuous y-field, height should be a number.
@@ -21313,7 +21365,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : str, dict, float, :class:`Step`
+    width : dict, float, :class:`Step`, Literal['container']
         The width of a visualization.
 
         * For a plot with a continuous x-field, width should be a number.
@@ -21338,14 +21390,14 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
 
     def __init__(
         self,
-        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
+        mark: Optional[dict | SchemaBase | Mark_T | CompositeMark_T] = Undefined,
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
-        height: Optional[str | dict | float | SchemaBase] = Undefined,
+        height: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         name: Optional[str] = Undefined,
         params: Optional[Sequence[dict | SchemaBase]] = Undefined,
         projection: Optional[dict | SchemaBase] = Undefined,
@@ -21354,7 +21406,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         view: Optional[dict | SchemaBase] = Undefined,
-        width: Optional[str | dict | float | SchemaBase] = Undefined,
+        width: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21479,7 +21531,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     encoding : dict, :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : str, dict, float, :class:`Step`
+    height : dict, float, :class:`Step`, Literal['container']
         The height of a visualization.
 
         * For a plot with a continuous y-field, height should be a number.
@@ -21513,7 +21565,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : str, dict, float, :class:`Step`
+    width : dict, float, :class:`Step`, Literal['container']
         The width of a visualization.
 
         * For a plot with a continuous x-field, width should be a number.
@@ -21542,14 +21594,14 @@ class LayerSpec(Spec, NonNormalizedSpec):
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
-        height: Optional[str | dict | float | SchemaBase] = Undefined,
+        height: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         name: Optional[str] = Undefined,
         projection: Optional[dict | SchemaBase] = Undefined,
         resolve: Optional[dict | SchemaBase] = Undefined,
         title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         view: Optional[dict | SchemaBase] = Undefined,
-        width: Optional[str | dict | float | SchemaBase] = Undefined,
+        width: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21842,7 +21894,7 @@ class SphereGenerator(Generator):
 
     Parameters
     ----------
-    sphere : bool, dict
+    sphere : dict, Literal[True]
         Generate sphere GeoJSON data for the full globe.
     name : str
         Provide a placeholder name and bind data at runtime.
@@ -21852,7 +21904,7 @@ class SphereGenerator(Generator):
 
     def __init__(
         self,
-        sphere: Optional[bool | dict] = Undefined,
+        sphere: Optional[dict | Literal[True]] = Undefined,
         name: Optional[str] = Undefined,
         **kwds,
     ):
@@ -22043,7 +22095,7 @@ class StringFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22111,7 +22163,7 @@ class StringFieldDef(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22214,7 +22266,7 @@ class StringFieldDef(VegaLiteSchema):
         self,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -22259,7 +22311,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22334,7 +22386,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22438,7 +22490,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -22835,7 +22887,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22910,7 +22962,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -23016,7 +23068,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -23091,7 +23143,7 @@ class TickConfig(AnyMarkConfig):
 
         **Default value:**  3/4 of step (width step for horizontal ticks and height step for
         vertical ticks).
-    baseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         For text marks, the vertical text baseline. One of ``"alphabetic"`` (default),
         ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, ``"line-bottom"``, or an
         expression reference that provides one of the valid values. The ``"line-top"`` and
@@ -23417,24 +23469,24 @@ class TickConfig(AnyMarkConfig):
         The URL of the image file for image marks.
     width : dict, float, :class:`ExprRef`
         Width of the marks.
-    x : str, dict, float, :class:`ExprRef`
+    x : dict, float, :class:`ExprRef`, Literal['width']
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : str, dict, float, :class:`ExprRef`
+    x2 : dict, float, :class:`ExprRef`, Literal['width']
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    y : str, dict, float, :class:`ExprRef`
+    y : dict, float, :class:`ExprRef`, Literal['height']
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : str, dict, float, :class:`ExprRef`
+    y2 : dict, float, :class:`ExprRef`, Literal['height']
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
@@ -23452,9 +23504,7 @@ class TickConfig(AnyMarkConfig):
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -23532,10 +23582,18 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23770,7 +23828,7 @@ class TimeUnitParams(VegaLiteSchema):
         If no ``unit`` is specified, maxbins is used to infer time units.
     step : float
         The number of steps between bins, in terms of the least significant unit provided.
-    unit : :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    unit : :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Defines how date-time values should be binned.
     utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
@@ -23802,7 +23860,7 @@ class TimeUnitTransformParams(VegaLiteSchema):
         If no ``unit`` is specified, maxbins is used to infer time units.
     step : float
         The number of steps between bins, in terms of the least significant unit provided.
-    unit : :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    unit : :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Defines how date-time values should be binned.
     utc : bool
         True to use UTC timezone. Equivalent to using a ``utc`` prefixed ``TimeUnit``.
@@ -23852,7 +23910,7 @@ class TitleConfig(VegaLiteSchema):
         the output SVG group, removing the title from the ARIA accessibility tree.
 
         **Default value:** ``true``
-    baseline : str, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
@@ -23919,7 +23977,7 @@ class TitleConfig(VegaLiteSchema):
         anchor: Optional[dict | Parameter | SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
+        baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
@@ -24031,7 +24089,7 @@ class TitleParams(VegaLiteSchema):
         the output SVG group, removing the title from the ARIA accessibility tree.
 
         **Default value:** ``true``
-    baseline : str, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom']
+    baseline : :class:`Baseline`, :class:`TextBaseline`, Literal['alphabetic', 'line-bottom', 'line-top', 'top', 'middle', 'bottom']
         Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
         (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
@@ -24106,7 +24164,7 @@ class TitleParams(VegaLiteSchema):
         anchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
+        baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
@@ -24215,7 +24273,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         * ``"point"`` -- to select multiple discrete data values; the first value is
           selected on ``click`` and additional values toggled on shift-click.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : str, dict, :class:`Binding`, :class:`BindInput`, :class:`BindRange`, :class:`BindDirect`, :class:`BindCheckbox`, :class:`LegendBinding`, :class:`BindRadioSelect`, :class:`LegendStreamBinding`
+    bind : dict, :class:`Binding`, :class:`BindInput`, :class:`BindRange`, :class:`BindDirect`, :class:`BindCheckbox`, :class:`LegendBinding`, :class:`BindRadioSelect`, Literal['legend', 'scales'], :class:`LegendStreamBinding`
         When set, a selection is populated by input elements (also known as dynamic query
         widgets) or by interacting with the corresponding legend. Direct manipulation
         interaction is disabled by default; to re-enable it, set the selection's `on
@@ -24250,7 +24308,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         self,
         name: Optional[str | SchemaBase] = Undefined,
         select: Optional[dict | SchemaBase | SelectionType_T] = Undefined,
-        bind: Optional[str | dict | SchemaBase] = Undefined,
+        bind: Optional[dict | SchemaBase | Literal["legend", "scales"]] = Undefined,
         value: Optional[
             str | bool | dict | None | float | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -24785,7 +24843,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     encoding : dict, :class:`SharedEncoding`
         A shared key-value mapping between encoding channels and definition of fields in the
         underlying layers.
-    height : str, dict, float, :class:`Step`
+    height : dict, float, :class:`Step`, Literal['container']
         The height of a visualization.
 
         * For a plot with a continuous y-field, height should be a number.
@@ -24831,7 +24889,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : str, dict, float, :class:`Step`
+    width : dict, float, :class:`Step`, Literal['container']
         The width of a visualization.
 
         * For a plot with a continuous x-field, width should be a number.
@@ -24872,7 +24930,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         datasets: Optional[dict | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
-        height: Optional[str | dict | float | SchemaBase] = Undefined,
+        height: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         name: Optional[str] = Undefined,
         padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         params: Optional[Sequence[dict | SchemaBase]] = Undefined,
@@ -24882,7 +24940,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         usermeta: Optional[dict | SchemaBase] = Undefined,
         view: Optional[dict | SchemaBase] = Undefined,
-        width: Optional[str | dict | float | SchemaBase] = Undefined,
+        width: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24927,7 +24985,7 @@ class TopLevelUnitSpec(TopLevelSpec):
     data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
-    mark : str, dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
+    mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
@@ -24988,7 +25046,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         Description of this mark for commenting purpose.
     encoding : dict, :class:`FacetedEncoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : str, dict, float, :class:`Step`
+    height : dict, float, :class:`Step`, Literal['container']
         The height of a visualization.
 
         * For a plot with a continuous y-field, height should be a number.
@@ -25044,7 +25102,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : str, dict, float, :class:`Step`
+    width : dict, float, :class:`Step`, Literal['container']
         The width of a visualization.
 
         * For a plot with a continuous x-field, width should be a number.
@@ -25076,7 +25134,7 @@ class TopLevelUnitSpec(TopLevelSpec):
     def __init__(
         self,
         data: Optional[dict | None | SchemaBase] = Undefined,
-        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
+        mark: Optional[dict | SchemaBase | Mark_T | CompositeMark_T] = Undefined,
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
@@ -25088,7 +25146,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         datasets: Optional[dict | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
-        height: Optional[str | dict | float | SchemaBase] = Undefined,
+        height: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         name: Optional[str] = Undefined,
         padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         params: Optional[Sequence[dict | SchemaBase]] = Undefined,
@@ -25099,7 +25157,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         usermeta: Optional[dict | SchemaBase] = Undefined,
         view: Optional[dict | SchemaBase] = Undefined,
-        width: Optional[str | dict | float | SchemaBase] = Undefined,
+        width: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -25289,7 +25347,7 @@ class TopoDataFormat(DataFormat):
         UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}``).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
-    type : str
+    type : Literal['topojson']
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
 
         **Default value:**  The default format type is determined by the extension of the
@@ -25303,7 +25361,7 @@ class TopoDataFormat(DataFormat):
         feature: Optional[str] = Undefined,
         mesh: Optional[str] = Undefined,
         parse: Optional[dict | None | SchemaBase] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["topojson"]] = Undefined,
         **kwds,
     ):
         super().__init__(feature=feature, mesh=mesh, parse=parse, type=type, **kwds)
@@ -25348,7 +25406,7 @@ class BinTransform(Transform):
 
     Parameters
     ----------
-    bin : bool, dict, :class:`BinParams`
+    bin : dict, Literal[True], :class:`BinParams`
         An object indicating bin properties, or simply ``true`` for using default bin
         parameters.
     field : str, :class:`FieldName`
@@ -25364,7 +25422,7 @@ class BinTransform(Transform):
 
     def __init__(
         self,
-        bin: Optional[bool | dict | SchemaBase] = Undefined,
+        bin: Optional[dict | SchemaBase | Literal[True]] = Undefined,
         field: Optional[str | SchemaBase] = Undefined,
         **kwds,
     ):
@@ -25967,7 +26025,7 @@ class TimeUnitTransform(Transform):
     ----------
     field : str, :class:`FieldName`
         The data field to apply time unit.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, :class:`TimeUnitTransformParams`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`SingleTimeUnit`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, :class:`TimeUnitTransformParams`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         The timeUnit.
     as : str, :class:`FieldName`
         The output field to write the timeUnit value.
@@ -26028,7 +26086,7 @@ class TypedFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -26064,7 +26122,7 @@ class TypedFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -26167,7 +26225,7 @@ class TypedFieldDef(VegaLiteSchema):
         self,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -26205,7 +26263,7 @@ class UnitSpec(VegaLiteSchema):
 
     Parameters
     ----------
-    mark : str, dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
+    mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
@@ -26236,7 +26294,7 @@ class UnitSpec(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
+        mark: Optional[dict | SchemaBase | Mark_T | CompositeMark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
@@ -26267,7 +26325,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
     Parameters
     ----------
-    mark : str, dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
+    mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
@@ -26279,7 +26337,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         Description of this mark for commenting purpose.
     encoding : dict, :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
-    height : str, dict, float, :class:`Step`
+    height : dict, float, :class:`Step`, Literal['container']
         The height of a visualization.
 
         * For a plot with a continuous y-field, height should be a number.
@@ -26315,7 +26373,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         An object defining the view background's fill and stroke.
 
         **Default value:** none (transparent)
-    width : str, dict, float, :class:`Step`
+    width : dict, float, :class:`Step`, Literal['container']
         The width of a visualization.
 
         * For a plot with a continuous x-field, width should be a number.
@@ -26340,18 +26398,18 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
+        mark: Optional[dict | SchemaBase | Mark_T | CompositeMark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
-        height: Optional[str | dict | float | SchemaBase] = Undefined,
+        height: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         name: Optional[str] = Undefined,
         params: Optional[Sequence[dict | SchemaBase]] = Undefined,
         projection: Optional[dict | SchemaBase] = Undefined,
         title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         view: Optional[dict | SchemaBase] = Undefined,
-        width: Optional[str | dict | float | SchemaBase] = Undefined,
+        width: Optional[dict | float | SchemaBase | Literal["container"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -26704,7 +26762,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -26714,7 +26772,9 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height", "width"]
+        ] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -27114,7 +27174,7 @@ class WindowFieldDef(VegaLiteSchema):
 
     Parameters
     ----------
-    op : :class:`AggregateOp`, :class:`WindowOnlyOp`, Literal['row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist', 'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value'], Literal['argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
+    op : :class:`AggregateOp`, :class:`WindowOnlyOp`, Literal['argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb', 'row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist', 'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value']
         The window or aggregation operation to apply within a window (e.g., ``"rank"``,
         ``"lead"``, ``"sum"``, ``"average"`` or ``"count"``). See the list of all supported
         operations `here <https://vega.github.io/vega-lite/docs/window.html#ops>`__.

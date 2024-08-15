@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Sequence
+from typing import TYPE_CHECKING, Literal, Sequence
 
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
@@ -39,9 +39,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -94,7 +92,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -130,12 +128,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -246,9 +252,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -301,7 +305,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -337,12 +341,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -453,9 +465,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -508,7 +518,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -544,12 +554,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -660,9 +678,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -715,7 +731,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -751,12 +767,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -867,9 +891,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -922,7 +944,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -958,12 +980,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -1074,9 +1104,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -1129,7 +1157,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1165,12 +1193,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -1281,9 +1317,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -1336,7 +1370,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1372,12 +1406,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -1488,9 +1530,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -1543,7 +1583,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1579,12 +1619,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -1695,9 +1743,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -1750,7 +1796,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1786,12 +1832,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -1902,9 +1956,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -1957,7 +2009,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1993,12 +2045,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -2109,9 +2169,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -2164,7 +2222,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -2200,12 +2258,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -2316,9 +2382,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -2371,7 +2435,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -2407,12 +2471,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -2523,9 +2595,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -2578,7 +2648,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -2614,12 +2684,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -2730,9 +2808,7 @@ class MarkMethodMixin:
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
-        ] = Undefined,
+        baseline: Optional[dict | Parameter | SchemaBase | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
         blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -2785,7 +2861,7 @@ class MarkMethodMixin:
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         outerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         padAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[str | bool | dict | SchemaBase] = Undefined,
+        point: Optional[bool | dict | SchemaBase | Literal["transparent"]] = Undefined,
         radius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         radius2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -2821,12 +2897,20 @@ class MarkMethodMixin:
         ] = Undefined,
         url: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         width: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        x: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        x2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        x: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
+        x2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["width"]
+        ] = Undefined,
         x2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         xOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        y: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        y2: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
+        y: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
+        y2: Optional[
+            dict | float | Parameter | SchemaBase | Literal["height"]
+        ] = Undefined,
         y2Offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
@@ -2933,7 +3017,7 @@ class MarkMethodMixin:
         box: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
-        extent: Optional[str | float] = Undefined,
+        extent: Optional[float | Literal["min-max"]] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
         opacity: Optional[float] = Undefined,
