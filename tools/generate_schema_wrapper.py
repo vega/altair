@@ -801,7 +801,7 @@ def generate_vegalite_mark_mixin(
     return imports, MARK_MIXIN.format(methods="\n".join(code))
 
 
-def _generate_sig_args(
+def _signature_args(
     args: Iterable[str],
     props: SchemaProperties,
     *,
@@ -827,19 +827,18 @@ def generate_mark_args(
     args = sorted((arg_info.required | arg_info.kwds) - {"type"})
     dict_args = (f"{p}={p}" for p in args)
     return {
-        "method_args": ", ".join(_generate_sig_args(args, info.properties)),
+        "method_args": ", ".join(_signature_args(args, info.properties)),
         "dict_args": ", ".join(chain(dict_args, ("**kwds",))),
     }
 
 
-def gen_config_typed_dict(prop_info: SchemaInfo) -> str:
-    arg_info = codegen.get_args(prop_info)
-    props = prop_info.properties
-    it = _generate_sig_args(arg_info.required_kwds, props, kind="typed_dict")
+def generate_typed_dict_args(prop_info: SchemaInfo) -> str:
+    args = codegen.get_args(prop_info).required_kwds
+    it = _signature_args(args, prop_info.properties, kind="typed_dict")
     return "\n    ".join(it)
 
 
-def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
+def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
     """TODO - Tidy up and use consistent naming."""
     with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
@@ -873,18 +872,19 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
         "DerivedStream",
     )
     MANUAL_DEFS_VALID = (get_valid_identifier(k) for k in MANUAL_DEFS)
+    KWDS: Literal["Kwds"] = "Kwds"
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
-    SchemaInfo._remap_title.update((k, f"{k}Kwds") for k in MANUAL_DEFS_VALID)
+    SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in MANUAL_DEFS_VALID)
 
     for prop, prop_info in config.properties.items():
         if (classname := prop_info.refname) and classname.endswith("Config"):
-            name = f"{classname}Kwds"
+            name = f"{classname}{KWDS}"
             top_dict_annotations.append(f"{prop}: {name}")
             if name not in sub_dicts:
                 # HACK: Ensure no references to actual `...Config` classes exist
                 # - Using regex due to forward references
                 args = re.sub(
-                    r"Config\b", r"ConfigKwds", gen_config_typed_dict(prop_info)
+                    r"Config\b", rf"Config{KWDS}", generate_typed_dict_args(prop_info)
                 )
                 sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
                     name=name, typed_dict_args=args
@@ -895,11 +895,10 @@ def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
 
     for d_name in MANUAL_DEFS:
         info = SchemaInfo({"$ref": f"#/definitions/{d_name}"}, rootschema=schema)
-        name = f"{info.title}Kwds"
-        td = CONFIG_SUB_TYPED_DICT.format(
-            name=name, typed_dict_args=gen_config_typed_dict(info)
+        name = f"{info.title}{KWDS}"
+        sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
+            name=name, typed_dict_args=generate_typed_dict_args(info)
         )
-        sub_dicts[name] = td
     yield "\n".join(sub_dicts.values())
     yield "# TODO: Non-`TypedDict` args"
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
@@ -1018,7 +1017,7 @@ def vegalite_main(skip_download: bool = False) -> None:
             "from .core import * # noqa: F403",
         ),
         "\n\n",
-        *gen_each_config_typed_dict(schemafile),
+        *generate_config_typed_dicts(schemafile),
     ]
     files[fp_theme_config] = content_theme_config
 
