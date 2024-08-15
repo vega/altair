@@ -20,7 +20,7 @@ class RectConfigKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     binSpacing: float
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
@@ -83,10 +83,10 @@ class RectConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class AreaConfigKwds(TypedDict, total=False):
@@ -98,7 +98,7 @@ class AreaConfigKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
@@ -134,7 +134,7 @@ class AreaConfigKwds(TypedDict, total=False):
     orient: Orientation_T
     outerRadius: float
     padAngle: float
-    point: str | bool | OverlayMarkDefKwds
+    point: bool | OverlayMarkDefKwds | Literal["transparent"]
     radius: float
     radius2: float
     shape: str
@@ -159,10 +159,10 @@ class AreaConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class AxisConfigKwds(TypedDict, total=False):
@@ -190,7 +190,7 @@ class AxisConfigKwds(TypedDict, total=False):
     gridWidth: float
     labelAlign: Align_T
     labelAngle: float
-    labelBaseline: str | Baseline_T
+    labelBaseline: TextBaseline_T
     labelBound: bool | float
     labelColor: None | ColorHex | ColorName_T
     labelExpr: str
@@ -204,7 +204,7 @@ class AxisConfigKwds(TypedDict, total=False):
     labelLineHeight: float
     labelOffset: float
     labelOpacity: float
-    labelOverlap: str | bool
+    labelOverlap: bool | Literal["greedy", "parity"]
     labelPadding: float
     labelSeparation: float
     labels: bool
@@ -232,7 +232,7 @@ class AxisConfigKwds(TypedDict, total=False):
     titleAlign: Align_T
     titleAnchor: TitleAnchor_T
     titleAngle: float
-    titleBaseline: str | Baseline_T
+    titleBaseline: TextBaseline_T
     titleColor: None | ColorHex | ColorName_T
     titleFont: str
     titleFontSize: float
@@ -258,7 +258,7 @@ class BarConfigKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     binSpacing: float
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
@@ -322,10 +322,10 @@ class BarConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class BoxPlotConfigKwds(TypedDict, total=False):
@@ -340,7 +340,7 @@ class BoxPlotConfigKwds(TypedDict, total=False):
         | RectConfigKwds
         | TickConfigKwds
     )
-    extent: str | float
+    extent: float | Literal["min-max"]
     median: (
         bool
         | BarConfigKwds
@@ -389,7 +389,7 @@ class MarkConfigKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
@@ -448,10 +448,10 @@ class MarkConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class CompositionConfigKwds(TypedDict, total=False):
@@ -521,7 +521,7 @@ class HeaderConfigKwds(TypedDict, total=False):
     labelAlign: Align_T
     labelAnchor: TitleAnchor_T
     labelAngle: float
-    labelBaseline: str | Baseline_T
+    labelBaseline: TextBaseline_T
     labelColor: ColorHex | ColorName_T
     labelExpr: str
     labelFont: str
@@ -538,7 +538,7 @@ class HeaderConfigKwds(TypedDict, total=False):
     titleAlign: Align_T
     titleAnchor: TitleAnchor_T
     titleAngle: float
-    titleBaseline: str | Baseline_T
+    titleBaseline: TextBaseline_T
     titleColor: ColorHex | ColorName_T
     titleFont: str
     titleFontSize: float
@@ -576,7 +576,7 @@ class LegendConfigKwds(TypedDict, total=False):
     gradientVerticalMinLength: float
     gridAlign: LayoutAlign_T
     labelAlign: Align_T
-    labelBaseline: str | Baseline_T
+    labelBaseline: TextBaseline_T
     labelColor: None | ColorHex | ColorName_T
     labelFont: str
     labelFontSize: float
@@ -585,7 +585,7 @@ class LegendConfigKwds(TypedDict, total=False):
     labelLimit: float
     labelOffset: float
     labelOpacity: float
-    labelOverlap: str | bool
+    labelOverlap: bool | Literal["greedy", "parity"]
     labelPadding: float
     labelSeparation: float
     layout: Map
@@ -615,7 +615,7 @@ class LegendConfigKwds(TypedDict, total=False):
     title: None
     titleAlign: Align_T
     titleAnchor: TitleAnchor_T
-    titleBaseline: str | Baseline_T
+    titleBaseline: TextBaseline_T
     titleColor: None | ColorHex | ColorName_T
     titleFont: str
     titleFontSize: float
@@ -639,7 +639,7 @@ class LineConfigKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
@@ -674,7 +674,7 @@ class LineConfigKwds(TypedDict, total=False):
     orient: Orientation_T
     outerRadius: float
     padAngle: float
-    point: str | bool | OverlayMarkDefKwds
+    point: bool | OverlayMarkDefKwds | Literal["transparent"]
     radius: float
     radius2: float
     shape: str
@@ -699,10 +699,10 @@ class LineConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class ProjectionConfigKwds(TypedDict, total=False):
@@ -821,7 +821,7 @@ class TickConfigKwds(TypedDict, total=False):
     ariaRoleDescription: str
     aspect: bool
     bandSize: float
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
     cornerRadius: float
@@ -881,10 +881,10 @@ class TickConfigKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
-    y: str | float
-    y2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
 
 
 class TitleConfigKwds(TypedDict, total=False):
@@ -894,7 +894,7 @@ class TitleConfigKwds(TypedDict, total=False):
     anchor: TitleAnchor_T
     angle: float
     aria: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     color: None | ColorHex | ColorName_T
     dx: float
     dy: float
@@ -955,29 +955,32 @@ class ViewConfigKwds(TypedDict, total=False):
 class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    angle: str | Value[float]
-    color: str | Value[ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
+    angle: Value[float] | Literal["zero-or-min"]
+    color: (
+        Literal["zero-or-min"]
+        | Value[ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
+    )
     fill: (
-        str
+        Literal["zero-or-min"]
         | Value[None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
     )
-    fillOpacity: str | Value[float]
-    opacity: str | Value[float]
-    radius: str | Value[float]
-    shape: str | Value[str]
-    size: str | Value[float]
+    fillOpacity: Value[float] | Literal["zero-or-min"]
+    opacity: Value[float] | Literal["zero-or-min"]
+    radius: Value[float] | Literal["zero-or-min"]
+    shape: Value[str] | Literal["zero-or-min"]
+    size: Value[float] | Literal["zero-or-min"]
     stroke: (
-        str
+        Literal["zero-or-min"]
         | Value[None | ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T]
     )
-    strokeDash: str | Value[Sequence[float]]
-    strokeOpacity: str | Value[float]
-    strokeWidth: str | Value[float]
-    theta: str | Value[float]
-    x: str | Value[str | float]
-    xOffset: str | Value[float]
-    y: str | Value[str | float]
-    yOffset: str | Value[float]
+    strokeDash: Literal["zero-or-min"] | Value[Sequence[float]]
+    strokeOpacity: Value[float] | Literal["zero-or-min"]
+    strokeWidth: Value[float] | Literal["zero-or-min"]
+    theta: Value[float] | Literal["zero-or-min"]
+    x: Literal["zero-or-min"] | Value[float | Literal["width"]]
+    xOffset: Value[float] | Literal["zero-or-min"]
+    y: Literal["zero-or-min"] | Value[float | Literal["height"]]
+    yOffset: Value[float] | Literal["zero-or-min"]
 
 
 class OverlayMarkDefKwds(TypedDict, total=False):
@@ -989,7 +992,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     ariaRole: str
     ariaRoleDescription: str
     aspect: bool
-    baseline: str | Baseline_T
+    baseline: TextBaseline_T
     blend: Blend_T
     clip: bool
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
@@ -1054,12 +1057,12 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     tooltip: str | bool | None | float | TooltipContent
     url: str
     width: float
-    x: str | float
-    x2: str | float
+    x: float | Literal["width"]
+    x2: float | Literal["width"]
     x2Offset: float
     xOffset: float
-    y: str | float
-    y2: str | float
+    y: float | Literal["height"]
+    y2: float | Literal["height"]
     y2Offset: float
     yOffset: float
 
@@ -1067,7 +1070,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
 class LinearGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    gradient: str
+    gradient: Literal["linear"]
     stops: Sequence[GradientStopKwds]
     id: str
     x1: float
@@ -1079,7 +1082,7 @@ class LinearGradientKwds(TypedDict, total=False):
 class RadialGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
-    gradient: str
+    gradient: Literal["radial"]
     stops: Sequence[GradientStopKwds]
     id: str
     r1: float
