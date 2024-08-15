@@ -37,6 +37,11 @@ class ArgInfo:
     invalid_kwds: set[str]
     additional: bool
 
+    @property
+    def required_kwds(self) -> tuple[str, ...]:
+        """Independently sort, then concat ``.required``, ``.kwds`` properties."""
+        return *sorted(self.required), *sorted(self.kwds)
+
 
 def get_args(info: SchemaInfo) -> ArgInfo:
     """Return the list of args & kwds for building the __init__ function."""

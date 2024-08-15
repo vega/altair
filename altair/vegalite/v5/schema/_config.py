@@ -1067,6 +1067,8 @@ class OverlayMarkDefKwds(TypedDict, total=False):
 class LinearGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
+    gradient: str
+    stops: Sequence[GradientStop]
     id: str
     x1: float
     x2: float
@@ -1077,6 +1079,8 @@ class LinearGradientKwds(TypedDict, total=False):
 class RadialGradientKwds(TypedDict, total=False):
     """Placeholder doc."""
 
+    gradient: str
+    stops: Sequence[GradientStop]
     id: str
     r1: float
     r2: float

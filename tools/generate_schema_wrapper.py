@@ -834,9 +834,9 @@ def generate_mark_args(
 
 def gen_config_typed_dict(prop_info: SchemaInfo) -> str:
     arg_info = codegen.get_args(prop_info)
-    args = sorted(arg_info.kwds)
     props = prop_info.properties
-    return "\n    ".join(_generate_sig_args(args, props, kind="typed_dict"))
+    it = _generate_sig_args(arg_info.required_kwds, props, kind="typed_dict")
+    return "\n    ".join(it)
 
 
 def gen_each_config_typed_dict(schemafile: Path) -> Iterator[str]:
