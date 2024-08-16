@@ -120,13 +120,13 @@ class _TypeAliasTracer:
                 tp = alias
         elif (alias := self._literals_invert.get(tp)) and replace:
             tp = alias
-        elif replace and info.is_union_enum():
+        elif replace and info.is_union_literal():
             # Handles one very specific edge case `WindowFieldDef`
             # - Has an anonymous enum union
             # - One of the members is declared afterwards
             # - SchemaBase needs to be first, as the union wont be internally sorted
             it = (
-                self.add_literal(el, spell_literal(el.enum), replace=True)
+                self.add_literal(el, spell_literal(el.literal), replace=True)
                 for el in info.anyOf
             )
             tp = f"Union[SchemaBase, {', '.join(it)}]"
@@ -420,13 +420,13 @@ class SchemaInfo:
 
         if self.is_empty():
             type_representations.append("Any")
-        elif self.is_enum():
-            tp_str = spell_literal(self.enum)
+        elif self.is_literal():
+            tp_str = spell_literal(self.literal)
             if for_type_hints:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             type_representations.append(tp_str)
-        elif for_type_hints and self.is_union_enum():
-            it = chain.from_iterable(el.enum for el in self.anyOf)
+        elif for_type_hints and self.is_union_literal():
+            it = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             type_representations.append(tp_str)
         elif self.is_anyOf():
@@ -436,7 +436,7 @@ class SchemaInfo:
                 )
                 for s in self.anyOf
             )
-            type_representations.extend(it)
+            type_representations.extend(maybe_rewrap_literal(chain.from_iterable(it)))
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
@@ -557,8 +557,16 @@ class SchemaInfo:
         return self.schema.get("items", {})
 
     @property
-    def enum(self) -> list:
+    def enum(self) -> list[str]:
         return self.schema.get("enum", [])
+
+    @property
+    def const(self) -> str:
+        return self.schema.get("const", "")
+
+    @property
+    def literal(self) -> list[str]:
+        return self.schema.get("enum", [self.const])
 
     @property
     def refname(self) -> str:
@@ -597,6 +605,12 @@ class SchemaInfo:
 
     def is_enum(self) -> bool:
         return "enum" in self.schema
+
+    def is_const(self) -> bool:
+        return "const" in self.schema
+
+    def is_literal(self) -> bool:
+        return not ({"enum", "const"}.isdisjoint(self.schema))
 
     def is_empty(self) -> bool:
         return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
@@ -646,13 +660,13 @@ class SchemaInfo:
         """
         return self.is_anyOf() and self.type is None
 
-    def is_union_enum(self) -> bool:
+    def is_union_literal(self) -> bool:
         """
         Candidate for reducing to a single ``Literal`` alias.
 
         E.g. `BinnedTimeUnit`
         """
-        return self.is_union() and all(el.is_enum() for el in self.anyOf)
+        return self.is_union() and all(el.is_literal() for el in self.anyOf)
 
 
 class RSTRenderer(_RSTRenderer):
@@ -792,9 +806,43 @@ def flatten(container: Iterable) -> Iterable:
             yield i
 
 
-def spell_literal(it: Iterable[str], /) -> str:
-    s = ", ".join(f"{s!r}" for s in it)
-    return f"Literal[{s}]"
+def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
+    """
+    Combine individual ``str`` type reprs into a single ``Literal``.
+
+    Parameters
+    ----------
+    it
+        Type representations.
+    quote
+        Call ``repr()`` on each element in ``it``.
+
+        .. note::
+            Set to ``False`` if performing a second pass.
+    """
+    it_el: Iterable[str] = (f"{s!r}" for s in it) if quote else it
+    return f"Literal[{', '.join(it_el)}]"
+
+
+def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:
+    """
+    Where `it` may contain one or more `"enum"`, `"const"`, flatten to a single `Literal[...]`.
+
+    All other type representations are yielded unchanged.
+    """
+    seen: set[str] = set()
+    for s in it:
+        if s.startswith("Literal["):
+            seen.add(unwrap_literal(s))
+        else:
+            yield s
+    if seen:
+        yield spell_literal(sorted(seen), quote=False)
+
+
+def unwrap_literal(tp: str, /) -> str:
+    """`"Literal['value']"` -> `"value"`."""
+    return re.sub(r"Literal\[(.+)\]", r"\g<1>", tp)
 
 
 def ruff_format_str(code: str | list[str]) -> str:

@@ -77,8 +77,10 @@ if TYPE_CHECKING:
         AggregateOp_T,
         AutosizeType_T,
         ColorName_T,
+        CompositeMark_T,
         ImputeMethod_T,
         LayoutAlign_T,
+        Mark_T,
         MultiTimeUnit_T,
         OneOrSeq,
         ProjectionType_T,
@@ -3678,9 +3680,9 @@ class Chart(
         self,
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
-        mark: Optional[str | AnyMark] = Undefined,
-        width: Optional[int | str | dict | Step] = Undefined,
-        height: Optional[int | str | dict | Step] = Undefined,
+        mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
+        width: Optional[int | dict | Step | Literal["container"]] = Undefined,
+        height: Optional[int | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
         # Data type hints won't match with what TopLevelUnitSpec expects
