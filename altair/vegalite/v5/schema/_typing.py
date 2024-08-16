@@ -13,13 +13,16 @@ __all__ = [
     "AllSortString_T",
     "AutosizeType_T",
     "AxisOrient_T",
-    "Baseline_T",
     "BinnedTimeUnit_T",
     "Blend_T",
+    "BoxPlot_T",
     "ColorName_T",
     "ColorScheme_T",
+    "CompositeMark_T",
     "Cursor_T",
+    "ErrorBand_T",
     "ErrorBarExtent_T",
+    "ErrorBar_T",
     "FontWeight_T",
     "ImputeMethod_T",
     "Interpolate_T",
@@ -52,6 +55,7 @@ __all__ = [
     "StandardType_T",
     "StrokeCap_T",
     "StrokeJoin_T",
+    "TextBaseline_T",
     "TextDirection_T",
     "TimeInterval_T",
     "TitleAnchor_T",
@@ -157,7 +161,6 @@ AllSortString_T: TypeAlias = Literal[
 ]
 AutosizeType_T: TypeAlias = Literal["pad", "none", "fit", "fit-x", "fit-y"]
 AxisOrient_T: TypeAlias = Literal["top", "bottom", "left", "right"]
-Baseline_T: TypeAlias = Literal["top", "middle", "bottom"]
 BinnedTimeUnit_T: TypeAlias = Literal[
     "binnedyear",
     "binnedyearquarter",
@@ -206,6 +209,7 @@ Blend_T: TypeAlias = Literal[
     "color",
     "luminosity",
 ]
+BoxPlot_T: TypeAlias = Literal["boxplot"]
 ColorName_T: TypeAlias = Literal[
     "black",
     "silver",
@@ -690,6 +694,7 @@ ColorScheme_T: TypeAlias = Literal[
     "rainbow",
     "sinebow",
 ]
+CompositeMark_T: TypeAlias = Literal["boxplot", "errorbar", "errorband"]
 Cursor_T: TypeAlias = Literal[
     "auto",
     "default",
@@ -728,7 +733,9 @@ Cursor_T: TypeAlias = Literal[
     "grab",
     "grabbing",
 ]
+ErrorBand_T: TypeAlias = Literal["errorband"]
 ErrorBarExtent_T: TypeAlias = Literal["ci", "iqr", "stderr", "stdev"]
+ErrorBar_T: TypeAlias = Literal["errorbar"]
 FontWeight_T: TypeAlias = Literal[
     "normal", "bold", "lighter", "bolder", 100, 200, 300, 400, 500, 600, 700, 800, 900
 ]
@@ -1064,6 +1071,9 @@ StackOffset_T: TypeAlias = Literal["zero", "center", "normalize"]
 StandardType_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal"]
 StrokeCap_T: TypeAlias = Literal["butt", "round", "square"]
 StrokeJoin_T: TypeAlias = Literal["miter", "round", "bevel"]
+TextBaseline_T: TypeAlias = Literal[
+    "alphabetic", "top", "middle", "bottom", "line-top", "line-bottom"
+]
 TextDirection_T: TypeAlias = Literal["ltr", "rtl"]
 TimeInterval_T: TypeAlias = Literal[
     "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
