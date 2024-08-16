@@ -462,36 +462,33 @@ def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
     TypeAliasTracer.update_aliases(("VegaThemes", spell_literal(theme_names)))
 
 
-def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
-    with schemapath.open(encoding="utf8") as f:
-        schema = json.load(f)
+def load_schema(fp: Path, /) -> dict[str, Any]:
+    """Reads and returns the root schema from ``fp``."""
+    with fp.open(encoding="utf8") as f:
+        root_schema = json.load(f)
+    return root_schema
 
-    schema = _add_shorthand_property_to_field_encodings(schema)
-    return schema
 
-
-def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
+def load_schema_with_shorthand_properties(fp: Path, /) -> dict[str, Any]:
+    schema = load_schema(fp)
     encoding_def = "FacetedEncoding"
-
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
-
+    shorthand = {
+        "anyOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}},
+            {"$ref": "#/definitions/RepeatRef"},
+        ],
+        "description": "shorthand for field, aggregate, and type",
+    }
     for propschema in encoding.properties.values():
         def_dict = get_field_datum_value_defs(propschema, schema)
-
-        field_ref = def_dict.get("field")
-        if field_ref is not None:
+        if field_ref := def_dict.get("field", None):
             defschema = {"$ref": field_ref}
             defschema = copy.deepcopy(resolve_references(defschema, schema))
             # For Encoding field definitions, we patch the schema by adding the
             # shorthand property.
-            defschema["properties"]["shorthand"] = {
-                "anyOf": [
-                    {"type": "string"},
-                    {"type": "array", "items": {"type": "string"}},
-                    {"$ref": "#/definitions/RepeatRef"},
-                ],
-                "description": "shorthand for field, aggregate, and type",
-            }
+            defschema["properties"]["shorthand"] = shorthand
             if "required" not in defschema:
                 defschema["required"] = ["shorthand"]
             elif "shorthand" not in defschema["required"]:
@@ -532,7 +529,9 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
             recursive_dict_update(sub_schema, root, def_dict)
 
 
-def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, str]:
+def get_field_datum_value_defs(
+    propschema: SchemaInfo, root: dict[str, Any]
+) -> dict[str, str]:
     def_dict: dict[str, str | None] = dict.fromkeys(("field", "datum", "value"))
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
@@ -578,14 +577,13 @@ def toposort(graph: dict[str, list[str]]) -> list[str]:
     return stack
 
 
-def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
+def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
-
-    rootschema = load_schema_with_shorthand_properties(schema_file)
-
+    rootschema = load_schema_with_shorthand_properties(fp)
     definitions: dict[str, SchemaGenerator] = {}
+    graph: dict[str, list[str]] = {}
 
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
@@ -599,9 +597,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
             basename=basename,
             rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
         )
-
-    graph: dict[str, list[str]] = {}
-
     for name, schema in definitions.items():
         graph[name] = []
         for child_name in schema.subclasses():
@@ -621,7 +616,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     EXCLUDE = {"Color", "Text", "LookupData", "Dict"}
     it = (c for c in definitions.keys() - EXCLUDE if not c.startswith("_"))
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
-
     contents = [
         HEADER,
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
@@ -682,21 +676,16 @@ class ChannelInfo:
 
 
 def generate_vegalite_channel_wrappers(
-    schemafile: Path, version: str, imports: list[str] | None = None
+    fp: Path, /, version: str, imports: list[str] | None = None
 ) -> str:
-    schema = load_schema_with_shorthand_properties(schemafile)
-
+    schema = load_schema_with_shorthand_properties(fp)
     encoding_def = "FacetedEncoding"
-
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
-
     channel_infos: dict[str, ChannelInfo] = {}
-
-    class_defs = []
+    class_defs: list[Any] = []
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
-
         supports_arrays = any(
             schema_info.is_array() for schema_info in propschema.anyOf
         )
@@ -742,10 +731,8 @@ def generate_vegalite_channel_wrappers(
         "ValueChannelMixin",
         "with_property_setters",
     )
-
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
     all_ = list(chain(it, COMPAT_EXPORTS))
-
     imports = imports or [
         "import sys",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
@@ -774,18 +761,14 @@ def generate_vegalite_channel_wrappers(
     return "\n".join(contents)
 
 
-def generate_vegalite_mark_mixin(schemafile: Path, markdefs: dict[str, str]) -> str:
-    with schemafile.open(encoding="utf8") as f:
-        schema = json.load(f)
-
-    code = []
+def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
+    schema = load_schema(fp)
+    code: list[str] = []
 
     for mark_enum, mark_def in markdefs.items():
         _def = schema["definitions"][mark_enum]
         marks: list[Any] = _def["enum"] if "enum" in _def else [_def["const"]]
         info = SchemaInfo({"$ref": f"#/definitions/{mark_def}"}, rootschema=schema)
-
-        # adapted from SchemaInfo.init_code
         mark_args = generate_mark_args(info)
 
         for mark in marks:
@@ -833,10 +816,9 @@ def generate_typed_dict_args(prop_info: SchemaInfo) -> str:
     return "\n    ".join(it)
 
 
-def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
+def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     """TODO - Tidy up and use consistent naming."""
-    with schemafile.open(encoding="utf8") as f:
-        schema = json.load(f)
+    schema = load_schema(fp)
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
     sub_dicts: dict[str, str] = {}
@@ -898,7 +880,6 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
                 sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
                     name=name, typed_dict_args=args
                 )
-
         else:
             ann: str = prop_info.to_type_repr(target="annotation", use_concrete=True)
             top_dict_annotations.append(f"{prop}: {ann}")
@@ -913,15 +894,13 @@ def generate_config_typed_dicts(schemafile: Path) -> Iterator[str]:
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
-def generate_vegalite_config_mixin(schemafile: Path) -> str:
+def generate_vegalite_config_mixin(fp: Path, /) -> str:
     class_name = "ConfigMethodMixin"
-
     code = [
         f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
-    with schemafile.open(encoding="utf8") as f:
-        schema = json.load(f)
+    schema = load_schema(fp)
     info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
 
     # configure() method
