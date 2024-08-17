@@ -1587,9 +1587,9 @@ def test_interactive_for_chart_types(chart_type: _MakeType):
     assert chart.interactive(legend=True).to_dict()  # type: ignore[call-arg]
 
 
-def test_interactive_with_no_encoding():
+def test_interactive_with_no_encoding(all_chart_types):
     # Should not raise error when there is no encoding
-    assert alt.Chart().mark_point().interactive().to_dict()
+    assert all_chart_types.interactive().to_dict()
 
 
 def test_interactive_tooltip_added_for_all_encodings():
