@@ -1570,7 +1570,21 @@ def test_ibis_with_date_32():
 
 
 # TODO These chart types don't all work yet
+@pytest.mark.parametrize(
+    "chart_type",
+    [
+        "chart",
+        pytest.param(
+            "layer", marks=pytest.mark.xfail(reason="Not Implemented", raises=TypeError)
+        ),
+        pytest.param(
+            "facet", marks=pytest.mark.xfail(reason="Not Implemented", raises=TypeError)
+        ),
+    ],
+)
 def test_interactive_for_chart_types(chart_type: _MakeType):
+    chart = _make_chart_type(chart_type)
+    assert chart.interactive(legend=True).to_dict()  # type: ignore[call-arg]
 
 
 def test_interactive_with_no_encoding():
