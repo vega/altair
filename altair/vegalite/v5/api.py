@@ -3857,7 +3857,8 @@ class Chart(
         # are not allowed in layered specs
         if tooltip:
             chart = _add_tooltip(chart)
-        if legend:
+        legend_encodings_missing = utils.is_undefined(chart.encoding)
+        if legend and not legend_encodings_missing:
             facet_encoding: FacetedEncoding = chart.encoding
             if not isinstance(legend, str):
                 legend = _infer_legend_encoding(facet_encoding)
