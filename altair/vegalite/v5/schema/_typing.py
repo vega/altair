@@ -13,18 +13,23 @@ __all__ = [
     "AllSortString_T",
     "AutosizeType_T",
     "AxisOrient_T",
-    "Baseline_T",
     "BinnedTimeUnit_T",
     "Blend_T",
+    "BoxPlot_T",
     "ColorName_T",
     "ColorScheme_T",
+    "CompositeMark_T",
     "Cursor_T",
+    "ErrorBand_T",
     "ErrorBarExtent_T",
+    "ErrorBar_T",
     "FontWeight_T",
     "ImputeMethod_T",
     "Interpolate_T",
     "LayoutAlign_T",
     "LegendOrient_T",
+    "LocalMultiTimeUnit_T",
+    "LocalSingleTimeUnit_T",
     "Map",
     "MarkInvalidDataMode_T",
     "MarkType_T",
@@ -43,12 +48,14 @@ __all__ = [
     "SelectionType_T",
     "SingleDefUnitChannel_T",
     "SingleTimeUnit_T",
+    "SortByChannelDesc_T",
     "SortByChannel_T",
     "SortOrder_T",
     "StackOffset_T",
     "StandardType_T",
     "StrokeCap_T",
     "StrokeJoin_T",
+    "TextBaseline_T",
     "TextDirection_T",
     "TimeInterval_T",
     "TitleAnchor_T",
@@ -56,6 +63,8 @@ __all__ = [
     "TitleOrient_T",
     "TypeForShape_T",
     "Type_T",
+    "UtcMultiTimeUnit_T",
+    "UtcSingleTimeUnit_T",
     "VegaThemes",
     "WindowOnlyOp_T",
 ]
@@ -152,7 +161,6 @@ AllSortString_T: TypeAlias = Literal[
 ]
 AutosizeType_T: TypeAlias = Literal["pad", "none", "fit", "fit-x", "fit-y"]
 AxisOrient_T: TypeAlias = Literal["top", "bottom", "left", "right"]
-Baseline_T: TypeAlias = Literal["top", "middle", "bottom"]
 BinnedTimeUnit_T: TypeAlias = Literal[
     "binnedyear",
     "binnedyearquarter",
@@ -201,6 +209,7 @@ Blend_T: TypeAlias = Literal[
     "color",
     "luminosity",
 ]
+BoxPlot_T: TypeAlias = Literal["boxplot"]
 ColorName_T: TypeAlias = Literal[
     "black",
     "silver",
@@ -685,6 +694,7 @@ ColorScheme_T: TypeAlias = Literal[
     "rainbow",
     "sinebow",
 ]
+CompositeMark_T: TypeAlias = Literal["boxplot", "errorbar", "errorband"]
 Cursor_T: TypeAlias = Literal[
     "auto",
     "default",
@@ -723,7 +733,9 @@ Cursor_T: TypeAlias = Literal[
     "grab",
     "grabbing",
 ]
+ErrorBand_T: TypeAlias = Literal["errorband"]
 ErrorBarExtent_T: TypeAlias = Literal["ci", "iqr", "stderr", "stdev"]
+ErrorBar_T: TypeAlias = Literal["errorbar"]
 FontWeight_T: TypeAlias = Literal[
     "normal", "bold", "lighter", "bolder", 100, 200, 300, 400, 500, 600, 700, 800, 900
 ]
@@ -756,6 +768,50 @@ LegendOrient_T: TypeAlias = Literal[
     "top-right",
     "bottom-left",
     "bottom-right",
+]
+LocalMultiTimeUnit_T: TypeAlias = Literal[
+    "yearquarter",
+    "yearquartermonth",
+    "yearmonth",
+    "yearmonthdate",
+    "yearmonthdatehours",
+    "yearmonthdatehoursminutes",
+    "yearmonthdatehoursminutesseconds",
+    "yearweek",
+    "yearweekday",
+    "yearweekdayhours",
+    "yearweekdayhoursminutes",
+    "yearweekdayhoursminutesseconds",
+    "yeardayofyear",
+    "quartermonth",
+    "monthdate",
+    "monthdatehours",
+    "monthdatehoursminutes",
+    "monthdatehoursminutesseconds",
+    "weekday",
+    "weekdayhours",
+    "weekdayhoursminutes",
+    "weekdayhoursminutesseconds",
+    "dayhours",
+    "dayhoursminutes",
+    "dayhoursminutesseconds",
+    "hoursminutes",
+    "hoursminutesseconds",
+    "minutesseconds",
+    "secondsmilliseconds",
+]
+LocalSingleTimeUnit_T: TypeAlias = Literal[
+    "year",
+    "quarter",
+    "month",
+    "week",
+    "day",
+    "dayofyear",
+    "date",
+    "hours",
+    "minutes",
+    "seconds",
+    "milliseconds",
 ]
 MarkInvalidDataMode_T: TypeAlias = Literal[
     "filter",
@@ -982,6 +1038,20 @@ SingleTimeUnit_T: TypeAlias = Literal[
     "utcseconds",
     "utcmilliseconds",
 ]
+SortByChannelDesc_T: TypeAlias = Literal[
+    "-x",
+    "-y",
+    "-color",
+    "-fill",
+    "-stroke",
+    "-strokeWidth",
+    "-size",
+    "-shape",
+    "-fillOpacity",
+    "-strokeOpacity",
+    "-opacity",
+    "-text",
+]
 SortByChannel_T: TypeAlias = Literal[
     "x",
     "y",
@@ -1001,6 +1071,9 @@ StackOffset_T: TypeAlias = Literal["zero", "center", "normalize"]
 StandardType_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal"]
 StrokeCap_T: TypeAlias = Literal["butt", "round", "square"]
 StrokeJoin_T: TypeAlias = Literal["miter", "round", "bevel"]
+TextBaseline_T: TypeAlias = Literal[
+    "alphabetic", "top", "middle", "bottom", "line-top", "line-bottom"
+]
 TextDirection_T: TypeAlias = Literal["ltr", "rtl"]
 TimeInterval_T: TypeAlias = Literal[
     "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
@@ -1010,6 +1083,50 @@ TitleFrame_T: TypeAlias = Literal["bounds", "group"]
 TitleOrient_T: TypeAlias = Literal["none", "left", "right", "top", "bottom"]
 TypeForShape_T: TypeAlias = Literal["nominal", "ordinal", "geojson"]
 Type_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
+UtcMultiTimeUnit_T: TypeAlias = Literal[
+    "utcyearquarter",
+    "utcyearquartermonth",
+    "utcyearmonth",
+    "utcyearmonthdate",
+    "utcyearmonthdatehours",
+    "utcyearmonthdatehoursminutes",
+    "utcyearmonthdatehoursminutesseconds",
+    "utcyearweek",
+    "utcyearweekday",
+    "utcyearweekdayhours",
+    "utcyearweekdayhoursminutes",
+    "utcyearweekdayhoursminutesseconds",
+    "utcyeardayofyear",
+    "utcquartermonth",
+    "utcmonthdate",
+    "utcmonthdatehours",
+    "utcmonthdatehoursminutes",
+    "utcmonthdatehoursminutesseconds",
+    "utcweekday",
+    "utcweekdayhours",
+    "utcweekdayhoursminutes",
+    "utcweekdayhoursminutesseconds",
+    "utcdayhours",
+    "utcdayhoursminutes",
+    "utcdayhoursminutesseconds",
+    "utchoursminutes",
+    "utchoursminutesseconds",
+    "utcminutesseconds",
+    "utcsecondsmilliseconds",
+]
+UtcSingleTimeUnit_T: TypeAlias = Literal[
+    "utcyear",
+    "utcquarter",
+    "utcmonth",
+    "utcweek",
+    "utcday",
+    "utcdayofyear",
+    "utcdate",
+    "utchours",
+    "utcminutes",
+    "utcseconds",
+    "utcmilliseconds",
+]
 WindowOnlyOp_T: TypeAlias = Literal[
     "row_number",
     "rank",

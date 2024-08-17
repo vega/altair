@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
 from typing_extensions import TypeAlias
 
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
+import narwhals.stable.v1 as nw
 
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
@@ -170,7 +170,8 @@ class FieldChannelMixin:
         if shorthand is Undefined:
             parsed = {}
         elif isinstance(shorthand, str):
-            parsed = parse_shorthand(shorthand, data=context.get("data", None))
+            data: nw.DataFrame | Any = context.get("data", None)
+            parsed = parse_shorthand(shorthand, data=data)
             type_required = "type" in self._kwds  # type: ignore[attr-defined]
             type_in_shorthand = "type" in parsed
             type_defined_explicitly = self._get("type") is not Undefined  # type: ignore[attr-defined]
@@ -179,7 +180,7 @@ class FieldChannelMixin:
                 # We still parse it out of the shorthand, but drop it here.
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
-                if _is_pandas_dataframe(context.get("data", None)):
+                if isinstance(data, nw.DataFrame):
                     msg = (
                         f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
@@ -332,7 +333,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -370,7 +371,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -471,35 +472,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _encoding_name = "angle"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Angle: ...
 
     @overload
     def aggregate(
@@ -595,7 +568,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -610,7 +583,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -648,7 +623,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -690,10 +665,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -742,47 +717,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def sort(self, _: list[core.DateTime], **kwds) -> Angle: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Angle: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Angle: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Angle: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Angle: ...
 
     @overload
     def sort(
@@ -805,116 +746,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def sort(self, _: None, **kwds) -> Angle: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Angle: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Angle: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Angle: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Angle: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Angle: ...
 
     @overload
     def timeUnit(
@@ -981,9 +822,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def title(self, _: None, **kwds) -> Angle: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Angle: ...
+    def type(self, _: StandardType_T, **kwds) -> Angle: ...
 
     def __init__(
         self,
@@ -1177,11 +1016,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def title(self, _: None, **kwds) -> AngleDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> AngleDatum: ...
+    def type(self, _: Type_T, **kwds) -> AngleDatum: ...
 
     def __init__(
         self,
@@ -1434,7 +1269,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -1472,7 +1307,7 @@ class Color(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -1573,35 +1408,7 @@ class Color(
     _encoding_name = "color"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Color: ...
 
     @overload
     def aggregate(
@@ -1697,7 +1504,7 @@ class Color(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -1712,7 +1519,9 @@ class Color(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1750,7 +1559,7 @@ class Color(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -1792,10 +1601,10 @@ class Color(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1844,47 +1653,13 @@ class Color(
     def sort(self, _: list[core.DateTime], **kwds) -> Color: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Color: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Color: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Color: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Color: ...
 
     @overload
     def sort(
@@ -1907,116 +1682,16 @@ class Color(
     def sort(self, _: None, **kwds) -> Color: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Color: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Color: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Color: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Color: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Color: ...
 
     @overload
     def timeUnit(
@@ -2083,9 +1758,7 @@ class Color(
     def title(self, _: None, **kwds) -> Color: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Color: ...
+    def type(self, _: StandardType_T, **kwds) -> Color: ...
 
     def __init__(
         self,
@@ -2281,11 +1954,7 @@ class ColorDatum(
     def title(self, _: None, **kwds) -> ColorDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> ColorDatum: ...
+    def type(self, _: Type_T, **kwds) -> ColorDatum: ...
 
     def __init__(
         self,
@@ -2559,7 +2228,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value**: Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
         (``20`` by default)
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -2660,35 +2329,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "column"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Column: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Column: ...
 
     @overload
     def aggregate(
@@ -2701,7 +2342,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Column: ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> Column: ...
+    def align(self, _: LayoutAlign_T, **kwds) -> Column: ...
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Column: ...
@@ -2750,7 +2391,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -2773,7 +2414,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -2807,7 +2448,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> Column: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Column: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Column: ...
 
     @overload
     def sort(
@@ -2825,116 +2466,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def spacing(self, _: float, **kwds) -> Column: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Column: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Column: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Column: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Column: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Column: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Column: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Column: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Column: ...
 
     @overload
     def timeUnit(
@@ -3001,9 +2542,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def title(self, _: None, **kwds) -> Column: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Column: ...
+    def type(self, _: StandardType_T, **kwds) -> Column: ...
 
     def __init__(
         self,
@@ -3072,7 +2611,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3147,7 +2686,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -3248,35 +2787,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "description"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Description: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Description: ...
 
     @overload
     def aggregate(
@@ -3311,7 +2822,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Description: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Description: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Description: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Description: ...
@@ -3358,116 +2869,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Description: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Description: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Description: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Description: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Description: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Description: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Description: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Description: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Description: ...
 
     @overload
     def timeUnit(
@@ -3534,16 +2945,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> Description: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Description: ...
+    def type(self, _: StandardType_T, **kwds) -> Description: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -3735,7 +3144,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3771,7 +3180,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -3872,35 +3281,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "detail"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Detail: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Detail: ...
 
     @overload
     def aggregate(
@@ -3935,7 +3316,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Detail: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Detail: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Detail: ...
@@ -3951,116 +3332,16 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Detail: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Detail: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Detail: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Detail: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Detail: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Detail: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Detail: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Detail: ...
 
     @overload
     def timeUnit(
@@ -4127,16 +3408,14 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def title(self, _: None, **kwds) -> Detail: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Detail: ...
+    def type(self, _: StandardType_T, **kwds) -> Detail: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -4303,7 +3582,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **Default value**: Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
         (``20`` by default)
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4404,35 +3683,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _encoding_name = "facet"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Facet: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Facet: ...
 
     @overload
     def aggregate(
@@ -4445,7 +3696,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> Facet: ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> Facet: ...
+    def align(self, _: LayoutAlign_T, **kwds) -> Facet: ...
 
     @overload
     def align(
@@ -4516,7 +3767,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -4539,7 +3790,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -4573,7 +3824,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> Facet: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Facet: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Facet: ...
 
     @overload
     def sort(
@@ -4599,116 +3850,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> Facet: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Facet: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Facet: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Facet: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Facet: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Facet: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Facet: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Facet: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Facet: ...
 
     @overload
     def timeUnit(
@@ -4775,9 +3926,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def title(self, _: None, **kwds) -> Facet: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Facet: ...
+    def type(self, _: StandardType_T, **kwds) -> Facet: ...
 
     def __init__(
         self,
@@ -4918,7 +4067,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -4956,7 +4105,7 @@ class Fill(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -5057,35 +4206,7 @@ class Fill(
     _encoding_name = "fill"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Fill: ...
 
     @overload
     def aggregate(
@@ -5181,7 +4302,7 @@ class Fill(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -5196,7 +4317,9 @@ class Fill(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -5234,7 +4357,7 @@ class Fill(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -5276,10 +4399,10 @@ class Fill(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -5328,47 +4451,13 @@ class Fill(
     def sort(self, _: list[core.DateTime], **kwds) -> Fill: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Fill: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Fill: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Fill: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Fill: ...
 
     @overload
     def sort(
@@ -5391,116 +4480,16 @@ class Fill(
     def sort(self, _: None, **kwds) -> Fill: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Fill: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Fill: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Fill: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Fill: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Fill: ...
 
     @overload
     def timeUnit(
@@ -5567,9 +4556,7 @@ class Fill(
     def title(self, _: None, **kwds) -> Fill: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Fill: ...
+    def type(self, _: StandardType_T, **kwds) -> Fill: ...
 
     def __init__(
         self,
@@ -5765,11 +4752,7 @@ class FillDatum(
     def title(self, _: None, **kwds) -> FillDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> FillDatum: ...
+    def type(self, _: Type_T, **kwds) -> FillDatum: ...
 
     def __init__(
         self,
@@ -6022,7 +5005,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -6060,7 +5043,7 @@ class FillOpacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -6161,35 +5144,7 @@ class FillOpacity(
     _encoding_name = "fillOpacity"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> FillOpacity: ...
 
     @overload
     def aggregate(
@@ -6285,7 +5240,7 @@ class FillOpacity(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -6300,7 +5255,9 @@ class FillOpacity(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -6338,7 +5295,7 @@ class FillOpacity(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -6380,10 +5337,10 @@ class FillOpacity(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -6432,47 +5389,13 @@ class FillOpacity(
     def sort(self, _: list[core.DateTime], **kwds) -> FillOpacity: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> FillOpacity: ...
+    def sort(self, _: SortOrder_T, **kwds) -> FillOpacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> FillOpacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> FillOpacity: ...
 
     @overload
     def sort(
@@ -6495,116 +5418,16 @@ class FillOpacity(
     def sort(self, _: None, **kwds) -> FillOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> FillOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> FillOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> FillOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> FillOpacity: ...
 
     @overload
     def timeUnit(
@@ -6671,9 +5494,7 @@ class FillOpacity(
     def title(self, _: None, **kwds) -> FillOpacity: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> FillOpacity: ...
+    def type(self, _: StandardType_T, **kwds) -> FillOpacity: ...
 
     def __init__(
         self,
@@ -6869,11 +5690,7 @@ class FillOpacityDatum(
     def title(self, _: None, **kwds) -> FillOpacityDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> FillOpacityDatum: ...
+    def type(self, _: Type_T, **kwds) -> FillOpacityDatum: ...
 
     def __init__(
         self,
@@ -7058,7 +5875,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7133,7 +5950,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7234,35 +6051,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "href"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Href: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Href: ...
 
     @overload
     def aggregate(
@@ -7297,7 +6086,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Href: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Href: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Href: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Href: ...
@@ -7344,116 +6133,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Href: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Href: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Href: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Href: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Href: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Href: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Href: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Href: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Href: ...
 
     @overload
     def timeUnit(
@@ -7520,16 +6209,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> Href: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Href: ...
+    def type(self, _: StandardType_T, **kwds) -> Href: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -7721,7 +6408,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7757,7 +6444,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -7858,35 +6545,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "key"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Key: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Key: ...
 
     @overload
     def aggregate(
@@ -7921,7 +6580,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Key: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Key: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Key: ...
@@ -7937,116 +6596,16 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Key: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Key: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Key: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Key: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Key: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Key: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Key: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Key: ...
 
     @overload
     def timeUnit(
@@ -8113,16 +6672,14 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def title(self, _: None, **kwds) -> Key: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Key: ...
+    def type(self, _: StandardType_T, **kwds) -> Key: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -8201,7 +6758,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8230,7 +6787,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : str
+    type : Literal['quantitative']
         The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
         ``"geojson"`` type for encoding `'geoshape'
@@ -8302,35 +6859,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "latitude"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Latitude: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude: ...
 
     @overload
     def aggregate(
@@ -8359,116 +6888,16 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Latitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Latitude: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude: ...
 
     @overload
     def timeUnit(
@@ -8535,7 +6964,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def title(self, _: None, **kwds) -> Latitude: ...
 
     @overload
-    def type(self, _: str, **kwds) -> Latitude: ...
+    def type(self, _: Literal["quantitative"], **kwds) -> Latitude: ...
 
     def __init__(
         self,
@@ -8548,7 +6977,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -8681,11 +7110,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> LatitudeDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> LatitudeDatum: ...
+    def type(self, _: Type_T, **kwds) -> LatitudeDatum: ...
 
     def __init__(
         self,
@@ -8760,7 +7185,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8795,35 +7220,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "latitude2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude2: ...
 
     @overload
     def aggregate(
@@ -8852,116 +7249,16 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Latitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude2: ...
 
     @overload
     def timeUnit(
@@ -9169,11 +7466,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> Latitude2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> Latitude2Datum: ...
+    def type(self, _: Type_T, **kwds) -> Latitude2Datum: ...
 
     def __init__(
         self,
@@ -9198,7 +7491,7 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -9268,7 +7561,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9297,7 +7590,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : str
+    type : Literal['quantitative']
         The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
         ``"geojson"`` type for encoding `'geoshape'
@@ -9369,35 +7662,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "longitude"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Longitude: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude: ...
 
     @overload
     def aggregate(
@@ -9426,116 +7691,16 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Longitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Longitude: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude: ...
 
     @overload
     def timeUnit(
@@ -9602,7 +7767,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def title(self, _: None, **kwds) -> Longitude: ...
 
     @overload
-    def type(self, _: str, **kwds) -> Longitude: ...
+    def type(self, _: Literal["quantitative"], **kwds) -> Longitude: ...
 
     def __init__(
         self,
@@ -9615,7 +7780,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[str] = Undefined,
+        type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -9748,11 +7913,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> LongitudeDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> LongitudeDatum: ...
+    def type(self, _: Type_T, **kwds) -> LongitudeDatum: ...
 
     def __init__(
         self,
@@ -9827,7 +7988,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -9862,35 +8023,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "longitude2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude2: ...
 
     @overload
     def aggregate(
@@ -9919,116 +8052,16 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Longitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude2: ...
 
     @overload
     def timeUnit(
@@ -10236,11 +8269,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> Longitude2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> Longitude2Datum: ...
+    def type(self, _: Type_T, **kwds) -> Longitude2Datum: ...
 
     def __init__(
         self,
@@ -10265,7 +8294,7 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -10366,7 +8395,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -10404,7 +8433,7 @@ class Opacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10505,35 +8534,7 @@ class Opacity(
     _encoding_name = "opacity"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Opacity: ...
 
     @overload
     def aggregate(
@@ -10629,7 +8630,7 @@ class Opacity(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -10644,7 +8645,9 @@ class Opacity(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10682,7 +8685,7 @@ class Opacity(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -10724,10 +8727,10 @@ class Opacity(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10776,47 +8779,13 @@ class Opacity(
     def sort(self, _: list[core.DateTime], **kwds) -> Opacity: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Opacity: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Opacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Opacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Opacity: ...
 
     @overload
     def sort(
@@ -10839,116 +8808,16 @@ class Opacity(
     def sort(self, _: None, **kwds) -> Opacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Opacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Opacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Opacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Opacity: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Opacity: ...
 
     @overload
     def timeUnit(
@@ -11015,9 +8884,7 @@ class Opacity(
     def title(self, _: None, **kwds) -> Opacity: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Opacity: ...
+    def type(self, _: StandardType_T, **kwds) -> Opacity: ...
 
     def __init__(
         self,
@@ -11211,11 +9078,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def title(self, _: None, **kwds) -> OpacityDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> OpacityDatum: ...
+    def type(self, _: Type_T, **kwds) -> OpacityDatum: ...
 
     def __init__(
         self,
@@ -11400,7 +9263,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11438,7 +9301,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`, Literal['ascending', 'descending']
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11539,35 +9402,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _encoding_name = "order"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Order: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Order: ...
 
     @overload
     def aggregate(
@@ -11602,7 +9437,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> Order: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Order: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Order: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Order: ...
@@ -11618,119 +9453,19 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> Order: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Order: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Order: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Order: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Order: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Order: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Order: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Order: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Order: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Order: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Order: ...
 
     @overload
     def timeUnit(
@@ -11797,16 +9532,14 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def title(self, _: None, **kwds) -> Order: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Order: ...
+    def type(self, _: StandardType_T, **kwds) -> Order: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
@@ -11907,7 +9640,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11956,7 +9689,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12024,7 +9757,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12125,35 +9858,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "radius"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius: ...
 
     @overload
     def aggregate(
@@ -12188,7 +9893,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Radius: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Radius: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Radius: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Radius: ...
@@ -12212,10 +9917,10 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -12264,47 +9969,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(self, _: list[core.DateTime], **kwds) -> Radius: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Radius: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Radius: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Radius: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Radius: ...
 
     @overload
     def sort(
@@ -12327,7 +9998,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(self, _: None, **kwds) -> Radius: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> Radius: ...
+    def stack(self, _: StackOffset_T, **kwds) -> Radius: ...
 
     @overload
     def stack(self, _: None, **kwds) -> Radius: ...
@@ -12336,116 +10007,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def stack(self, _: bool, **kwds) -> Radius: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius: ...
 
     @overload
     def timeUnit(
@@ -12512,16 +10083,14 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def title(self, _: None, **kwds) -> Radius: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Radius: ...
+    def type(self, _: StandardType_T, **kwds) -> Radius: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         sort: Optional[
@@ -12717,10 +10286,10 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -12757,9 +10326,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(self, _: None, **kwds) -> RadiusDatum: ...
 
     @overload
-    def stack(
-        self, _: Literal["zero", "center", "normalize"], **kwds
-    ) -> RadiusDatum: ...
+    def stack(self, _: StackOffset_T, **kwds) -> RadiusDatum: ...
 
     @overload
     def stack(self, _: None, **kwds) -> RadiusDatum: ...
@@ -12777,11 +10344,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def title(self, _: None, **kwds) -> RadiusDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> RadiusDatum: ...
+    def type(self, _: Type_T, **kwds) -> RadiusDatum: ...
 
     def __init__(
         self,
@@ -12814,7 +10377,7 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -12887,7 +10450,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12922,35 +10485,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "radius2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Radius2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius2: ...
 
     @overload
     def aggregate(
@@ -12979,116 +10514,16 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Radius2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Radius2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Radius2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius2: ...
 
     @overload
     def timeUnit(
@@ -13296,11 +10731,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> Radius2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> Radius2Datum: ...
+    def type(self, _: Type_T, **kwds) -> Radius2Datum: ...
 
     def __init__(
         self,
@@ -13325,7 +10756,7 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13447,7 +10878,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value**: Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
         (``20`` by default)
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -13548,35 +10979,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "row"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Row: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Row: ...
 
     @overload
     def aggregate(
@@ -13589,7 +10992,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Row: ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> Row: ...
+    def align(self, _: LayoutAlign_T, **kwds) -> Row: ...
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Row: ...
@@ -13638,7 +11041,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -13661,7 +11064,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -13695,7 +11098,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> Row: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Row: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Row: ...
 
     @overload
     def sort(
@@ -13713,116 +11116,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def spacing(self, _: float, **kwds) -> Row: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Row: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Row: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Row: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Row: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Row: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Row: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Row: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Row: ...
 
     @overload
     def timeUnit(
@@ -13889,9 +11192,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def title(self, _: None, **kwds) -> Row: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Row: ...
+    def type(self, _: StandardType_T, **kwds) -> Row: ...
 
     def __init__(
         self,
@@ -14028,7 +11329,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14066,7 +11367,7 @@ class Shape(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14167,35 +11468,7 @@ class Shape(
     _encoding_name = "shape"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Shape: ...
 
     @overload
     def aggregate(
@@ -14291,7 +11564,7 @@ class Shape(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -14306,7 +11579,9 @@ class Shape(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -14344,7 +11619,7 @@ class Shape(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -14386,10 +11661,10 @@ class Shape(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -14438,47 +11713,13 @@ class Shape(
     def sort(self, _: list[core.DateTime], **kwds) -> Shape: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Shape: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Shape: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Shape: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Shape: ...
 
     @overload
     def sort(
@@ -14501,116 +11742,16 @@ class Shape(
     def sort(self, _: None, **kwds) -> Shape: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Shape: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Shape: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Shape: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Shape: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Shape: ...
 
     @overload
     def timeUnit(
@@ -14677,7 +11818,7 @@ class Shape(
     def title(self, _: None, **kwds) -> Shape: ...
 
     @overload
-    def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> Shape: ...
+    def type(self, _: TypeForShape_T, **kwds) -> Shape: ...
 
     def __init__(
         self,
@@ -14873,11 +12014,7 @@ class ShapeDatum(
     def title(self, _: None, **kwds) -> ShapeDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> ShapeDatum: ...
+    def type(self, _: Type_T, **kwds) -> ShapeDatum: ...
 
     def __init__(
         self,
@@ -15128,7 +12265,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15166,7 +12303,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -15267,35 +12404,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _encoding_name = "size"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Size: ...
 
     @overload
     def aggregate(
@@ -15391,7 +12500,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -15406,7 +12515,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -15444,7 +12555,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -15486,10 +12597,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -15538,47 +12649,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def sort(self, _: list[core.DateTime], **kwds) -> Size: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Size: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Size: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Size: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Size: ...
 
     @overload
     def sort(
@@ -15601,116 +12678,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def sort(self, _: None, **kwds) -> Size: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Size: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Size: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Size: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Size: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Size: ...
 
     @overload
     def timeUnit(
@@ -15777,9 +12754,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def title(self, _: None, **kwds) -> Size: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Size: ...
+    def type(self, _: StandardType_T, **kwds) -> Size: ...
 
     def __init__(
         self,
@@ -15973,11 +12948,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def title(self, _: None, **kwds) -> SizeDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> SizeDatum: ...
+    def type(self, _: Type_T, **kwds) -> SizeDatum: ...
 
     def __init__(
         self,
@@ -16230,7 +13201,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -16268,7 +13239,7 @@ class Stroke(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -16369,35 +13340,7 @@ class Stroke(
     _encoding_name = "stroke"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Stroke: ...
 
     @overload
     def aggregate(
@@ -16493,7 +13436,7 @@ class Stroke(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -16508,7 +13451,9 @@ class Stroke(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -16546,7 +13491,7 @@ class Stroke(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -16588,10 +13533,10 @@ class Stroke(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -16640,47 +13585,13 @@ class Stroke(
     def sort(self, _: list[core.DateTime], **kwds) -> Stroke: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Stroke: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Stroke: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Stroke: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Stroke: ...
 
     @overload
     def sort(
@@ -16703,116 +13614,16 @@ class Stroke(
     def sort(self, _: None, **kwds) -> Stroke: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Stroke: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Stroke: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Stroke: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Stroke: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Stroke: ...
 
     @overload
     def timeUnit(
@@ -16879,9 +13690,7 @@ class Stroke(
     def title(self, _: None, **kwds) -> Stroke: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Stroke: ...
+    def type(self, _: StandardType_T, **kwds) -> Stroke: ...
 
     def __init__(
         self,
@@ -17077,11 +13886,7 @@ class StrokeDatum(
     def title(self, _: None, **kwds) -> StrokeDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> StrokeDatum: ...
+    def type(self, _: Type_T, **kwds) -> StrokeDatum: ...
 
     def __init__(
         self,
@@ -17334,7 +14139,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -17372,7 +14177,7 @@ class StrokeDash(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -17473,35 +14278,7 @@ class StrokeDash(
     _encoding_name = "strokeDash"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeDash: ...
 
     @overload
     def aggregate(
@@ -17597,7 +14374,7 @@ class StrokeDash(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -17612,7 +14389,9 @@ class StrokeDash(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -17650,7 +14429,7 @@ class StrokeDash(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -17692,10 +14471,10 @@ class StrokeDash(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -17744,47 +14523,13 @@ class StrokeDash(
     def sort(self, _: list[core.DateTime], **kwds) -> StrokeDash: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> StrokeDash: ...
+    def sort(self, _: SortOrder_T, **kwds) -> StrokeDash: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> StrokeDash: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeDash: ...
 
     @overload
     def sort(
@@ -17807,116 +14552,16 @@ class StrokeDash(
     def sort(self, _: None, **kwds) -> StrokeDash: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeDash: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeDash: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeDash: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeDash: ...
 
     @overload
     def timeUnit(
@@ -17983,9 +14628,7 @@ class StrokeDash(
     def title(self, _: None, **kwds) -> StrokeDash: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> StrokeDash: ...
+    def type(self, _: StandardType_T, **kwds) -> StrokeDash: ...
 
     def __init__(
         self,
@@ -18181,11 +14824,7 @@ class StrokeDashDatum(
     def title(self, _: None, **kwds) -> StrokeDashDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> StrokeDashDatum: ...
+    def type(self, _: Type_T, **kwds) -> StrokeDashDatum: ...
 
     def __init__(
         self,
@@ -18437,7 +15076,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18475,7 +15114,7 @@ class StrokeOpacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18576,35 +15215,7 @@ class StrokeOpacity(
     _encoding_name = "strokeOpacity"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeOpacity: ...
 
     @overload
     def aggregate(
@@ -18700,7 +15311,7 @@ class StrokeOpacity(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -18715,7 +15326,9 @@ class StrokeOpacity(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -18753,7 +15366,7 @@ class StrokeOpacity(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -18795,10 +15408,10 @@ class StrokeOpacity(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -18847,47 +15460,13 @@ class StrokeOpacity(
     def sort(self, _: list[core.DateTime], **kwds) -> StrokeOpacity: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> StrokeOpacity: ...
+    def sort(self, _: SortOrder_T, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeOpacity: ...
 
     @overload
     def sort(
@@ -18910,116 +15489,16 @@ class StrokeOpacity(
     def sort(self, _: None, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
 
     @overload
     def timeUnit(
@@ -19086,9 +15565,7 @@ class StrokeOpacity(
     def title(self, _: None, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> StrokeOpacity: ...
+    def type(self, _: StandardType_T, **kwds) -> StrokeOpacity: ...
 
     def __init__(
         self,
@@ -19284,11 +15761,7 @@ class StrokeOpacityDatum(
     def title(self, _: None, **kwds) -> StrokeOpacityDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> StrokeOpacityDatum: ...
+    def type(self, _: Type_T, **kwds) -> StrokeOpacityDatum: ...
 
     def __init__(
         self,
@@ -19540,7 +16013,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -19578,7 +16051,7 @@ class StrokeWidth(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -19679,35 +16152,7 @@ class StrokeWidth(
     _encoding_name = "strokeWidth"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeWidth: ...
 
     @overload
     def aggregate(
@@ -19803,7 +16248,7 @@ class StrokeWidth(
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -19818,7 +16263,9 @@ class StrokeWidth(
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -19856,7 +16303,7 @@ class StrokeWidth(
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -19898,10 +16345,10 @@ class StrokeWidth(
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -19950,47 +16397,13 @@ class StrokeWidth(
     def sort(self, _: list[core.DateTime], **kwds) -> StrokeWidth: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> StrokeWidth: ...
+    def sort(self, _: SortOrder_T, **kwds) -> StrokeWidth: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> StrokeWidth: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeWidth: ...
 
     @overload
     def sort(
@@ -20013,116 +16426,16 @@ class StrokeWidth(
     def sort(self, _: None, **kwds) -> StrokeWidth: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
 
     @overload
     def timeUnit(
@@ -20189,9 +16502,7 @@ class StrokeWidth(
     def title(self, _: None, **kwds) -> StrokeWidth: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> StrokeWidth: ...
+    def type(self, _: StandardType_T, **kwds) -> StrokeWidth: ...
 
     def __init__(
         self,
@@ -20387,11 +16698,7 @@ class StrokeWidthDatum(
     def title(self, _: None, **kwds) -> StrokeWidthDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> StrokeWidthDatum: ...
+    def type(self, _: Type_T, **kwds) -> StrokeWidthDatum: ...
 
     def __init__(
         self,
@@ -20576,7 +16883,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -20651,7 +16958,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -20752,35 +17059,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _encoding_name = "text"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Text: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Text: ...
 
     @overload
     def aggregate(
@@ -20815,7 +17094,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> Text: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Text: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Text: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Text: ...
@@ -20866,116 +17145,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def formatType(self, _: str, **kwds) -> Text: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Text: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Text: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Text: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Text: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Text: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Text: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Text: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Text: ...
 
     @overload
     def timeUnit(
@@ -21042,16 +17221,14 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def title(self, _: None, **kwds) -> Text: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Text: ...
+    def type(self, _: StandardType_T, **kwds) -> Text: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -21272,11 +17449,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def title(self, _: None, **kwds) -> TextDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> TextDatum: ...
+    def type(self, _: Type_T, **kwds) -> TextDatum: ...
 
     def __init__(
         self,
@@ -21326,7 +17499,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -21344,7 +17517,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
@@ -21416,7 +17589,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -21465,7 +17638,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -21533,7 +17706,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -21634,35 +17807,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "theta"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta: ...
 
     @overload
     def aggregate(
@@ -21697,7 +17842,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Theta: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Theta: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Theta: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Theta: ...
@@ -21721,10 +17866,10 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -21773,47 +17918,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(self, _: list[core.DateTime], **kwds) -> Theta: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Theta: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Theta: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Theta: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Theta: ...
 
     @overload
     def sort(
@@ -21836,7 +17947,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(self, _: None, **kwds) -> Theta: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> Theta: ...
+    def stack(self, _: StackOffset_T, **kwds) -> Theta: ...
 
     @overload
     def stack(self, _: None, **kwds) -> Theta: ...
@@ -21845,116 +17956,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def stack(self, _: bool, **kwds) -> Theta: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta: ...
 
     @overload
     def timeUnit(
@@ -22021,16 +18032,14 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def title(self, _: None, **kwds) -> Theta: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Theta: ...
+    def type(self, _: StandardType_T, **kwds) -> Theta: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         sort: Optional[
@@ -22226,10 +18235,10 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -22266,9 +18275,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(self, _: None, **kwds) -> ThetaDatum: ...
 
     @overload
-    def stack(
-        self, _: Literal["zero", "center", "normalize"], **kwds
-    ) -> ThetaDatum: ...
+    def stack(self, _: StackOffset_T, **kwds) -> ThetaDatum: ...
 
     @overload
     def stack(self, _: None, **kwds) -> ThetaDatum: ...
@@ -22286,11 +18293,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def title(self, _: None, **kwds) -> ThetaDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> ThetaDatum: ...
+    def type(self, _: Type_T, **kwds) -> ThetaDatum: ...
 
     def __init__(
         self,
@@ -22323,7 +18326,7 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -22396,7 +18399,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22431,35 +18434,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "theta2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Theta2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta2: ...
 
     @overload
     def aggregate(
@@ -22488,116 +18463,16 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Theta2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Theta2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Theta2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta2: ...
 
     @overload
     def timeUnit(
@@ -22805,11 +18680,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> Theta2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> Theta2Datum: ...
+    def type(self, _: Type_T, **kwds) -> Theta2Datum: ...
 
     def __init__(
         self,
@@ -22834,7 +18705,7 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -22868,7 +18739,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22943,7 +18814,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -23044,35 +18915,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "tooltip"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Tooltip: ...
 
     @overload
     def aggregate(
@@ -23107,7 +18950,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Tooltip: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Tooltip: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Tooltip: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Tooltip: ...
@@ -23154,116 +18997,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Tooltip: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Tooltip: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Tooltip: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Tooltip: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Tooltip: ...
 
     @overload
     def timeUnit(
@@ -23330,16 +19073,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> Tooltip: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Tooltip: ...
+    def type(self, _: StandardType_T, **kwds) -> Tooltip: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -23529,7 +19270,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -23604,7 +19345,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -23705,35 +19446,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "url"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Url: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Url: ...
 
     @overload
     def aggregate(
@@ -23768,7 +19481,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Url: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Url: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Url: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Url: ...
@@ -23815,116 +19528,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Url: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Url: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Url: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Url: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Url: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Url: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Url: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Url: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Url: ...
 
     @overload
     def timeUnit(
@@ -23991,16 +19604,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def title(self, _: None, **kwds) -> Url: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Url: ...
+    def type(self, _: StandardType_T, **kwds) -> Url: ...
 
     def __init__(
         self,
         shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         condition: Optional[
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
@@ -24199,7 +19810,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -24256,7 +19867,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -24324,7 +19935,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -24425,35 +20036,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "x"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> X: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X: ...
 
     @overload
     def aggregate(
@@ -24496,7 +20079,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -24515,7 +20098,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -24552,7 +20137,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -24609,7 +20194,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> X: ...
+    def bin(self, _: Literal["binned"], **kwds) -> X: ...
 
     @overload
     def bin(self, _: None, **kwds) -> X: ...
@@ -24646,10 +20231,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -24698,47 +20283,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> X: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> X: ...
+    def sort(self, _: SortOrder_T, **kwds) -> X: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> X: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> X: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> X: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> X: ...
 
     @overload
     def sort(
@@ -24761,7 +20312,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def sort(self, _: None, **kwds) -> X: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> X: ...
+    def stack(self, _: StackOffset_T, **kwds) -> X: ...
 
     @overload
     def stack(self, _: None, **kwds) -> X: ...
@@ -24770,116 +20321,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def stack(self, _: bool, **kwds) -> X: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> X: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> X: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> X: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> X: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X: ...
 
     @overload
     def timeUnit(
@@ -24946,9 +20397,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def title(self, _: None, **kwds) -> X: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> X: ...
+    def type(self, _: StandardType_T, **kwds) -> X: ...
 
     def __init__(
         self,
@@ -24956,7 +20405,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         axis: Optional[dict | None | SchemaBase] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         impute: Optional[dict | None | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
@@ -25191,7 +20640,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -25210,7 +20659,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -25247,7 +20698,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -25306,10 +20757,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -25346,7 +20797,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(self, _: None, **kwds) -> XDatum: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> XDatum: ...
+    def stack(self, _: StackOffset_T, **kwds) -> XDatum: ...
 
     @overload
     def stack(self, _: None, **kwds) -> XDatum: ...
@@ -25364,11 +20815,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def title(self, _: None, **kwds) -> XDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> XDatum: ...
+    def type(self, _: Type_T, **kwds) -> XDatum: ...
 
     def __init__(
         self,
@@ -25405,7 +20852,7 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -25478,7 +20925,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -25513,35 +20960,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "x2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> X2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X2: ...
 
     @overload
     def aggregate(
@@ -25570,116 +20989,16 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> X2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> X2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> X2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> X2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> X2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X2: ...
 
     @overload
     def timeUnit(
@@ -25887,11 +21206,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> X2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> X2Datum: ...
+    def type(self, _: Type_T, **kwds) -> X2Datum: ...
 
     def __init__(
         self,
@@ -25916,7 +21231,7 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -25989,7 +21304,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -26024,35 +21339,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> XError: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError: ...
 
     @overload
     def aggregate(
@@ -26081,116 +21368,16 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> XError: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> XError: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XError: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XError: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError: ...
 
     @overload
     def timeUnit(
@@ -26364,7 +21551,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -26399,35 +21586,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> XError2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError2: ...
 
     @overload
     def aggregate(
@@ -26456,116 +21615,16 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> XError2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> XError2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XError2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XError2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError2: ...
 
     @overload
     def timeUnit(
@@ -26749,7 +21808,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -26787,7 +21846,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -26888,35 +21947,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "xOffset"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XOffset: ...
 
     @overload
     def aggregate(
@@ -26972,10 +22003,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -27024,47 +22055,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> XOffset: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> XOffset: ...
+    def sort(self, _: SortOrder_T, **kwds) -> XOffset: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> XOffset: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> XOffset: ...
 
     @overload
     def sort(
@@ -27087,116 +22084,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(self, _: None, **kwds) -> XOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> XOffset: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XOffset: ...
 
     @overload
     def timeUnit(
@@ -27263,9 +22160,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def title(self, _: None, **kwds) -> XOffset: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> XOffset: ...
+    def type(self, _: StandardType_T, **kwds) -> XOffset: ...
 
     def __init__(
         self,
@@ -27436,10 +22331,10 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -27485,11 +22380,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def title(self, _: None, **kwds) -> XOffsetDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> XOffsetDatum: ...
+    def type(self, _: Type_T, **kwds) -> XOffsetDatum: ...
 
     def __init__(
         self,
@@ -27563,7 +22454,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : str, bool, dict, None, :class:`BinParams`
+    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -27620,7 +22511,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -27688,7 +22579,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -27789,35 +22680,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "y"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y: ...
 
     @overload
     def aggregate(
@@ -27860,7 +22723,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -27879,7 +22742,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -27916,7 +22781,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -27973,7 +22838,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def bin(self, _: str, **kwds) -> Y: ...
+    def bin(self, _: Literal["binned"], **kwds) -> Y: ...
 
     @overload
     def bin(self, _: None, **kwds) -> Y: ...
@@ -28010,10 +22875,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -28062,47 +22927,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> Y: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> Y: ...
+    def sort(self, _: SortOrder_T, **kwds) -> Y: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> Y: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> Y: ...
 
     @overload
     def sort(
@@ -28125,7 +22956,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def sort(self, _: None, **kwds) -> Y: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> Y: ...
+    def stack(self, _: StackOffset_T, **kwds) -> Y: ...
 
     @overload
     def stack(self, _: None, **kwds) -> Y: ...
@@ -28134,116 +22965,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def stack(self, _: bool, **kwds) -> Y: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Y: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y: ...
 
     @overload
     def timeUnit(
@@ -28310,9 +23041,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def title(self, _: None, **kwds) -> Y: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> Y: ...
+    def type(self, _: StandardType_T, **kwds) -> Y: ...
 
     def __init__(
         self,
@@ -28320,7 +23049,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
         axis: Optional[dict | None | SchemaBase] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         impute: Optional[dict | None | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
@@ -28555,7 +23284,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -28574,7 +23303,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOverlap: Optional[str | bool | dict | Parameter | SchemaBase] = Undefined,
+        labelOverlap: Optional[
+            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+        ] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
@@ -28611,7 +23342,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | SchemaBase | Baseline_T
+            dict | Parameter | SchemaBase | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -28670,10 +23401,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -28710,7 +23441,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(self, _: None, **kwds) -> YDatum: ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> YDatum: ...
+    def stack(self, _: StackOffset_T, **kwds) -> YDatum: ...
 
     @overload
     def stack(self, _: None, **kwds) -> YDatum: ...
@@ -28728,11 +23459,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def title(self, _: None, **kwds) -> YDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> YDatum: ...
+    def type(self, _: Type_T, **kwds) -> YDatum: ...
 
     def __init__(
         self,
@@ -28769,7 +23496,7 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -28842,7 +23569,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -28877,35 +23604,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "y2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> Y2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y2: ...
 
     @overload
     def aggregate(
@@ -28934,116 +23633,16 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Y2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> Y2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> Y2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Y2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> Y2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y2: ...
 
     @overload
     def timeUnit(
@@ -29251,11 +23850,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def title(self, _: None, **kwds) -> Y2Datum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> Y2Datum: ...
+    def type(self, _: Type_T, **kwds) -> Y2Datum: ...
 
     def __init__(
         self,
@@ -29280,7 +23875,7 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
 
     Parameters
     ----------
-    value : str, dict, float, :class:`ExprRef`
+    value : dict, float, :class:`ExprRef`, Literal['height', 'width']
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -29353,7 +23948,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -29388,35 +23983,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> YError: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError: ...
 
     @overload
     def aggregate(
@@ -29445,116 +24012,16 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> YError: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> YError: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YError: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YError: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError: ...
 
     @overload
     def timeUnit(
@@ -29728,7 +24195,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -29763,35 +24230,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError2"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> YError2: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError2: ...
 
     @overload
     def aggregate(
@@ -29820,116 +24259,16 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> YError2: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> YError2: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YError2: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError2: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YError2: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError2: ...
 
     @overload
     def timeUnit(
@@ -30113,7 +24452,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -30151,7 +24490,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -30252,35 +24591,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "yOffset"
 
     @overload
-    def aggregate(
-        self,
-        _: Literal[
-            "average",
-            "count",
-            "distinct",
-            "max",
-            "mean",
-            "median",
-            "min",
-            "missing",
-            "product",
-            "q1",
-            "q3",
-            "ci0",
-            "ci1",
-            "stderr",
-            "stdev",
-            "stdevp",
-            "sum",
-            "valid",
-            "values",
-            "variance",
-            "variancep",
-            "exponential",
-            "exponentialb",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YOffset: ...
 
     @overload
     def aggregate(
@@ -30336,10 +24647,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -30388,47 +24699,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(self, _: list[core.DateTime], **kwds) -> YOffset: ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> YOffset: ...
+    def sort(self, _: SortOrder_T, **kwds) -> YOffset: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "x",
-            "y",
-            "color",
-            "fill",
-            "stroke",
-            "strokeWidth",
-            "size",
-            "shape",
-            "fillOpacity",
-            "strokeOpacity",
-            "opacity",
-            "text",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def sort(self, _: SortByChannel_T, **kwds) -> YOffset: ...
 
     @overload
-    def sort(
-        self,
-        _: Literal[
-            "-x",
-            "-y",
-            "-color",
-            "-fill",
-            "-stroke",
-            "-strokeWidth",
-            "-size",
-            "-shape",
-            "-fillOpacity",
-            "-strokeOpacity",
-            "-opacity",
-            "-text",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def sort(self, _: SortByChannelDesc_T, **kwds) -> YOffset: ...
 
     @overload
     def sort(
@@ -30451,116 +24728,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(self, _: None, **kwds) -> YOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "year",
-            "quarter",
-            "month",
-            "week",
-            "day",
-            "dayofyear",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyear",
-            "utcquarter",
-            "utcmonth",
-            "utcweek",
-            "utcday",
-            "utcdayofyear",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "yearquarter",
-            "yearquartermonth",
-            "yearmonth",
-            "yearmonthdate",
-            "yearmonthdatehours",
-            "yearmonthdatehoursminutes",
-            "yearmonthdatehoursminutesseconds",
-            "yearweek",
-            "yearweekday",
-            "yearweekdayhours",
-            "yearweekdayhoursminutes",
-            "yearweekdayhoursminutesseconds",
-            "yeardayofyear",
-            "quartermonth",
-            "monthdate",
-            "monthdatehours",
-            "monthdatehoursminutes",
-            "monthdatehoursminutesseconds",
-            "weekday",
-            "weekdayhours",
-            "weekdayhoursminutes",
-            "weekdayhoursminutesseconds",
-            "dayhours",
-            "dayhoursminutes",
-            "dayhoursminutesseconds",
-            "hoursminutes",
-            "hoursminutesseconds",
-            "minutesseconds",
-            "secondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YOffset: ...
 
     @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "utcyearquarter",
-            "utcyearquartermonth",
-            "utcyearmonth",
-            "utcyearmonthdate",
-            "utcyearmonthdatehours",
-            "utcyearmonthdatehoursminutes",
-            "utcyearmonthdatehoursminutesseconds",
-            "utcyearweek",
-            "utcyearweekday",
-            "utcyearweekdayhours",
-            "utcyearweekdayhoursminutes",
-            "utcyearweekdayhoursminutesseconds",
-            "utcyeardayofyear",
-            "utcquartermonth",
-            "utcmonthdate",
-            "utcmonthdatehours",
-            "utcmonthdatehoursminutes",
-            "utcmonthdatehoursminutesseconds",
-            "utcweekday",
-            "utcweekdayhours",
-            "utcweekdayhoursminutes",
-            "utcweekdayhoursminutesseconds",
-            "utcdayhours",
-            "utcdayhoursminutes",
-            "utcdayhoursminutesseconds",
-            "utchoursminutes",
-            "utchoursminutesseconds",
-            "utcminutesseconds",
-            "utcsecondsmilliseconds",
-        ],
-        **kwds,
-    ) -> YOffset: ...
+    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YOffset: ...
 
     @overload
     def timeUnit(
@@ -30627,9 +24804,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def title(self, _: None, **kwds) -> YOffset: ...
 
     @overload
-    def type(
-        self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> YOffset: ...
+    def type(self, _: StandardType_T, **kwds) -> YOffset: ...
 
     def __init__(
         self,
@@ -30800,10 +24975,10 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         domain: Optional[
-            str
-            | dict
+            dict
             | Parameter
             | SchemaBase
+            | Literal["unaggregated"]
             | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -30849,11 +25024,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def title(self, _: None, **kwds) -> YOffsetDatum: ...
 
     @overload
-    def type(
-        self,
-        _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds,
-    ) -> YOffsetDatum: ...
+    def type(self, _: Type_T, **kwds) -> YOffsetDatum: ...
 
     def __init__(
         self,
