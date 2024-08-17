@@ -52,6 +52,7 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+_VALID_IDENT: re.Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
 
 
 class _TypeAliasTracer:
@@ -286,20 +287,9 @@ def get_valid_identifier(
     return valid
 
 
-def is_valid_identifier(var: str, allow_unicode: bool = False):
-    """
-    Return true if var contains a valid Python identifier.
-
-    Parameters
-    ----------
-    val : string
-        identifier to check
-    allow_unicode : bool (default: False)
-        if True, then allow Python 3 style unicode identifiers.
-    """
-    flags = re.UNICODE if allow_unicode else re.ASCII
-    is_valid = re.match(r"^[^\d\W]\w*\Z", var, flags)
-    return is_valid and not keyword.iskeyword(var)
+def is_valid_identifier(s: str, /) -> bool:
+    """Return ``True`` if ``s`` contains a valid Python identifier."""
+    return _VALID_IDENT.match(s) and not keyword.iskeyword(s)
 
 
 class SchemaProperties:
