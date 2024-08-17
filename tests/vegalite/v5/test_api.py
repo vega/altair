@@ -88,6 +88,22 @@ def _make_chart_type(chart_type: _MakeType) -> ChartType:
         raise ValueError(msg)
 
 
+@pytest.fixture(
+    params=(
+        "layer",
+        "hconcat",
+        "vconcat",
+        "concat",
+        "facet",
+        "facet_encoding",
+        "repeat",
+    )
+)
+def all_chart_types(request) -> ChartType:
+    """Use the parameter name ``all_chart_types`` to automatically parameterise."""
+    return _make_chart_type(request.param)
+
+
 @pytest.fixture
 def basic_chart() -> alt.Chart:
     data = pd.DataFrame(
@@ -98,6 +114,18 @@ def basic_chart() -> alt.Chart:
     )
 
     return alt.Chart(data).mark_bar().encode(x="a", y="b")
+
+
+@pytest.fixture
+def color_data() -> pl.DataFrame:
+    """10 rows, 3 columns ``"x:Q"``, ``"y:Q"``, ``"color:(N|O)"``."""
+    return pl.DataFrame(
+        {
+            "x": [0.32, 0.86, 0.10, 0.30, 0.47, 0.0, 1.0, 0.91, 0.88, 0.12],
+            "y": [0.11, 0.33, 0.01, 0.04, 0.77, 0.1, 0.2, 0.23, 0.05, 0.29],
+            "color": list("ACABBCABBA"),
+        }
+    )
 
 
 @pytest.fixture
