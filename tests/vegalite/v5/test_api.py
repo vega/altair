@@ -1608,10 +1608,10 @@ def test_interactive_legend_made_interactive_for_legend_encodings():
     ...
 
 
-def test_interactive_legend_made_interactiv_for_appropriate_encodings_types(
-    basic_chart,
-):
-    chart = _make_chart_type("chart")
+def test_interactive_legend_made_interactive_for_appropriate_encodings_types(
+    color_data,
+) -> None:
+    chart = alt.Chart(color_data).mark_point().encode(x="x", y="y")
 
     # TODO Reverse legend=False/True once we revert the default arg to true
     assert len(chart.encode(color="color:N").interactive().to_dict()["params"]) == 1
