@@ -3909,11 +3909,10 @@ LegendChannel_T: TypeAlias = Literal[
 
 
 def _add_tooltip(chart: _TChart, /) -> _TChart:
-    mark = chart.mark
-    if isinstance(mark, str):
-        mark = {"type": mark, "tooltip": True}
+    if isinstance(chart.mark, str):
+        chart.mark = {"type": chart.mark, "tooltip": True}
     else:
-        mark.tooltip = True
+        chart.mark.tooltip = True
     return chart
 
 
