@@ -350,7 +350,7 @@ class SchemaInfo:
         self.rootschema: dict[str, Any] = rootschema
         self.schema: dict[str, Any] = resolve_references(schema, rootschema)
 
-    def child(self, schema: dict) -> SchemaInfo:
+    def child(self, schema: dict[str, Any]) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
 
     def __repr__(self) -> str:
@@ -539,11 +539,11 @@ class SchemaInfo:
         )
 
     @property
-    def required(self) -> list:
+    def required(self) -> list[str]:
         return self.schema.get("required", [])
 
     @property
-    def patternProperties(self) -> dict:
+    def patternProperties(self) -> dict[str, Any]:
         return self.schema.get("patternProperties", {})
 
     @property
@@ -574,7 +574,7 @@ class SchemaInfo:
         return self.child(self.schema.get("not", {}))
 
     @property
-    def items(self) -> dict:
+    def items(self) -> dict[str, Any]:
         return self.schema.get("items", {})
 
     @property

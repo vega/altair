@@ -6,7 +6,7 @@ import re
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
-from typing import Final, Iterator
+from typing import Any, Final, Iterator
 
 from .utils import (
     SchemaInfo,
@@ -139,7 +139,7 @@ class SchemaGenerator:
     def __init__(
         self,
         classname: str,
-        schema: dict,
+        schema: dict[str, Any],
         rootschema: dict | None = None,
         basename: str | list[str] = "SchemaBase",
         schemarepr: object | None = None,
