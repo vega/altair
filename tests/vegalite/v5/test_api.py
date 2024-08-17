@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import date
 from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING, Any, Literal
 
 import ibis
 import jsonschema
@@ -22,7 +23,11 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from altair.utils.schemapi import Optional, Undefined
+from altair.utils.schemapi import Undefined
+
+if TYPE_CHECKING:
+    from altair.typing import ChartType, Optional
+    from altair.vegalite.v5.schema._typing import SingleDefUnitChannel_T
 
 try:
     import vl_convert as vlc
@@ -33,8 +38,12 @@ ibis.set_backend("polars")
 
 PANDAS_VERSION = Version(importlib_version("pandas"))
 
+_MakeType = Literal[
+    "layer", "hconcat", "vconcat", "concat", "facet", "facet_encoding", "repeat"
+]
 
-def getargs(*args, **kwargs):
+
+def getargs(*args, **kwargs) -> tuple[tuple[Any, ...], dict[str, Any]]:
     return args, kwargs
 
 
@@ -45,7 +54,7 @@ OP_DICT = {
 }
 
 
-def _make_chart_type(chart_type):
+def _make_chart_type(chart_type: _MakeType) -> ChartType:
     data = pd.DataFrame(
         {
             "x": [28, 55, 43, 91, 81, 53, 19, 87],
@@ -80,7 +89,7 @@ def _make_chart_type(chart_type):
 
 
 @pytest.fixture
-def basic_chart():
+def basic_chart() -> alt.Chart:
     data = pd.DataFrame(
         {
             "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
@@ -1533,10 +1542,7 @@ def test_ibis_with_date_32():
 
 
 # TODO These chart types don't all work yet
-@pytest.mark.parametrize("chart_type", ["chart"])  # , "layer", "facet"])
-def test_interactive_for_chart_types(chart_type):
-    chart = _make_chart_type("chart")
-    assert chart.interactive().to_dict()
+def test_interactive_for_chart_types(chart_type: _MakeType):
 
 
 def test_interactive_with_no_encoding():
