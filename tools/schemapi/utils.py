@@ -551,8 +551,8 @@ class SchemaInfo:
         return self.schema.get("additionalProperties", True)
 
     @property
-    def type(self) -> str | list[Any] | None:
-        return self.schema.get("type", None)
+    def type(self) -> str | list[Any]:
+        return self.schema.get("type", "")
 
     @property
     def anyOf(self) -> Iterator[SchemaInfo]:
@@ -594,8 +594,8 @@ class SchemaInfo:
         return self.raw_schema.get("$ref", "#/").split("/")[-1]
 
     @property
-    def ref(self) -> str | None:
-        return self.raw_schema.get("$ref", None)
+    def ref(self) -> str:
+        return self.raw_schema.get("$ref", "")
 
     @property
     def description(self) -> str:
@@ -679,7 +679,7 @@ class SchemaInfo:
 
         Not a real class.
         """
-        return self.is_anyOf() and self.type is None
+        return self.is_anyOf() and not self.type
 
     def is_union_literal(self) -> bool:
         """
