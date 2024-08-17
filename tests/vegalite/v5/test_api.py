@@ -1530,3 +1530,66 @@ def test_ibis_with_date_32():
         {"a": 2, "b": "2020-01-02T00:00:00"},
         {"a": 3, "b": "2020-01-03T00:00:00"},
     ]
+
+
+# TODO These chart types don't all work yet
+@pytest.mark.parametrize("chart_type", ["chart"])  # , "layer", "facet"])
+def test_interactive_for_chart_types(chart_type):
+    chart = _make_chart_type("chart")
+    assert chart.interactive().to_dict()
+
+
+def test_interactive_with_no_encoding():
+    # Should not raise error when there is no encoding
+    assert alt.Chart().mark_point().interactive().to_dict()
+
+
+def test_interactive_tooltip_added_for_all_encodings():
+    # TODO Loop through all possible encodings
+    # and check that tooltip interactivity is added for all of them
+    assert "tooltip" in alt.Chart().mark_point().interactive().to_dict()["mark"]
+    assert (
+        "tooltip"
+        not in alt.Chart().mark_point().interactive(tooltip=False).to_dict()["mark"]
+    )
+
+
+def test_interactive_legend_made_interactive_for_legend_encodings():
+    # TODO Loop through all possible encodings and check that legend
+    # interactivity is added only for the specified legend encodings
+    ...
+
+
+def test_interactive_legend_made_interactiv_for_appropriate_encodings_types(
+    basic_chart,
+):
+    chart = _make_chart_type("chart")
+
+    # TODO Reverse legend=False/True once we revert the default arg to true
+    assert len(chart.encode(color="color:N").interactive().to_dict()["params"]) == 1
+    chart_with_nominal_legend_encoding = (
+        chart.encode(color="color:N").interactive(legend=True).to_dict()
+    )
+    assert len(chart_with_nominal_legend_encoding["params"]) == 4
+    for param in chart_with_nominal_legend_encoding["params"]:
+        if "expr" in param:
+            assert param["expr"] == "domain('color')" or "react" in param
+
+    # TODO These tests currently don't work because we are raising
+    # when the legend is not nominal. To be updated if we change that behavior
+    # TODO Could change this first test if we get interactivity working with nominal
+    # chart_with_ordinal_legend_encoding = (
+    #     chart.encode(color="color:O").interactive(legend=True).to_dict()
+    # )
+    # assert len(chart_with_ordinal_legend_encoding["params"]) == 1
+
+    # chart_with_quantitative_legend_encoding = (
+    #     chart.encode(color="color:Q").interactive(legend=True).to_dict()
+    # )
+    # assert len(chart_with_quantitative_legend_encoding["params"]) == 1
+
+
+def test_interactive_legend_encoding_correctly_picked_from_multiple_encodings():
+    # TODO The legend should be chosen based on the priority order
+    # in the list of possible legend encodings
+    ...
