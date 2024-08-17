@@ -52,23 +52,10 @@ def get_args(info: SchemaInfo) -> ArgInfo:
     invalid_kwds: set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
-
-    if info.is_allOf():
-        # recursively call function on all children
-        arginfo: list[ArgInfo] = [get_args(child) for child in info.allOf]
-        nonkeyword = all(args.nonkeyword for args in arginfo)
-        required = {args.required for args in arginfo}
-        kwds = {args.kwds for args in arginfo}
-        kwds -= required
-        invalid_kwds = {args.invalid_kwds for args in arginfo}
-        additional = all(args.additional for args in arginfo)
-    elif info.is_empty() or info.is_compound():
+    if info.is_empty() or info.is_anyOf():
         nonkeyword = True
         additional = True
-    elif not info.is_object():
-        nonkeyword = True
-        additional = False
-    else:
+    elif info.is_object():
         invalid_kwds = {p for p in info.required if not is_valid_identifier(p)} | {
             p for p in info.properties if not is_valid_identifier(p)
         }
@@ -78,6 +65,20 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         nonkeyword = False
         additional = True
         # additional = info.additionalProperties or info.patternProperties
+    else:
+        nonkeyword = True
+        additional = False
+        if info.is_allOf():
+            # recursively call function on all children
+            msg = f"Branch is reachable with:\n{info.raw_schema!r}"
+            raise NotImplementedError(msg)
+            arginfo: list[ArgInfo] = [get_args(child) for child in info.allOf]
+            nonkeyword = all(args.nonkeyword for args in arginfo)
+            required = {args.required for args in arginfo}
+            kwds = {args.kwds for args in arginfo}
+            kwds -= required
+            invalid_kwds = {args.invalid_kwds for args in arginfo}
+            additional = all(args.additional for args in arginfo)
 
     return ArgInfo(
         nonkeyword=nonkeyword,
