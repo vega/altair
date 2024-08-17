@@ -1602,10 +1602,51 @@ def test_interactive_tooltip_added_for_all_encodings():
     )
 
 
-def test_interactive_legend_made_interactive_for_legend_encodings():
-    # TODO Loop through all possible encodings and check that legend
-    # interactivity is added only for the specified legend encodings
-    ...
+@pytest.mark.parametrize(
+    ("encoding", "err"),
+    [
+        ("xOffset", NotImplementedError),
+        ("yOffset", NotImplementedError),
+        ("x2", NotImplementedError),
+        ("y2", NotImplementedError),
+        ("longitude", NotImplementedError),
+        ("latitude", NotImplementedError),
+        ("longitude2", NotImplementedError),
+        ("latitude2", NotImplementedError),
+        ("theta", NotImplementedError),
+        ("theta2", NotImplementedError),
+        ("radius", None),
+        ("radius2", KeyError),
+        ("color", None),
+        ("fill", None),
+        ("stroke", None),
+        ("opacity", None),
+        ("fillOpacity", None),
+        ("strokeOpacity", None),
+        ("strokeWidth", None),
+        ("strokeDash", None),
+        ("size", NotImplementedError),
+        ("angle", None),
+        ("shape", None),
+        ("key", NotImplementedError),
+        ("text", NotImplementedError),
+        ("href", NotImplementedError),
+        ("url", NotImplementedError),
+        ("description", NotImplementedError),
+    ],
+)
+def test_interactive_legend_made_interactive_for_legend_encodings(
+    color_data, encoding: SingleDefUnitChannel_T, err: type[Exception] | None
+) -> None:
+    """Check that legend interactivity is added only for the allowed legend encodings."""
+    chart = (
+        alt.Chart(color_data).mark_point().encode(x="x", y="y", **{encoding: "color"})  # type: ignore[misc]
+    )
+    if err is None:
+        assert chart.interactive(legend=True).to_dict()
+    else:
+        with pytest.raises(err):
+            chart.interactive(legend=True).to_dict()
 
 
 def test_interactive_legend_made_interactive_for_appropriate_encodings_types(
