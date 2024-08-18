@@ -1321,10 +1321,10 @@ class _FromDict:
     @overload
     def from_dict(
         self,
-        dct: dict[str, Any],
-        tp: None = ...,
+        dct: dict[str, Any] | list[dict[str, Any]],
+        tp: Any = ...,
         schema: Any = ...,
-        rootschema: None = ...,
+        rootschema: Any = ...,
         default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
@@ -1361,15 +1361,15 @@ class _FromDict:
         schema: dict[str, Any] | None = None,
         rootschema: dict[str, Any] | None = None,
         default_class: Any = _passthrough,
-    ) -> TSchemaBase:
+    ) -> TSchemaBase | SchemaBase:
         """Construct an object from a dict representation."""
-        target_tp: type[TSchemaBase]
+        target_tp: Any
         current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
-            return dct  # type: ignore[return-value]
+            return dct
         elif tp is not None:
             current_schema = tp._schema
-            root_schema = rootschema or tp._rootschema or current_schema
+            root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
             # If there are multiple matches, we use the first one in the dict.
@@ -1378,7 +1378,7 @@ class _FromDict:
             current_schema = schema
             root_schema = rootschema or current_schema
             matches = self.class_dict[self.hash_schema(current_schema)]
-            target_tp = matches[0] if matches else default_class  # pyright: ignore[reportAssignmentType]
+            target_tp = matches[0] if matches else default_class
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
@@ -1400,13 +1400,13 @@ class _FromDict:
             # TODO: handle schemas for additionalProperties/patternProperties
             props: dict[str, Any] = resolved.get("properties", {})
             kwds = {
-                k: (from_dict(v, schema=props[k]) if k in props else v)  # pyright: ignore[reportCallIssue]
+                k: (from_dict(v, schema=props[k]) if k in props else v)
                 for k, v in dct.items()
             }
             return target_tp(**kwds)
         elif _is_list(dct):
             item_schema: dict[str, Any] = resolved.get("items", {})
-            return target_tp([from_dict(k, schema=item_schema) for k in dct])  # pyright: ignore[reportCallIssue]
+            return target_tp([from_dict(k, schema=item_schema) for k in dct])
         else:
             # NOTE: Unsure what is valid here
             return target_tp(dct)
