@@ -1325,7 +1325,7 @@ class _FromDict:
         tp: None = ...,
         schema: Any = ...,
         rootschema: None = ...,
-        default_class: type[TSchemaBase] = ...,
+        default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
     def from_dict(
@@ -1378,7 +1378,7 @@ class _FromDict:
             current_schema = schema
             root_schema = rootschema or current_schema
             matches = self.class_dict[self.hash_schema(current_schema)]
-            target_tp = matches[0] if matches else default_class
+            target_tp = matches[0] if matches else default_class  # pyright: ignore[reportAssignmentType]
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
@@ -1400,13 +1400,13 @@ class _FromDict:
             # TODO: handle schemas for additionalProperties/patternProperties
             props: dict[str, Any] = resolved.get("properties", {})
             kwds = {
-                k: (from_dict(v, schema=props[k]) if k in props else v)
+                k: (from_dict(v, schema=props[k]) if k in props else v)  # pyright: ignore[reportCallIssue]
                 for k, v in dct.items()
             }
             return target_tp(**kwds)
         elif _is_list(dct):
             item_schema: dict[str, Any] = resolved.get("items", {})
-            return target_tp([from_dict(k, schema=item_schema) for k in dct])
+            return target_tp([from_dict(k, schema=item_schema) for k in dct])  # pyright: ignore[reportCallIssue]
         else:
             # NOTE: Unsure what is valid here
             return target_tp(dct)
