@@ -205,13 +205,10 @@ def _get_errors_from_spec(
         validator_kwargs["registry"] = _get_referencing_registry(
             rootschema or schema, json_schema_draft_url
         )
-
     else:
         # No resolver is necessary if the schema is already the full schema
         validator_kwargs["resolver"] = (
-            jsonschema.RefResolver.from_schema(rootschema)
-            if rootschema is not None
-            else None
+            jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
 
     validator = validator_cls(schema, **validator_kwargs)
