@@ -165,6 +165,9 @@ def validate_jsonschema(
         return None
 
 
+# NOTE: Entry for creating a `list` of errors
+# Everything else is skipped if this returns an empty `list`
+# TODO: Refactor to peek at possible error w/ `next(validator.iter_errors(spec))`
 def _get_errors_from_spec(
     spec: dict[str, Any],
     schema: dict[str, Any],
