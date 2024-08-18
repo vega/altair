@@ -112,7 +112,7 @@ def validate_jsonschema(
     rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[True] = ...,
-) -> None: ...
+) -> Never: ...
 
 
 @overload
@@ -127,11 +127,11 @@ def validate_jsonschema(
 
 def validate_jsonschema(
     spec,
-    schema,
-    rootschema=None,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
     *,
-    raise_error=True,
-):
+    raise_error: bool = True,
+) -> jsonschema.exceptions.ValidationError | None:
     """
     Validates the passed in spec against the schema in the context of the rootschema.
 
@@ -148,13 +148,13 @@ def validate_jsonschema(
 
         # Nothing special about this first error but we need to choose one
         # which can be raised
-        main_error = next(iter(grouped_errors.values()))[0]
+        main_error: Any = next(iter(grouped_errors.values()))[0]
         # All errors are then attached as a new attribute to ValidationError so that
         # they can be used in SchemaValidationError to craft a more helpful
         # error message. Setting a new attribute like this is not ideal as
         # it then no longer matches the type ValidationError. It would be better
         # to refactor this function to never raise but only return errors.
-        main_error._all_errors = grouped_errors  # pyright: ignore[reportAttributeAccessIssue]
+        main_error._all_errors = grouped_errors
         if raise_error:
             raise main_error
         else:
@@ -1191,9 +1191,7 @@ class SchemaBase:
             schema = cls._schema
         # For the benefit of mypy
         assert schema is not None
-        return validate_jsonschema(
-            instance, schema, rootschema=cls._rootschema or cls._schema
-        )
+        validate_jsonschema(instance, schema, rootschema=cls._rootschema or cls._schema)
 
     @classmethod
     def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -1219,7 +1217,7 @@ class SchemaBase:
         np_opt = sys.modules.get("numpy")
         value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        return validate_jsonschema(
+        validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
