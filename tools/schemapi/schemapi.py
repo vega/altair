@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import contextlib
-import copy
 import inspect
 import json
 import sys
@@ -201,7 +200,7 @@ def _get_errors_from_spec(
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
     if _USING_REFERENCING:
-        schema = _prepare_references_in_schema(schema)
+        schema = _prepare_references(schema)
         validator_kwargs["registry"] = _get_referencing_registry(
             rootschema or schema, json_schema_draft_url
         )
@@ -220,44 +219,35 @@ def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
 
 
-def _use_referencing_library() -> bool:
-    """In version 4.18.0, the jsonschema package deprecated RefResolver in favor of the referencing library."""
-    return Version(jsonschema_version_str) >= Version("4.18")
+def _prepare_references(schema: dict[str, Any], /) -> dict[str, Any]:
+    """
+    Return a deep copy of ``schema`` w/ replaced uri(s).
+
+    All encountered ``dict | list``(s) will be reconstructed
+    w/ ``_VEGA_LITE_ROOT_URI`` in front of all nested``$ref`` values.
+
+    Notes
+    -----
+    ``copy.deepcopy`` is not needed as the iterator yields new objects.
+    """
+    return dict(_rec_refs(schema))
 
 
-def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
-    # Create a copy so that $ref is not modified in the original schema in case
-    # that it would still reference a dictionary which might be attached to
-    # an Altair class _schema attribute
-    schema = copy.deepcopy(schema)
+def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
+    """
+    Recurse through a schema, yielding fresh copies of mutable containers.
 
-    def _prepare_refs(d: dict[str, Any]) -> dict[str, Any]:
-        """
-        Add _VEGA_LITE_ROOT_URI in front of all $ref values.
-
-        This function recursively iterates through the whole dictionary.
-
-        $ref values can only be nested in dictionaries or lists
-        as the passed in `d` dictionary comes from the Vega-Lite json schema
-        and in json we only have arrays (-> lists in Python) and objects
-        (-> dictionaries in Python) which we need to iterate through.
-        """
-        for key, value in d.items():
-            if key == "$ref":
-                d[key] = _VEGA_LITE_ROOT_URI + d[key]
-            elif isinstance(value, dict):
-                d[key] = _prepare_refs(value)
-            elif isinstance(value, list):
-                prepared_values = []
-                for v in value:
-                    if isinstance(v, dict):
-                        v = _prepare_refs(v)
-                    prepared_values.append(v)
-                d[key] = prepared_values
-        return d
-
-    schema = _prepare_refs(schema)
-    return schema
+    Adds ``_VEGA_LITE_ROOT_URI`` in front of all nested``$ref`` values.
+    """
+    for k, v in m.items():
+        if k == "$ref":
+            yield k, f"{_VEGA_LITE_ROOT_URI}{v}"
+        elif isinstance(v, dict):
+            yield k, dict(_rec_refs(v))
+        elif isinstance(v, list):
+            yield k, [dict(_rec_refs(el)) if _is_dict(el) else el for el in v]
+        else:
+            yield k, v
 
 
 # We do not annotate the return value here as the referencing library is not always
