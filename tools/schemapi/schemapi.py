@@ -154,7 +154,7 @@ def validate_jsonschema(
         # error message. Setting a new attribute like this is not ideal as
         # it then no longer matches the type ValidationError. It would be better
         # to refactor this function to never raise but only return errors.
-        main_error._all_errors = grouped_errors
+        main_error._all_errors = grouped_errors  # pyright: ignore[reportAttributeAccessIssue]
         if raise_error:
             raise main_error
         else:
