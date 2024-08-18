@@ -171,20 +171,25 @@ def _get_errors_from_spec(
     rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
     """
-    Uses the relevant jsonschema validator to validate the passed in spec against the schema using the rootschema to resolve references.
+    Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
 
-    The schema and rootschema themselves are not validated but instead considered as valid.
+    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
+
+    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
+    Instead, we pass the ``schema`` directly to the validator class.
+
+    This is done for two reasons:
+
+    1. The schema comes from Vega-Lite and is not based on the user
+    input, therefore there is no need to validate it in the first place.
+    2. The "uri-reference" format checker fails for some of the
+    references as URIs in "$ref" are not encoded, e.g.:
+
+        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
+
+    would be a valid $ref in a Vega-Lite schema but it is not a valid
+    URI reference due to the characters such as '<'.
     """
-    # We don't use jsonschema.validate as this would validate the schema itself.
-    # Instead, we pass the schema directly to the validator class. This is done for
-    # two reasons: The schema comes from Vega-Lite and is not based on the user
-    # input, therefore there is no need to validate it in the first place. Furthermore,
-    # the "uri-reference" format checker fails for some of the references as URIs in
-    # "$ref" are not encoded,
-    # e.g. '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef,
-    # (Gradient|string|null)>' would be a valid $ref in a Vega-Lite schema but
-    # it is not a valid URI reference due to the characters such as '<'.
-
     json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
     validator_cls = jsonschema.validators.validator_for(
         {"$schema": json_schema_draft_url}
