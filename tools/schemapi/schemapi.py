@@ -81,7 +81,9 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
 
-jsonschema_version_str = importlib_version("jsonschema")
+
+_USING_REFERENCING: Final[bool] = Version(importlib_version("jsonschema")) >= Version("4.18")  # fmt: off
+"""In version 4.18.0, the ``jsonschema`` package deprecated RefResolver in favor of the ``referencing`` library."""
 
 
 def enable_debug_mode() -> None:
@@ -191,7 +193,7 @@ def _get_errors_from_spec(
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
-    if _use_referencing_library():
+    if _USING_REFERENCING:
         schema = _prepare_references_in_schema(schema)
         validator_kwargs["registry"] = _get_referencing_registry(
             rootschema or schema, json_schema_draft_url
@@ -538,7 +540,7 @@ def _resolve_references(
     schema: dict[str, Any], rootschema: dict[str, Any] | None = None
 ) -> dict[str, Any]:
     """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
-    if _use_referencing_library():
+    if _USING_REFERENCING:
         registry = _get_referencing_registry(rootschema or schema)
         # Using a different variable name to show that this is not the
         # jsonschema.RefResolver but instead a Resolver from the referencing
