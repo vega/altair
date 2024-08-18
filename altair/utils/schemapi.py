@@ -841,9 +841,7 @@ def _shallow_copy(obj: Any) -> Any: ...
 def _shallow_copy(obj: _CopyImpl | Any) -> _CopyImpl | Any:
     if isinstance(obj, SchemaBase):
         return obj.copy(deep=False)
-    elif isinstance(obj, list):
-        return obj[:]
-    elif isinstance(obj, dict):
+    elif isinstance(obj, (list, dict)):
         return obj.copy()
     else:
         return obj
