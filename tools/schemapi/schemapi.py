@@ -846,29 +846,20 @@ def _shallow_copy(obj: _CopyImpl | Any) -> _CopyImpl | Any:
 
 
 @overload
-def _deep_copy(obj: _CopyImpl, ignore: Any = ...) -> _CopyImpl: ...
+def _deep_copy(obj: _CopyImpl, by_ref: set[str]) -> _CopyImpl: ...
 @overload
-def _deep_copy(obj: Any, ignore: Any = ...) -> Any: ...
-def _deep_copy(
-    obj: _CopyImpl | Any, ignore: list[str] | None = None
-) -> _CopyImpl | Any:
-    if ignore is None:
-        ignore = []
+def _deep_copy(obj: Any, by_ref: set[str]) -> Any: ...
+def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
+    copy = partial(_deep_copy, by_ref=by_ref)
     if isinstance(obj, SchemaBase):
-        args = tuple(_deep_copy(arg) for arg in obj._args)
-        kwds = {
-            k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
-            for k, v in obj._kwds.items()
-        }
+        args = (copy(arg) for arg in obj._args)
+        kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
         with debug_mode(False):
             return obj.__class__(*args, **kwds)
     elif isinstance(obj, list):
-        return [_deep_copy(v, ignore=ignore) for v in obj]
+        return [copy(v) for v in obj]
     elif isinstance(obj, dict):
-        return {
-            k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
-            for k, v in obj.items()
-        }
+        return {k: (copy(v) if k not in by_ref else v) for k, v in obj.items()}
     else:
         return obj
 
@@ -928,7 +919,7 @@ class SchemaBase:
             only stored by reference.
         """
         if deep is True:
-            return cast("Self", _deep_copy(self, ignore=ignore))
+            return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
         if _is_iterable(deep):
