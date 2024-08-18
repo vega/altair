@@ -942,7 +942,7 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super().__getattr__
+                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
             except AttributeError:
                 _getattr = super().__getattribute__
             return _getattr(attr)
