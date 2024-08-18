@@ -42,6 +42,7 @@ from altair import vegalite
 if TYPE_CHECKING:
     from typing import ClassVar
 
+    from jsonschema.protocols import Validator
     from referencing import Registry
 
     from altair.typing import ChartType
@@ -191,8 +192,9 @@ def _get_errors_from_spec(
     URI reference due to the characters such as '<'.
     """
     json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
-    validator_cls = jsonschema.validators.validator_for(
-        {"$schema": json_schema_draft_url}
+    validator_cls: type[Validator] = cast(
+        "type[Validator]",
+        jsonschema.validators.validator_for({"$schema": json_schema_draft_url}),
     )
     validator_kwargs: dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
