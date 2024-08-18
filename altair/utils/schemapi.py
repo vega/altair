@@ -931,21 +931,11 @@ class SchemaBase:
             A list of keys for which the contents should not be copied, but
             only stored by reference.
         """
-        try:
-            deep = list(deep)  # type: ignore[arg-type]
-        except TypeError:
-            deep_is_list = False
-        else:
-            deep_is_list = True
-
-        if deep and not deep_is_list:
+        if deep is True:
             return cast("Self", _deep_copy(self, ignore=ignore))
-
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
-        if deep_is_list:
-            # Assert statement is for the benefit of Mypy
-            assert isinstance(deep, list)
+        if _is_iterable(deep):
             for attr in deep:
                 copy[attr] = _shallow_copy(copy._get(attr))
         return copy
