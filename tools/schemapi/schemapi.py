@@ -41,7 +41,7 @@ from altair import vegalite
 if TYPE_CHECKING:
     from typing import ClassVar
 
-    from jsonschema.protocols import Validator
+    from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
 
     from altair.typing import ChartType
@@ -109,7 +109,7 @@ def debug_mode(arg: bool) -> Iterator[None]:
 
 @overload
 def validate_jsonschema(
-    spec: Any,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
@@ -119,7 +119,7 @@ def validate_jsonschema(
 
 @overload
 def validate_jsonschema(
-    spec: Any,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
@@ -128,7 +128,7 @@ def validate_jsonschema(
 
 
 def validate_jsonschema(
-    spec,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
     *,
@@ -169,7 +169,7 @@ def validate_jsonschema(
 # Everything else is skipped if this returns an empty `list`
 # TODO: Refactor to peek at possible error w/ `next(validator.iter_errors(spec))`
 def _get_errors_from_spec(
-    spec: dict[str, Any],
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
