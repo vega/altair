@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import inspect
 import json
+import operator
 import sys
 import textwrap
 from collections import defaultdict
@@ -13,6 +14,7 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
     Dict,
     Final,
     Iterable,
@@ -28,7 +30,6 @@ from typing import (
 from typing_extensions import TypeAlias
 
 import jsonschema
-import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
 from packaging.version import Version
@@ -82,9 +83,31 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
 
+_JSONSCHEMA_VERSION = Version(importlib_version("jsonschema"))
+_USING_REFERENCING: Final[bool] = _JSONSCHEMA_VERSION >= Version("4.18")  # noqa: SIM300
+"""
+``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
 
-_USING_REFERENCING: Final[bool] = Version(importlib_version("jsonschema")) >= Version("4.18")  # fmt: off
-"""In version 4.18.0, the ``jsonschema`` package deprecated RefResolver in favor of the ``referencing`` library."""
+See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+"""
+
+if _JSONSCHEMA_VERSION >= Version("4.0.1"):  # noqa: SIM300
+    _json_path: Callable[[ValidationError], str] = operator.attrgetter("json_path")
+else:
+
+    def _json_path(err: ValidationError, /) -> str:
+        """
+        Vendored backport for ``jsonschema.ValidationError.json_path`` property.
+
+        See https://github.com/vega/altair/issues/3038.
+        """
+        path = "$"
+        for elem in err.absolute_path:
+            if isinstance(elem, int):
+                path += "[" + str(elem) + "]"
+            else:
+                path += "." + elem
+        return path
 
 
 def enable_debug_mode() -> None:
@@ -279,23 +302,7 @@ def _get_referencing_registry(
     )
 
 
-def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """
-    Drop in replacement for the .json_path property of the jsonschema ValidationError class.
-
-    This is not available as property for ValidationError with jsonschema<4.0.1.
-
-    More info, see https://github.com/vega/altair/issues/3038.
-    """
-    path = "$"
-    for elem in err.absolute_path:
-        if isinstance(elem, int):
-            path += "[" + str(elem) + "]"
-        else:
-            path += "." + elem
-    return path
-
-
+# NOTE: Review function (2)
 def _group_errors_by_json_path(
     errors: ValidationErrorList,
 ) -> GroupedValidationErrors:
@@ -308,8 +315,7 @@ def _group_errors_by_json_path(
     """
     errors_by_json_path = defaultdict(list)
     for err in errors:
-        err_key = getattr(err, "json_path", _json_path(err))
-        errors_by_json_path[err_key].append(err)
+        errors_by_json_path[_json_path(err)].append(err)
     return dict(errors_by_json_path)
 
 
@@ -563,7 +569,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
+            err, "_all_errors", {_json_path(err): [err]}
         )
         # This is the message from err
         self._original_message = self.message
