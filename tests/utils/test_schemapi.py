@@ -620,7 +620,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     return chart
 
 
-def chart_error_example__four_errors():
+def chart_error_example__four_errors_hide_fourth():
     # Error 1: unknown is not a valid encoding channel option
     # Error 2: Invalid Y option value "asdf".
     # Error 3: another_unknown is not a valid encoding channel option
@@ -821,7 +821,7 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
         r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$""",
     ),
     (
-        chart_error_example__four_errors,
+        chart_error_example__four_errors_hide_fourth,
         r"""Multiple errors were found.
 
                 Error 1: `Color` has no parameter named 'another_unknown'
