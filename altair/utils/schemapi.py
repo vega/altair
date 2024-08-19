@@ -5,6 +5,7 @@ from __future__ import annotations
 import contextlib
 import inspect
 import json
+import operator
 import sys
 import textwrap
 from collections import defaultdict
@@ -15,6 +16,7 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
     Dict,
     Final,
     Iterable,
@@ -30,7 +32,6 @@ from typing import (
 from typing_extensions import TypeAlias
 
 import jsonschema
-import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
 from packaging.version import Version
@@ -43,7 +44,8 @@ from altair import vegalite
 if TYPE_CHECKING:
     from typing import ClassVar
 
-    from jsonschema.protocols import Validator
+    from jsonschema import ValidationError
+    from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
 
     from altair.typing import ChartType
@@ -58,7 +60,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import Never, Self
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
+ValidationErrorList: TypeAlias = List[jsonschema.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
@@ -83,9 +85,31 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
 
+_JSONSCHEMA_VERSION = Version(importlib_version("jsonschema"))
+_USING_REFERENCING: Final[bool] = _JSONSCHEMA_VERSION >= Version("4.18")  # noqa: SIM300
+"""
+``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
 
-_USING_REFERENCING: Final[bool] = Version(importlib_version("jsonschema")) >= Version("4.18")  # fmt: off
-"""In version 4.18.0, the ``jsonschema`` package deprecated RefResolver in favor of the ``referencing`` library."""
+See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+"""
+
+if _JSONSCHEMA_VERSION >= Version("4.0.1"):  # noqa: SIM300
+    _json_path: Callable[[ValidationError], str] = operator.attrgetter("json_path")
+else:
+
+    def _json_path(err: ValidationError, /) -> str:
+        """
+        Vendored backport for ``jsonschema.ValidationError.json_path`` property.
+
+        See https://github.com/vega/altair/issues/3038.
+        """
+        path = "$"
+        for elem in err.absolute_path:
+            if isinstance(elem, int):
+                path += "[" + str(elem) + "]"
+            else:
+                path += "." + elem
+        return path
 
 
 def enable_debug_mode() -> None:
@@ -111,7 +135,7 @@ def debug_mode(arg: bool) -> Iterator[None]:
 
 @overload
 def validate_jsonschema(
-    spec: Any,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
@@ -121,21 +145,21 @@ def validate_jsonschema(
 
 @overload
 def validate_jsonschema(
-    spec: Any,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[False],
-) -> jsonschema.exceptions.ValidationError | None: ...
+) -> ValidationError | None: ...
 
 
 def validate_jsonschema(
-    spec,
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
     *,
     raise_error: bool = True,
-) -> jsonschema.exceptions.ValidationError | None:
+) -> ValidationError | None:
     """
     Validates the passed in spec against the schema in the context of the rootschema.
 
@@ -171,7 +195,7 @@ def validate_jsonschema(
 # Everything else is skipped if this returns an empty `list`
 # TODO: Refactor to peek at possible error w/ `next(validator.iter_errors(spec))`
 def _get_errors_from_spec(
-    spec: dict[str, Any],
+    spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
@@ -280,23 +304,7 @@ def _get_referencing_registry(
     )
 
 
-def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """
-    Drop in replacement for the .json_path property of the jsonschema ValidationError class.
-
-    This is not available as property for ValidationError with jsonschema<4.0.1.
-
-    More info, see https://github.com/vega/altair/issues/3038.
-    """
-    path = "$"
-    for elem in err.absolute_path:
-        if isinstance(elem, int):
-            path += "[" + str(elem) + "]"
-        else:
-            path += "." + elem
-    return path
-
-
+# NOTE: Review function (2)
 def _group_errors_by_json_path(
     errors: ValidationErrorList,
 ) -> GroupedValidationErrors:
@@ -309,8 +317,7 @@ def _group_errors_by_json_path(
     """
     errors_by_json_path = defaultdict(list)
     for err in errors:
-        err_key = getattr(err, "json_path", _json_path(err))
-        errors_by_json_path[err_key].append(err)
+        errors_by_json_path[_json_path(err)].append(err)
     return dict(errors_by_json_path)
 
 
@@ -400,7 +407,7 @@ def _deduplicate_errors(
     return grouped_errors_deduplicated
 
 
-def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool:
+def _is_required_value_error(err: ValidationError) -> bool:
     return err.validator == "required" and err.validator_value == ["value"]
 
 
@@ -560,11 +567,11 @@ def _resolve_references(
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback."""
 
-    def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
+    def __init__(self, obj: SchemaBase, err: ValidationError) -> None:
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
+            err, "_all_errors", {_json_path(err): [err]}
         )
         # This is the message from err
         self._original_message = self.message
@@ -616,7 +623,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def _get_additional_properties_error_message(
         self,
-        error: jsonschema.exceptions.ValidationError,
+        error: ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
         altair_cls = self._get_altair_class_for_error(error)
@@ -635,9 +642,7 @@ Existing parameter names are:
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         return message
 
-    def _get_altair_class_for_error(
-        self, error: jsonschema.exceptions.ValidationError
-    ) -> type[SchemaBase]:
+    def _get_altair_class_for_error(self, error: ValidationError) -> type[SchemaBase]:
         """
         Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
 
