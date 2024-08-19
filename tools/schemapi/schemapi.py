@@ -41,6 +41,7 @@ from altair import vegalite
 if TYPE_CHECKING:
     from typing import ClassVar
 
+    from jsonschema import ValidationError
     from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
 
@@ -56,7 +57,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import Never, Self
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
+ValidationErrorList: TypeAlias = List[jsonschema.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
@@ -124,7 +125,7 @@ def validate_jsonschema(
     rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[False],
-) -> jsonschema.exceptions.ValidationError | None: ...
+) -> ValidationError | None: ...
 
 
 def validate_jsonschema(
@@ -133,7 +134,7 @@ def validate_jsonschema(
     rootschema: dict[str, Any] | None = None,
     *,
     raise_error: bool = True,
-) -> jsonschema.exceptions.ValidationError | None:
+) -> ValidationError | None:
     """
     Validates the passed in spec against the schema in the context of the rootschema.
 
@@ -398,7 +399,7 @@ def _deduplicate_errors(
     return grouped_errors_deduplicated
 
 
-def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool:
+def _is_required_value_error(err: ValidationError) -> bool:
     return err.validator == "required" and err.validator_value == ["value"]
 
 
@@ -558,7 +559,7 @@ def _resolve_references(
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback."""
 
-    def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
+    def __init__(self, obj: SchemaBase, err: ValidationError) -> None:
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
@@ -614,7 +615,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def _get_additional_properties_error_message(
         self,
-        error: jsonschema.exceptions.ValidationError,
+        error: ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
         altair_cls = self._get_altair_class_for_error(error)
@@ -633,9 +634,7 @@ Existing parameter names are:
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         return message
 
-    def _get_altair_class_for_error(
-        self, error: jsonschema.exceptions.ValidationError
-    ) -> type[SchemaBase]:
+    def _get_altair_class_for_error(self, error: ValidationError) -> type[SchemaBase]:
         """
         Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
 
