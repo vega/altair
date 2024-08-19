@@ -11,7 +11,7 @@ import textwrap
 from collections import defaultdict
 from functools import partial
 from importlib.metadata import version as importlib_version
-from itertools import chain, zip_longest
+from itertools import chain, groupby, islice, zip_longest
 from math import ceil
 from typing import (
     TYPE_CHECKING,
@@ -34,6 +34,7 @@ from typing_extensions import TypeAlias
 import jsonschema
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+from jsonschema import ValidationError
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -44,7 +45,6 @@ from altair import vegalite
 if TYPE_CHECKING:
     from typing import ClassVar
 
-    from jsonschema import ValidationError
     from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
 
@@ -63,27 +63,40 @@ if TYPE_CHECKING:
 ValidationErrorList: TypeAlias = List[jsonschema.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
-# This URI is arbitrary and could be anything else. It just cannot be an empty
-# string as we need to reference the schema registered in
-# the referencing.Registry.
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
+"""
+Prefix added to each ``"$ref"``.
 
-# Ideally, jsonschema specification would be parsed from the current Vega-Lite
-# schema instead of being hardcoded here as a default value.
-# However, due to circular imports between this module and the altair.vegalite
-# modules, this information is not yet available at this point as altair.vegalite
-# is only partially loaded. The draft version which is used is unlikely to
-# change often so it's ok to keep this. There is also a test which validates
-# that this value is always the same as in the Vega-Lite schema.
+This URI is arbitrary and could be anything else.
+
+It just cannot be an empty string as we need to reference the schema registered in
+the ``referencing.Registry``."""
+
 _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#"
+"""
+Ideally, jsonschema specification would be parsed from the current Vega-Lite
+schema instead of being hardcoded here as a default value.
 
+However, due to circular imports between this module and the ``alt.vegalite``
+modules, this information is not yet available at this point as ``alt.vegalite``
+is only partially loaded.
 
-# If DEBUG_MODE is True, then schema objects are converted to dict and
-# validated at creation time. This slows things down, particularly for
-# larger specs, but leads to much more useful tracebacks for the user.
-# Individual schema classes can override this by setting the
-# class-level _class_is_valid_at_instantiation attribute to False
+The draft version which is used is unlikely to change often so it's ok to keep this.
+There is also a test which validates that this value is always the same as in the Vega-Lite schema.
+"""
+
 DEBUG_MODE: bool = True
+"""
+If ``DEBUG_MODE``, then ``SchemaBase`` are converted to ``dict`` and validated at creation time.
+
+This slows things down, particularly for larger specs, but leads to much more
+useful tracebacks for the user.
+
+Individual schema classes can override with:
+
+    class Derived(SchemaBase):
+        _class_is_valid_at_instantiation: ClassVar[bool] = False
+"""
 
 _JSONSCHEMA_VERSION = Version(importlib_version("jsonschema"))
 _USING_REFERENCING: Final[bool] = _JSONSCHEMA_VERSION >= Version("4.18")  # noqa: SIM300
@@ -141,8 +154,6 @@ def validate_jsonschema(
     *,
     raise_error: Literal[True] = ...,
 ) -> Never: ...
-
-
 @overload
 def validate_jsonschema(
     spec: _JsonParameter,
@@ -151,8 +162,6 @@ def validate_jsonschema(
     *,
     raise_error: Literal[False],
 ) -> ValidationError | None: ...
-
-
 def validate_jsonschema(
     spec: _JsonParameter,
     schema: dict[str, Any],
@@ -167,8 +176,9 @@ def validate_jsonschema(
     and only the most relevant errors are kept. Errors are then either raised
     or returned, depending on the value of `raise_error`.
     """
-    errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
-    if errors:
+    it_errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
+    if first_error := next(it_errors, None):
+        errors = [first_error, *it_errors]
         leaf_errors = _get_leaves_of_error_tree(errors)
         grouped_errors = _group_errors_by_json_path(leaf_errors)
         grouped_errors = _subset_to_most_specific_json_paths(grouped_errors)
@@ -182,7 +192,7 @@ def validate_jsonschema(
         # error message. Setting a new attribute like this is not ideal as
         # it then no longer matches the type ValidationError. It would be better
         # to refactor this function to never raise but only return errors.
-        main_error._all_errors = grouped_errors
+        main_error._errors = list(grouped_errors.values())
         if raise_error:
             raise main_error
         else:
@@ -191,14 +201,50 @@ def validate_jsonschema(
         return None
 
 
-# NOTE: Entry for creating a `list` of errors
-# Everything else is skipped if this returns an empty `list`
-# TODO: Refactor to peek at possible error w/ `next(validator.iter_errors(spec))`
+def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
+    """
+    Continue an iterator at the last popped ``element``.
+
+    Equivalent to::
+
+        elements = 1, 2, 3, 4, 5
+        it = iter(elements)
+        element = next(it)
+        it_continue = chain([element], it)
+
+    """
+    yield element
+    yield from others
+
+
+def lazy_validate_json_schema(
+    spec: _JsonParameter,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
+) -> None:
+    """Lazy equivalent of `validate_jsonschema`."""
+    it_errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
+    if first_error := next(it_errors, None):
+        groups = _lazy_group_tree_leaves(_rechain(first_error, it_errors))
+        most_specific = _lazy_subset_to_most_specific_json_paths(groups)
+        deduplicated = _lazy_deduplicate_errors(most_specific)
+        dummy_error: Any
+        if dummy_error := next(deduplicated, None):
+            dummy_error._errors = _rechain(dummy_error, deduplicated)  # type: ignore[attr-defined]
+            raise dummy_error
+        else:
+            msg = (
+                f"Expected to find at least one error, but first error was `None`.\n\n"
+                f"spec: {spec!r}"
+            )
+            raise NotImplementedError(msg)
+
+
 def _get_errors_from_spec(
     spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
-) -> ValidationErrorList:
+) -> Iterator[ValidationError]:
     """
     Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
 
@@ -240,8 +286,7 @@ def _get_errors_from_spec(
         )
 
     validator = validator_cls(schema, **validator_kwargs)
-    errors = list(validator.iter_errors(spec))
-    return errors
+    return validator.iter_errors(spec)
 
 
 def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
@@ -304,9 +349,8 @@ def _get_referencing_registry(
     )
 
 
-# NOTE: Review function (2)
 def _group_errors_by_json_path(
-    errors: ValidationErrorList,
+    errors: Iterable[ValidationError],
 ) -> GroupedValidationErrors:
     """
     Groups errors by the `json_path` attribute of the jsonschema ValidationError class.
@@ -340,6 +384,109 @@ def _get_leaves_of_error_tree(
         else:
             leaves.append(err)
     return leaves
+
+
+def _lazy_group_tree_leaves(
+    errors: Iterable[ValidationError], /
+) -> Iterator[tuple[str, ValidationError]]:
+    """
+    Combines 3 previously distinct steps:
+
+    - ``_get_leaves_of_error_tree``
+    - (part of) ``_group_errors_by_json_path``
+        - Doesnt actually group yet, can by calling `dict(result)`.
+    - ``_is_required_value_error``
+    """  # noqa: D400
+    for err in errors:
+        if err_context := err.context:
+            yield from _lazy_group_tree_leaves(err_context)
+        elif err.validator == "required" and err.validator_value == ["value"]:
+            continue
+        else:
+            yield _json_path(err), err
+
+
+_fn_path = cast("Callable[[tuple[str, ValidationError]], str]", operator.itemgetter(0))
+"""Key function for ``(json_path, ValidationError)``."""
+_fn_validator = cast("Callable[[ValidationError], str]", operator.attrgetter("validator"))  # fmt: off
+"""Key function for ``ValidationError.validator``."""
+
+
+def _lazy_subset_to_most_specific_json_paths(
+    json_path_errors: Iterator[tuple[str, ValidationError]], /
+) -> Iterator[Iterable[ValidationError]]:
+    """
+    Currently using a `list`, but typing it more restrictive to see if it can be avoided.
+
+    - Needs to be sorted to work with groupby
+    - Reversing allows prioritising more specific groups, since they are seen first
+    - Then re-reversed, to keep seen order
+
+    """
+    rev_sort = sorted(json_path_errors, key=_fn_path, reverse=True)
+    keeping: dict[str, Iterable[ValidationError]] = {}
+    for unique_path, grouped_errors in groupby(rev_sort, key=_fn_path):
+        if any(seen.startswith(unique_path) for seen in keeping):
+            continue
+        else:
+            keeping[unique_path] = [err for _, err in grouped_errors]
+    yield from reversed(keeping.values())
+
+
+def _lazy_deduplicate_errors(
+    grouped_errors: Iterator[Iterable[ValidationError]], /
+) -> Iterator[ValidationError]:
+    for element_errors in grouped_errors:
+        for validator, errors in groupby(
+            sorted(element_errors, key=_fn_validator), key=_fn_validator
+        ):
+            if validator == "additionalProperties":
+                errors = _lazy_additional_properties(errors)
+            elif validator == "enum":
+                errors = _lazy_enum(errors)
+            yield from _lazy_unique_message(errors)
+
+
+def _lazy_unique_message(
+    iterable: Iterable[ValidationError], /
+) -> Iterator[ValidationError]:
+    seen = set()
+    for el in iterable:
+        if el.message not in seen:
+            seen.add(el.message)
+            yield el
+
+
+def _lazy_additional_properties(
+    iterable: Iterable[ValidationError], /
+) -> Iterator[ValidationError]:
+    it = iter(iterable)
+    first = next(it)
+    if (
+        parent := cast("ValidationError", first.parent)
+    ) and parent.validator == "anyOf":
+        yield min(_rechain(first, it), key=lambda x: len(x.message))
+    else:
+        yield first
+
+
+def _lazy_enum(iterable: Iterable[ValidationError], /) -> Iterator[ValidationError]:
+    """
+    Temporary reusing the eager version to isolate issues.
+
+    The 3 errors rule applies per group.
+    """
+    # FIXME: Too simple
+    # Need to do an eager pass, as this skips intersections of non-overlapping enums
+    # yield reduce(_enum_inner, iterable)
+    yield from _deduplicate_enum_errors(list(iterable))
+
+
+def _enum_inner(prev: ValidationError, current: ValidationError, /) -> ValidationError:
+    """**Disabled**."""
+    longest = set(cast("list[str]", prev.validator_value))
+    contender = set(cast("list[str]", current.validator_value))
+    return current if contender.issuperset(longest) else prev
 
 
 def _subset_to_most_specific_json_paths(
@@ -570,9 +717,8 @@ class SchemaValidationError(jsonschema.ValidationError):
     def __init__(self, obj: SchemaBase, err: ValidationError) -> None:
         super().__init__(**err._contents())
         self.obj = obj
-        self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {_json_path(err): [err]}
-        )
+        err = cast("SchemaValidationError", err)
+        self._errors: Iterable[ValidationError] = err._errors
         # This is the message from err
         self._original_message = self.message
         self.message = self._get_message()
@@ -592,7 +738,10 @@ class SchemaValidationError(jsonschema.ValidationError):
         error_messages: list[str] = []
         # Only show a maximum of 3 errors as else the final message returned by this
         # method could get very long.
-        for errors in list(self._errors.values())[:3]:
+        # ^^^^^^^^^^
+        # CORRECTION: Only show 3 **json_paths**
+
+        for errors in islice(_group_errors_by_json_path(self._errors).values(), 3):
             error_messages.append(self._get_message_for_errors_group(errors))
 
         message = ""
@@ -1197,7 +1346,9 @@ class SchemaBase:
             schema = cls._schema
         # For the benefit of mypy
         assert schema is not None
-        validate_jsonschema(instance, schema, rootschema=cls._rootschema or cls._schema)
+        lazy_validate_json_schema(
+            instance, schema, rootschema=cls._rootschema or cls._schema
+        )
 
     @classmethod
     def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -1223,7 +1374,7 @@ class SchemaBase:
         np_opt = sys.modules.get("numpy")
         value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        validate_jsonschema(
+        lazy_validate_json_schema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
@@ -1394,7 +1545,7 @@ class _FromDict:
             schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
             for possible in schemas:
                 try:
-                    validate_jsonschema(dct, possible, rootschema=root_schema)
+                    lazy_validate_json_schema(dct, possible, rootschema=root_schema)
                 except jsonschema.ValidationError:
                     continue
                 else:
