@@ -430,7 +430,7 @@ def _lazy_subset_to_most_specific_json_paths(
             continue
         else:
             keeping[unique_path] = [err for _, err in grouped_errors]
-    yield from reversed(keeping.values())
+    yield from islice(reversed(keeping.values()), 3)
 
 
 def _lazy_deduplicate_errors(
@@ -746,7 +746,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         # ^^^^^^^^^^
         # CORRECTION: Only show 3 **json_paths**
 
-        for errors in islice(_group_errors_by_json_path(self._errors).values(), 3):
+        for errors in _group_errors_by_json_path(self._errors).values():
             error_messages.append(self._get_message_for_errors_group(errors))
 
         message = ""
