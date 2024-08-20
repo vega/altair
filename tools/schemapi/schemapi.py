@@ -463,9 +463,14 @@ def _lazy_additional_properties(
     if (
         parent := cast("ValidationError", first.parent)
     ) and parent.validator == "anyOf":
-        yield min(_rechain(first, it), key=lambda x: len(x.message))
+        yield min(_rechain(first, it), key=_message_len)
     else:
         yield first
+
+
+def _message_len(err: ValidationError, /) -> int:
+    """Return length of a ``ValidationError`` message."""
+    return len(err.message)
 
 
 def _lazy_enum(iterable: Iterable[ValidationError], /) -> Iterator[ValidationError]:
