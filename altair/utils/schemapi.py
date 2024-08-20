@@ -443,7 +443,7 @@ def _lazy_deduplicate_errors(
             if validator == "additionalProperties":
                 errors = _lazy_additional_properties(errors)
             elif validator == "enum":
-                errors = _lazy_enum(errors)
+                errors = _lazy_deduplicate_enum(errors)
             yield from _lazy_unique_message(errors)
 
 
@@ -475,23 +475,16 @@ def _message_len(err: ValidationError, /) -> int:
     return len(err.message)
 
 
-def _lazy_enum(iterable: Iterable[ValidationError], /) -> Iterator[ValidationError]:
-    """
-    Temporary reusing the eager version to isolate issues.
-
-    The 3 errors rule applies per group.
-    """
-    # FIXME: Too simple
-    # Need to do an eager pass, as this skips intersections of non-overlapping enums
-    # yield reduce(_enum_inner, iterable)
-    yield from _deduplicate_enum_errors(list(iterable))
-
-
-def _enum_inner(prev: ValidationError, current: ValidationError, /) -> ValidationError:
-    """**Disabled**."""
-    longest = set(cast("list[str]", prev.validator_value))
-    contender = set(cast("list[str]", current.validator_value))
-    return current if contender.issuperset(longest) else prev
+def _lazy_deduplicate_enum(
+    iterable: Iterable[ValidationError], /
+) -> Iterator[ValidationError]:
+    """Skip any``"enum"`` errors that are a subset of another error."""
+    enums: tuple[set[str], ...]
+    errors: tuple[ValidationError, ...]
+    enums, errors = zip(*((set(err.validator_value), err) for err in iterable))  # type: ignore[arg-type]
+    for cur_enum, err in zip(enums, errors):
+        if not any(cur_enum < e for e in enums if e != cur_enum):
+            yield err
 
 
 def _subset_to_most_specific_json_paths(
