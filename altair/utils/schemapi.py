@@ -21,26 +21,20 @@ from typing import (
     Final,
     Iterable,
     Iterator,
+    KeysView,
     List,
-    Literal,
     Sequence,
     TypeVar,
     Union,
     cast,
     overload,
 )
-from typing_extensions import TypeAlias
 
 import jsonschema
 import jsonschema.validators
 import narwhals.stable.v1 as nw
 from jsonschema import ValidationError
 from packaging.version import Version
-
-# This leads to circular imports with the vegalite module. Currently, this works
-# but be aware that when you access it in this script, the vegalite module might
-# not yet be fully instantiated in case your code is being executed during import time
-from altair import vegalite
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -59,9 +53,15 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    _Errs: TypeAlias = Iterable[ValidationError]
+    _ErrsLazy: TypeAlias = Iterator[ValidationError]
+    _ErrsLazyGroup: TypeAlias = Iterator[_ErrsLazy]
+    _IntoLazyGroup: TypeAlias = Iterator["tuple[str, ValidationError]"]
 
-ValidationErrorList: TypeAlias = List[jsonschema.ValidationError]
-GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
 """
@@ -146,61 +146,6 @@ def debug_mode(arg: bool) -> Iterator[None]:
         DEBUG_MODE = original
 
 
-@overload
-def validate_jsonschema(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = ...,
-    *,
-    raise_error: Literal[True] = ...,
-) -> Never: ...
-@overload
-def validate_jsonschema(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = ...,
-    *,
-    raise_error: Literal[False],
-) -> ValidationError | None: ...
-def validate_jsonschema(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
-    *,
-    raise_error: bool = True,
-) -> ValidationError | None:
-    """
-    Validates the passed in spec against the schema in the context of the rootschema.
-
-    If any errors are found, they are deduplicated and prioritized
-    and only the most relevant errors are kept. Errors are then either raised
-    or returned, depending on the value of `raise_error`.
-    """
-    it_errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
-    if first_error := next(it_errors, None):
-        errors = [first_error, *it_errors]
-        leaf_errors = _get_leaves_of_error_tree(errors)
-        grouped_errors = _group_errors_by_json_path(leaf_errors)
-        grouped_errors = _subset_to_most_specific_json_paths(grouped_errors)
-        grouped_errors = _deduplicate_errors(grouped_errors)
-
-        # Nothing special about this first error but we need to choose one
-        # which can be raised
-        main_error: Any = next(iter(grouped_errors.values()))[0]
-        # All errors are then attached as a new attribute to ValidationError so that
-        # they can be used in SchemaValidationError to craft a more helpful
-        # error message. Setting a new attribute like this is not ideal as
-        # it then no longer matches the type ValidationError. It would be better
-        # to refactor this function to never raise but only return errors.
-        main_error._errors = list(grouped_errors.values())
-        if raise_error:
-            raise main_error
-        else:
-            return main_error
-    else:
-        return None
-
-
 def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
     """
     Continue an iterator at the last popped ``element``.
@@ -217,20 +162,44 @@ def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
     yield from others
 
 
-def lazy_validate_json_schema(
+def _regroup(errors: _Errs, /) -> _ErrsLazyGroup:
+    """
+    Regroup error stream with the assumption they are already sorted.
+
+    This holds **only after** all other stages.
+    """
+    for _, grouped_it in groupby(errors, _json_path):
+        yield grouped_it
+
+
+def validate_jsonschema(
     spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
 ) -> None:
-    """Lazy equivalent of `validate_jsonschema`."""
-    it_errors = _get_errors_from_spec(spec, schema, rootschema=rootschema)
+    """
+    Lazy equivalent of `validate_jsonschema`.
+
+    Validates the passed in spec against the schema in the context of the rootschema.
+
+    If any errors are found, they are deduplicated and prioritized
+    and only the most relevant errors are kept.
+
+    Nothing special about this first error but we need to choose one
+    which can be raised
+    All errors are then attached as a new attribute to ValidationError so that
+    they can be used in SchemaValidationError to craft a more helpful
+    error message. Setting a new attribute like this is not ideal as
+    it then no longer matches the type ValidationError.
+    """
+    it_errors = _iter_errors_from_spec(spec, schema, rootschema=rootschema)
     if first_error := next(it_errors, None):
-        groups = _lazy_group_tree_leaves(_rechain(first_error, it_errors))
-        most_specific = _lazy_subset_to_most_specific_json_paths(groups)
-        deduplicated = _lazy_deduplicate_errors(most_specific)
+        groups = _group_tree_leaves(_rechain(first_error, it_errors))
+        most_specific = _prune_subset_paths(groups)
+        deduplicated = _deduplicate_errors(most_specific)
         dummy_error: Any
         if dummy_error := next(deduplicated, None):
-            dummy_error._errors = _rechain(dummy_error, deduplicated)  # type: ignore[attr-defined]
+            dummy_error._errors = _regroup(_rechain(dummy_error, deduplicated))  # type: ignore[attr-defined]
             raise dummy_error
         else:
             msg = (
@@ -240,11 +209,27 @@ def lazy_validate_json_schema(
             raise NotImplementedError(msg)
 
 
-def _get_errors_from_spec(
+def validate_jsonschema_fail_fast(
     spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
-) -> Iterator[ValidationError]:
+) -> None:
+    """
+    Raise as quickly as possible.
+
+    Use when any information about the error is not needed.
+    """
+    if (
+        err := next(_iter_errors_from_spec(spec, schema, rootschema=rootschema), None)
+    ) is not None:
+        raise err
+
+
+def _iter_errors_from_spec(
+    spec: _JsonParameter,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
+) -> _ErrsLazy:
     """
     Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
 
@@ -324,82 +309,57 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
-# We do not annotate the return value here as the referencing library is not always
-# available and this function is only executed in those cases.
 def _get_referencing_registry(
     rootschema: dict[str, Any], json_schema_draft_url: str | None = None
 ) -> Registry:
-    # Referencing is a dependency of newer jsonschema versions, starting with the
-    # version that is specified in _use_referencing_library and we therefore
-    # can expect that it is installed if the function returns True.
-    # We ignore 'import' mypy errors which happen when the referencing library
-    # is not installed. That's ok as in these cases this function is not called.
-    # We also have to ignore 'unused-ignore' errors as mypy raises those in case
-    # referencing is installed.
-    import referencing  # type: ignore[import,unused-ignore]
-    import referencing.jsonschema  # type: ignore[import,unused-ignore]
+    """
+    Referencing is a dependency of newer jsonschema versions.
 
-    if json_schema_draft_url is None:
-        json_schema_draft_url = _get_json_schema_draft_url(rootschema)
+    See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
 
-    specification = referencing.jsonschema.specification_with(json_schema_draft_url)
+    We ignore 'import' ``mypy`` errors which happen when the ``referencing`` library
+    is not installed.
+    That's ok as in these cases this function is not called.
+
+    We also have to ignore 'unused-ignore' errors as ``mypy`` raises those in case
+    ``referencing`` is installed.
+    """
+    from referencing import Registry  # type: ignore[import,unused-ignore]  # noqa: I001
+    from referencing.jsonschema import specification_with  # type: ignore[import,unused-ignore]
+
+    dialect_id = json_schema_draft_url or _get_json_schema_draft_url(rootschema)
+    specification = specification_with(dialect_id)
     resource = specification.create_resource(rootschema)
-    return referencing.Registry().with_resource(
-        uri=_VEGA_LITE_ROOT_URI, resource=resource
-    )
+    return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
 
 
-def _group_errors_by_json_path(
-    errors: Iterable[ValidationError],
-) -> GroupedValidationErrors:
-    """
-    Groups errors by the `json_path` attribute of the jsonschema ValidationError class.
-
-    This attribute contains the path to the offending element within
-    a chart specification and can therefore be considered as an identifier of an
-    'issue' in the chart that needs to be fixed.
-    """
-    errors_by_json_path = defaultdict(list)
-    for err in errors:
-        errors_by_json_path[_json_path(err)].append(err)
-    return dict(errors_by_json_path)
-
-
-def _get_leaves_of_error_tree(
-    errors: ValidationErrorList,
-) -> ValidationErrorList:
-    """
-    For each error in `errors`, it traverses down the "error tree" that is generated by the jsonschema library to find and return all "leaf" errors.
-
-    These are errors which have no further errors that caused it and so they are the most specific errors
-    with the most specific error messages.
-    """
-    leaves: ValidationErrorList = []
-    for err in errors:
-        if err.context:
-            # This means that the error `err` was caused by errors in subschemas.
-            # The list of errors from the subschemas are available in the property
-            # `context`.
-            leaves.extend(_get_leaves_of_error_tree(err.context))
-        else:
-            leaves.append(err)
-    return leaves
-
-
-def _lazy_group_tree_leaves(
-    errors: Iterable[ValidationError], /
-) -> Iterator[tuple[str, ValidationError]]:
+def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
     """
     Combines 3 previously distinct steps:
 
-    - ``_get_leaves_of_error_tree``
-    - (part of) ``_group_errors_by_json_path``
-        - Doesnt actually group yet, can by calling `dict(result)`.
-    - ``_is_required_value_error``
+    1. ``_get_leaves_of_error_tree``
+
+    These are errors which have no further errors that caused it and so they are the most specific errors
+    with the most specific error messages.
+
+    2. ``_group_errors_by_json_path`` (part of)
+
+    Extracts the path for grouping.
+
+    3. Removes::
+
+        ValidationError: "'value' is a required property"
+
+    as these errors are unlikely to be the relevant ones for the user.
+    They come from validation against a schema definition where the output of `alt.value`
+    would be valid.
+    However, if a user uses `alt.value`, the `value` keyword is included automatically
+    from that function and so it's unlikely that this was what the user intended
+    if the keyword is not present in the first place.
     """  # noqa: D400
     for err in errors:
         if err_context := err.context:
-            yield from _lazy_group_tree_leaves(err_context)
+            yield from _group_tree_leaves(err_context)
         elif err.validator == "required" and err.validator_value == ["value"]:
             continue
         else:
@@ -412,19 +372,28 @@ _fn_validator = cast("Callable[[ValidationError], str]", operator.attrgetter("va
 """Key function for ``ValidationError.validator``."""
 
 
-def _lazy_subset_to_most_specific_json_paths(
-    json_path_errors: Iterator[tuple[str, ValidationError]], /
-) -> Iterator[Iterable[ValidationError]]:
+def _message_len(err: ValidationError, /) -> int:
+    """Return length of a ``ValidationError`` message."""
+    return len(err.message)
+
+
+def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
     """
+    Removes key (json path), value (errors) pairs where the json path is fully contained in another json path.
+
+    For example if `errors_by_json_path` has two keys, `$.encoding.X` and `$.encoding.X.tooltip`,
+    then the first one will be removed and only the second one is returned.
+
+    This is done under the assumption that more specific json paths give more helpful error messages to the user.
+
     Currently using a `list`, but typing it more restrictive to see if it can be avoided.
 
     - Needs to be sorted to work with groupby
     - Reversing allows prioritising more specific groups, since they are seen first
     - Then re-reversed, to keep seen order
-
     """
     rev_sort = sorted(json_path_errors, key=_fn_path, reverse=True)
-    keeping: dict[str, Iterable[ValidationError]] = {}
+    keeping: dict[str, _Errs] = {}
     for unique_path, grouped_errors in groupby(rev_sort, key=_fn_path):
         if any(seen.startswith(unique_path) for seen in keeping):
             continue
@@ -433,23 +402,35 @@ def _lazy_subset_to_most_specific_json_paths(
     yield from islice(reversed(keeping.values()), 3)
 
 
-def _lazy_deduplicate_errors(
-    grouped_errors: Iterator[Iterable[ValidationError]], /
-) -> Iterator[ValidationError]:
-    for element_errors in grouped_errors:
-        for validator, errors in groupby(
-            sorted(element_errors, key=_fn_validator), key=_fn_validator
-        ):
+def _groupby_validator(errors: _Errs, /) -> Iterator[tuple[str, _ErrsLazy]]:
+    """
+    Groups the errors by the json schema "validator" that casued the error.
+
+    For example if the error is that a value is not one of an enumeration in the json schema
+    then the "validator" is `"enum"`, if the error is due to an unknown property that
+    was set although no additional properties are allowed then "validator" is
+    `"additionalProperties`, etc.
+    """
+    yield from groupby(sorted(errors, key=_fn_validator), key=_fn_validator)
+
+
+def _deduplicate_errors(grouped_errors: Iterator[_Errs], /) -> _ErrsLazy:
+    """
+    Some errors have very similar error messages or are just in general not helpful for a user.
+
+    This function removes as many of these cases as possible and
+    can be extended over time to handle new cases that come up.
+    """
+    for by_path in grouped_errors:
+        for validator, errors in _groupby_validator(by_path):
             if validator == "additionalProperties":
-                errors = _lazy_additional_properties(errors)
+                errors = _shortest_any_of(errors)
             elif validator == "enum":
-                errors = _lazy_deduplicate_enum(errors)
-            yield from _lazy_unique_message(errors)
+                errors = _prune_subset_enum(errors)
+            yield from _distinct_messages(errors)
 
 
-def _lazy_unique_message(
-    iterable: Iterable[ValidationError], /
-) -> Iterator[ValidationError]:
+def _distinct_messages(iterable: _Errs, /) -> _ErrsLazy:
     seen = set()
     for el in iterable:
         if el.message not in seen:
@@ -457,9 +438,19 @@ def _lazy_unique_message(
             yield el
 
 
-def _lazy_additional_properties(
-    iterable: Iterable[ValidationError], /
-) -> Iterator[ValidationError]:
+def _shortest_any_of(iterable: _Errs, /) -> _ErrsLazy:
+    """
+    If there are multiple additional property errors it usually means that the offending element was validated against multiple schemas and its parent is a common anyOf validator.
+
+    The error messages produced from these cases are usually
+    very similar and we just take the shortest one.
+    For example the following 3 errors are raised for::
+
+        alt.X("variety", unknown=2)
+        - "Additional properties are not allowed ('unknown' was unexpected)"
+        - "Additional properties are not allowed ('field', 'unknown' were unexpected)"
+        - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)".
+    """
     it = iter(iterable)
     first = next(it)
     if (
@@ -470,14 +461,7 @@ def _lazy_additional_properties(
         yield first
 
 
-def _message_len(err: ValidationError, /) -> int:
-    """Return length of a ``ValidationError`` message."""
-    return len(err.message)
-
-
-def _lazy_deduplicate_enum(
-    iterable: Iterable[ValidationError], /
-) -> Iterator[ValidationError]:
+def _prune_subset_enum(iterable: _Errs, /) -> _ErrsLazy:
     """Skip any``"enum"`` errors that are a subset of another error."""
     enums: tuple[set[str], ...]
     errors: tuple[ValidationError, ...]
@@ -487,157 +471,14 @@ def _lazy_deduplicate_enum(
             yield err
 
 
-def _subset_to_most_specific_json_paths(
-    errors_by_json_path: GroupedValidationErrors,
-) -> GroupedValidationErrors:
-    """
-    Removes key (json path), value (errors) pairs where the json path is fully contained in another json path.
-
-    For example if `errors_by_json_path` has two keys, `$.encoding.X` and `$.encoding.X.tooltip`,
-    then the first one will be removed and only the second one is returned.
-
-    This is done under the assumption that more specific json paths give more helpful error messages to the user.
-    """
-    errors_by_json_path_specific: GroupedValidationErrors = {}
-    for json_path, errors in errors_by_json_path.items():
-        if not _contained_at_start_of_one_of_other_values(
-            json_path, list(errors_by_json_path.keys())
-        ):
-            errors_by_json_path_specific[json_path] = errors
-    return errors_by_json_path_specific
-
-
-def _contained_at_start_of_one_of_other_values(x: str, values: Sequence[str]) -> bool:
-    # Does not count as "contained at start of other value" if the values are
-    # the same. These cases should be handled separately
-    return any(value.startswith(x) for value in values if x != value)
-
-
-def _deduplicate_errors(
-    grouped_errors: GroupedValidationErrors,
-) -> GroupedValidationErrors:
-    """
-    Some errors have very similar error messages or are just in general not helpful for a user.
-
-    This function removes as many of these cases as possible and
-    can be extended over time to handle new cases that come up.
-    """
-    grouped_errors_deduplicated: GroupedValidationErrors = {}
-    for json_path, element_errors in grouped_errors.items():
-        errors_by_validator = _group_errors_by_validator(element_errors)
-
-        deduplication_functions = {
-            "enum": _deduplicate_enum_errors,
-            "additionalProperties": _deduplicate_additional_properties_errors,
-        }
-        deduplicated_errors: ValidationErrorList = []
-        for validator, errors in errors_by_validator.items():
-            deduplication_func = deduplication_functions.get(validator)
-            if deduplication_func is not None:
-                errors = deduplication_func(errors)
-            deduplicated_errors.extend(_deduplicate_by_message(errors))
-
-        # Removes any ValidationError "'value' is a required property" as these
-        # errors are unlikely to be the relevant ones for the user. They come from
-        # validation against a schema definition where the output of `alt.value`
-        # would be valid. However, if a user uses `alt.value`, the `value` keyword
-        # is included automatically from that function and so it's unlikely
-        # that this was what the user intended if the keyword is not present
-        # in the first place.
-        deduplicated_errors = [
-            err for err in deduplicated_errors if not _is_required_value_error(err)
-        ]
-
-        grouped_errors_deduplicated[json_path] = deduplicated_errors
-    return grouped_errors_deduplicated
-
-
-def _is_required_value_error(err: ValidationError) -> bool:
-    return err.validator == "required" and err.validator_value == ["value"]
-
-
-def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
-    """
-    Groups the errors by the json schema "validator" that casued the error.
-
-    For example if the error is that a value is not one of an enumeration in the json schema
-    then the "validator" is `"enum"`, if the error is due to an unknown property that
-    was set although no additional properties are allowed then "validator" is
-    `"additionalProperties`, etc.
-    """
-    errors_by_validator: defaultdict[str, ValidationErrorList] = defaultdict(list)
-    for err in errors:
-        # Ignore mypy error as err.validator as it wrongly sees err.validator
-        # as of type Optional[Validator] instead of str which it is according
-        # to the documentation and all tested cases
-        errors_by_validator[err.validator].append(err)  # type: ignore[index]
-    return dict(errors_by_validator)
-
-
-def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList:
-    """
-    Deduplicate enum errors by removing the errors where the allowed values are a subset of another error.
-
-    For example, if `enum` contains two errors and one has `validator_value` (i.e. accepted values) ["A", "B"] and the
-    other one ["A", "B", "C"] then the first one is removed and the final
-    `enum` list only contains the error with ["A", "B", "C"].
-    """
-    if len(errors) > 1:
-        # Values (and therefore `validator_value`) of an enum are always arrays,
-        # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
-        # which is why we can use join below
-        value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
-        longest_enums: ValidationErrorList = []
-        for value_str, err in zip(value_strings, errors):
-            if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
-                longest_enums.append(err)
-        errors = longest_enums
-    return errors
-
-
-def _deduplicate_additional_properties_errors(
-    errors: ValidationErrorList,
-) -> ValidationErrorList:
-    """
-    If there are multiple additional property errors it usually means that the offending element was validated against multiple schemas and its parent is a common anyOf validator.
-
-    The error messages produced from these cases are usually
-    very similar and we just take the shortest one. For example,
-    the following 3 errors are raised for the `unknown` channel option in
-    `alt.X("variety", unknown=2)`:
-    - "Additional properties are not allowed ('unknown' was unexpected)"
-    - "Additional properties are not allowed ('field', 'unknown' were unexpected)"
-    - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)".
-    """
-    if len(errors) > 1:
-        # Test if all parent errors are the same anyOf error and only do
-        # the prioritization in these cases. Can't think of a chart spec where this
-        # would not be the case but still allow for it below to not break anything.
-        parent = errors[0].parent
-        if (
-            parent is not None
-            and parent.validator == "anyOf"
-            # Use [1:] as don't have to check for first error as it was used
-            # above to define `parent`
-            and all(err.parent is parent for err in errors[1:])
-        ):
-            errors = [min(errors, key=lambda x: len(x.message))]
-    return errors
-
-
-def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
-    """Deduplicate errors by message. This keeps the original order in case it was chosen intentionally."""
-    return list({e.message: e for e in errors}.values())
-
-
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
-    current_set = {cls}
-    while current_set:
-        seen |= current_set
-        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
-        for cls in current_set - seen:
+    current: set[type[Any]] = {cls}
+    while current:
+        seen |= current
+        current = set(chain.from_iterable(cls.__subclasses__() for cls in current))
+        for cls in current - seen:
             yield cls
 
 
@@ -716,7 +557,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         super().__init__(**err._contents())
         self.obj = obj
         err = cast("SchemaValidationError", err)
-        self._errors: Iterable[ValidationError] = err._errors
+        self._errors: _ErrsLazyGroup = err._errors
         # This is the message from err
         self._original_message = self.message
         self.message = self._get_message()
@@ -724,49 +565,47 @@ class SchemaValidationError(jsonschema.ValidationError):
     def __str__(self) -> str:
         return self.message
 
+    @staticmethod
+    def indent_from_second_line(msg: str, /, indent: int = 4) -> str:
+        return "\n".join(
+            " " * indent + s if idx > 0 and s else s
+            for idx, s in enumerate(msg.split("\n"))
+        )
+
     def _get_message(self) -> str:
-        def indent_second_line_onwards(message: str, indent: int = 4) -> str:
-            modified_lines: list[str] = []
-            for idx, line in enumerate(message.split("\n")):
-                if idx > 0 and len(line) > 0:
-                    line = " " * indent + line
-                modified_lines.append(line)
-            return "\n".join(modified_lines)
-
-        error_messages: list[str] = []
-        # Only show a maximum of 3 errors as else the final message returned by this
-        # method could get very long.
-        # ^^^^^^^^^^
-        # CORRECTION: Only show 3 **json_paths**
-
-        for errors in _group_errors_by_json_path(self._errors).values():
-            error_messages.append(self._get_message_for_errors_group(errors))
-
-        message = ""
-        if len(error_messages) > 1:
-            error_messages = [
-                indent_second_line_onwards(f"Error {error_id}: {m}")
+        it = self._errors
+        group_1 = list(next(it))
+        if (group_2 := next(it, None)) is not None:
+            error_messages = []
+            for group in group_1, list(group_2), next(it, None):
+                if group is not None:
+                    error_messages.append(self._get_message_for_errors_group(group))
+            message = "\n\n".join(
+                self.indent_from_second_line(f"Error {error_id}: {m}")
                 for error_id, m in enumerate(error_messages, start=1)
-            ]
-            message += "Multiple errors were found.\n\n"
-        message += "\n\n".join(error_messages)
-        return message
-
-    def _get_message_for_errors_group(
-        self,
-        errors: ValidationErrorList,
-    ) -> str:
-        if errors[0].validator == "additionalProperties":
-            # During development, we only found cases where an additionalProperties
-            # error was raised if that was the only error for the offending instance
-            # as identifiable by the json path. Therefore, we just check here the first
-            # error. However, other constellations might exist in which case
-            # this should be adapted so that other error messages are shown as well.
-            message = self._get_additional_properties_error_message(errors[0])
+            )
+            return f"Multiple errors were found.\n\n{message}"
         else:
-            message = self._get_default_error_message(errors=errors)
+            return self._get_message_for_errors_group(group_1)
 
-        return message.strip()
+    def _get_message_for_errors_group(self, errors: _Errs) -> str:
+        """
+        Note.
+
+        During development, we only found cases where an additionalProperties
+        error was raised if that was the only error for the offending instance
+        as identifiable by the json path.
+
+        Therefore, we just check here the first error.
+        However, other constellations might exist in which case this should be adapted
+        so that other error messages are shown as well.
+        """
+        if not isinstance(errors, Sequence):
+            errors = list(errors)
+        if errors[0].validator == "additionalProperties":
+            return self._get_additional_properties_error_message(errors[0])
+        else:
+            return self._get_default_error_message(errors=errors)
 
     def _get_additional_properties_error_message(
         self,
@@ -781,13 +620,12 @@ class SchemaValidationError(jsonschema.ValidationError):
         # "Additional properties are not allowed ('unknown' was unexpected)"
         # Line below extracts "unknown" from this string
         parameter_name = error.message.split("('")[-1].split("'")[0]
-        message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
-
-Existing parameter names are:
-{param_names_table}
-See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        return message
+        cls_name = altair_cls.__name__
+        return (
+            f"`{cls_name}` has no parameter named '{parameter_name}'\n\n"
+            f"Existing parameter names are:\n{param_names_table}\n"
+            f"See the help for `{cls_name}` to read the full description of these parameters"
+        )
 
     def _get_altair_class_for_error(self, error: ValidationError) -> type[SchemaBase]:
         """
@@ -795,6 +633,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
         This should lead to more informative error messages pointing the user closer to the source of the issue.
         """
+        from altair import vegalite
+
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
@@ -806,24 +646,17 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             # Did not find a suitable class based on traversing the path so we fall
             # back on the class of the top-level object which created
             # the SchemaValidationError
-            cls = self.obj.__class__
+            cls = type(self.obj)
         return cls
 
     @staticmethod
-    def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
+    def _format_params_as_table(param_view: KeysView[str]) -> str:
         """Format param names into a table so that they are easier to read."""
-        param_names: tuple[str, ...]
-        name_lengths: tuple[int, ...]
-        param_names, name_lengths = zip(
-            *[
-                (name, len(name))
-                for name in param_dict_keys
-                if name not in {"kwds", "self"}
-            ]
-        )
+        param_names: list[str] = [nm for nm in param_view if nm not in {"kwds", "self"}]
+
         # Worst case scenario with the same longest param name in the same
         # row for all columns
-        max_name_length = max(name_lengths)
+        max_name_length = len(max(param_view, key=len))
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
@@ -837,7 +670,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         column_heights = split_into_equal_parts(num_param_names, columns)
 
         # Section the param names into columns and compute their widths
-        param_names_columns: list[tuple[str, ...]] = []
+        param_names_columns: list[Sequence[str]] = []
         column_max_widths: list[int] = []
         last_end_idx: int = 0
         for ch in column_heights:
@@ -848,30 +681,29 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             last_end_idx = ch + last_end_idx
 
         # Transpose the param name columns into rows to facilitate looping
-        param_names_rows: list[tuple[str, ...]] = []
-        for li in zip_longest(*param_names_columns, fillvalue=""):
-            param_names_rows.append(li)
         # Build the table as a string by iterating over and formatting the rows
         param_names_table: str = ""
-        for param_names_row in param_names_rows:
+        column_pad = 3
+        for param_names_row in zip_longest(*param_names_columns, fillvalue=""):
+            last_element = len(param_names_row) - 1
             for num, param_name in enumerate(param_names_row):
                 # Set column width based on the longest param in the column
-                max_name_length_column = column_max_widths[num]
-                column_pad = 3
-                param_names_table += "{:<{}}".format(
-                    param_name, max_name_length_column + column_pad
-                )
+                width = column_pad + column_max_widths[num]
+                param_names_table += "{:<{}}".format(param_name, width)
                 # Insert newlines and spacing after the last element in each row
-                if num == (len(param_names_row) - 1):
+                if num == last_element:
                     param_names_table += "\n"
         return param_names_table
 
     def _get_default_error_message(
         self,
-        errors: ValidationErrorList,
+        errors: Sequence[ValidationError],
     ) -> str:
         bullet_points: list[str] = []
-        errors_by_validator = _group_errors_by_validator(errors)
+        errors_by_validator: defaultdict[str, list[ValidationError]] = defaultdict(list)
+        for err in errors:
+            errors_by_validator[err.validator].append(err)  # type: ignore[index]
+
         if "enum" in errors_by_validator:
             for error in errors_by_validator["enum"]:
                 bullet_points.append(f"one of {error.validator_value}")
@@ -919,7 +751,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             if validator not in {"enum", "type"}
         )
         message += "".join(it)
-        return message
+        return message.strip()
 
 
 class UndefinedType:
@@ -1215,7 +1047,7 @@ class SchemaBase:
         if validate:
             try:
                 self.validate(result)
-            except jsonschema.ValidationError as err:
+            except ValidationError as err:
                 # We do not raise `from err` as else the resulting
                 # traceback is very long as it contains part
                 # of the Vega-Lite schema. It would also first
@@ -1340,12 +1172,8 @@ class SchemaBase:
         cls, instance: dict[str, Any], schema: dict[str, Any] | None = None
     ) -> None:
         """Validate the instance against the class schema in the context of the rootschema."""
-        if schema is None:
-            schema = cls._schema
-        # For the benefit of mypy
-        assert schema is not None
-        lazy_validate_json_schema(
-            instance, schema, rootschema=cls._rootschema or cls._schema
+        validate_jsonschema(
+            instance, schema or cls._schema, cls._rootschema or cls._schema
         )
 
     @classmethod
@@ -1372,7 +1200,7 @@ class SchemaBase:
         np_opt = sys.modules.get("numpy")
         value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        lazy_validate_json_schema(
+        validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
@@ -1406,6 +1234,17 @@ def _is_iterable(
 
 def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
+
+
+def _freeze(val):
+    if isinstance(val, dict):
+        return frozenset((k, _freeze(v)) for k, v in val.items())
+    elif isinstance(val, set):
+        return frozenset(_freeze(v) for v in val)
+    elif isinstance(val, (list, tuple)):
+        return tuple(_freeze(v) for v in val)
+    else:
+        return val
 
 
 class _FromDict:
@@ -1445,22 +1284,8 @@ class _FromDict:
                 for key, val in schema.items()
                 if key not in cls._hash_exclude_keys
             }
-        if use_json:
-            s = json.dumps(schema, sort_keys=True)
-            return hash(s)
-        else:
-
-            def _freeze(val):
-                if isinstance(val, dict):
-                    return frozenset((k, _freeze(v)) for k, v in val.items())
-                elif isinstance(val, set):
-                    return frozenset(map(_freeze, val))
-                elif isinstance(val, (list, tuple)):
-                    return tuple(map(_freeze, val))
-                else:
-                    return val
-
-            return hash(_freeze(schema))
+        s: Any = json.dumps(schema, sort_keys=True) if use_json else _freeze(schema)
+        return hash(s)
 
     @overload
     def from_dict(
@@ -1543,8 +1368,8 @@ class _FromDict:
             schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
             for possible in schemas:
                 try:
-                    lazy_validate_json_schema(dct, possible, rootschema=root_schema)
-                except jsonschema.ValidationError:
+                    validate_jsonschema_fail_fast(dct, possible, rootschema=root_schema)
+                except ValidationError:
                     continue
                 else:
                     return from_dict(dct, schema=possible, default_class=target_tp)
@@ -1571,6 +1396,8 @@ class _PropertySetter:
         self.schema = schema
 
     def __get__(self, obj, cls):
+        from altair import vegalite
+
         self.obj = obj
         self.cls = cls
         # The docs from the encoding class parameter (e.g. `bin` in X, Color,
