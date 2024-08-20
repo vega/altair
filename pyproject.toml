@@ -130,6 +130,13 @@ update-init-file = [
     "ruff format .",
 ]
 
+# Much more isolated, focused purely on a faster `schemapi.py` rebuild/test loop.
+validation = [
+    "mypy tools/schemapi/schemapi.py",
+    "python tools/generate_schema_wrapper.py",
+    "pytest -k test_schemapi tests {args}",
+]
+
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
