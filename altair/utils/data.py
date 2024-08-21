@@ -314,12 +314,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
-        if _is_pandas_dataframe(data_native):
-            data_native = sanitize_pandas_dataframe(data_native)
-        # Maybe the type could be further clarified here that it is
-        # SupportGeoInterface and then the ignore statement is not needed?
-        data_sanitized = sanitize_geo_interface(data_native.__geo_interface__)
-        return {"values": data_sanitized}
+        return {"values": _from_geo_interface(data_native)}
     elif _is_pandas_dataframe(data_native):
         data_native = sanitize_pandas_dataframe(data_native)
         return {"values": data_native.to_dict(orient="records")}
@@ -350,14 +345,27 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
+def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
+    """
+    Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
+
+    Notes
+    -----
+    Split out to resolve typing issues related to:
+    - Intersection types
+    - ``typing.TypeGuard``
+    - ``pd.DataFrame.__getattr__``
+    """
+    if _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
+    return sanitize_geo_interface(data.__geo_interface__)
+
+
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data."""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
-        if _is_pandas_dataframe(data):
-            data = sanitize_pandas_dataframe(data)
-        data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
-        return json.dumps(data)
+        return json.dumps(_from_geo_interface(data))
     elif _is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
