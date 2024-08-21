@@ -160,13 +160,15 @@ def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
     yield from others
 
 
-def _regroup(errors: _Errs, /) -> _ErrsLazyGroup:
+def _regroup(
+    errors: _Errs, /, *, key: Callable[[ValidationError], str] = _json_path
+) -> _ErrsLazyGroup:
     """
-    Regroup error stream with the assumption they are already sorted.
+    Regroup error stream by a ``key`` function.
 
-    This holds **only after** all other stages.
+    Assumes ``errors`` are already sorted, which holds **only** at the end of ``validate_jsonschema``.
     """
-    for _, grouped_it in groupby(errors, _json_path):
+    for _, grouped_it in groupby(errors, key):
         yield grouped_it
 
 
