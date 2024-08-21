@@ -1587,6 +1587,59 @@ def test_interactive_for_chart_types(chart_type: _MakeType):
     assert chart.interactive(legend=True).to_dict()  # type: ignore[call-arg]
 
 
+def test_repro_3394_2302995453():
+    r"""
+    Related to ``SchemaBase.copy``
+
+    Log output::
+
+        tests/vegalite/v5/test_api.py:1608:
+
+        altair/vegalite/v5/api.py:3856: in interactive
+        chart: Chart = self.copy().add_params(
+        altair/utils/schemapi.py:924: in copy
+        return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))
+        altair/utils/schemapi.py:858: in _deep_copy
+        kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
+        altair/utils/schemapi.py:858: in _deep_copy
+        kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
+
+        obj = Then({
+        condition: [{'test': ((datum.IMDB_Rating === null) || (datum.Rotten_Tomatoes_Rating === null)), 'value': 'grey'}]
+        }), by_ref = set()
+
+        def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
+            copy = partial(_deep_copy, by_ref=by_ref)
+            if isinstance(obj, SchemaBase):
+                args = (copy(arg) for arg in obj._args)
+                kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
+                with debug_mode(False):
+        >               return obj.__class__(*args, **kwds)
+        E               TypeError: Then.__init__() got an unexpected keyword argument 'condition'
+
+        altair/utils/schemapi.py:860: TypeError
+
+    """  # noqa: D400
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.movies.url
+    predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
+        alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
+    )
+
+    chart = (
+        alt.Chart(source)
+        .mark_point(invalid=None)
+        .encode(
+            x="IMDB_Rating:Q",
+            y="Rotten_Tomatoes_Rating:Q",
+            color=alt.when(predicate).then(alt.value("grey")),
+        )
+    )
+    chart.interactive()
+
+
 def test_interactive_with_no_encoding(all_chart_types):
     # Should not raise error when there is no encoding
     assert all_chart_types.interactive().to_dict()
