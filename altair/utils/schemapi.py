@@ -37,7 +37,7 @@ from jsonschema import ValidationError
 from packaging.version import Version
 
 if TYPE_CHECKING:
-    from typing import ClassVar
+    from typing import ClassVar, Literal, Mapping
 
     from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
@@ -61,6 +61,19 @@ if TYPE_CHECKING:
     _ErrsLazy: TypeAlias = Iterator[ValidationError]
     _ErrsLazyGroup: TypeAlias = Iterator[_ErrsLazy]
     _IntoLazyGroup: TypeAlias = Iterator["tuple[str, ValidationError]"]
+    _ValidatorKeyword: TypeAlias = Literal[
+        "additionalProperties",
+        "enum",
+        "type",
+        "required",
+        "properties",
+        "anyOf",
+        "allOf",
+        "oneOf",
+        "ref",
+        "const",
+    ]
+    """Non-exhaustive listing of possible literals in ``ValidationError.validator``"""
 
 
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
@@ -98,32 +111,6 @@ Individual schema classes can override with:
         _class_is_valid_at_instantiation: ClassVar[bool] = False
 """
 
-_JSONSCHEMA_VERSION = Version(importlib_version("jsonschema"))
-_USING_REFERENCING: Final[bool] = _JSONSCHEMA_VERSION >= Version("4.18")  # noqa: SIM300
-"""
-``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
-
-See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
-"""
-
-if _JSONSCHEMA_VERSION >= Version("4.0.1"):  # noqa: SIM300
-    _json_path: Callable[[ValidationError], str] = operator.attrgetter("json_path")
-else:
-
-    def _json_path(err: ValidationError, /) -> str:
-        """
-        Vendored backport for ``jsonschema.ValidationError.json_path`` property.
-
-        See https://github.com/vega/altair/issues/3038.
-        """
-        path = "$"
-        for elem in err.absolute_path:
-            if isinstance(elem, int):
-                path += "[" + str(elem) + "]"
-            else:
-                path += "." + elem
-        return path
-
 
 def enable_debug_mode() -> None:
     global DEBUG_MODE
@@ -146,53 +133,24 @@ def debug_mode(arg: bool) -> Iterator[None]:
         DEBUG_MODE = original
 
 
-def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
-    """
-    Continue an iterator at the last popped ``element``.
-
-    Equivalent to::
-
-        elements = 1, 2, 3, 4, 5
-        it = iter(elements)
-        element = next(it)
-        it_continue = chain([element], it)
-
-    """
-    yield element
-    yield from others
-
-
-def _regroup(errors: _Errs, /) -> _ErrsLazyGroup:
-    """
-    Regroup error stream with the assumption they are already sorted.
-
-    This holds **only after** all other stages.
-    """
-    for _, grouped_it in groupby(errors, _json_path):
-        yield grouped_it
-
-
 def validate_jsonschema(
     spec: _JsonParameter,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
 ) -> None:
     """
-    Lazy equivalent of `validate_jsonschema`.
+    Validates ``spec`` against ``schema`` in the context of ``rootschema``.
 
-    Validates the passed in spec against the schema in the context of the rootschema.
+    Any ``ValidationError``(s) are deduplicated and prioritized, with
+    the remaining errors deemed relevant to the user.
 
-    If any errors are found, they are deduplicated and prioritized
-    and only the most relevant errors are kept.
-
-    Nothing special about this first error but we need to choose one
-    which can be raised
-    All errors are then attached as a new attribute to ValidationError so that
-    they can be used in SchemaValidationError to craft a more helpful
-    error message. Setting a new attribute like this is not ideal as
-    it then no longer matches the type ValidationError.
+    Notes
+    -----
+    - The first error is monkeypatched with a grouped iterator of all remaining errors
+    - ``SchemaValidationError`` utilizes the patched attribute, to craft a more helpful error message.
+        - However this breaks typing
     """
-    it_errors = _iter_errors_from_spec(spec, schema, rootschema=rootschema)
+    it_errors = _iter_validator_errors(spec, schema, rootschema=rootschema)
     if first_error := next(it_errors, None):
         groups = _group_tree_leaves(_rechain(first_error, it_errors))
         most_specific = _prune_subset_paths(groups)
@@ -217,61 +175,12 @@ def validate_jsonschema_fail_fast(
     """
     Raise as quickly as possible.
 
-    Use when any information about the error is not needed.
+    Use instead of ``validate_jsonschema`` when any information about the error(s) are not needed.
     """
     if (
-        err := next(_iter_errors_from_spec(spec, schema, rootschema=rootschema), None)
+        err := next(_iter_validator_errors(spec, schema, rootschema=rootschema), None)
     ) is not None:
         raise err
-
-
-def _iter_errors_from_spec(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
-) -> _ErrsLazy:
-    """
-    Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
-
-    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
-
-    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
-    Instead, we pass the ``schema`` directly to the validator class.
-
-    This is done for two reasons:
-
-    1. The schema comes from Vega-Lite and is not based on the user
-    input, therefore there is no need to validate it in the first place.
-    2. The "uri-reference" format checker fails for some of the
-    references as URIs in "$ref" are not encoded, e.g.:
-
-        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
-
-    would be a valid $ref in a Vega-Lite schema but it is not a valid
-    URI reference due to the characters such as '<'.
-    """
-    json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
-    validator_cls: type[Validator] = cast(
-        "type[Validator]",
-        jsonschema.validators.validator_for({"$schema": json_schema_draft_url}),
-    )
-    validator_kwargs: dict[str, Any] = {}
-    if hasattr(validator_cls, "FORMAT_CHECKER"):
-        validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
-
-    if _USING_REFERENCING:
-        schema = _prepare_references(schema)
-        validator_kwargs["registry"] = _get_referencing_registry(
-            rootschema or schema, json_schema_draft_url
-        )
-    else:
-        # No resolver is necessary if the schema is already the full schema
-        validator_kwargs["resolver"] = (
-            jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
-        )
-
-    validator = validator_cls(schema, **validator_kwargs)
-    return validator.iter_errors(spec)
 
 
 def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
@@ -309,28 +218,170 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
-def _get_referencing_registry(
-    rootschema: dict[str, Any], json_schema_draft_url: str | None = None
-) -> Registry:
+def _prepare_validator(url: str, /) -> Callable[..., Validator]:
+    tp = cast(
+        "Callable[..., Validator]",
+        jsonschema.validators.validator_for({"$schema": url}),
+    )
+    if hasattr(tp, "FORMAT_CHECKER"):
+        return partial(tp, format_checker=tp.FORMAT_CHECKER)
+    else:
+        return tp
+
+
+if Version(importlib_version("jsonschema")) >= Version("4.18"):
+    from referencing import Registry
+    from referencing.jsonschema import specification_with
+
+    def _construct_validator(
+        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+    ) -> Validator:
+        url = _get_json_schema_draft_url(rootschema or schema)
+        tp = _prepare_validator(url)
+        registry = _get_referencing_registry(rootschema or schema, url)
+        return tp(_prepare_references(schema), registry=registry)
+
+    def _get_referencing_registry(
+        rootschema: dict[str, Any], json_schema_draft_url: str | None = None
+    ) -> Registry[Any]:
+        """
+        Referencing is a dependency of newer jsonschema versions.
+
+        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+
+        We ignore 'import' ``mypy`` errors which happen when the ``referencing`` library
+        is not installed.
+        That's ok as in these cases this function is not called.
+
+        We also have to ignore 'unused-ignore' errors as ``mypy`` raises those in case
+        ``referencing`` is installed.
+        """
+        dialect_id = json_schema_draft_url or _get_json_schema_draft_url(rootschema)
+        specification = specification_with(dialect_id)
+        resource = specification.create_resource(rootschema)
+        return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
+
+    def _resolve_references(
+        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
+        registry = _get_referencing_registry(rootschema or schema)
+        resolver = registry.resolver()
+        while "$ref" in schema:
+            schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
+        return schema
+else:
+
+    def _construct_validator(
+        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+    ) -> Validator:
+        tp = _prepare_validator(_get_json_schema_draft_url(rootschema or schema))
+        resolver: Any = (
+            jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
+        )
+        return tp(schema, resolver=resolver)
+
+    def _resolve_references(
+        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """
+        Resolve schema references until there is no $ref anymore in the top-level of the dictionary.
+
+        ``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
+
+        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        """
+        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
+        while "$ref" in schema:
+            with resolver.resolving(schema["$ref"]) as resolved:
+                schema = resolved
+        return schema
+
+
+if Version(importlib_version("jsonschema")) >= Version("4.0.1"):
+    _json_path: Callable[[ValidationError], str] = operator.attrgetter("json_path")
+else:
+
+    def _json_path(err: ValidationError, /) -> str:
+        """
+        Vendored backport for ``jsonschema.ValidationError.json_path`` property.
+
+        See https://github.com/vega/altair/issues/3038.
+        """
+        path = "$"
+        for elem in err.absolute_path:
+            if isinstance(elem, int):
+                path += "[" + str(elem) + "]"
+            else:
+                path += "." + elem
+        return path
+
+
+_FN_PATH = cast("Callable[[tuple[str, ValidationError]], str]", operator.itemgetter(0))
+"""Key function for ``(json_path, ValidationError)``."""
+_FN_VALIDATOR = cast("Callable[[ValidationError], _ValidatorKeyword]", operator.attrgetter("validator"))  # fmt: off
+"""Key function for ``ValidationError.validator``."""
+
+
+def _message_len(err: ValidationError, /) -> int:
+    """Return length of a ``ValidationError`` message."""
+    return len(err.message)
+
+
+def _rechain(element: T, others: Iterable[T], /) -> Iterator[T]:
     """
-    Referencing is a dependency of newer jsonschema versions.
+    Continue an iterator at the last popped ``element``.
 
-    See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+    Equivalent to::
 
-    We ignore 'import' ``mypy`` errors which happen when the ``referencing`` library
-    is not installed.
-    That's ok as in these cases this function is not called.
+        elements = 1, 2, 3, 4, 5
+        it = iter(elements)
+        element = next(it)
+        it_continue = chain([element], it)
 
-    We also have to ignore 'unused-ignore' errors as ``mypy`` raises those in case
-    ``referencing`` is installed.
     """
-    from referencing import Registry  # type: ignore[import,unused-ignore]  # noqa: I001
-    from referencing.jsonschema import specification_with  # type: ignore[import,unused-ignore]
+    yield element
+    yield from others
 
-    dialect_id = json_schema_draft_url or _get_json_schema_draft_url(rootschema)
-    specification = specification_with(dialect_id)
-    resource = specification.create_resource(rootschema)
-    return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
+
+def _regroup(
+    errors: _Errs, /, *, key: Callable[[ValidationError], str] = _json_path
+) -> _ErrsLazyGroup:
+    """
+    Regroup error stream by a ``key`` function.
+
+    Assumes ``errors`` are already sorted, which holds **only** at the end of ``validate_jsonschema``.
+    """
+    for _, grouped_it in groupby(errors, key):
+        yield grouped_it
+
+
+def _iter_validator_errors(
+    spec: _JsonParameter,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
+) -> _ErrsLazy:
+    """
+    Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
+
+    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
+
+    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
+    Instead, we pass the ``schema`` directly to the validator class.
+
+    This is done for two reasons:
+
+    1. The schema comes from Vega-Lite and is not based on the user
+    input, therefore there is no need to validate it in the first place.
+    2. The "uri-reference" format checker fails for some of the
+    references as URIs in "$ref" are not encoded, e.g.:
+
+        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
+
+    would be a valid $ref in a Vega-Lite schema but it is not a valid
+    URI reference due to the characters such as '<'.
+    """
+    return _construct_validator(schema, rootschema).iter_errors(spec)
 
 
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
@@ -344,7 +395,7 @@ def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
 
     2. ``_group_errors_by_json_path`` (part of)
 
-    Extracts the path for grouping.
+    Extracts the ``.json_path`` property for grouping.
 
     3. Removes::
 
@@ -357,24 +408,15 @@ def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
     from that function and so it's unlikely that this was what the user intended
     if the keyword is not present in the first place.
     """  # noqa: D400
+    REQUIRED = "required"
+    VALUE = ["value"]
     for err in errors:
         if err_context := err.context:
             yield from _group_tree_leaves(err_context)
-        elif err.validator == "required" and err.validator_value == ["value"]:
+        elif err.validator == REQUIRED and err.validator_value == VALUE:
             continue
         else:
             yield _json_path(err), err
-
-
-_fn_path = cast("Callable[[tuple[str, ValidationError]], str]", operator.itemgetter(0))
-"""Key function for ``(json_path, ValidationError)``."""
-_fn_validator = cast("Callable[[ValidationError], str]", operator.attrgetter("validator"))  # fmt: off
-"""Key function for ``ValidationError.validator``."""
-
-
-def _message_len(err: ValidationError, /) -> int:
-    """Return length of a ``ValidationError`` message."""
-    return len(err.message)
 
 
 def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
@@ -392,9 +434,9 @@ def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
     - Reversing allows prioritising more specific groups, since they are seen first
     - Then re-reversed, to keep seen order
     """
-    rev_sort = sorted(json_path_errors, key=_fn_path, reverse=True)
+    rev_sort = sorted(json_path_errors, key=_FN_PATH, reverse=True)
     keeping: dict[str, _Errs] = {}
-    for unique_path, grouped_errors in groupby(rev_sort, key=_fn_path):
+    for unique_path, grouped_errors in groupby(rev_sort, key=_FN_PATH):
         if any(seen.startswith(unique_path) for seen in keeping):
             continue
         else:
@@ -402,7 +444,9 @@ def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
     yield from islice(reversed(keeping.values()), 3)
 
 
-def _groupby_validator(errors: _Errs, /) -> Iterator[tuple[str, _ErrsLazy]]:
+def _groupby_validator(
+    errors: _Errs, /
+) -> Iterator[tuple[_ValidatorKeyword, _ErrsLazy]]:
     """
     Groups the errors by the json schema "validator" that casued the error.
 
@@ -411,7 +455,7 @@ def _groupby_validator(errors: _Errs, /) -> Iterator[tuple[str, _ErrsLazy]]:
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    yield from groupby(sorted(errors, key=_fn_validator), key=_fn_validator)
+    yield from groupby(sorted(errors, key=_FN_VALIDATOR), key=_FN_VALIDATOR)
 
 
 def _deduplicate_errors(grouped_errors: Iterator[_Errs], /) -> _ErrsLazy:
@@ -423,10 +467,8 @@ def _deduplicate_errors(grouped_errors: Iterator[_Errs], /) -> _ErrsLazy:
     """
     for by_path in grouped_errors:
         for validator, errors in _groupby_validator(by_path):
-            if validator == "additionalProperties":
-                errors = _shortest_any_of(errors)
-            elif validator == "enum":
-                errors = _prune_subset_enum(errors)
+            if fn := _FN_MAP_DEDUPLICATION.get(validator):
+                errors = fn(errors)
             yield from _distinct_messages(errors)
 
 
@@ -469,6 +511,12 @@ def _prune_subset_enum(iterable: _Errs, /) -> _ErrsLazy:
     for cur_enum, err in zip(enums, errors):
         if not any(cur_enum < e for e in enums if e != cur_enum):
             yield err
+
+
+_FN_MAP_DEDUPLICATION: Mapping[_ValidatorKeyword, Callable[[_Errs], _ErrsLazy]] = {
+    "additionalProperties": _shortest_any_of,
+    "enum": _prune_subset_enum,
+}
 
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
@@ -526,28 +574,6 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
         return _todict(_from_array_like(obj), context, np_opt, pd_opt)
     else:
         return obj
-
-
-def _resolve_references(
-    schema: dict[str, Any], rootschema: dict[str, Any] | None = None
-) -> dict[str, Any]:
-    """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
-    if _USING_REFERENCING:
-        registry = _get_referencing_registry(rootschema or schema)
-        # Using a different variable name to show that this is not the
-        # jsonschema.RefResolver but instead a Resolver from the referencing
-        # library
-        referencing_resolver = registry.resolver()
-        while "$ref" in schema:
-            schema = referencing_resolver.lookup(
-                _VEGA_LITE_ROOT_URI + schema["$ref"]
-            ).contents
-    else:
-        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
-        while "$ref" in schema:
-            with resolver.resolving(schema["$ref"]) as resolved:
-                schema = resolved
-    return schema
 
 
 class SchemaValidationError(jsonschema.ValidationError):
