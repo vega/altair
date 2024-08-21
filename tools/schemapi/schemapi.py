@@ -365,7 +365,7 @@ def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
 
     2. ``_group_errors_by_json_path`` (part of)
 
-    Extracts the path for grouping.
+    Extracts the ``.json_path`` property for grouping.
 
     3. Removes::
 
