@@ -275,7 +275,6 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            # `strict=False` passes `data` through as-is if it is not a Narwhals object.
             data = func(nw.to_native(data, strict=False))
 
     # convert string input to a URLData
