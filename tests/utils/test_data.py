@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, SupportsIndex, TypeVar
 
 import narwhals.stable.v1 as nw
 import pandas as pd
@@ -15,6 +17,8 @@ from altair.utils.data import (
     to_values,
 )
 
+T = TypeVar("T")
+
 
 def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
     # Redefined to maintain existing tests
@@ -24,13 +28,15 @@ def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
     return data
 
 
-def _create_dataframe(N):
-    data = pd.DataFrame({"x": range(N), "y": range(N)})
+def _create_dataframe(
+    n: SupportsIndex, /, tp: Callable[..., T] | type[Any] = pd.DataFrame
+) -> T | Any:
+    data = tp({"x": range(n), "y": range(n)})
     return data
 
 
-def _create_data_with_values(N):
-    data = {"values": [{"x": i, "y": i + 1} for i in range(N)]}
+def _create_data_with_values(n: SupportsIndex, /) -> dict[str, Any]:
+    data = {"values": [{"x": i, "y": i + 1} for i in range(n)]}
     return data
 
 
@@ -127,19 +133,20 @@ def test_dict_to_json():
     assert data == {"values": output}
 
 
-def test_dataframe_to_csv():
+@pytest.mark.parametrize("tp", [pd.DataFrame, pl.DataFrame], ids=["pandas", "polars"])
+def test_dataframe_to_csv(tp: type[Any]) -> None:
     """
     Test to_csv with dataframe input.
 
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
-    data = _create_dataframe(10)
+    data = _create_dataframe(10, tp=tp)
     try:
         result1 = _pipe(data, to_csv)
         result2 = _pipe(data, to_csv)
         filename = result1["url"]
-        output = pd.read_csv(filename)
+        output = tp(pd.read_csv(filename))
     finally:
         Path(filename).unlink()
 
