@@ -35,7 +35,7 @@ from jsonschema import ValidationError
 from packaging.version import Version
 
 if TYPE_CHECKING:
-    from typing import ClassVar
+    from typing import ClassVar, Literal, Mapping
 
     from jsonschema.protocols import Validator, _JsonParameter
     from referencing import Registry
@@ -59,6 +59,19 @@ if TYPE_CHECKING:
     _ErrsLazy: TypeAlias = Iterator[ValidationError]
     _ErrsLazyGroup: TypeAlias = Iterator[_ErrsLazy]
     _IntoLazyGroup: TypeAlias = Iterator["tuple[str, ValidationError]"]
+    _ValidatorKeyword: TypeAlias = Literal[
+        "additionalProperties",
+        "enum",
+        "type",
+        "required",
+        "properties",
+        "anyOf",
+        "allOf",
+        "oneOf",
+        "ref",
+        "const",
+    ]
+    """Non-exhaustive listing of possible literals in ``ValidationError.validator``"""
 
 
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
@@ -330,6 +343,17 @@ def _get_referencing_registry(
     return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
 
 
+_FN_PATH = cast("Callable[[tuple[str, ValidationError]], str]", operator.itemgetter(0))
+"""Key function for ``(json_path, ValidationError)``."""
+_FN_VALIDATOR = cast("Callable[[ValidationError], _ValidatorKeyword]", operator.attrgetter("validator"))  # fmt: off
+"""Key function for ``ValidationError.validator``."""
+
+
+def _message_len(err: ValidationError, /) -> int:
+    """Return length of a ``ValidationError`` message."""
+    return len(err.message)
+
+
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
     """
     Combines 3 previously distinct steps:
@@ -354,24 +378,15 @@ def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
     from that function and so it's unlikely that this was what the user intended
     if the keyword is not present in the first place.
     """  # noqa: D400
+    REQUIRED = "required"
+    VALUE = ["value"]
     for err in errors:
         if err_context := err.context:
             yield from _group_tree_leaves(err_context)
-        elif err.validator == "required" and err.validator_value == ["value"]:
+        elif err.validator == REQUIRED and err.validator_value == VALUE:
             continue
         else:
             yield _json_path(err), err
-
-
-_fn_path = cast("Callable[[tuple[str, ValidationError]], str]", operator.itemgetter(0))
-"""Key function for ``(json_path, ValidationError)``."""
-_fn_validator = cast("Callable[[ValidationError], str]", operator.attrgetter("validator"))  # fmt: off
-"""Key function for ``ValidationError.validator``."""
-
-
-def _message_len(err: ValidationError, /) -> int:
-    """Return length of a ``ValidationError`` message."""
-    return len(err.message)
 
 
 def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
@@ -389,9 +404,9 @@ def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
     - Reversing allows prioritising more specific groups, since they are seen first
     - Then re-reversed, to keep seen order
     """
-    rev_sort = sorted(json_path_errors, key=_fn_path, reverse=True)
+    rev_sort = sorted(json_path_errors, key=_FN_PATH, reverse=True)
     keeping: dict[str, _Errs] = {}
-    for unique_path, grouped_errors in groupby(rev_sort, key=_fn_path):
+    for unique_path, grouped_errors in groupby(rev_sort, key=_FN_PATH):
         if any(seen.startswith(unique_path) for seen in keeping):
             continue
         else:
@@ -399,7 +414,9 @@ def _prune_subset_paths(json_path_errors: _IntoLazyGroup, /) -> Iterator[_Errs]:
     yield from islice(reversed(keeping.values()), 3)
 
 
-def _groupby_validator(errors: _Errs, /) -> Iterator[tuple[str, _ErrsLazy]]:
+def _groupby_validator(
+    errors: _Errs, /
+) -> Iterator[tuple[_ValidatorKeyword, _ErrsLazy]]:
     """
     Groups the errors by the json schema "validator" that casued the error.
 
@@ -408,7 +425,7 @@ def _groupby_validator(errors: _Errs, /) -> Iterator[tuple[str, _ErrsLazy]]:
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    yield from groupby(sorted(errors, key=_fn_validator), key=_fn_validator)
+    yield from groupby(sorted(errors, key=_FN_VALIDATOR), key=_FN_VALIDATOR)
 
 
 def _deduplicate_errors(grouped_errors: Iterator[_Errs], /) -> _ErrsLazy:
@@ -420,10 +437,8 @@ def _deduplicate_errors(grouped_errors: Iterator[_Errs], /) -> _ErrsLazy:
     """
     for by_path in grouped_errors:
         for validator, errors in _groupby_validator(by_path):
-            if validator == "additionalProperties":
-                errors = _shortest_any_of(errors)
-            elif validator == "enum":
-                errors = _prune_subset_enum(errors)
+            if fn := _FN_MAP_DEDUPLICATION.get(validator):
+                errors = fn(errors)
             yield from _distinct_messages(errors)
 
 
@@ -466,6 +481,12 @@ def _prune_subset_enum(iterable: _Errs, /) -> _ErrsLazy:
     for cur_enum, err in zip(enums, errors):
         if not any(cur_enum < e for e in enums if e != cur_enum):
             yield err
+
+
+_FN_MAP_DEDUPLICATION: Mapping[_ValidatorKeyword, Callable[[_Errs], _ErrsLazy]] = {
+    "additionalProperties": _shortest_any_of,
+    "enum": _prune_subset_enum,
+}
 
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
