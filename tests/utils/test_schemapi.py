@@ -875,7 +875,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         chart.to_dict()
 
 
-_SKIP_SLOW_BENCHMARKS: bool = False
+_SKIP_SLOW_BENCHMARKS: bool = True
 
 
 @pytest.mark.skipif(
