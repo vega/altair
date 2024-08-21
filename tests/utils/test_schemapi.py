@@ -871,6 +871,39 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         chart.to_dict()
 
 
+_SKIP_SLOW_BENCHMARKS: bool = False
+
+
+@pytest.mark.skipif(
+    _SKIP_SLOW_BENCHMARKS,
+    reason="Should only be run in isolation to test single threaded performance.",
+)
+def test_chart_validation_benchmark() -> None:
+    """
+    Intended to isolate the `to_dict` call.
+
+    Repeated ``1000`` times, non-parametric:
+    - in an attempt to limit the potential overhead of ``pytest``
+    - but enforce ``1`` thread, like a user-code would be.
+    """
+    if TYPE_CHECKING:
+        from typing import Iterator
+
+        from altair.typing import ChartType
+
+    def _iter_charts(*, times: int) -> Iterator[ChartType]:
+        from itertools import chain, repeat
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UserWarning)
+            charts: list[ChartType] = [fn() for fn, _ in chart_funcs_error_message]
+        yield from chain.from_iterable(repeat(charts, times=times))
+
+    for chart in _iter_charts(times=1000):
+        with pytest.raises(SchemaValidationError):
+            chart.to_dict(validate=True)
+
+
 def test_multiple_field_strings_in_condition():
     selection = alt.selection_point()
     expected_error_message = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
