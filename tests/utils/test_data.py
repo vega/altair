@@ -24,8 +24,8 @@ def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
     return data
 
 
-def _create_dataframe(N):
-    data = pd.DataFrame({"x": range(N), "y": range(N)})
+def _create_dataframe(N, constructor=pd.DataFrame):
+    data = constructor({"x": range(N), "y": range(N)})
     return data
 
 
@@ -127,19 +127,22 @@ def test_dict_to_json():
     assert data == {"values": output}
 
 
-def test_dataframe_to_csv():
+@pytest.mark.parametrize(
+    "constructor", [pd.DataFrame, pl.DataFrame], ids=["pandas", "polars"]
+)
+def test_dataframe_to_csv(constructor):
     """
     Test to_csv with dataframe input.
 
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
-    data = _create_dataframe(10)
+    data = _create_dataframe(10, constructor=constructor)
     try:
         result1 = _pipe(data, to_csv)
         result2 = _pipe(data, to_csv)
         filename = result1["url"]
-        output = pd.read_csv(filename)
+        output = constructor(pd.read_csv(filename))
     finally:
         Path(filename).unlink()
 
