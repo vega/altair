@@ -178,19 +178,16 @@ def validate_jsonschema(
     rootschema: dict[str, Any] | None = None,
 ) -> None:
     """
-    Lazy equivalent of `validate_jsonschema`.
+    Validates ``spec`` against ``schema`` in the context of ``rootschema``.
 
-    Validates the passed in spec against the schema in the context of the rootschema.
+    Any ``ValidationError``(s) are deduplicated and prioritized, with
+    the remaining errors deemed relevant to the user.
 
-    If any errors are found, they are deduplicated and prioritized
-    and only the most relevant errors are kept.
-
-    Nothing special about this first error but we need to choose one
-    which can be raised
-    All errors are then attached as a new attribute to ValidationError so that
-    they can be used in SchemaValidationError to craft a more helpful
-    error message. Setting a new attribute like this is not ideal as
-    it then no longer matches the type ValidationError.
+    Notes
+    -----
+    - The first error is monkeypatched with a grouped iterator of all remaining errors
+    - ``SchemaValidationError`` utilizes the patched attribute, to craft a more helpful error message.
+        - However this breaks typing
     """
     it_errors = _iter_errors_from_spec(spec, schema, rootschema=rootschema)
     if first_error := next(it_errors, None):
@@ -217,7 +214,7 @@ def validate_jsonschema_fail_fast(
     """
     Raise as quickly as possible.
 
-    Use when any information about the error is not needed.
+    Use instead of ``validate_jsonschema`` when any information about the error(s) are not needed.
     """
     if (
         err := next(_iter_errors_from_spec(spec, schema, rootschema=rootschema), None)
