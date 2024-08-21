@@ -23,6 +23,7 @@ from typing import (
 from typing_extensions import TypeAlias
 
 import jsonschema
+import narwhals.stable.v1 as nw
 
 from altair import utils
 from altair.expr import core as _expr_core
@@ -274,7 +275,7 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            data = func(data)
+            data = func(nw.to_native(data, strict=False))
 
     # convert string input to a URLData
     elif isinstance(data, str):
