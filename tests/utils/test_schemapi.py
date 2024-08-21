@@ -639,14 +639,16 @@ def chart_error_example__four_errors_hide_fourth():
     )
 
 
-def id_func(val) -> str:
+def id_func_chart_error_example(val) -> str:
     """
-    Ensures the generated test-id name uses only `chart_func` and not `expected_error_message`.
+    Ensures the generated test-id name uses only the unique portion of `chart_func`.
 
-    Without this, the name is ``test_chart_validation_errors[chart_func-expected_error_message]``
+    Otherwise the name is like below, but ``...`` represents the full error message::
+
+        "test_chart_validation_errors[chart_error_example__two_errors_with_one_in_nested_layered_chart-...]"
     """
     if isinstance(val, types.FunctionType):
-        return val.__name__
+        return val.__name__.replace("chart_error_example__", "")
     else:
         return ""
 
@@ -856,7 +858,9 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
 
 
 @pytest.mark.parametrize(
-    ("chart_func", "expected_error_message"), chart_funcs_error_message, ids=id_func
+    ("chart_func", "expected_error_message"),
+    chart_funcs_error_message,
+    ids=id_func_chart_error_example,
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
     # For some wrong chart specifications such as an unknown encoding channel,
