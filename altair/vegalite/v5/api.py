@@ -1061,6 +1061,9 @@ class Then(core.SchemaBase, t.Generic[_C]):
         m = super().to_dict(*args, **kwds)
         return _Conditional(condition=m["condition"])
 
+    def __deepcopy__(self, memo: Any) -> Self:
+        return type(self)(_Conditional(condition=_deepcopy(self.condition)))
+
 
 class ChainedWhen(_BaseWhen):
     """
