@@ -148,8 +148,25 @@ def validate_jsonschema(
     - The first error is monkeypatched with a grouped iterator of all remaining errors
     - ``SchemaValidationError`` utilizes the patched attribute, to craft a more helpful error message.
         - However this breaks typing
+
+    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
+
+    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
+    Instead, we pass the ``schema`` directly to the validator class.
+
+    This is done for two reasons:
+
+    1. The schema comes from Vega-Lite and is not based on the user
+    input, therefore there is no need to validate it in the first place.
+    2. The "uri-reference" format checker fails for some of the
+    references as URIs in "$ref" are not encoded, e.g.:
+
+        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
+
+    would be a valid $ref in a Vega-Lite schema but it is not a valid
+    URI reference due to the characters such as '<'.
     """
-    it_errors = _iter_validator_errors(spec, schema, rootschema=rootschema)
+    it_errors = _validator(schema, rootschema).iter_errors(spec)
     if first_error := next(it_errors, None):
         groups = _group_tree_leaves(_rechain(first_error, it_errors))
         most_specific = _prune_subset_paths(groups)
@@ -177,7 +194,7 @@ def validate_jsonschema_fail_fast(
     Use instead of ``validate_jsonschema`` when any information about the error(s) are not needed.
     """
     if (
-        err := next(_iter_validator_errors(spec, schema, rootschema=rootschema), None)
+        err := next(_validator(schema, rootschema).iter_errors(spec), None)
     ) is not None:
         raise err
 
@@ -405,34 +422,6 @@ def _regroup(
     """
     for _, grouped_it in groupby(errors, key):
         yield grouped_it
-
-
-def _iter_validator_errors(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
-) -> _ErrsLazy:
-    """
-    Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
-
-    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
-
-    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
-    Instead, we pass the ``schema`` directly to the validator class.
-
-    This is done for two reasons:
-
-    1. The schema comes from Vega-Lite and is not based on the user
-    input, therefore there is no need to validate it in the first place.
-    2. The "uri-reference" format checker fails for some of the
-    references as URIs in "$ref" are not encoded, e.g.:
-
-        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
-
-    would be a valid $ref in a Vega-Lite schema but it is not a valid
-    URI reference due to the characters such as '<'.
-    """
-    return _validator(schema, rootschema).iter_errors(spec)
 
 
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
