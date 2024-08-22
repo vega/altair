@@ -307,9 +307,9 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
            https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
         """
         uri = _get_schema_dialect_uri(rootschema or schema)
-        tp = _validator_for(uri)
+        validator = _validator_for(uri)
         registry = _registry(rootschema or schema, uri)
-        return tp(_prepare_references(schema), registry=registry)
+        return validator(_prepare_references(schema), registry=registry)
 
     def _registry(rootschema: dict[str, Any], dialect_id: str) -> Registry[Any]:
         """
@@ -343,11 +343,11 @@ else:
     def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        tp = _validator_for(_get_schema_dialect_uri(rootschema or schema))
+        validator = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
-        return tp(schema, resolver=resolver)
+        return validator(schema, resolver=resolver)
 
     def _resolve_references(
         schema: dict[str, Any], rootschema: dict[str, Any]
