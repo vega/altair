@@ -9,7 +9,7 @@ import operator
 import sys
 import textwrap
 from collections import defaultdict
-from functools import partial
+from functools import lru_cache, partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, groupby, islice, zip_longest
 from math import ceil
@@ -40,9 +40,9 @@ if TYPE_CHECKING:
     from typing import ClassVar, Literal, Mapping
 
     from jsonschema.protocols import Validator, _JsonParameter
-    from referencing import Registry, Specification
 
     from altair.typing import ChartType
+    from altair.vegalite.v5.schema._typing import Map
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -150,8 +150,25 @@ def validate_jsonschema(
     - The first error is monkeypatched with a grouped iterator of all remaining errors
     - ``SchemaValidationError`` utilizes the patched attribute, to craft a more helpful error message.
         - However this breaks typing
+
+    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
+
+    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
+    Instead, we pass the ``schema`` directly to the validator class.
+
+    This is done for two reasons:
+
+    1. The schema comes from Vega-Lite and is not based on the user
+    input, therefore there is no need to validate it in the first place.
+    2. The "uri-reference" format checker fails for some of the
+    references as URIs in "$ref" are not encoded, e.g.:
+
+        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
+
+    would be a valid $ref in a Vega-Lite schema but it is not a valid
+    URI reference due to the characters such as '<'.
     """
-    it_errors = _iter_validator_errors(spec, schema, rootschema=rootschema)
+    it_errors = _validator(schema, rootschema).iter_errors(spec)
     if first_error := next(it_errors, None):
         groups = _group_tree_leaves(_rechain(first_error, it_errors))
         most_specific = _prune_subset_paths(groups)
@@ -179,7 +196,7 @@ def validate_jsonschema_fail_fast(
     Use instead of ``validate_jsonschema`` when any information about the error(s) are not needed.
     """
     if (
-        err := next(_iter_validator_errors(spec, schema, rootschema=rootschema), None)
+        err := next(_validator(schema, rootschema).iter_errors(spec), None)
     ) is not None:
         raise err
 
@@ -228,6 +245,7 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
+@lru_cache(maxsize=None)
 def _validator_for(uri: str, /) -> Callable[..., Validator]:
     """
     Retrieve the constructor for a `Validator`_ class appropriate for validating the given schema.
@@ -250,10 +268,12 @@ def _validator_for(uri: str, /) -> Callable[..., Validator]:
 
 
 if Version(importlib_version("jsonschema")) >= Version("4.18"):
-    from functools import lru_cache
-
     from referencing import Registry
     from referencing.jsonschema import specification_with as _specification_with
+
+    if TYPE_CHECKING:
+        from referencing import Specification
+        from referencing._core import Resolver
 
     @lru_cache(maxsize=None)
     def specification_with(dialect_id: str, /) -> Specification[Any]:
@@ -292,9 +312,9 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
            https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
         """
         uri = _get_schema_dialect_uri(rootschema or schema)
-        tp = _validator_for(uri)
+        validator = _validator_for(uri)
         registry = _registry(rootschema or schema, uri)
-        return tp(_prepare_references(schema), registry=registry)
+        return validator(_prepare_references(schema), registry=registry)
 
     def _registry(rootschema: dict[str, Any], dialect_id: str) -> Registry[Any]:
         """
@@ -309,30 +329,73 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         .. _v4.18.0a1:
            https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
         """
-        specification = specification_with(dialect_id)
-        resource = specification.create_resource(rootschema)
-        return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
+        global _REGISTRY_CACHE
+        cache_key = _registry_comp_key(rootschema, dialect_id)
+        if (registry := _REGISTRY_CACHE.get(cache_key, None)) is not None:
+            return registry
+        else:
+            specification = specification_with(dialect_id)
+            resource = specification.create_resource(rootschema)
+            registry = Registry().with_resource(_VEGA_LITE_ROOT_URI, resource)
+            _REGISTRY_CACHE[cache_key] = registry
+            return registry
+
+    def _registry_update(
+        root: dict[str, Any], dialect_id: str, resolver: Resolver[Any]
+    ):
+        global _REGISTRY_CACHE
+        cache_key = _registry_comp_key(root, dialect_id)
+        _REGISTRY_CACHE[cache_key] = resolver._registry
 
     def _resolve_references(
         schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
         """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
+        root = rootschema or schema
+        if ("$ref" not in root) or ("$ref" not in schema):
+            return schema
         uri = _get_schema_dialect_uri(rootschema)
-        registry = _registry(rootschema or schema, uri)
+        registry = _registry(root, uri)
         resolver = registry.resolver()
         while "$ref" in schema:
-            schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
+            resolved = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"])
+            schema = resolved.contents
+        _registry_update(root, uri, resolved.resolver)
         return schema
+
+    def _registry_comp_key(root: Map, dialect_id: str, /) -> tuple[str, str]:
+        """
+        Generate a simple-minded hash to identify a registry.
+
+        Notes
+        -----
+        Why the strange hash?
+        - **All** generated schemas hit the ``"$ref"`` branch.
+        - ``api.Then`` hits the len(...) 1 branch w/ ``{"type": "object"}``.
+        - Final branch is only hit by mock schemas in:
+            - `tests/utils/test_core.py::test_infer_encoding_types`
+            - `tests/utils/test_schemapi.py`
+        """
+        if "$ref" in root:
+            k1 = root["$ref"]
+        elif len(root) == 1:
+            k1 = "".join(f"{s!s}" for s in chain(*root.items()))
+        else:
+            k1 = json.dumps(root, separators=(",", ":"), sort_keys=True)
+        return k1, dialect_id
+
+    _REGISTRY_CACHE: dict[tuple[str, str], Registry[Any]] = {}
+
 else:
 
     def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        tp = _validator_for(_get_schema_dialect_uri(rootschema or schema))
+        validator = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
-        return tp(schema, resolver=resolver)
+        return validator(schema, resolver=resolver)
 
     def _resolve_references(
         schema: dict[str, Any], rootschema: dict[str, Any]
@@ -407,34 +470,6 @@ def _regroup(
     """
     for _, grouped_it in groupby(errors, key):
         yield grouped_it
-
-
-def _iter_validator_errors(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
-) -> _ErrsLazy:
-    """
-    Uses the relevant ``jsonschema`` validator to validate ``spec`` against ``schema`` using `` rootschema`` to resolve references.
-
-    ``schema`` and ``rootschema`` are not validated but instead considered as valid.
-
-    We don't use ``jsonschema.validate`` as this would validate the ``schema`` itself.
-    Instead, we pass the ``schema`` directly to the validator class.
-
-    This is done for two reasons:
-
-    1. The schema comes from Vega-Lite and is not based on the user
-    input, therefore there is no need to validate it in the first place.
-    2. The "uri-reference" format checker fails for some of the
-    references as URIs in "$ref" are not encoded, e.g.:
-
-        '#/definitions/ValueDefWithCondition<MarkPropFieldOrDatumDef, (Gradient|string|null)>'
-
-    would be a valid $ref in a Vega-Lite schema but it is not a valid
-    URI reference due to the characters such as '<'.
-    """
-    return _validator(schema, rootschema).iter_errors(spec)
 
 
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
