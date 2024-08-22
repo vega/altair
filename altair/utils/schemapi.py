@@ -228,7 +228,20 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
-def _prepare_validator(uri: str, /) -> Callable[..., Validator]:
+def _validator_for(uri: str, /) -> Callable[..., Validator]:
+    """
+    Retrieve the constructor for a `Validator`_ class appropriate for validating the given schema.
+
+    Parameters
+    ----------
+    uri
+        Address pointing to the `$schema`_.
+
+    .. _Validator:
+       https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+    .. _$schema:
+       https://json-schema.org/understanding-json-schema/reference/schema
+    """
     tp: Callable[..., Validator] = jsonschema.validators.validator_for({"$schema": uri})
     if hasattr(tp, "FORMAT_CHECKER"):
         return partial(tp, format_checker=tp.FORMAT_CHECKER)
@@ -245,27 +258,56 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     @lru_cache(maxsize=None)
     def specification_with(dialect_id: str, /) -> Specification[Any]:
         """
-        Directly wraps ``referencing.jsonschema.specification_with``.
+        Retrieve the `Specification`_ with the given dialect identifier.
 
-        The original function returns one **immutable** object per JSON Schema **dialect**.
+        Wraps `specification_with`_, which returns one **immutable** object per
+        JSON Schema **dialect**.
+
+        Raises
+        ------
+        ``UnknownDialect``
+            if the given ``dialect_id`` isn't known
+
+        .. _Specification:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Specification
+        .. _specification_with:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.jsonschema.specification_with
         """
         return _specification_with(dialect_id)
 
-    def _construct_validator(
+    def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
+        """
+        Constructs a `Validator`_ for future validation.
+
+        Parameters
+        ----------
+        schema
+            Schema that a spec will be validated against.
+        rootschema
+            Context to evaluate within.
+
+        .. _Validator:
+           https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+        """
         uri = _get_schema_dialect_uri(rootschema or schema)
-        tp = _prepare_validator(uri)
-        registry = _get_referencing_registry(rootschema or schema, uri)
+        tp = _validator_for(uri)
+        registry = _registry(rootschema or schema, uri)
         return tp(_prepare_references(schema), registry=registry)
 
-    def _get_referencing_registry(
-        rootschema: dict[str, Any], dialect_id: str
-    ) -> Registry[Any]:
+    def _registry(rootschema: dict[str, Any], dialect_id: str) -> Registry[Any]:
         """
-        Referencing is a dependency of newer jsonschema versions.
+        Constructs a `Registry`_, adding the `Resource`_ produced by ``rootschema``.
 
-        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        Requires at least ``jsonschema`` `v4.18.0a1`_.
+
+        .. _Registry:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Registry
+        .. _Resource:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Resource
+        .. _v4.18.0a1:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
         """
         specification = specification_with(dialect_id)
         resource = specification.create_resource(rootschema)
@@ -276,17 +318,17 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     ) -> dict[str, Any]:
         """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
         uri = _get_schema_dialect_uri(rootschema)
-        registry = _get_referencing_registry(rootschema or schema, uri)
+        registry = _registry(rootschema or schema, uri)
         resolver = registry.resolver()
         while "$ref" in schema:
             schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
         return schema
 else:
 
-    def _construct_validator(
+    def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        tp = _prepare_validator(_get_schema_dialect_uri(rootschema or schema))
+        tp = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
@@ -392,7 +434,7 @@ def _iter_validator_errors(
     would be a valid $ref in a Vega-Lite schema but it is not a valid
     URI reference due to the characters such as '<'.
     """
-    return _construct_validator(schema, rootschema).iter_errors(spec)
+    return _validator(schema, rootschema).iter_errors(spec)
 
 
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
