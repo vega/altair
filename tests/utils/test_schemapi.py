@@ -22,7 +22,7 @@ import pytest
 import altair as alt
 from altair import load_schema
 from altair.utils.schemapi import (
-    _DEFAULT_JSON_SCHEMA_DRAFT_URL,
+    _DEFAULT_DIALECT_URI,
     SchemaBase,
     SchemaValidationError,
     Undefined,
@@ -42,9 +42,9 @@ _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 
 
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
-    # See comments next to definition of _DEFAULT_JSON_SCHEMA_DRAFT_URL
+    # See comments next to definition of `_DEFAULT_DIALECT_URI`
     # for details why we need this test
-    assert _DEFAULT_JSON_SCHEMA_DRAFT_URL == _JSON_SCHEMA_DRAFT_URL, (
+    assert _DEFAULT_DIALECT_URI == _JSON_SCHEMA_DRAFT_URL, (
         "The default json schema URL, which is hardcoded,"
         + " is not the same as the one used in the Vega-Lite schema."
         + " You need to update the default value."
@@ -876,6 +876,8 @@ def test_chart_validation_errors(chart_func, expected_error_message):
 
 
 _SKIP_SLOW_BENCHMARKS: bool = True
+_REPEAT_TIMES = 1000
+# to_dict optimize had no observable benefit
 
 
 @pytest.mark.skipif(
@@ -886,9 +888,13 @@ def test_chart_validation_benchmark() -> None:
     """
     Intended to isolate the `to_dict` call.
 
-    Repeated ``1000`` times, non-parametric:
+    Repeated ``_REPEAT_TIMES`` times, non-parametric:
     - in an attempt to limit the potential overhead of ``pytest``
     - but enforce ``1`` thread, like a user-code would be.
+
+    Results
+    -------
+    8/22/2024, 10:06:32 - 1000x in 108.46s (0:01:48)
     """
     if TYPE_CHECKING:
         from typing import Iterator
@@ -903,7 +909,7 @@ def test_chart_validation_benchmark() -> None:
             charts: list[ChartType] = [fn() for fn, _ in chart_funcs_error_message]
         yield from chain.from_iterable(repeat(charts, times=times))
 
-    for chart in _iter_charts(times=1000):
+    for chart in _iter_charts(times=_REPEAT_TIMES):
         with pytest.raises(SchemaValidationError):
             chart.to_dict(validate=True)
 

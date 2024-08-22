@@ -50,9 +50,9 @@ if TYPE_CHECKING:
         from typing_extensions import TypeIs
 
     if sys.version_info >= (3, 11):
-        from typing import Never, Self
+        from typing import LiteralString, Never, Self
     else:
-        from typing_extensions import Never, Self
+        from typing_extensions import LiteralString, Never, Self
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
@@ -85,18 +85,19 @@ This URI is arbitrary and could be anything else.
 It just cannot be an empty string as we need to reference the schema registered in
 the ``referencing.Registry``."""
 
-_DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#"
+_DEFAULT_DIALECT_URI: LiteralString = "http://json-schema.org/draft-07/schema#"
 """
-Ideally, jsonschema specification would be parsed from the current Vega-Lite
-schema instead of being hardcoded here as a default value.
+Ideally, this would be parsed from the current Vega-Lite schema, and not hardcoded here.
 
-However, due to circular imports between this module and the ``alt.vegalite``
-modules, this information is not yet available at this point as ``alt.vegalite``
-is only partially loaded.
+However, due to circular imports between this module and ``alt.vegalite``,
+this information is not yet available as the latter is only *partially* loaded.
 
-The draft version which is used is unlikely to change often so it's ok to keep this.
-There is also a test which validates that this value is always the same as in the Vega-Lite schema.
+The `draft version`_ which is used is unlikely to change often so it's ok to keep this.
+
+.. _draft version:
+   https://json-schema.org/understanding-json-schema/reference/schema#declaring-a-dialect
 """
+# RELATED: tests/utils/test/schemapi.py/test_actual_json_schema_draft_is_same_as_hardcoded_default
 
 DEBUG_MODE: bool = True
 """
@@ -183,8 +184,17 @@ def validate_jsonschema_fail_fast(
         raise err
 
 
-def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
-    return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
+def _get_schema_dialect_uri(schema: dict[str, Any]) -> str:
+    """
+    Return value of `$schema`_.
+
+    Defines which JSON Schema draft ``schema`` was written for.
+
+    .. _$schema:
+       https://json-schema.org/understanding-json-schema/reference/schema#schema
+
+    """
+    return schema.get("$schema", _DEFAULT_DIALECT_URI)
 
 
 def _prepare_references(schema: dict[str, Any], /) -> dict[str, Any]:
@@ -218,11 +228,9 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
-def _prepare_validator(url: str, /) -> Callable[..., Validator]:
-    tp = cast(
-        "Callable[..., Validator]",
-        jsonschema.validators.validator_for({"$schema": url}),
-    )
+def _prepare_validator(uri: str, /) -> Callable[..., Validator]:
+    # tp = cast("Callable[..., Validator]", jsonschema.validators.validator_for({"$schema": uri}))
+    tp: Callable[..., Validator] = jsonschema.validators.validator_for({"$schema": uri})
     if hasattr(tp, "FORMAT_CHECKER"):
         return partial(tp, format_checker=tp.FORMAT_CHECKER)
     else:
@@ -236,9 +244,9 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     def _construct_validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        url = _get_json_schema_draft_url(rootschema or schema)
-        tp = _prepare_validator(url)
-        registry = _get_referencing_registry(rootschema or schema, url)
+        uri = _get_schema_dialect_uri(rootschema or schema)
+        tp = _prepare_validator(uri)
+        registry = _get_referencing_registry(rootschema or schema, uri)
         return tp(_prepare_references(schema), registry=registry)
 
     def _get_referencing_registry(
@@ -256,7 +264,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         We also have to ignore 'unused-ignore' errors as ``mypy`` raises those in case
         ``referencing`` is installed.
         """
-        dialect_id = json_schema_draft_url or _get_json_schema_draft_url(rootschema)
+        dialect_id = json_schema_draft_url or _get_schema_dialect_uri(rootschema)
         specification = specification_with(dialect_id)
         resource = specification.create_resource(rootschema)
         return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
@@ -275,7 +283,7 @@ else:
     def _construct_validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        tp = _prepare_validator(_get_json_schema_draft_url(rootschema or schema))
+        tp = _prepare_validator(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
