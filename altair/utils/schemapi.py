@@ -260,30 +260,23 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         return tp(_prepare_references(schema), registry=registry)
 
     def _get_referencing_registry(
-        rootschema: dict[str, Any], json_schema_draft_url: str | None = None
+        rootschema: dict[str, Any], dialect_id: str
     ) -> Registry[Any]:
         """
         Referencing is a dependency of newer jsonschema versions.
 
         See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
-
-        We ignore 'import' ``mypy`` errors which happen when the ``referencing`` library
-        is not installed.
-        That's ok as in these cases this function is not called.
-
-        We also have to ignore 'unused-ignore' errors as ``mypy`` raises those in case
-        ``referencing`` is installed.
         """
-        dialect_id = json_schema_draft_url or _get_schema_dialect_uri(rootschema)
         specification = specification_with(dialect_id)
         resource = specification.create_resource(rootschema)
         return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
 
     def _resolve_references(
-        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+        schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
         """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
-        registry = _get_referencing_registry(rootschema or schema)
+        uri = _get_schema_dialect_uri(rootschema)
+        registry = _get_referencing_registry(rootschema or schema, uri)
         resolver = registry.resolver()
         while "$ref" in schema:
             schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
@@ -300,7 +293,7 @@ else:
         return tp(schema, resolver=resolver)
 
     def _resolve_references(
-        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+        schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
         """
         Resolve schema references until there is no $ref anymore in the top-level of the dictionary.
@@ -902,7 +895,7 @@ class SchemaBase:
     """
 
     _schema: ClassVar[dict[str, Any] | Any] = None
-    _rootschema: ClassVar[dict[str, Any] | None] = None
+    _rootschema: ClassVar[dict[str, Any] | Any] = None
     _class_is_valid_at_instantiation: ClassVar[bool] = True
 
     def __init__(self, *args: Any, **kwds: Any) -> None:
@@ -1223,13 +1216,17 @@ class SchemaBase:
     @classmethod
     def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
         """Resolve references in the context of this object's schema or root schema."""
-        schema_to_pass = schema or cls._schema
-        # For the benefit of mypy
-        assert schema_to_pass is not None
-        return _resolve_references(
-            schema=schema_to_pass,
-            rootschema=(cls._rootschema or cls._schema or schema),
-        )
+        rootschema = cls._rootschema or cls._schema or schema
+        if rootschema is None:
+            name = type(cls).__name__
+            msg = (
+                f"{name}.resolve_references() provided only `None` values for:\n"
+                f"{schema=}, {cls._schema=}, {cls._rootschema=}.\n\n"
+                f"This variant indicates the class definition {name!r} is invalid."
+            )
+            raise TypeError(msg)
+        else:
+            return _resolve_references(schema or cls._schema, rootschema=rootschema)
 
     @classmethod
     def validate_property(
