@@ -38,7 +38,7 @@ if TYPE_CHECKING:
     from typing import ClassVar, Literal, Mapping
 
     from jsonschema.protocols import Validator, _JsonParameter
-    from referencing import Registry
+    from referencing import Registry, Specification
 
     from altair.typing import ChartType
 
@@ -235,8 +235,19 @@ def _prepare_validator(uri: str, /) -> Callable[..., Validator]:
 
 
 if Version(importlib_version("jsonschema")) >= Version("4.18"):
+    from functools import lru_cache
+
     from referencing import Registry
-    from referencing.jsonschema import specification_with
+    from referencing.jsonschema import specification_with as _specification_with
+
+    @lru_cache(maxsize=None)
+    def specification_with(dialect_id: str, /) -> Specification[Any]:
+        """
+        Directly wraps ``referencing.jsonschema.specification_with``.
+
+        The original function returns one **immutable** object per JSON Schema **dialect**.
+        """
+        return _specification_with(dialect_id)
 
     def _construct_validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
