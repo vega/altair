@@ -226,7 +226,20 @@ def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
             yield k, v
 
 
-def _prepare_validator(uri: str, /) -> Callable[..., Validator]:
+def _validator_for(uri: str, /) -> Callable[..., Validator]:
+    """
+    Retrieve the constructor for a `Validator`_ class appropriate for validating the given schema.
+
+    Parameters
+    ----------
+    uri
+        Address pointing to the `$schema`_.
+
+    .. _Validator:
+       https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+    .. _$schema:
+       https://json-schema.org/understanding-json-schema/reference/schema
+    """
     tp: Callable[..., Validator] = jsonschema.validators.validator_for({"$schema": uri})
     if hasattr(tp, "FORMAT_CHECKER"):
         return partial(tp, format_checker=tp.FORMAT_CHECKER)
@@ -260,11 +273,24 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         """
         return _specification_with(dialect_id)
 
-    def _construct_validator(
+    def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
+        """
+        Constructs a `Validator`_ for future validation.
+
+        Parameters
+        ----------
+        schema
+            Schema that a spec will be validated against.
+        rootschema
+            Context to evaluate within.
+
+        .. _Validator:
+           https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+        """
         uri = _get_schema_dialect_uri(rootschema or schema)
-        tp = _prepare_validator(uri)
+        tp = _validator_for(uri)
         registry = _registry(rootschema or schema, uri)
         return tp(_prepare_references(schema), registry=registry)
 
@@ -297,10 +323,10 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         return schema
 else:
 
-    def _construct_validator(
+    def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
-        tp = _prepare_validator(_get_schema_dialect_uri(rootschema or schema))
+        tp = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
         )
@@ -406,7 +432,7 @@ def _iter_validator_errors(
     would be a valid $ref in a Vega-Lite schema but it is not a valid
     URI reference due to the characters such as '<'.
     """
-    return _construct_validator(schema, rootschema).iter_errors(spec)
+    return _validator(schema, rootschema).iter_errors(spec)
 
 
 def _group_tree_leaves(errors: _Errs, /) -> _IntoLazyGroup:
