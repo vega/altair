@@ -243,9 +243,20 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     @lru_cache(maxsize=None)
     def specification_with(dialect_id: str, /) -> Specification[Any]:
         """
-        Directly wraps ``referencing.jsonschema.specification_with``.
+        Retrieve the `Specification`_ with the given dialect identifier.
 
-        The original function returns one **immutable** object per JSON Schema **dialect**.
+        Wraps `specification_with`_, which returns one **immutable** object per
+        JSON Schema **dialect**.
+
+        Raises
+        ------
+        ``UnknownDialect``
+            if the given ``dialect_id`` isn't known
+
+        .. _Specification:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Specification
+        .. _specification_with:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.jsonschema.specification_with
         """
         return _specification_with(dialect_id)
 
