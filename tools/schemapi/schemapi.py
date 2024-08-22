@@ -265,16 +265,21 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     ) -> Validator:
         uri = _get_schema_dialect_uri(rootschema or schema)
         tp = _prepare_validator(uri)
-        registry = _get_referencing_registry(rootschema or schema, uri)
+        registry = _registry(rootschema or schema, uri)
         return tp(_prepare_references(schema), registry=registry)
 
-    def _get_referencing_registry(
-        rootschema: dict[str, Any], dialect_id: str
-    ) -> Registry[Any]:
+    def _registry(rootschema: dict[str, Any], dialect_id: str) -> Registry[Any]:
         """
-        Referencing is a dependency of newer jsonschema versions.
+        Constructs a `Registry`_, adding the `Resource`_ produced by ``rootschema``.
 
-        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        Requires at least ``jsonschema`` `v4.18.0a1`_.
+
+        .. _Registry:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Registry
+        .. _Resource:
+           https://referencing.readthedocs.io/en/stable/api/#referencing.Resource
+        .. _v4.18.0a1:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
         """
         specification = specification_with(dialect_id)
         resource = specification.create_resource(rootschema)
@@ -285,7 +290,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     ) -> dict[str, Any]:
         """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
         uri = _get_schema_dialect_uri(rootschema)
-        registry = _get_referencing_registry(rootschema or schema, uri)
+        registry = _registry(rootschema or schema, uri)
         resolver = registry.resolver()
         while "$ref" in schema:
             schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
