@@ -32,10 +32,9 @@ Either script can accept ``pytest`` args::
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
 """
 
-VL_CONVERT_AVAILABLE = find_spec("vl_convert") is not None
 
 skip_requires_vl_convert: pytest.MarkDecorator = pytest.mark.skipif(
-    not VL_CONVERT_AVAILABLE, reason="`vl_convert` not importable."
+    find_spec("vl_convert") is None, reason="`vl_convert` not installed."
 )
 """
 ``pytest.mark.skipif`` decorator.
@@ -44,6 +43,19 @@ Applies when `vl-convert`_ import would fail.
 
 .. _vl-convert:
    https://github.com/vega/vl-convert
+"""
+
+
+skip_requires_pyarrow: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("pyarrow") is None, reason="`pyarrow` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `pyarrow`_ import would fail.
+
+.. _pyarrow:
+   https://pypi.org/project/pyarrow/
 """
 
 
