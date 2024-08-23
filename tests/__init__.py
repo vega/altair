@@ -10,8 +10,19 @@ import pytest
 from tests import examples_arguments_syntax, examples_methods_syntax
 
 if TYPE_CHECKING:
+    import sys
     from re import Pattern
-    from typing import Any, Iterator
+    from typing import Collection, Iterator, Mapping
+
+    if sys.version_info >= (3, 11):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    from _pytest.mark import ParameterSet
+
+    MarksType: TypeAlias = (
+        "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
+    )
 
 slow: pytest.MarkDecorator = pytest.mark.slow()
 """
@@ -71,8 +82,39 @@ def id_func_str_only(val) -> str:
         return val
 
 
-def _distributed_examples(*exclude_prefixes: str) -> Iterator[tuple[Any, str]]:
+def _wrap_mark_specs(
+    pattern_marks: Mapping[Pattern[str] | str, MarksType], /
+) -> dict[Pattern[str], MarksType]:
+    return {
+        (re.compile(p) if not isinstance(p, re.Pattern) else p): marks
+        for p, marks in pattern_marks.items()
+    }
+
+
+def _fill_marks(
+    mark_specs: dict[Pattern[str], MarksType], string: str, /
+) -> MarksType | tuple[()]:
+    it = (v for k, v in mark_specs.items() if k.search(string))
+    return next(it, ())
+
+
+def _distributed_examples(
+    *exclude_prefixes: str, marks: Mapping[Pattern[str] | str, MarksType] | None = None
+) -> Iterator[ParameterSet]:
+    """
+    Yields ``pytest.mark.parametrize`` arguments for all examples.
+
+    Parameters
+    ----------
+    *exclude_prefixes
+        Any file starting with these will be **skipped**.
+    marks
+        Mapping of ``re.search(..., )`` patterns to ``pytest.param(marks=...)``.
+
+        The **first** match (if any) will be inserted into ``marks``.
+    """
     RE_NAME: Pattern[str] = re.compile(r"^tests\.(.*)")
+    mark_specs = _wrap_mark_specs(marks) if marks else {}
 
     for pkg in [examples_arguments_syntax, examples_methods_syntax]:
         pkg_name = pkg.__name__
@@ -86,7 +128,9 @@ def _distributed_examples(*exclude_prefixes: str) -> Iterator[tuple[Any, str]]:
                 file_name = f"{mod_name}.py"
                 msg_name = f"{pkg_name_unqual}.{file_name}"
                 if source := pkgutil.get_data(pkg_name, file_name):
-                    yield source, msg_name
+                    yield pytest.param(
+                        source, msg_name, marks=_fill_marks(mark_specs, msg_name)
+                    )
                 else:
                     msg = (
                         f"Failed to get source data from `{pkg_name}.{file_name}`.\n"
@@ -109,7 +153,26 @@ Hides ``pandas`` warning(s)::
 
 distributed_examples: pytest.MarkDecorator = pytest.mark.parametrize(
     ("source", "filename"),
-    tuple(_distributed_examples("_", "interval_selection_map_quakes")),
+    tuple(
+        _distributed_examples(
+            "_",
+            "interval_selection_map_quakes",
+            marks={
+                "beckers_barley.+facet": slow,
+                "lasagna_plot": slow,
+                "line_chart_with_cumsum_faceted": slow,
+                "layered_bar_chart": slow,
+                "multiple_interactions": slow,
+                "layered_histogram": slow,
+                "stacked_bar_chart_with_text": slow,
+                "bar_chart_with_labels": slow,
+                "interactive_cross_highlight": slow,
+                "wind_vector_map": slow,
+                r"\.point_map\.py": slow,
+                "line_chart_with_color_datum": slow,
+            },
+        )
+    ),
     ids=id_func_str_only,
 )
 """
