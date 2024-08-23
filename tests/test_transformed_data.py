@@ -6,7 +6,7 @@ from vega_datasets import data
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_methods_syntax
+from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
 
 try:
     import vegafusion as vf  # type: ignore
@@ -16,9 +16,7 @@ except ImportError:
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
-@pytest.mark.filterwarnings(
-    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning"
-)
+@ignore_DataFrameGroupBy
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
@@ -35,9 +33,9 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("gapminder_bubble_plot.py", 187, ["income", "population"]),
     ("grouped_bar_chart2.py", 9, ["Group", "Value_start"]),
     ("hexbins.py", 84, ["xFeaturePos", "mean_temp_max"]),
-    ("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"]),
+    pytest.param("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"], marks=slow),
     ("histogram_scatterplot.py", 64, ["bin_maxbins_10_Rotten_Tomatoes_Rating", "__count"]),
-    ("interactive_legend.py", 1708, ["sum_count_start", "series"]),
+    pytest.param("interactive_legend.py", 1708, ["sum_count_start", "series"], marks=slow),
     ("iowa_electricity.py", 51, ["net_generation_start", "year"]),
     ("isotype.py", 37, ["animal", "x"]),
     ("isotype_grid.py", 100, ["row", "col"]),
@@ -47,7 +45,7 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("layered_histogram.py", 113, ["bin_maxbins_100_Measurement"]),
     ("line_chart_with_cumsum.py", 52, ["cumulative_wheat"]),
     ("line_custom_order.py", 55, ["miles", "gas"]),
-    ("line_percent.py", 30, ["sex", "perc"]),
+    pytest.param("line_percent.py", 30, ["sex", "perc"], marks=slow),
     ("line_with_log_scale.py", 15, ["year", "sum_people"]),
     ("multifeature_scatter_plot.py", 150, ["petalWidth", "species"]),
     ("natural_disasters.py", 686, ["Deaths", "Year"]),
@@ -59,10 +57,10 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("pyramid.py", 3, ["category", "value_start"]),
     ("stacked_bar_chart_sorted_segments.py", 60, ["variety", "site"]),
     ("stem_and_leaf.py", 100, ["stem", "leaf"]),
-    ("streamgraph.py", 1708, ["series", "sum_count"]),
+    pytest.param("streamgraph.py", 1708, ["series", "sum_count"], marks=slow),
     ("top_k_items.py", 10, ["rank", "IMDB_Rating_start"]),
     ("top_k_letters.py", 9, ["rank", "letters"]),
-    ("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"]),
+    pytest.param("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"], marks=slow),
     ("area_faceted.py", 492, ["date", "price"]),
     ("distributions_faceted_histogram.py", 20, ["Origin", "__count"]),
     ("us_population_over_time.py", 38, ["sex", "people_start"]),
@@ -97,7 +95,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("histogram_responsive.py", [20, 20], [["__count"], ["__count"]]),
     ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB_Rating"]]),
     ("horizon_graph.py", [20, 20], [["x"], ["ny"]]),
-    ("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]]),
+    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]], marks=slow),
     ("interval_selection.py", [123, 123], [["price_start"], ["date"]]),
     ("layered_chart_with_dual_axis.py", [12, 12], [["month_date"], ["average_precipitation"]]),
     ("layered_heatmap_text.py", [9, 9], [["Cylinders"], ["mean_horsepower"]]),
@@ -111,11 +109,11 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         "scatter_with_layered_histogram.py",
         [2, 19],
         [["gender"], ["__count"]],
-        marks=pytest.mark.xfail(
+        marks=(slow, pytest.mark.xfail(
             XDIST_ENABLED,
             reason="Possibly `numpy` conflict with `xdist`.\n"
             "Very intermittent, but only affects `to_reconstruct=False`."
-        ),
+        )),
     ),
     ("scatter_with_minimap.py", [1461, 1461], [["date"], ["date"]]),
     ("scatter_with_rolling_mean.py", [1461, 1461], [["date"], ["rolling_mean"]]),
