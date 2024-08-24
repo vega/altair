@@ -21,14 +21,8 @@ import pytest
 
 import altair as alt
 from altair import load_schema
-from altair.utils.schemapi import (
-    _DEFAULT_DIALECT_URI,
-    SchemaBase,
-    SchemaValidationError,
-    Undefined,
-    UndefinedType,
-    _FromDict,
-)
+from altair.utils import schemapi
+from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType
 from altair.vegalite.v5.schema.channels import X
 from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
@@ -44,7 +38,7 @@ _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
     # See comments next to definition of `_DEFAULT_DIALECT_URI`
     # for details why we need this test
-    assert _DEFAULT_DIALECT_URI == _JSON_SCHEMA_DRAFT_URL, (
+    assert schemapi._DEFAULT_DIALECT_URI == _JSON_SCHEMA_DRAFT_URL, (
         "The default json schema URL, which is hardcoded,"
         + " is not the same as the one used in the Vega-Lite schema."
         + " You need to update the default value."
@@ -392,10 +386,11 @@ def test_class_with_no_schema():
 @pytest.mark.parametrize("use_json", [True, False])
 def test_hash_schema(use_json):
     classes = _TestSchema._default_wrapper_classes()
+    FromDict = schemapi._FromDict
 
     for cls in classes:
-        hsh1 = _FromDict.hash_schema(cls._schema, use_json=use_json)
-        hsh2 = _FromDict.hash_schema(cls._schema, use_json=use_json)
+        hsh1 = FromDict.hash_schema(cls._schema, use_json=use_json)
+        hsh2 = FromDict.hash_schema(cls._schema, use_json=use_json)
         assert hsh1 == hsh2
         assert hash(hsh1) == hash(hsh2)
 
@@ -407,7 +402,7 @@ def test_schema_validation_error():
     except jsonschema.ValidationError as err:
         the_err = err
 
-    assert isinstance(the_err, SchemaValidationError)
+    assert isinstance(the_err, schemapi.SchemaValidationError)
     message = str(the_err)
 
     assert the_err.message in message
@@ -871,7 +866,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         warnings.filterwarnings("ignore", category=UserWarning)
         chart = chart_func()
     expected_error_message = inspect.cleandoc(expected_error_message)
-    with pytest.raises(SchemaValidationError, match=expected_error_message):
+    with pytest.raises(schemapi.SchemaValidationError, match=expected_error_message):
         chart.to_dict()
 
 
@@ -910,7 +905,7 @@ def test_chart_validation_benchmark() -> None:
         yield from chain.from_iterable(repeat(charts, times=times))
 
     for chart in _iter_charts(times=_REPEAT_TIMES):
-        with pytest.raises(SchemaValidationError):
+        with pytest.raises(schemapi.SchemaValidationError):
             chart.to_dict(validate=True)
 
 

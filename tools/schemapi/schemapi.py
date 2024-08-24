@@ -73,6 +73,17 @@ if TYPE_CHECKING:
     ]
     """Non-exhaustive listing of possible literals in ``ValidationError.validator``"""
 
+__all__ = [
+    "Optional",  # altair.utils
+    "SchemaBase",  # altair.vegalite.v5.schema.core
+    "Undefined",  # altair.utils
+    "UndefinedType",  # altair.vegalite.v5.schema.core -> (side-effect relied on to propagate to alt.__init__)
+    "_resolve_references",  # tools.schemapi.utils -> tools.generate_schema_wrapper
+    "_subclasses",  # altair.vegalite.v5.schema.core
+    "is_undefined",  # altair.typing
+    "validate_jsonschema",  # altair.utils.display
+    "with_property_setters",  # altair.vegalite.v5.schema.channels
+]
 
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
 """
