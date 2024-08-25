@@ -1293,12 +1293,7 @@ class SchemaBase:
 
     @classmethod
     def from_json(
-        cls,
-        json_string: str,
-        validate: bool = True,
-        **kwargs: Any,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
+        cls, json_string: str, validate: bool = True, **kwargs: Any
     ) -> ChartType:
         """
         Instantiate the object from a valid JSON string.
