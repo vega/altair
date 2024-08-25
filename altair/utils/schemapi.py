@@ -723,7 +723,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             error_messages = []
             for group in group_1, list(group_2), next(it, None):
                 if group is not None:
-                    error_messages.append(self._get_message_for_errors_group(group))
+                    error_messages.append(self._get_message_for_errors_group(group))  # noqa: PERF401
             message = "\n\n".join(
                 self.indent_from_second_line(f"Error {error_id}: {m}")
                 for error_id, m in enumerate(error_messages, start=1)
@@ -850,7 +850,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
         if "enum" in errors_by_validator:
             for error in errors_by_validator["enum"]:
-                bullet_points.append(f"one of {error.validator_value}")
+                bullet_points.append(f"one of {error.validator_value}")  # noqa: PERF401
 
         if "type" in errors_by_validator:
             types = [f"'{err.validator_value}'" for err in errors_by_validator["type"]]

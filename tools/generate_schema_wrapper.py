@@ -394,7 +394,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
-    for _, propschema in encoding.properties.items():
+    for _, propschema in encoding.properties.items():  # noqa: PERF102
         def_dict = get_field_datum_value_defs(propschema, schema)
 
         field_ref = def_dict.get("field")
@@ -566,7 +566,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     ]
 
     for name in toposort(graph):
-        contents.append(definitions[name].schema_class())
+        contents.append(definitions[name].schema_class())  # noqa: PERF401
 
     contents.append("")  # end with newline
     return "\n".join(contents)

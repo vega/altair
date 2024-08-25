@@ -482,7 +482,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
         try:
             if field_name in getattr(param.select, prop):
                 return True
-        except (AttributeError, TypeError):
+        except (AttributeError, TypeError):  # noqa: PERF203
             pass
 
     return False
@@ -4871,7 +4871,7 @@ def _remove_layer_props(  # noqa: C901
                     val = c[prop]
                     if val is not Undefined:
                         values.append(val)
-                except KeyError:
+                except KeyError:  # noqa: PERF203
                     pass
             if len(values) == 0:
                 pass
