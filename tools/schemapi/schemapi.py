@@ -317,9 +317,12 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         rootschema
             Context to evaluate within.
 
+        We have **both** a current & a backwards-compatible version of this function.
+
         .. _Validator:
            https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
         """
+        # NOTE: This is the current version
         uri = _get_schema_dialect_uri(rootschema or schema)
         validator = _validator_for(uri)
         registry = _registry(rootschema or schema, uri)
@@ -359,7 +362,17 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     def _resolve_references(
         schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
-        """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
+        """
+        Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
+
+        ``jsonschema`` deprecated ``RefResolver`` in favor of `referencing`_.
+
+        We have **both** a current & a backwards-compatible version of this function.
+
+        .. _referencing:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        """
+        # NOTE: This is the current version
         root = rootschema or schema
         if ("$ref" not in root) or ("$ref" not in schema):
             return schema
@@ -400,6 +413,22 @@ else:
     def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
+        """
+        Constructs a `Validator`_ for future validation.
+
+        We have **both** a current & a backwards-compatible version of this function.
+
+        Parameters
+        ----------
+        schema
+            Schema that a spec will be validated against.
+        rootschema
+            Context to evaluate within.
+
+        .. _Validator:
+           https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+        """
+        # NOTE: This is the backwards-compatible version
         validator = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
@@ -410,12 +439,16 @@ else:
         schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
         """
-        Resolve schema references until there is no $ref anymore in the top-level of the dictionary.
+        Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
 
-        ``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
+        ``jsonschema`` deprecated ``RefResolver`` in favor of `referencing`_.
 
-        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        We have **both** a current & a backwards-compatible version of this function.
+
+        .. _referencing:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
         """
+        # NOTE: This is the backwards-compatible version
         resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
         while "$ref" in schema:
             with resolver.resolving(schema["$ref"]) as resolved:
