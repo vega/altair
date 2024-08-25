@@ -8,7 +8,7 @@ import json
 import operator
 import sys
 import textwrap
-from collections import defaultdict
+from collections import defaultdict, deque
 from functools import lru_cache, partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, groupby, islice, zip_longest
@@ -16,13 +16,10 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Dict,
-    Final,
     Iterable,
-    Iterator,
-    KeysView,
     List,
+    Mapping,
     Sequence,
     TypeVar,
     Union,
@@ -37,7 +34,7 @@ from jsonschema import ValidationError
 from packaging.version import Version
 
 if TYPE_CHECKING:
-    from typing import ClassVar, Literal, Mapping
+    from typing import Callable, ClassVar, Final, Iterator, KeysView, Literal
 
     from jsonschema.protocols import Validator, _JsonParameter
 
@@ -75,6 +72,17 @@ if TYPE_CHECKING:
     ]
     """Non-exhaustive listing of possible literals in ``ValidationError.validator``"""
 
+__all__ = [
+    "Optional",  # altair.utils
+    "SchemaBase",  # altair.vegalite.v5.schema.core
+    "Undefined",  # altair.utils
+    "UndefinedType",  # altair.vegalite.v5.schema.core -> (side-effect relied on to propagate to alt.__init__)
+    "_resolve_references",  # tools.schemapi.utils -> tools.generate_schema_wrapper
+    "_subclasses",  # altair.vegalite.v5.schema.core
+    "is_undefined",  # altair.typing
+    "validate_jsonschema",  # altair.utils.display
+    "with_property_setters",  # altair.vegalite.v5.schema.channels
+]
 
 _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
 """
@@ -308,9 +316,12 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         rootschema
             Context to evaluate within.
 
+        We have **both** a current & a backwards-compatible version of this function.
+
         .. _Validator:
            https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
         """
+        # NOTE: This is the current version
         uri = _get_schema_dialect_uri(rootschema or schema)
         validator = _validator_for(uri)
         registry = _registry(rootschema or schema, uri)
@@ -350,7 +361,17 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     def _resolve_references(
         schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
-        """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
+        """
+        Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
+
+        ``jsonschema`` deprecated ``RefResolver`` in favor of `referencing`_.
+
+        We have **both** a current & a backwards-compatible version of this function.
+
+        .. _referencing:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        """
+        # NOTE: This is the current version
         root = rootschema or schema
         if ("$ref" not in root) or ("$ref" not in schema):
             return schema
@@ -391,6 +412,22 @@ else:
     def _validator(
         schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> Validator:
+        """
+        Constructs a `Validator`_ for future validation.
+
+        We have **both** a current & a backwards-compatible version of this function.
+
+        Parameters
+        ----------
+        schema
+            Schema that a spec will be validated against.
+        rootschema
+            Context to evaluate within.
+
+        .. _Validator:
+           https://python-jsonschema.readthedocs.io/en/stable/validate/#the-validator-protocol
+        """
+        # NOTE: This is the backwards-compatible version
         validator = _validator_for(_get_schema_dialect_uri(rootschema or schema))
         resolver: Any = (
             jsonschema.RefResolver.from_schema(rootschema) if rootschema else rootschema
@@ -401,12 +438,16 @@ else:
         schema: dict[str, Any], rootschema: dict[str, Any]
     ) -> dict[str, Any]:
         """
-        Resolve schema references until there is no $ref anymore in the top-level of the dictionary.
+        Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
 
-        ``jsonschema`` deprecated ``RefResolver`` in favor of ``referencing``.
+        ``jsonschema`` deprecated ``RefResolver`` in favor of `referencing`_.
 
-        See https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+        We have **both** a current & a backwards-compatible version of this function.
+
+        .. _referencing:
+           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
         """
+        # NOTE: This is the backwards-compatible version
         resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
         while "$ref" in schema:
             with resolver.resolving(schema["$ref"]) as resolved:
@@ -605,17 +646,6 @@ _FN_MAP_DEDUPLICATION: Mapping[_ValidatorKeyword, Callable[[_Errs], _ErrsLazy]] 
     "additionalProperties": _shortest_any_of,
     "enum": _prune_subset_enum,
 }
-
-
-def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
-    """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
-    current: set[type[Any]] = {cls}
-    while current:
-        seen |= current
-        current = set(chain.from_iterable(cls.__subclasses__() for cls in current))
-        for cls in current - seen:
-            yield cls
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
@@ -971,6 +1001,8 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
+    # TODO: Implement `ClassVar` validation using https://peps.python.org/pep-0487/
+
     _schema: ClassVar[dict[str, Any] | Any] = None
     _rootschema: ClassVar[dict[str, Any] | Any] = None
     _class_is_valid_at_instantiation: ClassVar[bool] = True
@@ -1249,17 +1281,18 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        converter = _FromDict(cls._default_wrapper_classes())
+        # NOTE: the breadth-first search occurs only once now
+        # `_FromDict` is purely ClassVar/classmethods
+        converter: type[_FromDict] | _FromDict = (
+            _FromDict
+            if _FromDict.hash_tps
+            else _FromDict(cls._default_wrapper_classes())
+        )
         return converter.from_dict(dct, cls)
 
     @classmethod
     def from_json(
-        cls,
-        json_string: str,
-        validate: bool = True,
-        **kwargs: Any,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
+        cls, json_string: str, validate: bool = True, **kwargs: Any
     ) -> ChartType:
         """
         Instantiate the object from a valid JSON string.
@@ -1355,6 +1388,9 @@ def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
 
 
 def _freeze(val):
+    # NOTE: No longer referenced
+    # - Previously only called during tests
+    # - Not during any library code
     if isinstance(val, dict):
         return frozenset((k, _freeze(v)) for k, v in val.items())
     elif isinstance(val, set):
@@ -1363,6 +1399,64 @@ def _freeze(val):
         return tuple(_freeze(v) for v in val)
     else:
         return val
+
+
+def _hash_schema(
+    schema: _JsonParameter,
+    /,
+    *,
+    exclude: Iterable[str] = frozenset(
+        ("definitions", "title", "description", "$schema", "id")
+    ),
+) -> int:
+    """
+    Return the hash value for a ``schema``.
+
+    Parameters
+    ----------
+    schema
+        ``SchemaBase._schema``.
+    exclude
+        ``schema`` keys which are not considered when identifying equivalence.
+    """
+    if isinstance(schema, Mapping):
+        schema = {k: v for k, v in schema.items() if k not in exclude}
+    return hash(json.dumps(schema, sort_keys=True))
+
+
+def _subclasses(cls: type[TSchemaBase]) -> Iterator[type[TSchemaBase]]:
+    """
+    Breadth-first sequence of all classes which inherit from ``cls``.
+
+    Notes
+    -----
+    - `__subclasses__()` alone isn't helpful, as that is only immediate subclasses
+    - Deterministic
+    - Used for `SchemaBase` & `VegaLiteSchema`
+    - In practice, it provides an iterator over all classes in the schema below `VegaLiteSchema`
+        - The first one is `Root`
+    - The order itself, I don't think is important
+        - But probably important that it doesn't change
+        - Thinking they used an iterator so that the subclasses are evaluated after they have all been defined
+
+    - `Chart` seems to try to avoid calling this
+        - Using `TopLevelMixin.__subclasses__()` first if possible
+    - It is always called during `Chart.encode()`
+        - Chart.encode()
+        - altair.utils.core.infer_encoding_types
+        -  _ChannelCache.infer_encoding_types
+        - _ChannelCache._wrap_in_channel
+        - SchemaBase.from_dict (recursive, hot loop, validate =False, within a try/except)
+        - _FromDict(cls._default_wrapper_classes())
+        - schemapi._subclasses(schema.core.VegaLiteSchema)
+    """
+    seen = set()
+    current: set[type[TSchemaBase]] = {cls}
+    while current:
+        seen |= current
+        current = set(chain.from_iterable(cls.__subclasses__() for cls in current))
+        for cls in current - seen:
+            yield cls
 
 
 class _FromDict:
@@ -1374,40 +1468,31 @@ class _FromDict:
     specified in the ``wrapper_classes`` positional-only argument to the constructor.
     """
 
-    _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
+    hash_tps: ClassVar[defaultdict[int, deque[type[SchemaBase]]]] = defaultdict(deque)
+    """
+    Maps unique schemas to corresponding types.
 
-    def __init__(self, wrapper_classes: Iterable[type[SchemaBase]], /) -> None:
-        # Create a mapping of a schema hash to a list of matching classes
-        # This lets us quickly determine the correct class to construct
-        self.class_dict: dict[int, list[type[SchemaBase]]] = defaultdict(list)
+    The logic is that after removing a subset of keys, some schemas are identical.
+
+    If there are multiple matches, we use the first one in the ``deque``.
+
+    ``_subclasses`` yields the results of a `breadth-first search`_,
+    so the first matching class is the most general match.
+
+    .. _breadth-first search:
+       https://en.wikipedia.org/wiki/Breadth-first_search
+    """
+
+    def __init__(self, wrapper_classes: Iterator[type[SchemaBase]], /) -> None:
+        cls = type(self)
         for tp in wrapper_classes:
             if tp._schema is not None:
-                self.class_dict[self.hash_schema(tp._schema)].append(tp)
-
-    @classmethod
-    def hash_schema(cls, schema: dict[str, Any], use_json: bool = True) -> int:
-        """
-        Compute a python hash for a nested dictionary which properly handles dicts, lists, sets, and tuples.
-
-        At the top level, the function excludes from the hashed schema all keys
-        listed in `exclude_keys`.
-
-        This implements two methods: one based on conversion to JSON, and one based
-        on recursive conversions of unhashable to hashable types; the former seems
-        to be slightly faster in several benchmarks.
-        """
-        if cls._hash_exclude_keys and isinstance(schema, dict):
-            schema = {
-                key: val
-                for key, val in schema.items()
-                if key not in cls._hash_exclude_keys
-            }
-        s: Any = json.dumps(schema, sort_keys=True) if use_json else _freeze(schema)
-        return hash(s)
+                cls.hash_tps[_hash_schema(tp._schema)].append(tp)
 
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: TSchemaBase,
         tp: None = ...,
         schema: None = ...,
@@ -1415,8 +1500,9 @@ class _FromDict:
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]],
         tp: Any = ...,
         schema: Any = ...,
@@ -1424,8 +1510,9 @@ class _FromDict:
         default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any],
         tp: None = ...,
         schema: dict[str, Any] = ...,
@@ -1433,8 +1520,9 @@ class _FromDict:
         default_class: Any = ...,
     ) -> SchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any],
         tp: type[TSchemaBase],
         schema: None = ...,
@@ -1442,16 +1530,18 @@ class _FromDict:
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]],
         tp: type[TSchemaBase],
         schema: dict[str, Any],
         rootschema: dict[str, Any] | None = ...,
         default_class: Any = ...,
     ) -> Never: ...
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]] | TSchemaBase,
         tp: type[TSchemaBase] | None = None,
         schema: dict[str, Any] | None = None,
@@ -1468,28 +1558,26 @@ class _FromDict:
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
-            # If there are multiple matches, we use the first one in the dict.
-            # Our class dict is constructed breadth-first from top to bottom,
-            # so the first class that matches is the most general match.
             current_schema = schema
             root_schema = rootschema or current_schema
-            matches = self.class_dict[self.hash_schema(current_schema)]
-            target_tp = matches[0] if matches else default_class
+            matches = cls.hash_tps[_hash_schema(current_schema)]
+            target_tp = next(iter(matches), default_class)
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
 
-        from_dict = partial(self.from_dict, rootschema=root_schema)
+        from_dict = partial(cls.from_dict, rootschema=root_schema)
         # Can also return a list?
         resolved = _resolve_references(current_schema, root_schema)
         if "anyOf" in resolved or "oneOf" in resolved:
             schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
             for possible in schemas:
-                try:
-                    validate_jsonschema_fail_fast(dct, possible, rootschema=root_schema)
-                except ValidationError:
-                    continue
-                else:
+                # NOTE: Instead of raise/except/continue
+                # Pre-"zero-cost" exceptions, this has a huge performance gain.
+                # https://docs.python.org/3/whatsnew/3.11.html#misc
+                # https://github.com/python/cpython/blob/9b3749849eda4012261a112b22eb07f26fd345a9/InternalDocs/exception_handling.md
+                it_errs = _validator(possible, root_schema).iter_errors(dct)
+                if next(it_errs, None) is None:
                     return from_dict(dct, schema=possible, default_class=target_tp)
 
         if _is_dict(dct):
