@@ -830,6 +830,7 @@ class _ChannelCache:
     @classmethod
     def from_cache(cls) -> _ChannelCache:
         global _CHANNEL_CACHE
+        # FIXME: Hot try/except
         try:
             cached = _CHANNEL_CACHE
         except NameError:

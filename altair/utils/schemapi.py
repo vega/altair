@@ -1073,6 +1073,7 @@ class SchemaBase:
         if attr in self._kwds:
             return self._kwds[attr]
         else:
+            # FIXME: Hot try/except
             try:
                 _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
             except AttributeError:

@@ -1790,6 +1790,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         copy = _top_schema_base(self).copy(deep=False)
         original_data = getattr(copy, "data", Undefined)
         if not utils.is_undefined(original_data):
+            # FIXME: Hot try/except
             try:
                 data = _to_eager_narwhals_dataframe(original_data)
             except TypeError:
@@ -3401,6 +3402,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
+        # FIXME: Hot try/except
         try:
             dct = self.to_dict(context={"pre_transform": False})
         except Exception:
@@ -3713,6 +3715,7 @@ class Chart(
         _tp: Any
         for tp in TopLevelMixin.__subclasses__():
             _tp = super() if tp is Chart else tp
+            # FIXME: Hot try/except
             try:
                 return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:

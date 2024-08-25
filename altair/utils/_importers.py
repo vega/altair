@@ -76,6 +76,7 @@ def vl_version_for_vl_convert() -> str:
 
 def import_pyarrow_interchange() -> ModuleType:
     min_version = "11.0.0"
+    # FIXME: Hot try/except
     try:
         version = importlib_version("pyarrow")
 
@@ -102,6 +103,7 @@ def import_pyarrow_interchange() -> ModuleType:
 
 
 def pyarrow_available() -> bool:
+    # FIXME: Hot try/except
     try:
         import_pyarrow_interchange()
         return True
