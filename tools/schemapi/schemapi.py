@@ -646,17 +646,6 @@ _FN_MAP_DEDUPLICATION: Mapping[_ValidatorKeyword, Callable[[_Errs], _ErrsLazy]] 
 }
 
 
-def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
-    """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
-    current: set[type[Any]] = {cls}
-    while current:
-        seen |= current
-        current = set(chain.from_iterable(cls.__subclasses__() for cls in current))
-        for cls in current - seen:
-            yield cls
-
-
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
     try:
         ser = nw.from_native(obj, strict=True, series_only=True)
@@ -1288,7 +1277,13 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        converter = _FromDict(cls._default_wrapper_classes())
+        # NOTE: the breadth-first search occurs only once now
+        # `_FromDict` is purely ClassVar/classmethods
+        converter: type[_FromDict] | _FromDict = (
+            _FromDict
+            if _FromDict.hash_tps
+            else _FromDict(cls._default_wrapper_classes())
+        )
         return converter.from_dict(dct, cls)
 
     @classmethod
@@ -1389,6 +1384,9 @@ def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
 
 
 def _freeze(val):
+    # NOTE: No longer referenced
+    # - Previously only called during tests
+    # - Not during any library code
     if isinstance(val, dict):
         return frozenset((k, _freeze(v)) for k, v in val.items())
     elif isinstance(val, set):
@@ -1397,6 +1395,64 @@ def _freeze(val):
         return tuple(_freeze(v) for v in val)
     else:
         return val
+
+
+def _hash_schema(
+    schema: _JsonParameter,
+    /,
+    *,
+    exclude: Iterable[str] = frozenset(
+        ("definitions", "title", "description", "$schema", "id")
+    ),
+) -> int:
+    """
+    Return the hash value for a ``schema``.
+
+    Parameters
+    ----------
+    schema
+        ``SchemaBase._schema``.
+    exclude
+        ``schema`` keys which are not considered when identifying equivalence.
+    """
+    if isinstance(schema, Mapping):
+        schema = {k: v for k, v in schema.items() if k not in exclude}
+    return hash(json.dumps(schema, sort_keys=True))
+
+
+def _subclasses(cls: type[TSchemaBase]) -> Iterator[type[TSchemaBase]]:
+    """
+    Breadth-first sequence of all classes which inherit from ``cls``.
+
+    Notes
+    -----
+    - `__subclasses__()` alone isn't helpful, as that is only immediate subclasses
+    - Deterministic
+    - Used for `SchemaBase` & `VegaLiteSchema`
+    - In practice, it provides an iterator over all classes in the schema below `VegaLiteSchema`
+        - The first one is `Root`
+    - The order itself, I don't think is important
+        - But probably important that it doesn't change
+        - Thinking they used an iterator so that the subclasses are evaluated after they have all been defined
+
+    - `Chart` seems to try to avoid calling this
+        - Using `TopLevelMixin.__subclasses__()` first if possible
+    - It is always called during `Chart.encode()`
+        - Chart.encode()
+        - altair.utils.core.infer_encoding_types
+        -  _ChannelCache.infer_encoding_types
+        - _ChannelCache._wrap_in_channel
+        - SchemaBase.from_dict (recursive, hot loop, validate =False, within a try/except)
+        - _FromDict(cls._default_wrapper_classes())
+        - schemapi._subclasses(schema.core.VegaLiteSchema)
+    """
+    seen = set()
+    current: set[type[TSchemaBase]] = {cls}
+    while current:
+        seen |= current
+        current = set(chain.from_iterable(cls.__subclasses__() for cls in current))
+        for cls in current - seen:
+            yield cls
 
 
 class _FromDict:
@@ -1408,40 +1464,31 @@ class _FromDict:
     specified in the ``wrapper_classes`` positional-only argument to the constructor.
     """
 
-    _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
+    hash_tps: ClassVar[defaultdict[int, deque[type[SchemaBase]]]] = defaultdict(deque)
+    """
+    Maps unique schemas to corresponding types.
 
-    def __init__(self, wrapper_classes: Iterable[type[SchemaBase]], /) -> None:
-        # Create a mapping of a schema hash to a list of matching classes
-        # This lets us quickly determine the correct class to construct
-        self.class_dict: dict[int, list[type[SchemaBase]]] = defaultdict(list)
+    The logic is that after removing a subset of keys, some schemas are identical.
+
+    If there are multiple matches, we use the first one in the ``deque``.
+
+    ``_subclasses`` yields the results of a `breadth-first search`_,
+    so the first matching class is the most general match.
+
+    .. _breadth-first search:
+       https://en.wikipedia.org/wiki/Breadth-first_search
+    """
+
+    def __init__(self, wrapper_classes: Iterator[type[SchemaBase]], /) -> None:
+        cls = type(self)
         for tp in wrapper_classes:
             if tp._schema is not None:
-                self.class_dict[self.hash_schema(tp._schema)].append(tp)
-
-    @classmethod
-    def hash_schema(cls, schema: dict[str, Any], use_json: bool = True) -> int:
-        """
-        Compute a python hash for a nested dictionary which properly handles dicts, lists, sets, and tuples.
-
-        At the top level, the function excludes from the hashed schema all keys
-        listed in `exclude_keys`.
-
-        This implements two methods: one based on conversion to JSON, and one based
-        on recursive conversions of unhashable to hashable types; the former seems
-        to be slightly faster in several benchmarks.
-        """
-        if cls._hash_exclude_keys and isinstance(schema, dict):
-            schema = {
-                key: val
-                for key, val in schema.items()
-                if key not in cls._hash_exclude_keys
-            }
-        s: Any = json.dumps(schema, sort_keys=True) if use_json else _freeze(schema)
-        return hash(s)
+                cls.hash_tps[_hash_schema(tp._schema)].append(tp)
 
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: TSchemaBase,
         tp: None = ...,
         schema: None = ...,
@@ -1449,8 +1496,9 @@ class _FromDict:
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]],
         tp: Any = ...,
         schema: Any = ...,
@@ -1458,8 +1506,9 @@ class _FromDict:
         default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any],
         tp: None = ...,
         schema: dict[str, Any] = ...,
@@ -1467,8 +1516,9 @@ class _FromDict:
         default_class: Any = ...,
     ) -> SchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any],
         tp: type[TSchemaBase],
         schema: None = ...,
@@ -1476,16 +1526,18 @@ class _FromDict:
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]],
         tp: type[TSchemaBase],
         schema: dict[str, Any],
         rootschema: dict[str, Any] | None = ...,
         default_class: Any = ...,
     ) -> Never: ...
+    @classmethod
     def from_dict(
-        self,
+        cls,
         dct: dict[str, Any] | list[dict[str, Any]] | TSchemaBase,
         tp: type[TSchemaBase] | None = None,
         schema: dict[str, Any] | None = None,
@@ -1502,18 +1554,15 @@ class _FromDict:
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
-            # If there are multiple matches, we use the first one in the dict.
-            # Our class dict is constructed breadth-first from top to bottom,
-            # so the first class that matches is the most general match.
             current_schema = schema
             root_schema = rootschema or current_schema
-            matches = self.class_dict[self.hash_schema(current_schema)]
-            target_tp = matches[0] if matches else default_class
+            matches = cls.hash_tps[_hash_schema(current_schema)]
+            target_tp = next(iter(matches), default_class)
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
 
-        from_dict = partial(self.from_dict, rootschema=root_schema)
+        from_dict = partial(cls.from_dict, rootschema=root_schema)
         # Can also return a list?
         resolved = _resolve_references(current_schema, root_schema)
         if "anyOf" in resolved or "oneOf" in resolved:

@@ -10,7 +10,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Callable, Iterable, Literal, Sequence
 
 import jsonschema
 import jsonschema.exceptions
@@ -48,7 +48,23 @@ def test_actual_json_schema_draft_is_same_as_hardcoded_default():
 class _TestSchema(SchemaBase):
     @classmethod
     def _default_wrapper_classes(cls):
-        return _TestSchema.__subclasses__()
+        return schemapi._subclasses(_TestSchema)
+
+    @classmethod
+    def from_dict(
+        cls: type[schemapi.TSchemaBase], dct: dict[str, Any], validate: bool = True
+    ) -> schemapi.TSchemaBase:
+        """
+        Overrides ``SchemaBase``, which uses a cached ``FromDict.hash_tps``.
+
+        The cached version is based on an iterator over:
+
+            schemapi._subclasses(VegaLiteSchema)
+        """
+        if validate:
+            cls.validate(dct)
+        converter = schemapi._FromDict(cls._default_wrapper_classes())
+        return converter.from_dict(dct, cls)
 
 
 class MySchema(_TestSchema):
@@ -383,14 +399,10 @@ def test_class_with_no_schema():
     assert str(err.value).startswith("Cannot instantiate object")
 
 
-@pytest.mark.parametrize("use_json", [True, False])
-def test_hash_schema(use_json):
-    classes = _TestSchema._default_wrapper_classes()
-    FromDict = schemapi._FromDict
-
-    for cls in classes:
-        hsh1 = FromDict.hash_schema(cls._schema, use_json=use_json)
-        hsh2 = FromDict.hash_schema(cls._schema, use_json=use_json)
+def test_hash_schema():
+    for cls in _TestSchema._default_wrapper_classes():
+        hsh1 = schemapi._hash_schema(cls._schema)
+        hsh2 = schemapi._hash_schema(cls._schema)
         assert hsh1 == hsh2
         assert hash(hsh1) == hash(hsh2)
 
