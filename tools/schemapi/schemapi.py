@@ -6,7 +6,7 @@ import json
 import operator
 import sys
 import textwrap
-from collections import defaultdict
+from collections import defaultdict, deque
 from functools import lru_cache, partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, groupby, islice, zip_longest
@@ -14,13 +14,10 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Dict,
-    Final,
     Iterable,
-    Iterator,
-    KeysView,
     List,
+    Mapping,
     Sequence,
     TypeVar,
     Union,
@@ -35,7 +32,7 @@ from jsonschema import ValidationError
 from packaging.version import Version
 
 if TYPE_CHECKING:
-    from typing import ClassVar, Literal, Mapping
+    from typing import Callable, ClassVar, Final, Iterator, KeysView, Literal
 
     from jsonschema.protocols import Validator, _JsonParameter
 
