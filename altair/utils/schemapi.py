@@ -193,22 +193,6 @@ def validate_jsonschema(
             raise NotImplementedError(msg)
 
 
-def validate_jsonschema_fail_fast(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
-) -> None:
-    """
-    Raise as quickly as possible.
-
-    Use instead of ``validate_jsonschema`` when any information about the error(s) are not needed.
-    """
-    if (
-        err := next(_validator(schema, rootschema).iter_errors(spec), None)
-    ) is not None:
-        raise err
-
-
 def _get_schema_dialect_uri(schema: dict[str, Any]) -> str:
     """
     Return value of `$schema`_.
