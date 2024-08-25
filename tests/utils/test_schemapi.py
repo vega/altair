@@ -884,16 +884,19 @@ def test_chart_validation_errors(chart_func, expected_error_message):
 
 _SKIP_SLOW_BENCHMARKS: bool = True
 _REPEAT_TIMES = 1000
-# to_dict optimize had no observable benefit
 
 
+@pytest.mark.parametrize("to_or_from", ["to_dict-validate", "to_dict", "from_dict"])
+@pytest.mark.filterwarnings("ignore:.*:UserWarning")
 @pytest.mark.skipif(
     _SKIP_SLOW_BENCHMARKS,
     reason="Should only be run in isolation to test single threaded performance.",
 )
-def test_chart_validation_benchmark() -> None:
+def test_chart_validation_benchmark(
+    to_or_from: Literal["to_dict-validate", "to_dict", "from_dict"],
+) -> None:
     """
-    Intended to isolate the `to_dict` call.
+    Intended to isolate `Chart.(to|from)_dict.` calls.
 
     Repeated ``_REPEAT_TIMES`` times, non-parametric:
     - in an attempt to limit the potential overhead of ``pytest``
@@ -901,24 +904,64 @@ def test_chart_validation_benchmark() -> None:
 
     Results
     -------
-    8/22/2024, 10:06:32 - 1000x in 108.46s (0:01:48)
+    ```
+    _REPEAT_TIMES = 1000
+    pytest -k test_chart_validation_benchmark  --numprocesses=3 --durations=3 tests
+
+    # Pre-`SchemaBase.from_dict` refactor (3.12.3)
+    108.16s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict-validate]
+    84.62s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[from_dict]
+    66.71s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict]
+
+    # Post-`SchemaBase.from_dict` refactor (3.12.3)
+    107.84s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict-validate]
+    50.43s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[from_dict]
+    67.07s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict]
+    ```
     """
+    from itertools import chain, repeat
+
     if TYPE_CHECKING:
         from typing import Iterator
 
         from altair.typing import ChartType
 
-    def _iter_charts(*, times: int) -> Iterator[ChartType]:
-        from itertools import chain, repeat
+    def _iter_charts() -> Iterator[ChartType]:
+        """
+        Ensures only len(chart_funcs_error_message) actual charts are constructed.
 
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=UserWarning)
-            charts: list[ChartType] = [fn() for fn, _ in chart_funcs_error_message]
-        yield from chain.from_iterable(repeat(charts, times=times))
+        The `to_dict` calls are what gets multiplied
+        """
+        charts: list[ChartType] = [fn() for fn, _ in chart_funcs_error_message]
+        yield from chain.from_iterable(repeat(charts, times=_REPEAT_TIMES))
 
-    for chart in _iter_charts(times=_REPEAT_TIMES):
-        with pytest.raises(schemapi.SchemaValidationError):
-            chart.to_dict(validate=True)
+    def _iter_chart_factory() -> Iterator[ChartType]:
+        """
+        Validation not the bottleneck, but encode is.
+
+        Ensures at least `times` * len(chart_funcs_error_message) .encode calls are made.
+        """
+        chart_funcs: list[Callable[[], ChartType]] = [
+            fn for fn, _ in chart_funcs_error_message
+        ]
+        for fn in chain.from_iterable(repeat(chart_funcs, times=_REPEAT_TIMES)):
+            yield fn()
+
+    def _to_dict(validate: bool) -> None:
+        if validate:
+            for chart in _iter_charts():
+                with pytest.raises(schemapi.SchemaValidationError):
+                    chart.to_dict(validate=validate)
+        else:
+            for chart in _iter_charts():
+                chart.to_dict(validate=validate)
+
+    if to_or_from == "to_dict":
+        _to_dict(validate=False)
+    elif to_or_from == "to_dict-validate":
+        _to_dict(validate=True)
+    else:
+        assert list(_iter_chart_factory())
 
 
 def test_multiple_field_strings_in_condition():
