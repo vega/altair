@@ -715,18 +715,19 @@ class SchemaValidationError(jsonschema.ValidationError):
         )
 
     def _get_message(self) -> str:
-        it = self._errors
+        it: _ErrsLazyGroup = self._errors
         group_1 = list(next(it))
         if (group_2 := next(it, None)) is not None:
-            error_messages = []
-            for group in group_1, list(group_2), next(it, None):
-                if group is not None:
-                    error_messages.append(self._get_message_for_errors_group(group))  # noqa: PERF401
-            message = "\n\n".join(
-                self.indent_from_second_line(f"Error {error_id}: {m}")
-                for error_id, m in enumerate(error_messages, start=1)
+            messages: Iterator[str] = (
+                self._get_message_for_errors_group(g)
+                for g in (group_1, list(group_2), next(it, None))
+                if g is not None
             )
-            return f"Multiple errors were found.\n\n{message}"
+            msg = "\n\n".join(
+                self.indent_from_second_line(f"Error {error_id}: {m}")
+                for error_id, m in enumerate(messages, start=1)
+            )
+            return f"Multiple errors were found.\n\n{msg}"
         else:
             return self._get_message_for_errors_group(group_1)
 

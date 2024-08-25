@@ -213,8 +213,9 @@ def name_views(
 
         chart_names: list[str] = []
         for subchart in subcharts:
-            for name in name_views(subchart, i=i + len(chart_names), exclude=exclude):
-                chart_names.append(name)  # noqa: PERF402
+            chart_names.extend(
+                name_views(subchart, i=i + len(chart_names), exclude=exclude)
+            )
         return chart_names
 
 
@@ -324,9 +325,7 @@ def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]
     group = get_group_mark_for_scope(vega_spec, scope) or {}
 
     # get datasets from group
-    datasets = []
-    for dataset in group.get("data", []):
-        datasets.append(dataset["name"])  # noqa: PERF401
+    datasets = [dataset["name"] for dataset in group.get("data", [])]
 
     # Add facet dataset
     facet_dataset = group.get("from", {}).get("facet", {}).get("name", None)

@@ -426,7 +426,7 @@ class Parameter(_expr_core.OperatorMixin):
         # fields or encodings list, then we want to return an expression.
         if check_fields_and_encodings(self, field_name):
             return SelectionExpression(_attrexpr)
-        return _expr_core.GetAttrExpression(self.name, field_name)
+        return _attrexpr
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
@@ -478,13 +478,10 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     param = parameter.param
     if utils.is_undefined(param) or isinstance(param, core.VariableParameter):
         return False
-    for prop in ["fields", "encodings"]:
-        try:
-            if field_name in getattr(param.select, prop):
-                return True
-        except (AttributeError, TypeError):  # noqa: PERF203
-            pass
-
+    select = param.select
+    for prop in "fields", "encodings":
+        if not utils.is_undefined(p := select._get(prop)) and field_name in p:
+            return True
     return False
 
 
@@ -4841,17 +4838,13 @@ def _repeat_names(
     return params_named
 
 
-def _remove_layer_props(  # noqa: C901
+def _remove_layer_props(
     chart: LayerChart, subcharts: list[ChartType], layer_props: Iterable[str]
 ) -> tuple[dict[str, Any], list[ChartType]]:
     def remove_prop(subchart: ChartType, prop: str) -> ChartType:
-        # If subchart is a UnitSpec, then subchart["height"] raises a KeyError
-        try:
-            if subchart[prop] is not Undefined:
-                subchart = subchart.copy()
-                subchart[prop] = Undefined
-        except KeyError:
-            pass
+        if not utils.is_undefined(subchart._get(prop)):
+            subchart = subchart.copy()
+            subchart[prop] = Undefined
         return subchart
 
     output_dict: dict[str, Any] = {}
@@ -4864,15 +4857,8 @@ def _remove_layer_props(  # noqa: C901
         if chart[prop] is Undefined:
             # Top level does not have this prop.
             # Check for consistent props within the subcharts.
-            values = []
-            for c in subcharts:
-                # If c is a UnitSpec, then c["height"] raises a KeyError.
-                try:
-                    val = c[prop]
-                    if val is not Undefined:
-                        values.append(val)
-                except KeyError:  # noqa: PERF203
-                    pass
+            values = [v for c in subcharts if not utils.is_undefined(v := c._get(prop))]
+
             if len(values) == 0:
                 pass
             elif all(v == values[0] for v in values[1:]):
