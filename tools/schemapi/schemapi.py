@@ -1568,11 +1568,12 @@ class _FromDict:
         if "anyOf" in resolved or "oneOf" in resolved:
             schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
             for possible in schemas:
-                try:
-                    validate_jsonschema_fail_fast(dct, possible, rootschema=root_schema)
-                except ValidationError:
-                    continue
-                else:
+                # NOTE: Instead of raise/except/continue
+                # Pre-"zero-cost" exceptions, this has a huge performance gain.
+                # https://docs.python.org/3/whatsnew/3.11.html#misc
+                # https://github.com/python/cpython/blob/9b3749849eda4012261a112b22eb07f26fd345a9/InternalDocs/exception_handling.md
+                it_errs = _validator(possible, root_schema).iter_errors(dct)
+                if next(it_errs, None) is None:
                     return from_dict(dct, schema=possible, default_class=target_tp)
 
         if _is_dict(dct):
