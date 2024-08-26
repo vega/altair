@@ -1308,7 +1308,7 @@ class SchemaBase:
     @classmethod
     def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
         """Resolve references in the context of this object's schema or root schema."""
-        rootschema = cls._rootschema or cls._schema or schema
+        rootschema = cls._rootschema or cls._schema
         if rootschema is None:
             name = type(cls).__name__
             msg = (

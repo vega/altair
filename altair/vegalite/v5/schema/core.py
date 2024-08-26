@@ -487,6 +487,7 @@ def load_schema() -> dict:
 
 
 class VegaLiteSchema(SchemaBase):
+    _schema = load_schema()
     _rootschema = load_schema()
 
     @classmethod
@@ -501,8 +502,6 @@ class Root(VegaLiteSchema):
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
-
-    _schema = VegaLiteSchema._rootschema
 
     def __init__(self, *args, **kwds):
         super().__init__(*args, **kwds)

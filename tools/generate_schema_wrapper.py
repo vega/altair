@@ -54,6 +54,7 @@ CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 
 BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
+    _schema = load_schema()
     _rootschema = load_schema()
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[Any]]:
@@ -299,6 +300,17 @@ def process_description(description: str) -> str:
     description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
     description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
     return description.strip()
+
+
+class RootSchemaGenerator(SchemaGenerator):
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+
+        {init_code}
+    '''
+    )
 
 
 class FieldSchemaGenerator(SchemaGenerator):
@@ -557,12 +569,11 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
         BASE_SCHEMA.format(basename=basename),
-        schema_class(
+        RootSchemaGenerator(
             "Root",
             schema=rootschema,
             basename=basename,
-            schemarepr=CodeSnippet(f"{basename}._rootschema"),
-        ),
+        ).schema_class(),
     ]
 
     for name in toposort(graph):
