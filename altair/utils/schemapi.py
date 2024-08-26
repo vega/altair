@@ -981,6 +981,132 @@ def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
         return obj
 
 
+class _SchemaBasePEP487:
+    """Minimal demo for testing feasibility of `__init_subclass__`."""
+
+    _schema: ClassVar[dict[str, Any]]
+    _rootschema: ClassVar[dict[str, Any]]
+    _class_is_valid_at_instantiation: ClassVar[bool] = True
+
+    def __init__(self, *args: Any, **kwds: Any) -> None:
+        if (kwds and args) or len(args) > 1:
+            name = type(self).__name__
+            _args = ", ".join(f"{a!r}" for a in args)
+            _kwds = ", ".join(f"{k}={v!r}" for k, v in kwds.items())
+            msg = (
+                f"Expected either:\n"
+                f" - a single arg with no kwds, for, e.g. {{'type': 'string'}}\n"
+                f" - zero args with zero or more kwds for {{'type': 'object'}}\n\n"
+                f"but got: {name}({_args}, {_kwds})"
+            )
+            raise AssertionError(msg)
+        # use object.__setattr__ because we override setattr below.
+        self._args: tuple[Any, ...]
+        self._kwds: dict[str, Any]
+        object.__setattr__(self, "_args", args)
+        object.__setattr__(self, "_kwds", kwds)
+
+    def __init_subclass__(
+        cls,
+        *args: Any,
+        schema: dict[str, Any] | None = None,
+        rootschema: dict[str, Any] | None = None,
+        valid_at_init: bool | None = None,
+        **kwds: Any,
+    ) -> None:
+        super().__init_subclass__(*args, **kwds)
+        # NOTE: `SchemaBase` itself would have no `_schema` or `_rootschema`, but won't be run through this
+        # FIXED: `VegaLiteSchema` has a `_rootschema` but no `_schema`
+        # FIXED: `Root` uses `VegaLiteSchema._rootschema`, for `_schema` and inherits the same for `_rootschema`
+        # FIXED: Both have only `_schema` - which is a type
+        # - `api.Then`: _schema = {"type": "object"}
+        # - `expr.core.Expression`: _schema = {"type": "string"}
+        # ----
+        # All others either *only* define `_schema`, or inherit it when they are a channel
+        if schema is None:
+            if hasattr(cls, "_schema"):
+                schema = cls._schema
+            else:
+                msg = (
+                    f"Cannot instantiate object of type {cls}: "
+                    "_schema class attribute is not defined."
+                )
+                raise TypeError(msg)
+
+        if rootschema is None:
+            if hasattr(cls, "_rootschema"):
+                rootschema = cls._rootschema
+            elif "$ref" not in schema:
+                rootschema = schema
+            else:
+                msg = "`rootschema` must be provided if `schema` contains a `'$ref'` and does not inherit one."
+                raise TypeError(msg)
+
+        # NOTE: Inherit a `False`instead of overwriting with the default `True`
+        # - If a parent is not valid at init, then none of its subclasses can be
+        # - The current hierarchy does not support the inverse of this
+        #   - Subclasses may declare they are not valid
+        if valid_at_init is None:
+            valid_at_init = cls._class_is_valid_at_instantiation
+        cls._schema = schema
+        cls._rootschema = rootschema
+        cls._class_is_valid_at_instantiation = valid_at_init
+
+    @overload
+    def _get(self, attr: str, default: Optional = ...) -> Any | UndefinedType: ...
+    @overload
+    def _get(self, attr: str, default: T) -> Any | T: ...
+    def _get(self, attr: str, default: Optional[T] = Undefined) -> Any | T:
+        """Get an attribute, returning default if not present."""
+        if (item := self._kwds.get(attr, Undefined)) is not Undefined:
+            return item
+        else:
+            return default
+
+    def __dir__(self) -> list[str]:
+        return sorted(chain(super().__dir__(), self._kwds))
+
+    def __eq__(self, other: Any) -> bool:
+        return (
+            type(self) is type(other)
+            and self._args == other._args
+            and self._kwds == other._kwds
+        )
+
+    def __getattr__(self, attr: str):
+        # reminder: getattr is called after the normal lookups
+        if attr == "_kwds":
+            raise AttributeError()
+        if attr in self._kwds:
+            return self._kwds[attr]
+        else:
+            return getattr(super(), "__getattr__", super().__getattribute__)(attr)
+
+    def __getitem__(self, item: str) -> Any:
+        return self._kwds[item]
+
+    def __setattr__(self, item: str, val: Any) -> None:
+        if item.startswith("_"):
+            # Setting an instances copy of a ClassVar modify that
+            # By default, this makes **another** copy and places in _kwds
+            object.__setattr__(self, item, val)
+        else:
+            self._kwds[item] = val
+
+    def __setitem__(self, item: str, val: Any) -> None:
+        self._kwds[item] = val
+
+    def __repr__(self) -> str:
+        name = type(self).__name__
+        if kwds := self._kwds:
+            it = (f"{k}: {v!r}" for k, v in sorted(kwds.items()) if v is not Undefined)
+            args = ",\n".join(it).replace("\n", "\n  ")
+            LB, RB = "{", "}"
+            return f"{name}({LB}\n  {args}\n{RB})"
+        else:
+            return f"{name}({self._args[0]!r})"
+
+
 class SchemaBase:
     """
     Base class for schema wrappers.
