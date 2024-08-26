@@ -10,7 +10,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Literal, Sequence
+from typing import TYPE_CHECKING, Any, Callable, Iterable, Iterator, Literal, Sequence
 
 import jsonschema
 import jsonschema.exceptions
@@ -35,6 +35,34 @@ _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # try to use SchemaBase objects defined elsewhere as wrappers.
 
 
+@pytest.fixture
+def dummy_rootschema() -> dict[str, Any]:
+    return {
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
+        "definitions": {
+            "StringMapping": {
+                "type": "object",
+                "additionalProperties": {"type": "string"},
+            },
+            "StringArray": {"type": "array", "items": {"type": "string"}},
+        },
+        "properties": {
+            "a": {"$ref": "#/definitions/StringMapping"},
+            "a2": {"type": "object", "additionalProperties": {"type": "number"}},
+            "b": {"$ref": "#/definitions/StringArray"},
+            "b2": {"type": "array", "items": {"type": "number"}},
+            "c": {"type": ["string", "number"]},
+            "d": {
+                "anyOf": [
+                    {"$ref": "#/definitions/StringMapping"},
+                    {"$ref": "#/definitions/StringArray"},
+                ]
+            },
+            "e": {"items": [{"type": "string"}, {"type": "string"}]},
+        },
+    }
+
+
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
     # See comments next to definition of `_DEFAULT_DIALECT_URI`
     # for details why we need this test
@@ -43,6 +71,125 @@ def test_actual_json_schema_draft_is_same_as_hardcoded_default():
         + " is not the same as the one used in the Vega-Lite schema."
         + " You need to update the default value."
     )
+
+
+def test_init_subclasses_hierarchy(dummy_rootschema) -> None:
+    from referencing.exceptions import Unresolvable
+
+    from altair.expr.core import GetItemExpression, OperatorMixin
+    from altair.utils.schemapi import _SchemaBasePEP487
+
+    sch1 = _SchemaBasePEP487()
+    sch2 = _SchemaBasePEP487()
+    sch3 = _SchemaBasePEP487("blue")
+    sch4 = _SchemaBasePEP487("red")
+    sch5 = _SchemaBasePEP487(color="blue")
+    sch6 = _SchemaBasePEP487(color="red")
+
+    with pytest.raises(
+        AssertionError, match=r"_SchemaBasePEP487\('blue', color='red'\)"
+    ):
+        _SchemaBasePEP487("blue", color="red")
+
+    assert sch1 == sch2
+    assert sch3 != sch4
+    assert sch5 != sch6
+    assert sch3 != sch5
+    assert _SchemaBasePEP487("blue") == sch3
+    assert _SchemaBasePEP487(color="red") == sch6
+    with pytest.raises(AttributeError, match="_SchemaBasePEP487.+color"):
+        attempt = sch4.color is Undefined  # noqa: F841
+
+    assert sch5.color == sch5["color"] == sch5._get("color") == "blue"
+    assert sch5._get("price") is Undefined
+    assert sch5._get("price", 999) == 999
+
+    assert _SchemaBasePEP487._class_is_valid_at_instantiation
+    sch6._class_is_valid_at_instantiation = False  # type: ignore[misc]
+    assert (
+        _SchemaBasePEP487._class_is_valid_at_instantiation
+        != sch6._class_is_valid_at_instantiation
+    )
+
+    with pytest.raises(TypeError, match="Test1PEP487.+ _schema"):
+
+        class Test1PEP487(_SchemaBasePEP487): ...
+
+    class Test2PEP487(_SchemaBasePEP487, schema={"type": "object"}): ...
+
+    with pytest.raises(
+        TypeError,
+        match=r"`rootschema` must be provided if `schema` contains a `'\$ref'` and does not inherit one",
+    ):
+
+        class Test3PEP487(_SchemaBasePEP487, schema={"$ref": "#/definitions/Bar"}): ...
+
+    class RootParentPEP487(_SchemaBasePEP487, schema=dummy_rootschema):
+        @classmethod
+        def _default_wrapper_classes(cls) -> Iterator[type[Any]]:
+            return schemapi._subclasses(RootParentPEP487)
+
+    class Root(RootParentPEP487):
+        """
+        Root schema wrapper.
+
+        A Vega-Lite top-level specification. This is the root class for all Vega-Lite
+        specifications. (The json schema is generated from this type.)
+        """
+
+        def __init__(self, *args, **kwds) -> None:
+            super().__init__(*args, **kwds)
+
+    assert (
+        Root._schema
+        == Root._rootschema
+        == RootParentPEP487._schema
+        == RootParentPEP487._rootschema
+    )
+
+    class StringMapping(Root, schema={"$ref": "#/definitions/StringMapping"}): ...
+
+    class StringArray(Root, schema={"$ref": "#/definitions/StringArray"}): ...
+
+    with pytest.raises(
+        jsonschema.ValidationError,
+        match=r"5 is not of type 'string'",
+    ):
+        schemapi.validate_jsonschema(
+            ["one", "two", 5], StringArray._schema, StringArray._rootschema
+        )
+
+    with pytest.raises(Unresolvable):
+        schemapi.validate_jsonschema(["one", "two", "three"], StringArray._schema)
+
+    schemapi.validate_jsonschema(
+        ["one", "two", "three"], StringArray._schema, StringArray._rootschema
+    )
+
+    class Expression(OperatorMixin, _SchemaBasePEP487, schema={"type": "string"}):
+        def to_dict(self, *args, **kwargs):
+            return repr(self)
+
+        def __setattr__(self, attr, val) -> None:
+            # We don't need the setattr magic defined in SchemaBase
+            return object.__setattr__(self, attr, val)
+
+        def __getitem__(self, val):
+            return GetItemExpression(self, val)
+
+    non_ref_mixin = Expression(
+        Expression("some").to_dict() + Expression("more").to_dict()
+    )
+    schemapi.validate_jsonschema(
+        non_ref_mixin.to_dict(), non_ref_mixin._schema, non_ref_mixin._rootschema
+    )
+    with pytest.raises(
+        jsonschema.ValidationError,
+        match=r"is not of type 'array'",
+    ):
+        schemapi.validate_jsonschema(
+            non_ref_mixin.to_dict(), StringArray._schema, StringArray._rootschema
+        )
 
 
 class _TestSchema(SchemaBase):
@@ -922,8 +1069,6 @@ def test_chart_validation_benchmark(
     from itertools import chain, repeat
 
     if TYPE_CHECKING:
-        from typing import Iterator
-
         from altair.typing import ChartType
 
     def _iter_charts() -> Iterator[ChartType]:
