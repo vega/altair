@@ -1055,15 +1055,10 @@ class SchemaBase:
         # reminder: getattr is called after the normal lookups
         if attr == "_kwds":
             raise AttributeError()
-        if attr in self._kwds:
+        elif attr in self._kwds:
             return self._kwds[attr]
         else:
-            # FIXME: Hot try/except
-            try:
-                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
-            except AttributeError:
-                _getattr = super().__getattribute__
-            return _getattr(attr)
+            return getattr(super(), "__getattr__", super().__getattribute__)(attr)
 
     def __setattr__(self, item, val) -> None:
         self._kwds[item] = val
