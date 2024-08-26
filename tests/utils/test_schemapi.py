@@ -10,6 +10,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
+from importlib.metadata import version as importlib_version
 from typing import TYPE_CHECKING, Any, Callable, Iterable, Iterator, Literal, Sequence
 
 import jsonschema
@@ -18,6 +19,7 @@ import numpy as np
 import pandas as pd
 import polars as pl
 import pytest
+from packaging.version import Version
 
 import altair as alt
 from altair import load_schema
@@ -74,7 +76,12 @@ def test_actual_json_schema_draft_is_same_as_hardcoded_default():
 
 
 def test_init_subclasses_hierarchy(dummy_rootschema) -> None:
-    from referencing.exceptions import Unresolvable
+    if Version(importlib_version("jsonschema")) >= Version("4.18"):
+        from referencing.exceptions import Unresolvable
+    else:
+        from jsonschema.exceptions import (  # type: ignore[assignment]
+            RefResolutionError as Unresolvable,
+        )
 
     from altair.expr.core import GetItemExpression, OperatorMixin
     from altair.utils.schemapi import _SchemaBasePEP487
