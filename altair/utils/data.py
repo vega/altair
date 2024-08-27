@@ -314,12 +314,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
-        if _is_pandas_dataframe(data_native):
-            data_native = sanitize_pandas_dataframe(data_native)
-        # Maybe the type could be further clarified here that it is
-        # SupportGeoInterface and then the ignore statement is not needed?
-        data_sanitized = sanitize_geo_interface(data_native.__geo_interface__)
-        return {"values": data_sanitized}
+        return {"values": _from_geo_interface(data_native)}
     elif _is_pandas_dataframe(data_native):
         data_native = sanitize_pandas_dataframe(data_native)
         return {"values": data_native.to_dict(orient="records")}
@@ -350,32 +345,45 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
+def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
+    """
+    Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
+
+    Notes
+    -----
+    Split out to resolve typing issues related to:
+    - Intersection types
+    - ``typing.TypeGuard``
+    - ``pd.DataFrame.__getattr__``
+    """
+    if _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
+    return sanitize_geo_interface(data.__geo_interface__)
+
+
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data."""
     check_data_type(data)
-    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
-    data_native = nw.to_native(data, strict=False)
-    if isinstance(data_native, SupportsGeoInterface):
-        if _is_pandas_dataframe(data_native):
-            data_native = sanitize_pandas_dataframe(data_native)
-        data_native = sanitize_geo_interface(data_native.__geo_interface__)
-        return json.dumps(data_native)
-    elif _is_pandas_dataframe(data_native):
-        data = sanitize_pandas_dataframe(data_native)
-        return data_native.to_json(orient="records", double_precision=15)
-    elif isinstance(data_native, dict):
-        if "values" not in data_native:
+    if isinstance(data, SupportsGeoInterface):
+        return json.dumps(_from_geo_interface(data))
+    elif _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
+        return data.to_json(orient="records", double_precision=15)
+    elif isinstance(data, dict):
+        if "values" not in data:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
-        return json.dumps(data_native["values"], sort_keys=True)
-    elif isinstance(data, nw.DataFrame):
-        return json.dumps(data.rows(named=True))
-    else:
-        msg = "to_json only works with data expressed as " "a DataFrame or as a dict"
-        raise NotImplementedError(msg)
+        return json.dumps(data["values"], sort_keys=True)
+    try:
+        data_nw = nw.from_native(data, eager_only=True)
+    except TypeError as exc:
+        msg = "to_json only works with data expressed as a DataFrame or as a dict"
+        raise NotImplementedError(msg) from exc
+    data_nw = sanitize_narwhals_dataframe(data_nw)
+    return json.dumps(data_nw.rows(named=True))
 
 
-def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
+def _data_to_csv_string(data: DataType) -> str:
     """Return a CSV string representation of the input data."""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
@@ -398,18 +406,12 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
             msg = "pandas is required to convert a dict to a CSV string"
             raise ImportError(msg) from exc
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
-    elif isinstance(data, DataFrameLike):
-        # experimental interchange dataframe support
-        import pyarrow as pa
-        import pyarrow.csv as pa_csv
-
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        csv_buffer = pa.BufferOutputStream()
-        pa_csv.write_csv(pa_table, csv_buffer)
-        return csv_buffer.getvalue().to_pybytes().decode()
-    else:
-        msg = "to_csv only works with data expressed as " "a DataFrame or as a dict"
-        raise NotImplementedError(msg)
+    try:
+        data_nw = nw.from_native(data, eager_only=True)
+    except TypeError as exc:
+        msg = "to_csv only works with data expressed as a DataFrame or as a dict"
+        raise NotImplementedError(msg) from exc
+    return data_nw.write_csv()
 
 
 def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> pa.Table:

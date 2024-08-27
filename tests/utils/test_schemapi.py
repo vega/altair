@@ -620,7 +620,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     return chart
 
 
-def chart_error_example__four_errors():
+def chart_error_example__four_errors_hide_fourth():
     # Error 1: unknown is not a valid encoding channel option
     # Error 2: Invalid Y option value "asdf".
     # Error 3: another_unknown is not a valid encoding channel option
@@ -639,14 +639,16 @@ def chart_error_example__four_errors():
     )
 
 
-def id_func(val) -> str:
+def id_func_chart_error_example(val) -> str:
     """
-    Ensures the generated test-id name uses only `chart_func` and not `expected_error_message`.
+    Ensures the generated test-id name uses only the unique portion of `chart_func`.
 
-    Without this, the name is ``test_chart_validation_errors[chart_func-expected_error_message]``
+    Otherwise the name is like below, but ``...`` represents the full error message::
+
+        "test_chart_validation_errors[chart_error_example__two_errors_with_one_in_nested_layered_chart-...]"
     """
     if isinstance(val, types.FunctionType):
-        return val.__name__
+        return val.__name__.replace("chart_error_example__", "")
     else:
         return ""
 
@@ -821,7 +823,7 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
         r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$""",
     ),
     (
-        chart_error_example__four_errors,
+        chart_error_example__four_errors_hide_fourth,
         r"""Multiple errors were found.
 
                 Error 1: `Color` has no parameter named 'another_unknown'
@@ -856,7 +858,9 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
 
 
 @pytest.mark.parametrize(
-    ("chart_func", "expected_error_message"), chart_funcs_error_message, ids=id_func
+    ("chart_func", "expected_error_message"),
+    chart_funcs_error_message,
+    ids=id_func_chart_error_example,
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
     # For some wrong chart specifications such as an unknown encoding channel,
