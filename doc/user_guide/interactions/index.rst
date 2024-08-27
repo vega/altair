@@ -24,7 +24,10 @@ There are three core concepts of this grammar:
 - JupyterChart allow access to Altair's parameters from Python,
   e.g. printing the values of a selection in the plot.
 
-Once you have worked through these topics,
+Further reading
+---------------
+
+Once you have worked through the subpages for the topics listed above,
 you might wish to look through the :ref:`gallery-category-Interactive Charts` section of the example gallery
 for ideas about how they can be applied to more interesting charts.
 
