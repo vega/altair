@@ -455,7 +455,7 @@ pythonVersion="3.8"
 reportUnusedExpression="none"
 include=[
     "./altair/**/*.py",
-    ".doc/*.py",
+    "./doc/*.py",
 	"./sphinxext/**/*.py",
 	"./tests/**/*.py",
 	"./tools/**/*.py",
