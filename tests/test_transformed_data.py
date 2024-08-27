@@ -72,7 +72,7 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
-    chart = eval_block(source)
+    chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes
         # then what might have been originally used. See
@@ -128,7 +128,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
-    chart = eval_block(source)
+    chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes
         # then what might have been originally used. See
