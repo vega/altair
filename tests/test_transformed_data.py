@@ -7,6 +7,7 @@ from vega_datasets import data
 import altair as alt
 from altair.utils.execeval import eval_block
 from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
+import narwhals as nw
 
 try:
     import vegafusion as vf  # type: ignore
@@ -79,9 +80,11 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
+    assert df is not None
+    nw_df = nw.from_native(df, eager_only=True, strict=True)
 
-    assert len(df) == rows # pyright: ignore[reportArgumentType]
-    assert set(cols).issubset(set(df.columns)) # pyright: ignore[reportAttributeAccessIssue, reportOptionalMemberAccess]
+    assert len(nw_df) == rows 
+    assert set(cols).issubset(set(nw_df.columns))
 
 
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
@@ -134,14 +137,18 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
+   
+    assert isinstance(chart, (alt.LayerChart, alt.ConcatChart, alt.HConcatChart, alt.VConcatChart))
     dfs = chart.transformed_data()
 
     if not to_reconstruct:
         # Only run assert statements if the chart is not reconstructed. Reason
         # is that for some charts, the original chart contained duplicated datasets
         # which disappear when reconstructing the chart.
-        assert len(dfs) == len(all_rows) # pyright: ignore[reportArgumentType]
-        for df, rows, cols in zip(dfs, all_rows, all_cols): # pyright: ignore[reportArgumentType]
+        
+        nw_dfs = (nw.from_native(d, eager_only=True, strict=True) for d in dfs)
+        assert len(dfs) == len(all_rows)
+        for df, rows, cols in zip(nw_dfs, all_rows, all_cols):
             assert len(df) == rows
             assert set(cols).issubset(set(df.columns))
 
@@ -164,10 +171,13 @@ def test_transformed_data_exclude(to_reconstruct):
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
+    assert isinstance(chart, alt.LayerChart)
     datasets = chart.transformed_data(exclude=["some_annotation"])
 
-    assert len(datasets) == 2 # pyright: ignore[reportArgumentType]
-    assert len(datasets[0]) == 52 # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript]
-    assert "wheat_start" in datasets[0] # pyright: ignore[reportIndexIssue, reportOptionalSubscript, reportOperatorIssue]
-    assert len(datasets[1]) == 1 # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript]
-    assert "mean_wheat" in datasets[1] # pyright: ignore[reportIndexIssue, reportOptionalSubscript, reportOperatorIssue]
+    _datasets = [nw.from_native(d, eager_only=True, strict=True) for d in datasets]
+    assert len(datasets) == len(_datasets)
+    assert len(_datasets) == 2
+    assert len(_datasets[0]) == 52
+    assert "wheat_start" in _datasets[0]
+    assert len(_datasets[1]) == 1 
+    assert "mean_wheat" in _datasets[1] 
