@@ -80,8 +80,8 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
 
-    assert len(df) == rows
-    assert set(cols).issubset(set(df.columns))
+    assert len(df) == rows # pyright: ignore[reportArgumentType]
+    assert set(cols).issubset(set(df.columns)) # pyright: ignore[reportAttributeAccessIssue, reportOptionalMemberAccess]
 
 
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
@@ -140,8 +140,8 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # Only run assert statements if the chart is not reconstructed. Reason
         # is that for some charts, the original chart contained duplicated datasets
         # which disappear when reconstructing the chart.
-        assert len(dfs) == len(all_rows)
-        for df, rows, cols in zip(dfs, all_rows, all_cols):
+        assert len(dfs) == len(all_rows) # pyright: ignore[reportArgumentType]
+        for df, rows, cols in zip(dfs, all_rows, all_cols): # pyright: ignore[reportArgumentType]
             assert len(df) == rows
             assert set(cols).issubset(set(df.columns))
 
@@ -166,8 +166,8 @@ def test_transformed_data_exclude(to_reconstruct):
         chart = alt.Chart.from_dict(chart.to_dict())
     datasets = chart.transformed_data(exclude=["some_annotation"])
 
-    assert len(datasets) == 2
-    assert len(datasets[0]) == 52
-    assert "wheat_start" in datasets[0]
-    assert len(datasets[1]) == 1
-    assert "mean_wheat" in datasets[1]
+    assert len(datasets) == 2 # pyright: ignore[reportArgumentType]
+    assert len(datasets[0]) == 52 # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript]
+    assert "wheat_start" in datasets[0] # pyright: ignore[reportIndexIssue, reportOptionalSubscript, reportOperatorIssue]
+    assert len(datasets[1]) == 1 # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript]
+    assert "mean_wheat" in datasets[1] # pyright: ignore[reportIndexIssue, reportOptionalSubscript, reportOperatorIssue]
