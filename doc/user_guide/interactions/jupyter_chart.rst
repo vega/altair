@@ -458,8 +458,3 @@ Limitations
 Setting Selections
 ~~~~~~~~~~~~~~~~~~
 It's not currently possible to set selection states from Python.
-
-Additionally, the dashboarding packages ``Panel`` and ``Dash`` include support for processing Altair selections
-with custom callbacks. See the
-`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_
-and the `Dash documentation <https://dash.plotly.com/dash-vega-components>`_.
