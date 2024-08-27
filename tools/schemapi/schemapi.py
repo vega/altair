@@ -112,7 +112,7 @@ def validate_jsonschema(
     rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[True] = ...,
-) -> None: ...
+) -> Never: ...
 
 
 @overload
@@ -127,11 +127,11 @@ def validate_jsonschema(
 
 def validate_jsonschema(
     spec,
-    schema,
-    rootschema=None,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
     *,
-    raise_error=True,
-):
+    raise_error: bool = True,
+) -> jsonschema.exceptions.ValidationError | None:
     """
     Validates the passed in spec against the schema in the context of the rootschema.
 
@@ -148,7 +148,7 @@ def validate_jsonschema(
 
         # Nothing special about this first error but we need to choose one
         # which can be raised
-        main_error = next(iter(grouped_errors.values()))[0]
+        main_error: Any = next(iter(grouped_errors.values()))[0]
         # All errors are then attached as a new attribute to ValidationError so that
         # they can be used in SchemaValidationError to craft a more helpful
         # error message. Setting a new attribute like this is not ideal as
@@ -852,6 +852,9 @@ def _deep_copy(obj: Any, by_ref: set[str]) -> Any: ...
 def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
     copy = partial(_deep_copy, by_ref=by_ref)
     if isinstance(obj, SchemaBase):
+        if copier := getattr(obj, "__deepcopy__", None):
+            with debug_mode(False):
+                return copier(obj)
         args = (copy(arg) for arg in obj._args)
         kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
         with debug_mode(False):
@@ -942,7 +945,7 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super().__getattr__
+                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
             except AttributeError:
                 _getattr = super().__getattribute__
             return _getattr(attr)
@@ -1191,9 +1194,7 @@ class SchemaBase:
             schema = cls._schema
         # For the benefit of mypy
         assert schema is not None
-        return validate_jsonschema(
-            instance, schema, rootschema=cls._rootschema or cls._schema
-        )
+        validate_jsonschema(instance, schema, rootschema=cls._rootschema or cls._schema)
 
     @classmethod
     def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -1219,7 +1220,7 @@ class SchemaBase:
         np_opt = sys.modules.get("numpy")
         value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        return validate_jsonschema(
+        validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
@@ -1321,11 +1322,11 @@ class _FromDict:
     @overload
     def from_dict(
         self,
-        dct: dict[str, Any],
-        tp: None = ...,
+        dct: dict[str, Any] | list[dict[str, Any]],
+        tp: Any = ...,
         schema: Any = ...,
-        rootschema: None = ...,
-        default_class: type[TSchemaBase] = ...,
+        rootschema: Any = ...,
+        default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
     def from_dict(
@@ -1361,15 +1362,15 @@ class _FromDict:
         schema: dict[str, Any] | None = None,
         rootschema: dict[str, Any] | None = None,
         default_class: Any = _passthrough,
-    ) -> TSchemaBase:
+    ) -> TSchemaBase | SchemaBase:
         """Construct an object from a dict representation."""
-        target_tp: type[TSchemaBase]
+        target_tp: Any
         current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
-            return dct  # type: ignore[return-value]
+            return dct
         elif tp is not None:
             current_schema = tp._schema
-            root_schema = rootschema or tp._rootschema or current_schema
+            root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
             # If there are multiple matches, we use the first one in the dict.
