@@ -627,7 +627,6 @@ data before usage in Altair using GeoPandas for example as such:
    customization
    configuration
    saving_charts
-   jupyter_chart
 
 
 .. toctree::
