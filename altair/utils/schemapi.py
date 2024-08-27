@@ -871,6 +871,9 @@ def _deep_copy(obj: Any, by_ref: set[str]) -> Any: ...
 def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
     copy = partial(_deep_copy, by_ref=by_ref)
     if isinstance(obj, SchemaBase):
+        if copier := getattr(obj, "__deepcopy__", None):
+            with debug_mode(False):
+                return copier(obj)
         args = (copy(arg) for arg in obj._args)
         kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
         with debug_mode(False):

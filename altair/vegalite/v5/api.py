@@ -23,6 +23,7 @@ from typing import (
 from typing_extensions import TypeAlias
 
 import jsonschema
+import narwhals.stable.v1 as nw
 
 from altair import utils
 from altair.expr import core as _expr_core
@@ -274,7 +275,7 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            data = func(data)
+            data = func(nw.to_native(data, strict=False))
 
     # convert string input to a URLData
     elif isinstance(data, str):
@@ -1059,6 +1060,9 @@ class Then(core.SchemaBase, t.Generic[_C]):
     def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
         m = super().to_dict(*args, **kwds)
         return _Conditional(condition=m["condition"])
+
+    def __deepcopy__(self, memo: Any) -> Self:
+        return type(self)(_Conditional(condition=_deepcopy(self.condition)))
 
 
 class ChainedWhen(_BaseWhen):
