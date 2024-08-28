@@ -4902,7 +4902,7 @@ def _remove_layer_props(  # noqa: C901
             # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
-            msg = f"There are inconsistent values {values} for {prop}"
+            msg = f"There are inconsistent values {values} for {prop}"  # pyright: ignore[reportPossiblyUnboundVariable]
             raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 
