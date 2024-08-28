@@ -698,6 +698,27 @@ def test_when_condition_parity(
         assert chart_condition == chart_when
 
 
+def test_when_then_interactive() -> None:
+    """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
+    predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
+        alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
+    )
+
+    chart = (
+        alt.Chart(source)
+        .mark_point(invalid=None)
+        .encode(
+            x="IMDB_Rating:Q",
+            y="Rotten_Tomatoes_Rating:Q",
+            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+        )
+    )
+    assert chart.interactive()
+    assert chart.copy()
+    assert chart.to_dict()
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
