@@ -75,3 +75,6 @@ Untitled*.ipynb
 
 # hatch, doc generation
 data.json
+
+# type stubs
+typings/
