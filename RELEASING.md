@@ -6,7 +6,7 @@
 
 2. Make certain your branch is in sync with head:
  
-       git pull upstream main
+       git pull origin main
 
 3. Do a clean doc build:
 
@@ -25,13 +25,13 @@
 5. Commit change and push to main:
 
        git add . -u
-       git commit -m "chore: bump version to 5.0.0"
-       git push upstream main
+       git commit -m "chore: Bump version to 5.0.0"
+       git push origin main
 
 6. Tag the release:
 
        git tag -a v5.0.0 -m "version 5.0.0 release"
-       git push upstream v5.0.0
+       git push origin v5.0.0
 
 7. Build source & wheel distributions:
 
@@ -54,11 +54,11 @@
 11. Commit change and push to main:
 
         git add . -u
-        git commit -m "chore: bump version to 5.1.0dev"
-        git push upstream main
+        git commit -m "chore: Bump version to 5.1.0dev"
+        git push origin main
 
 12. Double-check that a conda-forge pull request is generated from the updated
-    pip package by the conda-forge bot (may take up to ~an hour):
+    pip package by the conda-forge bot (may take up to several hours):
     https://github.com/conda-forge/altair-feedstock/pulls
 
 13. Publish a new release in https://github.com/vega/altair/releases/
