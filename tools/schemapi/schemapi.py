@@ -213,10 +213,10 @@ def _prepare_references(schema: Map, /) -> dict[str, Any]:
     -----
     ``copy.deepcopy`` is not needed as the iterator yields new objects.
     """
-    return dict(_rec_refs(schema))
+    return dict(_recurse_refs(schema))
 
 
-def _rec_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
+def _recurse_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
     """
     Recurse through a schema, yielding fresh copies of mutable containers.
 
@@ -226,9 +226,9 @@ def _rec_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
         if k == "$ref":
             yield k, f"{_VEGA_LITE_ROOT_URI}{v}"
         elif isinstance(v, dict):
-            yield k, dict(_rec_refs(v))
+            yield k, dict(_recurse_refs(v))
         elif isinstance(v, list):
-            yield k, [dict(_rec_refs(el)) if _is_dict(el) else el for el in v]
+            yield k, [dict(_recurse_refs(el)) if _is_dict(el) else el for el in v]
         else:
             yield k, v
 
