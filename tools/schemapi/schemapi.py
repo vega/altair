@@ -1696,9 +1696,8 @@ class _FromDict:
         else:
             resolved = _resolve_references(current_schema, root_schema)
             cls.hash_resolved[hash_schema] = resolved
-        if "anyOf" in resolved or "oneOf" in resolved:
-            schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
-            for possible in schemas:
+        if "anyOf" in resolved:
+            for possible in resolved["anyOf"]:
                 # NOTE: Instead of raise/except/continue
                 # Pre-"zero-cost" exceptions, this has a huge performance gain.
                 # https://docs.python.org/3/whatsnew/3.11.html#misc
