@@ -215,10 +215,10 @@ def _prepare_references(schema: Map, /) -> dict[str, Any]:
     -----
     ``copy.deepcopy`` is not needed as the iterator yields new objects.
     """
-    return dict(_rec_refs(schema))
+    return dict(_recurse_refs(schema))
 
 
-def _rec_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
+def _recurse_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
     """
     Recurse through a schema, yielding fresh copies of mutable containers.
 
@@ -228,9 +228,9 @@ def _rec_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
         if k == "$ref":
             yield k, f"{_VEGA_LITE_ROOT_URI}{v}"
         elif isinstance(v, dict):
-            yield k, dict(_rec_refs(v))
+            yield k, dict(_recurse_refs(v))
         elif isinstance(v, list):
-            yield k, [dict(_rec_refs(el)) if _is_dict(el) else el for el in v]
+            yield k, [dict(_recurse_refs(el)) if _is_dict(el) else el for el in v]
         else:
             yield k, v
 
@@ -1599,6 +1599,13 @@ class _FromDict:
        https://en.wikipedia.org/wiki/Breadth-first_search
     """
 
+    hash_resolved: ClassVar[dict[int, Map]] = {}
+    """
+    Maps unique schemas to their reference-resolved equivalent.
+
+    Ensures that ``_resolve_references`` is evaluated **at most once**, per hash.
+    """
+
     def __init__(self, wrapper_classes: Iterator[type[SchemaBase]], /) -> None:
         cls = type(self)
         for tp in wrapper_classes:
@@ -1667,27 +1674,32 @@ class _FromDict:
         """Construct an object from a dict representation."""
         target_tp: Any
         current_schema: dict[str, Any]
+        hash_schema: int
         if isinstance(dct, SchemaBase):
             return dct
         elif tp is not None:
             current_schema = tp._schema
+            hash_schema = _hash_schema(current_schema)
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
             current_schema = schema
+            hash_schema = _hash_schema(current_schema)
             root_schema = rootschema or current_schema
-            matches = cls.hash_tps[_hash_schema(current_schema)]
+            matches = cls.hash_tps[hash_schema]
             target_tp = next(iter(matches), default_class)
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
 
         from_dict = partial(cls.from_dict, rootschema=root_schema)
-        # Can also return a list?
-        resolved = _resolve_references(current_schema, root_schema)
-        if "anyOf" in resolved or "oneOf" in resolved:
-            schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
-            for possible in schemas:
+        if resolved := cls.hash_resolved.get(hash_schema):
+            ...
+        else:
+            resolved = _resolve_references(current_schema, root_schema)
+            cls.hash_resolved[hash_schema] = resolved
+        if "anyOf" in resolved:
+            for possible in resolved["anyOf"]:
                 # NOTE: Instead of raise/except/continue
                 # Pre-"zero-cost" exceptions, this has a huge performance gain.
                 # https://docs.python.org/3/whatsnew/3.11.html#misc
