@@ -1597,6 +1597,13 @@ class _FromDict:
        https://en.wikipedia.org/wiki/Breadth-first_search
     """
 
+    hash_resolved: ClassVar[dict[int, Map]] = {}
+    """
+    Maps unique schemas to their reference-resolved equivalent.
+
+    Ensures that ``_resolve_references`` is evaluated **at most once**, per hash.
+    """
+
     def __init__(self, wrapper_classes: Iterator[type[SchemaBase]], /) -> None:
         cls = type(self)
         for tp in wrapper_classes:
@@ -1665,24 +1672,30 @@ class _FromDict:
         """Construct an object from a dict representation."""
         target_tp: Any
         current_schema: dict[str, Any]
+        hash_schema: int
         if isinstance(dct, SchemaBase):
             return dct
         elif tp is not None:
             current_schema = tp._schema
+            hash_schema = _hash_schema(current_schema)
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
             current_schema = schema
+            hash_schema = _hash_schema(current_schema)
             root_schema = rootschema or current_schema
-            matches = cls.hash_tps[_hash_schema(current_schema)]
+            matches = cls.hash_tps[hash_schema]
             target_tp = next(iter(matches), default_class)
         else:
             msg = "Must provide either `tp` or `schema`, but not both."
             raise ValueError(msg)
 
         from_dict = partial(cls.from_dict, rootschema=root_schema)
-        # Can also return a list?
-        resolved = _resolve_references(current_schema, root_schema)
+        if resolved := cls.hash_resolved.get(hash_schema):
+            ...
+        else:
+            resolved = _resolve_references(current_schema, root_schema)
+            cls.hash_resolved[hash_schema] = resolved
         if "anyOf" in resolved or "oneOf" in resolved:
             schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
             for possible in schemas:
