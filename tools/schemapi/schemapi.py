@@ -141,9 +141,7 @@ def debug_mode(arg: bool) -> Iterator[None]:
 
 
 def validate_jsonschema(
-    spec: _JsonParameter,
-    schema: dict[str, Any],
-    rootschema: dict[str, Any] | None = None,
+    spec: _JsonParameter, schema: Map, rootschema: Map | None = None
 ) -> None:
     """
     Validates ``spec`` against ``schema`` in the context of ``rootschema``.
@@ -191,7 +189,7 @@ def validate_jsonschema(
             raise NotImplementedError(msg)
 
 
-def _get_schema_dialect_uri(schema: dict[str, Any]) -> str:
+def _get_schema_dialect_uri(schema: Map, /) -> str:
     """
     Return value of `$schema`_.
 
@@ -204,7 +202,7 @@ def _get_schema_dialect_uri(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_DIALECT_URI)
 
 
-def _prepare_references(schema: dict[str, Any], /) -> dict[str, Any]:
+def _prepare_references(schema: Map, /) -> dict[str, Any]:
     """
     Return a deep copy of ``schema`` w/ replaced uri(s).
 
@@ -218,7 +216,7 @@ def _prepare_references(schema: dict[str, Any], /) -> dict[str, Any]:
     return dict(_rec_refs(schema))
 
 
-def _rec_refs(m: dict[str, Any], /) -> Iterator[tuple[str, Any]]:
+def _rec_refs(m: Map, /) -> Iterator[tuple[str, Any]]:
     """
     Recurse through a schema, yielding fresh copies of mutable containers.
 
@@ -285,9 +283,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         """
         return _specification_with(dialect_id)
 
-    def _validator(
-        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
-    ) -> Validator:
+    def _validator(schema: Map, rootschema: Map | None = None, /) -> Validator:
         """
         Constructs a `Validator`_ for future validation.
 
@@ -309,7 +305,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         registry = _registry(rootschema or schema, uri)
         return validator(_prepare_references(schema), registry=registry)
 
-    def _registry(rootschema: dict[str, Any], dialect_id: str) -> Registry[Any]:
+    def _registry(rootschema: Map, dialect_id: str) -> Registry[Any]:
         """
         Constructs a `Registry`_, adding the `Resource`_ produced by ``rootschema``.
 
@@ -333,16 +329,12 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
             _REGISTRY_CACHE[cache_key] = registry
             return registry
 
-    def _registry_update(
-        root: dict[str, Any], dialect_id: str, resolver: Resolver[Any]
-    ):
+    def _registry_update(root: Map, dialect_id: str, resolver: Resolver[Any]) -> None:
         global _REGISTRY_CACHE
         cache_key = _registry_comp_key(root, dialect_id)
         _REGISTRY_CACHE[cache_key] = resolver._registry
 
-    def _resolve_references(
-        schema: dict[str, Any], rootschema: dict[str, Any]
-    ) -> dict[str, Any]:
+    def _resolve_references(schema: Map, rootschema: Map) -> Map:
         """
         Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
 
@@ -391,9 +383,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
 
 else:
 
-    def _validator(
-        schema: dict[str, Any], rootschema: dict[str, Any] | None = None
-    ) -> Validator:
+    def _validator(schema: Map, rootschema: Map | None = None, /) -> Validator:
         """
         Constructs a `Validator`_ for future validation.
 
@@ -416,9 +406,7 @@ else:
         )
         return validator(schema, resolver=resolver)
 
-    def _resolve_references(
-        schema: dict[str, Any], rootschema: dict[str, Any]
-    ) -> dict[str, Any]:
+    def _resolve_references(schema: Map, rootschema: Map) -> Map:
         """
         Resolve schema references until there is no ``"$ref"`` anymore in the top-level ``dict``.
 
@@ -1444,7 +1432,8 @@ class SchemaBase:
             )
             raise TypeError(msg)
         else:
-            return _resolve_references(schema or cls._schema, rootschema=rootschema)
+            resolved = _resolve_references(schema or cls._schema, rootschema)
+            return cast("dict[str, Any]", resolved)
 
     @classmethod
     def validate_property(

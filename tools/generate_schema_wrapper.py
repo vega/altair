@@ -424,7 +424,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
                 "description": "shorthand for field, aggregate, and type",
             }
             if "required" not in defschema:
-                defschema["required"] = ["shorthand"]
+                defschema["required"] = ["shorthand"]  # type: ignore
             elif "shorthand" not in defschema["required"]:
                 defschema["required"].append("shorthand")
             schema["definitions"][field_ref.split("/")[-1]] = defschema
@@ -457,7 +457,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
                 if k in properties:
                     def_dict[k] = definition
         else:
-            recursive_dict_update(next_schema, root, def_dict)
+            recursive_dict_update(next_schema, root, def_dict)  # type: ignore
     elif "anyOf" in schema:
         for sub_schema in schema["anyOf"]:
             recursive_dict_update(sub_schema, root, def_dict)
@@ -473,7 +473,7 @@ def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, 
             msg = "Unexpected schema structure"
             raise ValueError(msg)
     else:
-        recursive_dict_update(schema, root, def_dict)
+        recursive_dict_update(schema, root, def_dict)  # type: ignore
 
     return {i: j for i, j in def_dict.items() if j}
 
