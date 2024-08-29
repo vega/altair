@@ -262,6 +262,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
     if TYPE_CHECKING:
         from referencing import Specification
         from referencing._core import Resolver
+        from rpds import HashTrieMap
 
     @lru_cache(maxsize=None)
     def specification_with(dialect_id: str, /) -> Specification[Any]:
@@ -378,6 +379,22 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         else:
             k1 = json.dumps(root, separators=(",", ":"), sort_keys=True)
         return k1, dialect_id
+
+    def resolve_references_rpds(schema: Map, rootschema: Map) -> HashTrieMap[str, Any]:
+        """
+        **Experimental** `rust`-speed returned type.
+
+        Directly wraps `_resolve_references`.
+
+        Idea
+        ----
+        - Store the result of this when called from ``_FromDict.from_dict()`` once per unique call
+        - Reuse the resolved schema, since we don't mutate it after resolving
+        - Should reduce the cost of ``_FromDict.from_dict()``, when a schema has been seen before
+        """
+        import rpds as rpds
+
+        return rpds.HashTrieMap(_resolve_references(schema, rootschema))
 
     _REGISTRY_CACHE: dict[tuple[str, str], Registry[Any]] = {}
 
