@@ -1680,6 +1680,8 @@ class _FromDict:
         elif tp is not None:
             current_schema = tp._schema
             hash_schema = _hash_schema(current_schema)
+            # NOTE: the `current_schema` branch only triggered for mock schema tests:
+            # test_schemapi.py::[test_construct_multifaceted_schema, test_copy_method, test_round_trip, test_copy_module, test_from_dict, test_to_from_json, test_to_from_pickle]
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
