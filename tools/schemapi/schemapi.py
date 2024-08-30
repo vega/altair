@@ -1041,6 +1041,7 @@ class SchemaBase:
             raise ValueError(msg)
         result = _todict(kwds, context=context, **opts)
         if validate:
+            # NOTE: Don't raise `from err`, see `SchemaValidationError` doc
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
