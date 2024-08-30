@@ -56,6 +56,7 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    _OptionalModule: TypeAlias = "ModuleType | None"
 
 ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
@@ -1189,7 +1190,7 @@ class SchemaBase:
         return sorted(chain(super().__dir__(), self._kwds))
 
 
-def _get_optional_modules(**modules: str) -> dict[str, ModuleType | None]:
+def _get_optional_modules(**modules: str) -> dict[str, _OptionalModule]:
     """
     Returns packages only if they have already been imported - otherwise they return `None`.
 
@@ -1205,10 +1206,25 @@ def _get_optional_modules(**modules: str) -> dict[str, ModuleType | None]:
 
     Examples
     --------
-    ::
+    >>> import pandas as pd  # doctest: +SKIP
+    >>> import polars as pl  # doctest: +SKIP
+    >>> from altair.utils.schemapi import _get_optional_modules  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(pd="pandas", pl="polars", ibis="ibis")  # doctest: +SKIP
+    {
+        "pd": <module 'pandas' from '...'>,
+        "pl": <module 'polars' from '...'>,
+        "ibis": None,
+    }
 
-        ResultType = dict[Literal["pd", "pl"], ModuleType | None]
-        r: ResultType = _get_optional_modules(pd="pandas", pl="polars")
+    If the user later imports ``ibis``, it would appear in subsequent calls.
+
+    >>> import ibis  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(ibis="ibis")  # doctest: +SKIP
+    {
+        "ibis": <module 'ibis' from '...'>,
+    }
     """
     return {k: sys.modules.get(v) for k, v in modules.items()}
 
