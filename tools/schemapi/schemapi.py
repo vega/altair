@@ -213,6 +213,8 @@ def _prepare_references(schema: Map, /) -> dict[str, Any]:
     -----
     ``copy.deepcopy`` is not needed as the iterator yields new objects.
     """
+    # FIXME: The hottest function + it is recursive
+    # Should be done once per schema
     return dict(_recurse_refs(schema))
 
 
