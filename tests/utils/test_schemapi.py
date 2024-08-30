@@ -1076,6 +1076,11 @@ def test_chart_validation_benchmark(
     108.24s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict-validate]
     50.33s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[from_dict]
     66.51s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict]
+
+    # Post-`dict` branch micro optimization in `_FromDict.from_dict` (3.12.3)
+    107.90s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict-validate]
+    49.63s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[from_dict]
+    66.87s call     tests/utils/test_schemapi.py::test_chart_validation_benchmark[to_dict]
     ```
     """
     from itertools import chain, repeat
