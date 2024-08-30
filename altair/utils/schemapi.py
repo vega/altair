@@ -215,6 +215,8 @@ def _prepare_references(schema: Map, /) -> dict[str, Any]:
     -----
     ``copy.deepcopy`` is not needed as the iterator yields new objects.
     """
+    # FIXME: The hottest function + it is recursive
+    # Should be done once per schema
     return dict(_recurse_refs(schema))
 
 
@@ -1663,7 +1665,7 @@ class _FromDict:
         default_class: Any = ...,
     ) -> Never: ...
     @classmethod
-    def from_dict(
+    def from_dict(  # noqa: C901
         cls,
         dct: dict[str, Any] | list[dict[str, Any]] | TSchemaBase,
         tp: type[TSchemaBase] | None = None,
@@ -1680,6 +1682,8 @@ class _FromDict:
         elif tp is not None:
             current_schema = tp._schema
             hash_schema = _hash_schema(current_schema)
+            # NOTE: the `current_schema` branch only triggered for mock schema tests:
+            # test_schemapi.py::[test_construct_multifaceted_schema, test_copy_method, test_round_trip, test_copy_module, test_from_dict, test_to_from_json, test_to_from_pickle]
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
@@ -1710,12 +1714,14 @@ class _FromDict:
 
         if _is_dict(dct):
             # TODO: handle schemas for additionalProperties/patternProperties
-            props: dict[str, Any] = resolved.get("properties", {})
-            kwds = {
-                k: (from_dict(v, schema=props[k]) if k in props else v)
-                for k, v in dct.items()
-            }
-            return target_tp(**kwds)
+            if props := resolved.get("properties"):
+                kwds = {
+                    k: (from_dict(v, schema=sch) if (sch := props.get(k)) else v)
+                    for k, v in dct.items()
+                }
+                return target_tp(**kwds)
+            else:
+                return target_tp(**dct)
         elif _is_list(dct):
             item_schema: dict[str, Any] = resolved.get("items", {})
             return target_tp([from_dict(k, schema=item_schema) for k in dct])
