@@ -328,7 +328,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         else:
             specification = specification_with(dialect_id)
             resource = specification.create_resource(rootschema)
-            registry = Registry().with_resource(_VEGA_LITE_ROOT_URI, resource)
+            registry = Registry().with_resource(_VEGA_LITE_ROOT_URI, resource).crawl()
             _REGISTRY_CACHE[cache_key] = registry
             return registry
 
@@ -354,9 +354,9 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
             return schema
         uri = _get_schema_dialect_uri(rootschema)
         registry = _registry(root, uri)
-        resolver = registry.resolver()
+        resolver = registry.resolver(_VEGA_LITE_ROOT_URI)
         while "$ref" in schema:
-            resolved = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"])
+            resolved = resolver.lookup(schema["$ref"])
             schema = resolved.contents
         _registry_update(root, uri, resolved.resolver)
         return schema
@@ -394,7 +394,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         - Reuse the resolved schema, since we don't mutate it after resolving
         - Should reduce the cost of ``_FromDict.from_dict()``, when a schema has been seen before
         """
-        import rpds as rpds
+        import rpds
 
         return rpds.HashTrieMap(_resolve_references(schema, rootschema))
 
