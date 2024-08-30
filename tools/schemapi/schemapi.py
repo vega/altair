@@ -257,6 +257,8 @@ def _validator_for(uri: str, /) -> Callable[..., Validator]:
         return tp
 
 
+_HASH_ENCODER = json.JSONEncoder(sort_keys=True, separators=(",", ":"))
+
 if Version(importlib_version("jsonschema")) >= Version("4.18"):
     from referencing import Registry
     from referencing.jsonschema import specification_with as _specification_with
@@ -379,7 +381,7 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         elif len(root) == 1:
             k1 = "".join(f"{s!s}" for s in chain(*root.items()))
         else:
-            k1 = json.dumps(root, separators=(",", ":"), sort_keys=True)
+            k1 = _HASH_ENCODER.encode(root)
         return k1, dialect_id
 
     def resolve_references_rpds(schema: Map, rootschema: Map) -> HashTrieMap[str, Any]:
@@ -1537,7 +1539,7 @@ def _hash_schema(
     """
     if isinstance(schema, Mapping):
         schema = {k: v for k, v in schema.items() if k not in exclude}
-    return hash(json.dumps(schema, sort_keys=True))
+    return hash(_HASH_ENCODER.encode(schema))
 
 
 def _subclasses(cls: type[TSchemaBase]) -> Iterator[type[TSchemaBase]]:
