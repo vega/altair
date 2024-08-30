@@ -27,7 +27,7 @@ import narwhals.stable.v1 as nw
 
 from altair import utils
 from altair.expr import core as _expr_core
-from altair.utils import Optional, Undefined
+from altair.utils import Optional, SchemaBase, Undefined
 from altair.utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
@@ -125,7 +125,6 @@ if TYPE_CHECKING:
         ProjectionType,
         RepeatMapping,
         RepeatRef,
-        SchemaBase,
         SelectionParameter,
         SequenceGenerator,
         SortField,
@@ -194,7 +193,7 @@ __all__ = [
 ]
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
-_TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
+_TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 
 # ------------------------------------------------------------------------
@@ -509,7 +508,7 @@ _ComposablePredicateType: TypeAlias = Union[
 ]
 """Permitted types for `&` reduced predicates."""
 
-_StatementType: TypeAlias = Union[core.SchemaBase, Map, str]
+_StatementType: TypeAlias = Union[SchemaBase, Map, str]
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -532,7 +531,7 @@ Prior to parsing any `_StatementType`.
 _LiteralValue: TypeAlias = Union[str, bool, float, int]
 """Primitive python value types."""
 
-_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
+_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -586,7 +585,7 @@ def _condition_to_selection(
     **kwargs: Any,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
     selection: SchemaBase | dict[str, _ConditionType | Any]
-    if isinstance(if_true, core.SchemaBase):
+    if isinstance(if_true, SchemaBase):
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
         if isinstance(if_false, str):
@@ -600,7 +599,7 @@ def _condition_to_selection(
             if_true = utils.parse_shorthand(if_true)
             if_true.update(kwargs)
     condition.update(if_true)
-    if isinstance(if_false, core.SchemaBase):
+    if isinstance(if_false, SchemaBase):
         # For the selection, the channel definitions all allow selections
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
@@ -662,8 +661,8 @@ def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
 
 def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
     for el in objs:
-        if isinstance(el, (core.SchemaBase, t.Mapping)):
-            item = el.to_dict(validate=False) if isinstance(el, core.SchemaBase) else el
+        if isinstance(el, (SchemaBase, t.Mapping)):
+            item = el.to_dict(validate=False) if isinstance(el, SchemaBase) else el
             yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
         else:
             continue
@@ -774,7 +773,7 @@ def _parse_literal(val: Any, /) -> dict[str, Any]:
 
 
 def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
-    if isinstance(statement, core.SchemaBase):
+    if isinstance(statement, SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
         statement = _parse_literal(statement)
@@ -786,7 +785,7 @@ def _parse_otherwise(
     statement: _StatementType, conditions: _Conditional[Any], kwds: dict[str, Any], /
 ) -> SchemaBase | _Conditional[Any]:
     selection: SchemaBase | _Conditional[Any]
-    if isinstance(statement, core.SchemaBase):
+    if isinstance(statement, SchemaBase):
         selection = statement.copy()
         conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
@@ -879,7 +878,7 @@ class When(_BaseWhen):
             return Then(_Conditional(condition=[condition]))
 
 
-class Then(core.SchemaBase, t.Generic[_C]):
+class Then(SchemaBase, t.Generic[_C]):
     """
     Utility class for ``when-then-otherwise`` conditions.
 
@@ -1728,7 +1727,6 @@ def _top_schema_base(  # noqa: ANN202
     - However it is required at runtime for any cases that use `super(..., copy)`.
     - The inferred type **is** used statically **outside** of this function.
     """
-    SchemaBase = core.SchemaBase
     if (isinstance(obj, SchemaBase) and isinstance(obj, TopLevelMixin)) or (
         not TYPE_CHECKING
         and (
@@ -3866,7 +3864,7 @@ def _check_if_valid_subspec(
     ],
 ) -> None:
     """Raise a `TypeError` if `spec` is not a valid sub-spec."""
-    if not isinstance(spec, core.SchemaBase):
+    if not isinstance(spec, SchemaBase):
         msg = f"Only chart objects can be used in {classname}."
         raise TypeError(msg)
     for attr in TOPLEVEL_ONLY_KEYS:
