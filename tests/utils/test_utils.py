@@ -1,7 +1,6 @@
 import io
 import json
 import sys
-import warnings
 
 import narwhals.stable.v1 as nw
 import numpy as np
@@ -13,11 +12,7 @@ from altair.utils import (
     sanitize_narwhals_dataframe,
     sanitize_pandas_dataframe,
 )
-
-try:
-    import pyarrow as pa
-except ImportError:
-    pa = None
+from tests import skip_requires_pyarrow
 
 
 def test_infer_vegalite_type():
@@ -36,13 +31,8 @@ def test_infer_vegalite_type():
     _check(nulled, "quantitative")
     _check(["a", "b", "c"], "nominal")
 
-    if hasattr(pytest, "warns"):  # added in pytest 2.8
-        with pytest.warns(UserWarning):
-            _check([], "nominal")
-    else:
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore")
-            _check([], "nominal")
+    with pytest.warns(UserWarning):
+        _check([], "nominal")
 
 
 def test_sanitize_dataframe():
@@ -97,8 +87,10 @@ def test_sanitize_dataframe():
 
 
 @pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
-@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+@skip_requires_pyarrow
 def test_sanitize_dataframe_arrow_columns():
+    import pyarrow as pa
+
     # create a dataframe with various types
     df = pd.DataFrame(
         {
@@ -128,11 +120,13 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
-@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+@skip_requires_pyarrow
 @pytest.mark.xfail(
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_sanitize_pyarrow_table_columns() -> None:
+    import pyarrow as pa
+
     # create a dataframe with various types
     df = pd.DataFrame(
         {
@@ -187,16 +181,14 @@ def test_sanitize_dataframe_colnames():
 
     # Test that non-string columns result in an error
     df.columns = [4, "foo", "bar"]
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(ValueError, match="Dataframe contains invalid column name: 4."):
         sanitize_pandas_dataframe(df)
-    assert str(err.value).startswith("Dataframe contains invalid column name: 4.")
 
 
 def test_sanitize_dataframe_timedelta():
     df = pd.DataFrame({"r": pd.timedelta_range(start="1 day", periods=4)})
-    with pytest.raises(ValueError) as err:  # noqa: PT011
+    with pytest.raises(ValueError, match='Field "r" has type "timedelta'):
         sanitize_pandas_dataframe(df)
-    assert str(err.value).startswith('Field "r" has type "timedelta')
 
 
 def test_sanitize_dataframe_infs():
