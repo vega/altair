@@ -1528,6 +1528,17 @@ def _is_iterable(
     return not isinstance(obj, exclude) and isinstance(obj, Iterable)
 
 
+def _is_valid(spec: _JsonParameter, tp: type[SchemaBase], /) -> bool:
+    """
+    Return True if ``tp`` can be constructed from ``spec``.
+
+    Notes
+    -----
+    Don't use this if you need to know *details* of the errors in ``spec``..
+    """
+    return next(_validator(tp._schema, tp._rootschema).iter_errors(spec), None) is None
+
+
 def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
 

@@ -22,7 +22,6 @@ from typing import (
 )
 from typing_extensions import TypeAlias
 
-import jsonschema
 import narwhals.stable.v1 as nw
 
 from altair import utils
@@ -37,6 +36,7 @@ from altair.utils.core import (
 )
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
+from altair.utils.schemapi import _is_valid
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -3724,14 +3724,13 @@ class Chart(
         jsonschema.ValidationError :
             If ``validate`` and ``dct`` does not conform to the schema
         """
+        if not validate:
+            return super().from_dict(dct, validate=False)
         _tp: Any
         for tp in TopLevelMixin.__subclasses__():
             _tp = super() if tp is Chart else tp
-            # FIXME: Hot try/except
-            try:
-                return _tp.from_dict(dct, validate=validate)
-            except jsonschema.ValidationError:
-                pass
+            if _is_valid(dct, _tp):
+                return _tp.from_dict(dct, validate=False)
 
         # As a last resort, try using the Root vegalite object
         return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
