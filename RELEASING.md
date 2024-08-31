@@ -41,7 +41,7 @@
 
 9. On main, build source & wheel distributions. If you work on a fork, replace `origin` with `upstream`:
 
-       git checkout main
+       git switch main
        git pull origin main
        hatch clean  # clean old builds & distributions
        hatch build  # create a source distribution and universal wheel
