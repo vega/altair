@@ -233,13 +233,13 @@ the selected points are sometimes obscured by some of the unselected points.
 To bring the selected points to the foreground,
 we can change the order in which they are laid out via the following
 encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
-You can see and example of this in the :ref:`gallery_selection_zorder` gallery example.
+You can see an example of this in the :ref:`gallery_selection_zorder` gallery example.
 
 Filtering Data
 ^^^^^^^^^^^^^^
 
 Using a selection parameter to filter data works in much the same way
-as using it within ``condition``,
+as using it within ``condition``.
 For example, in ``transform_filter(brush)``,
 we are again using the selection parameter ``brush`` as a predicate.
 Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
@@ -290,7 +290,7 @@ selection:
 .. altair-plot::
     :output: none
 
-    def make_example(selector):
+    def make_example(selector: alt.Parameter) -> alt.Chart:
         cars = data.cars.url
 
         return alt.Chart(cars).mark_rect().encode(
@@ -389,8 +389,7 @@ with a matching ``Origin``.
 
     scatter | legend
 
-The above could be equivalently replace ``fields=['Origin']`` with
-``encodings=['color']``, because in this case the chart maps ``color`` to
+Alternatively, we could express ``fields=['Origin']`` as ``encodings=['color']``, because our chart maps ``color`` to
 ``'Origin'``. Also note that there is a shortcut to create interactive legends in Altair
 described in the section :ref:`legend-binding`.
 
@@ -442,7 +441,7 @@ we can construct a scenario where there are two people who can make an interval
 selection in the same chart. The person Alex makes a selection box when the
 alt-key (macOS: option-key) is selected and Morgan can make a selection
 box when the shift-key is selected.
-We use the ``Brushconfig`` to give the selection box of Morgan a different
+We use :class:`BrushConfig` to give the selection box of Morgan a different
 style.
 Now, we color the rectangles when they fall within Alex's or Morgan's
 selection
