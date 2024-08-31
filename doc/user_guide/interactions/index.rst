@@ -19,8 +19,8 @@ There are three core concepts of this grammar:
 - Widgets and other chart input elements can bind to parameters
   so that charts can be manipulated via drop-down menus, radio buttons, sliders, legends, etc.
 
-In addition to the three core concepts,
-there are two additional components that enchances the capabitlities
+In addition to these concepts,
+there are two additional components that enhance the capabilities
 of interactive visualizations in Altair:
 
 - Expressions allow for custom calculation via writing basic formulas.
