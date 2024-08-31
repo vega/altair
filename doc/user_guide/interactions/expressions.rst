@@ -21,6 +21,16 @@ Using these two expressions defined inside parameters, we can connect them to an
 
 .. altair-plot::
 
+    import altair as alt
+    import numpy as np
+    import pandas as pd
+    
+    rand = np.random.RandomState(42)
+    df = pd.DataFrame({
+        'xval': range(100),
+        'yval': rand.randn(100).cumsum()
+    })
+
     bind_range = alt.binding_range(min=100, max=300, name='Slider value:  ')
     param_width = alt.param(bind=bind_range)
 
@@ -116,6 +126,9 @@ We also need to reference the field specified by the selection parameter
 
 .. altair-plot::
 
+    from vega_datasets import data
+    
+    cars = data.cars.url
     input_dropdown = alt.binding_select(options=['Europe', 'Japan', 'USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown, value='Europe')
 
@@ -156,7 +169,7 @@ To try this out, you can type ``mazda|ford`` in the search input box below.
             name='Search ',
         )
     )
-    alt.Chart(data.cars.url).mark_point(size=60).encode(
+    alt.Chart(cars).mark_point(size=60).encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         tooltip='Name:N',
