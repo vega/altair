@@ -18,10 +18,15 @@ There are three core concepts of this grammar:
   and update chart elements based on that input.
 - Widgets and other chart input elements can bind to parameters
   so that charts can be manipulated via drop-down menus, radio buttons, sliders, legends, etc.
+
+In addition to the three core concepts,
+there are two additional components that enchances the capabitlities
+of interactive visualizations in Altair:
+
 - Expressions allow for custom calculation via writing basic formulas.
   These can be used for fine-controlled interactivity,
   and are also available outside encodings.
-- JupyterChart allow access to Altair's parameters from Python,
+- JupyterCharts allow access to Altair's parameters from Python,
   e.g. printing the values of a selection in the plot.
 
 Further reading
