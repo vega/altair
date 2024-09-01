@@ -1,3 +1,5 @@
+.. currentmodule:: altair
+
 .. _user-guide-jupyterchart:
 
 JupyterChart

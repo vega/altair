@@ -23,6 +23,7 @@ from packaging.version import Version
 
 import altair as alt
 from altair.utils.schemapi import Optional, Undefined
+from tests import skip_requires_vl_convert, slow
 
 try:
     import vl_convert as vlc
@@ -807,11 +808,9 @@ def test_save(format, engine, basic_chart):
             pathlib.Path(fp).unlink()
 
 
-@pytest.mark.parametrize("inline", [False, True])
+@pytest.mark.parametrize("inline", [False, pytest.param(True, marks=slow)])
+@skip_requires_vl_convert
 def test_save_html(basic_chart, inline):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run this test")
-
     out = io.StringIO()
     basic_chart.save(out, format="html", inline=inline)
     out.seek(0)
@@ -827,10 +826,8 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
 
 
+@skip_requires_vl_convert
 def test_to_url(basic_chart):
-    if vlc is None:
-        pytest.skip("vl_convert is not installed")
-
     share_url = basic_chart.to_url()
 
     assert share_url.startswith("https://vega.github.io/editor/#/url/vega-lite/")
