@@ -4165,7 +4165,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
 def concat(*charts: ConcatType, **kwargs: Any) -> ConcatChart:
     """Concatenate charts horizontally."""
-    return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
+    return ConcatChart(concat=charts, **kwargs)
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
@@ -4269,7 +4269,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 def hconcat(*charts: ConcatType, **kwargs: Any) -> HConcatChart:
     """Concatenate charts horizontally."""
-    return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
+    return HConcatChart(hconcat=charts, **kwargs)
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
@@ -4375,7 +4375,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 def vconcat(*charts: ConcatType, **kwargs: Any) -> VConcatChart:
     """Concatenate charts vertically."""
-    return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
+    return VConcatChart(vconcat=charts, **kwargs)
 
 
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
@@ -4501,7 +4501,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
 def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
     """Layer multiple charts."""
-    return LayerChart(layer=charts, **kwargs)  # pyright: ignore
+    return LayerChart(layer=charts, **kwargs)
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
