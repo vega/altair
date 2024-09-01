@@ -620,14 +620,13 @@ data before usage in Altair using GeoPandas for example as such:
    encodings/index
    marks/index
    transform/index
-   interactions
+   interactions/index
    compound_charts
    scale_resolve
    times_and_dates
    customization
    configuration
    saving_charts
-   jupyter_chart
 
 
 .. toctree::
