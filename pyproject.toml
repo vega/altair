@@ -129,6 +129,14 @@ update-init-file = [
     "ruff check .",
     "ruff format .",
 ]
+test-fast = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"not slow\" {args}"
+]
+test-slow = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"slow\" {args}"
+]
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
@@ -409,6 +417,10 @@ docstring-code-line-length = 88
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
 addopts = ["--numprocesses=logical"]
+# https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
+markers = [
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')"
+]
 
 [tool.mypy]
 warn_unused_ignores = true
