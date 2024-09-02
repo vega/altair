@@ -1566,31 +1566,7 @@ def _hash_schema(
 
 
 def _subclasses(cls: type[TSchemaBase]) -> Iterator[type[TSchemaBase]]:
-    """
-    Breadth-first sequence of all classes which inherit from ``cls``.
-
-    Notes
-    -----
-    - `__subclasses__()` alone isn't helpful, as that is only immediate subclasses
-    - Deterministic
-    - Used for `SchemaBase` & `VegaLiteSchema`
-    - In practice, it provides an iterator over all classes in the schema below `VegaLiteSchema`
-        - The first one is `Root`
-    - The order itself, I don't think is important
-        - But probably important that it doesn't change
-        - Thinking they used an iterator so that the subclasses are evaluated after they have all been defined
-
-    - `Chart` seems to try to avoid calling this
-        - Using `TopLevelMixin.__subclasses__()` first if possible
-    - It is always called during `Chart.encode()`
-        - Chart.encode()
-        - altair.utils.core.infer_encoding_types
-        -  _ChannelCache.infer_encoding_types
-        - _ChannelCache._wrap_in_channel
-        - SchemaBase.from_dict (recursive, hot loop, validate =False, within a try/except)
-        - _FromDict(cls._default_wrapper_classes())
-        - schemapi._subclasses(schema.core.VegaLiteSchema)
-    """
+    """Breadth-first sequence of all classes which inherit from ``cls``."""
     seen = set()
     current: set[type[TSchemaBase]] = {cls}
     while current:
