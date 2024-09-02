@@ -57,8 +57,10 @@ R = TypeVar("R")
 
 WrapsFunc = TypeAliasType("WrapsFunc", Callable[..., R], type_params=(R,))
 WrappedFunc = TypeAliasType("WrappedFunc", Callable[P, R], type_params=(P, R))
+# NOTE: Requires stringized form to avoid `< (3, 11)` issues
+# See: https://github.com/vega/altair/actions/runs/10667859416/job/29567290871?pr=3565
 WrapsMethod = TypeAliasType(
-    "WrapsMethod", Callable[Concatenate[T, ...], R], type_params=(T, R)
+    "WrapsMethod", "Callable[Concatenate[T, ...], R]", type_params=(T, R)
 )
 WrappedMethod = TypeAliasType(
     "WrappedMethod", Callable[Concatenate[T, P], R], type_params=(T, P, R)
