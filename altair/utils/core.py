@@ -31,9 +31,9 @@ from narwhals.typing import IntoDataFrame
 from altair.utils.schemapi import SchemaBase, Undefined
 
 if sys.version_info >= (3, 12):
-    from typing import Protocol, runtime_checkable
+    from typing import Protocol, TypeAliasType, runtime_checkable
 else:
-    from typing_extensions import Protocol, runtime_checkable
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable
 if sys.version_info >= (3, 10):
     from typing import Concatenate, ParamSpec
 else:
@@ -50,10 +50,19 @@ if TYPE_CHECKING:
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
 
-P = ParamSpec("P")
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 T = TypeVar("T")
+P = ParamSpec("P")
 R = TypeVar("R")
+
+WrapsFunc = TypeAliasType("WrapsFunc", Callable[..., R], type_params=(R,))
+WrappedFunc = TypeAliasType("WrappedFunc", Callable[P, R], type_params=(P, R))
+WrapsMethod = TypeAliasType(
+    "WrapsMethod", Callable[Concatenate[T, ...], R], type_params=(T, R)
+)
+WrappedMethod = TypeAliasType(
+    "WrappedMethod", Callable[Concatenate[T, P], R], type_params=(T, P, R)
+)
 
 
 @runtime_checkable
@@ -725,19 +734,21 @@ def use_signature(tp: Callable[P, Any], /):
 
     - **Overload 1**: Decorating method
     - **Overload 2**: Decorating function
+
+    Returns
+    -------
+    **Adding the annotation breaks typing**:
+
+        Overload[Callable[[WrapsMethod[T, R]], WrappedMethod[T, P, R]], Callable[[WrapsFunc[R]], WrappedFunc[P, R]]]
     """
 
     @overload
-    def decorate(
-        cb: Callable[Concatenate[T, ...], R], /
-    ) -> Callable[Concatenate[T, P], R]: ...
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
 
     @overload
-    def decorate(cb: Callable[..., R], /) -> Callable[P, R]: ...
+    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
 
-    def decorate(
-        cb: Callable[..., R], /
-    ) -> Callable[Concatenate[T, P], R] | Callable[P, R]:
+    def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
         """
         Raises when no doc was found.
 
