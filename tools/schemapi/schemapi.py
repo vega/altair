@@ -91,7 +91,8 @@ Prefix added to each ``"$ref"``.
 This URI is arbitrary and could be anything else.
 
 It just cannot be an empty string as we need to reference the schema registered in
-the ``referencing.Registry``."""
+the ``referencing.Registry``.
+"""
 
 _DEFAULT_DIALECT_URI: LiteralString = "http://json-schema.org/draft-07/schema#"
 """
@@ -1541,20 +1542,6 @@ def _is_valid(spec: _JsonParameter, tp: type[SchemaBase], /) -> bool:
 
 def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
-
-
-def _freeze(val):
-    # NOTE: No longer referenced
-    # - Previously only called during tests
-    # - Not during any library code
-    if isinstance(val, dict):
-        return frozenset((k, _freeze(v)) for k, v in val.items())
-    elif isinstance(val, set):
-        return frozenset(_freeze(v) for v in val)
-    elif isinstance(val, (list, tuple)):
-        return tuple(_freeze(v) for v in val)
-    else:
-        return val
 
 
 def _hash_schema(
