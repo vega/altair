@@ -290,6 +290,74 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         """
         return _specification_with(dialect_id)
 
+    class _Registry:
+        """
+        A cache of `Registry`_ (s).
+
+        An instance named ``registry`` is used to wrap the `Registry`_ API,
+        with a managed cache.
+
+        See Also
+        --------
+        ``_Registry.__call__``
+
+        .. _Registry:
+               https://referencing.readthedocs.io/en/stable/api/#referencing.Registry
+        """
+
+        _cached: ClassVar[dict[tuple[str, str], Registry[Any]]] = {}
+
+        @staticmethod
+        def compute_key(root: Map, dialect_id: str, /) -> tuple[str, str]:
+            """
+            Generate a simple-minded hash to identify a registry.
+
+            Notes
+            -----
+            Why the strange hash?
+            - **All** generated schemas hit the ``"$ref"`` branch.
+            - ``api.Then`` hits the len(...) 1 branch w/ ``{"type": "object"}``.
+            - Final branch is only hit by mock schemas in:
+                - `tests/utils/test_core.py::test_infer_encoding_types`
+                - `tests/utils/test_schemapi.py`
+            """
+            if "$ref" in root:
+                k1 = root["$ref"]
+            elif len(root) == 1:
+                k1 = "".join(f"{s!s}" for s in chain(*root.items()))
+            else:
+                k1 = _HASH_ENCODER.encode(root)
+            return k1, dialect_id
+
+        @classmethod
+        def update_cached(
+            cls, root: Map, dialect_id: str, resolver: Resolver[Any]
+        ) -> None:
+            cls._cached[cls.compute_key(root, dialect_id)] = resolver._registry
+
+        def __call__(self, root: Map, dialect_id: str, /) -> Registry[Any]:
+            """
+            Constructs a `Registry`_, adding the `Resource`_ produced by ``rootschema``.
+
+            Requires at least ``jsonschema`` `v4.18.0a1`_.
+
+            .. _Registry:
+               https://referencing.readthedocs.io/en/stable/api/#referencing.Registry
+            .. _Resource:
+               https://referencing.readthedocs.io/en/stable/api/#referencing.Resource
+            .. _v4.18.0a1:
+               https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
+            """
+            cache_key = self.compute_key(root, dialect_id)
+            if (reg := self._cached.get(cache_key, None)) is not None:
+                return reg
+            resource = specification_with(dialect_id).create_resource(root)
+            reg = Registry().with_resource(_VEGA_LITE_ROOT_URI, resource).crawl()
+            type(self)._cached[cache_key] = reg
+            return reg
+
+    registry: _Registry = _Registry()
+
     def _validator(schema: Map, rootschema: Map | None = None, /) -> Validator:
         """
         Constructs a `Validator`_ for future validation.
@@ -309,37 +377,9 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         # NOTE: This is the current version
         uri = _get_schema_dialect_uri(rootschema or schema)
         validator = _validator_for(uri)
-        registry = _registry(rootschema or schema, uri)
-        return validator(_prepare_references(schema), registry=registry)
-
-    def _registry(rootschema: Map, dialect_id: str) -> Registry[Any]:
-        """
-        Constructs a `Registry`_, adding the `Resource`_ produced by ``rootschema``.
-
-        Requires at least ``jsonschema`` `v4.18.0a1`_.
-
-        .. _Registry:
-           https://referencing.readthedocs.io/en/stable/api/#referencing.Registry
-        .. _Resource:
-           https://referencing.readthedocs.io/en/stable/api/#referencing.Resource
-        .. _v4.18.0a1:
-           https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0a1
-        """
-        global _REGISTRY_CACHE
-        cache_key = _registry_comp_key(rootschema, dialect_id)
-        if (registry := _REGISTRY_CACHE.get(cache_key, None)) is not None:
-            return registry
-        else:
-            specification = specification_with(dialect_id)
-            resource = specification.create_resource(rootschema)
-            registry = Registry().with_resource(_VEGA_LITE_ROOT_URI, resource).crawl()
-            _REGISTRY_CACHE[cache_key] = registry
-            return registry
-
-    def _registry_update(root: Map, dialect_id: str, resolver: Resolver[Any]) -> None:
-        global _REGISTRY_CACHE
-        cache_key = _registry_comp_key(root, dialect_id)
-        _REGISTRY_CACHE[cache_key] = resolver._registry
+        return validator(
+            _prepare_references(schema), registry=registry(rootschema or schema, uri)
+        )
 
     def _resolve_references(schema: Map, rootschema: Map) -> Map:
         """
@@ -357,36 +397,13 @@ if Version(importlib_version("jsonschema")) >= Version("4.18"):
         if ("$ref" not in root) or ("$ref" not in schema):
             return schema
         uri = _get_schema_dialect_uri(rootschema)
-        registry = _registry(root, uri)
-        resolver = registry.resolver(_VEGA_LITE_ROOT_URI)
+        resolver = registry(root, uri).resolver(_VEGA_LITE_ROOT_URI)
         while "$ref" in schema:
             resolved = resolver.lookup(schema["$ref"])
             schema = resolved.contents
-        _registry_update(root, uri, resolved.resolver)
+        registry.update_cached(root, uri, resolved.resolver)
         return schema
 
-    def _registry_comp_key(root: Map, dialect_id: str, /) -> tuple[str, str]:
-        """
-        Generate a simple-minded hash to identify a registry.
-
-        Notes
-        -----
-        Why the strange hash?
-        - **All** generated schemas hit the ``"$ref"`` branch.
-        - ``api.Then`` hits the len(...) 1 branch w/ ``{"type": "object"}``.
-        - Final branch is only hit by mock schemas in:
-            - `tests/utils/test_core.py::test_infer_encoding_types`
-            - `tests/utils/test_schemapi.py`
-        """
-        if "$ref" in root:
-            k1 = root["$ref"]
-        elif len(root) == 1:
-            k1 = "".join(f"{s!s}" for s in chain(*root.items()))
-        else:
-            k1 = _HASH_ENCODER.encode(root)
-        return k1, dialect_id
-
-    _REGISTRY_CACHE: dict[tuple[str, str], Registry[Any]] = {}
 
 else:
 
