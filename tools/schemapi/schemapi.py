@@ -1366,8 +1366,6 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        # NOTE: the breadth-first search occurs only once now
-        # `_FromDict` is purely ClassVar/classmethods
         converter: type[_FromDict] | _FromDict = (
             _FromDict
             if _FromDict.hash_tps
@@ -1707,14 +1705,9 @@ class _FromDict:
         elif tp is not None:
             current_schema = tp._schema
             hash_schema = _hash_schema(current_schema)
-            # NOTE: the `current_schema` branch only triggered for mock schema tests:
-            # test_schemapi.py::[test_construct_multifaceted_schema, test_copy_method, test_round_trip, test_copy_module, test_from_dict, test_to_from_json, test_to_from_pickle]
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
-            # FIXME: This is the slow branch
-            # - Improving the perf of the `tp` one is too small scale
-            # - Every recursive `from_dict` call that isn't solved hits this
             current_schema = schema
             hash_schema = _hash_schema(current_schema)
             root_schema = rootschema or current_schema
