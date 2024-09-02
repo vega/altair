@@ -1141,8 +1141,6 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
-    # TODO: Implement `ClassVar` validation using https://peps.python.org/pep-0487/
-
     _schema: ClassVar[dict[str, Any] | Any] = None
     _rootschema: ClassVar[dict[str, Any] | Any] = None
     _class_is_valid_at_instantiation: ClassVar[bool] = True
