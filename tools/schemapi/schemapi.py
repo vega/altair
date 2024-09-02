@@ -1718,9 +1718,7 @@ class _FromDict:
             raise ValueError(msg)
 
         from_dict = partial(cls.from_dict, rootschema=root_schema)
-        if resolved := cls.hash_resolved.get(hash_schema):
-            ...
-        else:
+        if (resolved := cls.hash_resolved.get(hash_schema)) is None:
             resolved = _resolve_references(current_schema, root_schema)
             cls.hash_resolved[hash_schema] = resolved
         if "anyOf" in resolved:
