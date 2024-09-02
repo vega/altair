@@ -93,7 +93,8 @@ Prefix added to each ``"$ref"``.
 This URI is arbitrary and could be anything else.
 
 It just cannot be an empty string as we need to reference the schema registered in
-the ``referencing.Registry``."""
+the ``referencing.Registry``.
+"""
 
 _DEFAULT_DIALECT_URI: LiteralString = "http://json-schema.org/draft-07/schema#"
 """
@@ -1367,8 +1368,6 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        # NOTE: the breadth-first search occurs only once now
-        # `_FromDict` is purely ClassVar/classmethods
         converter: type[_FromDict] | _FromDict = (
             _FromDict
             if _FromDict.hash_tps
@@ -1545,20 +1544,6 @@ def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
 
 
-def _freeze(val):
-    # NOTE: No longer referenced
-    # - Previously only called during tests
-    # - Not during any library code
-    if isinstance(val, dict):
-        return frozenset((k, _freeze(v)) for k, v in val.items())
-    elif isinstance(val, set):
-        return frozenset(_freeze(v) for v in val)
-    elif isinstance(val, (list, tuple)):
-        return tuple(_freeze(v) for v in val)
-    else:
-        return val
-
-
 def _hash_schema(
     schema: _JsonParameter,
     /,
@@ -1722,14 +1707,9 @@ class _FromDict:
         elif tp is not None:
             current_schema = tp._schema
             hash_schema = _hash_schema(current_schema)
-            # NOTE: the `current_schema` branch only triggered for mock schema tests:
-            # test_schemapi.py::[test_construct_multifaceted_schema, test_copy_method, test_round_trip, test_copy_module, test_from_dict, test_to_from_json, test_to_from_pickle]
             root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
             target_tp = tp
         elif schema is not None:
-            # FIXME: This is the slow branch
-            # - Improving the perf of the `tp` one is too small scale
-            # - Every recursive `from_dict` call that isn't solved hits this
             current_schema = schema
             hash_schema = _hash_schema(current_schema)
             root_schema = rootschema or current_schema
