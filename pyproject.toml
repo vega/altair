@@ -20,7 +20,7 @@ dependencies = [
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
     "packaging",
-    "narwhals>=1.1.0"
+    "narwhals>=1.5.2"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
@@ -128,6 +128,14 @@ update-init-file = [
     "python tools/update_init_file.py",
     "ruff check .",
     "ruff format .",
+]
+test-fast = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"not slow\" {args}"
+]
+test-slow = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"slow\" {args}"
 ]
 
 [tool.hatch.envs.hatch-test]
@@ -409,6 +417,10 @@ docstring-code-line-length = 88
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
 addopts = ["--numprocesses=logical"]
+# https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
+markers = [
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')"
+]
 
 [tool.mypy]
 warn_unused_ignores = true

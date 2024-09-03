@@ -2,8 +2,8 @@
 
 .. _user-guide-resolve:
 
-Scale and Guide Resolution
---------------------------
+Scale & Guide Resolution
+------------------------
 When creating compound charts (see :ref:`user-guide-compound`), altair defaults
 to using shared chart scales and guides (e.g. axes, legends, etc.).
 This default can be adjusted using the :meth:`Chart.resolve_scale`,

@@ -1,8 +1,10 @@
 """Tests of various renderers."""
 
 import json
+from importlib.metadata import version as importlib_version
 
 import pytest
+from packaging.version import Version
 
 import altair.vegalite.v5 as alt
 
@@ -16,6 +18,20 @@ try:
 
 except ImportError:
     anywidget = None  # type: ignore
+
+
+skip_requires_anywidget = pytest.mark.skipif(
+    not anywidget, reason="anywidget not importable"
+)
+if Version(importlib_version("ipywidgets")) < Version("8.1.4"):
+    # See https://github.com/vega/altair/issues/3234#issuecomment-2268515312
+    jupyter_marks = skip_requires_anywidget(
+        pytest.mark.filterwarnings(
+            "ignore:Deprecated in traitlets 4.1.*:DeprecationWarning"
+        )
+    )
+else:
+    jupyter_marks = skip_requires_anywidget
 
 
 @pytest.fixture
@@ -94,12 +110,9 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
         assert bundle["image/svg+xml"].startswith("<svg")
 
 
-@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
+@jupyter_marks
 def test_jupyter_renderer_mimetype(chart, renderer="jupyter") -> None:
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled."""
-    if not anywidget:
-        pytest.skip("anywidget not importable; skipping test")
-
     with alt.renderers.enable(renderer):
         assert (
             "application/vnd.jupyter.widget-view+json"

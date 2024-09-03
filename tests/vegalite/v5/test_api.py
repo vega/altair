@@ -10,7 +10,7 @@ import pathlib
 import re
 import sys
 import tempfile
-from datetime import date
+from datetime import date, datetime
 from importlib.metadata import version as importlib_version
 
 import ibis
@@ -23,6 +23,7 @@ from packaging.version import Version
 
 import altair as alt
 from altair.utils.schemapi import Optional, Undefined
+from tests import skip_requires_vl_convert, slow
 
 try:
     import vl_convert as vlc
@@ -698,6 +699,27 @@ def test_when_condition_parity(
         assert chart_condition == chart_when
 
 
+def test_when_then_interactive() -> None:
+    """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
+    predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
+        alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
+    )
+
+    chart = (
+        alt.Chart(source)
+        .mark_point(invalid=None)
+        .encode(
+            x="IMDB_Rating:Q",
+            y="Rotten_Tomatoes_Rating:Q",
+            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+        )
+    )
+    assert chart.interactive()
+    assert chart.copy()
+    assert chart.to_dict()
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
@@ -786,11 +808,9 @@ def test_save(format, engine, basic_chart):
             pathlib.Path(fp).unlink()
 
 
-@pytest.mark.parametrize("inline", [False, True])
+@pytest.mark.parametrize("inline", [False, pytest.param(True, marks=slow)])
+@skip_requires_vl_convert
 def test_save_html(basic_chart, inline):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run this test")
-
     out = io.StringIO()
     basic_chart.save(out, format="html", inline=inline)
     out.seek(0)
@@ -806,10 +826,8 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
 
 
+@skip_requires_vl_convert
 def test_to_url(basic_chart):
-    if vlc is None:
-        pytest.skip("vl_convert is not installed")
-
     share_url = basic_chart.to_url()
 
     assert share_url.startswith("https://vega.github.io/editor/#/url/vega-lite/")
@@ -1529,4 +1547,39 @@ def test_ibis_with_date_32():
         {"a": 1, "b": "2020-01-01T00:00:00"},
         {"a": 2, "b": "2020-01-02T00:00:00"},
         {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
+)
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    df = pl.DataFrame(
+        {
+            "a": [1, 2, 3],
+            "b": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
+        }
+    )
+    tbl = ibis.memtable(df)
+    # "poison" `arrow_table_from_dfi_dataframe` to check that it does not get called
+    # if we use the vegafusion transformer
+    monkeypatch.setattr(
+        "altair.utils.data.arrow_table_from_dfi_dataframe", lambda x: 1 / 0
+    )
+    tbl = ibis.memtable(df)
+    with alt.data_transformers.enable("vegafusion"):
+        result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict(format="vega")
+    assert next(iter(result["data"]))["values"] == [
+        {"a": 1, "b": "2020-01-01T00:00:00.000"},
+        {"a": 2, "b": "2020-01-02T00:00:00.000"},
+        {"a": 3, "b": "2020-01-03T00:00:00.000"},
     ]

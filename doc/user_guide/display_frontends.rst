@@ -171,7 +171,7 @@ Package                                                                         
 `Marimo <https://docs.marimo.io/guides/plotting.html>`_                                                                              ✔                                    ✔
 `Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
 `Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
-`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                              
+`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                    ✔
 ===================================================================================================================================  ===================================  =============================
 
 The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well. 
