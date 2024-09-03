@@ -77,6 +77,7 @@ __all__ = [
     "SchemaBase",  # altair.vegalite.v5.schema.core
     "Undefined",  # altair.utils
     "UndefinedType",  # altair.vegalite.v5.schema.core -> (side-effect relied on to propagate to alt.__init__)
+    "_is_valid",  # altair.vegalite.v5.api
     "_resolve_references",  # tools.schemapi.utils -> tools.generate_schema_wrapper
     "_subclasses",  # altair.vegalite.v5.schema.core
     "is_undefined",  # altair.typing
