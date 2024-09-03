@@ -817,7 +817,6 @@ def generate_typed_dict_args(prop_info: SchemaInfo) -> str:
 
 
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
-    """TODO - Tidy up and use consistent naming."""
     schema = load_schema(fp)
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
