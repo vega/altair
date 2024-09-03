@@ -10,7 +10,7 @@ import pathlib
 import re
 import sys
 import tempfile
-from datetime import date
+from datetime import date, datetime
 from importlib.metadata import version as importlib_version
 
 import ibis
@@ -1547,4 +1547,39 @@ def test_ibis_with_date_32():
         {"a": 1, "b": "2020-01-01T00:00:00"},
         {"a": 2, "b": "2020-01-02T00:00:00"},
         {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
+)
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    df = pl.DataFrame(
+        {
+            "a": [1, 2, 3],
+            "b": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
+        }
+    )
+    tbl = ibis.memtable(df)
+    # "poison" `arrow_table_from_dfi_dataframe` to check that it does not get called
+    # if we use the vegafusion transformer
+    monkeypatch.setattr(
+        "altair.utils.data.arrow_table_from_dfi_dataframe", lambda x: 1 / 0
+    )
+    tbl = ibis.memtable(df)
+    with alt.data_transformers.enable("vegafusion"):
+        result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict(format="vega")
+    assert next(iter(result["data"]))["values"] == [
+        {"a": 1, "b": "2020-01-01T00:00:00.000"},
+        {"a": 2, "b": "2020-01-02T00:00:00.000"},
+        {"a": 3, "b": "2020-01-03T00:00:00.000"},
     ]
