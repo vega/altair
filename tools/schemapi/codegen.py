@@ -294,7 +294,7 @@ class SchemaGenerator:
                 f"{p}: {info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
                 for p, info in prop_infos.items()
             )
-        elif si.type:
+        elif isinstance(si.type, str):
             py_type = jsonschema_to_python_types[si.type]
             if py_type == "list":
                 # Try to get a type hint like "List[str]" which is more specific

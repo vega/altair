@@ -6,7 +6,7 @@ import keyword
 import re
 import subprocess
 import textwrap
-import urllib
+import urllib.parse
 from html import unescape
 from itertools import chain
 from operator import itemgetter
@@ -289,7 +289,7 @@ def get_valid_identifier(
 
 def is_valid_identifier(s: str, /) -> bool:
     """Return ``True`` if ``s`` contains a valid Python identifier."""
-    return _VALID_IDENT.match(s) and not keyword.iskeyword(s)
+    return _VALID_IDENT.match(s) is not None and not keyword.iskeyword(s)
 
 
 class SchemaProperties:
@@ -311,11 +311,8 @@ class SchemaProperties:
     def __dir__(self) -> list[str]:
         return list(self._properties.keys())
 
-    def __getattr__(self, attr):
-        try:
-            return self[attr]
-        except KeyError:
-            return super().__getattr__(attr)
+    def __getattr__(self, attr) -> SchemaInfo:
+        return self[attr]
 
     def __getitem__(self, attr) -> SchemaInfo:
         dct = self._properties[attr]
@@ -748,7 +745,7 @@ class RSTParse(mistune.Markdown):
         super().__init__(renderer, block, inline, plugins)
 
     def __call__(self, s: str) -> str:
-        s = super().__call__(s)
+        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
         return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
 
 
@@ -1045,8 +1042,8 @@ def ruff_write_lint_format_str(
 
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
-    imports = "\n".join(f"    {s}" for s in imports)
-    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imports}\n"
+    imps = "\n".join(f"    {s}" for s in imports)
+    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imps}\n"
 
 
 def import_typing_extensions(
