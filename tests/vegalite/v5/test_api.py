@@ -1228,9 +1228,6 @@ def test_themes():
         assert "config" not in chart.to_dict()
 
 
-# TODO: Investigate alternative to looped try/except/pass
-# - AFAIK it would speed up `Chart.from_dict()`
-# - but maybe not central enough to have general impact
 def test_chart_from_dict() -> None:
     base = alt.Chart("data.csv").mark_point().encode(x="x:Q", y="y:Q")
 

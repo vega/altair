@@ -1042,14 +1042,6 @@ class _SchemaBasePEP487:
         **kwds: Any,
     ) -> None:
         super().__init_subclass__(*args, **kwds)
-        # NOTE: `SchemaBase` itself would have no `_schema` or `_rootschema`, but won't be run through this
-        # FIXED: `VegaLiteSchema` has a `_rootschema` but no `_schema`
-        # FIXED: `Root` uses `VegaLiteSchema._rootschema`, for `_schema` and inherits the same for `_rootschema`
-        # FIXED: Both have only `_schema` - which is a type
-        # - `api.Then`: _schema = {"type": "object"}
-        # - `expr.core.Expression`: _schema = {"type": "string"}
-        # ----
-        # All others either *only* define `_schema`, or inherit it when they are a channel
         if schema is None:
             if hasattr(cls, "_schema"):
                 schema = cls._schema
@@ -1059,7 +1051,6 @@ class _SchemaBasePEP487:
                     "_schema class attribute is not defined."
                 )
                 raise TypeError(msg)
-
         if rootschema is None:
             if hasattr(cls, "_rootschema"):
                 rootschema = cls._rootschema
@@ -1068,11 +1059,6 @@ class _SchemaBasePEP487:
             else:
                 msg = "`rootschema` must be provided if `schema` contains a `'$ref'` and does not inherit one."
                 raise TypeError(msg)
-
-        # NOTE: Inherit a `False`instead of overwriting with the default `True`
-        # - If a parent is not valid at init, then none of its subclasses can be
-        # - The current hierarchy does not support the inverse of this
-        #   - Subclasses may declare they are not valid
         if valid_at_init is None:
             valid_at_init = cls._class_is_valid_at_instantiation
         cls._schema = schema
