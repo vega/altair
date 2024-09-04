@@ -12,6 +12,8 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, Literal
+from typing_extensions import Protocol, TypeAlias, TypeIs, runtime_checkable
 
 import ibis
 import jsonschema
@@ -22,6 +24,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair import SchemaBase
 from altair.utils.schemapi import Optional, Undefined
 from tests import skip_requires_vl_convert, slow
 
@@ -29,6 +32,10 @@ try:
     import vl_convert as vlc
 except ImportError:
     vlc = None
+
+if TYPE_CHECKING:
+    from altair import Color, ColorDatum, ColorValue, Then
+    from altair.vegalite.v5.schema._typing import Map
 
 ibis.set_backend("polars")
 
@@ -699,6 +706,48 @@ def test_when_condition_parity(
         assert chart_condition == chart_when
 
 
+_SchemaLikeDict: TypeAlias = Dict[Literal["type"], Literal["object"]]
+
+
+@runtime_checkable
+class SchemaLike(Protocol):
+    _schema: ClassVar[_SchemaLikeDict] = {"type": "object"}
+
+    def to_dict(self, *args, **kwds) -> Any: ...
+
+
+# New alias def
+Schema_3: TypeAlias = "Map | SchemaBase"
+
+# How we'd use `SchemaLike` in annotations
+Schema_4: TypeAlias = "SchemaBase | SchemaLike"
+
+# Combining 4 & 5 essentially
+Schema_5: TypeAlias = "Map | SchemaBase | SchemaLike"
+
+# Excluding `SchemaBase` from the alias
+Schema_6: TypeAlias = "Map | SchemaLike"
+
+
+def chart_encode(
+    col_0: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
+    col_1: Optional[
+        str | Color | Map | SchemaBase | ColorDatum | ColorValue
+    ] = Undefined,
+    col_2: Optional[
+        str | Color | Map | Then[Any] | ColorDatum | ColorValue
+    ] = Undefined,
+    col_3: Optional[str | Color | Schema_3 | ColorDatum | ColorValue] = Undefined,
+    col_4: Optional[str | Color | Map | Schema_4 | ColorDatum | ColorValue] = Undefined,
+    col_5: Optional[str | Color | Schema_5 | ColorDatum | ColorValue] = Undefined,
+    col_6: Optional[str | Color | Schema_6 | ColorDatum | ColorValue] = Undefined,
+): ...
+
+
+def is_schema_like(obj: SchemaLike) -> TypeIs[SchemaLike]:
+    return isinstance(obj, SchemaLike)
+
+
 def test_when_then_interactive() -> None:
     """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
     source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
@@ -718,6 +767,33 @@ def test_when_then_interactive() -> None:
     assert chart.interactive()
     assert chart.copy()
     assert chart.to_dict()
+
+    then_pass = alt.when(predicate).then(alt.value("grey"))
+    # NOTE: A stand-in for a `SchemaBase` that we don't want to accept
+    then_fail: alt.Chart = alt.Chart(source)
+
+    result_pass = chart_encode(
+        col_0=then_pass,
+        col_1=then_pass,
+        col_2=then_pass,
+        col_3=then_pass,
+        col_4=then_pass,
+        col_5=then_pass,
+        col_6=then_pass,
+    )
+
+    result_fail = chart_encode(
+        col_0=then_fail,
+        col_1=then_fail,
+        col_2=then_fail,
+        col_3=then_fail,
+        col_4=then_fail,
+        col_5=then_fail,
+        col_6=then_fail,
+    )
+
+    is_schema_like(then_pass)
+    is_schema_like(then_fail)
 
 
 def test_selection_to_dict():

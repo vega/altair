@@ -891,7 +891,7 @@ class Then(SchemaBase, t.Generic[_C]):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    _schema = {"type": "object"}
+    _schema: t.ClassVar[dict[Literal["type"], Literal["object"]]] = {"type": "object"}
 
     def __init__(self, conditions: _Conditional[_C], /) -> None:
         super().__init__(**conditions)
