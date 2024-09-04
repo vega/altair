@@ -226,33 +226,33 @@ of the selection (for more information on selections, see
 .. altair-plot::
 
     brush = alt.selection_interval()
-
-    points = alt.Chart().mark_point().encode(
-        alt.X('temp_max:Q').title('Maximum Daily Temperature (C)'),
-        alt.Y('temp_range:Q').title('Daily Temperature Range (C)'),
-        color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
-        size=alt.Size('precipitation:Q').scale(range=[1, 200])
-    ).transform_calculate(
-        "temp_range", "datum.temp_max - datum.temp_min"
-    ).properties(
-        width=600,
-        height=400
-    ).add_params(
-        brush
+    color = (
+        alt.when(brush)
+        .then(alt.Color("weather:N").scale(scale))
+        .otherwise(alt.value("lightgray"))
     )
 
-    bars = alt.Chart().mark_bar().encode(
-        x='count()',
-        y='weather:N',
-        color=alt.Color('weather:N').scale(scale),
-    ).transform_calculate(
-        "temp_range", "datum.temp_max - datum.temp_min"
-    ).transform_filter(
-        brush
-    ).properties(
-        width=600
+    points = (
+        alt.Chart()
+        .mark_point()
+        .encode(
+            alt.X("temp_max:Q").title("Maximum Daily Temperature (C)"),
+            alt.Y("temp_range:Q").title("Daily Temperature Range (C)"),
+            color=color,
+            size=alt.Size("precipitation:Q").scale(range=[1, 200]),
+        )
+        .transform_calculate("temp_range", "datum.temp_max - datum.temp_min")
+        .properties(width=600, height=400)
+        .add_params(brush)
     )
-
+    bars = (
+        alt.Chart()
+        .mark_bar()
+        .encode(x="count()", y="weather:N", color=alt.Color("weather:N").scale(scale))
+        .transform_calculate("temp_range", "datum.temp_max - datum.temp_min")
+        .transform_filter(brush)
+        .properties(width=600)
+    )
     alt.vconcat(points, bars, data=df)
 
 This chart, containing concatenations, data transformations, selections, and
