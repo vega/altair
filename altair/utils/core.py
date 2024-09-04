@@ -32,7 +32,6 @@ else:
 
 if TYPE_CHECKING:
     import typing as t
-    from types import ModuleType
 
     import pandas as pd
     from narwhals.typing import IntoExpr
@@ -812,22 +811,6 @@ class _ChannelCache:
     name_to_channel: dict[str, dict[_ChannelType, type[SchemaBase]]]
 
     @classmethod
-    def from_channels(cls, channels: ModuleType, /) -> _ChannelCache:
-        # - This branch is only kept for tests that depend on mocking `channels`.
-        # - No longer needs to pass around `channels` reference and rebuild every call.
-        c_to_n = {
-            c: c._encoding_name
-            for c in channels.__dict__.values()
-            if isinstance(c, type)
-            and issubclass(c, SchemaBase)
-            and hasattr(c, "_encoding_name")
-        }
-        self = cls.__new__(cls)
-        self.channel_to_name = c_to_n
-        self.name_to_channel = _invert_group_channels(c_to_n)
-        return self
-
-    @classmethod
     def from_cache(cls) -> _ChannelCache:
         global _CHANNEL_CACHE
         try:
@@ -920,9 +903,7 @@ def _invert_group_channels(
     return {k: _reduce(chans) for k, chans in grouper}
 
 
-def infer_encoding_types(
-    args: tuple[Any, ...], kwargs: dict[str, Any], channels: ModuleType | None = None
-):
+def infer_encoding_types(args: tuple[Any, ...], kwargs: dict[str, Any]):
     """
     Infer typed keyword arguments for args and kwargs.
 
@@ -932,8 +913,6 @@ def infer_encoding_types(
         Sequence of function args
     kwargs : MutableMapping
         Dict of function kwargs
-    channels : ModuleType
-        The module containing all altair encoding channel classes.
 
     Returns
     -------
@@ -941,11 +920,7 @@ def infer_encoding_types(
         All args and kwargs in a single dict, with keys and types
         based on the channels mapping.
     """
-    cache = (
-        _ChannelCache.from_channels(channels)
-        if channels
-        else _ChannelCache.from_cache()
-    )
+    cache = _ChannelCache.from_cache()
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
         el = next(iter(arg), None) if isinstance(arg, (list, tuple)) else arg
