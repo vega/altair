@@ -529,9 +529,10 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 
     # define a pointer selection
     click_state = alt.selection_point(fields=["state"])
+    # define a condition on the opacity encoding depending on the selection
+    opacity = alt.when(click_state).then(alt.value(1)).otherwise(alt.value(0.2))
 
     # create a choropleth map using a lookup transform
-    # define a condition on the opacity encoding depending on the selection
     choropleth = (
         alt.Chart(us_states)
         .mark_geoshape()
@@ -540,13 +541,13 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
         )
         .encode(
             color="population:Q",
-            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            opacity=opacity,
             tooltip=["state:N", "population:Q"],
         )
         .project(type="albersUsa")
     )
 
-    # create a bar chart with a similar condition on the opacity encoding.
+    # create a bar chart with the same conditional ``opacity`` encoding.
     bars = (
         alt.Chart(
             us_population.nlargest(15, "population"), title="Top 15 states by population"
@@ -554,7 +555,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
         .mark_bar()
         .encode(
             x="population",
-            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            opacity=opacity,
             color="population",
             y=alt.Y("state").sort("-x"),
         )
@@ -616,7 +617,7 @@ We use here an elegant way to access the nested point coordinates from the geome
         .encode(
             longitude="lon:Q",
             latitude="lat:Q",
-            strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
+            strokeWidth=alt.when(hover, empty=False).then(alt.value(1)).otherwise(alt.value(0)),
             size=alt.Size(
                 "mag:Q",
                 scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 6], exponent=4),
