@@ -146,6 +146,8 @@ we created a selection parameter using ``brush = alt.selection_interval()``,
 and we attached that parameter to the chart using ``add_params``.
 One difference is that here we have not defined how the chart should respond to the selection; you will learn this in the next section.
 
+.. _conditions-filters:
+
 Conditions & Filters
 ~~~~~~~~~~~~~~~~~~~~
 

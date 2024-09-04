@@ -51,10 +51,10 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
 
     input_dropdown = alt.binding_select(options=['Europe', 'Japan', 'USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
-    color = alt.condition(
-        selection,
-        alt.Color('Origin:N').legend(None),
-        alt.value('lightgray')
+    color = (
+        alt.when(selection)
+        .then(alt.Color("Origin:N").legend(None))
+        .otherwise(alt.value("lightgray"))
     )
 
     alt.Chart(cars).mark_point().encode(
@@ -72,7 +72,7 @@ and selection parameters follow the same pattern as you will see further down
 in the :ref:`encoding-channel-binding` section.
 
 As you can see above,
-we are still using ``conditions`` to make the chart respond to the selection,
+we are still using :ref:`conditions <conditions-filters>` to make the chart respond to the selection,
 just as we did without widgets.
 Bindings and input elements can also be used to filter data
 allowing the user to see just the selected points as in the example below.
@@ -137,11 +137,7 @@ to see the point highlighted
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         tooltip='Name:N',
-        opacity=alt.condition(
-            search_input,
-            alt.value(1),
-            alt.value(0.05)
-        )
+        opacity=alt.when(search_input).then(alt.value(1)).otherwise(alt.value(0.05)),
     ).add_params(
         search_input
     )
@@ -185,16 +181,12 @@ which would have been the case if we just wrote ``xval < selector``.
 
     slider = alt.binding_range(min=0, max=100, step=1, name='Cutoff ')
     selector = alt.param(name='SelectorName', value=50, bind=slider)
+    predicate = alt.datum.xval < selector
 
     alt.Chart(df).mark_point().encode(
        x='xval',
        y='yval',
-       color=alt.condition(
-           alt.datum.xval < selector,
-           # 'datum.xval < SelectorName',  # An equivalent alternative
-           alt.value('red'),
-           alt.value('blue')
-       )
+       color=alt.when(predicate).then(alt.value("red")).otherwise(alt.value("blue")),
     ).add_params(
        selector
     )
@@ -213,16 +205,12 @@ points based on whether they are smaller or larger than the value:
         bind=slider,
         value=[{'cutoff': 50}]
     )
+    predicate = alt.datum.xval < selector.cutoff
 
     alt.Chart(df).mark_point().encode(
         x='xval',
         y='yval',
-        color=alt.condition(
-            alt.datum.xval < selector.cutoff,
-            # 'datum.xval < SelectorName.cutoff',  # An equivalent alternative
-            alt.value('red'),
-            alt.value('blue')
-        )
+        color=alt.when(predicate).then(alt.value("red")).otherwise(alt.value("blue")),
     ).add_params(
         selector
     )
@@ -263,11 +251,7 @@ just if the value of the check box is True (checked) or False (unchecked):
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        size=alt.condition(
-            param_checkbox,
-            'Acceleration:Q',
-            alt.value(25)
-        )
+        size=alt.when(param_checkbox).then("Acceleration:Q").otherwise(alt.value(25)),
     ).add_params(
         param_checkbox
     )
@@ -315,7 +299,7 @@ Altair provides the ``bind='legend'`` option to facilitate the creation of click
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N',
-        opacity=alt.condition(selection, alt.value(0.8), alt.value(0.2))
+        opacity=alt.when(selection).then(alt.value(0.8)).otherwise(alt.value(0.2)),
     ).add_params(
         selection
     )
