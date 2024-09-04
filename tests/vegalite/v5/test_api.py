@@ -772,7 +772,7 @@ def test_when_then_interactive() -> None:
     # NOTE: A stand-in for a `SchemaBase` that we don't want to accept
     then_fail: alt.Chart = alt.Chart(source)
 
-    result_pass = chart_encode(
+    result_pass = chart_encode(  # noqa: F841
         col_0=then_pass,
         col_1=then_pass,
         col_2=then_pass,
@@ -782,7 +782,7 @@ def test_when_then_interactive() -> None:
         col_6=then_pass,
     )
 
-    result_fail = chart_encode(
+    result_fail = chart_encode(  # noqa: F841
         col_0=then_fail,
         col_1=then_fail,
         col_2=then_fail,
