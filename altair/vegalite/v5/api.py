@@ -32,9 +32,6 @@ from altair.utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
-from altair.utils.core import (
-    to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
-)
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
 
@@ -1818,7 +1815,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         original_data = getattr(copy, "data", Undefined)
         if not utils.is_undefined(original_data):
             try:
-                data = _to_eager_narwhals_dataframe(original_data)
+                data = nw.from_native(original_data, eager_or_interchange_only=True)
             except TypeError:
                 # Non-narwhalifiable type supported by Altair, such as dict
                 data = original_data
