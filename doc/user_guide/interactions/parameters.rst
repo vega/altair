@@ -154,6 +154,11 @@ Conditions & Filters
 Conditional Encodings
 ^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+
+   This material was changed considerably with the release of Altair ``5.5.0``.
+   :func:`when` was introduced in ``5.4.0`` and should be preferred over :func:`condition`.
+
 The example above is neat, but the selection interval doesn't actually *do* anything yet.
 To make the chart respond to this selection, we need to reference ``brush`` within
 the chart specification. Here, we will use the :func:`when` function to create
