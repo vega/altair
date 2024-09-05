@@ -19,6 +19,8 @@ if TYPE_CHECKING:
 ThemeType = Plugin[Dict[str, Any]]
 
 
+# HACK: See for `LiteralString` requirement in `name`
+# https://github.com/vega/altair/pull/3526#discussion_r1743350127
 class ThemeRegistry(PluginRegistry[ThemeType, Dict[str, Any]]):
     def enable(
         self, name: LiteralString | AltairThemes | VegaThemes | None = None, **options

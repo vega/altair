@@ -74,6 +74,8 @@ for theme in VEGA_THEMES:
 themes.enable("default")
 
 
+# HACK: See for `LiteralString` requirement in `name`
+# https://github.com/vega/altair/pull/3526#discussion_r1743350127
 def register_theme(
     name: LiteralString, *, enable: bool
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:
