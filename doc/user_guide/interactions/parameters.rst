@@ -156,31 +156,45 @@ Conditional Encodings
 
 The example above is neat, but the selection interval doesn't actually *do* anything yet.
 To make the chart respond to this selection, we need to reference the selection in within
-the chart specification. Here, we will use the :func:`condition` function to create
+the chart specification. Here, we will use the :func:`when` function to create
 a conditional color encoding: we'll tie the color to the ``"Origin"``
 column for points in the selection, and set the color to ``"lightgray"``
 for points outside the selection:
 
 .. altair-plot::
 
+    conditional = alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
+
     alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-    ).add_params(
-        brush
-    )
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q",
+        color=conditional,
+    ).add_params(brush)
 
 As you can see, the color of the points now changes depending on whether they are inside or outside the selection.
 Above we are using the selection parameter ``brush`` as a *predicate*
 (something that evaluates as `True` or `False`).
-This is controlled by the line ``color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))``.
+
+This is controlled by our definition ``conditional`` ::
+
+    conditional = alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
+
 Data points which fall within the selection evaluate as ``True``,
 and data points which fall outside the selection evaluate to ``False``.
 The ``'Origin:N'`` specifies how to color the points which fall within the selection,
-and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value;
-you can remember this as ``alt.condition(<condition>, <if_true>, <if_false>)``.
+and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value.
 
+The ``when-then-otherwise`` syntax was directly inspired by `polars.when`_, 
+and is similar to an ``if-else`` statement written in Python ::
+
+    # alt.when(brush)
+    if brush:
+        # .then("Origin:N")
+        color = "Origin:N"
+    else:
+        # .otherwise(alt.value("lightgray"))
+        color = alt.value("lightgray")
+    
 This approach becomes even more powerful when the selection behavior is
 tied across multiple views of the data within a compound chart.
 For example, here we create a ``chart`` object using the same code as
@@ -193,7 +207,7 @@ tied to ``"Acceleration"``
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray")),
     ).properties(
         width=250,
         height=250
@@ -220,7 +234,7 @@ We can modify the brush definition, and leave the rest of the code unchanged:
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray")),
     ).properties(
         width=250,
         height=250
@@ -233,15 +247,18 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 As you might have noticed,
 the selected points are sometimes obscured by some of the unselected points.
 To bring the selected points to the foreground,
-we can change the order in which they are laid out via the following
-encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
+we can change the order in which they are laid out via the following encoding ::
+    
+    hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
+    order = alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
+
 You can see an example of this in the :ref:`gallery_selection_zorder` gallery example.
 
 Filtering Data
 ^^^^^^^^^^^^^^
 
 Using a selection parameter to filter data works in much the same way
-as using it within ``condition``.
+as using it within :func:`when`.
 For example, in ``transform_filter(brush)``,
 we are again using the selection parameter ``brush`` as a predicate.
 Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
@@ -298,7 +315,7 @@ selection:
         return alt.Chart(cars).mark_rect().encode(
             x="Cylinders:O",
             y="Origin:N",
-            color=alt.condition(selector, 'count()', alt.value('lightgray'))
+            color=alt.when(brush).then("count()").otherwise(alt.value("lightgray")),
         ).properties(
             width=300,
             height=180
@@ -369,10 +386,10 @@ with a matching ``Origin``.
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin'])
-    color = alt.condition(
-        selection,
-        alt.Color('Origin:N').legend(None),
-        alt.value('lightgray')
+    color = (
+        alt.when(selection)
+        .then(alt.Color("Origin:N").legend(None))
+        .otherwise(alt.value("lightgray"))
     )
 
     scatter = alt.Chart(cars).mark_point().encode(
@@ -404,10 +421,10 @@ cylinders:
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
-    color = alt.condition(
-        selection,
-        alt.Color('Origin:N').legend(None),
-        alt.value('lightgray')
+    color = (
+        alt.when(selection)
+        .then(alt.Color("Origin:N").legend(None))
+        .otherwise(alt.value("lightgray"))
     )
 
     scatter = alt.Chart(cars).mark_point().encode(
@@ -464,7 +481,7 @@ selection
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
+        color=alt.when(alex | morgan).then("count()").otherwise(alt.value("grey")),
     ).add_params(
         alex, morgan
     ).properties(
@@ -484,3 +501,5 @@ For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
 
+.. _polars.when:
+    https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
