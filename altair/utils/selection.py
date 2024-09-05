@@ -1,6 +1,7 @@
-from dataclasses import dataclass
-from typing import List, Dict, Any, NewType, Optional
+from __future__ import annotations
 
+from dataclasses import dataclass
+from typing import Any, Dict, List, NewType
 
 # Type representing the "{selection}_store" dataset that corresponds to a
 # Vega-Lite selection
@@ -10,9 +11,7 @@ Store = NewType("Store", List[Dict[str, Any]])
 @dataclass(frozen=True, eq=True)
 class IndexSelection:
     """
-    An IndexSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when neither the fields nor encodings arguments are specified.
+    Represents the state of an alt.selection_point() when neither the fields nor encodings arguments are specified.
 
     The value field is a list of zero-based indices into the
     selected dataset.
@@ -22,11 +21,11 @@ class IndexSelection:
     """
 
     name: str
-    value: List[int]
+    value: list[int]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, dict]], store: Store):
+    def from_vega(name: str, signal: dict[str, dict] | None, store: Store):
         """
         Construct an IndexSelection from the raw Vega signal and dataset values.
 
@@ -55,9 +54,7 @@ class IndexSelection:
 @dataclass(frozen=True, eq=True)
 class PointSelection:
     """
-    A PointSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when the fields or encodings arguments are specified.
+    Represents the state of an alt.selection_point() when the fields or encodings arguments are specified.
 
     The value field is a list of dicts of the form:
         [{"dim1": 1, "dim2": "A"}, {"dim1": 2, "dim2": "BB"}]
@@ -67,11 +64,11 @@ class PointSelection:
     """
 
     name: str
-    value: List[Dict[str, Any]]
+    value: list[dict[str, Any]]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, dict]], store: Store):
+    def from_vega(name: str, signal: dict[str, dict] | None, store: Store):
         """
         Construct a PointSelection from the raw Vega signal and dataset values.
 
@@ -89,18 +86,14 @@ class PointSelection:
         -------
         PointSelection
         """
-        if signal is None:
-            points = []
-        else:
-            points = signal.get("vlPoint", {}).get("or", [])
+        points = [] if signal is None else signal.get("vlPoint", {}).get("or", [])
         return PointSelection(name=name, value=points, store=store)
 
 
 @dataclass(frozen=True, eq=True)
 class IntervalSelection:
     """
-    An IntervalSelection represents the state of an Altair
-    interval selection (as constructed by alt.selection_interval()).
+    Represents the state of an alt.selection_interval().
 
     The value field is a dict of the form:
         {"dim1": [0, 10], "dim2": ["A", "BB", "CCC"]}
@@ -110,11 +103,11 @@ class IntervalSelection:
     """
 
     name: str
-    value: Dict[str, list]
+    value: dict[str, list]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, list]], store: Store):
+    def from_vega(name: str, signal: dict[str, list] | None, store: Store):
         """
         Construct an IntervalSelection from the raw Vega signal and dataset values.
 

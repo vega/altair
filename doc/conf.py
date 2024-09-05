@@ -19,7 +19,7 @@ from datetime import datetime
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath(".."))  # noqa: PTH100
 
 # -- General configuration ------------------------------------------------
 
@@ -49,6 +49,8 @@ autodoc_default_flags = ["members", "inherited-members"]
 
 autodoc_member_order = "groupwise"
 
+autodoc_typehints = "none"
+
 # generate autosummary even if no references
 autosummary_generate = True
 
@@ -58,7 +60,7 @@ templates_path = ["_templates"]
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 # source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
+source_suffix = {".rst": "restructuredtext"}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -68,7 +70,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Vega-Altair"
-copyright = "2016-{}, Vega-Altair Developers".format(datetime.now().year)
+copyright = f"2016-{datetime.now().year}, Vega-Altair Developers"
 author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -76,7 +78,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.2.0dev"
+version = "5.5.0dev"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 
@@ -140,11 +142,10 @@ html_theme_options = {
     "navbar_center": ["navbar-nav"],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "primary_sidebar_end": [],
-    "footer_items": [],
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/altair-viz/altair",
+            "url": "https://github.com/vega/altair",
             "icon": "fab fa-github fa-lg",
             "type": "fontawesome",
         },
@@ -155,8 +156,12 @@ html_theme_options = {
             "type": "fontawesome",
         },
     ],
-    "header_links_before_dropdown": 6,
+    "header_links_before_dropdown": 4,
     "announcement": """This website is for version 5. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
+    "analytics": {
+        "plausible_analytics_domain": "altair-viz.github.io",
+        "plausible_analytics_url": ("https://views.scientific-python.org/js/script.js"),
+    },
 }
 
 html_context = {"default_mode": "light"}

@@ -41,7 +41,7 @@ Channel        Altair Class            Description                     Example
 angle          :class:`Angle`          The angle of the mark           :ref:`gallery_wind_vector_map`
 color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
 fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
-fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
+fillOpacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
 opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
 radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
 shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
@@ -163,7 +163,7 @@ The same approach works for other mark types, like stacked areas charts.
 Note that unlike the ``sort`` parameter to positional encoding channels,
 the :class:`Order` channel cannot take a list of values to sort by
 and is not automatically sorted when an ordered pandas categorical column is passed.
-If we want to sort stacked segments in a custom order, we can `follow the approach in this issue comment <https://github.com/altair-viz/altair/issues/245#issuecomment-748443434>`_, although there might be edge cases where this is not fully supported. This workaround also makes the order of the segments align with the order that the colors shows up in a legend that uses custom sorting for the color domain.
+If we want to sort stacked segments in a custom order, we can `follow the approach in this issue comment <https://github.com/vega/altair/issues/245#issuecomment-748443434>`_, although there might be edge cases where this is not fully supported. This workaround also makes the order of the segments align with the order that the colors shows up in a legend that uses custom sorting for the color domain.
 
 For line marks, the :class:`Order` channel encodes the order in which data points are connected. This can be useful for creating a scatter plot that draws lines between the dots using a different field than the x and y axes.
 

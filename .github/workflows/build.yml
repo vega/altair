@@ -7,26 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         jsonschema-version: ["3.0", "latest"]
     name: py ${{ matrix.python-version }} js ${{ matrix.jsonschema-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      # - name: Set Up Chromedriver
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get --only-upgrade install google-chrome-stable
-      #     sudo apt-get -yqq install chromium-chromedriver
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[dev]
-          # pip install "selenium<4.3.0"
-          # pip install altair_saver
+          pip install ".[all, dev]"
       - name: Install specific jsonschema
         # Only have to execute this if we don't want the latest jsonschema version
         if: ${{ matrix.jsonschema-version != 'latest' }}
@@ -36,12 +29,12 @@ jobs:
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
         # Uninstalling for Python 3.8 is an arbitrary choice.
-        # Also see https://github.com/altair-viz/altair/pull/3114
+        # Also see https://github.com/vega/altair/pull/3114
         if: ${{ matrix.python-version == '3.8' }}
         run: |
-          pip uninstall -y pyarrow vegafusion vegafusion-python-embed
-      - name: Maybe install lowest supported Pandas version
-        # We install the lowest supported Pandas version for one job to test that
+          pip uninstall -y pyarrow vegafusion vegafusion-python-embed vl-convert-python anywidget
+      - name: Maybe install lowest supported pandas version
+        # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
         # Python 3.8 wheels, so only run this job for Python 3.8
         if: ${{ matrix.python-version == '3.8' }}
@@ -49,6 +42,7 @@ jobs:
           pip install pandas==0.25.3 numpy==1.17.5
       - name: Test that schema generation has no effect
         run: |
+          pip install vl-convert-python
           python tools/generate_schema_wrapper.py
           # This gets the paths of all files which were either deleted, modified
           # or are not yet tracked by Git
@@ -67,23 +61,12 @@ jobs:
           if [ ${#files_cleaned[@]} -gt 0 ]; then
               echo "The code generation modified the following files:"
               echo $files
+              git diff
               exit 1
           fi
       - name: Test with pytest
         run: |
-          pytest --doctest-modules tests
-      # - name: Selected tests without vl-convert-python
-      #   run: |
-      #     pip uninstall vl-convert-python --yes
-      #     pytest -m save_engine --doctest-modules tests
-      # - name: Selected tests without vl-convert-python and altair_saver
-      #   run: |
-      #     pip uninstall altair_saver --yes
-      #     pytest -m save_engine --doctest-modules tests
-      - name: Selected tests with vl-convert-python and without altair_saver
-        run: |
-          # pip install vl-convert-python
-          pytest -m save_engine --doctest-modules tests
+          pytest --pyargs --numprocesses=logical --doctest-modules tests
       - name: Validate Vega-Lite schema
         run: |
           # We install all 'format' dependencies of jsonschema as check-jsonschema

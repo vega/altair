@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Dict, Optional, Tuple, Any, Union
 import uuid
+from typing import Any, Callable, Dict, Tuple, Union
+from typing_extensions import TypeAlias
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
-from .plugin_registry import PluginRegistry, PluginEnabler
 from .mimebundle import spec_to_mimebundle
+from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
-
 
 # ==============================================================================
 # Renderer registry
@@ -16,19 +18,20 @@ from .schemapi import validate_jsonschema
 # MimeBundleType needs to be the same as what are acceptable return values
 # for _repr_mimebundle_,
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
-MimeBundleDataType = Dict[str, Any]
-MimeBundleMetaDataType = Dict[str, Any]
-MimeBundleType = Union[
+MimeBundleDataType: TypeAlias = Dict[str, Any]
+MimeBundleMetaDataType: TypeAlias = Dict[str, Any]
+MimeBundleType: TypeAlias = Union[
     MimeBundleDataType, Tuple[MimeBundleDataType, MimeBundleMetaDataType]
 ]
-RendererType = Callable[..., MimeBundleType]
+RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
-DefaultRendererReturnType = Tuple[
-    Dict[str, Union[str, dict]], Dict[str, Dict[str, Any]]
+
+DefaultRendererReturnType: TypeAlias = Tuple[
+    Dict[str, Union[str, Dict[str, Any]]], Dict[str, Dict[str, Any]]
 ]
 
 
-class RendererRegistry(PluginRegistry[RendererType]):
+class RendererRegistry(PluginRegistry[RendererType, MimeBundleType]):
     entrypoint_err_messages = {
         "notebook": textwrap.dedent(
             """
@@ -38,27 +41,23 @@ class RendererRegistry(PluginRegistry[RendererType]):
             for more information.
             """
         ),
-        "altair_viewer": textwrap.dedent(
-            """
-            To use the 'altair_viewer' renderer, you must install the altair_viewer
-            package; see http://github.com/altair-viz/altair_viewer/
-            for more information.
-            """
-        ),
     }
 
     def set_embed_options(
         self,
-        defaultStyle: Optional[Union[bool, str]] = None,
-        renderer: Optional[str] = None,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
-        padding: Optional[int] = None,
-        scaleFactor: Optional[float] = None,
-        actions: Optional[Union[bool, Dict[str, bool]]] = None,
+        defaultStyle: bool | str | None = None,
+        renderer: str | None = None,
+        width: int | None = None,
+        height: int | None = None,
+        padding: int | None = None,
+        scaleFactor: float | None = None,
+        actions: bool | dict[str, bool] | None = None,
+        format_locale: str | dict | None = None,
+        time_format_locale: str | dict | None = None,
         **kwargs,
     ) -> PluginEnabler:
-        """Set options for embeddings of Vega & Vega-Lite charts.
+        """
+        Set options for embeddings of Vega & Vega-Lite charts.
 
         Options are fully documented at https://github.com/vega/vega-embed.
         Similar to the `enable()` method, this can be used as either
@@ -88,10 +87,18 @@ class RendererRegistry(PluginRegistry[RendererType]):
             can take a key-value mapping object that maps keys (export, source,
             compiled, editor) to boolean values for determining if
             each action link should be shown.
+        format_locale : str or dict
+            d3-format locale name or dictionary. Defaults to "en-US" for United States English.
+            See https://github.com/d3/d3-format/tree/main/locale for available names and example
+            definitions.
+        time_format_locale : str or dict
+            d3-time-format locale name or dictionary. Defaults to "en-US" for United States English.
+            See https://github.com/d3/d3-time-format/tree/main/locale for available names and example
+            definitions.
         **kwargs :
             Additional options are passed directly to embed options.
         """
-        options: Dict[str, Optional[Union[bool, str, float, Dict[str, bool]]]] = {
+        options: dict[str, bool | str | float | dict[str, bool] | None] = {
             "defaultStyle": defaultStyle,
             "renderer": renderer,
             "width": width,
@@ -99,6 +106,8 @@ class RendererRegistry(PluginRegistry[RendererType]):
             "padding": padding,
             "scaleFactor": scaleFactor,
             "actions": actions,
+            "formatLocale": format_locale,
+            "timeFormatLocale": time_format_locale,
         }
         kwargs.update({key: val for key, val in options.items() if val is not None})
         return self.enable(None, embed_options=kwargs)
@@ -110,7 +119,8 @@ class RendererRegistry(PluginRegistry[RendererType]):
 
 
 class Displayable:
-    """A base display class for VegaLite v1/v2.
+    """
+    A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
 
@@ -124,10 +134,10 @@ class Displayable:
     through appropriate data model transformers.
     """
 
-    renderers: Optional[RendererRegistry] = None
+    renderers: RendererRegistry | None = None
     schema_path = ("altair", "")
 
-    def __init__(self, spec: dict, validate: bool = False) -> None:
+    def __init__(self, spec: dict[str, Any], validate: bool = False) -> None:
         self.spec = spec
         self.validate = validate
         self._validate()
@@ -136,7 +146,7 @@ class Displayable:
         """Validate the spec against the schema."""
         data = pkgutil.get_data(*self.schema_path)
         assert data is not None
-        schema_dict: dict = json.loads(data.decode("utf-8"))
+        schema_dict: dict[str, Any] = json.loads(data.decode("utf-8"))
         validate_jsonschema(
             self.spec,
             schema_dict,
@@ -155,9 +165,10 @@ class Displayable:
 
 
 def default_renderer_base(
-    spec: dict, mime_type: str, str_repr: str, **options
+    spec: dict[str, Any], mime_type: str, str_repr: str, **options
 ) -> DefaultRendererReturnType:
-    """A default renderer for Vega or VegaLite that works for modern frontends.
+    """
+    A default renderer for Vega or VegaLite that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
@@ -166,8 +177,8 @@ def default_renderer_base(
     from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
 
     assert isinstance(spec, dict)
-    bundle: Dict[str, Union[str, dict]] = {}
-    metadata: Dict[str, Dict[str, Any]] = {}
+    bundle: dict[str, str | dict] = {}
+    metadata: dict[str, dict[str, Any]] = {}
 
     if using_vegafusion():
         spec = compile_with_vegafusion(spec)
@@ -185,9 +196,10 @@ def default_renderer_base(
 
 
 def json_renderer_base(
-    spec: dict, str_repr: str, **options
+    spec: dict[str, Any], str_repr: str, **options
 ) -> DefaultRendererReturnType:
-    """A renderer that returns a MIME type of application/json.
+    """
+    A renderer that returns a MIME type of application/json.
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
@@ -197,7 +209,7 @@ def json_renderer_base(
 
 
 class HTMLRenderer:
-    """Object to render charts as HTML, with a unique output div each time"""
+    """Object to render charts as HTML, with a unique output div each time."""
 
     def __init__(self, output_div: str = "altair-viz-{}", **kwargs) -> None:
         self._output_div = output_div
@@ -207,9 +219,7 @@ class HTMLRenderer:
     def output_div(self) -> str:
         return self._output_div.format(uuid.uuid4().hex)
 
-    def __call__(self, spec: dict, **metadata) -> Dict[str, str]:
+    def __call__(self, spec: dict[str, Any], **metadata) -> dict[str, str]:
         kwargs = self.kwargs.copy()
-        kwargs.update(metadata)
-        return spec_to_mimebundle(
-            spec, format="html", output_div=self.output_div, **kwargs
-        )
+        kwargs.update(**metadata, output_div=self.output_div)
+        return spec_to_mimebundle(spec, format="html", **kwargs)

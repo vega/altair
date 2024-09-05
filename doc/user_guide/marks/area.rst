@@ -78,7 +78,6 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
 .. altair-plot::
     import altair as alt
     from vega_datasets import data
-    from altair.expr import datum
 
     source = data.stocks.url
 

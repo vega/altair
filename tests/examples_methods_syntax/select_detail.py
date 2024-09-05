@@ -54,7 +54,7 @@ points = base.mark_point(filled=True, size=200).encode(
     color=alt.condition(selector, 'id:O', alt.value('lightgray'), legend=None),
 )
 
-timeseries = base.mark_line().encode(
+line = base.mark_line().encode(
     x='time',
     y=alt.Y('value').scale(domain=(-15, 15)),
     color=alt.Color('id:O').legend(None)
@@ -62,4 +62,4 @@ timeseries = base.mark_line().encode(
     selector
 )
 
-points | timeseries
+points | line

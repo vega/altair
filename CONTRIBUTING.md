@@ -1,7 +1,7 @@
 # Feedback and Contribution
 
 We welcome any input, feedback, bug reports, and contributions via [Altair's
-GitHub Repository](http://github.com/altair-viz/altair/). In particular, we
+GitHub Repository](http://github.com/vega/altair/). In particular, we
 welcome companion efforts from other visualization libraries to render the
 Vega-Lite specifications output by Altair. We see this portion of the effort
 as much bigger than Altair itself: the Vega and Vega-Lite specifications are
@@ -11,7 +11,7 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
-All contributions, suggestions, and feedback you submitted are accepted under the [Project's license](./LICENSE). You represent that if you do not own copyright in the code that you have the authority to submit it under the [Project's license](./LICENSE). All feedback, suggestions, or contributions are not confidential.
+All contributions, suggestions, and feedback you submitted are accepted under the [Project's license](./LICENSE). You represent that if you do not own copyright in the code that you have the authority to submit it under the [Project's license](./LICENSE). All feedback, suggestions, or contributions are not confidential. The Project abides by the Vega Organization's [code of conduct](https://github.com/vega/.github/blob/main/CODE_OF_CONDUCT.md) and [governance](https://github.com/vega/.github/blob/main/project-docs/GOVERNANCE.md).
 
 ## How To Contribute Code to Vega-Altair
 
@@ -35,11 +35,11 @@ every time you open a new Python interpreter
 
 ```cmd
 cd altair/ 
-python -m pip install -e .[dev]
+python -m pip install -e ".[all, dev]"
 ```
 
-'[dev]' indicates that pip should also install the development requirements
-which you can find in `pyproject.toml` (`[project.optional-dependencies]/dev`)
+'[all, dev]' indicates that pip should also install the optional and development requirements
+which you can find in `pyproject.toml` (`[project.optional-dependencies]/all` and `[project.optional-dependencies]/dev`)
 
 ### Creating a Branch
 
@@ -56,27 +56,52 @@ With this branch checked-out, make the desired changes to the package.
 A large part of Altair's code base is automatically generated.
 After you have made your manual changes,
 make sure to run the following to see if there are any changes
-to the automatically generated files: `python tools/generate_schema_wrapper.py`.
+to the automatically generated files: 
+
+```bash
+hatch run generate-schema-wrapper
+```
 
 For information on how to update the Vega-Lite version that Altair uses,
 please read [the maintainers' notes](NOTES_FOR_MAINTAINERS.md).
 
 ### Testing your Changes
 
-Before suggesting your contributing your changing to the main Altair repository,
+Before submitting your changes to the main Altair repository,
 it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
-```cmd
-hatch run test
+```bash
+hatch test
 ```
 
 
-This also runs the [`black`](https://black.readthedocs.io/) code formatter, [`ruff`](https://ruff.rs/) linter and [`mypy`](https://mypy-lang.org/) as type checker.
+This also runs the [`ruff`](https://ruff.rs/) linter and formatter as well as [`mypy`](https://mypy-lang.org/) as type checker.
 
 
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
+
+#### Failures on specific python version(s)
+By default, `hatch test` will run the test suite against the currently active python version.
+Two useful variants for debugging failures that only appear *after* you've submitted your PR:
+
+```bash
+# Test against all python version(s) in the matrix
+hatch test --all
+# Test against a specific python version
+hatch test --python 3.8
+```
+
+See [hatch test](https://hatch.pypa.io/latest/cli/reference/#hatch-test) docs for other options.
+
+#### Changes to `__all__`
+If `test_completeness_of__all__` fails, you may need to run:
+
+```bash
+hatch run update-init-file
+```
+However, this test usually indicates *unintentional* addition(s) to the top-level `alt.` namespace that will need resolving first.
 
 ### Creating a Pull Request
 
@@ -187,7 +212,7 @@ The specific commands for each step depend on your operating system.
 Make sure you execute the following commands from the root dir of altair and have [`hatch`](https://hatch.pypa.io/) installed in your local environment.
 
 - For MacOS and Linux, run the following commands in your terminal:
-```cmd
+```bash
 hatch run doc:clean-all
 hatch run doc:build-html
 hatch run doc:serve
@@ -203,7 +228,6 @@ hatch run doc:serve
 To view the documentation, open your browser and go to `http://localhost:8000`. To stop the server, use `^C` (control+c) in the terminal.
 
 ---
-The Project abides by the Organization's [code of conduct](./governance/org-docs/CODE-OF-CONDUCT.md) and [trademark policy](./governance/org-docs/TRADEMARKS.md).
 
 Part of MVG-0.1-beta.
 Made with love by GitHub. Licensed under the [CC-BY 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/).

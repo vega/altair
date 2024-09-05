@@ -2,8 +2,8 @@
 
 .. _user-guide-compound:
 
-Layered and Multi-View Charts
------------------------------
+Layered & Multi-View Charts
+---------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
 and repeated charts. They are summarized in the following tables:
@@ -363,7 +363,7 @@ layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_point(on='mouseover', nearest=True, empty=False)
+    hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',

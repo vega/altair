@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -22,12 +22,13 @@ def test_disable_max_rows(sample_data):
             alt.data_transformers.get()(sample_data)
 
     try:
-        with alt.data_transformers.enable("json"):
-            # Ensure that there is no TypeError for non-max_rows transformers.
-            with alt.data_transformers.disable_max_rows():
-                jsonfile = alt.data_transformers.get()(sample_data)
+        # Ensure that there is no TypeError for non-max_rows transformers.
+        with alt.data_transformers.enable(
+            "json"
+        ), alt.data_transformers.disable_max_rows():
+            jsonfile = alt.data_transformers.get()(sample_data)
     except TypeError:
         jsonfile = {}
     finally:
         if jsonfile:
-            os.remove(jsonfile["url"])
+            Path(jsonfile["url"]).unlink()

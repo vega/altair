@@ -3,7 +3,7 @@
 Resources
 =========
 
-We hope to make it easier to find learning resources and projects related to Altair by listing them here. If you know of a project that should be added, please let us know by opening an `Issue on GitHub <https://github.com/altair-viz/altair/issues>`_.
+We hope to make it easier to find learning resources and projects related to Altair by listing them here. If you know of a project that should be added, please let us know by opening an `Issue on GitHub <https://github.com/vega/altair/issues>`_.
 
 .. _learning-resources:
 
@@ -88,14 +88,6 @@ VegaFusion provides server-side scaling for Altair charts, which can accelerate 
 .. List of links.
 .. _VegaFusion: https://vegafusion.io/
 
-altair_saver_
-~~~~~~~~~~~~~
-
-Enables saving charts to a variety of output types.
-
-.. List of links.
-.. _altair_saver: https://github.com/altair-viz/altair_saver
-
 altair_data_server_
 ~~~~~~~~~~~~~~~~~~~
 
@@ -143,7 +135,7 @@ nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a si
 Altair Ally is a companion package to Altair, which provides a few shortcuts to create common plots for exploratory data analysis, particularly those involving visualization of an entire dataframe.
 
 .. List of links.
-.. _`Altair Ally`: https://joelostblom.github.io/altair_ally
+.. _`Altair Ally`: https://github.com/vega/altair_ally
 
 gif_
 ~~~~

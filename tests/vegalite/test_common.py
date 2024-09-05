@@ -1,8 +1,7 @@
-"""Tests of functionality that should work in all vegalite versions"""
-
-import pytest
+"""Tests of functionality that should work in all vegalite versions."""
 
 import pandas as pd
+import pytest
 
 from altair.vegalite import v5
 
@@ -93,7 +92,7 @@ def test_max_rows(alt):
 
     with alt.data_transformers.enable("default"):
         basic_chart.to_dict()  # this should not fail
-
-    with alt.data_transformers.enable("default", max_rows=5):
-        with pytest.raises(alt.MaxRowsError):
-            basic_chart.to_dict()  # this should not fail
+    with alt.data_transformers.enable("default", max_rows=5), pytest.raises(
+        alt.MaxRowsError
+    ):
+        basic_chart.to_dict()  # this should not fail

@@ -8,9 +8,11 @@ you’ll learn how to display images stored as Numpy arrays
 in tooltips with any Altair chart.
 
 First,
-we create some example image arrays with blobs of different sizes.
+we create some example image arrays with blobs (objects)
+of different sizes and shapes (circular and square).
 We measure the area of the blobs
-in order to have a quantitative measurement to plot.
+in order to have a quantitative measurement
+to compare them with in our charts.
 
 .. altair-plot::
     :output: repr
@@ -40,7 +42,7 @@ in order to have a quantitative measurement to plot.
         'group': rng.choice(['a', 'b', 'c'], size=n_rows)
     })
     # Compute the area as the proportion of pixels above a threshold
-    df[['image1_area', 'image2_area']] = df[['image1', 'image2']].applymap(lambda x: (x > 0.4).mean())
+    df[['image1_area', 'image2_area']] = df[['image1', 'image2']].map(lambda x: (x > 0.4).mean())
     df
 
 Next, we define the function
@@ -150,7 +152,7 @@ instead of both the images concatenated together.
         return f"data:image/png;base64,{img_str}"
 
     # The column with the base64 image string must be called "image" in order for it to trigger the image rendering in the tooltip
-    df[['image1_base64', 'image2_base64']] = df[['image1', 'image2']].applymap(create_tooltip_image)
+    df[['image1_base64', 'image2_base64']] = df[['image1', 'image2']].map(create_tooltip_image)
     # Dropping the image arrays since they are large an no longer needed
     # Also drop the previous tooltip image for clarity
     df_plot = df.drop(columns=['image1', 'image2', 'image'])

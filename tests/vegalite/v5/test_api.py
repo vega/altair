@@ -1,27 +1,38 @@
-"""Unit tests for altair API"""
+"""Unit tests for altair API."""
+
+from __future__ import annotations
 
 import io
 import json
 import operator
 import os
 import pathlib
+import re
+import sys
 import tempfile
+from datetime import date, datetime
+from importlib.metadata import version as importlib_version
 
+import ibis
 import jsonschema
-import pytest
+import narwhals.stable.v1 as nw
 import pandas as pd
+import polars as pl
+import pytest
+from packaging.version import Version
 
-import altair.vegalite.v5 as alt
+import altair as alt
+from altair.utils.schemapi import Optional, Undefined
+from tests import skip_requires_vl_convert, slow
 
 try:
-    import altair_saver  # noqa: F401
-except ImportError:
-    altair_saver = None
-
-try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
+
+ibis.set_backend("polars")
+
+PANDAS_VERSION = Version(importlib_version("pandas"))
 
 
 def getargs(*args, **kwargs):
@@ -53,7 +64,7 @@ def _make_chart_type(chart_type):
         )
     )
 
-    if chart_type in ["layer", "hconcat", "vconcat", "concat"]:
+    if chart_type in {"layer", "hconcat", "vconcat", "concat"}:
         func = getattr(alt, chart_type)
         return func(base.mark_square(), base.mark_circle())
     elif chart_type == "facet":
@@ -65,7 +76,8 @@ def _make_chart_type(chart_type):
     elif chart_type == "chart":
         return base
     else:
-        raise ValueError("chart_type='{}' is not recognized".format(chart_type))
+        msg = f"chart_type='{chart_type}' is not recognized"
+        raise ValueError(msg)
 
 
 @pytest.fixture
@@ -78,6 +90,100 @@ def basic_chart():
     )
 
     return alt.Chart(data).mark_bar().encode(x="a", y="b")
+
+
+@pytest.fixture
+def cars():
+    return pd.DataFrame(
+        {
+            "Name": [
+                "chevrolet chevelle malibu",
+                "buick skylark 320",
+                "plymouth satellite",
+                "amc rebel sst",
+                "ford torino",
+                "ford galaxie 500",
+                "chevrolet impala",
+                "plymouth fury iii",
+                "pontiac catalina",
+                "amc ambassador dpl",
+            ],
+            "Miles_per_Gallon": [
+                18.0,
+                15.0,
+                18.0,
+                16.0,
+                17.0,
+                15.0,
+                14.0,
+                14.0,
+                14.0,
+                15.0,
+            ],
+            "Cylinders": [8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+            "Displacement": [
+                307.0,
+                350.0,
+                318.0,
+                304.0,
+                302.0,
+                429.0,
+                454.0,
+                440.0,
+                455.0,
+                390.0,
+            ],
+            "Horsepower": [
+                130.0,
+                165.0,
+                150.0,
+                150.0,
+                140.0,
+                198.0,
+                220.0,
+                215.0,
+                225.0,
+                190.0,
+            ],
+            "Weight_in_lbs": [
+                3504,
+                3693,
+                3436,
+                3433,
+                3449,
+                4341,
+                4354,
+                4312,
+                4425,
+                3850,
+            ],
+            "Acceleration": [12.0, 11.5, 11.0, 12.0, 10.5, 10.0, 9.0, 8.5, 10.0, 8.5],
+            "Year": [
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+                pd.Timestamp("1970-01-01 00:00:00"),
+            ],
+            "Origin": [
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+                "USA",
+            ],
+        }
+    )
 
 
 def test_chart_data_types():
@@ -117,6 +223,7 @@ def test_chart_data_types():
     assert dct["data"] == {"name": "Foo"}
 
 
+@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_infer_types():
     data = pd.DataFrame(
         {
@@ -194,7 +301,7 @@ def test_chart_infer_types():
 
 
 @pytest.mark.parametrize(
-    "args, kwargs",
+    ("args", "kwargs"),
     [
         getargs(detail=["value:Q", "name:N"], tooltip=["value:Q", "name:N"]),
         getargs(detail=["value", "name"], tooltip=["value", "name"]),
@@ -225,7 +332,7 @@ def test_multiple_encodings(args, kwargs):
 def test_chart_operations():
     data = pd.DataFrame(
         {
-            "x": pd.date_range("2012", periods=10, freq="Y"),
+            "x": pd.date_range("2012", periods=10, freq="YS"),
             "y": range(10),
             "c": list("abcabcabca"),
         }
@@ -254,6 +361,365 @@ def test_chart_operations():
     assert len(chart.vconcat) == 4
 
 
+def test_when() -> None:
+    select = alt.selection_point(name="select", on="click")
+    condition = alt.condition(select, alt.value(1), "two", empty=False)["condition"]
+    condition.pop("value")
+    when = alt.when(select, empty=False)
+    when_constraint = alt.when(Origin="Europe")
+    when_constraints = alt.when(
+        Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
+    )
+    expected_constraint = alt.datum.Origin == "Europe"
+    expected_constraints = (
+        (alt.datum.Name == "Name_1")
+        & (alt.datum.Color == "Green")
+        & (alt.datum.Age == 25)
+        & (alt.datum.StartDate == "2000-10-01")
+    )
+
+    assert isinstance(when, alt.When)
+    assert condition == when._condition
+    assert isinstance(when_constraint, alt.When)
+    assert when_constraint._condition["test"] == expected_constraint
+    assert when_constraints._condition["test"] == expected_constraints
+    with pytest.raises((NotImplementedError, TypeError), match="list"):
+        alt.when([1, 2, 3])  # type: ignore
+    with pytest.raises(TypeError, match="Undefined"):
+        alt.when()
+    with pytest.raises(TypeError, match="int"):
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+
+
+def test_when_then() -> None:
+    select = alt.selection_point(name="select", on="click")
+    when = alt.when(select)
+    when_then = when.then(alt.value(5))
+
+    assert isinstance(when_then, alt.Then)
+    condition = when_then.condition
+    assert isinstance(condition, list)
+    assert condition[-1].get("value") == 5
+
+    with pytest.raises(TypeError, match=r"Path"):
+        when.then(pathlib.Path("some"))  # type: ignore
+
+    with pytest.raises(TypeError, match="float"):
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+
+
+def test_when_then_only(basic_chart) -> None:
+    """`Then` is an acceptable encode argument."""
+    select = alt.selection_point(name="select", on="click")
+
+    basic_chart.encode(fillOpacity=alt.when(select).then(alt.value(5))).to_dict()
+
+
+def test_when_then_otherwise() -> None:
+    select = alt.selection_point(name="select", on="click")
+    when_then = alt.when(select).then(alt.value(2, empty=False))
+    when_then_otherwise = when_then.otherwise(alt.value(0))
+
+    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    with pytest.raises(TypeError, match="list"):
+        when_then.otherwise([1, 2, 3])  # type: ignore
+
+    # Needed to modify to a list of conditions,
+    # which isn't possible in `condition`
+    single_condition = expected.pop("condition")
+    expected["condition"] = [single_condition]
+
+    assert expected == when_then_otherwise
+
+
+def test_when_then_when_then_otherwise() -> None:
+    """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
+    data = {
+        "values": [
+            {"a": "A", "b": 28},
+            {"a": "B", "b": 55},
+            {"a": "C", "b": 43},
+            {"a": "D", "b": 91},
+            {"a": "E", "b": 81},
+            {"a": "F", "b": 53},
+            {"a": "G", "b": 19},
+            {"a": "H", "b": 87},
+            {"a": "I", "b": 52},
+        ]
+    }
+
+    select = alt.selection_point(name="select", on="click")
+    highlight = alt.selection_point(name="highlight", on="pointerover")
+    when_then_when_then = (
+        alt.when(select)
+        .then(alt.value(2, empty=False))
+        .when(highlight)
+        .then(alt.value(1, empty=False))
+    )
+    with pytest.raises(TypeError, match="set"):
+        when_then_when_then.otherwise({"five", "six"})  # type: ignore
+
+    expected_stroke = {
+        "condition": [
+            {"param": "select", "empty": False, "value": 2},
+            {"param": "highlight", "empty": False, "value": 1},
+        ],
+        "value": 0,
+    }
+    actual_stroke = when_then_when_then.otherwise(alt.value(0))
+    fill_opacity = alt.when(select).then(alt.value(1)).otherwise(alt.value(0.3))
+
+    assert expected_stroke == actual_stroke
+    chart = (
+        alt.Chart(data)
+        .mark_bar(fill="#4C78A8", stroke="black", cursor="pointer")
+        .encode(x="a:O", y="b:Q", fillOpacity=fill_opacity, strokeWidth=actual_stroke)
+        .configure_scale(bandPaddingInner=0.2)
+        .add_params(select, highlight)
+    )
+    chart.to_dict()
+
+
+def test_when_multi_channel_param(cars):
+    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)."""
+    brush = alt.selection_interval()
+    hover = alt.selection_point(on="pointerover", nearest=True, empty=False)
+
+    chart_1 = (
+        alt.Chart(cars)
+        .mark_rect()
+        .encode(
+            x="Cylinders:N",
+            y="Origin:N",
+            color=alt.when(brush).then("count()").otherwise(alt.value("grey")),
+            opacity=alt.when(brush).then(alt.value(1)).otherwise(alt.value(0.6)),
+        )
+        .add_params(brush)
+    )
+    chart_1.to_dict()
+
+    color = alt.when(hover).then(alt.value("coral")).otherwise(alt.value("lightgray"))
+
+    chart_2 = (
+        alt.Chart(cars, title="Selection obscured by other points")
+        .mark_circle(opacity=1)
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+            color=color,
+            size=alt.when(hover).then(alt.value(300)).otherwise(alt.value(30)),
+        )
+        .add_params(hover)
+    )
+
+    chart_3 = chart_2 | chart_2.encode(
+        order=alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
+    ).properties(title="Selection brought to front")
+
+    chart_3.to_dict()
+
+
+def test_when_labels_position_based_on_condition() -> None:
+    """
+    Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
+
+    Original [labels-position-based-on-condition](https://altair-viz.github.io/user_guide/marks/text.html#labels-position-based-on-condition)
+    """
+    import numpy as np
+    import pandas as pd
+
+    from altair.utils.schemapi import SchemaValidationError
+
+    rand = np.random.RandomState(42)
+    df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
+
+    bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
+    param_width = alt.param(bind=bind_range)
+    param_width_lt_200 = param_width < 200
+
+    # Examples of how to write both js and python expressions
+    param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'black'")
+    param_color_py_expr = alt.param(
+        expr=alt.expr.if_(param_width_lt_200, "red", "black")
+    )
+    when = (
+        alt.when(param_width_lt_200)
+        .then(alt.value("red"))
+        .otherwise(alt.value("black"))
+    )
+
+    # NOTE: If the `@overload` signatures change,
+    # `mypy` will flag structural errors here
+    cond = when["condition"][0]
+    otherwise = when["value"]
+    param_color_py_when = alt.param(
+        expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
+    )
+    assert param_color_py_expr.expr == param_color_py_when.expr
+
+    chart = (
+        alt.Chart(df)
+        .mark_point()
+        .encode(
+            alt.X("xval").axis(titleColor=param_color_js_expr),
+            alt.Y("yval").axis(titleColor=param_color_py_when),
+        )
+        .add_params(param_width, param_color_js_expr, param_color_py_when)
+    )
+    chart.to_dict()
+    fail_condition = alt.condition(
+        param_width < 200, alt.value("red"), alt.value("black")
+    )
+    with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
+        alt.param(expr=fail_condition)  # type: ignore
+
+
+def test_when_expressions_inside_parameters() -> None:
+    """
+    Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
+
+    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
+    """
+    import polars as pl
+
+    source = pl.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
+
+    bar = (
+        alt.Chart(source)
+        .mark_bar()
+        .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
+    )
+    when_then_otherwise = (
+        alt.when(alt.datum.b >= 0).then(alt.value(10)).otherwise(alt.value(-20))
+    )
+    cond = when_then_otherwise["condition"][0]
+    otherwise = when_then_otherwise["value"]
+    expected = alt.expr.if_(alt.datum.b >= 0, 10, -20)
+    actual = alt.expr.if_(cond["test"], cond["value"], otherwise)
+    assert expected == actual
+
+    text_conditioned = bar.mark_text(
+        align="left",
+        baseline="middle",
+        dx=alt.expr(actual),  # type: ignore[arg-type]
+    ).encode(text="b")
+
+    chart = bar + text_conditioned
+    chart.to_dict()
+
+
+def test_when_multiple_fields():
+    # Triggering structural errors
+    # https://vega.github.io/vega-lite/docs/condition.html#field
+    brush = alt.selection_interval()
+    select_x = alt.selection_interval(encodings=["x"])
+    when = alt.when(brush)
+    reveal_msg = re.compile(r"Only one field.+Shorthand 'max\(\)'", flags=re.DOTALL)
+    with pytest.raises(TypeError, match=reveal_msg):
+        when.then("count()").otherwise("max()")
+
+    chain_mixed_msg = re.compile(
+        r"Chained.+mixed.+conflict.+\{'field': 'field_1', 'type': 'quantitative'\}.+otherwise",
+        flags=re.DOTALL,
+    )
+    with pytest.raises(TypeError, match=chain_mixed_msg):
+        when.then({"field": "field_1", "type": "quantitative"}).when(
+            select_x, field_2=99
+        )
+
+    with pytest.raises(TypeError, match=chain_mixed_msg):
+        when.then("field_1:Q").when(Genre="pop")
+
+    chain_otherwise_msg = re.compile(
+        r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
+        flags=re.DOTALL,
+    )
+    with pytest.raises(TypeError, match=chain_otherwise_msg):
+        when.then(alt.value(5)).when(
+            alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
+        ).then("min(foo):Q").otherwise(
+            alt.AggregatedFieldDef(
+                "argmax", field="field_9", **{"as": "this_field_here"}
+            )
+        )
+
+
+@pytest.mark.parametrize(
+    ("channel", "then", "otherwise"),
+    [
+        ("color", alt.ColorValue("red"), alt.ColorValue("blue")),
+        ("opacity", alt.value(0.5), alt.value(1.0)),
+        ("text", alt.TextValue("foo"), alt.value("bar")),
+        ("color", alt.Color("col1:N"), alt.value("blue")),
+        ("opacity", "col1:N", alt.value(0.5)),
+        ("text", alt.value("abc"), alt.Text("Name:N")),
+        ("size", alt.value(20), "Name:N"),
+        ("size", "count()", alt.value(0)),
+    ],
+)
+@pytest.mark.parametrize(
+    "when",
+    [
+        alt.selection_interval(),
+        alt.selection_point(),
+        alt.datum.Displacement > alt.value(350),
+        alt.selection_point(name="select", on="click"),
+        alt.selection_point(fields=["Horsepower"]),
+    ],
+)
+@pytest.mark.parametrize("empty", [Undefined, True, False])
+def test_when_condition_parity(
+    cars, channel: str, when, empty: Optional[bool], then, otherwise
+):
+    params = [when] if isinstance(when, alt.Parameter) else ()
+    kwds = {"x": "Cylinders:N", "y": "Origin:N"}
+
+    input_condition = alt.condition(when, then, otherwise, empty=empty)
+    chart_condition = (
+        alt.Chart(cars)
+        .mark_rect()
+        .encode(**kwds, **{channel: input_condition})
+        .add_params(*params)
+        .to_dict()
+    )
+
+    input_when = alt.when(when, empty=empty).then(then).otherwise(otherwise)
+    chart_when = (
+        alt.Chart(cars)
+        .mark_rect()
+        .encode(**kwds, **{channel: input_when})
+        .add_params(*params)
+        .to_dict()
+    )
+
+    if isinstance(input_when["condition"], list):
+        input_when["condition"] = input_when["condition"][0]
+        assert input_condition == input_when
+    else:
+        assert chart_condition == chart_when
+
+
+def test_when_then_interactive() -> None:
+    """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
+    predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
+        alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
+    )
+
+    chart = (
+        alt.Chart(source)
+        .mark_point(invalid=None)
+        .encode(
+            x="IMDB_Rating:Q",
+            y="Rotten_Tomatoes_Rating:Q",
+            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+        )
+    )
+    assert chart.interactive()
+    assert chart.copy()
+    assert chart.to_dict()
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
@@ -277,69 +743,42 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
-    assert isinstance(selection["value"], alt.expr.Expression)
-    assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
+    assert isinstance(selection["value"], Expression)
+    assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"
     with pytest.raises(AttributeError):
         getattr(selection, magic_attr)
 
 
-@pytest.mark.save_engine
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
-@pytest.mark.parametrize("engine", ["altair_saver", "vl-convert"])
+@pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
-    if format in ["pdf", "png"]:
+    if format in {"pdf", "png"}:
         out = io.BytesIO()
         mode = "rb"
     else:
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png", "pdf", "bogus"]:
-        if engine == "altair_saver":
-            if format == "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"Unsupported format: '{format}'" in str(err.value)
-                return
-            elif altair_saver is None:
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "altair_saver" in str(err.value)
-                return
-            elif format not in altair_saver.available_formats():
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"No enabled saver found that supports format='{format}'" in str(
-                    err.value
-                )
-                return
-
-        elif engine == "vl-convert":
-            if vlc is None and format != "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "vl-convert-python" in str(err.value)
-                return
-            elif format == "pdf":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert (
-                    f"The 'vl-convert' conversion engine does not support the '{format}' format"
-                    in str(err.value)
-                )
-                return
-            elif format not in ("png", "svg"):
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"Unsupported format: '{format}'" in str(err.value)
-                return
+    if format in {"svg", "png", "pdf", "bogus"} and engine == "vl-convert":
+        if format == "bogus":
+            with pytest.raises(ValueError) as err:  # noqa: PT011
+                basic_chart.save(out, format=format, engine=engine)
+            assert f"Unsupported format: '{format}'" in str(err.value)
+            return
+        elif vlc is None:
+            with pytest.raises(ValueError) as err:  # noqa: PT011
+                basic_chart.save(out, format=format, engine=engine)
+            assert "vl-convert-python" in str(err.value)
+            return
 
     basic_chart.save(out, format=format, engine=engine)
     out.seek(0)
@@ -353,6 +792,8 @@ def test_save(format, engine, basic_chart):
         assert content.startswith("<svg")
     elif format == "png":
         assert content.startswith(b"\x89PNG")
+    elif format == "pdf":
+        assert content.startswith(b"%PDF-")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
     os.close(fid)
@@ -361,15 +802,14 @@ def test_save(format, engine, basic_chart):
     for fp in [filename, pathlib.Path(filename)]:
         try:
             basic_chart.save(fp, format=format, engine=engine)
-            with open(fp, mode) as f:
+            with pathlib.Path(fp).open(mode) as f:
                 assert f.read()[:1000] == content[:1000]
         finally:
-            os.remove(fp)
+            pathlib.Path(fp).unlink()
 
 
-# Only test inline=False as altair_viewer is required for inline=True
-# but that package has not yet been released with support for Altair 5
-@pytest.mark.parametrize("inline", [False])
+@pytest.mark.parametrize("inline", [False, pytest.param(True, marks=slow)])
+@skip_requires_vl_convert
 def test_save_html(basic_chart, inline):
     out = io.StringIO()
     basic_chart.save(out, format="html", inline=inline)
@@ -384,6 +824,20 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
+
+
+@skip_requires_vl_convert
+def test_to_url(basic_chart):
+    share_url = basic_chart.to_url()
+
+    assert share_url.startswith("https://vega.github.io/editor/#/url/vega-lite/")
+
+    # Check fullscreen
+    fullscreen_share_url = basic_chart.to_url(fullscreen=True)
+    assert fullscreen_share_url.startswith(
+        "https://vega.github.io/editor/#/url/vega-lite/"
+    )
+    assert fullscreen_share_url.endswith("/view")
 
 
 def test_facet_basic():
@@ -490,9 +944,9 @@ def test_selection():
     assert isinstance(single & multi, alt.SelectionPredicateComposition)
     assert isinstance(single | multi, alt.SelectionPredicateComposition)
     assert isinstance(~single, alt.SelectionPredicateComposition)
-    assert "and" in (single & multi).to_dict().keys()
-    assert "or" in (single | multi).to_dict().keys()
-    assert "not" in (~single).to_dict().keys()
+    assert "and" in (single & multi).to_dict()
+    assert "or" in (single | multi).to_dict()
+    assert "not" in (~single).to_dict()
 
     # test that default names increment (regression for #1454)
     sel1 = alt.selection_point()
@@ -615,9 +1069,10 @@ def test_transforms():
 
     # kwargs don't maintain order in Python < 3.6, so window list can
     # be reversed
-    assert chart.transform == [
-        alt.WindowTransform(frame=[None, 0], window=window)
-    ] or chart.transform == [alt.WindowTransform(frame=[None, 0], window=window[::-1])]
+    assert chart.transform in (
+        [alt.WindowTransform(frame=[None, 0], window=window)],
+        [alt.WindowTransform(frame=[None, 0], window=window[::-1])],
+    )
 
 
 def test_filter_transform_selection_predicates():
@@ -744,7 +1199,7 @@ def test_selection_property():
 
 
 def test_LookupData():
-    df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+    df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
     lookup = alt.LookupData(data=df, key="x")
 
     dct = lookup.to_dict()
@@ -839,7 +1294,7 @@ def test_consolidate_InlineData():
     with alt.data_transformers.enable(consolidate_datasets=True):
         dct = chart.to_dict()
     assert dct["data"]["format"] == data.format
-    assert list(dct["datasets"].values())[0] == data.values
+    assert next(iter(dct["datasets"].values())) == data.values
 
     data = alt.InlineData(values=[], name="runtime_data")
     chart = alt.Chart(data).mark_point()
@@ -910,14 +1365,14 @@ def test_subcharts_with_same_data(method, data):
     text = point.mark_text()
 
     chart1 = func(point, line, text)
-    assert chart1.data is not alt.Undefined
-    assert all(c.data is alt.Undefined for c in getattr(chart1, method))
+    assert chart1.data is not Undefined
+    assert all(c.data is Undefined for c in getattr(chart1, method))
 
     if method != "concat":
         op = OP_DICT[method]
         chart2 = op(op(point, line), text)
-        assert chart2.data is not alt.Undefined
-        assert all(c.data is alt.Undefined for c in getattr(chart2, method))
+        assert chart2.data is not Undefined
+        assert all(c.data is Undefined for c in getattr(chart2, method))
 
 
 @pytest.mark.parametrize("method", ["layer", "hconcat", "vconcat", "concat"])
@@ -932,20 +1387,20 @@ def test_subcharts_different_data(method, data):
     nodata = alt.Chart().mark_point().encode(x="x:Q", y="y:Q")
 
     chart1 = func(point, otherdata)
-    assert chart1.data is alt.Undefined
+    assert chart1.data is Undefined
     assert getattr(chart1, method)[0].data is data
 
     chart2 = func(point, nodata)
-    assert chart2.data is alt.Undefined
+    assert chart2.data is Undefined
     assert getattr(chart2, method)[0].data is data
 
 
 def test_layer_facet(basic_chart):
     chart = (basic_chart + basic_chart).facet(row="row:Q")
-    assert chart.data is not alt.Undefined
-    assert chart.spec.data is alt.Undefined
+    assert chart.data is not Undefined
+    assert chart.spec.data is Undefined
     for layer in chart.spec.layer:
-        assert layer.data is alt.Undefined
+        assert layer.data is Undefined
 
     dct = chart.to_dict()
     assert "data" in dct
@@ -962,39 +1417,20 @@ def test_layer_errors():
 
     simple_chart = alt.Chart("data.txt").mark_point()
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError, match=r".config. attribute cannot.+LayerChart"):
         toplevel_chart + simple_chart
-    assert str(err.value).startswith(
-        'Objects with "config" attribute cannot be used within LayerChart.'
-    )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError, match=r"Concat.+cannot.+layered.+before concat"):
         alt.hconcat(simple_chart) + simple_chart
-    assert (
-        str(err.value)
-        == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-    )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError, match=r"Repeat.+cannot.+layered.+before repeat"):
         repeat_chart + simple_chart
-    assert (
-        str(err.value)
-        == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
-    )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         facet_chart1 + simple_chart
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError, match=r"Facet.+.+cannot.+layered.+before facet"):
         alt.layer(simple_chart) + facet_chart2
-    assert (
-        str(err.value)
-        == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-    )
 
 
 @pytest.mark.parametrize(
@@ -1072,3 +1508,78 @@ def test_validate_dataset():
     jsn = chart.to_json()
 
     assert jsn
+
+
+def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delitem(sys.modules, "pandas")
+    monkeypatch.delitem(sys.modules, "numpy")
+    monkeypatch.delitem(sys.modules, "pyarrow", raising=False)
+
+    df = pl.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+    _ = alt.Chart(df).mark_line().encode(x="a", y="b").to_json()
+    # Check pandas and PyArrow weren't imported anywhere along the way,
+    # confirming that the plot above would work without pandas no PyArrow
+    # installed.
+    assert "pandas" not in sys.modules
+    assert "pyarrow" not in sys.modules
+    assert "numpy" not in sys.modules
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
+)
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_date_32():
+    df = pl.DataFrame(
+        {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
+    )
+    tbl = ibis.memtable(df)
+    result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
+    assert next(iter(result["datasets"].values())) == [
+        {"a": 1, "b": "2020-01-01T00:00:00"},
+        {"a": 2, "b": "2020-01-02T00:00:00"},
+        {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
+)
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    df = pl.DataFrame(
+        {
+            "a": [1, 2, 3],
+            "b": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
+        }
+    )
+    tbl = ibis.memtable(df)
+    # "poison" `arrow_table_from_dfi_dataframe` to check that it does not get called
+    # if we use the vegafusion transformer
+    monkeypatch.setattr(
+        "altair.utils.data.arrow_table_from_dfi_dataframe", lambda x: 1 / 0
+    )
+    tbl = ibis.memtable(df)
+    with alt.data_transformers.enable("vegafusion"):
+        result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict(format="vega")
+    assert next(iter(result["data"]))["values"] == [
+        {"a": 1, "b": "2020-01-01T00:00:00.000"},
+        {"a": 2, "b": "2020-01-02T00:00:00.000"},
+        {"a": 3, "b": "2020-01-03T00:00:00.000"},
+    ]

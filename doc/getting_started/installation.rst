@@ -5,22 +5,24 @@
 Installation
 ============
 
-Altair can be installed, along with the example datasets in vega_datasets_, using:
+Altair can be installed, along with all its optional dependencies, using:
 
 .. code-block:: bash
 
-    pip install altair vega_datasets
+    pip install "altair[all]"
 
 If you are using the conda_ package manager, the equivalent is:
 
 .. code-block:: bash
 
-    conda install -c conda-forge altair vega_datasets
+    conda install -c conda-forge altair-all
 
-At this point, you should be able to open `Jupyter Notebook`_ or `JupyterLab`_
+At this point, you should be able to open any IDE compatible with Jupyter Notebooks,
 and execute any of the code from the :ref:`example-gallery`.
 For more information on how to display charts in various notebook environments
 and non-notebook IDEs, see :ref:`displaying-charts`.
+If you wish to install Altair with only the required dependencies,
+you can omit the ``[all]``/``-all`` suffix.
 
 Development Installation
 ========================
@@ -33,20 +35,20 @@ from the root of the repository to install the main version of Altair:
 
     pip install -e .
 
-To install development dependencies as well, run
+To install optional and development dependencies as well, run
 
 .. code-block:: bash
 
-    pip install -e .[dev]
+    pip install -e ".[all, dev]"
 
 If you do not wish to clone the source repository, you can install the
 development version directly from GitHub using:
 
 .. code-block:: bash
 
-    pip install -e git+https://github.com/altair-viz/altair.git
+    pip install -e git+https://github.com/vega/altair.git
 
-Please see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md>`_
+Please see `CONTRIBUTING.md <https://github.com/vega/altair/blob/main/CONTRIBUTING.md>`_
 for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
@@ -54,4 +56,4 @@ for details on how to contribute to the Altair project.
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 .. _JupyterLab: http://jupyterlab.readthedocs.io/
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/
-.. _Altair source repository: http://github.com/altair-viz/altair
+.. _Altair source repository: http://github.com/vega/altair

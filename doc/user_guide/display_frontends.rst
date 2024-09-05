@@ -40,6 +40,26 @@ The most used built-in renderers are:
   newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
+``alt.renderers.enable("jupyter")``
+  *(added in version 5.3):* Output the chart using :ref:`user-guide-jupyterchart`. This renderer
+  is compatible with environments that support third-party Jupyter Widgets including
+  JupyterLab_, `Jupyter Notebook`_, `VSCode-Python`_, and `Colab`_.
+  It requires a web connection in order to load relevant Javascript libraries.  Note that,
+  although this renderer uses ``JupyterChart``, it does not provide the
+  ability to access value and selection params in Python. To do so, create a ``JupyterChart``
+  object explicitly following the instructions in the :ref:`user-guide-jupyterchart`
+  documentation.
+
+``alt.renderers.enable("jupyter", offline=True)``
+  *(added in version 5.3):* Same as the ``"jupyter"`` renderer above, but loads JavaScript
+  dependencies from the ``vl-convert-python`` package (rather than from an online CDN)
+  so that an internet connection is not required.
+
+``alt.renderers.enable("browser")``
+  *(added in version 5.3):* Display charts in an external web browser. This renderer is
+  particularly useful when using Vega-Altair in a local non-Jupyter environment, such as
+  in `IPython`_ or `Spyder`_. See :ref:`display-browser` for more information.
+
 In addition, Altair includes the following renderers:
 
 - ``"default"``, ``"colab"``, ``"kaggle"``, ``"zeppelin"``: identical to ``"html"``
@@ -135,72 +155,112 @@ Optionally, for offline rendering, you can use the mimetype renderer::
     # Optional in VS Code
     alt.renderers.enable('mimetype')
 
+.. _display_dashboards:
+
+Dashboards
+----------
+Altair is compatible with common Python dashboarding packages. Many of them even provide support for reading out :ref:`parameters <user-guide-interactions>` from the chart.
+This allows you to e.g. select data points and update another part of the dashboard such as a table based on that selection:
+
+===================================================================================================================================  ===================================  =============================
+Package                                                                                                                              Displays interactive Altair charts   Supports reading out parameters
+===================================================================================================================================  ===================================  =============================
+`Panel <https://panel.holoviz.org/reference/panes/Vega.html#altair>`_                                                                ✔                                    ✔
+`Plotly Dash <https://dash.plotly.com/dash-vega-components?utm_medium=altair>`_                                                      ✔                                    ✔
+`Jupyter Voila <https://voila.readthedocs.io/en/stable/>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`                       ✔                                    ✔
+`Marimo <https://docs.marimo.io/guides/plotting.html>`_                                                                              ✔                                    ✔
+`Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
+`Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
+`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                    ✔
+===================================================================================================================================  ===================================  =============================
+
+The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well. 
+For use cases where the interactivity provided by Altair itself is enough, you can also use tools which generate HTML pages which do not require a web server such as `Quarto <https://quarto.org/>`_ or `Jupyter Book <https://jupyterbook.org/>`_.
+
+If you are using a dashboarding package that is not listed here, please `open an issue <https://github.com/vega/altair/issues>`_ on GitHub so that we can add it.
+
 .. _display-general:
 
-Working in non-Notebook Environments
-------------------------------------
+Working in environments without a JavaScript frontend
+-----------------------------------------------------   
 The Vega-Lite specifications produced by Altair can be produced in any Python
-environment, but to render these specifications currently requires a javascript
+environment, but to render these specifications currently requires a JavaScript
 engine. For this reason, Altair works most seamlessly with the browser-based
-environments mentioned above.
+environments mentioned above. Even so, Altair can be used effectively in non-browser
+based environments using the approaches described below.
 
-If you would like to render plots from another Python interface that does not
-have a built-in javascript engine, you'll need to somehow connect your charts
-to a second tool that can execute javascript.
+Static Image Renderers
+~~~~~~~~~~~~~~~~~~~~~~
+The ``"png"`` and ``"svg"`` renderers rely on the JavaScript engine embedded in
+the vl-convert optional dependency to generate static images from Vega-Lite chart
+specifications. These static images are then displayed in IPython-based environments
+using the Mime Renderer Extensions system. This approach may be used to display static
+versions of Altair charts inline in the `IPython QtConsole`_ and `Spyder`_, as well as
+in browser-based environments like JupyterLab.
 
-There are a few options available for this:
+The ``"svg"`` renderer is enabled like this::
 
-Vega-enabled IDEs
-~~~~~~~~~~~~~~~~~
-Some IDEs have extensions that natively recognize and display Altair charts.
-Examples are:
+    alt.renderers.enable("svg")
 
-- The `VSCode-Python`_ extension, which supports native Altair and Vega-Lite
-  chart display as of November 2019.
-- The Hydrogen_ project, which is built on nteract_ and renders Altair charts
-  via the ``mimetype`` renderer.
 
-Altair Viewer
-~~~~~~~~~~~~~
-.. note::
-   
-   altair_viewer does not yet support Altair 5.
+The ``"png"`` renderer is enabled like this::
 
-For non-notebook IDEs, a useful companion is the `Altair Viewer`_ package,
-which provides an Altair renderer that works directly from any Python terminal.
-Start by installing the package::
+    alt.renderers.enable("png")
 
-    $ pip install altair_viewer
 
-When enabled, this will serve charts via a local HTTP server and automatically open
-a browser window in which to view them, with subsequent charts displayed in the
-same window.
+The ``"png"`` renderer supports the following keyword argument configuration options:
 
-If you are using an IPython-compatible terminal ``altair_viewer`` can be enabled via
-Altair's standard renderer framework::
+- The ``scale_factor`` argument may be used to increase the chart size by the specified
+  scale factor (Default 1.0).
+- The ``ppi`` argument controls the pixels-per-inch resolution of the displayed image (Default 72).
 
-    import altair as alt
-    alt.renderers.enable('altair_viewer')
+Example usage::
 
-If you prefer to manually trigger chart display, you can use the built-in :meth:`Chart.show`
-method to manually trigger chart display::
+    alt.renderers.enable("png", scale_factor=2, ppi=144)
 
-    import altair as alt
 
-    # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
+.. _display-browser:
 
-    chart = alt.Chart(cars).mark_point().encode(
-        x='Horsepower',
-        y='Miles_per_Gallon',
-        color='Origin',
-    ).interactive()
+Browser Renderer
+~~~~~~~~~~~~~~~~
+To support displaying charts with interactive features in non-browser based environments,
+the ``"browser"`` renderer automatically opens charts in browser tabs of a system web browser.
 
-    chart.show()
+The ``"browser"`` renderer is enabled like this::
 
-This command will block the Python interpreter until the browser window containing
-the chart is closed.
+    alt.renderers.enable("browser")
+
+
+The ``"browser"`` renderer supports the following keyword argument configuration options:
+
+- The ``using`` argument may be used to specify which system web browser to use. This
+  may be set to a string to indicate the single browser that must be used (e.g. ``"safari"``),
+  or it may be set to a list of browser names where the first available browser is used. See the
+  documentation for the `webbrowser module`_ for the list of supported browser names. If not
+  specified, the system default browser is used.
+- The ``offline`` argument may be used to specify whether JavaScript dependencies should
+  be loaded from an online CDN or embedded alongside the chart specification. When ``offline``
+  is ``False`` (the default), JavaScript dependencies are loaded from an online CDN, and so
+  an internet connection is required. When ``offline`` is ``True``, JavaScript dependencies
+  are embedded alongside the chart specification and so no internet connection is required. Setting
+  ``offline`` to ``True`` requires the optional ``vl-convert-python`` dependency.
+- The ``port`` argument may be used to configure the system port that the chart HTML is served
+  on. Defaults to a random open port.
+
+Limitations:
+
+- The ``"browser"`` renderer sets up a temporary web server that serves the chart exactly once,
+  then opens the designated browser pointing to the server's URL. This approach does not require
+  the creation of temporary HTML files on disk, and it's memory efficient as there are no long-lived
+  web server processes required. A limitation of this approach is that the chart will be lost if the
+  browser is refreshed, and it's not possible to copy the chart URL and paste it in another browser
+  tab.
+- When used in IPython-based environments, the ``"browser"`` renderer will automatically open the
+  chart in the browser when the chart is the final value of the cell or command. This behavior is not
+  available in the standard ``python`` REPL. In this case, the ``chart.show()`` method may be used to
+  manually invoke the active renderer and open the chart in the browser.
+- This renderer is not compatible with remote environments like `Binder`_ or `Colab`_.
+
 
 Manual ``save()`` and display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -641,7 +701,6 @@ see :ref:`display-general`.
 .. _nteract: https://nteract.io
 .. _nbconvert: https://nbconvert.readthedocs.io/
 .. _nbviewer: https://nbviewer.jupyter.org/
-.. _Altair Viewer: https://github.com/altair-viz/altair_viewer/
 .. _Colab: https://colab.research.google.com
 .. _Hydrogen: https://github.com/nteract/hydrogen
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
@@ -649,3 +708,8 @@ see :ref:`display-general`.
 .. _Vega: https://vega.github.io/vega/
 .. _VSCode-Python: https://code.visualstudio.com/docs/python/python-tutorial
 .. _Zeppelin: https://zeppelin.apache.org/
+.. _Binder: https://mybinder.org/
+.. _IPython: https://ipython.org/
+.. _Spyder: https://www.spyder-ide.org/
+.. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
+.. _webbrowser module: https://docs.python.org/3/library/webbrowser.html#webbrowser.register

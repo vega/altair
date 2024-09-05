@@ -1,7 +1,9 @@
+.. currentmodule:: altair
+
 .. _user-guide-jupyterchart:
 
-JupyterChart Interactivity
-==========================
+JupyterChart
+============
 The ``JupyterChart`` class, introduced in Vega-Altair 5.1, makes it possible to update charts
 after they have been displayed and access the state of :ref:`user-guide-interactions` from Python.
 
@@ -20,7 +22,7 @@ Tested environments include:
 
 .. note::
     If you try ``JupyterChart`` in another environment that supports Jupyter Widgets,
-    `let us know how it goes <https://github.com/altair-viz/altair/issues>`_ so that we can keep
+    `let us know how it goes <https://github.com/vega/altair/issues>`_ so that we can keep
     this list up to date.
 
 Basic Usage
@@ -426,15 +428,33 @@ is used to combine the chart and HTML table in a column layout.
       Your browser does not support the video tag.
     </video>
 
+.. _user-guide-jupyterchart-offline:
+
+Offline Usage
+-------------
+By default, the ``JupyterChart`` widget loads its JavaScript dependencies dynamically from a CDN
+location, which requires an active internet connection. Starting in Altair 5.3, JupyterChart supports
+loading its JavaScript dependencies from the ``vl-convert-python`` package, which enables offline usage.
+
+Offline mode is enabled using the ``JupyterChart.enable_offline`` class method.
+
+.. code-block:: python
+
+    import altair as alt
+    alt.JupyterChart.enable_offline()
+
+This only needs to be called once, after which all displayed JupyterCharts will operate in offline mode.
+
+Offline mode can be disabled by passing ``offline=False`` to this same method.
+
+.. code-block:: python
+
+    import altair as alt
+    alt.JupyterChart.enable_offline(offline=False)
+
 Limitations
 -----------
 
 Setting Selections
 ~~~~~~~~~~~~~~~~~~
 It's not currently possible to set selection states from Python.
-
-Internet Connection Required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The JupyterChart class currently loads its JavaScript dependencies dynamically from a CDN location.
-This keeps the ``altair`` package small, but it means that an internet connection is required
-to display JupyterChart instances. In the future, we would like to provide optional offline support.

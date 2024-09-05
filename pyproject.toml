@@ -3,7 +3,6 @@
 # 2 project configuration
 # 3 tool configuration, for:
 # - hatch
-# - black
 # - ruff
 # - pytest
 # - mypy
@@ -16,15 +15,12 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.0.1; python_version<\"3.11\"",
+    "typing_extensions>=4.10.0; python_version<\"3.13\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
-    "numpy",
-    # If you update the minimum required pandas version, also update it in build.yml
-    "pandas>=0.25",
-    "toolz",
-    "packaging"
+    "packaging",
+    "narwhals>=1.5.2"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
@@ -49,30 +45,41 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
 ]
 
 [project.urls]
 Documentation = "https://altair-viz.github.io"
-Source = "https://github.com/altair-viz/altair"
+Source = "https://github.com/vega/altair"
 
 [project.optional-dependencies]
+all = [
+    "vega_datasets>=0.9.0",
+    "vl-convert-python>=1.6.0",
+    "pandas>=0.25.3",
+    "numpy",
+    "pyarrow>=11",
+    "vegafusion[embed]>=1.6.6",
+    "anywidget>=0.9.0",
+    "altair_tiles>=0.3.0"
+]
 dev = [
     "hatch",
-    "ruff",
-    "black<24",
-    "ipython",
+    "ruff>=0.6.0",
+    "ibis-framework[polars]",
+    "ipython[kernel]",
+    "pandas>=0.25.3",
     "pytest",
     "pytest-cov",
-    "m2r",
-    "vega_datasets",
-    "vl-convert-python>=0.14.0",
+    "pytest-xdist[psutil]~=3.5",
+    "mistune",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "pyarrow>=11",
-    "vegafusion[embed]>=1.4.0",
-    "anywidget"
+    "geopandas",
+    "polars>=0.20.3",
 ]
 doc = [
     "sphinx",
@@ -82,7 +89,6 @@ doc = [
     "numpydoc",
     "pillow>=9,<10",
     "pydata-sphinx-theme>=0.14.1",
-    "geopandas",
     "myst-parser",
     "sphinx_copybutton",
     "sphinx-design",
@@ -100,20 +106,59 @@ include = ["/altair"]
 artifacts = ["altair/jupyter/js/index.js"]
 
 [tool.hatch.envs.default]
-features = ["dev"]
+features = ["all", "dev"]
+# https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
+installer = "uv"
 
 [tool.hatch.envs.default.scripts]
+generate-schema-wrapper = [
+    "mypy tools/schemapi/schemapi.py",
+    "python tools/generate_schema_wrapper.py",
+    "test"
+]
 test = [
-    "black --diff --color --check .",
     "ruff check .",
+    "ruff format --diff --check .",
     "mypy altair tests",
-    "python -m pytest --pyargs --doctest-modules tests altair",
+    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
+update-init-file = [
+    "python tools/update_init_file.py",
+    "ruff check .",
+    "ruff format .",
+]
+test-fast = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"not slow\" {args}"
+]
+test-slow = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"slow\" {args}"
+]
+
+[tool.hatch.envs.hatch-test]
+# https://hatch.pypa.io/latest/tutorials/testing/overview/
+features = ["all", "dev", "doc"]
+# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
+default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair"]
+parallel = true
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+[tool.hatch.envs.hatch-test.scripts]
+run = [
+    "ruff check .", 
+    "ruff format --diff --check .",
+    "mypy altair tests",
+    "pytest{env:HATCH_TEST_ARGS:} {args}"
+]
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report"
 
 [tool.hatch.envs.doc]
-features = ["dev", "doc"]
+features = ["all", "dev", "doc"]
 
 [tool.hatch.envs.doc.scripts]
 clean = "rm -rf doc/_build"
@@ -146,27 +191,76 @@ publish-clean-build = [
     "(cd doc && bash sync_website.sh)",
 ]
 
-[tool.black]
-line-length = 88
-target-version = ["py38", "py39", "py310", "py311"]
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | build
-  | dist
-  | doc
-  | tests/examples_arguments_syntax
-  | tests/examples_methods_syntax
-  | altair/vegalite/v\d*/schema
-)/
-'''
-
 [tool.ruff]
 target-version = "py38"
 line-length = 88
+indent-width = 4
+exclude = [
+    ".git",
+    "build",
+    "__pycache__",
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax",
+    "tests/test_transformed_data.py",
+]
+
+[tool.ruff.lint]
+# https://docs.astral.sh/ruff/preview/
+preview = true
+
+# https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+extend-safe-fixes=[
+    # unnecessary-comprehension-in-call
+    "C419",
+    # literal-membership
+    "PLR6201",
+    # from __future__ import annotations #
+    # ---------------------------------- # 
+    "UP006",
+    "UP007",
+    "UP008",
+    "TCH",
+    # assign exception msg to variable #
+    # -------------------------------- #
+    "EM101",
+    "EM102",
+    # trailing-whitespace
+    "W291",
+    # blank line contains whitespace
+    "W293",
+    # unsorted-dunder-all
+    "RUF022",
+    # pydocstyle #
+    # ---------- #
+    # fits-on-one-line
+    "D200",
+    # escape-sequence-in-docstring
+    "D301",
+    # ends-in-period
+    "D400",
+    # missing-return-type-special-method 
+    "ANN204",
+    # unnecessary-dict-comprehension-for-iterable
+    "C420",
+]
+
+# https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+extend-select=[
+    # refurb
+    "FURB", 
+    # pylint (preview) autofix #
+    # ------------------------ #
+    # unnecessary-dunder-call
+    "PLC2801", 
+    # unnecessary-dict-index-lookup
+    "PLR1733", 
+    # unnecessary-list-index-lookup
+    "PLR1736",
+    # literal-membership
+    "PLR6201",
+    # unspecified-encoding
+    "PLW1514",
+]
 select = [
     # flake8-bugbear
     "B",
@@ -174,66 +268,183 @@ select = [
     "C4",
     # pycodestyle-error
     "E",
-    # pycodestyle-warning
-    "W",
+    # flake8-errmsg
+    "EM",
     # pyflakes
     "F",
+    # flake8-future-annotations
+    "FA",
+    # flynt
+    "FLY",
+    # flake8-pie
+    "PIE",
+    # flake8-pytest-style
+    "PT",
+    # flake8-use-pathlib
+    "PTH",
+    # Ruff-specific rules
+    "RUF",
+    # flake8-simplify
+    "SIM",
+    # flake8-type-checking
+    "TCH",
     # flake8-tidy-imports
     "TID",
+    # pyupgrade
+    "UP",
+    # pycodestyle-warning
+    "W",
+    # pylint (stable) autofix #
+    # ----------------------- #
+    # iteration-over-set
+    "PLC0208",
+    # manual-from-import
+    "PLR0402",
+    # useless-return
+    "PLR1711",
+    # repeated-equality-comparison
+    "PLR1714",
+    # collapsible-else-if
+    "PLR5501",
+    # useless-else-on-loop
+    "PLW0120",
+    # subprocess-run-without-check
+    "PLW1510",
+    # nested-min-max
+    "PLW3301",
+    # pydocstyle #
+    # ---------- #
+    "D",
+    # multi-line-summary-second-line
+    "D213",
+    # numpy-specific-rules
+    "NPY",
+    # flake8-annotations
+    "ANN",
+    # unsorted-imports
+    "I001",
+    # complex-structure
+    "C901",
 ]
-ignore = [
-    # E203, E266, W503 not yet supported by ruff,
-    # see https://github.com/charliermarsh/ruff/issues/2402
+ignore = [  
     # Whitespace before ':'
-    # "E203",
+    "E203",
     # Too many leading '#' for block comment
-    # "E266",
-    # Line break occurred before a binary operator
-    # "W503",
+    "E266",
     # Line too long
     "E501",
-    # Relative imports are banned
-    "TID252",
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
+    # mutable-class-default
+    "RUF012",
+    # suppressible-exception
+    # https://github.com/vega/altair/pull/3431#discussion_r1629808660
+    "SIM105",
+    # pydocstyle/ https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules #
+    # ------------------------------------------------------------------------- #
+    # undocumented-public-module
+    "D100",
+    # undocumented-public-class
+    "D101",
+    # undocumented-public-method  
+    "D102",
+    # undocumented-public-function  
+    "D103",
+    # undocumented-public-package   
+    "D104",
+    # undocumented-magic-method 
+    "D105",
+    # undocumented-public-init  
+    "D107",
+    # indent-with-spaces
+    "D206",
+    # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D212",
+    # Imperative mood   
+    "D401",
+    # Blank line after last section 
+    "D413",
+    # doc-line-too-long
+    "W505",
+    # Any as annotation
+    "ANN401" 
 ]
-exclude = [
-    ".git",
-    "build",
-    "__pycache__",
-    "tests/examples_arguments_syntax",
-    "tests/examples_methods_syntax",
-    "altair/vegalite/v?/schema",
-]
+# https://docs.astral.sh/ruff/settings/#lintpydocstyle
+pydocstyle={ convention="numpy" }
+mccabe={ max-complexity=10 }
 
-[tool.ruff.mccabe]
-max-complexity = 18
+[tool.ruff.lint.isort]
+classes = ["expr", "datum"]
+extra-standard-library = ["typing_extensions"]
+known-first-party=[
+    "altair_tiles",
+    "sphinxext_altair",
+    "vega_datasets",
+    "vegafusion",
+    "vl_convert",
+]
+split-on-trailing-comma = false
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+# https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
+"typing.Optional".msg = """
+Use `Union[T, None]` instead.
+`typing.Optional` is likely to be confused with `altair.typing.Optional`, \
+which have a similar but different semantic meaning.
+See https://github.com/vega/altair/pull/3449
+"""
+
+[tool.ruff.lint.per-file-ignores]
+# Only enforce type annotation rules on public api
+"!altair/vegalite/v5/api.py" = ["ANN"]
+# Allow complex if/elif branching during tests
+"tests/**/*.py"= ["C901"]
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+# https://docs.astral.sh/ruff/formatter/#docstring-formatting
+docstring-code-format = true
+docstring-code-line-length = 88
 
 [tool.pytest.ini_options]
+# Pytest does not need to search these folders for test functions.
+# They contain examples which are being executed by the
+# test_examples tests.
+norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+addopts = ["--numprocesses=logical"]
+# https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
-    "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')"
 ]
 
 [tool.mypy]
 warn_unused_ignores = true
+pretty = true
 
 [[tool.mypy.overrides]]
 module = [
     "vega_datasets.*",
-    "toolz.*",
-    "altair_viewer.*",
-    "altair_saver.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",
     "pandas.lib.*",
+    "geopandas.*",
     "nbformat.*",
     "ipykernel.*",
-    "m2r.*",
+    "ibis.*",
+    # This refers to schemapi in the tools folder which is imported
+    # by the tools scripts such as generate_schema_wrapper.py
+    "schemapi.*"
 ]
 ignore_missing_imports = true
 
-[[tool.mypy.overrides]]
-module = ["altair.vegalite.v5.schema.*"]
-ignore_errors = true
+[tool.pyright]
+extraPaths=["./tools"]
+pythonPlatform="All"
+pythonVersion="3.8"
+reportUnusedExpression="none"

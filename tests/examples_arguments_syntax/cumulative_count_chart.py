@@ -17,5 +17,5 @@ alt.Chart(source).transform_window(
     sort=[{"field": "IMDB_Rating"}],
 ).mark_area().encode(
     x="IMDB_Rating:Q",
-    y="cumulative_count:Q"
+    y=alt.Y("cumulative_count:Q", stack=False)
 )

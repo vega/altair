@@ -1,21 +1,24 @@
-# ruff: noqa
-from .schema import *
+# ruff: noqa: F401, F403
+from altair.expr.core import datum
+
 from .api import *
-
-from ...expr import datum, expr  # type: ignore[no-redef]
-
-from .display import VegaLite, renderers
 from .compiler import vegalite_compilers
-
 from .data import (
     MaxRowsError,
-    pipe,
-    curry,
+    data_transformers,
+    default_data_transformer,
     limit_rows,
     sample,
-    to_json,
     to_csv,
+    to_json,
     to_values,
-    default_data_transformer,
-    data_transformers,
 )
+from .display import (
+    VEGA_VERSION,
+    VEGAEMBED_VERSION,
+    VEGALITE_VERSION,
+    VegaLite,
+    renderers,
+)
+from .schema import *
+from .theme import themes

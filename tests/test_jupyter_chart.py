@@ -1,12 +1,29 @@
-import altair as alt
-from altair.jupyter.jupyter_chart import (
-    IntervalSelection,
-    IndexSelection,
-    PointSelection,
-)
-from vega_datasets import data
+from importlib.metadata import version as importlib_version
+
 import pandas as pd
 import pytest
+from packaging.version import Version
+
+import altair as alt
+from vega_datasets import data
+
+# If anywidget is not installed, we will skip the tests in this file.
+try:
+    import anywidget  # noqa: F401
+
+    has_anywidget = True
+except ImportError:
+    has_anywidget = False
+
+if has_anywidget:
+    from altair.jupyter import jupyter_chart
+else:
+    jupyter_chart = None  # type: ignore
+
+skip_requires_anywidget = pytest.mark.skipif(
+    not has_anywidget, reason="anywidget not importable"
+)
+
 
 try:
     import vegafusion  # type: ignore # noqa: F401
@@ -15,8 +32,22 @@ try:
 except ImportError:
     transformers = ["default"]
 
+param_transformers = pytest.mark.parametrize("transformer", transformers)
 
-@pytest.mark.parametrize("transformer", transformers)
+
+if Version(importlib_version("ipywidgets")) < Version("8.1.4"):
+    # See https://github.com/vega/altair/issues/3234#issuecomment-2268515312
+    _filterwarn = pytest.mark.filterwarnings(
+        "ignore:Deprecated in traitlets 4.1.*:DeprecationWarning"
+    )
+    jupyter_marks: pytest.MarkDecorator = skip_requires_anywidget(
+        _filterwarn(param_transformers)
+    )
+else:
+    jupyter_marks = skip_requires_anywidget(param_transformers)
+
+
+@jupyter_marks
 def test_chart_with_no_interactivity(transformer):
     with alt.data_transformers.enable(transformer):
         source = pd.DataFrame(
@@ -30,6 +61,9 @@ def test_chart_with_no_interactivity(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            # With the "vegafusion" transformer, the spec is not computed until the front-end
+            # sets the local_tz. Assign this property manually to simulate this.
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -39,7 +73,7 @@ def test_chart_with_no_interactivity(transformer):
         assert len(widget.params.trait_values()) == 0
 
 
-@pytest.mark.parametrize("transformer", transformers)
+@jupyter_marks
 def test_interval_selection_example(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -59,6 +93,7 @@ def test_interval_selection_example(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -69,7 +104,7 @@ def test_interval_selection_example(transformer):
 
         # Check initial interval selection
         selection = widget.selections.interval
-        assert isinstance(selection, IntervalSelection)
+        assert isinstance(selection, jupyter_chart.IntervalSelection)
         assert selection.value == {}
         assert selection.store == []
 
@@ -98,7 +133,7 @@ def test_interval_selection_example(transformer):
         }
 
         selection = widget.selections.interval
-        assert isinstance(selection, IntervalSelection)
+        assert isinstance(selection, jupyter_chart.IntervalSelection)
         assert selection.value == {
             "Horsepower": [40.0, 100],
             "Miles_per_Gallon": [25, 30],
@@ -106,7 +141,7 @@ def test_interval_selection_example(transformer):
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", transformers)
+@jupyter_marks
 def test_index_selection_example(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -126,6 +161,7 @@ def test_index_selection_example(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -136,7 +172,7 @@ def test_index_selection_example(transformer):
 
         # Check initial interval selection
         selection = widget.selections.index
-        assert isinstance(selection, IndexSelection)
+        assert isinstance(selection, jupyter_chart.IndexSelection)
         assert selection.value == []
         assert selection.store == []
 
@@ -160,12 +196,12 @@ def test_index_selection_example(transformer):
         }
 
         selection = widget.selections.index
-        assert isinstance(selection, IndexSelection)
+        assert isinstance(selection, jupyter_chart.IndexSelection)
         assert selection.value == [219, 329, 340]
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", transformers)
+@jupyter_marks
 def test_point_selection(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()
@@ -185,6 +221,7 @@ def test_point_selection(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -195,7 +232,7 @@ def test_point_selection(transformer):
 
         # Check initial interval selection
         selection = widget.selections.point
-        assert isinstance(selection, PointSelection)
+        assert isinstance(selection, jupyter_chart.PointSelection)
         assert selection.value == []
         assert selection.store == []
 
@@ -222,12 +259,12 @@ def test_point_selection(transformer):
         }
 
         selection = widget.selections.point
-        assert isinstance(selection, PointSelection)
+        assert isinstance(selection, jupyter_chart.PointSelection)
         assert selection.value == [{"Cylinders": 4}, {"Cylinders": 5}]
         assert selection.store == store
 
 
-@pytest.mark.parametrize("transformer", transformers)
+@jupyter_marks
 def test_param_updates(transformer):
     with alt.data_transformers.enable(transformer):
         source = data.cars()

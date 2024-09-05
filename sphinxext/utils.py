@@ -1,12 +1,20 @@
+from __future__ import annotations
+
 import ast
 import hashlib
 import itertools
 import json
 import re
+from pathlib import Path
+from typing import Any
 
 
-def create_thumbnail(image_filename, thumb_filename, window_size=(280, 160)):
-    """Create a thumbnail whose shortest dimension matches the window"""
+def create_thumbnail(
+    image_filename: Path,
+    thumb_filename: Path,
+    window_size: tuple[float, float] = (280, 160),
+) -> None:
+    """Create a thumbnail whose shortest dimension matches the window."""
     from PIL import Image
 
     im = Image.open(image_filename)
@@ -26,10 +34,12 @@ def create_thumbnail(image_filename, thumb_filename, window_size=(280, 160)):
     thumb.save(thumb_filename)
 
 
-def create_generic_image(filename, shape=(200, 300), gradient=True):
-    """Create a generic image"""
-    from PIL import Image
+def create_generic_image(
+    filename: Path, shape: tuple[float, float] = (200, 300), gradient: bool = True
+) -> None:
+    """Create a generic image."""
     import numpy as np
+    from PIL import Image
 
     assert len(shape) == 2
 
@@ -48,8 +58,9 @@ Example script with invalid Python syntax
 """
 
 
-def _parse_source_file(filename):
-    """Parse source file into AST node
+def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
+    """
+    Parse source file into AST node.
 
     Parameters
     ----------
@@ -66,9 +77,7 @@ def _parse_source_file(filename):
     This function adapted from the sphinx-gallery project; license: BSD-3
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
-
-    with open(filename, "r", encoding="utf-8") as fid:
-        content = fid.read()
+    content = Path(filename).read_text(encoding="utf-8")
     # change from Windows format to UNIX for uniformity
     content = content.replace("\r\n", "\n")
 
@@ -79,8 +88,9 @@ def _parse_source_file(filename):
     return node, content
 
 
-def get_docstring_and_rest(filename):
-    """Separate ``filename`` content between docstring and the rest
+def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
+    """
+    Separate ``filename`` content between docstring and the rest.
 
     Strongly inspired from ast.get_docstring.
 
@@ -117,14 +127,14 @@ def get_docstring_and_rest(filename):
     else:
         category = None
 
+    lineno = 1
+
     if node is None:
-        return SYNTAX_ERROR_DOCSTRING, category, content, 1
+        return SYNTAX_ERROR_DOCSTRING, category, content, lineno
 
     if not isinstance(node, ast.Module):
-        raise TypeError(
-            "This function only supports modules. "
-            "You provided {}".format(node.__class__.__name__)
-        )
+        msg = f"This function only supports modules. You provided {node.__class__.__name__}"
+        raise TypeError(msg)
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error
@@ -160,8 +170,8 @@ def get_docstring_and_rest(filename):
             if hasattr(docstring, "decode") and not isinstance(docstring, str):
                 docstring = docstring.decode("utf-8")
             # python3.8: has end_lineno
-            lineno = (
-                getattr(docstring_node, "end_lineno", None) or docstring_node.lineno
+            lineno = getattr(
+                docstring_node, "end_lineno", docstring_node.lineno
             )  # The last line of the string.
             # This get the content of the file after the docstring last line
             # Note: 'maxsplit' argument is not a keyword argument in python2
@@ -171,29 +181,30 @@ def get_docstring_and_rest(filename):
             docstring, rest = "", ""
 
     if not docstring:
-        raise ValueError(
-            (
-                'Could not find docstring in file "{0}". '
-                "A docstring is required for the example gallery."
-            ).format(filename)
+        msg = (
+            f'Could not find docstring in file "{filename}". '
+            "A docstring is required for the example gallery."
         )
+        raise ValueError(msg)
     return docstring, category, rest, lineno
 
 
-def prev_this_next(it, sentinel=None):
-    """Utility to return (prev, this, next) tuples from an iterator"""
+def prev_this_next(
+    it: list[dict[str, Any]], sentinel: None = None
+) -> zip[tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any] | None]]:
+    """Utility to return (prev, this, next) tuples from an iterator."""
     i1, i2, i3 = itertools.tee(it, 3)
     next(i3, None)
     return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]))
 
 
-def dict_hash(dct):
-    """Return a hash of the contents of a dictionary"""
+def dict_hash(dct: dict[Any, Any]) -> Any:
+    """Return a hash of the contents of a dictionary."""
     serialized = json.dumps(dct, sort_keys=True)
 
     try:
-        m = hashlib.md5(serialized)
+        m = hashlib.sha256(serialized)[:32]
     except TypeError:
-        m = hashlib.md5(serialized.encode())
+        m = hashlib.sha256(serialized.encode())[:32]
 
     return m.hexdigest()

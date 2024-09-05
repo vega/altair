@@ -1,53 +1,55 @@
-"""
-Utility routines
-"""
-from collections.abc import Mapping, MutableMapping
-from copy import deepcopy
-import json
+"""Utility routines."""
+
+from __future__ import annotations
+
 import itertools
+import json
 import re
 import sys
 import traceback
 import warnings
-from typing import (
-    Callable,
-    TypeVar,
-    Any,
-    Union,
-    Dict,
-    Optional,
-    Tuple,
-    Sequence,
-    Type,
-    cast,
-)
-from types import ModuleType
+from collections.abc import Mapping, MutableMapping
+from copy import deepcopy
+from itertools import groupby
+from operator import itemgetter
+from typing import TYPE_CHECKING, Any, Callable, Iterator, Literal, TypeVar, cast
 
 import jsonschema
-import pandas as pd
-import numpy as np
-from pandas.api.types import infer_dtype
+import narwhals.stable.v1 as nw
+from narwhals.dependencies import get_polars, is_pandas_dataframe
+from narwhals.typing import IntoDataFrame
 
-from altair.utils.schemapi import SchemaBase
-from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
+from altair.utils.schemapi import SchemaBase, Undefined
 
+if sys.version_info >= (3, 12):
+    from typing import Protocol, runtime_checkable
+else:
+    from typing_extensions import Protocol, runtime_checkable
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
+    import typing as t
 
-_V = TypeVar("_V")
-_P = ParamSpec("_P")
+    import pandas as pd
+    from narwhals.typing import IntoExpr
+
+    from altair.utils._dfi_types import DataFrame as DfiDataFrame
+    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
+
+V = TypeVar("V")
+P = ParamSpec("P")
+TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
 
-class _DataFrameLike(Protocol):
-    def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
-        ...
+@runtime_checkable
+class DataFrameLike(Protocol):
+    def __dataframe__(
+        self, nan_as_null: bool = False, allow_copy: bool = True
+    ) -> DfiDataFrame: ...
 
 
 TYPECODE_MAP = {
@@ -86,6 +88,8 @@ AGGREGATES = [
     "values",
     "variance",
     "variancep",
+    "exponential",
+    "exponentialb",
 ]
 
 # window aggregates from vega-lite version 4.6.0
@@ -136,6 +140,7 @@ TIMEUNITS = [
     "monthdatehoursminutesseconds",
     "weekday",
     "weeksdayhours",
+    "weekdayhours",
     "weekdayhoursminutes",
     "weekdayhoursminutesseconds",
     "dayhours",
@@ -175,7 +180,7 @@ TIMEUNITS = [
     "utcmonthdatehoursminutes",
     "utcmonthdatehoursminutesseconds",
     "utcweekday",
-    "utcweeksdayhours",
+    "utcweekdayhours",
     "utcweekdayhoursminutes",
     "utcweekdayhoursminutesseconds",
     "utcdayhours",
@@ -187,36 +192,53 @@ TIMEUNITS = [
     "utcsecondsmilliseconds",
 ]
 
+VALID_TYPECODES = list(itertools.chain(iter(TYPECODE_MAP), iter(INV_TYPECODE_MAP)))
 
-_InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
+SHORTHAND_UNITS = {
+    "field": "(?P<field>.*)",
+    "type": "(?P<type>{})".format("|".join(VALID_TYPECODES)),
+    "agg_count": "(?P<aggregate>count)",
+    "op_count": "(?P<op>count)",
+    "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+    "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+    "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+}
+
+SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
+    frozenset(("field", "aggregate", "type", "timeUnit"))
+)
 
 
-def infer_vegalite_type(
+def infer_vegalite_type_for_pandas(
     data: object,
-) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
-    From an array-like input, infer the correct vega typecode
-    ('ordinal', 'nominal', 'quantitative', or 'temporal')
+    From an array-like input, infer the correct vega typecode.
+
+    ('ordinal', 'nominal', 'quantitative', or 'temporal').
 
     Parameters
     ----------
     data: object
     """
+    # This is safe to import here, as this function is only called on pandas input.
+    from pandas.api.types import infer_dtype
+
     typ = infer_dtype(data, skipna=False)
 
-    if typ in [
+    if typ in {
         "floating",
         "mixed-integer-float",
         "integer",
         "mixed-integer",
         "complex",
-    ]:
+    }:
         return "quantitative"
     elif typ == "categorical" and hasattr(data, "cat") and data.cat.ordered:
         return ("ordinal", data.cat.categories.tolist())
-    elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
+    elif typ in {"string", "bytes", "categorical", "boolean", "mixed", "unicode"}:
         return "nominal"
-    elif typ in [
+    elif typ in {
         "datetime",
         "datetime64",
         "timedelta",
@@ -224,23 +246,23 @@ def infer_vegalite_type(
         "date",
         "time",
         "period",
-    ]:
+    }:
         return "temporal"
     else:
         warnings.warn(
-            "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ),
+            f"I don't know how to infer vegalite type from '{typ}'.  "
+            "Defaulting to nominal.",
             stacklevel=1,
         )
         return "nominal"
 
 
-def merge_props_geom(feat: dict) -> dict:
+def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
-    Merge properties with geometry
-    * Overwrites 'type' and 'geometry' entries if existing
-    """
+    Merge properties with geometry.
 
+    * Overwrites 'type' and 'geometry' entries if existing.
+    """
     geom = {k: feat[k] for k in ("type", "geometry")}
     try:
         feat["properties"].update(geom)
@@ -253,19 +275,19 @@ def merge_props_geom(feat: dict) -> dict:
     return props_geom
 
 
-def sanitize_geo_interface(geo: MutableMapping) -> dict:
-    """Santize a geo_interface to prepare it for serialization.
+def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
+    """
+    Santize a geo_interface to prepare it for serialization.
 
     * Make a copy
     * Convert type array or _Array to list
     * Convert tuples to lists (using json.loads/dumps)
     * Merge properties with geometry
     """
-
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
-    for key in geo.keys():
+    for key in geo:
         if str(type(geo[key]).__name__).startswith(("_Array", "array")):
             geo[key] = geo[key].tolist()
 
@@ -287,14 +309,18 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
 
 
 def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
+    # This is only called on `numpy` inputs, so it's safe to import it here.
+    import numpy as np
+
     try:
         return np.issubdtype(dtype, subtype)
     except (NotImplementedError, TypeError):
         return False
 
 
-def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
-    """Sanitize a DataFrame to prepare it for serialization.
+def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+    """
+    Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
     * Convert RangeIndex columns to strings
@@ -310,6 +336,11 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
+    # This is safe to import here, as this function is only called on pandas input.
+    # NumPy is a required dependency of pandas so is also safe to import.
+    import numpy as np
+    import pandas as pd
+
     df = df.copy()
 
     if isinstance(df.columns, pd.RangeIndex):
@@ -317,15 +348,18 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
     for col_name in df.columns:
         if not isinstance(col_name, str):
-            raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col_name)
+            msg = (
+                f"Dataframe contains invalid column name: {col_name!r}. "
+                "Column names must be strings"
             )
+            raise ValueError(msg)
 
     if isinstance(df.index, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
     if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
@@ -343,7 +377,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         if dtype_name == "category":
             # Work around bug in to_json for categorical types in older versions
             # of pandas as they do not properly convert NaN values to null in to_json.
-            # We can probably remove this part once we require Pandas >= 1.0
+            # We can probably remove this part once we require pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif dtype_name == "string":
@@ -359,39 +393,43 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name.startswith("datetime") or dtype_name.startswith("timestamp"):
+        elif dtype_name.startswith(("datetime", "timestamp")):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
             # parses full ISO-8601 dates as local time, and dates in Vega and
             # Vega-Lite are displayed in local time by default.
-            # (see https://github.com/altair-viz/altair/issues/1027)
+            # (see https://github.com/vega/altair/issues/1027)
             df[col_name] = (
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )
         elif dtype_name.startswith("timedelta"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
+                ""
             )
+            raise ValueError(msg)
         elif dtype_name.startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue
-        elif dtype_name in {
-            "Int8",
-            "Int16",
-            "Int32",
-            "Int64",
-            "UInt8",
-            "UInt16",
-            "UInt32",
-            "UInt64",
-            "Float32",
-            "Float64",
-        }:  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
+        elif (
+            dtype_name
+            in {
+                "Int8",
+                "Int16",
+                "Int32",
+                "Int64",
+                "UInt8",
+                "UInt16",
+                "UInt32",
+                "UInt64",
+                "Float32",
+                "Float64",
+            }
+        ):  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
@@ -404,7 +442,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif dtype == object:
+        elif dtype == object:  # noqa: E721
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
             col = df[col_name].astype(object).apply(to_list_if_array)
@@ -412,40 +450,67 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     return df
 
 
-def sanitize_arrow_table(pa_table):
-    """Sanitize arrow table for JSON serialization"""
-    import pyarrow as pa
-    import pyarrow.compute as pc
-
-    arrays = []
-    schema = pa_table.schema
-    for name in schema.names:
-        array = pa_table[name]
-        dtype = schema.field(name).type
-        if str(dtype).startswith("timestamp"):
-            arrays.append(pc.strftime(array))
-        elif str(dtype).startswith("duration"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+def sanitize_narwhals_dataframe(
+    data: nw.DataFrame[TIntoDataFrame],
+) -> nw.DataFrame[TIntoDataFrame]:
+    """Sanitize narwhals.DataFrame for JSON serialization."""
+    schema = data.schema
+    columns: list[IntoExpr] = []
+    # See https://github.com/vega/altair/issues/1027 for why this is necessary.
+    local_iso_fmt_string = "%Y-%m-%dT%H:%M:%S"
+    for name, dtype in schema.items():
+        if dtype == nw.Date and nw.get_native_namespace(data) is get_polars():
+            # Polars doesn't allow formatting `Date` with time directives.
+            # The date -> datetime cast is extremely fast compared with `to_string`
+            columns.append(
+                nw.col(name).cast(nw.Datetime).dt.to_string(local_iso_fmt_string)
+            )
+        elif dtype == nw.Date:
+            columns.append(nw.col(name).dt.to_string(local_iso_fmt_string))
+        elif dtype == nw.Datetime:
+            columns.append(nw.col(name).dt.to_string(f"{local_iso_fmt_string}%.f"))
+        elif dtype == nw.Duration:
+            msg = (
+                f'Field "{name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype)
+                ""
             )
+            raise ValueError(msg)
         else:
-            arrays.append(array)
+            columns.append(name)
+    return data.select(columns)
 
-    return pa.Table.from_arrays(arrays, names=schema.names)
+
+def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
+    """
+    Wrap `data` in `narwhals.DataFrame`.
+
+    If `data` is not supported by Narwhals, but it is convertible
+    to a PyArrow table, then first convert to a PyArrow Table,
+    and then wrap in `narwhals.DataFrame`.
+    """
+    data_nw = nw.from_native(data, eager_or_interchange_only=True)
+    if nw.get_level(data_nw) == "interchange":
+        # If Narwhals' support for `data`'s class is only metadata-level, then we
+        # use the interchange protocol to convert to a PyArrow Table.
+        from altair.utils.data import arrow_table_from_dfi_dataframe
+
+        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore[arg-type]
+        data_nw = nw.from_native(pa_table, eager_only=True)
+    return data_nw
 
 
-def parse_shorthand(
-    shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
+def parse_shorthand(  # noqa: C901
+    shorthand: dict[str, Any] | str,
+    data: IntoDataFrame | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
     parse_types: bool = True,
-) -> Dict[str, Any]:
-    """General tool to parse shorthand values
+) -> dict[str, Any]:
+    """
+    General tool to parse shorthand values.
 
     These are of the form:
 
@@ -480,61 +545,68 @@ def parse_shorthand(
 
     Examples
     --------
-    >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
-    ...                      'bar': [1, 2, 3, 4]})
+    >>> import pandas as pd
+    >>> data = pd.DataFrame({"foo": ["A", "B", "A", "B"], "bar": [1, 2, 3, 4]})
 
-    >>> parse_shorthand('name') == {'field': 'name'}
+    >>> parse_shorthand("name") == {"field": "name"}
     True
 
-    >>> parse_shorthand('name:Q') == {'field': 'name', 'type': 'quantitative'}
+    >>> parse_shorthand("name:Q") == {"field": "name", "type": "quantitative"}
     True
 
-    >>> parse_shorthand('average(col)') == {'aggregate': 'average', 'field': 'col'}
+    >>> parse_shorthand("average(col)") == {"aggregate": "average", "field": "col"}
     True
 
-    >>> parse_shorthand('foo:O') == {'field': 'foo', 'type': 'ordinal'}
+    >>> parse_shorthand("foo:O") == {"field": "foo", "type": "ordinal"}
     True
 
-    >>> parse_shorthand('min(foo):Q') == {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
+    >>> parse_shorthand("min(foo):Q") == {
+    ...     "aggregate": "min",
+    ...     "field": "foo",
+    ...     "type": "quantitative",
+    ... }
     True
 
-    >>> parse_shorthand('month(col)') == {'field': 'col', 'timeUnit': 'month', 'type': 'temporal'}
+    >>> parse_shorthand("month(col)") == {
+    ...     "field": "col",
+    ...     "timeUnit": "month",
+    ...     "type": "temporal",
+    ... }
     True
 
-    >>> parse_shorthand('year(col):O') == {'field': 'col', 'timeUnit': 'year', 'type': 'ordinal'}
+    >>> parse_shorthand("year(col):O") == {
+    ...     "field": "col",
+    ...     "timeUnit": "year",
+    ...     "type": "ordinal",
+    ... }
     True
 
-    >>> parse_shorthand('foo', data) == {'field': 'foo', 'type': 'nominal'}
+    >>> parse_shorthand("foo", data) == {"field": "foo", "type": "nominal"}
     True
 
-    >>> parse_shorthand('bar', data) == {'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand("bar", data) == {"field": "bar", "type": "quantitative"}
     True
 
-    >>> parse_shorthand('bar:O', data) == {'field': 'bar', 'type': 'ordinal'}
+    >>> parse_shorthand("bar:O", data) == {"field": "bar", "type": "ordinal"}
     True
 
-    >>> parse_shorthand('sum(bar)', data) == {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand("sum(bar)", data) == {
+    ...     "aggregate": "sum",
+    ...     "field": "bar",
+    ...     "type": "quantitative",
+    ... }
     True
 
-    >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
+    >>> parse_shorthand("count()", data) == {
+    ...     "aggregate": "count",
+    ...     "type": "quantitative",
+    ... }
     True
     """
-    from altair.utils._importers import pyarrow_available
+    from altair.utils.data import is_data_type
 
     if not shorthand:
         return {}
-
-    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
-
-    units = {
-        "field": "(?P<field>.*)",
-        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
-        "agg_count": "(?P<aggregate>count)",
-        "op_count": "(?P<op>count)",
-        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    }
 
     patterns = []
 
@@ -553,7 +625,8 @@ def parse_shorthand(
         patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
     regexps = (
-        re.compile(r"\A" + p.format(**units) + r"\Z", re.DOTALL) for p in patterns
+        re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL)
+        for p in patterns
     )
 
     # find matches depending on valid fields passed
@@ -579,39 +652,22 @@ def parse_shorthand(
         attrs["type"] = "temporal"
 
     # if data is specified and type is not, infer type from data
-    if "type" not in attrs:
-        if pyarrow_available() and data is not None and hasattr(data, "__dataframe__"):
-            dfi = data.__dataframe__()
-            if "field" in attrs:
-                unescaped_field = attrs["field"].replace("\\", "")
-                if unescaped_field in dfi.column_names():
-                    column = dfi.get_column_by_name(unescaped_field)
-                    try:
-                        attrs["type"] = infer_vegalite_type_for_dfi_column(column)
-                    except (NotImplementedError, AttributeError, ValueError):
-                        # Fall back to pandas-based inference.
-                        # Note: The AttributeError catch is a workaround for
-                        # https://github.com/pandas-dev/pandas/issues/55332
-                        if isinstance(data, pd.DataFrame):
-                            attrs["type"] = infer_vegalite_type(data[unescaped_field])
-                        else:
-                            raise
-
-                    if isinstance(attrs["type"], tuple):
-                        attrs["sort"] = attrs["type"][1]
-                        attrs["type"] = attrs["type"][0]
-        elif isinstance(data, pd.DataFrame):
-            # Fallback if pyarrow is not installed or if pandas is older than 1.5
-            #
-            # Remove escape sequences so that types can be inferred for columns with special characters
-            if "field" in attrs and attrs["field"].replace("\\", "") in data.columns:
-                attrs["type"] = infer_vegalite_type(
-                    data[attrs["field"].replace("\\", "")]
-                )
-                # ordered categorical dataframe columns return the type and sort order as a tuple
-                if isinstance(attrs["type"], tuple):
-                    attrs["sort"] = attrs["type"][1]
-                    attrs["type"] = attrs["type"][0]
+    if "type" not in attrs and is_data_type(data):
+        unescaped_field = attrs["field"].replace("\\", "")
+        data_nw = nw.from_native(data, eager_or_interchange_only=True)
+        schema = data_nw.schema
+        if unescaped_field in schema:
+            column = data_nw[unescaped_field]
+            if schema[unescaped_field] in {
+                nw.Object,
+                nw.Unknown,
+            } and is_pandas_dataframe(nw.to_native(data_nw)):
+                attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
+            else:
+                attrs["type"] = infer_vegalite_type_for_narwhals(column)
+            if isinstance(attrs["type"], tuple):
+                attrs["sort"] = attrs["type"][1]
+                attrs["type"] = attrs["type"][0]
 
     # If an unescaped colon is still present, it's often due to an incorrect data type specification
     # but could also be due to using a column name with ":" in it.
@@ -632,78 +688,63 @@ def parse_shorthand(
     return attrs
 
 
-def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, "PandasColumn"],
-) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
-    from pyarrow.interchange.from_dataframe import column_to_array
-
-    try:
-        kind = column.dtype[0]
-    except NotImplementedError as e:
-        # Edge case hack:
-        # dtype access fails for pandas column with datetime64[ns, UTC] type,
-        # but all we need to know is that its temporal, so check the
-        # error message for the presence of datetime64.
-        #
-        # See https://github.com/pandas-dev/pandas/issues/54239
-        if "datetime64" in e.args[0] or "timestamp" in e.args[0]:
-            return "temporal"
-        raise e
-
+def infer_vegalite_type_for_narwhals(
+    column: nw.Series,
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list]:
+    dtype = column.dtype
     if (
-        kind == DtypeKind.CATEGORICAL
-        and column.describe_categorical["is_ordered"]
-        and column.describe_categorical["categories"] is not None
+        nw.is_ordered_categorical(column)
+        and not (categories := column.cat.get_categories()).is_empty()
     ):
-        # Treat ordered categorical column as Vega-Lite ordinal
-        categories_column = column.describe_categorical["categories"]
-        categories_array = column_to_array(categories_column)
-        return "ordinal", categories_array.to_pylist()
-    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+        return "ordinal", categories.to_list()
+    if dtype in {nw.String, nw.Categorical, nw.Boolean}:
         return "nominal"
-    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+    elif dtype.is_numeric():
         return "quantitative"
-    elif kind == DtypeKind.DATETIME:
+    elif dtype in {nw.Datetime, nw.Date}:
         return "temporal"
     else:
-        raise ValueError(f"Unexpected DtypeKind: {kind}")
+        msg = f"Unexpected DtypeKind: {dtype}"
+        raise ValueError(msg)
 
 
-def use_signature(Obj: Callable[_P, Any]):
-    """Apply call signature and documentation of Obj to the decorated method"""
+def use_signature(obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
+    """Apply call signature and documentation of `obj` to the decorated method."""
 
-    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
-        # call-signature of f is exposed via __wrapped__.
-        # we want it to mimic Obj.__init__
-        f.__wrapped__ = Obj.__init__  # type: ignore
-        f._uses_signature = Obj  # type: ignore
+    def decorate(func: Callable[..., V]) -> Callable[P, V]:
+        # call-signature of func is exposed via __wrapped__.
+        # we want it to mimic obj.__init__
 
-        # Supplement the docstring of f with information from Obj
-        if Obj.__doc__:
+        # error: Accessing "__init__" on an instance is unsound,
+        # since instance.__init__ could be from an incompatible subclass  [misc]
+        wrapped = (
+            obj.__init__ if (isinstance(obj, type) and issubclass(obj, object)) else obj  # type: ignore [misc]
+        )
+        func.__wrapped__ = wrapped  # type: ignore[attr-defined]
+        func._uses_signature = obj  # type: ignore[attr-defined]
+
+        # Supplement the docstring of func with information from obj
+        if doc_in := obj.__doc__:
+            doc_lines = doc_in.splitlines(keepends=True)[1:]
             # Patch in a reference to the class this docstring is copied from,
             # to generate a hyperlink.
-            doclines = Obj.__doc__.splitlines()
-            doclines[0] = f"Refer to :class:`{Obj.__name__}`"
-
-            if f.__doc__:
-                doc = f.__doc__ + "\n".join(doclines[1:])
-            else:
-                doc = "\n".join(doclines)
-            try:
-                f.__doc__ = doc
-            except AttributeError:
-                # __doc__ is not modifiable for classes in Python < 3.3
-                pass
-
-        return f
+            line_1 = f"{func.__doc__ or f'Refer to :class:`{obj.__name__}`'}\n"
+            func.__doc__ = "".join((line_1, *doc_lines))
+            return func
+        else:
+            msg = f"Found no doc for {obj!r}"
+            raise AttributeError(msg)
 
     return decorate
 
 
 def update_nested(
-    original: MutableMapping, update: Mapping, copy: bool = False
-) -> MutableMapping:
-    """Update nested dictionaries
+    original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: bool = False,
+) -> t.MutableMapping[Any, Any]:
+    """
+    Update nested dictionaries.
 
     Parameters
     ----------
@@ -721,8 +762,8 @@ def update_nested(
 
     Examples
     --------
-    >>> original = {'x': {'b': 2, 'c': 4}}
-    >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
+    >>> original = {"x": {"b": 2, "c": 4}}
+    >>> update = {"x": {"b": 5, "d": 6}, "y": 40}
     >>> update_nested(original, update)  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     >>> original  # doctest: +SKIP
@@ -758,8 +799,118 @@ def display_traceback(in_ipython: bool = True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
-    """Infer typed keyword arguments for args and kwargs
+_ChannelType = Literal["field", "datum", "value"]
+_CHANNEL_CACHE: _ChannelCache
+"""Singleton `_ChannelCache` instance.
+
+Initialized on first use.
+"""
+
+
+class _ChannelCache:
+    channel_to_name: dict[type[SchemaBase], str]
+    name_to_channel: dict[str, dict[_ChannelType, type[SchemaBase]]]
+
+    @classmethod
+    def from_cache(cls) -> _ChannelCache:
+        global _CHANNEL_CACHE
+        try:
+            cached = _CHANNEL_CACHE
+        except NameError:
+            cached = cls.__new__(cls)
+            cached.channel_to_name = _init_channel_to_name()
+            cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
+            _CHANNEL_CACHE = cached
+        return _CHANNEL_CACHE
+
+    def get_encoding(self, tp: type[Any], /) -> str:
+        if encoding := self.channel_to_name.get(tp):
+            return encoding
+        msg = f"positional of type {type(tp).__name__!r}"
+        raise NotImplementedError(msg)
+
+    def _wrap_in_channel(self, obj: Any, encoding: str, /):
+        if isinstance(obj, SchemaBase):
+            return obj
+        elif isinstance(obj, str):
+            obj = {"shorthand": obj}
+        elif isinstance(obj, (list, tuple)):
+            return [self._wrap_in_channel(el, encoding) for el in obj]
+        if channel := self.name_to_channel.get(encoding):
+            tp = channel["value" if "value" in obj else "field"]
+            try:
+                # Don't force validation here; some objects won't be valid until
+                # they're created in the context of a chart.
+                return tp.from_dict(obj, validate=False)
+            except jsonschema.ValidationError:
+                # our attempts at finding the correct class have failed
+                return obj
+        else:
+            warnings.warn(f"Unrecognized encoding channel {encoding!r}", stacklevel=1)
+            return obj
+
+    def infer_encoding_types(self, kwargs: dict[str, Any], /):
+        return {
+            encoding: self._wrap_in_channel(obj, encoding)
+            for encoding, obj in kwargs.items()
+            if obj is not Undefined
+        }
+
+
+def _init_channel_to_name():
+    """
+    Construct a dictionary of channel type to encoding name.
+
+    Note
+    ----
+    The return type is not expressible using annotations, but is used
+    internally by `mypy`/`pyright` and avoids the need for type ignores.
+
+    Returns
+    -------
+        mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
+    """
+    from altair.vegalite.v5.schema import channels as ch
+
+    mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
+
+    return {
+        c: c._encoding_name
+        for c in ch.__dict__.values()
+        if isinstance(c, type) and issubclass(c, mixins) and issubclass(c, SchemaBase)
+    }
+
+
+def _invert_group_channels(
+    m: dict[type[SchemaBase], str], /
+) -> dict[str, dict[_ChannelType, type[SchemaBase]]]:
+    """Grouped inverted index for `_ChannelCache.channel_to_name`."""
+
+    def _reduce(it: Iterator[tuple[type[Any], str]]) -> Any:
+        """
+        Returns a 1-2 item dict, per channel.
+
+        Never includes `datum`, as it is never utilized in `wrap_in_channel`.
+        """
+        item: dict[Any, type[SchemaBase]] = {}
+        for tp, _ in it:
+            name = tp.__name__
+            if name.endswith("Datum"):
+                continue
+            elif name.endswith("Value"):
+                sub_key = "value"
+            else:
+                sub_key = "field"
+            item[sub_key] = tp
+        return item
+
+    grouper = groupby(m.items(), itemgetter(1))
+    return {k: _reduce(chans) for k, chans in grouper}
+
+
+def infer_encoding_types(args: tuple[Any, ...], kwargs: dict[str, Any]):
+    """
+    Infer typed keyword arguments for args and kwargs.
 
     Parameters
     ----------
@@ -767,8 +918,6 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         Sequence of function args
     kwargs : MutableMapping
         Dict of function kwargs
-    channels : ModuleType
-        The module containing all altair encoding channel classes.
 
     Returns
     -------
@@ -776,68 +925,15 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         All args and kwargs in a single dict, with keys and types
         based on the channels mapping.
     """
-    # Construct a dictionary of channel type to encoding name
-    # TODO: cache this somehow?
-    channel_objs = (getattr(channels, name) for name in dir(channels))
-    channel_objs = (
-        c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
-    )
-    channel_to_name: Dict[Type[SchemaBase], str] = {
-        c: c._encoding_name for c in channel_objs
-    }
-    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
-    for chan, name in channel_to_name.items():
-        chans = name_to_channel.setdefault(name, {})
-        if chan.__name__.endswith("Datum"):
-            key = "datum"
-        elif chan.__name__.endswith("Value"):
-            key = "value"
-        else:
-            key = "field"
-        chans[key] = chan
-
+    cache = _ChannelCache.from_cache()
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
-        if isinstance(arg, (list, tuple)) and len(arg) > 0:
-            type_ = type(arg[0])
+        el = next(iter(arg), None) if isinstance(arg, (list, tuple)) else arg
+        encoding = cache.get_encoding(type(el))
+        if encoding not in kwargs:
+            kwargs[encoding] = arg
         else:
-            type_ = type(arg)
+            msg = f"encoding {encoding!r} specified twice."
+            raise ValueError(msg)
 
-        encoding = channel_to_name.get(type_, None)
-        if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
-        if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
-        kwargs[encoding] = arg
-
-    def _wrap_in_channel_class(obj, encoding):
-        if isinstance(obj, SchemaBase):
-            return obj
-
-        if isinstance(obj, str):
-            obj = {"shorthand": obj}
-
-        if isinstance(obj, (list, tuple)):
-            return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
-
-        if encoding not in name_to_channel:
-            warnings.warn(
-                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
-            )
-            return obj
-
-        classes = name_to_channel[encoding]
-        cls = classes["value"] if "value" in obj else classes["field"]
-
-        try:
-            # Don't force validation here; some objects won't be valid until
-            # they're created in the context of a chart.
-            return cls.from_dict(obj, validate=False)
-        except jsonschema.ValidationError:
-            # our attempts at finding the correct class have failed
-            return obj
-
-    return {
-        encoding: _wrap_in_channel_class(obj, encoding)
-        for encoding, obj in kwargs.items()
-    }
+    return cache.infer_encoding_types(kwargs)

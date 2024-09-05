@@ -1,21 +1,21 @@
+from __future__ import annotations
+
 import importlib
 import re
-import sys
 import warnings
-from os.path import abspath, dirname
+from typing import Any, Iterator, Sequence
 
-from docutils import nodes, utils, frontend
+from docutils import frontend, nodes, utils
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
-sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
-from tools.schemapi.utils import fix_docstring_issues, SchemaInfo  # noqa: E402
+from tools.schemapi.utils import SchemaInfo, fix_docstring_issues
 
 
-def type_description(schema):
-    """Return a concise type description for the given schema"""
+def type_description(schema: dict[str, Any]) -> str:
+    """Return a concise type description for the given schema."""
     if not schema or not isinstance(schema, dict) or schema.keys() == {"description"}:
         return "any"
     elif "$ref" in schema:
@@ -37,14 +37,16 @@ def type_description(schema):
         )
     else:
         warnings.warn(
-            "cannot infer type for schema with keys {}" "".format(schema.keys()),
+            f"cannot infer type for schema with keys {schema.keys()}" "",
             stacklevel=1,
         )
         return "--"
 
 
-def prepare_table_header(titles, widths):
-    """Build docutil empty table"""
+def prepare_table_header(
+    titles: Sequence[str], widths: Sequence[float]
+) -> tuple[nodes.table, nodes.tbody]:
+    """Build docutil empty table."""
     ncols = len(titles)
     assert len(widths) == ncols
 
@@ -66,9 +68,8 @@ reClassDef = re.compile(r":class:`([^`]+)`")
 reCode = re.compile(r"`([^`]+)`")
 
 
-def add_class_def(node, classDef):
-    """Add reference on classDef to node"""
-
+def add_class_def(node: nodes.paragraph, classDef: str) -> nodes.paragraph:
+    """Add reference on classDef to node."""
     ref = addnodes.pending_xref(
         reftarget=classDef,
         reftype="class",
@@ -85,8 +86,8 @@ def add_class_def(node, classDef):
     return node
 
 
-def add_text(node, text):
-    """Add text with inline code to node"""
+def add_text(node: nodes.paragraph, text: str) -> nodes.paragraph:
+    """Add text with inline code to node."""
     is_text = True
     for part in reCode.split(text):
         if part:
@@ -100,10 +101,11 @@ def add_text(node, text):
     return node
 
 
-def build_row(item, rootschema):
-    """Return nodes.row with property description"""
-
-    prop, propschema, required = item
+def build_row(
+    item: tuple[str, dict[str, Any]], rootschema: dict[str, Any] | None
+) -> nodes.row:
+    """Return nodes.row with property description."""
+    prop, propschema, _ = item
     row = nodes.row()
 
     # Property
@@ -130,7 +132,7 @@ def build_row(item, rootschema):
     md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
     description = SchemaInfo(propschema, rootschema).deep_description
-    description = description if description else " "
+    description = description or " "
     str_descr = ""
     str_descr += description
     str_descr = fix_docstring_issues(str_descr)
@@ -145,8 +147,10 @@ def build_row(item, rootschema):
     return row
 
 
-def build_schema_table(items, rootschema):
-    """Return schema table of items (iterator of prop, schema.item, required)"""
+def build_schema_table(
+    items: Iterator[tuple[str, dict[str, Any]]], rootschema: dict[str, Any] | None
+) -> nodes.table:
+    """Return schema table of items (iterator of prop, schema.item, required)."""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
     )
@@ -156,8 +160,10 @@ def build_schema_table(items, rootschema):
     return table
 
 
-def select_items_from_schema(schema, props=None):
-    """Return iterator  (prop, schema.item, required) on prop, return all in None"""
+def select_items_from_schema(
+    schema: dict[str, Any], props: list[str] | None = None
+) -> Iterator[tuple[Any, Any, bool] | tuple[str, Any, bool]]:
+    """Return iterator  (prop, schema.item, required) on prop, return all in None."""
     properties = schema.get("properties", {})
     required = schema.get("required", [])
     if not props:
@@ -168,15 +174,20 @@ def select_items_from_schema(schema, props=None):
             try:
                 yield prop, properties[prop], prop in required
             except KeyError as err:
-                raise Exception(f"Can't find property: {prop}") from err
+                msg = f"Can't find property: {prop}"
+                raise Exception(msg) from err
 
 
-def prepare_schema_table(schema, rootschema, props=None):
+def prepare_schema_table(
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None,
+    props: list[str] | None = None,
+) -> nodes.table:
     items = select_items_from_schema(schema, props)
     return build_schema_table(items, rootschema)
 
 
-def validate_properties(properties):
+def validate_properties(properties: str) -> list[str]:
     return properties.strip().split()
 
 
@@ -195,11 +206,11 @@ class AltairObjectTableDirective(Directive):
 
     option_spec = {"properties": validate_properties, "dont-collapse-table": flag}
 
-    def run(self):
+    def run(self) -> list:
         objectname = self.arguments[0]
         modname, classname = objectname.rsplit(".", 1)
         module = importlib.import_module(modname)
-        cls = getattr(module, classname)
+        cls: type[Any] = getattr(module, classname)
         schema = cls.resolve_references(cls._schema)
 
         properties = self.options.get("properties", None)
@@ -221,5 +232,5 @@ class AltairObjectTableDirective(Directive):
         return result
 
 
-def setup(app):
+def setup(app) -> None:
     app.add_directive("altair-object-table", AltairObjectTableDirective)

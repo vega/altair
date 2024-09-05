@@ -1,35 +1,41 @@
-from typing import List, Optional, Tuple, Dict, Iterable, overload, Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Tuple, overload
+from typing_extensions import TypeAlias
 
 from altair import (
     Chart,
-    FacetChart,
-    LayerChart,
-    HConcatChart,
-    VConcatChart,
     ConcatChart,
-    TopLevelUnitSpec,
+    ConcatSpecGenericSpec,
+    FacetChart,
     FacetedUnitSpec,
+    FacetSpec,
+    HConcatChart,
+    HConcatSpecGenericSpec,
+    LayerChart,
+    LayerSpec,
+    NonNormalizedSpec,
+    TopLevelConcatSpec,
+    TopLevelFacetSpec,
+    TopLevelHConcatSpec,
+    TopLevelLayerSpec,
+    TopLevelUnitSpec,
+    TopLevelVConcatSpec,
     UnitSpec,
     UnitSpecWithFrame,
-    NonNormalizedSpec,
-    TopLevelLayerSpec,
-    LayerSpec,
-    TopLevelConcatSpec,
-    ConcatSpecGenericSpec,
-    TopLevelHConcatSpec,
-    HConcatSpecGenericSpec,
-    TopLevelVConcatSpec,
+    VConcatChart,
     VConcatSpecGenericSpec,
-    TopLevelFacetSpec,
-    FacetSpec,
     data_transformers,
 )
 from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
-from altair.utils.core import _DataFrameLike
 from altair.utils.schemapi import Undefined
 
-Scope = Tuple[int, ...]
-FacetMapping = Dict[Tuple[str, Scope], Tuple[str, Scope]]
+if TYPE_CHECKING:
+    from altair.typing import ChartType
+    from altair.utils.core import DataFrameLike
+
+Scope: TypeAlias = Tuple[int, ...]
+FacetMapping: TypeAlias = Dict[Tuple[str, Scope], Tuple[str, Scope]]
 
 
 # For the transformed_data functionality, the chart classes in the values
@@ -53,24 +59,23 @@ _chart_class_mapping = {
 
 @overload
 def transformed_data(
-    chart: Union[Chart, FacetChart],
-    row_limit: Optional[int] = None,
-    exclude: Optional[Iterable[str]] = None,
-) -> Optional[_DataFrameLike]:
-    ...
+    chart: Chart | FacetChart,
+    row_limit: int | None = None,
+    exclude: Iterable[str] | None = None,
+) -> DataFrameLike | None: ...
 
 
 @overload
 def transformed_data(
-    chart: Union[LayerChart, HConcatChart, VConcatChart, ConcatChart],
-    row_limit: Optional[int] = None,
-    exclude: Optional[Iterable[str]] = None,
-) -> List[_DataFrameLike]:
-    ...
+    chart: LayerChart | HConcatChart | VConcatChart | ConcatChart,
+    row_limit: int | None = None,
+    exclude: Iterable[str] | None = None,
+) -> list[DataFrameLike]: ...
 
 
 def transformed_data(chart, row_limit=None, exclude=None):
-    """Evaluate a Chart's transforms
+    """
+    Evaluate a Chart's transforms.
 
     Evaluate the data transforms associated with a Chart and return the
     transformed data as one or more DataFrames
@@ -92,11 +97,9 @@ def transformed_data(chart, row_limit=None, exclude=None):
         transformed data
     """
     vf = import_vegafusion()
-
-    if isinstance(chart, Chart):
-        # Add mark if none is specified to satisfy Vega-Lite
-        if chart.mark == Undefined:
-            chart = chart.mark_point()
+    # Add mark if none is specified to satisfy Vega-Lite
+    if isinstance(chart, Chart) and chart.mark == Undefined:
+        chart = chart.mark_point()
 
     # Deep copy chart so that we can rename marks without affecting caller
     chart = chart.copy(deep=True)
@@ -121,10 +124,11 @@ def transformed_data(chart, row_limit=None, exclude=None):
         if chart_name in dataset_mapping:
             dataset_names.append(dataset_mapping[chart_name])
         else:
-            raise ValueError("Failed to locate all datasets")
+            msg = "Failed to locate all datasets"
+            raise ValueError(msg)
 
     # Extract transformed datasets with VegaFusion
-    datasets, warnings = vf.runtime.pre_transform_datasets(
+    datasets, _ = vf.runtime.pre_transform_datasets(
         vega_spec,
         dataset_names,
         row_limit=row_limit,
@@ -153,13 +157,10 @@ def transformed_data(chart, row_limit=None, exclude=None):
 # The same error appeared when trying it with Protocols for the concat and layer charts.
 # This function is only used internally and so we accept this inconsistency for now.
 def name_views(
-    chart: Union[
-        Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, ConcatChart
-    ],
-    i: int = 0,
-    exclude: Optional[Iterable[str]] = None,
-) -> List[str]:
-    """Name unnamed chart views
+    chart: ChartType, i: int = 0, exclude: Iterable[str] | None = None
+) -> list[str]:
+    """
+    Name unnamed chart views.
 
     Name unnamed charts views so that we can look them up later in
     the compiled Vega spec.
@@ -182,17 +183,18 @@ def name_views(
         List of the names of the charts and subcharts
     """
     exclude = set(exclude) if exclude is not None else set()
-    if isinstance(chart, _chart_class_mapping[Chart]) or isinstance(
-        chart, _chart_class_mapping[FacetChart]
+    if isinstance(
+        chart, (_chart_class_mapping[Chart], _chart_class_mapping[FacetChart])
     ):
         if chart.name not in exclude:
-            if chart.name in (None, Undefined):
+            if chart.name in {None, Undefined}:
                 # Add name since none is specified
                 chart.name = Chart._get_name()
             return [chart.name]
         else:
             return []
     else:
+        subcharts: list[Any]
         if isinstance(chart, _chart_class_mapping[LayerChart]):
             subcharts = chart.layer
         elif isinstance(chart, _chart_class_mapping[HConcatChart]):
@@ -202,21 +204,25 @@ def name_views(
         elif isinstance(chart, _chart_class_mapping[ConcatChart]):
             subcharts = chart.concat
         else:
-            raise ValueError(
+            msg = (
                 "transformed_data accepts an instance of "
                 "Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, or ConcatChart\n"
                 f"Received value of type: {type(chart)}"
             )
+            raise ValueError(msg)
 
-        chart_names: List[str] = []
+        chart_names: list[str] = []
         for subchart in subcharts:
             for name in name_views(subchart, i=i + len(chart_names), exclude=exclude):
                 chart_names.append(name)
         return chart_names
 
 
-def get_group_mark_for_scope(vega_spec: dict, scope: Scope) -> Optional[dict]:
-    """Get the group mark at a particular scope
+def get_group_mark_for_scope(
+    vega_spec: dict[str, Any], scope: Scope
+) -> dict[str, Any] | None:
+    """
+    Get the group mark at a particular scope.
 
     Parameters
     ----------
@@ -237,13 +243,8 @@ def get_group_mark_for_scope(vega_spec: dict, scope: Scope) -> Optional[dict]:
     --------
     >>> spec = {
     ...     "marks": [
-    ...         {
-    ...             "type": "group",
-    ...             "marks": [{"type": "symbol"}]
-    ...         },
-    ...         {
-    ...             "type": "group",
-    ...             "marks": [{"type": "rect"}]}
+    ...         {"type": "group", "marks": [{"type": "symbol"}]},
+    ...         {"type": "group", "marks": [{"type": "rect"}]},
     ...     ]
     ... }
     >>> get_group_mark_for_scope(spec, (1,))
@@ -268,8 +269,9 @@ def get_group_mark_for_scope(vega_spec: dict, scope: Scope) -> Optional[dict]:
     return group
 
 
-def get_datasets_for_scope(vega_spec: dict, scope: Scope) -> List[str]:
-    """Get the names of the datasets that are defined at a given scope
+def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]:
+    """
+    Get the names of the datasets that are defined at a given scope.
 
     Parameters
     ----------
@@ -288,16 +290,12 @@ def get_datasets_for_scope(vega_spec: dict, scope: Scope) -> List[str]:
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
-    ...             "data": [
-    ...                 {"name": "data2"}
-    ...             ],
-    ...             "marks": [{"type": "symbol"}]
+    ...             "data": [{"name": "data2"}],
+    ...             "marks": [{"type": "symbol"}],
     ...         },
     ...         {
     ...             "type": "group",
@@ -305,9 +303,9 @@ def get_datasets_for_scope(vega_spec: dict, scope: Scope) -> List[str]:
     ...                 {"name": "data3"},
     ...                 {"name": "data4"},
     ...             ],
-    ...             "marks": [{"type": "rect"}]
-    ...         }
-    ...     ]
+    ...             "marks": [{"type": "rect"}],
+    ...         },
+    ...     ],
     ... }
 
     >>> get_datasets_for_scope(spec, ())
@@ -338,9 +336,10 @@ def get_datasets_for_scope(vega_spec: dict, scope: Scope) -> List[str]:
 
 
 def get_definition_scope_for_data_reference(
-    vega_spec: dict, data_name: str, usage_scope: Scope
-) -> Optional[Scope]:
-    """Return the scope that a dataset is defined at, for a given usage scope
+    vega_spec: dict[str, Any], data_name: str, usage_scope: Scope
+) -> Scope | None:
+    """
+    Return the scope that a dataset is defined at, for a given usage scope.
 
     Parameters
     ----------
@@ -360,26 +359,24 @@ def get_definition_scope_for_data_reference(
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
-    ...             "data": [
-    ...                 {"name": "data2"}
-    ...             ],
-    ...             "marks": [{
-    ...                 "type": "symbol",
-    ...                 "encode": {
-    ...                     "update": {
-    ...                         "x": {"field": "x", "data": "data1"},
-    ...                         "y": {"field": "y", "data": "data2"},
-    ...                     }
+    ...             "data": [{"name": "data2"}],
+    ...             "marks": [
+    ...                 {
+    ...                     "type": "symbol",
+    ...                     "encode": {
+    ...                         "update": {
+    ...                             "x": {"field": "x", "data": "data1"},
+    ...                             "y": {"field": "y", "data": "data2"},
+    ...                         }
+    ...                     },
     ...                 }
-    ...             }]
+    ...             ],
     ...         }
-    ...     ]
+    ...     ],
     ... }
 
     data1 is referenced at scope [0] and defined at scope []
@@ -403,8 +400,9 @@ def get_definition_scope_for_data_reference(
     return None
 
 
-def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
-    """Create mapping from facet definitions to source datasets
+def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
+    """
+    Create mapping from facet definitions to source datasets.
 
     Parameters
     ----------
@@ -421,9 +419,7 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
@@ -431,11 +427,11 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
     ...                 "facet": {
     ...                     "name": "facet1",
     ...                     "data": "data1",
-    ...                     "groupby": ["colA"]
+    ...                     "groupby": ["colA"],
     ...                 }
-    ...             }
+    ...             },
     ...         }
-    ...     ]
+    ...     ],
     ... }
     >>> get_facet_mapping(spec)
     {('facet1', (0,)): ('data1', ())}
@@ -446,7 +442,7 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
     for mark in mark_group.get("marks", []):
         if mark.get("type", None) == "group":
             # Get facet for this group
-            group_scope = scope + (group_index,)
+            group_scope = (*scope, group_index)
             facet = mark.get("from", {}).get("facet", None)
             if facet is not None:
                 facet_name = facet.get("name", None)
@@ -456,7 +452,7 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
                         group, facet_data, scope
                     )
                     if definition_scope is not None:
-                        facet_mapping[(facet_name, group_scope)] = (
+                        facet_mapping[facet_name, group_scope] = (
                             facet_data,
                             definition_scope,
                         )
@@ -470,9 +466,10 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
 
 
 def get_from_facet_mapping(
-    scoped_dataset: Tuple[str, Scope], facet_mapping: FacetMapping
-) -> Tuple[str, Scope]:
-    """Apply facet mapping to a scoped dataset
+    scoped_dataset: tuple[str, Scope], facet_mapping: FacetMapping
+) -> tuple[str, Scope]:
+    """
+    Apply facet mapping to a scoped dataset.
 
     Parameters
     ----------
@@ -489,7 +486,10 @@ def get_from_facet_mapping(
     Examples
     --------
     Facet mapping as produced by get_facet_mapping
-    >>> facet_mapping = {("facet1", (0,)): ("data1", ()), ("facet2", (0, 1)): ("facet1", (0,))}
+    >>> facet_mapping = {
+    ...     ("facet1", (0,)): ("data1", ()),
+    ...     ("facet2", (0, 1)): ("facet1", (0,)),
+    ... }
     >>> get_from_facet_mapping(("facet2", (0, 1)), facet_mapping)
     ('data1', ())
     """
@@ -499,12 +499,13 @@ def get_from_facet_mapping(
 
 
 def get_datasets_for_view_names(
-    group: dict,
-    vl_chart_names: List[str],
+    group: dict[str, Any],
+    vl_chart_names: list[str],
     facet_mapping: FacetMapping,
     scope: Scope = (),
-) -> Dict[str, Tuple[str, Scope]]:
-    """Get the Vega datasets that correspond to the provided Altair view names
+) -> dict[str, tuple[str, Scope]]:
+    """
+    Get the Vega datasets that correspond to the provided Altair view names.
 
     Parameters
     ----------
@@ -538,7 +539,7 @@ def get_datasets_for_view_names(
         name = mark.get("name", "")
         if mark.get("type", "") == "group":
             group_data_names = get_datasets_for_view_names(
-                group, vl_chart_names, facet_mapping, scope=scope + (group_index,)
+                group, vl_chart_names, facet_mapping, scope=(*scope, group_index)
             )
             for k, v in group_data_names.items():
                 datasets.setdefault(k, v)

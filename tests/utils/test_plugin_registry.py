@@ -1,8 +1,9 @@
-from altair.utils.plugin_registry import PluginRegistry
 from typing import Callable
 
+from altair.utils.plugin_registry import PluginRegistry
 
-class TypedCallableRegistry(PluginRegistry[Callable[[int], int]]):
+
+class TypedCallableRegistry(PluginRegistry[Callable[[int], int], int]):
     pass
 
 

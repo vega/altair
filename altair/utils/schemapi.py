@@ -1,37 +1,39 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-import collections
+from __future__ import annotations
+
 import contextlib
 import copy
 import inspect
 import json
 import sys
 import textwrap
-from typing import (
-    Any,
-    Sequence,
-    List,
-    Dict,
-    Optional,
-    DefaultDict,
-    Tuple,
-    Iterable,
-    Type,
-    Generator,
-    Union,
-    overload,
-    Literal,
-    TypeVar,
-)
-from itertools import zip_longest
+from collections import defaultdict
+from functools import partial
 from importlib.metadata import version as importlib_version
-from typing import Final
+from itertools import chain, zip_longest
+from math import ceil
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    Final,
+    Iterable,
+    Iterator,
+    List,
+    Literal,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+    overload,
+)
+from typing_extensions import TypeAlias
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
-import numpy as np
-import pandas as pd
+import narwhals.stable.v1 as nw
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -39,15 +41,27 @@ from packaging.version import Version
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+if TYPE_CHECKING:
+    from types import ModuleType
+    from typing import ClassVar
 
-_TSchemaBase = TypeVar("_TSchemaBase", bound="SchemaBase")
+    from referencing import Registry
 
-ValidationErrorList = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors = Dict[str, ValidationErrorList]
+    from altair.typing import ChartType
+
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+
+    if sys.version_info >= (3, 11):
+        from typing import Never, Self
+    else:
+        from typing_extensions import Never, Self
+    _OptionalModule: TypeAlias = "ModuleType | None"
+
+ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -71,6 +85,8 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
 
+jsonschema_version_str = importlib_version("jsonschema")
+
 
 def enable_debug_mode() -> None:
     global DEBUG_MODE
@@ -83,7 +99,7 @@ def disable_debug_mode() -> None:
 
 
 @contextlib.contextmanager
-def debug_mode(arg: bool) -> Generator[None, None, None]:
+def debug_mode(arg: bool) -> Iterator[None]:
     global DEBUG_MODE
     original = DEBUG_MODE
     DEBUG_MODE = arg
@@ -95,35 +111,35 @@ def debug_mode(arg: bool) -> Generator[None, None, None]:
 
 @overload
 def validate_jsonschema(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = ...,
+    spec: Any,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[True] = ...,
-) -> None:
-    ...
+) -> Never: ...
 
 
 @overload
 def validate_jsonschema(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = ...,
+    spec: Any,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[False],
-) -> Optional[jsonschema.exceptions.ValidationError]:
-    ...
+) -> jsonschema.exceptions.ValidationError | None: ...
 
 
 def validate_jsonschema(
     spec,
-    schema,
-    rootschema=None,
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
     *,
-    raise_error=True,
-):
-    """Validates the passed in spec against the schema in the context of the
-    rootschema. If any errors are found, they are deduplicated and prioritized
+    raise_error: bool = True,
+) -> jsonschema.exceptions.ValidationError | None:
+    """
+    Validates the passed in spec against the schema in the context of the rootschema.
+
+    If any errors are found, they are deduplicated and prioritized
     and only the most relevant errors are kept. Errors are then either raised
     or returned, depending on the value of `raise_error`.
     """
@@ -136,7 +152,7 @@ def validate_jsonschema(
 
         # Nothing special about this first error but we need to choose one
         # which can be raised
-        main_error = list(grouped_errors.values())[0][0]
+        main_error: Any = next(iter(grouped_errors.values()))[0]
         # All errors are then attached as a new attribute to ValidationError so that
         # they can be used in SchemaValidationError to craft a more helpful
         # error message. Setting a new attribute like this is not ideal as
@@ -152,14 +168,14 @@ def validate_jsonschema(
 
 
 def _get_errors_from_spec(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = None,
+    spec: dict[str, Any],
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
-    """Uses the relevant jsonschema validator to validate the passed in spec
-    against the schema using the rootschema to resolve references.
-    The schema and rootschema themselves are not validated but instead considered
-    as valid.
+    """
+    Uses the relevant jsonschema validator to validate the passed in spec against the schema using the rootschema to resolve references.
+
+    The schema and rootschema themselves are not validated but instead considered as valid.
     """
     # We don't use jsonschema.validate as this would validate the schema itself.
     # Instead, we pass the schema directly to the validator class. This is done for
@@ -175,7 +191,7 @@ def _get_errors_from_spec(
     validator_cls = jsonschema.validators.validator_for(
         {"$schema": json_schema_draft_url}
     )
-    validator_kwargs: Dict[str, Any] = {}
+    validator_kwargs: dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
@@ -198,43 +214,44 @@ def _get_errors_from_spec(
     return errors
 
 
-def _get_json_schema_draft_url(schema: dict) -> str:
+def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
 
 
 def _use_referencing_library() -> bool:
-    """In version 4.18.0, the jsonschema package deprecated RefResolver in
-    favor of the referencing library."""
-    jsonschema_version_str = importlib_version("jsonschema")
+    """In version 4.18.0, the jsonschema package deprecated RefResolver in favor of the referencing library."""
     return Version(jsonschema_version_str) >= Version("4.18")
 
 
-def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
+def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
     # Create a copy so that $ref is not modified in the original schema in case
     # that it would still reference a dictionary which might be attached to
     # an Altair class _schema attribute
     schema = copy.deepcopy(schema)
 
-    def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
-        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This function
-        recursively iterates through the whole dictionary."""
+    def _prepare_refs(d: dict[str, Any]) -> dict[str, Any]:
+        """
+        Add _VEGA_LITE_ROOT_URI in front of all $ref values.
+
+        This function recursively iterates through the whole dictionary.
+
+        $ref values can only be nested in dictionaries or lists
+        as the passed in `d` dictionary comes from the Vega-Lite json schema
+        and in json we only have arrays (-> lists in Python) and objects
+        (-> dictionaries in Python) which we need to iterate through.
+        """
         for key, value in d.items():
             if key == "$ref":
                 d[key] = _VEGA_LITE_ROOT_URI + d[key]
-            else:
-                # $ref values can only be nested in dictionaries or lists
-                # as the passed in `d` dictionary comes from the Vega-Lite json schema
-                # and in json we only have arrays (-> lists in Python) and objects
-                # (-> dictionaries in Python) which we need to iterate through.
-                if isinstance(value, dict):
-                    d[key] = _prepare_refs(value)
-                elif isinstance(value, list):
-                    prepared_values = []
-                    for v in value:
-                        if isinstance(v, dict):
-                            v = _prepare_refs(v)
-                        prepared_values.append(v)
-                    d[key] = prepared_values
+            elif isinstance(value, dict):
+                d[key] = _prepare_refs(value)
+            elif isinstance(value, list):
+                prepared_values = []
+                for v in value:
+                    if isinstance(v, dict):
+                        v = _prepare_refs(v)
+                    prepared_values.append(v)
+                d[key] = prepared_values
         return d
 
     schema = _prepare_refs(schema)
@@ -244,8 +261,8 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
 # We do not annotate the return value here as the referencing library is not always
 # available and this function is only executed in those cases.
 def _get_referencing_registry(
-    rootschema: Dict[str, Any], json_schema_draft_url: Optional[str] = None
-):
+    rootschema: dict[str, Any], json_schema_draft_url: str | None = None
+) -> Registry:
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
@@ -267,10 +284,12 @@ def _get_referencing_registry(
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """Drop in replacement for the .json_path property of the jsonschema
-    ValidationError class, which is not available as property for
-    ValidationError with jsonschema<4.0.1.
-    More info, see https://github.com/altair-viz/altair/issues/3038
+    """
+    Drop in replacement for the .json_path property of the jsonschema ValidationError class.
+
+    This is not available as property for ValidationError with jsonschema<4.0.1.
+
+    More info, see https://github.com/vega/altair/issues/3038.
     """
     path = "$"
     for elem in err.absolute_path:
@@ -284,12 +303,14 @@ def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
 def _group_errors_by_json_path(
     errors: ValidationErrorList,
 ) -> GroupedValidationErrors:
-    """Groups errors by the `json_path` attribute of the jsonschema ValidationError
-    class. This attribute contains the path to the offending element within
+    """
+    Groups errors by the `json_path` attribute of the jsonschema ValidationError class.
+
+    This attribute contains the path to the offending element within
     a chart specification and can therefore be considered as an identifier of an
     'issue' in the chart that needs to be fixed.
     """
-    errors_by_json_path = collections.defaultdict(list)
+    errors_by_json_path = defaultdict(list)
     for err in errors:
         err_key = getattr(err, "json_path", _json_path(err))
         errors_by_json_path[err_key].append(err)
@@ -299,9 +320,10 @@ def _group_errors_by_json_path(
 def _get_leaves_of_error_tree(
     errors: ValidationErrorList,
 ) -> ValidationErrorList:
-    """For each error in `errors`, it traverses down the "error tree" that is generated
-    by the jsonschema library to find and return all "leaf" errors. These are errors
-    which have no further errors that caused it and so they are the most specific errors
+    """
+    For each error in `errors`, it traverses down the "error tree" that is generated by the jsonschema library to find and return all "leaf" errors.
+
+    These are errors which have no further errors that caused it and so they are the most specific errors
     with the most specific error messages.
     """
     leaves: ValidationErrorList = []
@@ -319,11 +341,13 @@ def _get_leaves_of_error_tree(
 def _subset_to_most_specific_json_paths(
     errors_by_json_path: GroupedValidationErrors,
 ) -> GroupedValidationErrors:
-    """Removes key (json path), value (errors) pairs where the json path is fully
-    contained in another json path. For example if `errors_by_json_path` has two
-    keys, `$.encoding.X` and `$.encoding.X.tooltip`, then the first one will be removed
-    and only the second one is returned. This is done under the assumption that
-    more specific json paths give more helpful error messages to the user.
+    """
+    Removes key (json path), value (errors) pairs where the json path is fully contained in another json path.
+
+    For example if `errors_by_json_path` has two keys, `$.encoding.X` and `$.encoding.X.tooltip`,
+    then the first one will be removed and only the second one is returned.
+
+    This is done under the assumption that more specific json paths give more helpful error messages to the user.
     """
     errors_by_json_path_specific: GroupedValidationErrors = {}
     for json_path, errors in errors_by_json_path.items():
@@ -343,8 +367,10 @@ def _contained_at_start_of_one_of_other_values(x: str, values: Sequence[str]) ->
 def _deduplicate_errors(
     grouped_errors: GroupedValidationErrors,
 ) -> GroupedValidationErrors:
-    """Some errors have very similar error messages or are just in general not helpful
-    for a user. This function removes as many of these cases as possible and
+    """
+    Some errors have very similar error messages or are just in general not helpful for a user.
+
+    This function removes as many of these cases as possible and
     can be extended over time to handle new cases that come up.
     """
     grouped_errors_deduplicated: GroupedValidationErrors = {}
@@ -357,7 +383,7 @@ def _deduplicate_errors(
         }
         deduplicated_errors: ValidationErrorList = []
         for validator, errors in errors_by_validator.items():
-            deduplication_func = deduplication_functions.get(validator, None)
+            deduplication_func = deduplication_functions.get(validator)
             if deduplication_func is not None:
                 errors = deduplication_func(errors)
             deduplicated_errors.extend(_deduplicate_by_message(errors))
@@ -382,15 +408,15 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
-    """Groups the errors by the json schema "validator" that casued the error. For
-    example if the error is that a value is not one of an enumeration in the json schema
+    """
+    Groups the errors by the json schema "validator" that casued the error.
+
+    For example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    errors_by_validator: DefaultDict[
-        str, ValidationErrorList
-    ] = collections.defaultdict(list)
+    errors_by_validator: defaultdict[str, ValidationErrorList] = defaultdict(list)
     for err in errors:
         # Ignore mypy error as err.validator as it wrongly sees err.validator
         # as of type Optional[Validator] instead of str which it is according
@@ -400,9 +426,10 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
 
 
 def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList:
-    """Deduplicate enum errors by removing the errors where the allowed values
-    are a subset of another error. For example, if `enum` contains two errors
-    and one has `validator_value` (i.e. accepted values) ["A", "B"] and the
+    """
+    Deduplicate enum errors by removing the errors where the allowed values are a subset of another error.
+
+    For example, if `enum` contains two errors and one has `validator_value` (i.e. accepted values) ["A", "B"] and the
     other one ["A", "B", "C"] then the first one is removed and the final
     `enum` list only contains the error with ["A", "B", "C"].
     """
@@ -410,7 +437,7 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
         # Values (and therefore `validator_value`) of an enum are always arrays,
         # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
         # which is why we can use join below
-        value_strings = [",".join(err.validator_value) for err in errors]
+        value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
         longest_enums: ValidationErrorList = []
         for value_str, err in zip(value_strings, errors):
             if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
@@ -422,16 +449,16 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
 def _deduplicate_additional_properties_errors(
     errors: ValidationErrorList,
 ) -> ValidationErrorList:
-    """If there are multiple additional property errors it usually means that
-    the offending element was validated against multiple schemas and
-    its parent is a common anyOf validator.
+    """
+    If there are multiple additional property errors it usually means that the offending element was validated against multiple schemas and its parent is a common anyOf validator.
+
     The error messages produced from these cases are usually
     very similar and we just take the shortest one. For example,
     the following 3 errors are raised for the `unknown` channel option in
     `alt.X("variety", unknown=2)`:
     - "Additional properties are not allowed ('unknown' was unexpected)"
     - "Additional properties are not allowed ('field', 'unknown' were unexpected)"
-    - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)"
+    - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)".
     """
     if len(errors) > 1:
         # Test if all parent errors are the same anyOf error and only do
@@ -450,13 +477,11 @@ def _deduplicate_additional_properties_errors(
 
 
 def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
-    """Deduplicate errors by message. This keeps the original order in case
-    it was chosen intentionally.
-    """
+    """Deduplicate errors by message. This keeps the original order in case it was chosen intentionally."""
     return list({e.message: e for e in errors}.values())
 
 
-def _subclasses(cls: type) -> Generator[type, None, None]:
+def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
     current_set = {cls}
@@ -467,30 +492,56 @@ def _subclasses(cls: type) -> Generator[type, None, None]:
             yield cls
 
 
-def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
+def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
+    try:
+        ser = nw.from_native(obj, strict=True, series_only=True)
+        return ser.to_list()
+    except TypeError:
+        return list(obj)
+
+
+def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
+    if np_opt is not None:
+        np = np_opt
+        if isinstance(obj, np.ndarray):
+            return [_todict(v, context, np_opt, pd_opt) for v in obj]
+        elif isinstance(obj, np.number):
+            return float(obj)
+        elif isinstance(obj, np.datetime64):
+            result = str(obj)
+            if "T" not in result:
+                # See https://github.com/vega/altair/issues/1027 for why this is necessary.
+                result += "T00:00:00"
+            return result
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=False, context=context)
-    elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, context) for v in obj]
+    elif isinstance(obj, (list, tuple)):
+        return [_todict(v, context, np_opt, pd_opt) for v in obj]
     elif isinstance(obj, dict):
-        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
-    elif hasattr(obj, "to_dict"):
+        return {
+            k: _todict(v, context, np_opt, pd_opt)
+            for k, v in obj.items()
+            if v is not Undefined
+        }
+    elif (
+        hasattr(obj, "to_dict")
+        and (module_name := obj.__module__)
+        and module_name.startswith("altair")
+    ):
         return obj.to_dict()
-    elif isinstance(obj, np.number):
-        return float(obj)
-    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
-        return pd.Timestamp(obj).isoformat()
+    elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
+        return pd_opt.Timestamp(obj).isoformat()
+    elif _is_iterable(obj, exclude=(str, bytes)):
+        return _todict(_from_array_like(obj), context, np_opt, pd_opt)
     else:
         return obj
 
 
 def _resolve_references(
-    schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
-) -> Dict[str, Any]:
-    """Resolve schema references until there is no $ref anymore
-    in the top-level of the dictionary.
-    """
+    schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
     if _use_referencing_library():
         registry = _get_referencing_registry(rootschema or schema)
         # Using a different variable name to show that this is not the
@@ -510,9 +561,25 @@ def _resolve_references(
 
 
 class SchemaValidationError(jsonschema.ValidationError):
-    """A wrapper for jsonschema.ValidationError with friendlier traceback"""
+    def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
+        """
+        A wrapper for ``jsonschema.ValidationError`` with friendlier traceback.
 
-    def __init__(self, obj: "SchemaBase", err: jsonschema.ValidationError) -> None:
+        Parameters
+        ----------
+        obj
+            The instance that failed ``self.validate(...)``.
+        err
+            The original ``ValidationError``.
+
+        Notes
+        -----
+        We do not raise `from err` as else the resulting traceback is very long
+        as it contains part of the Vega-Lite schema.
+
+        It would also first show the less helpful `ValidationError` instead of
+        the more user friendly `SchemaValidationError`.
+        """
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
@@ -527,14 +594,14 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def _get_message(self) -> str:
         def indent_second_line_onwards(message: str, indent: int = 4) -> str:
-            modified_lines: List[str] = []
+            modified_lines: list[str] = []
             for idx, line in enumerate(message.split("\n")):
                 if idx > 0 and len(line) > 0:
                     line = " " * indent + line
                 modified_lines.append(line)
             return "\n".join(modified_lines)
 
-        error_messages: List[str] = []
+        error_messages: list[str] = []
         # Only show a maximum of 3 errors as else the final message returned by this
         # method could get very long.
         for errors in list(self._errors.values())[:3]:
@@ -589,10 +656,11 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
-    ) -> Type["SchemaBase"]:
-        """Try to get the lowest class possible in the chart hierarchy so
-        it can be displayed in the error message. This should lead to more informative
-        error messages pointing the user closer to the source of the issue.
+    ) -> type[SchemaBase]:
+        """
+        Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
+
+        This should lead to more informative error messages pointing the user closer to the source of the issue.
         """
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
@@ -610,14 +678,14 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
-        """Format param names into a table so that they are easier to read"""
-        param_names: Tuple[str, ...]
-        name_lengths: Tuple[int, ...]
+        """Format param names into a table so that they are easier to read."""
+        param_names: tuple[str, ...]
+        name_lengths: tuple[int, ...]
         param_names, name_lengths = zip(
             *[
                 (name, len(name))
                 for name in param_dict_keys
-                if name not in ["kwds", "self"]
+                if name not in {"kwds", "self"}
             ]
         )
         # Worst case scenario with the same longest param name in the same
@@ -626,28 +694,28 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
-        square_columns = int(np.ceil(num_param_names**0.5))
+        square_columns = int(ceil(num_param_names**0.5))
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
-        def split_into_equal_parts(n: int, p: int) -> List[int]:
+        def split_into_equal_parts(n: int, p: int) -> list[int]:
             return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
 
         column_heights = split_into_equal_parts(num_param_names, columns)
 
         # Section the param names into columns and compute their widths
-        param_names_columns: List[Tuple[str, ...]] = []
-        column_max_widths: List[int] = []
+        param_names_columns: list[tuple[str, ...]] = []
+        column_max_widths: list[int] = []
         last_end_idx: int = 0
         for ch in column_heights:
             param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
             column_max_widths.append(
-                max([len(param_name) for param_name in param_names_columns[-1]])
+                max(len(param_name) for param_name in param_names_columns[-1])
             )
             last_end_idx = ch + last_end_idx
 
         # Transpose the param name columns into rows to facilitate looping
-        param_names_rows: List[Tuple[str, ...]] = []
+        param_names_rows: list[tuple[str, ...]] = []
         for li in zip_longest(*param_names_columns, fillvalue=""):
             param_names_rows.append(li)
         # Build the table as a string by iterating over and formatting the rows
@@ -669,7 +737,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         self,
         errors: ValidationErrorList,
     ) -> str:
-        bullet_points: List[str] = []
+        bullet_points: list[str] = []
         errors_by_validator = _group_errors_by_validator(errors)
         if "enum" in errors_by_validator:
             for error in errors_by_validator["enum"]:
@@ -712,44 +780,124 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         # Add unformatted messages of any remaining errors which were not
         # considered so far. This is not expected to be used but more exists
         # as a fallback for cases which were not known during development.
-        for validator, errors in errors_by_validator.items():
-            if validator not in ("enum", "type"):
-                message += "\n".join([e.message for e in errors])
-
+        it = (
+            "\n".join(e.message for e in errors)
+            for validator, errors in errors_by_validator.items()
+            if validator not in {"enum", "type"}
+        )
+        message += "".join(it)
         return message
 
 
 class UndefinedType:
-    """A singleton object for marking undefined parameters"""
+    """A singleton object for marking undefined parameters."""
 
     __instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args, **kwargs) -> Self:
         if not isinstance(cls.__instance, cls):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Undefined"
 
 
-# In the future Altair may implement a more complete set of type hints.
-# But for now, we'll add an annotation to indicate that the type checker
-# should permit any value passed to a function argument whose default
-# value is Undefined.
-Undefined: Any = UndefinedType()
+Undefined = UndefinedType()
+T = TypeVar("T")
+Optional: TypeAlias = Union[T, UndefinedType]
+"""One of ``T`` specified type(s), or the ``Undefined`` singleton.
+
+Examples
+--------
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+    from altair.typing import Optional
+
+    def func_1(
+        short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
+        long: Union[
+            str, bool, float, Dict[str, Any], SchemaBase, UndefinedType
+        ] = Undefined,
+    ): ...
+
+This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__.
+
+``altair.typing.Optional`` treats ``None`` like any other type::
+
+    # ruff: noqa: UP006, UP007
+    from altair.typing import Optional
+
+    def func_2(
+        short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
+        long: Union[
+            str, float, Dict[str, Any], None, SchemaBase, UndefinedType
+        ] = Undefined,
+    ): ...
+"""
+
+
+def is_undefined(obj: Any) -> TypeIs[UndefinedType]:
+    """
+    Type-safe singleton check for `UndefinedType`.
+
+    Notes
+    -----
+    - Using `obj is Undefined` does not narrow from `UndefinedType` in a union.
+        - Due to the assumption that other `UndefinedType`'s could exist.
+    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an `Enum`.
+        - Otherwise, requires an explicit guard to inform the type checker.
+    """
+    return obj is Undefined
+
+
+@overload
+def _shallow_copy(obj: _CopyImpl) -> _CopyImpl: ...
+@overload
+def _shallow_copy(obj: Any) -> Any: ...
+def _shallow_copy(obj: _CopyImpl | Any) -> _CopyImpl | Any:
+    if isinstance(obj, SchemaBase):
+        return obj.copy(deep=False)
+    elif isinstance(obj, (list, dict)):
+        return obj.copy()
+    else:
+        return obj
+
+
+@overload
+def _deep_copy(obj: _CopyImpl, by_ref: set[str]) -> _CopyImpl: ...
+@overload
+def _deep_copy(obj: Any, by_ref: set[str]) -> Any: ...
+def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
+    copy = partial(_deep_copy, by_ref=by_ref)
+    if isinstance(obj, SchemaBase):
+        if copier := getattr(obj, "__deepcopy__", None):
+            with debug_mode(False):
+                return copier(obj)
+        args = (copy(arg) for arg in obj._args)
+        kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
+        with debug_mode(False):
+            return obj.__class__(*args, **kwds)
+    elif isinstance(obj, list):
+        return [copy(v) for v in obj]
+    elif isinstance(obj, dict):
+        return {k: (copy(v) if k not in by_ref else v) for k, v in obj.items()}
+    else:
+        return obj
 
 
 class SchemaBase:
-    """Base class for schema wrappers.
+    """
+    Base class for schema wrappers.
 
     Each derived class should set the _schema class attribute (and optionally
     the _rootschema class attribute) which is used for validation.
     """
 
-    _schema: Optional[Dict[str, Any]] = None
-    _rootschema: Optional[Dict[str, Any]] = None
-    _class_is_valid_at_instantiation: bool = True
+    _schema: ClassVar[dict[str, Any] | Any] = None
+    _rootschema: ClassVar[dict[str, Any] | None] = None
+    _class_is_valid_at_instantiation: ClassVar[bool] = True
 
     def __init__(self, *args: Any, **kwds: Any) -> None:
         # Two valid options for initialization, which should be handled by
@@ -757,16 +905,17 @@ class SchemaBase:
         # - a single arg with no kwds, for, e.g. {'type': 'string'}
         # - zero args with zero or more kwds for {'type': 'object'}
         if self._schema is None:
-            raise ValueError(
-                "Cannot instantiate object of type {}: "
+            msg = (
+                f"Cannot instantiate object of type {self.__class__}: "
                 "_schema class attribute is not defined."
-                "".format(self.__class__)
+                ""
             )
+            raise ValueError(msg)
 
         if kwds:
             assert len(args) == 0
         else:
-            assert len(args) in [0, 1]
+            assert len(args) in {0, 1}
 
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, "_args", args)
@@ -776,9 +925,10 @@ class SchemaBase:
             self.to_dict(validate=True)
 
     def copy(
-        self, deep: Union[bool, Iterable] = True, ignore: Optional[list] = None
+        self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
-        """Return a copy of the object
+        """
+        Return a copy of the object.
 
         Parameters
         ----------
@@ -791,53 +941,11 @@ class SchemaBase:
             A list of keys for which the contents should not be copied, but
             only stored by reference.
         """
-
-        def _shallow_copy(obj):
-            if isinstance(obj, SchemaBase):
-                return obj.copy(deep=False)
-            elif isinstance(obj, list):
-                return obj[:]
-            elif isinstance(obj, dict):
-                return obj.copy()
-            else:
-                return obj
-
-        def _deep_copy(obj, ignore: Optional[list] = None):
-            if ignore is None:
-                ignore = []
-            if isinstance(obj, SchemaBase):
-                args = tuple(_deep_copy(arg) for arg in obj._args)
-                kwds = {
-                    k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
-                    for k, v in obj._kwds.items()
-                }
-                with debug_mode(False):
-                    return obj.__class__(*args, **kwds)
-            elif isinstance(obj, list):
-                return [_deep_copy(v, ignore=ignore) for v in obj]
-            elif isinstance(obj, dict):
-                return {
-                    k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
-                    for k, v in obj.items()
-                }
-            else:
-                return obj
-
-        try:
-            deep = list(deep)  # type: ignore[arg-type]
-        except TypeError:
-            deep_is_list = False
-        else:
-            deep_is_list = True
-
-        if deep and not deep_is_list:
-            return _deep_copy(self, ignore=ignore)
-
+        if deep is True:
+            return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
-        if deep_is_list:
-            # Assert statement is for the benefit of Mypy
-            assert isinstance(deep, list)
+        if _is_iterable(deep):
             for attr in deep:
                 copy[attr] = _shallow_copy(copy._get(attr))
         return copy
@@ -857,35 +965,31 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super(SchemaBase, self).__getattr__
+                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
             except AttributeError:
-                _getattr = super(SchemaBase, self).__getattribute__
+                _getattr = super().__getattribute__
             return _getattr(attr)
 
-    def __setattr__(self, item, val):
+    def __setattr__(self, item, val) -> None:
         self._kwds[item] = val
 
     def __getitem__(self, item):
         return self._kwds[item]
 
-    def __setitem__(self, item, val):
+    def __setitem__(self, item, val) -> None:
         self._kwds[item] = val
 
-    def __repr__(self):
-        if self._kwds:
-            args = (
-                "{}: {!r}".format(key, val)
-                for key, val in sorted(self._kwds.items())
-                if val is not Undefined
-            )
-            args = "\n" + ",\n".join(args)
-            return "{0}({{{1}\n}})".format(
-                self.__class__.__name__, args.replace("\n", "\n  ")
-            )
+    def __repr__(self) -> str:
+        name = type(self).__name__
+        if kwds := self._kwds:
+            it = (f"{k}: {v!r}" for k, v in sorted(kwds.items()) if v is not Undefined)
+            args = ",\n".join(it).replace("\n", "\n  ")
+            LB, RB = "{", "}"
+            return f"{name}({LB}\n  {args}\n{RB})"
         else:
-            return "{}({!r})".format(self.__class__.__name__, self._args[0])
+            return f"{name}({self._args[0]!r})"
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return (
             type(self) is type(other)
             and self._args == other._args
@@ -896,132 +1000,94 @@ class SchemaBase:
         self,
         validate: bool = True,
         *,
-        ignore: Optional[List[str]] = None,
-        context: Optional[Dict[str, Any]] = None,
-    ) -> dict:
-        """Return a dictionary representation of the object
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """
+        Return a dictionary representation of the object.
 
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this object
+            A context dictionary.
 
         Raises
         ------
         SchemaValidationError :
-            if validate=True and the dict does not conform to the schema
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
-        if context is None:
-            context = {}
-        if ignore is None:
-            ignore = []
+        context = context or {}
+        ignore = ignore or []
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], context=context)
+            kwds = self._args[0]
         elif not self._args:
             kwds = self._kwds.copy()
-            # parsed_shorthand is added by FieldChannelMixin.
-            # It's used below to replace shorthand with its long form equivalent
-            # parsed_shorthand is removed from context if it exists so that it is
-            # not passed to child to_dict function calls
-            parsed_shorthand = context.pop("parsed_shorthand", {})
-            # Prevent that pandas categorical data is automatically sorted
-            # when a non-ordinal data type is specifed manually
-            # or if the encoding channel does not support sorting
-            if "sort" in parsed_shorthand and (
-                "sort" not in kwds or kwds["type"] not in ["ordinal", Undefined]
-            ):
-                parsed_shorthand.pop("sort")
-
-            kwds.update(
-                {
-                    k: v
-                    for k, v in parsed_shorthand.items()
-                    if kwds.get(k, Undefined) is Undefined
-                }
-            )
-            kwds = {
-                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
-            }
-            if "mark" in kwds and isinstance(kwds["mark"], str):
-                kwds["mark"] = {"type": kwds["mark"]}
-            result = _todict(
-                kwds,
-                context=context,
-            )
+            exclude = {*ignore, "shorthand"}
+            if parsed := context.pop("parsed_shorthand", None):
+                kwds = _replace_parsed_shorthand(parsed, kwds)
+            kwds = {k: v for k, v in kwds.items() if k not in exclude}
+            if (mark := kwds.get("mark")) and isinstance(mark, str):
+                kwds["mark"] = {"type": mark}
         else:
-            raise ValueError(
-                "{} instance has both a value and properties : "
-                "cannot serialize to dict".format(self.__class__)
-            )
+            msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
+            raise ValueError(msg)
+        result = _todict(kwds, context=context, **opts)
         if validate:
+            # NOTE: Don't raise `from err`, see `SchemaValidationError` doc
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                # We do not raise `from err` as else the resulting
-                # traceback is very long as it contains part
-                # of the Vega-Lite schema. It would also first
-                # show the less helpful ValidationError instead of
-                # the more user friendly SchemaValidationError
                 raise SchemaValidationError(self, err) from None
         return result
 
     def to_json(
         self,
         validate: bool = True,
-        indent: int = 2,
+        indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
-        ignore: Optional[List[str]] = None,
-        context: Optional[Dict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
         **kwargs,
     ) -> str:
-        """Emit the JSON representation for this object as a string.
+        """
+        Emit the JSON representation for this object as a string.
 
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
+            A context dictionary.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
+        Raises
+        ------
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
         Notes
         -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        str
-            The JSON specification of the chart object.
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if ignore is None:
             ignore = []
@@ -1031,20 +1097,16 @@ class SchemaBase:
         return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
 
     @classmethod
-    def _default_wrapper_classes(cls) -> Generator[Type["SchemaBase"], None, None]:
-        """Return the set of classes used within cls.from_dict()"""
+    def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:
+        """Return the set of classes used within cls.from_dict()."""
         return _subclasses(SchemaBase)
 
     @classmethod
     def from_dict(
-        cls,
-        dct: dict,
-        validate: bool = True,
-        _wrapper_classes: Optional[Iterable[Type["SchemaBase"]]] = None,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
-    ) -> "SchemaBase":
-        """Construct class from a dictionary representation
+        cls: type[TSchemaBase], dct: dict[str, Any], validate: bool = True
+    ) -> TSchemaBase:
+        """
+        Construct class from a dictionary representation.
 
         Parameters
         ----------
@@ -1052,26 +1114,15 @@ class SchemaBase:
             The dict from which to construct the class
         validate : boolean
             If True (default), then validate the input against the schema.
-        _wrapper_classes : iterable (optional)
-            The set of SchemaBase classes to use when constructing wrappers
-            of the dict inputs. If not specified, the result of
-            cls._default_wrapper_classes will be used.
-
-        Returns
-        -------
-        obj : Schema object
-            The wrapped schema
 
         Raises
         ------
         jsonschema.ValidationError :
-            if validate=True and dct does not conform to the schema
+            If ``validate`` and ``dct`` does not conform to the schema
         """
         if validate:
             cls.validate(dct)
-        if _wrapper_classes is None:
-            _wrapper_classes = cls._default_wrapper_classes()
-        converter = _FromDict(_wrapper_classes)
+        converter = _FromDict(cls._default_wrapper_classes())
         return converter.from_dict(dct, cls)
 
     @classmethod
@@ -1079,11 +1130,12 @@ class SchemaBase:
         cls,
         json_string: str,
         validate: bool = True,
-        **kwargs: Any
+        **kwargs: Any,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
-    ) -> Any:
-        """Instantiate the object from a valid JSON string
+    ) -> ChartType:
+        """
+        Instantiate the object from a valid JSON string.
 
         Parameters
         ----------
@@ -1099,27 +1151,22 @@ class SchemaBase:
         chart : Chart object
             The altair Chart object built from the specification.
         """
-        dct = json.loads(json_string, **kwargs)
-        return cls.from_dict(dct, validate=validate)
+        dct: dict[str, Any] = json.loads(json_string, **kwargs)
+        return cls.from_dict(dct, validate=validate)  # type: ignore[return-value]
 
     @classmethod
     def validate(
-        cls, instance: Dict[str, Any], schema: Optional[Dict[str, Any]] = None
+        cls, instance: dict[str, Any], schema: dict[str, Any] | None = None
     ) -> None:
-        """
-        Validate the instance against the class schema in the context of the
-        rootschema.
-        """
+        """Validate the instance against the class schema in the context of the rootschema."""
         if schema is None:
             schema = cls._schema
         # For the benefit of mypy
         assert schema is not None
-        return validate_jsonschema(
-            instance, schema, rootschema=cls._rootschema or cls._schema
-        )
+        validate_jsonschema(instance, schema, rootschema=cls._rootschema or cls._schema)
 
     @classmethod
-    def resolve_references(cls, schema: Optional[dict] = None) -> dict:
+    def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
         """Resolve references in the context of this object's schema or root schema."""
         schema_to_pass = schema or cls._schema
         # For the benefit of mypy
@@ -1131,49 +1178,136 @@ class SchemaBase:
 
     @classmethod
     def validate_property(
-        cls, name: str, value: Any, schema: Optional[dict] = None
+        cls, name: str, value: Any, schema: dict[str, Any] | None = None
     ) -> None:
-        """
-        Validate a property against property schema in the context of the
-        rootschema
-        """
-        value = _todict(value, context={})
+        """Validate a property against property schema in the context of the rootschema."""
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
+        value = _todict(value, context={}, **opts)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        return validate_jsonschema(
+        validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
-    def __dir__(self) -> list:
-        return sorted(list(super().__dir__()) + list(self._kwds.keys()))
+    def __dir__(self) -> list[str]:
+        return sorted(chain(super().__dir__(), self._kwds))
 
 
-def _passthrough(*args, **kwds):
+def _get_optional_modules(**modules: str) -> dict[str, _OptionalModule]:
+    """
+    Returns packages only if they have already been imported - otherwise they return `None`.
+
+    This is useful for `isinstance` checks.
+
+    For example, if `pandas` has not been imported, then an object is
+    definitely not a `pandas.Timestamp`.
+
+    Parameters
+    ----------
+    **modules
+        Keyword-only binding from `{alias: module_name}`.
+
+    Examples
+    --------
+    >>> import pandas as pd  # doctest: +SKIP
+    >>> import polars as pl  # doctest: +SKIP
+    >>> from altair.utils.schemapi import _get_optional_modules  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(pd="pandas", pl="polars", ibis="ibis")  # doctest: +SKIP
+    {
+        "pd": <module 'pandas' from '...'>,
+        "pl": <module 'polars' from '...'>,
+        "ibis": None,
+    }
+
+    If the user later imports ``ibis``, it would appear in subsequent calls.
+
+    >>> import ibis  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(ibis="ibis")  # doctest: +SKIP
+    {
+        "ibis": <module 'ibis' from '...'>,
+    }
+    """
+    return {k: sys.modules.get(v) for k, v in modules.items()}
+
+
+def _replace_parsed_shorthand(
+    parsed_shorthand: dict[str, Any], kwds: dict[str, Any]
+) -> dict[str, Any]:
+    """
+    `parsed_shorthand` is added by `FieldChannelMixin`.
+
+    It's used below to replace shorthand with its long form equivalent
+    `parsed_shorthand` is removed from `context` if it exists so that it is
+    not passed to child `to_dict` function calls.
+    """
+    # Prevent that pandas categorical data is automatically sorted
+    # when a non-ordinal data type is specifed manually
+    # or if the encoding channel does not support sorting
+    if "sort" in parsed_shorthand and (
+        "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
+    ):
+        parsed_shorthand.pop("sort")
+
+    kwds.update(
+        (k, v)
+        for k, v in parsed_shorthand.items()
+        if kwds.get(k, Undefined) is Undefined
+    )
+    return kwds
+
+
+TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
+
+_CopyImpl = TypeVar("_CopyImpl", SchemaBase, Dict[Any, Any], List[Any])
+"""
+Types which have an implementation in ``SchemaBase.copy()``.
+
+All other types are returned **by reference**.
+"""
+
+
+def _is_dict(obj: Any | dict[Any, Any]) -> TypeIs[dict[Any, Any]]:
+    return isinstance(obj, dict)
+
+
+def _is_list(obj: Any | list[Any]) -> TypeIs[list[Any]]:
+    return isinstance(obj, list)
+
+
+def _is_iterable(
+    obj: Any, *, exclude: type | tuple[type, ...] = (str, bytes)
+) -> TypeIs[Iterable[Any]]:
+    return not isinstance(obj, exclude) and isinstance(obj, Iterable)
+
+
+def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
 
 
 class _FromDict:
-    """Class used to construct SchemaBase class hierarchies from a dict
+    """
+    Class used to construct SchemaBase class hierarchies from a dict.
 
     The primary purpose of using this class is to be able to build a hash table
     that maps schemas to their wrapper classes. The candidate classes are
-    specified in the ``class_list`` argument to the constructor.
+    specified in the ``wrapper_classes`` positional-only argument to the constructor.
     """
 
     _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
 
-    def __init__(self, class_list: Iterable[Type[SchemaBase]]) -> None:
+    def __init__(self, wrapper_classes: Iterable[type[SchemaBase]], /) -> None:
         # Create a mapping of a schema hash to a list of matching classes
         # This lets us quickly determine the correct class to construct
-        self.class_dict = collections.defaultdict(list)
-        for cls in class_list:
-            if cls._schema is not None:
-                self.class_dict[self.hash_schema(cls._schema)].append(cls)
+        self.class_dict: dict[int, list[type[SchemaBase]]] = defaultdict(list)
+        for tp in wrapper_classes:
+            if tp._schema is not None:
+                self.class_dict[self.hash_schema(tp._schema)].append(tp)
 
     @classmethod
-    def hash_schema(cls, schema: dict, use_json: bool = True) -> int:
+    def hash_schema(cls, schema: dict[str, Any], use_json: bool = True) -> int:
         """
-        Compute a python hash for a nested dictionary which
-        properly handles dicts, lists, sets, and tuples.
+        Compute a python hash for a nested dictionary which properly handles dicts, lists, sets, and tuples.
 
         At the top level, the function excludes from the hashed schema all keys
         listed in `exclude_keys`.
@@ -1198,91 +1332,118 @@ class _FromDict:
                     return frozenset((k, _freeze(v)) for k, v in val.items())
                 elif isinstance(val, set):
                     return frozenset(map(_freeze, val))
-                elif isinstance(val, list) or isinstance(val, tuple):
+                elif isinstance(val, (list, tuple)):
                     return tuple(map(_freeze, val))
                 else:
                     return val
 
             return hash(_freeze(schema))
 
+    @overload
     def from_dict(
         self,
-        dct: dict,
-        cls: Optional[Type[SchemaBase]] = None,
-        schema: Optional[dict] = None,
-        rootschema: Optional[dict] = None,
-        default_class=_passthrough,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
-    ) -> Any:
-        """Construct an object from a dict representation"""
-        if (schema is None) == (cls is None):
-            raise ValueError("Must provide either cls or schema, but not both.")
-        if schema is None:
-            # Can ignore type errors as  cls is not None in case schema is
-            schema = cls._schema  # type: ignore[union-attr]
-            # For the benefit of mypy
-            assert schema is not None
-            if rootschema:
-                rootschema = rootschema
-            elif cls is not None and cls._rootschema is not None:
-                rootschema = cls._rootschema
-            else:
-                rootschema = None
-        rootschema = rootschema or schema
-
+        dct: TSchemaBase,
+        tp: None = ...,
+        schema: None = ...,
+        rootschema: None = ...,
+        default_class: Any = ...,
+    ) -> TSchemaBase: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any] | list[dict[str, Any]],
+        tp: Any = ...,
+        schema: Any = ...,
+        rootschema: Any = ...,
+        default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
+    ) -> TSchemaBase: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any],
+        tp: None = ...,
+        schema: dict[str, Any] = ...,
+        rootschema: None = ...,
+        default_class: Any = ...,
+    ) -> SchemaBase: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any],
+        tp: type[TSchemaBase],
+        schema: None = ...,
+        rootschema: None = ...,
+        default_class: Any = ...,
+    ) -> TSchemaBase: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any] | list[dict[str, Any]],
+        tp: type[TSchemaBase],
+        schema: dict[str, Any],
+        rootschema: dict[str, Any] | None = ...,
+        default_class: Any = ...,
+    ) -> Never: ...
+    def from_dict(
+        self,
+        dct: dict[str, Any] | list[dict[str, Any]] | TSchemaBase,
+        tp: type[TSchemaBase] | None = None,
+        schema: dict[str, Any] | None = None,
+        rootschema: dict[str, Any] | None = None,
+        default_class: Any = _passthrough,
+    ) -> TSchemaBase | SchemaBase:
+        """Construct an object from a dict representation."""
+        target_tp: Any
+        current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
             return dct
-
-        if cls is None:
+        elif tp is not None:
+            current_schema = tp._schema
+            root_schema: dict[str, Any] = rootschema or tp._rootschema or current_schema
+            target_tp = tp
+        elif schema is not None:
             # If there are multiple matches, we use the first one in the dict.
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
-            matches = self.class_dict[self.hash_schema(schema)]
-            if matches:
-                cls = matches[0]
-            else:
-                cls = default_class
-        schema = _resolve_references(schema, rootschema)
+            current_schema = schema
+            root_schema = rootschema or current_schema
+            matches = self.class_dict[self.hash_schema(current_schema)]
+            target_tp = matches[0] if matches else default_class
+        else:
+            msg = "Must provide either `tp` or `schema`, but not both."
+            raise ValueError(msg)
 
-        if "anyOf" in schema or "oneOf" in schema:
-            schemas = schema.get("anyOf", []) + schema.get("oneOf", [])
-            for possible_schema in schemas:
+        from_dict = partial(self.from_dict, rootschema=root_schema)
+        # Can also return a list?
+        resolved = _resolve_references(current_schema, root_schema)
+        if "anyOf" in resolved or "oneOf" in resolved:
+            schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
+            for possible in schemas:
                 try:
-                    validate_jsonschema(dct, possible_schema, rootschema=rootschema)
+                    validate_jsonschema(dct, possible, rootschema=root_schema)
                 except jsonschema.ValidationError:
                     continue
                 else:
-                    return self.from_dict(
-                        dct,
-                        schema=possible_schema,
-                        rootschema=rootschema,
-                        default_class=cls,
-                    )
+                    return from_dict(dct, schema=possible, default_class=target_tp)
 
-        if isinstance(dct, dict):
+        if _is_dict(dct):
             # TODO: handle schemas for additionalProperties/patternProperties
-            props = schema.get("properties", {})
-            kwds = {}
-            for key, val in dct.items():
-                if key in props:
-                    val = self.from_dict(val, schema=props[key], rootschema=rootschema)
-                kwds[key] = val
-            return cls(**kwds)
-
-        elif isinstance(dct, list):
-            item_schema = schema.get("items", {})
-            dct = [
-                self.from_dict(val, schema=item_schema, rootschema=rootschema)
-                for val in dct
-            ]
-            return cls(dct)
+            props: dict[str, Any] = resolved.get("properties", {})
+            kwds = {
+                k: (from_dict(v, schema=props[k]) if k in props else v)
+                for k, v in dct.items()
+            }
+            return target_tp(**kwds)
+        elif _is_list(dct):
+            item_schema: dict[str, Any] = resolved.get("items", {})
+            return target_tp([from_dict(k, schema=item_schema) for k in dct])
         else:
-            return cls(dct)
+            # NOTE: Unsure what is valid here
+            return target_tp(dct)
 
 
 class _PropertySetter:
-    def __init__(self, prop: str, schema: dict) -> None:
+    def __init__(self, prop: str, schema: dict[str, Any]) -> None:
         self.prop = prop
         self.schema = schema
 
@@ -1322,17 +1483,15 @@ class _PropertySetter:
             pass
         return self
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any):
         obj = self.obj.copy()
         # TODO: use schema to validate
         obj[self.prop] = args[0] if args else kwargs
         return obj
 
 
-def with_property_setters(cls: _TSchemaBase) -> _TSchemaBase:
-    """
-    Decorator to add property setters to a Schema class.
-    """
+def with_property_setters(cls: type[TSchemaBase]) -> type[TSchemaBase]:
+    """Decorator to add property setters to a Schema class."""
     schema = cls.resolve_references()
     for prop, propschema in schema.get("properties", {}).items():
         setattr(cls, prop, _PropertySetter(prop, propschema))

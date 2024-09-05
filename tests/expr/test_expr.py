@@ -1,18 +1,45 @@
+from __future__ import annotations
+
 import operator
+import sys
+from inspect import classify_class_attrs, getmembers
+from typing import Any, Iterator
 
 import pytest
-
-from altair import expr
-from altair import datum
-from altair import ExprRef
 from jsonschema.exceptions import ValidationError
+
+from altair import datum, expr, ExprRef
+from altair.expr import _ConstExpressionType
+
+# This maps vega expression function names to the Python name
+VEGA_REMAP = {"if_": "if"}
+
+
+def _is_property(obj: Any, /) -> bool:
+    return isinstance(obj, property)
+
+
+def _get_classmethod_names(tp: type[Any], /) -> Iterator[str]:
+    for m in classify_class_attrs(tp):
+        if m.kind == "class method" and m.defining_class is tp:
+            yield m.name
+
+
+def _remap_classmethod_names(tp: type[Any], /) -> Iterator[tuple[str, str]]:
+    for name in _get_classmethod_names(tp):
+        yield VEGA_REMAP.get(name, name), name
+
+
+def _get_property_names(tp: type[Any], /) -> Iterator[str]:
+    for nm, _ in getmembers(tp, _is_property):
+        yield nm
 
 
 def test_unary_operations():
     OP_MAP = {"-": operator.neg, "+": operator.pos}
     for op, func in OP_MAP.items():
         z = func(datum.xxx)
-        assert repr(z) == "({}datum.xxx)".format(op)
+        assert repr(z) == f"({op}datum.xxx)"
 
 
 def test_binary_operations():
@@ -42,16 +69,16 @@ def test_binary_operations():
     }
     for op, func in OP_MAP.items():
         z1 = func(datum.xxx, 2)
-        assert repr(z1) == "(datum.xxx {} 2)".format(op)
+        assert repr(z1) == f"(datum.xxx {op} 2)"
 
         z2 = func(2, datum.xxx)
         if op in INEQ_REVERSE:
-            assert repr(z2) == "(datum.xxx {} 2)".format(INEQ_REVERSE[op])
+            assert repr(z2) == f"(datum.xxx {INEQ_REVERSE[op]} 2)"
         else:
-            assert repr(z2) == "(2 {} datum.xxx)".format(op)
+            assert repr(z2) == f"(2 {op} datum.xxx)"
 
         z3 = func(datum.xxx, datum.yyy)
-        assert repr(z3) == "(datum.xxx {} datum.yyy)".format(op)
+        assert repr(z3) == f"(datum.xxx {op} datum.yyy)"
 
 
 def test_abs():
@@ -59,26 +86,37 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-def test_expr_funcs():
-    """test all functions defined in expr.funcs"""
-    name_map = {val: key for key, val in expr.funcs.NAME_MAP.items()}
-    for funcname in expr.funcs.__all__:
-        func = getattr(expr, funcname)
-        z = func(datum.xxx)
-        assert repr(z) == "{}(datum.xxx)".format(name_map.get(funcname, funcname))
+@pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
+def test_expr_funcs(veganame: str, methodname: str):
+    """Test all functions defined in expr.funcs."""
+    func = getattr(expr, methodname)
+    z = func(datum.xxx)
+    assert repr(z) == f"{veganame}(datum.xxx)"
 
 
-def test_expr_consts():
-    """Test all constants defined in expr.consts"""
-    name_map = {val: key for key, val in expr.consts.NAME_MAP.items()}
-    for constname in expr.consts.__all__:
-        const = getattr(expr, constname)
-        z = const * datum.xxx
-        assert repr(z) == "({} * datum.xxx)".format(name_map.get(constname, constname))
+@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+def test_expr_consts(constname: str):
+    """Test all constants defined in expr.consts."""
+    const = getattr(expr, constname)
+    z = const * datum.xxx
+    assert repr(z) == f"({constname} * datum.xxx)"
+
+
+@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+def test_expr_consts_immutable(constname: str):
+    """Ensure e.g `alt.expr.PI = 2` is prevented."""
+    if sys.version_info >= (3, 11):
+        pattern = f"property {constname!r}.+has no setter"
+    elif sys.version_info >= (3, 10):
+        pattern = f"can't set attribute {constname!r}"
+    else:
+        pattern = "can't set attribute"
+    with pytest.raises(AttributeError, match=pattern):
+        setattr(expr, constname, 2)
 
 
 def test_json_reprs():
-    """Test JSON representations of special values"""
+    """Test JSON representations of special values."""
     assert repr(datum.xxx == None) == "(datum.xxx === null)"  # noqa: E711
     assert repr(datum.xxx == False) == "(datum.xxx === false)"  # noqa: E712
     assert repr(datum.xxx == True) == "(datum.xxx === true)"  # noqa: E712
@@ -127,7 +165,7 @@ def test_expression_function_nostring():
     # expr() can only work with str otherwise
     # should raise a SchemaValidationError
     with pytest.raises(ValidationError):
-        expr(2 * 2)
+        expr(2 * 2)  # pyright: ignore
 
     with pytest.raises(ValidationError):
-        expr(["foo", "bah"])
+        expr(["foo", "bah"])  # pyright: ignore

@@ -20,14 +20,20 @@ Line Mark Properties
     interpolate_select = alt.binding_select(
         options=[
             "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
             "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
             "catmull-rom",
             "linear",
+            "linear-closed",
             "monotone",
             "natural",
             "step",
-            "step-after",
             "step-before",
+            "step-after",
         ],
         name="interpolate",
     )
@@ -115,7 +121,7 @@ We can further apply selection to highlight a certain line on hover.
     source = data.stocks()
 
     highlight = alt.selection_point(
-        on="mouseover", fields=["symbol"], nearest=True
+        on="pointerover", fields=["symbol"], nearest=True
     )
 
     base = alt.Chart(source).encode(

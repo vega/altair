@@ -1,12 +1,33 @@
-from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
-from types import TracebackType
+from __future__ import annotations
 
+from functools import partial
 from importlib.metadata import entry_points
+from typing import TYPE_CHECKING, Any, Callable, Generic, cast
+from typing_extensions import TypeAliasType, TypeIs, TypeVar
 
-from toolz import curry
+from altair.utils.deprecation import deprecated_warn
+
+if TYPE_CHECKING:
+    from types import TracebackType
+
+T = TypeVar("T")
+R = TypeVar("R")
+Plugin = TypeAliasType("Plugin", Callable[..., R], type_params=(R,))
+PluginT = TypeVar("PluginT", bound=Plugin[Any])
+IsPlugin = Callable[[object], TypeIs[Plugin[Any]]]
 
 
-PluginType = TypeVar("PluginType")
+def _is_type(tp: type[T], /) -> Callable[[object], TypeIs[type[T]]]:
+    """
+    Converts a type to guard function.
+
+    Added for compatibility with original `PluginRegistry` default.
+    """
+
+    def func(obj: object, /) -> TypeIs[type[T]]:
+        return isinstance(obj, tp)
+
+    return func
 
 
 class NoSuchEntryPoint(Exception):
@@ -19,35 +40,37 @@ class NoSuchEntryPoint(Exception):
 
 
 class PluginEnabler:
-    """Context manager for enabling plugins
+    """
+    Context manager for enabling plugins.
 
     This object lets you use enable() as a context manager to
     temporarily enable a given plugin::
 
-        with plugins.enable('name'):
+        with plugins.enable("name"):
             do_something()  # 'name' plugin temporarily enabled
         # plugins back to original state
     """
 
-    def __init__(self, registry: "PluginRegistry", name: str, **options):
-        self.registry = registry  # type: PluginRegistry
-        self.name = name  # type: str
-        self.options = options  # type: Dict[str, Any]
-        self.original_state = registry._get_state()  # type: Dict[str, Any]
+    def __init__(self, registry: PluginRegistry, name: str, **options):
+        self.registry: PluginRegistry = registry
+        self.name: str = name
+        self.options: dict[str, Any] = options
+        self.original_state: dict[str, Any] = registry._get_state()
         self.registry._enable(name, **options)
 
-    def __enter__(self) -> "PluginEnabler":
+    def __enter__(self) -> PluginEnabler:
         return self
 
     def __exit__(self, typ: type, value: Exception, traceback: TracebackType) -> None:
         self.registry._set_state(self.original_state)
 
     def __repr__(self) -> str:
-        return "{}.enable({!r})".format(self.registry.__class__.__name__, self.name)
+        return f"{self.registry.__class__.__name__}.enable({self.name!r})"
 
 
-class PluginRegistry(Generic[PluginType]):
-    """A registry for plugins.
+class PluginRegistry(Generic[PluginT, R]):
+    """
+    A registry for plugins.
 
     This is a plugin registry that allows plugins to be loaded/registered
     in two ways:
@@ -59,63 +82,85 @@ class PluginRegistry(Generic[PluginType]):
     When you create an instance of this class, provide the name of the
     entry point group to use::
 
-        reg = PluginRegister('my_entrypoint_group')
+        reg = PluginRegister("my_entrypoint_group")
 
     """
 
     # this is a mapping of name to error message to allow custom error messages
     # in case an entrypoint is not found
-    entrypoint_err_messages = {}  # type: Dict[str, str]
+    entrypoint_err_messages: dict[str, str] = {}
 
     # global settings is a key-value mapping of settings that are stored globally
     # in the registry rather than passed to the plugins
-    _global_settings = {}  # type: Dict[str, Any]
+    _global_settings: dict[str, Any] = {}
 
-    def __init__(self, entry_point_group: str = "", plugin_type: type = object):
-        """Create a PluginRegistry for a named entry point group.
+    def __init__(
+        self, entry_point_group: str = "", plugin_type: IsPlugin = callable
+    ) -> None:
+        """
+        Create a PluginRegistry for a named entry point group.
 
         Parameters
-        ==========
+        ----------
         entry_point_group: str
             The name of the entry point group.
-        plugin_type: object
-            A type that will optionally be used for runtime type checking of
-            loaded plugins using isinstance.
-        """
-        self.entry_point_group = entry_point_group  # type: str
-        self.plugin_type = plugin_type  # type: Optional[type]
-        self._active = None  # type: Optional[PluginType]
-        self._active_name = ""  # type: str
-        self._plugins = {}  # type: Dict[str, PluginType]
-        self._options = {}  # type: Dict[str, Any]
-        self._global_settings = self.__class__._global_settings.copy()  # type: dict
+        plugin_type
+            A type narrowing function that will optionally be used for runtime
+            type checking loaded plugins.
 
-    def register(self, name: str, value: Optional[PluginType]) -> Optional[PluginType]:
-        """Register a plugin by name and value.
+        References
+        ----------
+        https://typing.readthedocs.io/en/latest/spec/narrowing.html
+        """
+        self.entry_point_group: str = entry_point_group
+        self.plugin_type: IsPlugin
+        if plugin_type is not callable and isinstance(plugin_type, type):
+            msg = (
+                f"Pass a callable `TypeIs` function to `plugin_type` instead.\n"
+                f"{type(self).__name__!r}(plugin_type)\n\n"
+                f"See also:\n"
+                f"https://typing.readthedocs.io/en/latest/spec/narrowing.html\n"
+                f"https://docs.astral.sh/ruff/rules/assert/"
+            )
+            deprecated_warn(msg, version="5.4.0")
+            self.plugin_type = cast(IsPlugin, _is_type(plugin_type))
+        else:
+            self.plugin_type = plugin_type
+        self._active: Plugin[R] | None = None
+        self._active_name: str = ""
+        self._plugins: dict[str, PluginT] = {}
+        self._options: dict[str, Any] = {}
+        self._global_settings: dict[str, Any] = self.__class__._global_settings.copy()
+
+    def register(self, name: str, value: PluginT | None) -> PluginT | None:
+        """
+        Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
         used to manage entry point managed plugins, which are auto-loaded.
 
         Parameters
-        ==========
+        ----------
         name: str
             The name of the plugin.
         value: PluginType or None
             The actual plugin object to register or None to unregister that plugin.
 
         Returns
-        =======
+        -------
         plugin: PluginType or None
             The plugin that was registered or unregistered.
         """
         if value is None:
             return self._plugins.pop(name, None)
-        else:
-            assert isinstance(value, self.plugin_type)  # type: ignore[arg-type]  # Should ideally be fixed by better annotating plugin_type
+        elif self.plugin_type(value):
             self._plugins[name] = value
             return value
+        else:
+            msg = f"{type(value).__name__!r} is not compatible with {type(self).__name__!r}"
+            raise TypeError(msg)
 
-    def names(self) -> List[str]:
+    def names(self) -> list[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
         e_points = importlib_metadata_get(self.entry_point_group)
@@ -123,8 +168,8 @@ class PluginRegistry(Generic[PluginType]):
         exts.extend(more_exts)
         return sorted(set(exts))
 
-    def _get_state(self) -> Dict[str, Any]:
-        """Return a dictionary representing the current state of the registry"""
+    def _get_state(self) -> dict[str, Any]:
+        """Return a dictionary representing the current state of the registry."""
         return {
             "_active": self._active,
             "_active_name": self._active_name,
@@ -133,8 +178,8 @@ class PluginRegistry(Generic[PluginType]):
             "_global_settings": self._global_settings.copy(),
         }
 
-    def _set_state(self, state: Dict[str, Any]) -> None:
-        """Reset the state of the registry"""
+    def _set_state(self, state: dict[str, Any]) -> None:
+        """Reset the state of the registry."""
         assert set(state.keys()) == {
             "_active",
             "_active_name",
@@ -148,17 +193,17 @@ class PluginRegistry(Generic[PluginType]):
     def _enable(self, name: str, **options) -> None:
         if name not in self._plugins:
             try:
-                (ep,) = [
+                (ep,) = (
                     ep
                     for ep in importlib_metadata_get(self.entry_point_group)
                     if ep.name == name
-                ]
+                )
             except ValueError as err:
                 if name in self.entrypoint_err_messages:
                     raise ValueError(self.entrypoint_err_messages[name]) from err
                 else:
                     raise NoSuchEntryPoint(self.entry_point_group, name) from err
-            value = cast(PluginType, ep.load())
+            value = cast(PluginT, ep.load())
             self.register(name, value)
         self._active_name = name
         self._active = self._plugins[name]
@@ -166,8 +211,9 @@ class PluginRegistry(Generic[PluginType]):
             self._global_settings[key] = options.pop(key)
         self._options = options
 
-    def enable(self, name: Optional[str] = None, **options) -> PluginEnabler:
-        """Enable a plugin by name.
+    def enable(self, name: str | None = None, **options) -> PluginEnabler:
+        """
+        Enable a plugin by name.
 
         This can be either called directly, or used as a context manager.
 
@@ -191,25 +237,32 @@ class PluginRegistry(Generic[PluginType]):
 
     @property
     def active(self) -> str:
-        """Return the name of the currently active plugin"""
+        """Return the name of the currently active plugin."""
         return self._active_name
 
     @property
-    def options(self) -> Dict[str, Any]:
-        """Return the current options dictionary"""
+    def options(self) -> dict[str, Any]:
+        """Return the current options dictionary."""
         return self._options
 
-    def get(self) -> Optional[PluginType]:
+    def get(self) -> partial[R] | Plugin[R] | None:
         """Return the currently active plugin."""
-        if self._options:
-            return curry(self._active, **self._options)
-        else:
-            return self._active
+        if (func := self._active) and self.plugin_type(func):
+            return partial(func, **self._options) if self._options else func
+        elif self._active is not None:
+            msg = (
+                f"{type(self).__name__!r} requires all plugins to be callable objects, "
+                f"but {type(self._active).__name__!r} is not callable."
+            )
+            raise TypeError(msg)
+        elif TYPE_CHECKING:
+            # NOTE: The `None` return is implicit, but `mypy` isn't satisfied
+            # - `ruff` will factor out explicit `None` return
+            # - `pyright` has no issue
+            raise NotImplementedError
 
     def __repr__(self) -> str:
-        return "{}(active={!r}, registered={!r})" "".format(
-            self.__class__.__name__, self._active_name, list(self.names())
-        )
+        return f"{type(self).__name__}(active={self.active!r}, registered={self.names()!r})"
 
 
 def importlib_metadata_get(group):
@@ -219,6 +272,6 @@ def importlib_metadata_get(group):
     # also get compatibility with the importlib_metadata package which had a different
     # deprecation cycle for 'get'
     if hasattr(ep, "select"):
-        return ep.select(group=group)
+        return ep.select(group=group)  # pyright: ignore
     else:
         return ep.get(group, [])

@@ -1,7 +1,7 @@
 """
 Multi-Line Highlight
 ====================
-This multi-line chart uses an invisible Voronoi tessellation to handle mouseover to
+This multi-line chart uses an invisible Voronoi tessellation to handle pointerover to
 identify the nearest point and then highlight the line on which the point falls.
 It is adapted from the Vega-Lite example found at
 https://bl.ocks.org/amitkaps/fe4238e716db53930b2f1a70d3401701
@@ -12,7 +12,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-highlight = alt.selection_point(on='mouseover',
+highlight = alt.selection_point(on='pointerover',
                           fields=['symbol'], nearest=True)
 
 base = alt.Chart(source).encode(

@@ -1,13 +1,13 @@
-"""Tests for variable parameters and selection parameters"""
-
-import pandas as pd
-
-import warnings
-import pytest
+"""Tests for variable parameters and selection parameters."""
 
 import re
+import warnings
+
+import pandas as pd
+import pytest
 
 import altair.vegalite.v5 as alt
+from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def test_variable_param():
@@ -82,9 +82,9 @@ def test_selection_deprecation():
         alt.selection_interval()
 
         # this v4 syntax is deprecated
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             alt.selection_single()
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             alt.selection_multi()
 
         # new syntax
@@ -95,7 +95,7 @@ def test_selection_deprecation():
         # this v4 syntax is deprecated
         brush = alt.selection_interval()
         c = alt.Chart().mark_point()
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             c.add_selection(brush)
 
 
@@ -105,25 +105,27 @@ def test_parameter_naming():
     assert prm.param.name == "some_name"
 
     # test automatic naming which has the form such as param_5
-    prm0, prm1, prm2 = [alt.param() for _ in range(3)]
+    prm0, prm1, prm2 = (alt.param() for _ in range(3))
 
     res = re.match("param_([0-9]+)", prm0.param.name)
 
     assert res
 
     num = int(res[1])
-    assert prm1.param.name == f"param_{num+1}"
-    assert prm2.param.name == f"param_{num+2}"
+    assert prm1.param.name == f"param_{num + 1}"
+    assert prm2.param.name == f"param_{num + 2}"
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     data = pd.DataFrame([{"a": "A", "b": 28}])
 
     sel = alt.selection_point(fields=["b"])
     se = sel.b | 300
 
     assert isinstance(se, alt.SelectionExpression)
-    assert isinstance(se.expr, alt.expr.core.Expression)
+    assert isinstance(se.expr, Expression)
 
     c = (
         alt.Chart(data)

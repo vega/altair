@@ -1,5 +1,4 @@
-from .core import FunctionExpression
-
+from __future__ import annotations
 
 FUNCTION_LISTING = {
     "isArray": r"Returns true if _value_ is an array, false otherwise.",
@@ -166,27 +165,3 @@ FUNCTION_LISTING = {
 
 # This maps vega expression function names to the Python name
 NAME_MAP = {"if": "if_"}
-
-
-class ExprFunc:
-    def __init__(self, name, doc):
-        self.name = name
-        self.doc = doc
-        self.__doc__ = """{}(*args)\n    {}""".format(name, doc)
-
-    def __call__(self, *args):
-        return FunctionExpression(self.name, args)
-
-    def __repr__(self):
-        return "<function expr.{}(*args)>".format(self.name)
-
-
-def _populate_namespace():
-    globals_ = globals()
-    for name, doc in FUNCTION_LISTING.items():
-        py_name = NAME_MAP.get(name, name)
-        globals_[py_name] = ExprFunc(name, doc)
-        yield py_name
-
-
-__all__ = list(_populate_namespace())

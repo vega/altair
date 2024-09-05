@@ -155,16 +155,14 @@ API Functions
    layer
    param
    repeat
-   selection
    selection_interval
-   selection_multi
    selection_point
-   selection_single
    sequence
    sphere
    topo_feature
    value
    vconcat
+   when
 
 Low-Level Schema Wrappers
 -------------------------
@@ -402,6 +400,7 @@ Low-Level Schema Wrappers
    Mark
    MarkConfig
    MarkDef
+   MarkInvalidDataMode
    MarkPropDefGradientstringnull
    MarkPropDefnumber
    MarkPropDefnumberArray
@@ -482,6 +481,41 @@ Low-Level Schema Wrappers
    ScaleFieldDef
    ScaleInterpolateEnum
    ScaleInterpolateParams
+   ScaleInvalidDataConfig
+   ScaleInvalidDataShowAsValueangle
+   ScaleInvalidDataShowAsValuecolor
+   ScaleInvalidDataShowAsValuefill
+   ScaleInvalidDataShowAsValuefillOpacity
+   ScaleInvalidDataShowAsValueopacity
+   ScaleInvalidDataShowAsValueradius
+   ScaleInvalidDataShowAsValueshape
+   ScaleInvalidDataShowAsValuesize
+   ScaleInvalidDataShowAsValuestroke
+   ScaleInvalidDataShowAsValuestrokeDash
+   ScaleInvalidDataShowAsValuestrokeOpacity
+   ScaleInvalidDataShowAsValuestrokeWidth
+   ScaleInvalidDataShowAsValuetheta
+   ScaleInvalidDataShowAsValuex
+   ScaleInvalidDataShowAsValuexOffset
+   ScaleInvalidDataShowAsValuey
+   ScaleInvalidDataShowAsValueyOffset
+   ScaleInvalidDataShowAsangle
+   ScaleInvalidDataShowAscolor
+   ScaleInvalidDataShowAsfill
+   ScaleInvalidDataShowAsfillOpacity
+   ScaleInvalidDataShowAsopacity
+   ScaleInvalidDataShowAsradius
+   ScaleInvalidDataShowAsshape
+   ScaleInvalidDataShowAssize
+   ScaleInvalidDataShowAsstroke
+   ScaleInvalidDataShowAsstrokeDash
+   ScaleInvalidDataShowAsstrokeOpacity
+   ScaleInvalidDataShowAsstrokeWidth
+   ScaleInvalidDataShowAstheta
+   ScaleInvalidDataShowAsx
+   ScaleInvalidDataShowAsxOffset
+   ScaleInvalidDataShowAsy
+   ScaleInvalidDataShowAsyOffset
    ScaleResolveMap
    ScaleType
    SchemaBase
@@ -590,3 +624,70 @@ Low-Level Schema Wrappers
    WindowFieldDef
    WindowOnlyOp
    WindowTransform
+
+API Utility Classes
+-------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/api-cls/
+   :nosignatures:
+
+   expr
+   When
+   Then
+   ChainedWhen
+
+Typing
+------
+.. currentmodule:: altair.typing
+
+.. autosummary::
+   :toctree: generated/typing/
+   :nosignatures:
+
+   ChannelAngle
+   ChannelColor
+   ChannelColumn
+   ChannelDescription
+   ChannelDetail
+   ChannelFacet
+   ChannelFill
+   ChannelFillOpacity
+   ChannelHref
+   ChannelKey
+   ChannelLatitude
+   ChannelLatitude2
+   ChannelLongitude
+   ChannelLongitude2
+   ChannelOpacity
+   ChannelOrder
+   ChannelRadius
+   ChannelRadius2
+   ChannelRow
+   ChannelShape
+   ChannelSize
+   ChannelStroke
+   ChannelStrokeDash
+   ChannelStrokeOpacity
+   ChannelStrokeWidth
+   ChannelText
+   ChannelTheta
+   ChannelTheta2
+   ChannelTooltip
+   ChannelUrl
+   ChannelX
+   ChannelX2
+   ChannelXError
+   ChannelXError2
+   ChannelXOffset
+   ChannelY
+   ChannelY2
+   ChannelYError
+   ChannelYError2
+   ChannelYOffset
+   ChartType
+   EncodeKwds
+   Optional
+   is_chart_type
+

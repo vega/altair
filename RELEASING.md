@@ -1,9 +1,12 @@
-1. Create a new virtual environment following the instructions in `CONTRIBUTING.md`.
-   Make sure to also install all dependencies for the documentation.
+1. Make sure to have an environment set up with `hatch` installed. See `CONTRIBUTING.md`.
+   Remove any existing environments managed by `hatch` so that it will create new ones
+   with the latest dependencies when executing the commands further below:
+   
+       hatch env prune
 
-2. Make certain your branch is in sync with head:
+2. Make certain your branch is in sync with head. If you work on a fork, replace `origin` with `upstream`:
  
-       git pull upstream main
+       git pull origin main
 
 3. Do a clean doc build:
 
@@ -14,32 +17,32 @@
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
 
-4. Make sure changes.rst is up to date for the release: compare against PRs
-   merged since the last release & update top heading with release date.
+4. Create a new release branch:
+       
+       git switch -c version_5.0.0
 
 5. Update version to, e.g. 5.0.0:
 
    - in ``altair/__init__.py``
    - in ``doc/conf.py``
 
-6. Double-check that all vega-lite/vega/vega-embed versions are up-to-date:
-
-   - URLs in ``doc/conf.py``
-   - versions in ``altair/vegalite/v5/display.py``
-
-7. Commit change and push to main:
+6. Commit changes and push:
 
        git add . -u
-       git commit -m "MAINT: bump version to 5.0.0"
-       git push upstream main
+       git commit -m "chore: Bump version to 5.0.0"
+       git push
+
+7. Merge release branch into main, make sure that all required checks pass
 
 8. Tag the release:
 
        git tag -a v5.0.0 -m "version 5.0.0 release"
-       git push upstream v5.0.0
+       git push origin v5.0.0
 
-9. Build source & wheel distributions:
+9. On main, build source & wheel distributions. If you work on a fork, replace `origin` with `upstream`:
 
+       git switch main
+       git pull origin main
        hatch clean  # clean old builds & distributions
        hatch build  # create a source distribution and universal wheel
 
@@ -51,34 +54,30 @@
 
         hatch run doc:publish-clean-build
 
-12. update version to, e.g. 5.1.0dev:
+12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
+
+        git tag -a v5.0.0 -m "Version 5.0.0 release"
+        git push origin v5.0.0
+
+13. Create a new branch:
+       
+       git switch -c maint_5.1.0dev
+
+14. Update version and add 'dev' suffix, e.g. 5.1.0dev:
 
     - in ``altair/__init__.py``
     - in ``doc/conf.py``
 
-13. add a new changelog entry for the unreleased version:
-
-    ```
-    Version 5.1.0 (unreleased)
-    --------------------------
-
-    Enhancements
-    ~~~~~~~~~~~~
-    Bug Fixes
-    ~~~~~~~~~
-    Backward-Incompatible Changes
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ```
-
-14. Commit change and push to main:
+15. Commit changes and push:
 
         git add . -u
-        git commit -m "MAINT: bump version to 5.1.0dev"
-        git push upstream main
+        git commit -m "chore: Bump version to 5.1.0dev"
+        git push
+        
+16. Merge maintenance branch into main
 
-15. Double-check that a conda-forge pull request is generated from the updated
-    pip package by the conda-forge bot (may take up to ~an hour):
+17. Double-check that a conda-forge pull request is generated from the updated
+    pip package by the conda-forge bot (may take up to several hours):
     https://github.com/conda-forge/altair-feedstock/pulls
 
-16. Copy changes.rst section into release notes within
-    https://github.com/altair-viz/altair/releases/, and publish the release.
+18. Publish a new release in https://github.com/vega/altair/releases/

@@ -5,25 +5,25 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: black-ruff-mypy
+    name: ruff-mypy
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
+        python-version: "3.12"
     # Installing all dependencies and not just the linters as mypy needs them for type checking
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install .[dev]
-    - name: Check formatting with black
-      run: |
-        black --diff --color .
-        black --check .
+        pip install hatch
     - name: Lint with ruff
       run: |        
-        ruff check .
+        hatch run ruff check .        
+    - name: Check formatting with ruff
+      run: |
+        hatch run ruff format --diff .
+        hatch run ruff format --check .
     - name: Lint with mypy
       run: |
-        mypy altair tests
+        hatch run mypy altair tests

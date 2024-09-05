@@ -1,27 +1,40 @@
+# ruff: noqa: W291
+from __future__ import annotations
+
 import copy
-import io
 import inspect
+import io
 import json
+import pickle
+import types
+import warnings
+from collections import deque
+from functools import partial
+from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+
 import jsonschema
 import jsonschema.exceptions
-import pickle
-import warnings
-
 import numpy as np
 import pandas as pd
+import polars as pl
 import pytest
-from vega_datasets import data
 
 import altair as alt
 from altair import load_schema
 from altair.utils.schemapi import (
-    UndefinedType,
-    SchemaBase,
-    Undefined,
-    _FromDict,
-    SchemaValidationError,
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
+    SchemaBase,
+    SchemaValidationError,
+    Undefined,
+    UndefinedType,
+    _FromDict,
 )
+from altair.vegalite.v5.schema.channels import X
+from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
+from vega_datasets import data
+
+if TYPE_CHECKING:
+    from narwhals.typing import IntoDataFrame
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
@@ -146,18 +159,14 @@ _validation_selection_schema = {
 class Draft4Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-04/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-04/schema#",
     }
 
 
 class Draft6Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-06/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-06/schema#",
     }
 
 
@@ -375,7 +384,7 @@ def test_class_with_no_schema():
     class BadSchema(SchemaBase):
         pass
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         BadSchema(4)
     assert str(err.value).startswith("Cannot instantiate object")
 
@@ -438,22 +447,6 @@ def chart_error_example__hconcat():
     )
 
     return points | text
-
-
-def chart_error_example__invalid_channel():
-    # Error: invalidChannel is an invalid encoding channel. Condition is correct
-    # but is added below as in previous implementations of Altair this interfered
-    # with finding the invalidChannel error
-    selection = alt.selection_point()
-    return (
-        alt.Chart(data.barley())
-        .mark_circle()
-        .add_params(selection)
-        .encode(
-            color=alt.condition(selection, alt.value("red"), alt.value("green")),
-            invalidChannel=None,
-        )
-    )
 
 
 def chart_error_example__invalid_y_option_value_unknown_x_option():
@@ -550,17 +543,15 @@ def chart_error_example__wrong_tooltip_type_in_faceted_chart():
 
 def chart_error_example__wrong_tooltip_type_in_layered_chart():
     # Error: Wrong data type to pass to tooltip
-    return alt.layer(
-        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
-    )
+    return alt.layer(alt.Chart().mark_point().encode(tooltip=[{"wrong"}]))
 
 
 def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     return alt.layer(
         alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
-        alt.Chart().mark_line().encode(invalidChannel="unknown"),
+        alt.Chart().mark_line().encode(alt.Color(invalidArgument="unknown")),
     )
 
 
@@ -575,7 +566,7 @@ def chart_error_example__two_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__three_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     # Error 3: Invalid value for bandPosition
     return (
         chart_error_example__two_errors_in_layered_chart()
@@ -585,7 +576,7 @@ def chart_error_example__three_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     # Error 1: invalidOption is not a valid option for Scale
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
 
     # In the final chart object, the `layer` attribute will look like this:
     # [alt.Chart(...), alt.Chart(...), alt.LayerChart(...)]
@@ -621,7 +612,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
     base = alt.Chart().encode(y=alt.datum(300))
 
-    rule = base.mark_rule().encode(invalidChannel=2)
+    rule = base.mark_rule().encode(alt.Color(invalidArgument="unknown"))
     text = base.mark_text(text="hazardous")
     rule_text = rule + text
 
@@ -629,7 +620,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     return chart
 
 
-def chart_error_example__four_errors():
+def chart_error_example__four_errors_hide_fourth():
     # Error 1: unknown is not a valid encoding channel option
     # Error 2: Invalid Y option value "asdf".
     # Error 3: another_unknown is not a valid encoding channel option
@@ -648,13 +639,26 @@ def chart_error_example__four_errors():
     )
 
 
-@pytest.mark.parametrize(
-    "chart_func, expected_error_message",
-    [
-        (
-            chart_error_example__invalid_y_option_value_unknown_x_option,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+def id_func_chart_error_example(val) -> str:
+    """
+    Ensures the generated test-id name uses only the unique portion of `chart_func`.
+
+    Otherwise the name is like below, but ``...`` represents the full error message::
+
+        "test_chart_validation_errors[chart_error_example__two_errors_with_one_in_nested_layered_chart-...]"
+    """
+    if isinstance(val, types.FunctionType):
+        return val.__name__.replace("chart_error_example__", "")
+    else:
+        return ""
+
+
+# NOTE: Avoids all cases appearing in a failure traceback
+# At the time of writing, this is over 300 lines
+chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
+    (
+        chart_error_example__invalid_y_option_value_unknown_x_option,
+        r"""Multiple errors were found.
 
                 Error 1: `X` has no parameter named 'unknown'
 
@@ -669,79 +673,59 @@ def chart_error_example__four_errors():
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                     - One of \['zero', 'center', 'normalize'\]
-                    - Of type 'null' or 'boolean'$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__wrong_tooltip_type_in_faceted_chart,
-            inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
-            ),
-        ),
-        (
-            chart_error_example__wrong_tooltip_type_in_layered_chart,
-            inspect.cleandoc(
-                r"""'{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$"""
-            ),
-        ),
-        (
-            chart_error_example__two_errors_in_layered_chart,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+                    - Of type 'null' or 'boolean'$""",
+    ),
+    (
+        chart_error_example__wrong_tooltip_type_in_faceted_chart,
+        r"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
+    ),
+    (
+        chart_error_example__wrong_tooltip_type_in_layered_chart,
+        r"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
+    ),
+    (
+        chart_error_example__two_errors_in_layered_chart,
+        r"""Multiple errors were found.
 
-                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__two_errors_in_complex_concat_layered_chart,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+                    See the help for `Color` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__two_errors_in_complex_concat_layered_chart,
+        r"""Multiple errors were found.
 
-                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
-            ),
-        ),
-        (
-            chart_error_example__three_errors_in_complex_concat_layered_chart,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+    ),
+    (
+        chart_error_example__three_errors_in_complex_concat_layered_chart,
+        r"""Multiple errors were found.
 
-                Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters
+                    See the help for `Color` to read the full description of these parameters
 
-                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__two_errors_with_one_in_nested_layered_chart,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+    ),
+    (
+        chart_error_example__two_errors_with_one_in_nested_layered_chart,
+        r"""Multiple errors were found.
 
                 Error 1: `Scale` has no parameter named 'invalidOption'
 
@@ -754,24 +738,18 @@ def chart_error_example__four_errors():
 
                     See the help for `Scale` to read the full description of these parameters
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__layer,
-            inspect.cleandoc(
-                r"""`VConcatChart` has no parameter named 'width'
+                    See the help for `Color` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__layer,
+        r"""`VConcatChart` has no parameter named 'width'
 
                 Existing parameter names are:
                 vconcat      center     description   params    title       
@@ -779,91 +757,58 @@ def chart_error_example__four_errors():
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__invalid_y_option_value,
-            inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`. Valid values are:
+                See the help for `VConcatChart` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__invalid_y_option_value,
+        r"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_y_option_value_with_condition,
-            inspect.cleandoc(
-                r"""'asdf' is an invalid value for `stack`. Valid values are:
+                - Of type 'null' or 'boolean'$""",
+    ),
+    (
+        chart_error_example__invalid_y_option_value_with_condition,
+        r"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$"""
-            ),
-        ),
-        (
-            chart_error_example__hconcat,
-            inspect.cleandoc(
-                r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_channel,
-            inspect.cleandoc(
-                r"""`Encoding` has no parameter named 'invalidChannel'
-
-                Existing parameter names are:
-                angle         key          order     strokeDash      tooltip   xOffset   
-                color         latitude     radius    strokeOpacity   url       y         
-                description   latitude2    radius2   strokeWidth     x         y2        
-                detail        longitude    shape     text            x2        yError    
-                fill          longitude2   size      theta           xError    yError2   
-                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                href                                                                     
-
-                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__invalid_timeunit_value,
-            inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
+                - Of type 'null' or 'boolean'$""",
+    ),
+    (
+        chart_error_example__hconcat,
+        r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$""",
+    ),
+    (
+        chart_error_example__invalid_timeunit_value,
+        r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
                 - One of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
                 - One of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
-                - One of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
-                - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
+                - One of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
+                - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
                 - One of \['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'\]
                 - One of \['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'\]
-                - Of type 'object'$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_sort_value,
-            inspect.cleandoc(
-                r"""'invalid_value' is an invalid value for `sort`. Valid values are:
+                - Of type 'object'$""",
+    ),
+    (
+        chart_error_example__invalid_sort_value,
+        r"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
                 - One of \['ascending', 'descending'\]
                 - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
                 - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
-                - Of type 'array', 'object', or 'null'$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_bandposition_value,
-            inspect.cleandoc(
-                r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_type,
-            inspect.cleandoc(
-                r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$"""
-            ),
-        ),
-        (
-            chart_error_example__additional_datum_argument,
-            inspect.cleandoc(
-                r"""`X` has no parameter named 'wrong_argument'
+                - Of type 'array', 'object', or 'null'$""",
+    ),
+    (
+        chart_error_example__invalid_bandposition_value,
+        r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+    ),
+    (
+        chart_error_example__invalid_type,
+        r"""'unknown' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$""",
+    ),
+    (
+        chart_error_example__additional_datum_argument,
+        r"""`X` has no parameter named 'wrong_argument'
 
                 Existing parameter names are:
                 shorthand      bin      scale   timeUnit   
@@ -871,19 +816,15 @@ def chart_error_example__four_errors():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-        (
-            chart_error_example__invalid_value_type,
-            inspect.cleandoc(
-                r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$"""
-            ),
-        ),
-        (
-            chart_error_example__four_errors,
-            inspect.cleandoc(
-                r"""Multiple errors were found.
+                See the help for `X` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__invalid_value_type,
+        r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$""",
+    ),
+    (
+        chart_error_example__four_errors_hide_fourth,
+        r"""Multiple errors were found.
 
                 Error 1: `Color` has no parameter named 'another_unknown'
 
@@ -911,10 +852,15 @@ def chart_error_example__four_errors():
                     axis           impute   stack   type       
                     bandPosition                               
 
-                    See the help for `X` to read the full description of these parameters$"""  # noqa: W291
-            ),
-        ),
-    ],
+                    See the help for `X` to read the full description of these parameters$""",
+    ),
+]
+
+
+@pytest.mark.parametrize(
+    ("chart_func", "expected_error_message"),
+    chart_funcs_error_message,
+    ids=id_func_chart_error_example,
 )
 def test_chart_validation_errors(chart_func, expected_error_message):
     # For some wrong chart specifications such as an unknown encoding channel,
@@ -924,6 +870,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         chart = chart_func()
+    expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
 
@@ -932,14 +879,25 @@ def test_multiple_field_strings_in_condition():
     selection = alt.selection_point()
     expected_error_message = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
     with pytest.raises(ValueError, match=expected_error_message):
-        (
+        chart = (  # noqa: F841
             alt.Chart(data.cars())
             .mark_circle()
             .add_params(selection)
-            .encode(
-                color=alt.condition(selection, "Origin", "Origin"),
-            )
-        ).to_dict()
+            .encode(color=alt.condition(selection, "Origin", "Origin"))
+            .to_dict()
+        )
+
+
+@pytest.mark.parametrize("tp", [pd.DataFrame, pl.DataFrame])
+def test_non_existent_column_name(tp: Callable[..., IntoDataFrame]) -> None:
+    df = tp({"a": [1, 2], "b": [4, 5]})
+    msg = (
+        'Unable to determine data type for the field "c"; verify that the field name '
+        "is not misspelled. If you are referencing a field from a transform, also "
+        "confirm that the data type is specified correctly."
+    )
+    with pytest.raises(ValueError, match=msg):
+        alt.Chart(df).mark_line().encode(x="a", y="c").to_json()
 
 
 def test_serialize_numpy_types():
@@ -996,3 +954,71 @@ def test_to_dict_expand_mark_spec():
     chart = alt.Chart().mark_bar()
     assert chart.to_dict()["mark"] == {"type": "bar"}
     assert chart.mark == "bar"
+
+
+@pytest.mark.parametrize(
+    "expected",
+    [list("cdfabe"), [0, 3, 4, 5, 8]],
+)
+@pytest.mark.parametrize(
+    "tp",
+    [
+        tuple,
+        list,
+        deque,
+        pl.Series,
+        pd.Series,
+        pd.Index,
+        pd.Categorical,
+        pd.CategoricalIndex,
+        np.array,
+    ],
+)
+@pytest.mark.parametrize(
+    "schema_param",
+    [
+        (partial(X, "x:N"), "sort"),
+        (partial(FieldOneOfPredicate, "name"), "oneOf"),
+        (Legend, "values"),
+    ],
+)
+def test_to_dict_iterables(
+    tp: Callable[..., Iterable[Any]],
+    expected: Sequence[Any],
+    schema_param: tuple[Callable[..., SchemaBase], str],
+) -> None:
+    """
+    Confirm `SchemaBase` can convert common `(Sequence|Iterable)` types to `list`.
+
+    Parameters
+    ----------
+    tp
+        Constructor for test `Iterable`.
+    expected
+        Values wrapped by `tp`.
+    schema_param
+        Constructor for `SchemaBase` subclass, and target parameter name.
+
+    Notes
+    -----
+    `partial` can be used to reshape the `SchemaBase` constructor.
+
+    References
+    ----------
+    - https://github.com/vega/altair/issues/2808
+    - https://github.com/vega/altair/issues/2877
+    """
+    tp_schema, param = schema_param
+    validated = tp_schema(**{param: tp(expected)}).to_dict()
+    actual = validated[param]
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    "tp", [range, np.arange, partial(pl.int_range, eager=True), pd.RangeIndex]
+)
+def test_to_dict_range(tp) -> None:
+    expected = [0, 1, 2, 3, 4]
+    x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
+    actual = x_dict["sort"]  # type: ignore
+    assert actual == expected
