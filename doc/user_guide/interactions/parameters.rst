@@ -155,11 +155,9 @@ Conditional Encodings
 ^^^^^^^^^^^^^^^^^^^^^
 
 The example above is neat, but the selection interval doesn't actually *do* anything yet.
-To make the chart respond to this selection, we need to reference the selection in within
+To make the chart respond to this selection, we need to reference ``brush`` within
 the chart specification. Here, we will use the :func:`when` function to create
-a conditional color encoding: we'll tie the color to the ``"Origin"``
-column for points in the selection, and set the color to ``"lightgray"``
-for points outside the selection:
+a conditional color encoding:
 
 .. altair-plot::
 
@@ -175,17 +173,17 @@ As you can see, the color of the points now changes depending on whether they ar
 Above we are using the selection parameter ``brush`` as a *predicate*
 (something that evaluates as `True` or `False`).
 
-This is controlled by our definition ``conditional`` ::
+This is controlled by our definition ``conditional``::
 
     conditional = alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
 
 Data points which fall within the selection evaluate as ``True``,
 and data points which fall outside the selection evaluate to ``False``.
-The ``'Origin:N'`` specifies how to color the points which fall within the selection,
+The ``"Origin:N"`` specifies how to color the points which fall within the selection,
 and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value.
 
 The ``when-then-otherwise`` syntax was directly inspired by `polars.when`_, 
-and is similar to an ``if-else`` statement written in Python ::
+and is similar to an ``if-else`` statement written in Python::
 
     # alt.when(brush)
     if brush:
@@ -197,7 +195,7 @@ and is similar to an ``if-else`` statement written in Python ::
     
 This approach becomes even more powerful when the selection behavior is
 tied across multiple views of the data within a compound chart.
-For example, here we create a ``chart`` object using the same code as
+For example, here we create a :class:`Chart` using the same code as
 above, and horizontally concatenate two versions of this chart: one
 with the x-encoding tied to ``"Horsepower"``, and one with the x-encoding
 tied to ``"Acceleration"``
@@ -247,7 +245,7 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 As you might have noticed,
 the selected points are sometimes obscured by some of the unselected points.
 To bring the selected points to the foreground,
-we can change the order in which they are laid out via the following encoding ::
+we can change the order in which they are laid out via the following encoding::
     
     hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
     order = alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
