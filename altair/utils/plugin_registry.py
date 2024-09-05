@@ -115,7 +115,7 @@ class PluginRegistry(Generic[PluginT, R]):
         self.entry_point_group: str = entry_point_group
         self.plugin_type: IsPlugin
         if plugin_type is not callable and isinstance(plugin_type, type):
-            msg = (
+            msg: Any = (
                 f"Pass a callable `TypeIs` function to `plugin_type` instead.\n"
                 f"{type(self).__name__!r}(plugin_type)\n\n"
                 f"See also:\n"
