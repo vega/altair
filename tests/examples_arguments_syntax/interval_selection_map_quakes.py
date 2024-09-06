@@ -38,7 +38,7 @@ quakes = alt.Chart(gdf_quakies).transform_calculate(
 ).mark_circle(opacity=0.35, tooltip=True).encode(
     longitude="lon:Q",
     latitude="lat:Q",
-    color=alt.condition(brush, alt.value("goldenrod"), alt.value("steelblue")),
+    color=alt.when(brush).then(alt.value("goldenrod")).otherwise(alt.value("steelblue")),
     size=alt.Size("mag:Q", scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 7], exponent=4)),
 ).add_params(brush)
 

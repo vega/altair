@@ -8,10 +8,10 @@ from vega_datasets import data
 
 source = data.stocks()
 
-color_condition = alt.condition(
-    "month(datum.value) == 1 && date(datum.value) == 1",
-    alt.value("black"),
-    alt.value(None),
+color_condition = (
+    alt.when(alt.expr.month("datum.value") == 1, alt.expr.date("datum.value") == 1)
+    .then(alt.value("black"))
+    .otherwise(alt.value(None))
 )
 
 alt.Chart(source, width=300, height=100).transform_filter(
@@ -23,8 +23,8 @@ alt.Chart(source, width=300, height=100).transform_filter(
             format="%Y",
             labelAngle=0,
             labelOverlap=False,
-            labelColor=color_condition,
-            tickColor=color_condition,
+            labelColor=color_condition, # type: ignore[arg-type]
+            tickColor=color_condition, # type: ignore[arg-type]
         ),
         title="Time",
     ),
