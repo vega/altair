@@ -651,7 +651,7 @@ def test_when_typing(cars) -> None:
         .otherwise(alt.value("white"))
     )
     source = cars
-    chart = (
+    chart = (  # noqa: F841
         alt.Chart(source)
         .mark_rect()
         .encode(
