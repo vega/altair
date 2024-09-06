@@ -819,6 +819,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     ruff_write_lint_format_str(outfile, content)
 
+    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
+
     files: dict[Path, str | Iterable[str]] = {}
 
     # Generate the core schema wrappers
@@ -871,7 +873,6 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
     )
     print(msg)
-    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
     TypeAliasTracer.write_module(
         fp_typing, "OneOrSeq", header=HEADER, extra=TYPING_EXTRA
     )
