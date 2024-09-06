@@ -161,7 +161,10 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
         .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
       {%- if use_olli %}
       olliAdapters.VegaLiteAdapter(spec).then(olliVisSpec => {
-        const olliRender = olli.olli(olliVisSpec);
+        // It's a function if it was loaded via maybeLoadScript below.
+        // If it comes from require, it's a module and we access olli.olli
+        const olliFunc = typeof olli === 'function' ? olli : olli.olli;
+        const olliRender = olliFunc(olliVisSpec);
         olliDiv.append(olliRender);
       });
       {%- endif %}
@@ -183,7 +186,11 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
         .then(() => maybeLoadScript("olli-adapters", "{{olli_adapters_version}}"))
         {%- endif %}
         .catch(showError)
+        {%- if use_olli %}
+        .then(() => displayChart(vegaEmbed, olli, OlliAdapters));
+        {%- else %}
         .then(() => displayChart(vegaEmbed));
+        {%- endif %}
     }
   })({{ spec }}, {{ embed_options }});
 </script>
