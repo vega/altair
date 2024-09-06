@@ -38,7 +38,7 @@ jsonschema_to_python_types = {
     "string": "str",
     "number": "float",
     "integer": "int",
-    "object": "dict",
+    "object": "Map",
     "boolean": "bool",
     "array": "list",
     "null": "None",
@@ -449,8 +449,6 @@ class SchemaInfo:
                     )
                 )
             type_representations.extend(options)
-        elif self.is_object():
-            type_representations.append("dict")
         elif self.is_array():
             # A list is invariant in its type parameter. This means that e.g.
             # List[str] is not a subtype of List[Union[core.FieldName, str]]
