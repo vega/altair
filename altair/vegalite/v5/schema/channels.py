@@ -497,7 +497,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -512,8 +512,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -522,7 +522,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -544,110 +544,106 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -659,45 +655,45 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -728,7 +724,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -826,28 +822,26 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -987,8 +981,8 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleDatum: ...
 
@@ -997,7 +991,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleDatum: ...
 
@@ -1022,9 +1016,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -1062,25 +1054,25 @@ class AngleValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1092,11 +1084,11 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -1105,26 +1097,26 @@ class AngleValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1136,12 +1128,12 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -1150,8 +1142,8 @@ class AngleValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -1160,7 +1152,7 @@ class AngleValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -1172,9 +1164,7 @@ class AngleValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -1433,7 +1423,7 @@ class Color(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -1448,8 +1438,8 @@ class Color(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1458,7 +1448,7 @@ class Color(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1480,110 +1470,106 @@ class Color(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -1595,45 +1581,45 @@ class Color(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1664,7 +1650,7 @@ class Color(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -1762,28 +1748,26 @@ class Color(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1925,8 +1909,8 @@ class ColorDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -1935,7 +1919,7 @@ class ColorDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -1960,9 +1944,7 @@ class ColorDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -2001,25 +1983,25 @@ class ColorValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2031,11 +2013,11 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -2044,26 +2026,26 @@ class ColorValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2075,12 +2057,12 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -2089,8 +2071,8 @@ class ColorValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2099,7 +2081,7 @@ class ColorValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2111,9 +2093,7 @@ class ColorValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -2357,7 +2337,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -2385,50 +2365,50 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def header(
         self,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Column: ...
 
@@ -2453,7 +2433,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -2546,27 +2526,27 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         center: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        header: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        header: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | SortOrder_T
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2812,7 +2792,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -2830,8 +2810,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Description: ...
 
@@ -2840,7 +2820,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Description: ...
 
@@ -2863,7 +2843,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: str, **kwds) -> Description: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> Description: ...
+    def format(self, _: Map, **kwds) -> Description: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> Description: ...
@@ -2949,18 +2929,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3003,25 +2981,25 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3033,11 +3011,11 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -3046,26 +3024,26 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3077,12 +3055,12 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -3091,8 +3069,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -3101,7 +3079,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -3113,9 +3091,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -3306,7 +3282,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -3412,13 +3388,13 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3719,7 +3695,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -3761,50 +3737,50 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def header(
         self,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Facet: ...
 
@@ -3829,7 +3805,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -3930,29 +3906,29 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
-        align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
+        align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
-        center: Optional[bool | dict | SchemaBase] = Undefined,
+        center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        header: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        header: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | SortOrder_T
         ] = Undefined,
-        spacing: Optional[dict | float | SchemaBase] = Undefined,
+        spacing: Optional[float | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4231,7 +4207,7 @@ class Fill(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -4246,8 +4222,8 @@ class Fill(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4256,7 +4232,7 @@ class Fill(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4278,110 +4254,106 @@ class Fill(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -4393,45 +4365,45 @@ class Fill(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4462,7 +4434,7 @@ class Fill(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -4560,28 +4532,26 @@ class Fill(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4723,8 +4693,8 @@ class FillDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -4733,7 +4703,7 @@ class FillDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -4758,9 +4728,7 @@ class FillDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -4799,25 +4767,25 @@ class FillValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4829,11 +4797,11 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -4842,26 +4810,26 @@ class FillValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4873,12 +4841,12 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -4887,8 +4855,8 @@ class FillValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -4897,7 +4865,7 @@ class FillValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -4909,9 +4877,7 @@ class FillValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -5169,7 +5135,7 @@ class FillOpacity(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -5184,8 +5150,8 @@ class FillOpacity(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -5194,7 +5160,7 @@ class FillOpacity(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -5216,110 +5182,106 @@ class FillOpacity(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -5331,45 +5293,45 @@ class FillOpacity(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -5400,7 +5362,7 @@ class FillOpacity(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -5498,28 +5460,26 @@ class FillOpacity(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -5661,8 +5621,8 @@ class FillOpacityDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
 
@@ -5671,7 +5631,7 @@ class FillOpacityDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
 
@@ -5696,9 +5656,7 @@ class FillOpacityDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -5736,25 +5694,25 @@ class FillOpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -5766,11 +5724,11 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -5779,26 +5737,26 @@ class FillOpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -5810,12 +5768,12 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -5824,8 +5782,8 @@ class FillOpacityValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -5834,7 +5792,7 @@ class FillOpacityValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -5846,9 +5804,7 @@ class FillOpacityValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -6076,7 +6032,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -6094,8 +6050,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Href: ...
 
@@ -6104,7 +6060,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Href: ...
 
@@ -6127,7 +6083,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: str, **kwds) -> Href: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> Href: ...
+    def format(self, _: Map, **kwds) -> Href: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> Href: ...
@@ -6213,18 +6169,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6267,25 +6221,25 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6297,11 +6251,11 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -6310,26 +6264,26 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6341,12 +6295,12 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -6355,8 +6309,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -6365,7 +6319,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -6377,9 +6331,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -6570,7 +6522,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -6676,13 +6628,13 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6968,13 +6920,13 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
@@ -7326,13 +7278,13 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -7771,13 +7723,13 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
@@ -8129,13 +8081,13 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -8559,7 +8511,7 @@ class Opacity(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -8574,8 +8526,8 @@ class Opacity(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -8584,7 +8536,7 @@ class Opacity(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -8606,110 +8558,106 @@ class Opacity(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -8721,45 +8669,45 @@ class Opacity(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -8790,7 +8738,7 @@ class Opacity(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -8888,28 +8836,26 @@ class Opacity(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -9049,8 +8995,8 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
 
@@ -9059,7 +9005,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
 
@@ -9084,9 +9030,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -9124,25 +9068,25 @@ class OpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -9154,11 +9098,11 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -9167,26 +9111,26 @@ class OpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -9198,12 +9142,12 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -9212,8 +9156,8 @@ class OpacityValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -9222,7 +9166,7 @@ class OpacityValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -9234,9 +9178,7 @@ class OpacityValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -9427,7 +9369,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -9536,14 +9478,14 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -9589,7 +9531,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float] = Undefined,
         **kwds,
     ) -> OrderValue: ...
@@ -9611,9 +9553,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -9883,7 +9823,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -9911,45 +9851,45 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Radius: ...
 
@@ -9980,7 +9920,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -10087,25 +10027,25 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -10280,45 +10220,45 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> RadiusDatum: ...
 
@@ -10350,7 +10290,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -10591,13 +10531,13 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -11007,7 +10947,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -11035,50 +10975,50 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def header(
         self,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Row: ...
 
@@ -11103,7 +11043,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -11196,27 +11136,27 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         center: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        header: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        header: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | SortOrder_T
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -11493,7 +11433,7 @@ class Shape(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -11508,8 +11448,8 @@ class Shape(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11518,7 +11458,7 @@ class Shape(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11540,110 +11480,106 @@ class Shape(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -11655,45 +11591,45 @@ class Shape(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11724,7 +11660,7 @@ class Shape(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -11822,28 +11758,26 @@ class Shape(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -11985,8 +11919,8 @@ class ShapeDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -11995,7 +11929,7 @@ class ShapeDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -12020,9 +11954,7 @@ class ShapeDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -12061,25 +11993,25 @@ class ShapeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -12091,11 +12023,11 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -12104,26 +12036,26 @@ class ShapeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -12135,12 +12067,12 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -12149,8 +12081,8 @@ class ShapeValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -12159,7 +12091,7 @@ class ShapeValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -12171,9 +12103,7 @@ class ShapeValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -12429,7 +12359,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -12444,8 +12374,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -12454,7 +12384,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -12476,110 +12406,106 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -12591,45 +12517,45 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -12660,7 +12586,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -12758,28 +12684,26 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -12919,8 +12843,8 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeDatum: ...
 
@@ -12929,7 +12853,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeDatum: ...
 
@@ -12954,9 +12878,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -12994,25 +12916,25 @@ class SizeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13024,11 +12946,11 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13037,26 +12959,26 @@ class SizeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13068,12 +12990,12 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13082,8 +13004,8 @@ class SizeValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -13092,7 +13014,7 @@ class SizeValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -13104,9 +13026,7 @@ class SizeValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -13365,7 +13285,7 @@ class Stroke(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -13380,8 +13300,8 @@ class Stroke(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13390,7 +13310,7 @@ class Stroke(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13412,110 +13332,106 @@ class Stroke(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -13527,45 +13443,45 @@ class Stroke(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13596,7 +13512,7 @@ class Stroke(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -13694,28 +13610,26 @@ class Stroke(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13857,8 +13771,8 @@ class StrokeDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -13867,7 +13781,7 @@ class StrokeDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -13892,9 +13806,7 @@ class StrokeDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13933,25 +13845,25 @@ class StrokeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13963,11 +13875,11 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13976,26 +13888,26 @@ class StrokeValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14007,12 +13919,12 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -14021,8 +13933,8 @@ class StrokeValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -14031,7 +13943,7 @@ class StrokeValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -14043,9 +13955,7 @@ class StrokeValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -14303,7 +14213,7 @@ class StrokeDash(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -14318,8 +14228,8 @@ class StrokeDash(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -14328,7 +14238,7 @@ class StrokeDash(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -14350,110 +14260,106 @@ class StrokeDash(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -14465,45 +14371,45 @@ class StrokeDash(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -14534,7 +14440,7 @@ class StrokeDash(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -14632,28 +14538,26 @@ class StrokeDash(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14795,8 +14699,8 @@ class StrokeDashDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashDatum: ...
 
@@ -14805,7 +14709,7 @@ class StrokeDashDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashDatum: ...
 
@@ -14830,9 +14734,7 @@ class StrokeDashDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -14870,25 +14772,25 @@ class StrokeDashValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14900,11 +14802,11 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -14913,26 +14815,26 @@ class StrokeDashValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14944,12 +14846,12 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -14958,8 +14860,8 @@ class StrokeDashValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
 
@@ -14968,7 +14870,7 @@ class StrokeDashValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
 
@@ -14980,9 +14882,7 @@ class StrokeDashValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -15240,7 +15140,7 @@ class StrokeOpacity(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -15255,8 +15155,8 @@ class StrokeOpacity(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -15265,7 +15165,7 @@ class StrokeOpacity(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -15287,110 +15187,106 @@ class StrokeOpacity(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -15402,45 +15298,45 @@ class StrokeOpacity(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -15471,7 +15367,7 @@ class StrokeOpacity(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -15569,28 +15465,26 @@ class StrokeOpacity(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -15732,8 +15626,8 @@ class StrokeOpacityDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
 
@@ -15742,7 +15636,7 @@ class StrokeOpacityDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
 
@@ -15767,9 +15661,7 @@ class StrokeOpacityDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -15807,25 +15699,25 @@ class StrokeOpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -15837,11 +15729,11 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -15850,26 +15742,26 @@ class StrokeOpacityValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -15881,12 +15773,12 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -15895,8 +15787,8 @@ class StrokeOpacityValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -15905,7 +15797,7 @@ class StrokeOpacityValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -15917,9 +15809,7 @@ class StrokeOpacityValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -16177,7 +16067,7 @@ class StrokeWidth(
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -16192,8 +16082,8 @@ class StrokeWidth(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -16202,7 +16092,7 @@ class StrokeWidth(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -16224,110 +16114,106 @@ class StrokeWidth(
     @overload
     def legend(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        clipHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columnPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        columns: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        columns: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gradientStrokeWidth: Optional[
-            dict | float | Parameter | SchemaBase
-        ] = Undefined,
-        gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
+        gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridAlign: Optional[Parameter | SchemaBase | Map | LayoutAlign_T] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        legendY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        legendY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[SchemaBase | LegendOrient_T] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOrient: Optional[Parameter | SchemaBase | Map | Orient_T] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -16339,45 +16225,45 @@ class StrokeWidth(
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -16408,7 +16294,7 @@ class StrokeWidth(
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -16506,28 +16392,26 @@ class StrokeWidth(
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -16669,8 +16553,8 @@ class StrokeWidthDatum(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
 
@@ -16679,7 +16563,7 @@ class StrokeWidthDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
 
@@ -16704,9 +16588,7 @@ class StrokeWidthDatum(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -16744,25 +16626,25 @@ class StrokeWidthValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -16774,11 +16656,11 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -16787,26 +16669,26 @@ class StrokeWidthValue(
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -16818,12 +16700,12 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -16832,8 +16714,8 @@ class StrokeWidthValue(
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -16842,7 +16724,7 @@ class StrokeWidthValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -16854,9 +16736,7 @@ class StrokeWidthValue(
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -17084,7 +16964,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -17102,10 +16982,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> Text: ...
 
@@ -17114,9 +16992,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> Text: ...
 
@@ -17139,7 +17015,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def format(self, _: str, **kwds) -> Text: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> Text: ...
+    def format(self, _: Map, **kwds) -> Text: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> Text: ...
@@ -17225,18 +17101,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17407,10 +17281,8 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextDatum: ...
 
@@ -17419,9 +17291,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextDatum: ...
 
@@ -17434,7 +17304,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def format(self, _: str, **kwds) -> TextDatum: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> TextDatum: ...
+    def format(self, _: Map, **kwds) -> TextDatum: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> TextDatum: ...
@@ -17455,10 +17325,8 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -17497,15 +17365,15 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17515,16 +17383,16 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17534,10 +17402,8 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextValue: ...
 
@@ -17546,9 +17412,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[
-            str | dict | Parameter | SchemaBase | Sequence[str]
-        ] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextValue: ...
 
@@ -17560,9 +17424,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -17832,7 +17694,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -17860,45 +17722,45 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Theta: ...
 
@@ -17929,7 +17791,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -18036,25 +17898,25 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -18229,45 +18091,45 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ThetaDatum: ...
 
@@ -18299,7 +18161,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -18540,13 +18402,13 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -18940,7 +18802,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -18958,8 +18820,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Tooltip: ...
 
@@ -18968,7 +18830,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Tooltip: ...
 
@@ -18991,7 +18853,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: str, **kwds) -> Tooltip: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> Tooltip: ...
+    def format(self, _: Map, **kwds) -> Tooltip: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> Tooltip: ...
@@ -19077,18 +18939,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19131,25 +18991,25 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19161,11 +19021,11 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -19174,26 +19034,26 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19205,12 +19065,12 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -19219,8 +19079,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -19229,7 +19089,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -19241,9 +19101,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -19471,7 +19329,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -19489,8 +19347,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Url: ...
 
@@ -19499,7 +19357,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Url: ...
 
@@ -19522,7 +19380,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def format(self, _: str, **kwds) -> Url: ...
 
     @overload
-    def format(self, _: dict, **kwds) -> Url: ...
+    def format(self, _: Map, **kwds) -> Url: ...
 
     @overload
     def formatType(self, _: str, **kwds) -> Url: ...
@@ -19608,18 +19466,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19662,25 +19518,25 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19692,11 +19548,11 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
-        test: Optional[str | dict | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -19705,26 +19561,26 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
         empty: Optional[bool] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19736,12 +19592,12 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | dict | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[dict | None | SchemaBase] = Undefined,
+        legend: Optional[None | SchemaBase | Map] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -19750,8 +19606,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: Optional[str | dict | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        test: Optional[str | SchemaBase | Map] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -19760,7 +19616,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | dict | None | Parameter | SchemaBase] = Undefined,
+        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -19772,9 +19628,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def __init__(
         self,
         value,
-        condition: Optional[
-            dict | SchemaBase | Sequence[dict | SchemaBase]
-        ] = Undefined,
+        condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, condition=condition, **kwds)
@@ -20051,118 +19905,116 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def axis(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        bandPosition: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         domainDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        domainDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        domainDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        labelAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
-        labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
+        labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
-        labelFlushOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFlushOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
-        maxExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        minExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        orient: Optional[dict | Parameter | SchemaBase | AxisOrient_T] = Undefined,
-        position: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        maxExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        orient: Optional[Parameter | SchemaBase | Map | AxisOrient_T] = Undefined,
+        position: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
         tickBand: Optional[
-            dict | Parameter | SchemaBase | Literal["center", "extent"]
+            Parameter | SchemaBase | Literal["center", "extent"] | Map
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        tickDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        tickDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickExtra: Optional[bool] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickRound: Optional[bool] = Undefined,
-        tickSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
-        titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
+        titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        translate: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        translate: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -20184,7 +20036,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -20213,7 +20065,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def impute(
         self,
         frame: Optional[Sequence[None | float]] = Undefined,
-        keyvals: Optional[dict | SchemaBase | Sequence[Any]] = Undefined,
+        keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
         **kwds,
@@ -20225,45 +20077,45 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> X: ...
 
@@ -20294,7 +20146,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -20401,27 +20253,27 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[dict | None | SchemaBase] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
+        axis: Optional[None | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        impute: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        impute: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -20612,118 +20464,116 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def axis(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        bandPosition: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         domainDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        domainDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        domainDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        labelAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
-        labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
+        labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
-        labelFlushOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFlushOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
-        maxExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        minExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        orient: Optional[dict | Parameter | SchemaBase | AxisOrient_T] = Undefined,
-        position: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        maxExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        orient: Optional[Parameter | SchemaBase | Map | AxisOrient_T] = Undefined,
+        position: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
         tickBand: Optional[
-            dict | Parameter | SchemaBase | Literal["center", "extent"]
+            Parameter | SchemaBase | Literal["center", "extent"] | Map
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        tickDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        tickDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickExtra: Optional[bool] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickRound: Optional[bool] = Undefined,
-        tickSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
-        titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
+        titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        translate: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        translate: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -20739,7 +20589,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def impute(
         self,
         frame: Optional[Sequence[None | float]] = Undefined,
-        keyvals: Optional[dict | SchemaBase | Sequence[Any]] = Undefined,
+        keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
         **kwds,
@@ -20751,45 +20601,45 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XDatum: ...
 
@@ -20820,10 +20670,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: Optional[dict | None | SchemaBase] = Undefined,
+        axis: Optional[None | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        impute: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -21066,13 +20916,13 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -21445,13 +21295,13 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -21692,13 +21542,13 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -21972,7 +21822,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -21997,45 +21847,45 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XOffset: ...
 
@@ -22066,7 +21916,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -22164,24 +22014,24 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -22325,45 +22175,45 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XOffsetDatum: ...
 
@@ -22386,7 +22236,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -22695,118 +22545,116 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def axis(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        bandPosition: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         domainDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        domainDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        domainDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        labelAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
-        labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
+        labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
-        labelFlushOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFlushOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
-        maxExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        minExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        orient: Optional[dict | Parameter | SchemaBase | AxisOrient_T] = Undefined,
-        position: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        maxExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        orient: Optional[Parameter | SchemaBase | Map | AxisOrient_T] = Undefined,
+        position: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
         tickBand: Optional[
-            dict | Parameter | SchemaBase | Literal["center", "extent"]
+            Parameter | SchemaBase | Literal["center", "extent"] | Map
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        tickDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        tickDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickExtra: Optional[bool] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickRound: Optional[bool] = Undefined,
-        tickSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
-        titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
+        titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        translate: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        translate: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -22828,7 +22676,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -22857,7 +22705,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def impute(
         self,
         frame: Optional[Sequence[None | float]] = Undefined,
-        keyvals: Optional[dict | SchemaBase | Sequence[Any]] = Undefined,
+        keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
         **kwds,
@@ -22869,45 +22717,45 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Y: ...
 
@@ -22938,7 +22786,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -23045,27 +22893,27 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[dict | None | SchemaBase] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
+        axis: Optional[None | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase | Literal["binned"]] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        impute: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        impute: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23256,118 +23104,116 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def axis(
         self,
-        aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        bandPosition: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         domainDash: Optional[
-            dict | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        domainDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        format: Optional[str | dict | SchemaBase] = Undefined,
+        domainDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        gridWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        labelAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
-        labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
+        labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
-        labelFlushOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        labelFlushOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labelOverlap: Optional[
-            bool | dict | Parameter | SchemaBase | Literal["greedy", "parity"]
+            bool | Parameter | SchemaBase | Literal["greedy", "parity"] | Map
         ] = Undefined,
-        labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelSeparation: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        labelSeparation: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
-        maxExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        minExtent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        orient: Optional[dict | Parameter | SchemaBase | AxisOrient_T] = Undefined,
-        position: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        maxExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minExtent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        orient: Optional[Parameter | SchemaBase | Map | AxisOrient_T] = Undefined,
+        position: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
         tickBand: Optional[
-            dict | Parameter | SchemaBase | Literal["center", "extent"]
+            Parameter | SchemaBase | Literal["center", "extent"] | Map
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         tickCount: Optional[
-            dict | float | Parameter | SchemaBase | TimeInterval_T
+            float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        tickDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
-        tickDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
+        tickDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickExtra: Optional[bool] = Undefined,
-        tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickRound: Optional[bool] = Undefined,
-        tickSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
-        titleAnchor: Optional[
-            dict | Parameter | SchemaBase | TitleAnchor_T
-        ] = Undefined,
-        titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
+        titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleBaseline: Optional[
-            dict | Parameter | SchemaBase | TextBaseline_T
+            Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
-        titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleFontStyle: Optional[str | dict | Parameter | SchemaBase] = Undefined,
+        titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleFontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontWeight: Optional[
-            dict | Parameter | SchemaBase | FontWeight_T
+            Parameter | SchemaBase | Map | FontWeight_T
         ] = Undefined,
-        titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleX: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleY: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        translate: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        titleLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleX: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        titleY: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        translate: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         values: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
         **kwds,
@@ -23383,7 +23229,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def impute(
         self,
         frame: Optional[Sequence[None | float]] = Undefined,
-        keyvals: Optional[dict | SchemaBase | Sequence[Any]] = Undefined,
+        keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
         **kwds,
@@ -23395,45 +23241,45 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YDatum: ...
 
@@ -23464,10 +23310,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: Optional[dict | None | SchemaBase] = Undefined,
+        axis: Optional[None | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[dict | None | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        impute: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -23710,13 +23556,13 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -24089,13 +23935,13 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -24336,13 +24182,13 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
         bin: Optional[None] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -24616,7 +24462,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
         divide: Optional[Sequence[float]] = Undefined,
-        extent: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
+        extent: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         maxbins: Optional[float] = Undefined,
         minstep: Optional[float] = Undefined,
         nice: Optional[bool] = Undefined,
@@ -24641,45 +24487,45 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YOffset: ...
 
@@ -24710,7 +24556,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        field: Optional[str | dict | SchemaBase] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
         order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
@@ -24808,24 +24654,24 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        aggregate: Optional[dict | SchemaBase | NonArgAggregateOp_T] = Undefined,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | dict | None | SchemaBase] = Undefined,
-        field: Optional[str | dict | SchemaBase] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         sort: Optional[
-            dict
-            | None
+            None
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[dict | SchemaBase]
+            | Sequence[SchemaBase | Map]
+            | Map
             | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -24969,45 +24815,45 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def scale(
         self,
-        align: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        base: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        bins: Optional[dict | SchemaBase | Sequence[float]] = Undefined,
-        clamp: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        constant: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
+        clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        constant: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[
-            dict
-            | Parameter
+            Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
+            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Map
         ] = Undefined,
-        domainMax: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMid: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainMin: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        domainRaw: Optional[dict | Parameter | SchemaBase] = Undefined,
-        exponent: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
+        exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
-            dict | Parameter | SchemaBase | ScaleInterpolateEnum_T
+            Parameter | SchemaBase | Map | ScaleInterpolateEnum_T
         ] = Undefined,
         nice: Optional[
-            bool | dict | float | Parameter | SchemaBase | TimeInterval_T
+            bool | float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingInner: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        paddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         range: Optional[
-            dict
-            | SchemaBase
-            | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            SchemaBase
+            | Sequence[str | float | Parameter | SchemaBase | Sequence[float] | Map]
+            | Map
             | RangeEnum_T
         ] = Undefined,
-        rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
-        reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        scheme: Optional[dict | Parameter | SchemaBase | ColorScheme_T] = Undefined,
+        rangeMax: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        rangeMin: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        reverse: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        round: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
-        zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
+        zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YOffsetDatum: ...
 
@@ -25030,7 +24876,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[dict | None | SchemaBase] = Undefined,
+        scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,

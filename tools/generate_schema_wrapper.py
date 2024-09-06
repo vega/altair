@@ -549,7 +549,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     # of exported classes which are also defined in the channels or api modules which takes
     # precedent in the generated __init__.py files one and two levels up.
     # Importing these classes from multiple modules confuses type checkers.
-    EXCLUDE = {"Color", "Text", "LookupData", "Dict"}
+    EXCLUDE = {"Color", "Text", "LookupData", "Dict", "FacetMapping"}
     it = (c for c in definitions.keys() - EXCLUDE if not c.startswith("_"))
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
 
@@ -830,6 +830,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     ruff_write_lint_format_str(outfile, content)
 
+    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
+
     files: dict[Path, str | Iterable[str]] = {}
 
     # Generate the core schema wrappers
@@ -882,7 +884,6 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
     )
     print(msg)
-    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
     TypeAliasTracer.write_module(
         fp_typing, "OneOrSeq", header=HEADER, extra=TYPING_EXTRA
     )

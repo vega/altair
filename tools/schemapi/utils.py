@@ -38,7 +38,7 @@ jsonschema_to_python_types = {
     "string": "str",
     "number": "float",
     "integer": "int",
-    "object": "dict",
+    "object": "Map",
     "boolean": "bool",
     "array": "list",
     "null": "None",
@@ -159,7 +159,7 @@ class _TypeAliasTracer:
 
         Currently used as a sort key, to place literals/aliases last.
         """
-        return tp in self._literals_invert or tp in self._literals
+        return tp in self._literals_invert or tp in self._literals or tp in self._aliases  # fmt: skip
 
     def write_module(
         self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString
@@ -449,7 +449,7 @@ class SchemaInfo:
                     )
                 )
             type_representations.extend(options)
-        elif self.is_object():
+        elif self.is_object() and not for_type_hints:
             type_representations.append("dict")
         elif self.is_array():
             # A list is invariant in its type parameter. This means that e.g.
