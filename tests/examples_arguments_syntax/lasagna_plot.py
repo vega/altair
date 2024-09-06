@@ -23,8 +23,8 @@ alt.Chart(source, width=300, height=100).transform_filter(
             format="%Y",
             labelAngle=0,
             labelOverlap=False,
-            labelColor=color_condition, # type: ignore[arg-type]
-            tickColor=color_condition, # type: ignore[arg-type]
+            labelColor=color_condition,
+            tickColor=color_condition,
         ),
         title="Time",
     ),

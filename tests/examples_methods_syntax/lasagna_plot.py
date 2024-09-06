@@ -23,8 +23,8 @@ alt.Chart(source, width=300, height=100).transform_filter(
             format="%Y",
             labelAngle=0,
             labelOverlap=False,
-            labelColor=color_condition, # type: ignore[call-overload]
-            tickColor=color_condition, # pyright: ignore[reportArgumentType]
+            labelColor=color_condition,
+            tickColor=color_condition,
         ),
     alt.Y("symbol:N").title(None),
     alt.Color("sum(price)").title("Price")
