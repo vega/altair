@@ -308,11 +308,26 @@ class LookupData(core.LookupData):
 
 
 class FacetMapping(core.FacetMapping):
+    """
+    FacetMapping schema wrapper.
+
+    Parameters
+    ----------
+    column : str, :class:`FacetFieldDef`, :class:`Column`
+        A field definition for the horizontal facet of trellis plots.
+    row : str, :class:`FacetFieldDef`, :class:`Row`
+        A field definition for the vertical facet of trellis plots.
+    """
+
     _class_is_valid_at_instantiation = False
 
-    @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        column: Optional[str | FacetFieldDef | Column] = Undefined,
+        row: Optional[str | FacetFieldDef | Row] = Undefined,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(column=column, row=row, **kwargs)  # type: ignore[arg-type]
 
     def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
@@ -3617,13 +3632,14 @@ class _EncodingMixin(channels._EncodingMixin):
             self = _top_schema_base(self).copy(deep=False)
             data, self.data = self.data, Undefined
 
-        if facet_specified:
+        f: Facet | FacetMapping
+        if not utils.is_undefined(facet):
             f = channels.Facet(facet) if isinstance(facet, str) else facet
         else:
             r: Any = row
             f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)  # pyright: ignore[reportArgumentType]
 
 
 class Chart(
@@ -4173,7 +4189,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
 def concat(*charts: ConcatType, **kwargs: Any) -> ConcatChart:
     """Concatenate charts horizontally."""
-    return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
+    return ConcatChart(concat=charts, **kwargs)
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
@@ -4277,7 +4293,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 def hconcat(*charts: ConcatType, **kwargs: Any) -> HConcatChart:
     """Concatenate charts horizontally."""
-    return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
+    return HConcatChart(hconcat=charts, **kwargs)
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
@@ -4383,7 +4399,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 def vconcat(*charts: ConcatType, **kwargs: Any) -> VConcatChart:
     """Concatenate charts vertically."""
-    return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
+    return VConcatChart(vconcat=charts, **kwargs)
 
 
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
@@ -4509,7 +4525,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
 def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
     """Layer multiple charts."""
-    return LayerChart(layer=charts, **kwargs)  # pyright: ignore
+    return LayerChart(layer=charts, **kwargs)
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
