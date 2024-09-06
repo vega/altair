@@ -449,6 +449,8 @@ class SchemaInfo:
                     )
                 )
             type_representations.extend(options)
+        elif self.is_object() and not for_type_hints:
+            type_representations.append("dict")
         elif self.is_array():
             # A list is invariant in its type parameter. This means that e.g.
             # List[str] is not a subtype of List[Union[core.FieldName, str]]
