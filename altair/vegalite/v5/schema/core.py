@@ -158,7 +158,6 @@ __all__ = [
     "ExtentTransform",
     "FacetEncodingFieldDef",
     "FacetFieldDef",
-    "FacetMapping",
     "FacetSpec",
     "FacetedEncoding",
     "FacetedUnitSpec",
