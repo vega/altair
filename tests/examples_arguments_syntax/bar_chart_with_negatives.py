@@ -9,12 +9,13 @@ from vega_datasets import data
 
 source = data.us_employment()
 
-alt.Chart(source).mark_bar().encode(
-    x="month:T",
-    y="nonfarm_change:Q",
-    color=alt.condition(
-        alt.datum.nonfarm_change > 0,
-        alt.value("steelblue"),  # The positive color
-        alt.value("orange")  # The negative color
-    )
-).properties(width=600)
+predicate = alt.datum.nonfarm_change > 0
+color = alt.when(predicate).then(alt.value("steelblue")).otherwise(alt.value("orange"))
+
+chart = (
+    alt.Chart(source)
+    .mark_bar()
+    .encode(x="month:T", y="nonfarm_change:Q", color=color)
+    .properties(width=600)
+)
+chart
