@@ -47,7 +47,7 @@ jsonschema_to_python_types: dict[str, str] = {
     "string": "str",
     "number": "float",
     "integer": "int",
-    "object": "dict",
+    "object": "Map",
     "boolean": "bool",
     "array": "list",
     "null": "None",
@@ -180,9 +180,9 @@ class _TypeAliasTracer:
 
         Currently used as a sort key, to place literals/aliases last.
         """
-        return (tp in self._literals_invert or tp in self._literals) or (
-            include_concrete and self.fmt.format(tp) in self._literals
-        )
+        return (
+            tp in self._literals_invert or tp in self._literals or tp in self._aliases
+        ) or (include_concrete and self.fmt.format(tp) in self._literals)
 
     def write_module(
         self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString
@@ -457,6 +457,8 @@ class SchemaInfo:
         elif self.type in jsonschema_to_python_types:
             if self.is_object() and use_concrete:
                 ...  # HACK: Fall-through case to avoid `dict` added to `TypedDict`
+            elif self.is_object() and target == "doc":
+                tps.add("dict")
             else:
                 tps.add(jsonschema_to_python_types[self.type])
         else:
