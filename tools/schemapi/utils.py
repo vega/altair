@@ -159,7 +159,7 @@ class _TypeAliasTracer:
 
         Currently used as a sort key, to place literals/aliases last.
         """
-        return tp in self._literals_invert or tp in self._literals
+        return tp in self._literals_invert or tp in self._literals or tp in self._aliases  # fmt: skip
 
     def write_module(
         self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString

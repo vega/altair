@@ -32,114 +32,114 @@ class MarkMethodMixin:
 
     def mark_arc(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)."""
@@ -241,114 +241,114 @@ class MarkMethodMixin:
 
     def mark_area(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)."""
@@ -450,114 +450,114 @@ class MarkMethodMixin:
 
     def mark_bar(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)."""
@@ -659,114 +659,114 @@ class MarkMethodMixin:
 
     def mark_image(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)."""
@@ -868,114 +868,114 @@ class MarkMethodMixin:
 
     def mark_line(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)."""
@@ -1077,114 +1077,114 @@ class MarkMethodMixin:
 
     def mark_point(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)."""
@@ -1286,114 +1286,114 @@ class MarkMethodMixin:
 
     def mark_rect(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)."""
@@ -1495,114 +1495,114 @@ class MarkMethodMixin:
 
     def mark_rule(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)."""
@@ -1704,114 +1704,114 @@ class MarkMethodMixin:
 
     def mark_text(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)."""
@@ -1913,114 +1913,114 @@ class MarkMethodMixin:
 
     def mark_tick(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)."""
@@ -2122,114 +2122,114 @@ class MarkMethodMixin:
 
     def mark_trail(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)."""
@@ -2331,114 +2331,114 @@ class MarkMethodMixin:
 
     def mark_circle(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)."""
@@ -2540,114 +2540,114 @@ class MarkMethodMixin:
 
     def mark_square(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)."""
@@ -2749,114 +2749,114 @@ class MarkMethodMixin:
 
     def mark_geoshape(
         self,
-        align: Optional[Map | Parameter | SchemaBase | Align_T] = Undefined,
-        angle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        aria: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        ariaRole: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        ariaRoleDescription: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        aspect: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        align: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
+        angle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        ariaRole: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        ariaRoleDescription: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        aspect: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandSize: Optional[float] = Undefined,
-        baseline: Optional[Map | Parameter | SchemaBase | TextBaseline_T] = Undefined,
+        baseline: Optional[Parameter | SchemaBase | Map | TextBaseline_T] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[Map | Parameter | SchemaBase | Blend_T] = Undefined,
-        clip: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        blend: Optional[Parameter | SchemaBase | Map | Blend_T] = Undefined,
+        clip: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
-        cornerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusBottomLeft: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
         cornerRadiusBottomRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cornerRadiusEnd: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        cornerRadiusTopLeft: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopRight: Optional[
-            Map | float | Parameter | SchemaBase
+            float | Parameter | SchemaBase | Map
         ] = Undefined,
-        cursor: Optional[Map | Parameter | SchemaBase | Cursor_T] = Undefined,
-        description: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        dir: Optional[Map | Parameter | SchemaBase | TextDirection_T] = Undefined,
-        discreteBandSize: Optional[Map | float | SchemaBase] = Undefined,
-        dx: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        dy: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        ellipsis: Optional[Map | str | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
+        description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
+        discreteBandSize: Optional[float | SchemaBase | Map] = Undefined,
+        dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        fillOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
-        font: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        fontStyle: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        fontWeight: Optional[Map | Parameter | SchemaBase | FontWeight_T] = Undefined,
-        height: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        href: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        innerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        interpolate: Optional[Map | Parameter | SchemaBase | Interpolate_T] = Undefined,
+        font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        fontStyle: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        fontWeight: Optional[Parameter | SchemaBase | Map | FontWeight_T] = Undefined,
+        height: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        limit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        line: Optional[Map | bool | SchemaBase] = Undefined,
-        lineBreak: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        lineHeight: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        minBandSize: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        opacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        line: Optional[bool | SchemaBase | Map] = Undefined,
+        lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        minBandSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         order: Optional[bool | None] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outerRadius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        padAngle: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        point: Optional[Map | bool | SchemaBase | Literal["transparent"]] = Undefined,
-        radius: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radius2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        radiusOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        shape: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        size: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        smooth: Optional[Map | bool | Parameter | SchemaBase] = Undefined,
+        outerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        padAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        point: Optional[bool | SchemaBase | Literal["transparent"] | Map] = Undefined,
+        radius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radius2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        radiusOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            Map | str | None | Parameter | SchemaBase | ColorName_T
+            str | None | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[Map | Parameter | SchemaBase | StrokeCap_T] = Undefined,
+        strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
-            Map | Parameter | SchemaBase | Sequence[float]
+            Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
-        strokeDashOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeJoin: Optional[Map | Parameter | SchemaBase | StrokeJoin_T] = Undefined,
-        strokeMiterLimit: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeOpacity: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        strokeWidth: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
+        strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         style: Optional[str | Sequence[str]] = Undefined,
-        tension: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        text: Optional[Map | str | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        theta: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        theta2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        thetaOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        tension: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
+        theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            Map | str | bool | None | float | Parameter | SchemaBase
+            str | bool | None | float | Parameter | SchemaBase | Map
         ] = Undefined,
-        url: Optional[Map | str | Parameter | SchemaBase] = Undefined,
-        width: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
+        width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         x: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
         x2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["width"]
+            float | Parameter | SchemaBase | Literal["width"] | Map
         ] = Undefined,
-        x2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        xOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         y: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
         y2: Optional[
-            Map | float | Parameter | SchemaBase | Literal["height"]
+            float | Parameter | SchemaBase | Literal["height"] | Map
         ] = Undefined,
-        y2Offset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
-        yOffset: Optional[Map | float | Parameter | SchemaBase] = Undefined,
+        y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)."""
@@ -2958,18 +2958,18 @@ class MarkMethodMixin:
 
     def mark_boxplot(
         self,
-        box: Optional[Map | bool | SchemaBase] = Undefined,
+        box: Optional[bool | SchemaBase | Map] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         extent: Optional[float | Literal["min-max"]] = Undefined,
         invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
-        median: Optional[Map | bool | SchemaBase] = Undefined,
+        median: Optional[bool | SchemaBase | Map] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        outliers: Optional[Map | bool | SchemaBase] = Undefined,
-        rule: Optional[Map | bool | SchemaBase] = Undefined,
+        outliers: Optional[bool | SchemaBase | Map] = Undefined,
+        rule: Optional[bool | SchemaBase | Map] = Undefined,
         size: Optional[float] = Undefined,
-        ticks: Optional[Map | bool | SchemaBase] = Undefined,
+        ticks: Optional[bool | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)."""
@@ -2998,14 +2998,14 @@ class MarkMethodMixin:
     def mark_errorbar(
         self,
         clip: Optional[bool] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
-        rule: Optional[Map | bool | SchemaBase] = Undefined,
+        rule: Optional[bool | SchemaBase | Map] = Undefined,
         size: Optional[float] = Undefined,
         thickness: Optional[float] = Undefined,
-        ticks: Optional[Map | bool | SchemaBase] = Undefined,
+        ticks: Optional[bool | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)."""
@@ -3030,10 +3030,10 @@ class MarkMethodMixin:
 
     def mark_errorband(
         self,
-        band: Optional[Map | bool | SchemaBase] = Undefined,
-        borders: Optional[Map | bool | SchemaBase] = Undefined,
+        band: Optional[bool | SchemaBase | Map] = Undefined,
+        borders: Optional[bool | SchemaBase | Map] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[Map | str | Parameter | SchemaBase | ColorName_T] = Undefined,
+        color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         interpolate: Optional[SchemaBase | Interpolate_T] = Undefined,
         opacity: Optional[float] = Undefined,
