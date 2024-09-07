@@ -456,16 +456,13 @@ class SchemaInfo:
             )
             tps.update(maybe_rewrap_literal(chain.from_iterable(it_nest)))
         elif isinstance(self.type, list):
-            options = []
-            subschema = SchemaInfo(dict(**self.schema))
-            for typ_ in self.type:
-                # FIXME: Rewrite this to not mutate `SchemaInfo.schema`
-                subschema.schema["type"] = typ_
-                # We always use title if possible for nested objects
-                options.append(
-                    subschema.to_type_repr(target=target, use_concrete=use_concrete)
+            # We always use title if possible for nested objects
+            tps.update(
+                SchemaInfo(dict(self.schema, type=tp)).to_type_repr(
+                    target=target, use_concrete=use_concrete
                 )
-            tps.update(options)
+                for tp in self.type
+            )
         elif self.is_array():
             tps.add(
                 spell_nested_sequence(self, target=target, use_concrete=use_concrete)
