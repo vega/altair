@@ -302,13 +302,13 @@ class SchemaProperties:
 
     def __init__(
         self,
-        properties: dict[str, Any],
-        schema: dict[str, Any],
-        rootschema: dict[str, Any] | None = None,
+        properties: Mapping[str, Any],
+        schema: Mapping[str, Any],
+        rootschema: Mapping[str, Any] | None = None,
     ) -> None:
-        self._properties: dict[str, Any] = properties
-        self._schema: dict[str, Any] = schema
-        self._rootschema: dict[str, Any] = rootschema or schema
+        self._properties: Mapping[str, Any] = properties
+        self._schema: Mapping[str, Any] = schema
+        self._rootschema: Mapping[str, Any] = rootschema or schema
 
     def __bool__(self) -> bool:
         return bool(self._properties)
@@ -334,7 +334,7 @@ class SchemaProperties:
     def items(self) -> Iterator[tuple[str, SchemaInfo]]:
         return ((key, self[key]) for key in self)
 
-    def keys(self) -> dict_keys[str, Any]:
+    def keys(self) -> KeysView:
         return self._properties.keys()
 
     def values(self) -> Iterator[SchemaInfo]:
@@ -347,13 +347,20 @@ class SchemaInfo:
     _remap_title: ClassVar[dict[str, str]] = {}
 
     def __init__(
-        self, schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+        self, schema: Mapping[str, Any], rootschema: Mapping[str, Any] | None = None
     ) -> None:
         if not rootschema:
             rootschema = schema
-        self.raw_schema: dict[str, Any] = schema
-        self.rootschema: dict[str, Any] = rootschema
-        self.schema: dict[str, Any] = resolve_references(schema, rootschema)
+        self.raw_schema: Mapping[str, Any]
+        self.rootschema: Mapping[str, Any]
+        self.schema: Mapping[str, Any]
+        object.__setattr__(self, "raw_schema", schema)
+        object.__setattr__(self, "rootschema", rootschema)
+        object.__setattr__(self, "schema", resolve_references(schema, rootschema))  # type: ignore
+
+    def __setattr__(self, name: str, value: Any) -> Never:
+        msg = f"{type(self).__name__!r} is immutable.\nCould not assign self.{name} = {value}"
+        raise TypeError(msg)
 
     def child(self, schema: dict[str, Any]) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
@@ -452,6 +459,7 @@ class SchemaInfo:
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
+                # FIXME: Rewrite this to not mutate `SchemaInfo.schema`
                 subschema.schema["type"] = typ_
                 # We always use title if possible for nested objects
                 options.append(

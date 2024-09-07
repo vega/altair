@@ -533,7 +533,8 @@ def get_field_datum_value_defs(
     propschema: SchemaInfo, root: dict[str, Any]
 ) -> dict[str, str]:
     def_dict: dict[str, str | None] = dict.fromkeys(("field", "datum", "value"))
-    schema = propschema.schema
+    _schema = propschema.schema
+    schema = _schema if isinstance(_schema, dict) else dict(_schema)
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:
             def_dict["field"] = propschema.ref
