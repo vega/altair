@@ -323,6 +323,9 @@ class SchemaProperties:
     def __iter__(self) -> Iterator[str]:
         return iter(self._properties)
 
+    def __len__(self) -> int:
+        return len(self._properties)
+
     def items(self) -> Iterator[tuple[str, SchemaInfo]]:
         return ((key, self[key]) for key in self)
 
