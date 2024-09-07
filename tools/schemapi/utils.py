@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import keyword
 import re
 import subprocess
@@ -55,6 +56,8 @@ jsonschema_to_python_types: dict[str, str] = {
     "null": "None",
 }
 _VALID_IDENT: re.Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
+
+_HASH_ENCODER = json.JSONEncoder(sort_keys=True, separators=(",", ":"))
 
 
 class _TypeAliasTracer:
@@ -361,6 +364,16 @@ class SchemaInfo:
     def __setattr__(self, name: str, value: Any) -> Never:
         msg = f"{type(self).__name__!r} is immutable.\nCould not assign self.{name} = {value}"
         raise TypeError(msg)
+
+    def __hash__(self) -> int:
+        return hash(_HASH_ENCODER.encode(self.schema))
+
+    def __eq__(self, value: object) -> bool:
+        if isinstance(value, SchemaInfo):
+            if self.ref:
+                return self.ref == value.ref
+            return hash(self) == hash(value)
+        return False
 
     def child(self, schema: dict[str, Any]) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
