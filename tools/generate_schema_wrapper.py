@@ -10,6 +10,7 @@ import sys
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
+from keyword import iskeyword
 from pathlib import Path
 from typing import Any, Final, Iterable, Iterator, Literal
 from urllib import request
@@ -892,6 +893,44 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         )
     yield "\n".join(sub_dicts.values())
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
+
+
+def is_relevant_schema(info: SchemaInfo, /) -> bool:
+    EXCLUDE = {"ExprRef", "RelativeBandSize", "ParameterPredicate"}
+    return bool(
+        info.ref
+        and info.refname not in EXCLUDE
+        and info.properties
+        and info.type == "object"
+        and not info.is_value()
+        and "field" not in info.required
+        and not (iskeyword(next(iter(info.required), "")))
+    )
+
+
+def iter_children(info: SchemaInfo, /) -> Iterator[SchemaInfo]:
+    yield from info.properties.values()
+    yield from info.anyOf
+    if info.items:
+        yield info.child(info.items)
+
+
+def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
+    """Equivalent to `get_all_objects`."""
+    MAX_DEPTH = 6
+    seen: set[SchemaInfo] = set()
+    if is_relevant_schema(info) and info not in seen:
+        seen.add(info)
+    if depth < MAX_DEPTH:
+        for prop_info in iter_children(info):
+            seen.update(find_relevant_schemas(prop_info, depth=depth + 1))
+    return seen
+
+
+def wip_config_schemas(fp: Path, /) -> set[SchemaInfo]:
+    schema = load_schema(fp)
+    config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
+    return find_relevant_schemas(config)
 
 
 def generate_vegalite_config_mixin(fp: Path, /) -> str:
