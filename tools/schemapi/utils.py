@@ -498,6 +498,10 @@ class SchemaInfo:
         # but then we would need to write some overload signatures for
         # api.param).
         EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
+        """
+        `RelativeBandSize` excluded as it has a single property `band`,
+        but all instances also accept `float`.
+        """
         REMAP_TITLE: dict[str, str] = SchemaInfo._remap_title
         title: str = self.title
         tps: set[str] = set()
