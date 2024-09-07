@@ -484,7 +484,7 @@ def load_schema_with_shorthand_properties(fp: Path, /) -> dict[str, Any]:
     for propschema in encoding.properties.values():
         def_dict = get_field_datum_value_defs(propschema, schema)
         if field_ref := def_dict.get("field", None):
-            defschema = {"$ref": field_ref}
+            defschema: dict[str, Any] = {"$ref": field_ref}
             defschema = copy.deepcopy(resolve_references(defschema, schema))
             # For Encoding field definitions, we patch the schema by adding the
             # shorthand property.
@@ -702,7 +702,7 @@ def generate_vegalite_channel_wrappers(
 
             gen: SchemaGenerator
             defschema = {"$ref": definition}
-            kwds = {
+            kwds: dict[str, Any] = {
                 "basename": basename,
                 "schema": defschema,
                 "rootschema": schema,

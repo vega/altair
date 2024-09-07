@@ -112,7 +112,7 @@ def toplevel_charts() -> list[str]:
 
 
 def encoding_wrappers() -> list[str]:
-    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))
+    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
 
 
 def api_functions() -> list[str]:

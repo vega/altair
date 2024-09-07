@@ -17,6 +17,8 @@ from typing import (
     Iterable,
     Iterator,
     Literal,
+    Mapping,
+    MutableSequence,
     Sequence,
     overload,
 )
@@ -27,9 +29,9 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from _collections_abc import dict_keys
+    from _collections_abc import KeysView
     from pathlib import Path
-    from typing_extensions import LiteralString, TypeAlias
+    from typing_extensions import LiteralString, Never, TypeAlias
 
     from mistune import BlockState
 
@@ -139,7 +141,7 @@ class _TypeAliasTracer:
                 self._update_literals(alias, tp)
             if replace:
                 tp = alias
-        elif (alias := self._literals_invert.get(tp)) and replace:
+        elif (alias := self._literals_invert.get(tp, "")) and replace:
             tp = alias
         elif replace and info.is_union_literal():
             # Handles one very specific edge case `WindowFieldDef`
@@ -201,10 +203,13 @@ class _TypeAliasTracer:
         extra
             `tools.generate_schema_wrapper.TYPING_EXTRA`.
         """
-        ruff_format = ["ruff", "format", fp]
+        ruff_format: MutableSequence[str | Path] = ["ruff", "format", fp]
         if self._cmd_format:
             ruff_format.extend(self._cmd_format)
-        commands = (["ruff", "check", fp, *self._cmd_check], ruff_format)
+        commands: tuple[Sequence[str | Path], ...] = (
+            ["ruff", "check", fp, *self._cmd_check],
+            ruff_format,
+        )
         static = (header, "\n", *self._imports, "\n\n")
         self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
         all_ = [*iter(self._aliases), *extra_all]
@@ -438,11 +443,11 @@ class SchemaInfo:
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
         elif self.is_anyOf():
-            it = (
+            it_nest = (
                 s.to_type_repr(target=target, as_str=False, use_concrete=use_concrete)
                 for s in self.anyOf
             )
-            tps.update(maybe_rewrap_literal(chain.from_iterable(it)))
+            tps.update(maybe_rewrap_literal(chain.from_iterable(it_nest)))
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
@@ -1015,7 +1020,7 @@ def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
     ruff format --diff --check .
     ```
     """
-    cmd = ["ruff", "format", fp]
+    cmd: MutableSequence[str | Path] = ["ruff", "format", fp]
     if extra_args:
         cmd.extend(extra_args)
     r = subprocess.run(cmd, check=True)
@@ -1036,7 +1041,7 @@ def ruff_write_lint_format_str(
     - Encoding set as default
     - `I001/2` are `isort` rules, to sort imports.
     """
-    commands = (
+    commands: Iterable[Sequence[str | Path]] = (
         ["ruff", "check", fp, "--fix"],
         ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
     )
