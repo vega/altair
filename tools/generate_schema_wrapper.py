@@ -908,13 +908,6 @@ def is_relevant_schema(info: SchemaInfo, /) -> bool:
     )
 
 
-def iter_children(info: SchemaInfo, /) -> Iterator[SchemaInfo]:
-    yield from info.properties.values()
-    yield from info.anyOf
-    if info.items:
-        yield info.child(info.items)
-
-
 def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
     """Equivalent to `get_all_objects`."""
     MAX_DEPTH = 6
@@ -922,7 +915,7 @@ def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
     if is_relevant_schema(info) and info not in seen:
         seen.add(info)
     if depth < MAX_DEPTH:
-        for prop_info in iter_children(info):
+        for prop_info in info.iter_descendants():
             seen.update(find_relevant_schemas(prop_info, depth=depth + 1))
     return seen
 

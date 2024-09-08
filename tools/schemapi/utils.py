@@ -378,6 +378,15 @@ class SchemaInfo:
     def child(self, schema: dict[str, Any]) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
 
+    def iter_descendants(self) -> Iterator[SchemaInfo]:
+        """Yields `properties`, `anyOf`, `items`."""
+        if "properties" in self.schema:
+            yield from self.properties.values()
+        if "anyOf" in self.schema:
+            yield from self.anyOf
+        if self.items:
+            yield self.child(self.items)
+
     def __repr__(self) -> str:
         keys = []
         for key in sorted(self.schema.keys()):
