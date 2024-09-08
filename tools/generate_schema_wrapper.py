@@ -836,6 +836,9 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         )
         for info in relevant.values()
     )
+    _all = [f"{nm}{KWDS}" for nm in relevant]
+    _all.append("ThemeConfig")
+    yield f"__all__ = {_all}\n\n"
     yield "\n".join(sub_dicts)
 
     for prop, prop_info in config.properties.items():
