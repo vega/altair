@@ -372,7 +372,7 @@ class SchemaInfo:
         if isinstance(value, SchemaInfo):
             if self.ref:
                 return self.ref == value.ref
-            return hash(self) == hash(value)
+            return self.schema == value.schema
         return False
 
     def child(self, schema: dict[str, Any]) -> SchemaInfo:
