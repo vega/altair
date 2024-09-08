@@ -822,80 +822,34 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     schema = load_schema(fp)
     config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
     top_dict_annotations: list[str] = []
-    sub_dicts: dict[str, str] = {}
-    # FIXME: Replace with a recursive/graph approach
-    MANUAL_DEFS = (
-        "ScaleInvalidDataConfig",
-        "OverlayMarkDef",
-        "LinearGradient",
-        "RadialGradient",
-        "GradientStop",
-        "TooltipContent",
-        "DateTime",
-        "TimeIntervalStep",
-        "IntervalSelectionConfigWithoutType",
-        "PointSelectionConfigWithoutType",
-        "Feature<Geometry,GeoJsonProperties>",
-        "GeoJsonFeature",
-        "GeoJsonFeatureCollection",
-        "GeometryCollection",
-        "Point",
-        "Polygon",
-        "LineString",
-        "MultiPoint",
-        "MultiPolygon",
-        "MultiLineString",
-        "BrushConfig",
-        "MergedStream",
-        "DerivedStream",
-        "AutoSizeParams",
-        "Locale",
-        "VariableParameter",
-        "TopLevelSelectionParameter",
-        "PointSelectionConfig",
-        "IntervalSelectionConfig",
-        "BindInput",
-        "BindRange",
-        "BindDirect",
-        "BindCheckbox",
-        "BindRadioSelect",
-        "NumberLocale",
-        "TimeLocale",
-        "LegendStreamBinding",
-    )
-    MANUAL_DEFS_VALID = (get_valid_identifier(k) for k in MANUAL_DEFS)
+    relevant: dict[str, SchemaInfo] = {
+        x.title: x
+        for x in sorted(find_relevant_schemas(config), key=lambda x: x.refname)
+        if x.refname != "Config"
+    }
     KWDS: Literal["Kwds"] = "Kwds"
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
-    SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in MANUAL_DEFS_VALID)
+    SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in relevant)
+    sub_dicts = (
+        CONFIG_SUB_TYPED_DICT.format(
+            name=f"{info.title}{KWDS}", typed_dict_args=generate_typed_dict_args(info)
+        )
+        for info in relevant.values()
+    )
+    yield "\n".join(sub_dicts)
 
     for prop, prop_info in config.properties.items():
         if (classname := prop_info.refname) and classname.endswith("Config"):
             name = f"{classname}{KWDS}"
             top_dict_annotations.append(f"{prop}: {name}")
-            if name not in sub_dicts:
-                # HACK: Ensure no references to actual `...Config` classes exist
-                # - Using regex due to forward references
-                args = re.sub(
-                    r"Config\b", rf"Config{KWDS}", generate_typed_dict_args(prop_info)
-                )
-                sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
-                    name=name, typed_dict_args=args
-                )
         else:
             ann: str = prop_info.to_type_repr(target="annotation", use_concrete=True)
             top_dict_annotations.append(f"{prop}: {ann}")
-
-    for d_name in MANUAL_DEFS:
-        info = SchemaInfo({"$ref": f"#/definitions/{d_name}"}, rootschema=schema)
-        name = f"{info.title}{KWDS}"
-        sub_dicts[name] = CONFIG_SUB_TYPED_DICT.format(
-            name=name, typed_dict_args=generate_typed_dict_args(info)
-        )
-    yield "\n".join(sub_dicts.values())
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
 def is_relevant_schema(info: SchemaInfo, /) -> bool:
+    """Relevant for the purpose of `ThemeConfig`."""
     EXCLUDE = {"ExprRef", "RelativeBandSize", "ParameterPredicate"}
     return bool(
         info.ref
@@ -918,12 +872,6 @@ def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
         for prop_info in info.iter_descendants():
             seen.update(find_relevant_schemas(prop_info, depth=depth + 1))
     return seen
-
-
-def wip_config_schemas(fp: Path, /) -> set[SchemaInfo]:
-    schema = load_schema(fp)
-    config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
-    return find_relevant_schemas(config)
 
 
 def generate_vegalite_config_mixin(fp: Path, /) -> str:
