@@ -228,14 +228,15 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 
 CONFIG_TYPED_DICT: Final = '''
 class ThemeConfig(TypedDict, total=False):
-    """Placeholder doc."""
+    """Placeholder doc.
+    {doc}"""
     {typed_dict_args}
 
 '''
 
 CONFIG_SUB_TYPED_DICT: Final = '''
 class {name}(TypedDict, total=False):
-    """Placeholder doc."""
+    """{doc}"""
 
     {typed_dict_args}
 '''
@@ -800,6 +801,27 @@ def _signature_args(
         raise NotImplementedError
 
 
+def _doc_args(
+    info: SchemaInfo,
+    *,
+    kind: Literal["method", "typed_dict"] = "method",
+    generate_summary: bool = True,
+) -> Iterator[str]:
+    """Lazily build a docstring."""
+    props = info.properties
+    if kind == "method":
+        raise NotImplementedError
+    elif kind == "typed_dict":
+        if generate_summary:
+            yield f"{info.title} ``TypedDict`` wrapper."
+        yield from ("", "Parameters", "----------")
+        for p in codegen.get_args(info).required_kwds:
+            yield f"{p}"
+            yield f"    {process_description(props[p].deep_description)}"
+    else:
+        raise NotImplementedError
+
+
 def generate_mark_args(
     info: SchemaInfo,
 ) -> dict[Literal["method_args", "dict_args"], str]:
@@ -812,10 +834,18 @@ def generate_mark_args(
     }
 
 
-def generate_typed_dict_args(prop_info: SchemaInfo) -> str:
-    args = codegen.get_args(prop_info).required_kwds
-    it = _signature_args(args, prop_info.properties, kind="typed_dict")
+def generate_typed_dict_args(info: SchemaInfo, /) -> str:
+    args = codegen.get_args(info).required_kwds
+    it = _signature_args(args, info.properties, kind="typed_dict")
     return "\n    ".join(it)
+
+
+def generate_typed_dict_doc(info: SchemaInfo, /, *, summary: bool = True) -> str:
+    return indent_docstring(
+        _doc_args(info, kind="typed_dict", generate_summary=summary),
+        indent_level=4,
+        lstrip=False,
+    )
 
 
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
@@ -833,14 +863,19 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
 
     config_sub: Iterator[str] = (
         CONFIG_SUB_TYPED_DICT.format(
-            name=f"{info.title}{KWDS}", typed_dict_args=generate_typed_dict_args(info)
+            name=f"{info.title}{KWDS}",
+            typed_dict_args=generate_typed_dict_args(info),
+            doc=generate_typed_dict_doc(info),
         )
         for info in relevant.values()
     )
     config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
     yield f"__all__ = {[*config_sub_names, THEME_CONFIG]}\n\n"
     yield "\n".join(config_sub)
-    yield CONFIG_TYPED_DICT.format(typed_dict_args=generate_typed_dict_args(config))
+    yield CONFIG_TYPED_DICT.format(
+        typed_dict_args=generate_typed_dict_args(config),
+        doc=generate_typed_dict_doc(config, summary=False),
+    )
 
 
 def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[SchemaInfo]:
