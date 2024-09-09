@@ -10,6 +10,7 @@ import sys
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
+from operator import attrgetter
 from pathlib import Path
 from typing import Any, Final, Iterable, Iterator, Literal
 from urllib import request
@@ -818,39 +819,31 @@ def generate_typed_dict_args(prop_info: SchemaInfo) -> str:
 
 
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
-    schema = load_schema(fp)
-    config = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
-    top_dict_annotations: list[str] = []
+    KWDS: Literal["Kwds"] = "Kwds"
+    THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
+    config = SchemaInfo({"$ref": "#/definitions/Config"}, load_schema(fp))
+
     relevant: dict[str, SchemaInfo] = {
         x.title: x
-        for x in sorted(find_relevant_schemas(config), key=lambda x: x.refname)
+        for x in sorted(find_theme_config_targets(config), key=attrgetter("refname"))
         if x.refname != "Config"
     }
-    KWDS: Literal["Kwds"] = "Kwds"
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
     SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in relevant)
-    sub_dicts = (
+
+    config_sub: Iterator[str] = (
         CONFIG_SUB_TYPED_DICT.format(
             name=f"{info.title}{KWDS}", typed_dict_args=generate_typed_dict_args(info)
         )
         for info in relevant.values()
     )
-    _all = [f"{nm}{KWDS}" for nm in relevant]
-    _all.append("ThemeConfig")
-    yield f"__all__ = {_all}\n\n"
-    yield "\n".join(sub_dicts)
-
-    for prop, prop_info in config.properties.items():
-        if (classname := prop_info.refname) and classname.endswith("Config"):
-            name = f"{classname}{KWDS}"
-            top_dict_annotations.append(f"{prop}: {name}")
-        else:
-            ann: str = prop_info.to_type_repr(target="annotation", use_concrete=True)
-            top_dict_annotations.append(f"{prop}: {ann}")
-    yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
+    config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
+    yield f"__all__ = {[*config_sub_names, THEME_CONFIG]}\n\n"
+    yield "\n".join(config_sub)
+    yield CONFIG_TYPED_DICT.format(typed_dict_args=generate_typed_dict_args(config))
 
 
-def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
+def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[SchemaInfo]:
     """Equivalent to `get_all_objects`."""
     MAX_DEPTH = 6
     seen: set[SchemaInfo] = set()
@@ -858,7 +851,7 @@ def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
         seen.add(info)
     if depth < MAX_DEPTH:
         for prop_info in info.iter_descendants():
-            seen.update(find_relevant_schemas(prop_info, depth=depth + 1))
+            seen.update(find_theme_config_targets(prop_info, depth + 1))
     return seen
 
 
