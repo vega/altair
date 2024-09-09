@@ -228,7 +228,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 
 CONFIG_TYPED_DICT: Final = '''
 class ThemeConfig(TypedDict, total=False):
-    """Placeholder doc.
+    """Top-Level Configuration ``TypedDict`` for creating a consistent theme.
     {doc}"""
     {typed_dict_args}
 

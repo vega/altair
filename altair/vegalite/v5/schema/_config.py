@@ -6731,7 +6731,7 @@ class ViewConfigKwds(TypedDict, total=False):
 
 class ThemeConfig(TypedDict, total=False):
     """
-    Placeholder doc.
+    Top-Level Configuration ``TypedDict`` for creating a consistent theme.
 
     Parameters
     ----------
