@@ -816,10 +816,12 @@ class RSTParse(mistune.Markdown):
 
 
 def indent_docstring(  # noqa: C901
-    lines: list[str], indent_level: int, width: int = 100, lstrip=True
+    lines: Iterable[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
     """Indent a docstring for use in generated code."""
     final_lines = []
+    if not isinstance(lines, list):
+        lines = list(lines)
     if len(lines) > 1:
         lines += [""]
 
