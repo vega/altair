@@ -525,13 +525,11 @@ class SchemaInfo:
             Avoid base classes/wrappers that don't provide type info.
         """
         tp_param: set[str] = {"ExprRef", "ParameterExtent"}
-        # In these cases, a value parameter is also always accepted.
-        # It would be quite complex to further differentiate
-        # between a value and a selection parameter based on
-        # the type system (one could
-        # try to check for the type of the Parameter.param attribute
-        # but then we would need to write some overload signatures for
-        # api.param).
+        # In these cases, a `VariableParameter` is also always accepted.
+        # It could be difficult to differentiate `(Variable|Selection)Parameter`, with typing.
+        # TODO: A solution could be defining `Parameter` as generic over either `param` or `param_type`.
+        # - Rewriting the init logic to not use an `Undefined` default.
+        # - Any narrowing logic could be factored-out into `is_(selection|variable)_parameter` guards.
         EXCLUDE_TITLE: set[str] = tp_param | {"RelativeBandSize"}
         """
         `RelativeBandSize` excluded as it has a single property `band`,
@@ -542,8 +540,7 @@ class SchemaInfo:
         tps: set[str] = set()
         if not use_concrete:
             tps.add("SchemaBase")
-            # To keep type hints simple, we only use the SchemaBase class
-            # as the type hint for all classes which inherit from it.
+            # NOTE: To keep type hints simple, we annotate with `SchemaBase` for all subclasses.
             if title in tp_param:
                 tps.add("Parameter")
         elif self.is_value():
