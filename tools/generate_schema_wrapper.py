@@ -10,7 +10,6 @@ import sys
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
-from keyword import iskeyword
 from pathlib import Path
 from typing import Any, Final, Iterable, Iterator, Literal
 from urllib import request
@@ -851,25 +850,11 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     yield CONFIG_TYPED_DICT.format(typed_dict_args="\n    ".join(top_dict_annotations))
 
 
-def is_relevant_schema(info: SchemaInfo, /) -> bool:
-    """Relevant for the purpose of `ThemeConfig`."""
-    EXCLUDE = {"ExprRef", "RelativeBandSize", "ParameterPredicate"}
-    return bool(
-        info.ref
-        and info.refname not in EXCLUDE
-        and info.properties
-        and info.type == "object"
-        and not info.is_value()
-        and "field" not in info.required
-        and not (iskeyword(next(iter(info.required), "")))
-    )
-
-
 def find_relevant_schemas(info: SchemaInfo, depth: int = 0) -> set[SchemaInfo]:
     """Equivalent to `get_all_objects`."""
     MAX_DEPTH = 6
     seen: set[SchemaInfo] = set()
-    if is_relevant_schema(info) and info not in seen:
+    if info.is_theme_config_target() and info not in seen:
         seen.add(info)
     if depth < MAX_DEPTH:
         for prop_info in info.iter_descendants():

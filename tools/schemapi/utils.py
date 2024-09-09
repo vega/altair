@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 import json
-import keyword
 import re
 import subprocess
 import textwrap
 import urllib.parse
 from html import unescape
 from itertools import chain
+from keyword import iskeyword
 from operator import itemgetter
 from typing import (
     TYPE_CHECKING,
@@ -290,14 +290,14 @@ def get_valid_identifier(
         valid = "_" + valid
 
     # if the result is a reserved keyword, then add an underscore at the end
-    if keyword.iskeyword(valid):
+    if iskeyword(valid):
         valid += "_"
     return valid
 
 
 def is_valid_identifier(s: str, /) -> bool:
     """Return ``True`` if ``s`` contains a valid Python identifier."""
-    return _VALID_IDENT.match(s) is not None and not keyword.iskeyword(s)
+    return _VALID_IDENT.match(s) is not None and not iskeyword(s)
 
 
 class SchemaProperties:
@@ -769,6 +769,25 @@ class SchemaInfo:
             )
             and isinstance(self.type, str)
             and self.type in jsonschema_to_python_types
+        )
+
+    def is_theme_config_target(self) -> bool:
+        """
+        Return `True` for candidates  classes in ``ThemeConfig`` hierarchy of ``TypedDict``(s).
+
+        Satisfying these rules ensures:
+        - we generate meaningful annotations
+        - they improve autocompletion, without overwhelming the UX
+        """
+        EXCLUDE = {"ExprRef", "ParameterPredicate", "RelativeBandSize"}
+        return bool(
+            self.ref
+            and self.refname not in EXCLUDE
+            and self.properties
+            and self.type == "object"
+            and not self.is_value()
+            and "field" not in self.required
+            and not (iskeyword(next(iter(self.required), "")))
         )
 
 
