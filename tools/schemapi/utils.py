@@ -532,7 +532,7 @@ class SchemaInfo:
         # try to check for the type of the Parameter.param attribute
         # but then we would need to write some overload signatures for
         # api.param).
-        EXCLUDE_TITLE: set[str] = tp_param | {"Dict", "RelativeBandSize"}
+        EXCLUDE_TITLE: set[str] = tp_param | {"RelativeBandSize"}
         """
         `RelativeBandSize` excluded as it has a single property `band`,
         but all instances also accept `float`.
@@ -743,7 +743,7 @@ class SchemaInfo:
         """
         Represents a name assigned to a literal type.
 
-        At the time of writing, all of these are:
+        At the time of writing, most of these are:
 
             SchemaInfo.schema = {"type": "string"}
 
@@ -757,10 +757,19 @@ class SchemaInfo:
             arg = FieldName("name 1")
 
         The latter is not useful and adds noise.
+
+        ``Dict`` is very similar case, with a *slightly* different schema:
+
+            SchemaInfo.schema = {"additionalProperties": {}, "type": "object"}
         """
         TP = "type"
+        ADDITIONAL = "additionalProperties"
+        keys = self.schema.keys()
         return (
-            self.schema.keys() == {TP}
+            (
+                (keys == {TP})
+                or (keys == {TP, ADDITIONAL} and self.schema[ADDITIONAL] == {})
+            )
             and isinstance(self.type, str)
             and self.type in jsonschema_to_python_types
         )
