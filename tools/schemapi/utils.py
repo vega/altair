@@ -452,7 +452,7 @@ class SchemaInfo:
             Wrap the result in ``altair.typing.Optional``.
         """
         tps: set[str] = set()
-        for_type_hints: bool = target == "annotation"
+        FOR_TYPE_HINTS: bool = target == "annotation"
 
         if self.title:
             if target == "annotation":
@@ -464,10 +464,10 @@ class SchemaInfo:
             tps.add("Any")
         elif self.is_literal():
             tp_str = spell_literal(self.literal)
-            if for_type_hints:
+            if FOR_TYPE_HINTS:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             tps.add(tp_str)
-        elif for_type_hints and self.is_union_literal():
+        elif FOR_TYPE_HINTS and self.is_union_literal():
             it = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
