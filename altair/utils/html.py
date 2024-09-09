@@ -327,10 +327,10 @@ def spec_to_html(
         vl_version = vl_version_for_vl_convert()
         render_kwargs["vegaembed_script"] = vlc.javascript_bundle(vl_version=vl_version)
     elif template == "olli":
-        olli_version = "2"
-        olli_adapters_version = "2"
-        render_kwargs["olli_version"] = olli_version
-        render_kwargs["olli_adapters_version"] = olli_adapters_version
+        OLLI_VERSION = "2"
+        OLLI_ADAPTERS_VERSION = "2"
+        render_kwargs["olli_version"] = OLLI_VERSION
+        render_kwargs["olli_adapters_version"] = OLLI_ADAPTERS_VERSION
         render_kwargs["use_olli"] = True
 
     jinja_template = TEMPLATES.get(template, template)  # type: ignore[arg-type]
