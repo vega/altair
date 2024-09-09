@@ -506,7 +506,7 @@ class SchemaInfo:
                 tps.discard("str")
             elif len(tps) == 0 and as_str:
                 # HACK: There is a single case that ends up empty here
-                # (LegendConfig.layout)
+                # See: https://github.com/vega/altair/pull/3536#discussion_r1714344162
                 tps = {"Map"}
         type_reprs = sort_type_reprs(tps)
         return (
