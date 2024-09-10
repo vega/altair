@@ -188,7 +188,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "symbolType": "square",
         },
         "line": {"stroke": "#4572a7", "strokeWidth": 2},
-        "path": {"stroke": "#4572a7"},
         "range": {
             "category": [
                 "#4572a7",
@@ -204,8 +203,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ]
         },
         "rect": {"fill": "#4572a7"},
-        "shape": {"stroke": "#4572a7"},
-        "symbol": {"fill": "#4572a7", "size": 50, "strokeWidth": 1.5},
     }
     fivethirtyeight: ThemeConfig = {
         "arc": {"fill": "#30a2da"},
@@ -227,7 +224,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "axisBand": {"grid": False},
         "background": "#f0f0f0",
         "bar": {"binSpacing": 2, "fill": "#30a2da", "stroke": None},
-        "group": {"fill": "#f0f0f0"},
         "legend": {
             "labelColor": "#333",
             "labelFontSize": 11,
@@ -239,7 +235,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "titlePadding": 10,
         },
         "line": {"stroke": "#30a2da", "strokeWidth": 2},
-        "path": {"stroke": "#30a2da", "strokeWidth": 0.5},
         "point": {"filled": True, "shape": "circle"},
         "range": {
             "category": [
@@ -267,7 +262,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "heatmap": ["#d6e8ed", "#cee0e5", "#91bfd9", "#549cc6", "#1d78b5"],
         },
         "rect": {"fill": "#30a2da"},
-        "shape": {"stroke": "#30a2da"},
         "title": {"anchor": "start", "fontSize": 24, "fontWeight": 600, "offset": 20},
     }
     ggplot2: ThemeConfig = {
@@ -285,10 +279,8 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "titleFontSize": 16,
             "titleFontWeight": "normal",
         },
-        "group": {"fill": "#e5e5e5"},
         "legend": {"labelBaseline": "middle", "labelFontSize": 11, "symbolSize": 40},
         "line": {"stroke": "#000"},
-        "path": {"stroke": "#000"},
         "range": {
             "category": [
                 "#000000",
@@ -304,8 +296,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ]
         },
         "rect": {"fill": "#000"},
-        "shape": {"stroke": "#000"},
-        "symbol": {"fill": "#000", "size": 40},
     }
     googlecharts: ThemeConfig = {
         "arc": {"fill": "#3366CC"},
@@ -385,7 +375,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "titleFontWeight": "normal",
         },
         "line": {"stroke": "#82c6df", "strokeWidth": 2},
-        "path": {"stroke": "#82c6df"},
         "range": {
             "category": [
                 "#ec8431",
@@ -432,8 +421,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ],
         },
         "rect": {"fill": "#82c6df"},
-        "shape": {"stroke": "#82c6df"},
-        "symbol": {"fill": "#82c6df", "size": 30},
         "title": {
             "anchor": "start",
             "color": "#000000",
@@ -493,7 +480,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "strokeJoin": "round",
             "strokeWidth": 3,
         },
-        "path": {"stroke": "#118DFF"},
         "point": {"fill": "#118DFF", "filled": True, "size": 75},
         "range": {
             "category": [
@@ -522,8 +508,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ],
         },
         "rect": {"fill": "#118DFF"},
-        "shape": {"stroke": "#118DFF"},
-        "symbol": {"fill": "#118DFF", "size": 50, "strokeWidth": 1.5},
         "text": {"fill": "#605E5C", "font": "Segoe UI", "fontSize": 12},
         "view": {"stroke": "transparent"},
     }
@@ -550,7 +534,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "symbolType": "square",
         },
         "line": {"stroke": "#ab5787"},
-        "path": {"stroke": "#ab5787"},
         "range": {
             "category": [
                 "#ab5787",
@@ -566,8 +549,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ]
         },
         "rect": {"fill": "#ab5787"},
-        "shape": {"stroke": "#ab5787"},
-        "symbol": {"fill": "#ab5787", "size": 30},
     }
     urbaninstitute: ThemeConfig = {
         "arc": {"fill": "#1696d2"},
@@ -615,7 +596,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "titlePadding": 10,
         },
         "line": {"color": "#1696d2", "stroke": "#1696d2", "strokeWidth": 5},
-        "path": {"stroke": "#1696d2", "strokeWidth": 0.5},
         "point": {"filled": True},
         "range": {
             "category": [
@@ -666,9 +646,7 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ],
         },
         "rect": {"fill": "#1696d2"},
-        "shape": {"stroke": "#1696d2"},
         "style": {"bar": {"fill": "#1696d2", "stroke": None}},
-        "symbol": {"fill": "#1696d2", "size": 30},
         "text": {
             "align": "center",
             "color": "#1696d2",
@@ -698,7 +676,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "background": "#fff",
         "legend": {"labelFontSize": 11, "padding": 1, "symbolType": "square"},
         "line": {"stroke": "#3e5c69"},
-        "path": {"stroke": "#3e5c69"},
         "range": {
             "category": [
                 "#3e5c69",
@@ -712,6 +689,4 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ]
         },
         "rect": {"fill": "#3e5c69"},
-        "shape": {"stroke": "#3e5c69"},
-        "symbol": {"fill": "#3e5c69"},
     }
