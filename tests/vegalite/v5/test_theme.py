@@ -60,6 +60,9 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
     Declares most of the default themes as ``ThemeConfig``.
 
     Adding a typed argument to the signature ensures ``mypy`` checks this.
+
+    ## Missing
+    ### Padding inline dict
     """
     # ruff: noqa: F841
 
@@ -311,7 +314,12 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         },
         "background": "#fff",
         "circle": {"fill": "#3366CC"},
-        "padding": {"bottom": 10, "left": 10, "right": 10, "top": 10},
+        "padding": {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+        },  # FIXME: [typeddict-item]
         "path": {"stroke": "#3366CC"},
         "range": {
             "category": [
