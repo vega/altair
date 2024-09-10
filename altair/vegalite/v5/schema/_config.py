@@ -7076,7 +7076,7 @@ class ThemeConfig(TypedDict, total=False):
     normalizedNumberFormatType: str
     numberFormat: str
     numberFormatType: str
-    padding: float
+    padding: float | Map
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     point: MarkConfigKwds
     projection: ProjectionConfigKwds

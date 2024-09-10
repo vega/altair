@@ -549,6 +549,8 @@ class SchemaInfo:
             tps.add(f"Value[{t}]")
         elif title in REMAP_TITLE:
             tps.add(REMAP_TITLE[title])
+        elif title == "Padding":
+            tps.update(("float", "Map"))
         elif (
             (title not in EXCLUDE_TITLE)
             and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)
