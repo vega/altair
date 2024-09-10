@@ -133,7 +133,8 @@ class SchemaGenerator:
     """
     ).lstrip()
 
-    def _process_description(self, description: str):
+    @staticmethod
+    def _process_description(description: str):
         return description
 
     def __init__(

@@ -413,18 +413,18 @@ class SchemaInfo:
         self,
         *,
         as_str: Literal[True] = ...,
-        target: TargetType = "doc",
-        use_concrete: bool = False,
-        use_undefined: bool = False,
+        target: TargetType = ...,
+        use_concrete: bool = ...,
+        use_undefined: bool = ...,
     ) -> str: ...
     @overload
     def to_type_repr(
         self,
         *,
         as_str: Literal[False],
-        target: TargetType = "doc",
-        use_concrete: bool = False,
-        use_undefined: bool = False,
+        target: TargetType = ...,
+        use_concrete: bool = ...,
+        use_undefined: bool = ...,
     ) -> list[str]: ...
     def to_type_repr(  # noqa: C901
         self,

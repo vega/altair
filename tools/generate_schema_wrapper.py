@@ -349,6 +349,8 @@ def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
 
 '''
 
+_ChannelType = Literal["field", "datum", "value"]
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -533,8 +535,10 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
 
 def get_field_datum_value_defs(
     propschema: SchemaInfo, root: dict[str, Any]
-) -> dict[str, str]:
-    def_dict: dict[str, str | None] = dict.fromkeys(("field", "datum", "value"))
+) -> dict[_ChannelType, str]:
+    def_dict: dict[_ChannelType, str | None] = dict.fromkeys(
+        ("field", "datum", "value")
+    )
     _schema = propschema.schema
     schema = _schema if isinstance(_schema, dict) else dict(_schema)
     if propschema.is_reference() and "properties" in schema:
@@ -722,6 +726,8 @@ def generate_vegalite_channel_wrappers(
                 temp_name = f"{classname}Value"
                 channel_info.value_class_name = temp_name
                 gen = ValueSchemaGenerator(temp_name, nodefault=["value"], **kwds)
+            else:
+                raise NotImplementedError
 
             class_defs.append(gen.schema_class())
 
