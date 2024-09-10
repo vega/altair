@@ -22,6 +22,7 @@ from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
+    finalize_type_reprs,
     get_valid_identifier,
     import_type_checking,
     import_typing_extensions,
@@ -227,22 +228,28 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
     return copy
 """
-
-CONFIG_TYPED_DICT: Final = '''
-class ThemeConfig(TypedDict, total=False):
-    """Top-Level Configuration ``TypedDict`` for creating a consistent theme.
-    {doc}"""
-    {typed_dict_args}
-
-'''
-
-CONFIG_SUB_TYPED_DICT: Final = '''
-class {name}(TypedDict, total=False):
+UNIVERSAL_TYPED_DICT = '''
+class {name}(TypedDict{init_subclass_args}):{comment}
     """{doc}"""
 
     {typed_dict_args}
 '''
+THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
+THEME_CONFIG_SUMMARY = (
+    "Top-Level Configuration ``TypedDict`` for creating a consistent theme."
+)
+EXTRA_ITEMS_MESSAGE = """\
+    Notes
+    -----
+    The following keys may be specified as string literals **only**:
 
+        {invalid_kwds}
+
+    See `PEP728`_ for type checker compatibility.
+
+    .. _PEP728:
+        https://peps.python.org/pep-0728/#reference-implementation
+"""
 
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
@@ -824,15 +831,14 @@ def _doc_args(
     info: SchemaInfo,
     *,
     kind: Literal["method", "typed_dict"] = "method",
-    generate_summary: bool = True,
+    summary: str | None = None,
 ) -> Iterator[str]:
     """Lazily build a docstring."""
     props = info.properties
     if kind == "method":
         raise NotImplementedError
     elif kind == "typed_dict":
-        if generate_summary:
-            yield f"{info.title} ``TypedDict`` wrapper."
+        yield summary or f"{info.title} ``TypedDict`` wrapper."
         yield from ("", "Parameters", "----------")
         for p in codegen.get_args(info).required_kwds:
             yield f"{p}"
@@ -853,23 +859,72 @@ def generate_mark_args(
     }
 
 
-def generate_typed_dict_args(info: SchemaInfo, /) -> str:
+def _typed_dict_args(info: SchemaInfo, /) -> str:
     args = codegen.get_args(info).required_kwds
     it = _signature_args(args, info.properties, kind="typed_dict")
     return "\n    ".join(it)
 
 
-def generate_typed_dict_doc(info: SchemaInfo, /, *, summary: bool = True) -> str:
+def _typed_dict_doc(info: SchemaInfo, /, *, summary: str | None = None) -> str:
     return indent_docstring(
-        _doc_args(info, kind="typed_dict", generate_summary=summary),
+        _doc_args(info, kind="typed_dict", summary=summary),
         indent_level=4,
         lstrip=False,
     )
 
 
+def generate_typed_dict(
+    info: SchemaInfo, name: str, *, summary: str | None = None
+) -> str:
+    """
+    _summary_.
+
+    TODO: Tidy up, finish doc
+
+    Parameters
+    ----------
+    info
+        Schema.
+    name
+        Full target class name.
+        Include a pre/post-fix if ``SchemaInfo.title`` already exists.
+    summary
+        When provided, used instead of generated summary line.
+    """
+    TARGET: Literal["annotation"] = "annotation"
+    arg_info = codegen.get_args(info)
+    init_subclass_args = ", total=False"
+    comment = ""
+    td_args = _typed_dict_args(info)
+    td_doc = _typed_dict_doc(info, summary=summary)
+    if kwds := arg_info.invalid_kwds:
+        init_subclass_args = ", closed=True, total=False"
+        comment = "  # type: ignore[call-arg]"
+        props = info.properties
+        kwds_all_tps = chain.from_iterable(
+            props[p].to_type_repr(as_str=False, target=TARGET, use_concrete=True)
+            for p in kwds
+        )
+        td_args = (
+            f"{td_args}\n    "
+            f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
+        )
+        td_doc = (
+            f"{td_doc}\n"
+            f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
+        )
+
+    return UNIVERSAL_TYPED_DICT.format(
+        name=name,
+        init_subclass_args=init_subclass_args,
+        comment=comment,
+        doc=td_doc,
+        typed_dict_args=td_args,
+    )
+
+
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     KWDS: Literal["Kwds"] = "Kwds"
-    THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
     config = SchemaInfo({"$ref": "#/definitions/Config"}, load_schema(fp))
 
     relevant: dict[str, SchemaInfo] = {
@@ -881,20 +936,13 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in relevant)
 
     config_sub: Iterator[str] = (
-        CONFIG_SUB_TYPED_DICT.format(
-            name=f"{info.title}{KWDS}",
-            typed_dict_args=generate_typed_dict_args(info),
-            doc=generate_typed_dict_doc(info),
-        )
+        generate_typed_dict(info, name=f"{info.title}{KWDS}")
         for info in relevant.values()
     )
     config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
     yield f"__all__ = {[*config_sub_names, THEME_CONFIG]}\n\n"
     yield "\n".join(config_sub)
-    yield CONFIG_TYPED_DICT.format(
-        typed_dict_args=generate_typed_dict_args(config),
-        doc=generate_typed_dict_doc(config, summary=False),
-    )
+    yield generate_typed_dict(config, THEME_CONFIG, summary=THEME_CONFIG_SUMMARY)
 
 
 def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[SchemaInfo]:
@@ -1007,6 +1055,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     content_theme_config = [
         HEADER,
         "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
+        import_typing_extensions((3, 14), "TypedDict", include_sys=True),
         "\n\n",
         import_type_checking("from ._typing import * # noqa: F403"),
         "\n\n",

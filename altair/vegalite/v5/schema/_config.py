@@ -3,7 +3,14 @@
 
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict
+
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
@@ -5837,7 +5844,7 @@ class SelectionConfigKwds(TypedDict, total=False):
     point: PointSelectionConfigWithoutTypeKwds
 
 
-class StyleConfigIndexKwds(TypedDict, total=False):
+class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     """
     StyleConfigIndex ``TypedDict`` wrapper.
 
@@ -5873,6 +5880,17 @@ class StyleConfigIndexKwds(TypedDict, total=False):
         Tick-Specific Config
     trail
         Trail-Specific Config
+
+    Notes
+    -----
+    The following keys may be specified as string literals **only**:
+
+        ['group-subtitle', 'group-title', 'guide-label', 'guide-title']
+
+    See `PEP728`_ for type checker compatibility.
+
+    .. _PEP728:
+        https://peps.python.org/pep-0728/#reference-implementation
     """
 
     arc: RectConfigKwds
@@ -5890,6 +5908,7 @@ class StyleConfigIndexKwds(TypedDict, total=False):
     text: MarkConfigKwds
     tick: TickConfigKwds
     trail: LineConfigKwds
+    __extra_items__: MarkConfigKwds
 
 
 class TickConfigKwds(TypedDict, total=False):

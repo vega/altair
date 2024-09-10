@@ -960,6 +960,18 @@ def collapse_type_repr(
         raise TypeError(msg)
 
 
+def finalize_type_reprs(
+    tps: Iterable[str],
+    /,
+    *,
+    target: TargetType,
+    use_undefined: bool = False,
+) -> str:
+    return collapse_type_repr(
+        sort_type_reprs(tps), target=target, use_undefined=use_undefined
+    )
+
+
 def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     # Shorter types are usually the more relevant ones, e.g. `str` instead
     # of `SchemaBase`. Output order from set is non-deterministic -> If
@@ -968,7 +980,8 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
     # for more infos.
     # Using lower as we don't want to prefer uppercase such as "None" over
-    it = sorted(tps, key=str.lower)  # Tertiary sort
+    dedup = tps if isinstance(tps, set) else set(tps)
+    it = sorted(dedup, key=str.lower)  # Tertiary sort
     it = sorted(it, key=len)  # Secondary sort
     return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
 

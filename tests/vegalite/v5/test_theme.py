@@ -139,7 +139,7 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
                 "fill": "#525252",
                 "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
                 "fontWeight": 400,
-            },
+            },  # type: ignore[typeddict-unknown-key]
             "guide-title": {
                 "fill": "#525252",
                 "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
@@ -161,7 +161,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
     dark = ThemeConfig(
         axis={"domainColor": "#fff", "gridColor": "#888", "tickColor": "#fff"},
         background="#333",
-        style={"guide-label": {"fill": "#fff"}, "guide-title": {"fill": "#fff"}},
+        style={
+            "guide-label": {"fill": "#fff"},
+            "guide-title": {"fill": "#fff"},
+        },  # type: ignore[typeddict-unknown-key]
         title={"color": "#fff", "subtitleColor": "#fff"},
         view={"stroke": "#888"},
     )
@@ -330,9 +333,18 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "rect": {"fill": "#3366CC"},
         "shape": {"stroke": "#3366CC"},
         "style": {
-            "group-title": {"font": "Arial, sans-serif", "fontSize": 12},
-            "guide-label": {"font": "Arial, sans-serif", "fontSize": 12},
-            "guide-title": {"font": "Arial, sans-serif", "fontSize": 12},
+            "group-title": {  # type: ignore[typeddict-unknown-key]
+                "font": "Arial, sans-serif",
+                "fontSize": 12,
+            },
+            "guide-label": {
+                "font": "Arial, sans-serif",
+                "fontSize": 12,
+            },
+            "guide-title": {
+                "font": "Arial, sans-serif",
+                "fontSize": 12,
+            },
         },
         "symbol": {"stroke": "#3366CC"},
         "title": {
