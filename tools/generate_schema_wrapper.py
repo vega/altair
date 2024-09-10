@@ -49,6 +49,8 @@ from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+SCHEMA_FILE = "vega-lite-schema.json"
+THEMES_FILE = "vega-themes.json"
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -448,7 +450,7 @@ def download_schemafile(
     url = schema_url(version=version)
     schemadir = Path(schemapath)
     schemadir.mkdir(parents=True, exist_ok=True)
-    fp = schemadir / "vega-lite-schema.json"
+    fp = schemadir / SCHEMA_FILE
     if not skip_download:
         request.urlretrieve(url, fp)
     elif not fp.exists():
@@ -457,8 +459,19 @@ def download_schemafile(
     return fp
 
 
+def _vega_lite_props_only(
+    themes: dict[str, dict[str, Any]], props: SchemaProperties, /
+) -> Iterator[tuple[str, dict[str, Any]]]:
+    """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
+    keep = props.keys()
+    for name, theme_spec in themes.items():
+        yield name, {k: v for k, v in theme_spec.items() if k in keep}
+
+
 def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
-    themes = vlc.get_themes()
+    root = load_schema(fp.parent / SCHEMA_FILE)
+    vl_props = SchemaInfo({"$ref": "#/definitions/Config"}, root).properties
+    themes = dict(_vega_lite_props_only(vlc.get_themes(), vl_props))
     data = json.dumps(themes, indent=indent, sort_keys=True)
     fp.write_text(data, encoding="utf8")
 
@@ -636,7 +649,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
             "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
-        LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
+        LOAD_SCHEMA.format(schemafile=SCHEMA_FILE),
         BASE_SCHEMA.format(basename=basename),
         schema_class(
             "Root",
@@ -929,7 +942,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         skip_download=skip_download,
     )
 
-    fp_themes = schemapath / "vega-themes.json"
+    fp_themes = schemapath / THEMES_FILE
     print(f"Updating themes\n {schemafile!s}\n  ->{fp_themes!s}")
     update_vega_themes(fp_themes)
 
