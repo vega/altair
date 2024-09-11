@@ -229,7 +229,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 UNIVERSAL_TYPED_DICT = '''
-class {name}(TypedDict{init_subclass_args}):{comment}
+class {name}(TypedDict{metaclass_kwds}):{comment}
     """{doc}"""
 
     {typed_dict_args}
@@ -893,12 +893,12 @@ def generate_typed_dict(
     """
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
-    init_subclass_args = ", total=False"
+    metaclass_kwds = ", total=False"
     comment = ""
     td_args = _typed_dict_args(info)
     td_doc = _typed_dict_doc(info, summary=summary)
     if kwds := arg_info.invalid_kwds:
-        init_subclass_args = ", closed=True, total=False"
+        metaclass_kwds = ", closed=True, total=False"
         comment = "  # type: ignore[call-arg]"
         props = info.properties
         kwds_all_tps = chain.from_iterable(
@@ -916,7 +916,7 @@ def generate_typed_dict(
 
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
-        init_subclass_args=init_subclass_args,
+        metaclass_kwds=metaclass_kwds,
         comment=comment,
         doc=td_doc,
         typed_dict_args=td_args,
