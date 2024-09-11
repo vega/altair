@@ -1085,20 +1085,6 @@ def unwrap_literal(tp: str, /) -> str:
     return re.sub(r"Literal\[(.+)\]", r"\g<1>", tp)
 
 
-def ruff_format_str(code: str | list[str]) -> str:
-    if isinstance(code, list):
-        code = "\n".join(code)
-
-    r = subprocess.run(
-        # Name of the file does not seem to matter but ruff requires one
-        ["ruff", "format", "--stdin-filename", "placeholder.py"],
-        input=code.encode(),
-        check=True,
-        capture_output=True,
-    )
-    return r.stdout.decode()
-
-
 def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
     """
     Format an existing file.
