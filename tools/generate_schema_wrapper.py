@@ -234,11 +234,15 @@ class {name}(TypedDict{metaclass_kwds}):{comment}
 
     {typed_dict_args}
 '''
+ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
 THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
-THEME_CONFIG_SUMMARY = (
+ENCODE_KWDS_SUMMARY: Final = (
+    "Encoding channels map properties of the data to visual properties of the chart."
+)
+THEME_CONFIG_SUMMARY: Final = (
     "Top-Level Configuration ``TypedDict`` for creating a consistent theme."
 )
-EXTRA_ITEMS_MESSAGE = """\
+EXTRA_ITEMS_MESSAGE: Final = """\
     Notes
     -----
     The following keys may be specified as string literals **only**:
@@ -277,13 +281,6 @@ class _EncodingMixin:
         return copy
 '''
 
-ENCODE_TYPED_DICT: Final = '''
-class EncodeKwds(TypedDict, total=False):
-    """Encoding channels map properties of the data to visual properties of the chart.
-    {docstring}"""
-    {channels}
-
-'''
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
 # Revisit if this starts to become more common
@@ -785,7 +782,9 @@ def generate_vegalite_channel_wrappers(
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
         *class_defs,
-        *generate_encoding_artifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
+        *generate_encoding_artifacts(
+            channel_infos, ENCODE_METHOD, facet_encoding=encoding
+        ),
     ]
     return "\n".join(contents)
 
@@ -874,7 +873,11 @@ def _typed_dict_doc(info: SchemaInfo, /, *, summary: str | None = None) -> str:
 
 
 def generate_typed_dict(
-    info: SchemaInfo, name: str, *, summary: str | None = None
+    info: SchemaInfo,
+    name: str,
+    *,
+    summary: str | None = None,
+    override_args: Iterable[str] | None = None,
 ) -> str:
     """
     _summary_.
@@ -890,12 +893,22 @@ def generate_typed_dict(
         Include a pre/post-fix if ``SchemaInfo.title`` already exists.
     summary
         When provided, used instead of generated summary line.
+    override_args
+        Inject custom handling for types.
+
+    Notes
+    -----
+    - Internally handles keys that are not valid python identifiers
     """
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
     metaclass_kwds = ", total=False"
     comment = ""
-    td_args = _typed_dict_args(info)
+    td_args = (
+        _typed_dict_args(info)
+        if override_args is None
+        else "\n    ".join(override_args)
+    )
     td_doc = _typed_dict_doc(info, summary=summary)
     if kwds := arg_info.invalid_kwds:
         metaclass_kwds = ", closed=True, total=False"
@@ -1086,7 +1099,10 @@ def vegalite_main(skip_download: bool = False) -> None:
 
 
 def generate_encoding_artifacts(
-    channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
+    channel_infos: dict[str, ChannelInfo],
+    fmt_method: str,
+    *,
+    facet_encoding: SchemaInfo,
 ) -> Iterator[str]:
     """
     Generate ``Chart.encode()`` and related typing structures.
@@ -1141,9 +1157,11 @@ def generate_encoding_artifacts(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
     )
-    typed_dict: str = fmt_typed_dict.format(
-        channels="\n    ".join(typed_dict_args),
-        docstring=indent_docstring(typed_dict_doc_params, indent_level=4, lstrip=False),
+    typed_dict = generate_typed_dict(
+        facet_encoding,
+        ENCODE_KWDS,
+        summary=ENCODE_KWDS_SUMMARY,
+        override_args=typed_dict_args,
     )
     artifacts: Iterable[str] = *type_aliases, method, typed_dict
     yield from artifacts
