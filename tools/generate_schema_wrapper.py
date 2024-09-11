@@ -28,7 +28,6 @@ from tools.schemapi.utils import (
     import_type_checking,
     import_typing_extensions,
     indent_docstring,
-    process_description,
     resolve_references,
     rst_syntax_for_class,
     ruff_format_py,
@@ -818,7 +817,7 @@ def _doc_args(
         yield from ("", "Parameters", "----------")
         for p in codegen.get_args(info).required_kwds:
             yield f"{p}"
-            yield f"    {process_description(props[p].deep_description)}"
+            yield f"    {props[p].deep_description}"
     else:
         raise NotImplementedError
 
@@ -1125,7 +1124,7 @@ def generate_encoding_artifacts(
         typed_dict_args.append(f"{channel}: {tp_inner}")
         signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
 
-        description: str = f"    {process_description(info.deep_description)}"
+        description: str = f"    {info.deep_description}"
 
         signature_doc_params.extend((f"{channel} : {doc_types_flat}", description))
         typed_dict_doc_params.extend((f"{channel}", description))

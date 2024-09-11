@@ -233,7 +233,7 @@ class SchemaGenerator:
                 propinfo = info.properties[prop]
                 doc += [
                     f"{prop} : {propinfo.to_type_repr()}",
-                    f"    {process_description(propinfo.deep_description)}",
+                    f"    {propinfo.deep_description}",
                 ]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 

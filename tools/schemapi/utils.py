@@ -642,7 +642,7 @@ class SchemaInfo:
 
     @property
     def deep_description(self) -> str:
-        return self._get_description(include_sublevels=True)
+        return process_description(self._get_description(include_sublevels=True))
 
     def _get_description(self, include_sublevels: bool = False) -> str:
         desc = self.raw_schema.get("description", self.schema.get("description", ""))
