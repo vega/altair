@@ -6,7 +6,7 @@ import re
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
-from typing import Any, Final, Iterator
+from typing import Any, Final, Iterable, Iterator
 
 from .utils import (
     SchemaInfo,
@@ -37,11 +37,24 @@ class ArgInfo:
     kwds: set[str]
     invalid_kwds: set[str]
     additional: bool
+    schema_info: SchemaInfo
 
-    @property
-    def required_kwds(self) -> tuple[str, ...]:
-        """Independently sort, then concat ``.required``, ``.kwds`` properties."""
-        return *sorted(self.required), *sorted(self.kwds)
+    def iter_args(
+        self, *prop_groups: Iterable[str]
+    ) -> Iterator[tuple[str, SchemaInfo]]:
+        """
+        Yields (property_name, property_info).
+
+        Useful for signatures and docstrings.
+
+        Parameters
+        ----------
+        *prop_groups
+            Each group will independently sorted, and chained.
+        """
+        props = self.schema_info.properties
+        for p in chain.from_iterable(sorted(group) for group in prop_groups):
+            yield p, props[p]
 
 
 def get_args(info: SchemaInfo) -> ArgInfo:
@@ -87,6 +100,7 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         kwds=kwds,
         invalid_kwds=invalid_kwds,
         additional=additional,
+        schema_info=info,
     )
 
 

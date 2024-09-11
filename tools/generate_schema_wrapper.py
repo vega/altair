@@ -802,26 +802,6 @@ def _signature_args(
         raise NotImplementedError
 
 
-def _doc_args(
-    info: SchemaInfo,
-    *,
-    kind: Literal["method", "typed_dict"] = "method",
-    summary: str | None = None,
-) -> Iterator[str]:
-    """Lazily build a docstring."""
-    props = info.properties
-    if kind == "method":
-        raise NotImplementedError
-    elif kind == "typed_dict":
-        yield summary or f"{info.title} ``TypedDict`` wrapper."
-        yield from ("", "Parameters", "----------")
-        for p in codegen.get_args(info).required_kwds:
-            yield f"{p}"
-            yield f"    {props[p].deep_description}"
-    else:
-        raise NotImplementedError
-
-
 def generate_mark_args(
     info: SchemaInfo,
 ) -> dict[Literal["method_args", "dict_args"], str]:
@@ -835,17 +815,26 @@ def generate_mark_args(
 
 
 def _typed_dict_args(info: SchemaInfo, /) -> str:
-    args = codegen.get_args(info).required_kwds
-    it = _signature_args(args, info.properties, kind="typed_dict")
-    return "\n    ".join(it)
+    args = codegen.get_args(info)
+    return "\n    ".join(
+        f"{p}: {p_info.to_type_repr(target='annotation', use_concrete=True)}"
+        for p, p_info in args.iter_args(args.required, args.kwds)
+    )
 
 
 def _typed_dict_doc(info: SchemaInfo, /, *, summary: str | None = None) -> str:
-    return indent_docstring(
-        _doc_args(info, kind="typed_dict", summary=summary),
-        indent_level=4,
-        lstrip=False,
+    args = codegen.get_args(info)
+    it = chain.from_iterable(
+        (p, f"    {p_info.deep_description}")
+        for p, p_info in args.iter_args(args.required, args.kwds)
     )
+    lines = (
+        summary or f"{info.title} ``TypedDict`` wrapper.",
+        "",
+        "Parameters",
+        "----------",
+    )
+    return indent_docstring(chain(lines, it), indent_level=4, lstrip=False)
 
 
 def generate_typed_dict(
