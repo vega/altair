@@ -32,6 +32,7 @@ from tools.schemapi.schemapi import _resolve_references as resolve_references
 if TYPE_CHECKING:
     from _collections_abc import KeysView
     from pathlib import Path
+    from re import Pattern
     from typing_extensions import LiteralString, Never, TypeAlias
 
     from mistune import BlockState
@@ -56,9 +57,11 @@ jsonschema_to_python_types: dict[str, str] = {
     "null": "None",
 }
 
-_VALID_IDENT: re.Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
-_RE_LINK: re.Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
-_RE_SPECIAL: re.Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
+_VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
+_RE_LINK: Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
+_RE_SPECIAL: Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
+_RE_LIST_MISSING_ASTERISK: Pattern[str] = re.compile(r"^-(?=[ `\"a-z])", re.MULTILINE)
+_RE_LIST_MISSING_WHITESPACE: Pattern[str] = re.compile(r"^\*(?=[`\"a-z])", re.MULTILINE)
 
 _HASH_ENCODER = json.JSONEncoder(sort_keys=True, separators=(",", ":"))
 
@@ -888,24 +891,20 @@ def indent_docstring(  # noqa: C901
 
 
 def fix_docstring_issues(docstring: str) -> str:
-    # All lists should start with '*' followed by a whitespace. Fixes the ones
-    # which either do not have a whitespace or/and start with '-' by first replacing
-    # "-" with "*" and then adding a whitespace where necessary
-    docstring = re.sub(
-        r"^-(?=[ `\"a-z])",
-        "*",
-        docstring,
-        flags=re.MULTILINE,
+    """
+    All lists should start with `"* "`.
+
+    1. Fixes the ones which either do not have `" "` and/or start with `"-"` replacing `"-"` ->  `"*"` and then adding `" "` where necessary.
+    2. Now add a `" "` where a `"*"` is followed by one of the characters in the square brackets of the regex pattern.
+
+    Parameters
+    ----------
+    docstring
+        A processed docstring line.
+    """
+    return _RE_LIST_MISSING_WHITESPACE.sub(
+        "* ", _RE_LIST_MISSING_ASTERISK.sub("*", docstring)
     )
-    # Now add a whitespace where an asterisk is followed by one of the characters
-    # in the square brackets of the regex pattern
-    docstring = re.sub(
-        r"^\*(?=[`\"a-z])",
-        "* ",
-        docstring,
-        flags=re.MULTILINE,
-    )
-    return docstring
 
 
 def rst_syntax_for_class(class_name: str) -> str:
