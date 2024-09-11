@@ -767,3 +767,120 @@ def binste_altair_theme() -> ThemeConfig:
             "square": {"size": 60},
         }
     )
+
+
+def husky_theme() -> ThemeConfig:
+    """
+    Adapted from https://github.com/deppen8/husky-altair-theme/blob/46f680532ee38c44e656903d3f1affe11b9982bb/husky_theme.py.
+
+    Keeps 2 errors present in the original (marked by `# type: ignore[...]`).
+    """
+    PURPLE = "#4b2e83"
+    GOLD = "#b7a57a"
+    METALLIC_GOLD = "#85754d"
+    LIGHT_GRAY = "#d9d9d9"
+    DARK_GRAY = "#444444"
+    BLACK = "#000000"
+
+    HEADER_FONT = "EncodeSans-Regular"
+    BODY_FONT = "OpenSans-Regular"
+    BODY_FONT_BOLD = "OpenSans-Bold"
+
+    return ThemeConfig(
+        {
+            "title": {
+                "fontSize": 18,
+                "font": HEADER_FONT,
+                "anchor": "start",
+                "color": PURPLE,
+            },
+            "axisX": {
+                "domain": True,
+                "domainColor": DARK_GRAY,
+                "domainWidth": 1,
+                "grid": True,
+                "gridColor": LIGHT_GRAY,
+                "gridWidth": 0.5,
+                "labelFont": BODY_FONT,
+                "labelFontSize": 12,
+                "labelColor": DARK_GRAY,
+                "labelAngle": 0,
+                "tickColor": DARK_GRAY,
+                "tickSize": 5,
+                "titleFont": BODY_FONT_BOLD,
+                "titleFontSize": 12,
+            },
+            "axisY": {
+                "domain": True,
+                "domainColor": DARK_GRAY,
+                "grid": True,
+                "gridColor": LIGHT_GRAY,
+                "gridWidth": 0.5,
+                "labelFont": BODY_FONT,
+                "labelFontSize": 12,
+                "labelAngle": 0,
+                "ticks": True,
+                "titleFont": BODY_FONT_BOLD,
+                "titleFontSize": 12,
+            },
+            "header": {
+                "labelFont": BODY_FONT,
+                "labelFontSize": 16,
+                "titleFont": BODY_FONT_BOLD,
+                "titleFontSize": 16,
+            },
+            "range": {
+                "category": [
+                    PURPLE,
+                    GOLD,
+                    LIGHT_GRAY,
+                    METALLIC_GOLD,
+                    BLACK,
+                    DARK_GRAY,
+                ],
+                "diverging": [PURPLE, "#c2a5cf", LIGHT_GRAY, GOLD, METALLIC_GOLD],
+            },
+            "legend": {
+                "labelFont": BODY_FONT,
+                "labelFontSize": 12,
+                "symbolSize": 100,
+                "titleFont": BODY_FONT_BOLD,
+                "titleFontSize": 12,
+            },
+            "area": {
+                "fill": PURPLE,
+            },
+            "circle": {"fill": PURPLE, "size": 40},
+            "line": {
+                "color": PURPLE,
+                "stroke": PURPLE,
+                "strokeWidth": 3,
+            },
+            "trail": {
+                "color": PURPLE,
+                "stroke": PURPLE,
+                "strokeWidth": 0,
+                "size": 1,
+            },
+            "path": {
+                "stroke": PURPLE,
+                "strokeWidth": 0.5,
+            },  # type: ignore[typeddict-unknown-key]
+            "point": {"color": PURPLE, "size": 40},
+            "text": {
+                "font": BODY_FONT,
+                "color": PURPLE,
+                "fontSize": 11,
+                "align": "right",
+                "size": 14,
+            },
+            "bar": {
+                "size": 10,
+                "binSpacing": 1,
+                "continuousBandSize": 10,
+                "fill": PURPLE,
+                "stroke": False,  # type: ignore[typeddict-item]
+            },
+            "tick": {"color": PURPLE},
+        },
+    )
