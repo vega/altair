@@ -157,7 +157,15 @@ class SchemaGenerator:
         self.kwargs = kwargs
 
     def subclasses(self) -> Iterator[str]:
-        """Return an Iterator over subclass names, if any."""
+        """
+        Return an Iterator over subclass names, if any.
+
+        NOTE
+        ----
+        *Does not represent subclasses**.
+
+        Represents a ``Union`` of schemas (``SchemaInfo.anyOf``).
+        """
         for child in SchemaInfo(self.schema, self.rootschema).anyOf:
             if child.is_reference():
                 yield child.refname
