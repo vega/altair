@@ -1099,7 +1099,6 @@ def generate_encoding_artifacts(
     type_aliases: list[str] = []
     typed_dict_args: list[str] = []
     signature_doc_params: list[str] = ["", "Parameters", "----------"]
-    typed_dict_doc_params: list[str] = ["", "Parameters", "----------"]
 
     for channel, info in channel_infos.items():
         alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
@@ -1127,7 +1126,6 @@ def generate_encoding_artifacts(
         description: str = f"    {info.deep_description}"
 
         signature_doc_params.extend((f"{channel} : {doc_types_flat}", description))
-        typed_dict_doc_params.extend((f"{channel}", description))
 
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
