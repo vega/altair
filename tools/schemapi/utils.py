@@ -905,12 +905,6 @@ def fix_docstring_issues(docstring: str) -> str:
         docstring,
         flags=re.MULTILINE,
     )
-
-    # Links to the vega-lite documentation cannot be relative but instead need to
-    # contain the full URL.
-    docstring = docstring.replace(
-        "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
-    )
     return docstring
 
 
@@ -1198,6 +1192,11 @@ def process_description(description: str) -> str:
     description = rst_parse(description)
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
+    # Links to the vega-lite documentation cannot be relative but instead need to
+    # contain the full URL.
+    description = description.replace(
+        "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
+    )
     # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
     description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
     description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
