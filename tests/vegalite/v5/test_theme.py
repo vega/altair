@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any, Callable, cast
 
 import pytest
 
@@ -9,9 +9,17 @@ from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema._typing import is_color_hex
 from altair.vegalite.v5.theme import VEGA_THEMES, register_theme, themes
 
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 11):
+        from typing import LiteralString
+    else:
+        from typing_extensions import LiteralString
+
 
 @pytest.fixture
-def chart():
+def chart() -> alt.Chart:
     return alt.Chart("data.csv").mark_bar().encode(x="x:Q")
 
 
@@ -55,18 +63,14 @@ def test_is_color_hex(color_code: Any, *, valid: bool) -> None:
     assert is_color_hex(color_code) == valid
 
 
-def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
+def carbonwhite_theme() -> ThemeConfig:
     """
-    Declares most of the default themes as ``ThemeConfig``.
+    Only including **1/4** of `carbon`_ , which gives sufficient structural coverage.
 
-    Adding a typed argument to the signature ensures ``mypy`` checks this.
-
-    ## Missing
-    ### Padding inline dict
+    .. _carbon:
+        https://github.com/vega/vega-themes/blob/5f1a5c5b22cc462cf3d46894212152b71cfe964f/src/carbongen.ts
     """
-    # ruff: noqa: F841
-
-    carbonwhite: ThemeConfig = {
+    return {
         "arc": {"fill": "#6929c4"},
         "area": {"fill": "#6929c4"},
         "axis": {
@@ -85,8 +89,6 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "axisY": {"titlePadding": 2.5},
         "background": "#ffffff",
         "circle": {"fill": "#6929c4"},
-        "group": {"fill": "#ffffff"},
-        "path": {"stroke": "#6929c4"},
         "range": {
             "category": [
                 "#6929c4",
@@ -136,20 +138,18 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             ],
         },
         "rect": {"fill": "#6929c4"},
-        "shape": {"stroke": "#6929c4"},
         "style": {
             "guide-label": {
                 "fill": "#525252",
                 "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
                 "fontWeight": 400,
-            },  # type: ignore[typeddict-unknown-key]
+            },
             "guide-title": {
                 "fill": "#525252",
                 "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
                 "fontWeight": 400,
             },
-        },
-        "symbol": {"stroke": "#6929c4"},
+        },  # type: ignore[typeddict-unknown-key]
         "title": {
             "anchor": "start",
             "color": "#161616",
@@ -161,7 +161,9 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "view": {"fill": "#ffffff", "stroke": "#ffffff"},
     }
 
-    dark = ThemeConfig(
+
+def dark_theme() -> ThemeConfig:
+    return ThemeConfig(
         axis={"domainColor": "#fff", "gridColor": "#888", "tickColor": "#fff"},
         background="#333",
         style={
@@ -172,7 +174,9 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         view={"stroke": "#888"},
     )
 
-    excel: ThemeConfig = {
+
+def excel_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#4572a7"},
         "area": {"fill": "#4572a7"},
         "axis": {
@@ -210,7 +214,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         },
         "rect": {"fill": "#4572a7"},
     }
-    fivethirtyeight: ThemeConfig = {
+
+
+def fivethirtyeight_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#30a2da"},
         "area": {"fill": "#30a2da"},
         "axis": {
@@ -270,7 +277,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "rect": {"fill": "#30a2da"},
         "title": {"anchor": "start", "fontSize": 24, "fontWeight": 600, "offset": 20},
     }
-    ggplot2: ThemeConfig = {
+
+
+def ggplot2_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#000"},
         "area": {"fill": "#000"},
         "axis": {
@@ -303,7 +313,12 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         },
         "rect": {"fill": "#000"},
     }
-    googlecharts: ThemeConfig = {
+
+
+# FIXME: Support key-completion for `ThemeConfig.padding` ``Padding``
+def googlecharts_theme() -> ThemeConfig:
+    """``Padding`` definition `float | Map` needs to be stricter."""
+    return {
         "arc": {"fill": "#3366CC"},
         "area": {"fill": "#3366CC"},
         "axis": {
@@ -319,8 +334,7 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "left": 10,
             "right": 10,
             "top": 10,
-        },  # FIXME: [typeddict-item]
-        "path": {"stroke": "#3366CC"},
+        },
         "range": {
             "category": [
                 "#4285F4",
@@ -339,22 +353,11 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "heatmap": ["#c6dafc", "#5e97f6", "#2a56c6"],
         },
         "rect": {"fill": "#3366CC"},
-        "shape": {"stroke": "#3366CC"},
         "style": {
-            "group-title": {  # type: ignore[typeddict-unknown-key]
-                "font": "Arial, sans-serif",
-                "fontSize": 12,
-            },
-            "guide-label": {
-                "font": "Arial, sans-serif",
-                "fontSize": 12,
-            },
-            "guide-title": {
-                "font": "Arial, sans-serif",
-                "fontSize": 12,
-            },
-        },
-        "symbol": {"stroke": "#3366CC"},
+            "group-title": {"font": "Arial, sans-serif", "fontSize": 12},
+            "guide-label": {"font": "Arial, sans-serif", "fontSize": 12},
+            "guide-title": {"font": "Arial, sans-serif", "fontSize": 12},
+        },  # type: ignore[typeddict-unknown-key]
         "title": {
             "anchor": "start",
             "dy": -3,
@@ -363,7 +366,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "fontWeight": "bold",
         },
     }
-    latimes: ThemeConfig = {
+
+
+def latimes_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#82c6df"},
         "area": {"fill": "#82c6df"},
         "axis": {
@@ -449,7 +455,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
             "fontWeight": "normal",
         },
     }
-    powerbi: ThemeConfig = {
+
+
+def powerbi_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#118DFF"},
         "area": {"fill": "#118DFF", "line": True, "opacity": 0.6},
         "axis": {
@@ -531,7 +540,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "text": {"fill": "#605E5C", "font": "Segoe UI", "fontSize": 12},
         "view": {"stroke": "transparent"},
     }
-    quartz: ThemeConfig = {
+
+
+def quartz_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#ab5787"},
         "area": {"fill": "#ab5787"},
         "axis": {
@@ -570,7 +582,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         },
         "rect": {"fill": "#ab5787"},
     }
-    urbaninstitute: ThemeConfig = {
+
+
+def urbaninstitute_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#1696d2"},
         "area": {"fill": "#1696d2"},
         "axisX": {
@@ -679,7 +694,10 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         "trail": {"color": "#1696d2", "size": 1, "stroke": "#1696d2", "strokeWidth": 0},
         "view": {"stroke": "transparent"},
     }
-    vox: ThemeConfig = {
+
+
+def vox_theme() -> ThemeConfig:
+    return {
         "arc": {"fill": "#3e5c69"},
         "area": {"fill": "#3e5c69"},
         "axis": {
@@ -884,3 +902,49 @@ def husky_theme() -> ThemeConfig:
             "tick": {"color": PURPLE},
         },
     )
+
+
+known_themes: pytest.MarkDecorator = pytest.mark.parametrize(
+    "theme_func",
+    [
+        carbonwhite_theme,
+        dark_theme,
+        excel_theme,
+        fivethirtyeight_theme,
+        ggplot2_theme,
+        googlecharts_theme,
+        latimes_theme,
+        powerbi_theme,
+        quartz_theme,
+        urbaninstitute_theme,
+        vox_theme,
+        binste_altair_theme,
+        husky_theme,
+    ],
+)
+"""
+``pytest.mark.parametrize`` decorator.
+
+Provides themes from `vega-themes`_ and `other sources`_.
+
+Notes
+-----
+These are **redefined by hand** to run through a type checker.
+
+.. _vega-themes:
+   https://vega.github.io/vega-themes/
+.. _other sources:
+    https://github.com/vega/altair/issues/3519#issuecomment-2292010192
+"""
+
+
+@known_themes
+def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
+    """
+    Simple-minded extra safety for themes.
+
+    See ``(test_vega_themes|test_register_theme_decorator)`` for comprehensive suite.
+    """
+    name = cast("LiteralString", theme_func.__qualname__)
+    register_theme(name, enable=True)
+    assert chart.to_dict(validate=True)
