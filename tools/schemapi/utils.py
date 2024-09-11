@@ -508,11 +508,10 @@ class SchemaInfo:
                 # HACK: There is a single case that ends up empty here
                 # See: https://github.com/vega/altair/pull/3536#discussion_r1714344162
                 tps = {"Map"}
-        type_reprs = sort_type_reprs(tps)
         return (
-            collapse_type_repr(type_reprs, target=target, use_undefined=use_undefined)
+            finalize_type_reprs(tps, target=target, use_undefined=use_undefined)
             if as_str
-            else type_reprs
+            else sort_type_reprs(tps)
         )
 
     def title_to_type_reprs(self, *, use_concrete: bool) -> set[str]:
@@ -929,7 +928,7 @@ def flatten(container: Iterable) -> Iterable:
             yield i
 
 
-def collapse_type_repr(
+def finalize_type_reprs(
     tps: Iterable[str],
     /,
     *,
@@ -937,18 +936,40 @@ def collapse_type_repr(
     use_undefined: bool = False,
 ) -> str:
     """
-    Returns collected types as `str`.
+    Deduplicates, sorts, and returns ``tps`` as a single string.
 
     Parameters
     ----------
     tps
-        Unique, sorted, `type_representations`
+        Collected type representations.
     target
         Destination for the type.
-        `'doc'` skips `Union`, `Optional` parts.
+
+        .. note::
+            `"doc"` skips ``(Union|Optional)`` wrappers.
+
     use_undefined
         Wrap the result in `altair.typing.Optional`.
         Avoids exposing `UndefinedType`.
+    """
+    return _collapse_type_repr(
+        sort_type_reprs(tps), target=target, use_undefined=use_undefined
+    )
+
+
+def _collapse_type_repr(
+    tps: Iterable[str],
+    /,
+    *,
+    target: TargetType,
+    use_undefined: bool = False,
+) -> str:
+    """
+    Flatten unique types into a single string.
+
+    See Also
+    --------
+    - ``utils.finalize_type_reprs``
     """
     tp_str = ", ".join(tps)
     if target == "doc":
@@ -962,26 +983,28 @@ def collapse_type_repr(
         raise TypeError(msg)
 
 
-def finalize_type_reprs(
-    tps: Iterable[str],
-    /,
-    *,
-    target: TargetType,
-    use_undefined: bool = False,
-) -> str:
-    return collapse_type_repr(
-        sort_type_reprs(tps), target=target, use_undefined=use_undefined
-    )
-
-
 def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
-    # Shorter types are usually the more relevant ones, e.g. `str` instead
-    # of `SchemaBase`. Output order from set is non-deterministic -> If
-    # types have same length names, order would be non-deterministic as it is
-    # returned from sort. Hence, we sort as well by type name as a tie-breaker,
-    # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
-    # for more infos.
-    # Using lower as we don't want to prefer uppercase such as "None" over
+    """
+    Shorter types are usually the more relevant ones, e.g. `str` instead of `SchemaBase`.
+
+    We use `set`_ for unique elements, but the lack of ordering requires additional sorts:
+    - If types have same length names, order would still be non-deterministic
+    - Hence, we sort as well by type name as a tie-breaker, see `sort-stability`_.
+    - Using ``str.lower`` gives priority to `builtins`_ over ``None``.
+    - Lowest priority is given to generated aliases from ``TypeAliasTracer``.
+        - These are purely to improve autocompletion
+
+    Related
+    -------
+    - https://github.com/vega/altair/pull/3573#discussion_r1747121600
+
+    .. _set:
+        https://docs.python.org/3/tutorial/datastructures.html#sets
+    .. _sort-stability:
+        https://docs.python.org/3/howto/sorting.html#sort-stability-and-complex-sorts
+    .. _builtins:
+        https://docs.python.org/3/library/functions.html
+    """
     dedup = tps if isinstance(tps, set) else set(tps)
     it = sorted(dedup, key=str.lower)  # Tertiary sort
     it = sorted(it, key=len)  # Secondary sort
