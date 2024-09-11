@@ -55,7 +55,10 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+
 _VALID_IDENT: re.Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
+_RE_LINK: re.Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
+_RE_SPECIAL: re.Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 
 _HASH_ENCODER = json.JSONEncoder(sort_keys=True, separators=(",", ":"))
 
@@ -1184,3 +1187,19 @@ rather than repeating long literals in every method definition.
 """
 
 rst_parse: RSTParse = RSTParse(RSTRenderer())
+
+
+def process_description(description: str) -> str:
+    # remove formatting from links
+    description = "".join(
+        _RE_SPECIAL.sub("", d) if i % 2 else d
+        for i, d in enumerate(_RE_LINK.split(description))
+    )
+    description = rst_parse(description)
+    # Some entries in the Vega-Lite schema miss the second occurence of '__'
+    description = description.replace("__Default value: ", "__Default value:__ ")
+    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
+    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
+    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
+    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
+    return description.strip()

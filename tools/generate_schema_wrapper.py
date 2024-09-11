@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import copy
 import json
-import re
 import sys
 import textwrap
 from dataclasses import dataclass
@@ -18,6 +17,8 @@ from urllib import request
 import vl_convert as vlc
 
 sys.path.insert(0, str(Path.cwd()))
+
+
 from tools.schemapi import CodeSnippet, SchemaInfo, codegen
 from tools.schemapi.utils import (
     SchemaProperties,
@@ -27,8 +28,8 @@ from tools.schemapi.utils import (
     import_type_checking,
     import_typing_extensions,
     indent_docstring,
+    process_description,
     resolve_references,
-    rst_parse,
     rst_syntax_for_class,
     ruff_format_py,
     ruff_write_lint_format_str,
@@ -37,8 +38,6 @@ from tools.schemapi.utils import (
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
-reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
-reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 
 HEADER_COMMENT = """\
 # The contents of this file are automatically written by
@@ -368,28 +367,6 @@ class SchemaGenerator(codegen.SchemaGenerator):
         {init_code}
     '''
     )
-
-    @staticmethod
-    def _process_description(description: str) -> str:
-        return process_description(description)
-
-
-def process_description(description: str) -> str:
-    # remove formatting from links
-    description = "".join(
-        [
-            reSpecial.sub("", d) if i % 2 else d
-            for i, d in enumerate(reLink.split(description))
-        ]
-    )
-    description = rst_parse(description)
-    # Some entries in the Vega-Lite schema miss the second occurence of '__'
-    description = description.replace("__Default value: ", "__Default value:__ ")
-    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
-    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
-    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
-    return description.strip()
 
 
 class FieldSchemaGenerator(SchemaGenerator):

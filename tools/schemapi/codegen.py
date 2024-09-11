@@ -15,6 +15,7 @@ from .utils import (
     indent_docstring,
     is_valid_identifier,
     jsonschema_to_python_types,
+    process_description,
     spell_literal,
 )
 
@@ -133,10 +134,6 @@ class SchemaGenerator:
     """
     ).lstrip()
 
-    @staticmethod
-    def _process_description(description: str):
-        return description
-
     def __init__(
         self,
         classname: str,
@@ -206,7 +203,7 @@ class SchemaGenerator:
             # https://numpydoc.readthedocs.io/en/latest/format.html#extended-summary
             # Remove condition from description
             desc: str = re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
-            ext_summary: list[str] = self._process_description(desc).splitlines()
+            ext_summary: list[str] = process_description(desc).splitlines()
             # Remove lines which contain the "raw-html" directive which cannot be processed
             # by Sphinx at this level of the docstring. It works for descriptions
             # of attributes which is why we do not do the same below. The removed
@@ -228,7 +225,7 @@ class SchemaGenerator:
                 propinfo = info.properties[prop]
                 doc += [
                     f"{prop} : {propinfo.to_type_repr()}",
-                    f"    {self._process_description(propinfo.deep_description)}",
+                    f"    {process_description(propinfo.deep_description)}",
                 ]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
