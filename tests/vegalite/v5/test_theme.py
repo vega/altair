@@ -710,3 +710,60 @@ def test_theme_config_typing(*, enable_mypy: bool = True) -> None:
         },
         "rect": {"fill": "#3e5c69"},
     }
+
+
+def binste_altair_theme() -> ThemeConfig:
+    """Copied from https://gist.github.com/binste/b4042fa76a89d72d45cbbb9355ec6906."""
+    return ThemeConfig(
+        {
+            "axis": {
+                "labelFontSize": 16,
+                "titleFontSize": 16,
+                "titleFontWeight": "normal",
+                "gridColor": "lightGray",
+                "labelAngle": 0,
+                "labelFlush": False,
+                "labelPadding": 5,
+            },
+            "axisY": {
+                "domain": False,
+                "ticks": False,
+                "labelPadding": 10,
+                "titleAngle": 0,
+                "titleY": -20,
+                "titleAlign": "left",
+                "titlePadding": 0,
+            },
+            "axisTemporal": {"grid": False},
+            "axisDiscrete": {"ticks": False, "labelPadding": 10, "grid": False},
+            "scale": {"barBandPaddingInner": 0.2},
+            "header": {"labelFontSize": 16, "titleFontSize": 16},
+            "legend": {
+                "labelFontSize": 16,
+                "titleFontSize": 16,
+                "titleFontWeight": "normal",
+            },
+            "title": {
+                "fontSize": 20,
+                "fontStyle": "normal",
+                "align": "left",
+                "anchor": "start",
+                "orient": "top",
+                "fontWeight": 600,
+                "offset": 10,
+                "subtitlePadding": 3,
+                "subtitleFontSize": 16,
+            },
+            "view": {
+                "strokeWidth": 0,
+                "continuousHeight": 350,
+                "continuousWidth": 600,
+                "step": 50,
+            },
+            "line": {"strokeWidth": 3.5},
+            "text": {"fontSize": 16},
+            "circle": {"size": 60},
+            "point": {"size": 60},
+            "square": {"size": 60},
+        }
+    )
