@@ -827,9 +827,7 @@ def generate_typed_dict(
     override_args: Iterable[str] | None = None,
 ) -> str:
     """
-    _summary_.
-
-    TODO: Tidy up, finish doc
+    Return a fully typed & documented ``TypedDict``.
 
     Parameters
     ----------
@@ -841,7 +839,7 @@ def generate_typed_dict(
     summary
         When provided, used instead of generated summary line.
     override_args
-        Inject custom handling for types.
+        When provided, used instead of ``_typed_dict_args``.
 
     Notes
     -----
