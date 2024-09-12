@@ -7,6 +7,7 @@ import copy
 import json
 import sys
 import textwrap
+from collections import deque
 from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
@@ -198,9 +199,9 @@ class MarkMethodMixin:
 '''
 
 MARK_METHOD: Final = '''
-def mark_{mark}({method_args}) -> Self:
+def mark_{mark}(self, {method_args}, **kwds) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
-    kwds = dict({dict_args})
+    kwds = dict({dict_args}, **kwds)
     copy = self.copy(deep=False)  # type: ignore[attr-defined]
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
@@ -783,35 +784,18 @@ def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
     return MARK_MIXIN.format(methods="\n".join(code))
 
 
-def _signature_args(
-    args: Iterable[str],
-    props: SchemaProperties,
-    *,
-    kind: Literal["method", "typed_dict"] = "method",
-) -> Iterator[str]:
-    """Lazily build a typed argument list."""
-    if kind == "method":
-        yield "self"
-        for p in args:
-            yield f"{p}: {props[p].to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-        yield "**kwds"
-    elif kind == "typed_dict":
-        for p in args:
-            yield f"{p}: {props[p].to_type_repr(target='annotation', use_concrete=True)}"
-    else:
-        raise NotImplementedError
-
-
 def generate_mark_args(
-    info: SchemaInfo,
+    info: SchemaInfo, /
 ) -> dict[Literal["method_args", "dict_args"], str]:
-    arg_info = codegen.get_args(info)
-    args = sorted((arg_info.required | arg_info.kwds) - {"type"})
-    dict_args = (f"{p}={p}" for p in args)
-    return {
-        "method_args": ", ".join(_signature_args(args, info.properties)),
-        "dict_args": ", ".join(chain(dict_args, ("**kwds",))),
-    }
+    args = codegen.get_args(info)
+    method_args: deque[str] = deque()
+    dict_args: deque[str] = deque()
+    for p, p_info in args.iter_args(args.required | args.kwds, exclude="type"):
+        dict_args.append(f"{p}={p}")
+        method_args.append(
+            f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
+        )
+    return {"method_args": ", ".join(method_args), "dict_args": ", ".join(dict_args)}
 
 
 def _typed_dict_args(info: SchemaInfo, /) -> str:
@@ -876,12 +860,11 @@ def generate_typed_dict(
     )
     td_doc = _typed_dict_doc(info, summary=summary)
     if kwds := arg_info.invalid_kwds:
-        metaclass_kwds = ", closed=True, total=False"
+        metaclass_kwds = f", closed=True{metaclass_kwds}"
         comment = "  # type: ignore[call-arg]"
-        props = info.properties
         kwds_all_tps = chain.from_iterable(
-            props[p].to_type_repr(as_str=False, target=TARGET, use_concrete=True)
-            for p in kwds
+            info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
+            for _, info in arg_info.iter_args(kwds)
         )
         td_args = (
             f"{td_args}\n    "

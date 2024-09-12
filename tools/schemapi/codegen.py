@@ -40,7 +40,7 @@ class ArgInfo:
     schema_info: SchemaInfo
 
     def iter_args(
-        self, *prop_groups: Iterable[str]
+        self, *prop_groups: Iterable[str], exclude: str | Iterable[str] | None = None
     ) -> Iterator[tuple[str, SchemaInfo]]:
         """
         Yields (property_name, property_info).
@@ -51,10 +51,21 @@ class ArgInfo:
         ----------
         *prop_groups
             Each group will independently sorted, and chained.
+        exclude
+            Property name(s) to omit if they appear in any of ``prop_groups``.
         """
         props = self.schema_info.properties
-        for p in chain.from_iterable(sorted(group) for group in prop_groups):
-            yield p, props[p]
+        it = chain.from_iterable(
+            sorted(g if isinstance(g, set) else set(g)) for g in prop_groups
+        )
+        if exclude is not None:
+            exclude = {exclude} if isinstance(exclude, str) else set(exclude)
+            for p in it:
+                if p not in exclude:
+                    yield p, props[p]
+        else:
+            for p in it:
+                yield p, props[p]
 
 
 def get_args(info: SchemaInfo) -> ArgInfo:
