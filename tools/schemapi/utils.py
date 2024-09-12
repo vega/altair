@@ -1015,7 +1015,7 @@ def spell_nested_sequence(
     info: SchemaInfo, *, target: TargetType, use_concrete: bool
 ) -> str:
     """
-    Summary.
+    Return a type representation for an array.
 
     Notes
     -----
@@ -1172,7 +1172,9 @@ rather than repeating long literals in every method definition.
 rst_parse: RSTParse = RSTParse(RSTRenderer())
 
 
+# TODO: Investigate `mistune.Markdown.(before|after)_render_hooks`.
 def process_description(description: str) -> str:
+    """Parse a JSON encoded markdown description into an `RST` string."""
     # remove formatting from links
     description = "".join(
         _RE_SPECIAL.sub("", d) if i % 2 else d
