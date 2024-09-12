@@ -556,6 +556,10 @@ class SchemaInfo:
             value = self.properties["value"]
             t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
             tps.add(f"Value[{t}]")
+        elif self.is_rowcol():
+            row = self.properties["row"]
+            t = row.to_type_repr(target="annotation", use_concrete=use_concrete)
+            tps.add(f"RowCol[{t}, {t}]")
         elif title in REMAP_TITLE:
             tps.update(REMAP_TITLE[title])
         elif (
@@ -713,6 +717,14 @@ class SchemaInfo:
 
     def is_value(self) -> bool:
         return self.is_object() and self.properties.keys() == {"value"}
+
+    def is_rowcol(self) -> bool:
+        props = self.properties
+        return (
+            self.is_object()
+            and props.keys() == {"column", "row"}
+            and props["column"] == props["row"]
+        )
 
     def is_array(self) -> bool:
         return self.type == "array"

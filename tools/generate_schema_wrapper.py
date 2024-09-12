@@ -352,6 +352,26 @@ def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
     pattern: re.Pattern[str] = next(it)
     return bool(pattern.fullmatch(obj))
 
+
+CT = TypeVar("CT")
+RT = TypeVar("RT")
+
+class RowCol(TypedDict, Generic[CT, RT], total=False):
+    """
+    A `Generic`_ two-item ``dict``.
+
+    Parameters
+    ----------
+    column: CT
+    row: RT
+
+    .. _Generic:
+        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+
+    """
+
+    column: CT
+    row: RT
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
