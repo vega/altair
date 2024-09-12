@@ -451,7 +451,7 @@ def _vega_lite_props_only(
 
 def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
     root = load_schema(fp.parent / SCHEMA_FILE)
-    vl_props = SchemaInfo({"$ref": "#/definitions/Config"}, root).properties
+    vl_props = SchemaInfo.from_refname("Config", root).properties
     themes = dict(_vega_lite_props_only(vlc.get_themes(), vl_props))
     data = json.dumps(themes, indent=indent, sort_keys=True)
     fp.write_text(data, encoding="utf8")
@@ -773,7 +773,7 @@ def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
     for mark_enum, mark_def in markdefs.items():
         _def = schema["definitions"][mark_enum]
         marks: list[Any] = _def["enum"] if "enum" in _def else [_def["const"]]
-        info = SchemaInfo({"$ref": f"#/definitions/{mark_def}"}, rootschema=schema)
+        info = SchemaInfo.from_refname(mark_def, rootschema=schema)
         mark_args = generate_mark_args(info)
 
         for mark in marks:
@@ -886,12 +886,13 @@ def generate_typed_dict(
 
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     KWDS: Literal["Kwds"] = "Kwds"
-    config = SchemaInfo({"$ref": "#/definitions/Config"}, load_schema(fp))
+    CONFIG: Literal["Config"] = "Config"
+    config = SchemaInfo.from_refname(CONFIG, load_schema(fp))
 
     relevant: dict[str, SchemaInfo] = {
         x.title: x
         for x in sorted(find_theme_config_targets(config), key=attrgetter("refname"))
-        if x.refname != "Config"
+        if x.refname != CONFIG
     }
     SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
     SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in relevant)
@@ -920,21 +921,21 @@ def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[Schema
 
 def generate_vegalite_config_mixin(fp: Path, /) -> str:
     class_name = "ConfigMethodMixin"
+    CONFIG: Literal["Config"] = "Config"
     code = [
         f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
-    schema = load_schema(fp)
-    info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
+    info = SchemaInfo.from_refname(CONFIG, rootschema=load_schema(fp))
 
     # configure() method
-    method = CONFIG_METHOD.format(classname="Config", method="configure")
+    method = CONFIG_METHOD.format(classname=CONFIG, method="configure")
     code.append("\n    ".join(method.splitlines()))
 
     # configure_prop() methods
     for prop, prop_info in info.properties.items():
         classname = prop_info.refname
-        if classname and classname.endswith("Config"):
+        if classname and classname.endswith(CONFIG):
             method = CONFIG_PROP_METHOD.format(classname=classname, prop=prop)
             code.append("\n    ".join(method.splitlines()))
     return "\n".join(code)

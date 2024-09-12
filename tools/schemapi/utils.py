@@ -343,7 +343,7 @@ class SchemaProperties:
     def items(self) -> Iterator[tuple[str, SchemaInfo]]:
         return ((key, self[key]) for key in self)
 
-    def keys(self) -> KeysView:
+    def keys(self) -> KeysView[str]:
         return self._properties.keys()
 
     def values(self) -> Iterator[SchemaInfo]:
@@ -366,6 +366,10 @@ class SchemaInfo:
         object.__setattr__(self, "raw_schema", schema)
         object.__setattr__(self, "rootschema", rootschema)
         object.__setattr__(self, "schema", resolve_references(schema, rootschema))  # type: ignore
+
+    @classmethod
+    def from_refname(cls, refname: str, /, rootschema: Mapping[str, Any]) -> SchemaInfo:
+        return cls({"$ref": f"#/definitions/{refname}"}, rootschema)
 
     def __setattr__(self, name: str, value: Any) -> Never:
         msg = f"{type(self).__name__!r} is immutable.\nCould not assign self.{name} = {value}"
