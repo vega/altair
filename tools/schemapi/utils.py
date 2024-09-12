@@ -353,7 +353,7 @@ class SchemaProperties:
 class SchemaInfo:
     """A wrapper for inspecting a JSON schema."""
 
-    _remap_title: ClassVar[dict[str, str]] = {}
+    _remap_title: ClassVar[dict[str, Sequence[str]]] = {}
 
     def __init__(
         self, schema: Mapping[str, Any], rootschema: Mapping[str, Any] | None = None
@@ -544,7 +544,7 @@ class SchemaInfo:
         `RelativeBandSize` excluded as it has a single property `band`,
         but all instances also accept `float`.
         """
-        REMAP_TITLE: dict[str, str] = SchemaInfo._remap_title
+        REMAP_TITLE = SchemaInfo._remap_title
         title: str = self.title
         tps: set[str] = set()
         if not use_concrete:
@@ -557,9 +557,7 @@ class SchemaInfo:
             t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
             tps.add(f"Value[{t}]")
         elif title in REMAP_TITLE:
-            tps.add(REMAP_TITLE[title])
-        elif title == "Padding":
-            tps.update(("float", "Map"))
+            tps.update(REMAP_TITLE[title])
         elif (
             (title not in EXCLUDE_TITLE)
             and not TypeAliasTracer.is_cached(title, include_concrete=use_concrete)

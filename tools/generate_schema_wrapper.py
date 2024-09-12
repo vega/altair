@@ -892,8 +892,10 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         for x in sorted(find_theme_config_targets(config), key=attrgetter("refname"))
         if x.refname != CONFIG
     }
-    SchemaInfo._remap_title.update({"HexColor": "ColorHex"})
-    SchemaInfo._remap_title.update((k, f"{k}{KWDS}") for k in relevant)
+    SchemaInfo._remap_title.update(
+        {"HexColor": ("ColorHex",), "Padding": ("float", "Map")}
+    )
+    SchemaInfo._remap_title.update((k, (f"{k}{KWDS}",)) for k in relevant)
 
     config_sub: Iterator[str] = (
         generate_typed_dict(info, name=f"{info.title}{KWDS}")
