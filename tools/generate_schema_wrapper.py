@@ -256,7 +256,7 @@ EXTRA_ITEMS_MESSAGE: Final = """\
 
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
-    def encode({method_args}) -> Self:
+    def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
         # Compat prep for `infer_encoding_types` signature
@@ -1066,7 +1066,7 @@ def generate_encoding_artifacts(
         - but this translates poorly to an IDE
         - `info.supports_arrays`
     """
-    signature_args: list[str] = ["self", "*args: Any"]
+    signature_args: list[str] = []
     type_aliases: list[str] = []
     typed_dict_args: list[str] = []
     signature_doc_params: list[str] = ["", "Parameters", "----------"]
