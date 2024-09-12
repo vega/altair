@@ -802,119 +802,6 @@ class SchemaInfo:
         )
 
 
-class RSTRenderer(_RSTRenderer):
-    def __init__(self) -> None:
-        super().__init__()
-
-    def inline_html(self, token: dict[str, Any], state: BlockState) -> str:
-        html = token["raw"]
-        return rf"\ :raw-html:`{html}`\ "
-
-
-class RSTParse(mistune.Markdown):
-    def __init__(
-        self,
-        renderer: mistune.BaseRenderer,
-        block: mistune.BlockParser | None = None,
-        inline: mistune.InlineParser | None = None,
-        plugins=None,
-    ) -> None:
-        super().__init__(renderer, block, inline, plugins)
-
-    def __call__(self, s: str) -> str:
-        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
-        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
-
-
-def indent_docstring(  # noqa: C901
-    lines: Iterable[str], indent_level: int, width: int = 100, lstrip=True
-) -> str:
-    """Indent a docstring for use in generated code."""
-    final_lines = []
-    if not isinstance(lines, list):
-        lines = list(lines)
-    if len(lines) > 1:
-        lines += [""]
-
-    for i, line in enumerate(lines):
-        stripped = line.lstrip()
-        if stripped:
-            leading_space = len(line) - len(stripped)
-            indent = indent_level + leading_space
-            wrapper = textwrap.TextWrapper(
-                width=width - indent,
-                initial_indent=indent * " ",
-                subsequent_indent=indent * " ",
-                break_long_words=False,
-                break_on_hyphens=False,
-                drop_whitespace=True,
-            )
-            list_wrapper = textwrap.TextWrapper(
-                width=width - indent,
-                initial_indent=indent * " " + "* ",
-                subsequent_indent=indent * " " + "  ",
-                break_long_words=False,
-                break_on_hyphens=False,
-                drop_whitespace=True,
-            )
-            for line in stripped.split("\n"):
-                line_stripped = line.lstrip()
-                line_stripped = fix_docstring_issues(line_stripped)
-                if line_stripped == "":
-                    final_lines.append("")
-                elif line_stripped.startswith("* "):
-                    final_lines.extend(list_wrapper.wrap(line_stripped[2:]))
-                # Matches lines where an attribute is mentioned followed by the accepted
-                # types (lines starting with a character sequence that
-                # does not contain white spaces or '*' followed by ' : ').
-                # It therefore matches 'condition : anyOf(...' but not '**Notes** : ...'
-                # These lines should not be wrapped at all but appear on one line
-                elif re.match(r"[^\s*]+ : ", line_stripped):
-                    final_lines.append(indent * " " + line_stripped)
-                else:
-                    final_lines.extend(wrapper.wrap(line_stripped))
-
-        # If this is the last line, put in an indent
-        elif i + 1 == len(lines):
-            final_lines.append(indent_level * " ")
-        # If it's not the last line, this is a blank line that should not indent.
-        else:
-            final_lines.append("")
-    # Remove any trailing whitespaces on the right side
-    stripped_lines = []
-    for i, line in enumerate(final_lines):
-        if i + 1 == len(final_lines):
-            stripped_lines.append(line)
-        else:
-            stripped_lines.append(line.rstrip())
-    # Join it all together
-    wrapped = "\n".join(stripped_lines)
-    if lstrip:
-        wrapped = wrapped.lstrip()
-    return wrapped
-
-
-def fix_docstring_issues(docstring: str) -> str:
-    """
-    All lists should start with `"* "`.
-
-    1. Fixes the ones which either do not have `" "` and/or start with `"-"` replacing `"-"` ->  `"*"` and then adding `" "` where necessary.
-    2. Now add a `" "` where a `"*"` is followed by one of the characters in the square brackets of the regex pattern.
-
-    Parameters
-    ----------
-    docstring
-        A processed docstring line.
-    """
-    return _RE_LIST_MISSING_WHITESPACE.sub(
-        "* ", _RE_LIST_MISSING_ASTERISK.sub("*", docstring)
-    )
-
-
-def rst_syntax_for_class(class_name: str) -> str:
-    return f":class:`{class_name}`"
-
-
 def flatten(container: Iterable) -> Iterable:
     """
     Flatten arbitrarily flattened list.
@@ -1168,6 +1055,120 @@ These are then converted to `TypeAlias` statements, written to another module.
 Allows for a single definition to be reused multiple times,
 rather than repeating long literals in every method definition.
 """
+
+
+class RSTRenderer(_RSTRenderer):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def inline_html(self, token: dict[str, Any], state: BlockState) -> str:
+        html = token["raw"]
+        return rf"\ :raw-html:`{html}`\ "
+
+
+class RSTParse(mistune.Markdown):
+    def __init__(
+        self,
+        renderer: mistune.BaseRenderer,
+        block: mistune.BlockParser | None = None,
+        inline: mistune.InlineParser | None = None,
+        plugins=None,
+    ) -> None:
+        super().__init__(renderer, block, inline, plugins)
+
+    def __call__(self, s: str) -> str:
+        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
+        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
+
+
+def indent_docstring(  # noqa: C901
+    lines: Iterable[str], indent_level: int, width: int = 100, lstrip=True
+) -> str:
+    """Indent a docstring for use in generated code."""
+    final_lines = []
+    if not isinstance(lines, list):
+        lines = list(lines)
+    if len(lines) > 1:
+        lines += [""]
+
+    for i, line in enumerate(lines):
+        stripped = line.lstrip()
+        if stripped:
+            leading_space = len(line) - len(stripped)
+            indent = indent_level + leading_space
+            wrapper = textwrap.TextWrapper(
+                width=width - indent,
+                initial_indent=indent * " ",
+                subsequent_indent=indent * " ",
+                break_long_words=False,
+                break_on_hyphens=False,
+                drop_whitespace=True,
+            )
+            list_wrapper = textwrap.TextWrapper(
+                width=width - indent,
+                initial_indent=indent * " " + "* ",
+                subsequent_indent=indent * " " + "  ",
+                break_long_words=False,
+                break_on_hyphens=False,
+                drop_whitespace=True,
+            )
+            for line in stripped.split("\n"):
+                line_stripped = line.lstrip()
+                line_stripped = fix_docstring_issues(line_stripped)
+                if line_stripped == "":
+                    final_lines.append("")
+                elif line_stripped.startswith("* "):
+                    final_lines.extend(list_wrapper.wrap(line_stripped[2:]))
+                # Matches lines where an attribute is mentioned followed by the accepted
+                # types (lines starting with a character sequence that
+                # does not contain white spaces or '*' followed by ' : ').
+                # It therefore matches 'condition : anyOf(...' but not '**Notes** : ...'
+                # These lines should not be wrapped at all but appear on one line
+                elif re.match(r"[^\s*]+ : ", line_stripped):
+                    final_lines.append(indent * " " + line_stripped)
+                else:
+                    final_lines.extend(wrapper.wrap(line_stripped))
+
+        # If this is the last line, put in an indent
+        elif i + 1 == len(lines):
+            final_lines.append(indent_level * " ")
+        # If it's not the last line, this is a blank line that should not indent.
+        else:
+            final_lines.append("")
+    # Remove any trailing whitespaces on the right side
+    stripped_lines = []
+    for i, line in enumerate(final_lines):
+        if i + 1 == len(final_lines):
+            stripped_lines.append(line)
+        else:
+            stripped_lines.append(line.rstrip())
+    # Join it all together
+    wrapped = "\n".join(stripped_lines)
+    if lstrip:
+        wrapped = wrapped.lstrip()
+    return wrapped
+
+
+def fix_docstring_issues(docstring: str) -> str:
+    """
+    All lists should start with `"* "`.
+
+    1. Fixes the ones which either do not have `" "` and/or start with `"-"` replacing `"-"` ->  `"*"` and then adding `" "` where necessary.
+    2. Now add a `" "` where a `"*"` is followed by one of the characters in the square brackets of the regex pattern.
+
+    Parameters
+    ----------
+    docstring
+        A processed docstring line.
+    """
+    return _RE_LIST_MISSING_WHITESPACE.sub(
+        "* ", _RE_LIST_MISSING_ASTERISK.sub("*", docstring)
+    )
+
+
+def rst_syntax_for_class(class_name: str) -> str:
+    return f":class:`{class_name}`"
+
 
 rst_parse: RSTParse = RSTParse(RSTRenderer())
 
