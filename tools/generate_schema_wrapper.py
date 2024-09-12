@@ -676,9 +676,7 @@ class ChannelInfo:
                 yield self.value_class_name
 
 
-def generate_vegalite_channel_wrappers(
-    fp: Path, /, version: str, imports: list[str] | None = None
-) -> str:
+def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
     schema = load_schema_with_shorthand_properties(fp)
     encoding_def = "FacetedEncoding"
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
@@ -736,7 +734,7 @@ def generate_vegalite_channel_wrappers(
     )
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
     all_ = list(chain(it, COMPAT_EXPORTS))
-    imports = imports or [
+    imports = [
         "import sys",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
         import_typing_extensions((3, 10), "TypeAlias"),
@@ -979,7 +977,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile, version=version)
+    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
 
     # generate the mark mixin
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
