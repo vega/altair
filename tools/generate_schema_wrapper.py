@@ -851,18 +851,26 @@ def generate_typed_dict(
     Parameters
     ----------
     info
-        Schema.
+        JSON Schema wrapper.
     name
         Full target class name.
         Include a pre/post-fix if ``SchemaInfo.title`` already exists.
     summary
         When provided, used instead of generated summary line.
+    groups
+        A subset of ``ArgInfo``, or a callable that can derive one.
+    exclude
+        Property name(s) to omit if they appear during iteration.
     override_args
-        When provided, used instead of ``_typed_dict_args``.
+        When provided, used instead of any ``ArgInfo`` related handling.
+
+        .. note::
+            See ``EncodeKwds``.
 
     Notes
     -----
     - Internally handles keys that are not valid python identifiers
+    - The union of their types will be added to ``__extra_items__``
     """
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
@@ -884,6 +892,8 @@ def generate_typed_dict(
         ),
         indent_level=4,
     )
+    # NOTE: The RHS eager eval is used to skip `invalid_kwds`,
+    # if they have been marked for exclusion
     if (kwds := arg_info.invalid_kwds) and list(
         arg_info.iter_args(kwds, exclude=exclude)
     ):

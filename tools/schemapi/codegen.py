@@ -64,17 +64,17 @@ class ArgInfo:
         *more_groups: Iterable[str] | AttrGetter[ArgInfo, set[str]],
         exclude: str | Iterable[str] | None = None,
     ) -> Iterator[tuple[str, SchemaInfo]]:
-        """
+        r"""
         Yields (property_name, property_info).
 
         Useful for signatures and docstrings.
 
         Parameters
         ----------
-        *prop_groups
+        group, \*more_groups
             Each group will independently sorted, and chained.
         exclude
-            Property name(s) to omit if they appear in any of ``prop_groups``.
+            Property name(s) to omit if they appear during iteration.
         """
         props = self.schema_info.properties
         it = chain.from_iterable(
