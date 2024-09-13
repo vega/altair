@@ -297,17 +297,13 @@ class SchemaGenerator:
 
         if info.properties:
             arg_info = self.arg_info
-            doc += ["", "Parameters", "----------", ""]
-            for prop in (
-                sorted(arg_info.required)
-                + sorted(arg_info.kwds)
-                + sorted(arg_info.invalid_kwds)
-            ):
-                propinfo = info.properties[prop]
-                doc += [
-                    f"{prop} : {propinfo.to_type_repr()}",
-                    f"    {propinfo.deep_description}",
-                ]
+            it = chain.from_iterable(
+                (f"{p} : {p_info.to_type_repr()}", f"    {p_info.deep_description}")
+                for p, p_info in arg_info.iter_args(
+                    arg_info.required, arg_kwds, arg_invalid_kwds
+                )
+            )
+            doc.extend(chain(["", "Parameters", "----------", ""], it))
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent: int = 0) -> str:
