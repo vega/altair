@@ -2182,7 +2182,7 @@ class ConfigKwds(TypedDict, total=False):
     normalizedNumberFormatType: str
     numberFormat: str
     numberFormatType: str
-    padding: float | Map
+    padding: float | PaddingKwds
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     point: MarkConfigKwds
     projection: ProjectionConfigKwds
@@ -7762,7 +7762,7 @@ class ThemeConfig(TypedDict, total=False):
     description: str
     height: float | StepKwds | Literal["container"]
     name: str
-    padding: float | Map
+    padding: float | PaddingKwds
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     projection: ProjectionKwds
     resolve: ResolveKwds

@@ -66,6 +66,7 @@ __all__ = [
     "OneOrSeq",
     "Orient_T",
     "Orientation_T",
+    "PaddingKwds",
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
@@ -188,6 +189,13 @@ class RowCol(TypedDict, Generic[T], total=False):
 
     column: T
     row: T
+
+
+class PaddingKwds(TypedDict, total=False):
+    bottom: float
+    left: float
+    right: float
+    top: float
 
 
 VegaThemes: TypeAlias = Literal[

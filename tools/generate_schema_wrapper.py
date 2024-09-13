@@ -380,6 +380,13 @@ class RowCol(TypedDict, Generic[T], total=False):
 
     column: T
     row: T
+
+
+class PaddingKwds(TypedDict, total=False):
+    bottom: float
+    left: float
+    right: float
+    top: float
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
@@ -949,7 +956,7 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     }
 
     SchemaInfo._remap_title.update(
-        {"HexColor": ("ColorHex",), "Padding": ("float", "Map")}
+        {"HexColor": ("ColorHex",), "Padding": ("float", "PaddingKwds")}
     )
     SchemaInfo._remap_title.update((k, (f"{k}{KWDS}",)) for k in relevant)
     config_sub: Iterator[str] = (
@@ -1100,6 +1107,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "ColorHex",
         "is_color_hex",
         "RowCol",
+        "PaddingKwds",
         header=HEADER,
         extra=TYPING_EXTRA,
     )
