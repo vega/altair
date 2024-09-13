@@ -335,7 +335,6 @@ def ggplot2_theme() -> ThemeConfig:
     }
 
 
-# FIXME: Support key-completion for `ThemeConfig.padding` ``Padding``
 def googlecharts_theme() -> ThemeConfig:
     """``Padding`` definition `float | Map` needs to be stricter."""
     return {
