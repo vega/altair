@@ -771,8 +771,20 @@ def use_signature(tp: Callable[P, Any], /):
     return decorate
 
 
+@overload
 def update_nested(
     original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[False] = ...,
+) -> t.MutableMapping[Any, Any]: ...
+@overload
+def update_nested(
+    original: t.Mapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[True],
+) -> t.MutableMapping[Any, Any]: ...
+def update_nested(
+    original: Any,
     update: t.Mapping[Any, Any],
     copy: bool = False,
 ) -> t.MutableMapping[Any, Any]:
