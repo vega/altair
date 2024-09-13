@@ -31,6 +31,7 @@ __all__ = [
     "BoxPlotConfigKwds",
     "BrushConfigKwds",
     "CompositionConfigKwds",
+    "ConfigKwds",
     "DateTimeKwds",
     "DerivedStreamKwds",
     "ErrorBandConfigKwds",
@@ -1851,6 +1852,355 @@ class CompositionConfigKwds(TypedDict, total=False):
 
     columns: float
     spacing: float
+
+
+class ConfigKwds(TypedDict, total=False):
+    """
+    Config ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    arc
+        Arc-specific Config
+    area
+        Area-Specific Config
+    aria
+        A boolean flag indicating if ARIA default attributes should be included for marks
+        and guides (SVG output only). If false, the ``"aria-hidden"`` attribute will be set
+        for all guides, removing them from the ARIA accessibility tree and Vega-Lite will
+        not generate default descriptions for marks.
+
+        **Default value:** ``true``.
+    autosize
+        How the visualization size should be determined. If a string, should be one of
+        ``"pad"``, ``"fit"`` or ``"none"``. Object values can additionally specify
+        parameters for content sizing and automatic resizing.
+
+        **Default value**: ``pad``
+    axis
+        Axis configuration, which determines default properties for all ``x`` and ``y``
+        `axes <https://vega.github.io/vega-lite/docs/axis.html>`__. For a full list of axis
+        configuration options, please see the `corresponding section of the axis
+        documentation <https://vega.github.io/vega-lite/docs/axis.html#config>`__.
+    axisBand
+        Config for axes with "band" scales.
+    axisBottom
+        Config for x-axis along the bottom edge of the chart.
+    axisDiscrete
+        Config for axes with "point" or "band" scales.
+    axisLeft
+        Config for y-axis along the left edge of the chart.
+    axisPoint
+        Config for axes with "point" scales.
+    axisQuantitative
+        Config for quantitative axes.
+    axisRight
+        Config for y-axis along the right edge of the chart.
+    axisTemporal
+        Config for temporal axes.
+    axisTop
+        Config for x-axis along the top edge of the chart.
+    axisX
+        X-axis specific config.
+    axisXBand
+        Config for x-axes with "band" scales.
+    axisXDiscrete
+        Config for x-axes with "point" or "band" scales.
+    axisXPoint
+        Config for x-axes with "point" scales.
+    axisXQuantitative
+        Config for x-quantitative axes.
+    axisXTemporal
+        Config for x-temporal axes.
+    axisY
+        Y-axis specific config.
+    axisYBand
+        Config for y-axes with "band" scales.
+    axisYDiscrete
+        Config for y-axes with "point" or "band" scales.
+    axisYPoint
+        Config for y-axes with "point" scales.
+    axisYQuantitative
+        Config for y-quantitative axes.
+    axisYTemporal
+        Config for y-temporal axes.
+    background
+        CSS color property to use as the background of the entire view.
+
+        **Default value:** ``"white"``
+    bar
+        Bar-Specific Config
+    boxplot
+        Box Config
+    circle
+        Circle-Specific Config
+    concat
+        Default configuration for all concatenation and repeat view composition operators
+        (``concat``, ``hconcat``, ``vconcat``, and ``repeat``)
+    countTitle
+        Default axis and legend title for count fields.
+
+        **Default value:** ``'Count of Records``.
+    customFormatTypes
+        Allow the ``formatType`` property for text marks and guides to accept a custom
+        formatter function `registered as a Vega expression
+        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__.
+    errorband
+        ErrorBand Config
+    errorbar
+        ErrorBar Config
+    facet
+        Default configuration for the ``facet`` view composition operator
+    fieldTitle
+        Defines how Vega-Lite generates title for fields. There are three possible styles:
+
+        * ``"verbal"`` (Default) - displays function in a verbal style (e.g., "Sum of
+          field", "Year-month of date", "field (binned)").
+        * ``"function"`` - displays function using parentheses and capitalized texts (e.g.,
+          "SUM(field)", "YEARMONTH(date)", "BIN(field)").
+        * ``"plain"`` - displays only the field name without functions (e.g., "field",
+          "date", "field").
+    font
+        Default font for all text marks, titles, and labels.
+    geoshape
+        Geoshape-Specific Config
+    header
+        Header configuration, which determines default properties for all `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerColumn
+        Header configuration, which determines default properties for column `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerFacet
+        Header configuration, which determines default properties for non-row/column facet
+        `headers <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerRow
+        Header configuration, which determines default properties for row `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    image
+        Image-specific Config
+    legend
+        Legend configuration, which determines default properties for all `legends
+        <https://vega.github.io/vega-lite/docs/legend.html>`__. For a full list of legend
+        configuration options, please see the `corresponding section of in the legend
+        documentation <https://vega.github.io/vega-lite/docs/legend.html#config>`__.
+    line
+        Line-Specific Config
+    lineBreak
+        A delimiter, such as a newline character, upon which to break text strings into
+        multiple lines. This property provides a global default for text marks, which is
+        overridden by mark or style config settings, and by the lineBreak mark encoding
+        channel. If signal-valued, either string or regular expression (regexp) values are
+        valid.
+    locale
+        Locale definitions for string parsing and formatting of number and date values. The
+        locale object should contain ``number`` and/or ``time`` properties with `locale
+        definitions <https://vega.github.io/vega/docs/api/locale/>`__. Locale definitions
+        provided in the config block may be overridden by the View constructor locale
+        option.
+    mark
+        Mark Config
+    normalizedNumberFormat
+        If normalizedNumberFormatType is not specified, D3 number format for axis labels,
+        text marks, and tooltips of normalized stacked fields (fields with ``stack:
+        "normalize"``). For example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.normalizedNumberFormatType`` is specified and
+        ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
+        alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
+        value:** ``%``
+    normalizedNumberFormatType
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.normalizedNumberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
+    numberFormat
+        If numberFormatType is not specified, D3 number format for guide labels, text marks,
+        and tooltips of non-normalized fields (fields *without* ``stack: "normalize"``). For
+        example ``"s"`` for SI units. Use `D3's number format pattern
+        <https://github.com/d3/d3-format#locale_format>`__.
+
+        If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
+        ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
+        ``config.numberFormatType`` function.
+    numberFormatType
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.numberFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
+        exposed as `format in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
+        set ``customFormatTypes`` to ``true`` to use this feature.
+    padding
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle. If a number, specifies padding for all sides. If an
+        object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}`` to specify padding for each side of the visualization.
+
+        **Default value**: ``5``
+    params
+        Dynamic variables or selections that parameterize a visualization.
+    point
+        Point-Specific Config
+    projection
+        Projection configuration, which determines default properties for all `projections
+        <https://vega.github.io/vega-lite/docs/projection.html>`__. For a full list of
+        projection configuration options, please see the `corresponding section of the
+        projection documentation
+        <https://vega.github.io/vega-lite/docs/projection.html#config>`__.
+    range
+        An object hash that defines default range arrays or schemes for using with scales.
+        For a full list of scale range configuration options, please see the `corresponding
+        section of the scale documentation
+        <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
+    rect
+        Rect-Specific Config
+    rule
+        Rule-Specific Config
+    scale
+        Scale configuration determines default properties for all `scales
+        <https://vega.github.io/vega-lite/docs/scale.html>`__. For a full list of scale
+        configuration options, please see the `corresponding section of the scale
+        documentation <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
+    selection
+        An object hash for defining default properties for each type of selections.
+    square
+        Square-Specific Config
+    style
+        An object hash that defines key-value mappings to determine default properties for
+        marks with a given `style
+        <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__. The keys represent
+        styles names; the values have to be valid `mark configuration objects
+        <https://vega.github.io/vega-lite/docs/mark.html#config>`__.
+    text
+        Text-Specific Config
+    tick
+        Tick-Specific Config
+    timeFormat
+        Default time format for raw time values (without time units) in text marks, legend
+        labels and header labels.
+
+        **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
+        for each label automatically so this config does not affect axes.
+    timeFormatType
+        `Custom format type
+        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
+        ``config.timeFormat``.
+
+        **Default value:** ``undefined`` -- This is equilvalent to call D3-time-format,
+        which is exposed as `timeFormat in Vega-Expression
+        <https://vega.github.io/vega/docs/expressions/#timeFormat>`__. **Note:** You must
+        also set ``customFormatTypes`` to ``true`` and there must *not* be a ``timeUnit``
+        defined to use this feature.
+    title
+        Title configuration, which determines default properties for all `titles
+        <https://vega.github.io/vega-lite/docs/title.html>`__. For a full list of title
+        configuration options, please see the `corresponding section of the title
+        documentation <https://vega.github.io/vega-lite/docs/title.html#config>`__.
+    tooltipFormat
+        Define `custom format configuration
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ for tooltips. If
+        unspecified, default format config will be applied.
+    trail
+        Trail-Specific Config
+    view
+        Default properties for `single view plots
+        <https://vega.github.io/vega-lite/docs/spec.html#single>`__.
+    """
+
+    arc: RectConfigKwds
+    area: AreaConfigKwds
+    aria: bool
+    autosize: AutoSizeParamsKwds | AutosizeType_T
+    axis: AxisConfigKwds
+    axisBand: AxisConfigKwds
+    axisBottom: AxisConfigKwds
+    axisDiscrete: AxisConfigKwds
+    axisLeft: AxisConfigKwds
+    axisPoint: AxisConfigKwds
+    axisQuantitative: AxisConfigKwds
+    axisRight: AxisConfigKwds
+    axisTemporal: AxisConfigKwds
+    axisTop: AxisConfigKwds
+    axisX: AxisConfigKwds
+    axisXBand: AxisConfigKwds
+    axisXDiscrete: AxisConfigKwds
+    axisXPoint: AxisConfigKwds
+    axisXQuantitative: AxisConfigKwds
+    axisXTemporal: AxisConfigKwds
+    axisY: AxisConfigKwds
+    axisYBand: AxisConfigKwds
+    axisYDiscrete: AxisConfigKwds
+    axisYPoint: AxisConfigKwds
+    axisYQuantitative: AxisConfigKwds
+    axisYTemporal: AxisConfigKwds
+    background: ColorHex | ColorName_T
+    bar: BarConfigKwds
+    boxplot: BoxPlotConfigKwds
+    circle: MarkConfigKwds
+    concat: CompositionConfigKwds
+    countTitle: str
+    customFormatTypes: bool
+    errorband: ErrorBandConfigKwds
+    errorbar: ErrorBarConfigKwds
+    facet: CompositionConfigKwds
+    fieldTitle: Literal["verbal", "functional", "plain"]
+    font: str
+    geoshape: MarkConfigKwds
+    header: HeaderConfigKwds
+    headerColumn: HeaderConfigKwds
+    headerFacet: HeaderConfigKwds
+    headerRow: HeaderConfigKwds
+    image: RectConfigKwds
+    legend: LegendConfigKwds
+    line: LineConfigKwds
+    lineBreak: str
+    locale: LocaleKwds
+    mark: MarkConfigKwds
+    normalizedNumberFormat: str
+    normalizedNumberFormatType: str
+    numberFormat: str
+    numberFormatType: str
+    padding: float | Map
+    params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
+    point: MarkConfigKwds
+    projection: ProjectionConfigKwds
+    range: RangeConfigKwds
+    rect: RectConfigKwds
+    rule: MarkConfigKwds
+    scale: ScaleConfigKwds
+    selection: SelectionConfigKwds
+    square: MarkConfigKwds
+    style: StyleConfigIndexKwds
+    text: MarkConfigKwds
+    tick: TickConfigKwds
+    timeFormat: str
+    timeFormatType: str
+    title: TitleConfigKwds
+    tooltipFormat: FormatConfigKwds
+    trail: LineConfigKwds
+    view: ViewConfigKwds
 
 
 class DateTimeKwds(TypedDict, total=False):
@@ -7278,198 +7628,77 @@ class ThemeConfig(TypedDict, total=False):
 
     Parameters
     ----------
-    arc
-        Arc-specific Config
-    area
-        Area-Specific Config
-    aria
-        A boolean flag indicating if ARIA default attributes should be included for marks
-        and guides (SVG output only). If false, the ``"aria-hidden"`` attribute will be set
-        for all guides, removing them from the ARIA accessibility tree and Vega-Lite will
-        not generate default descriptions for marks.
+    align
+        The alignment to apply to grid rows and columns. The supported string values are
+        ``"all"``, ``"each"``, and ``"none"``.
 
-        **Default value:** ``true``.
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     autosize
         How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``. Object values can additionally specify
         parameters for content sizing and automatic resizing.
 
         **Default value**: ``pad``
-    axis
-        Axis configuration, which determines default properties for all ``x`` and ``y``
-        `axes <https://vega.github.io/vega-lite/docs/axis.html>`__. For a full list of axis
-        configuration options, please see the `corresponding section of the axis
-        documentation <https://vega.github.io/vega-lite/docs/axis.html#config>`__.
-    axisBand
-        Config for axes with "band" scales.
-    axisBottom
-        Config for x-axis along the bottom edge of the chart.
-    axisDiscrete
-        Config for axes with "point" or "band" scales.
-    axisLeft
-        Config for y-axis along the left edge of the chart.
-    axisPoint
-        Config for axes with "point" scales.
-    axisQuantitative
-        Config for quantitative axes.
-    axisRight
-        Config for y-axis along the right edge of the chart.
-    axisTemporal
-        Config for temporal axes.
-    axisTop
-        Config for x-axis along the top edge of the chart.
-    axisX
-        X-axis specific config.
-    axisXBand
-        Config for x-axes with "band" scales.
-    axisXDiscrete
-        Config for x-axes with "point" or "band" scales.
-    axisXPoint
-        Config for x-axes with "point" scales.
-    axisXQuantitative
-        Config for x-quantitative axes.
-    axisXTemporal
-        Config for x-temporal axes.
-    axisY
-        Y-axis specific config.
-    axisYBand
-        Config for y-axes with "band" scales.
-    axisYDiscrete
-        Config for y-axes with "point" or "band" scales.
-    axisYPoint
-        Config for y-axes with "point" scales.
-    axisYQuantitative
-        Config for y-quantitative axes.
-    axisYTemporal
-        Config for y-temporal axes.
     background
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
-    bar
-        Bar-Specific Config
-    boxplot
-        Box Config
-    circle
-        Circle-Specific Config
-    concat
-        Default configuration for all concatenation and repeat view composition operators
-        (``concat``, ``hconcat``, ``vconcat``, and ``repeat``)
-    countTitle
-        Default axis and legend title for count fields.
+    bounds
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
 
-        **Default value:** ``'Count of Records``.
-    customFormatTypes
-        Allow the ``formatType`` property for text marks and guides to accept a custom
-        formatter function `registered as a Vega expression
-        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__.
-    errorband
-        ErrorBand Config
-    errorbar
-        ErrorBar Config
-    facet
-        Default configuration for the ``facet`` view composition operator
-    fieldTitle
-        Defines how Vega-Lite generates title for fields. There are three possible styles:
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
 
-        * ``"verbal"`` (Default) - displays function in a verbal style (e.g., "Sum of
-          field", "Year-month of date", "field (binned)").
-        * ``"function"`` - displays function using parentheses and capitalized texts (e.g.,
-          "SUM(field)", "YEARMONTH(date)", "BIN(field)").
-        * ``"plain"`` - displays only the field name without functions (e.g., "field",
-          "date", "field").
-    font
-        Default font for all text marks, titles, and labels.
-    geoshape
-        Geoshape-Specific Config
-    header
-        Header configuration, which determines default properties for all `headers
-        <https://vega.github.io/vega-lite/docs/header.html>`__.
+        **Default value:** ``"full"``
+    center
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
 
-        For a full list of header configuration options, please see the `corresponding
-        section of in the header documentation
-        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
-    headerColumn
-        Header configuration, which determines default properties for column `headers
-        <https://vega.github.io/vega-lite/docs/header.html>`__.
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
 
-        For a full list of header configuration options, please see the `corresponding
-        section of in the header documentation
-        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
-    headerFacet
-        Header configuration, which determines default properties for non-row/column facet
-        `headers <https://vega.github.io/vega-lite/docs/header.html>`__.
+        **Default value:** ``false``
+    config
+        Vega-Lite configuration object. This property can only be defined at the top-level
+        of a specification.
+    description
+        Description of this mark for commenting purpose.
+    height
+        The height of a visualization.
 
-        For a full list of header configuration options, please see the `corresponding
-        section of in the header documentation
-        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
-    headerRow
-        Header configuration, which determines default properties for row `headers
-        <https://vega.github.io/vega-lite/docs/header.html>`__.
+        * For a plot with a continuous y-field, height should be a number.
+        * For a plot with either a discrete y-field or no y-field, height can be either a
+          number indicating a fixed height or an object in the form of ``{step: number}``
+          defining the height per discrete step. (No y-field is equivalent to having one
+          discrete step.)
+        * To enable responsive sizing on height, it should be set to ``"container"``.
 
-        For a full list of header configuration options, please see the `corresponding
-        section of in the header documentation
-        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
-    image
-        Image-specific Config
-    legend
-        Legend configuration, which determines default properties for all `legends
-        <https://vega.github.io/vega-lite/docs/legend.html>`__. For a full list of legend
-        configuration options, please see the `corresponding section of in the legend
-        documentation <https://vega.github.io/vega-lite/docs/legend.html#config>`__.
-    line
-        Line-Specific Config
-    lineBreak
-        A delimiter, such as a newline character, upon which to break text strings into
-        multiple lines. This property provides a global default for text marks, which is
-        overridden by mark or style config settings, and by the lineBreak mark encoding
-        channel. If signal-valued, either string or regular expression (regexp) values are
-        valid.
-    locale
-        Locale definitions for string parsing and formatting of number and date values. The
-        locale object should contain ``number`` and/or ``time`` properties with `locale
-        definitions <https://vega.github.io/vega/docs/api/locale/>`__. Locale definitions
-        provided in the config block may be overridden by the View constructor locale
-        option.
-    mark
-        Mark Config
-    normalizedNumberFormat
-        If normalizedNumberFormatType is not specified, D3 number format for axis labels,
-        text marks, and tooltips of normalized stacked fields (fields with ``stack:
-        "normalize"``). For example ``"s"`` for SI units. Use `D3's number format pattern
-        <https://github.com/d3/d3-format#locale_format>`__.
+        **Default value:** Based on ``config.view.continuousHeight`` for a plot with a
+        continuous y-field and ``config.view.discreteHeight`` otherwise.
 
-        If ``config.normalizedNumberFormatType`` is specified and
-        ``config.customFormatTypes`` is ``true``, this value will be passed as ``format``
-        alongside ``datum.value`` to the ``config.numberFormatType`` function. **Default
-        value:** ``%``
-    normalizedNumberFormatType
-        `Custom format type
-        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
-        ``config.normalizedNumberFormat``.
+        **Note:** For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        height of a single view and the ``"container"`` option cannot be used.
 
-        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
-        exposed as `format in Vega-Expression
-        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
-        set ``customFormatTypes`` to ``true`` to use this feature.
-    numberFormat
-        If numberFormatType is not specified, D3 number format for guide labels, text marks,
-        and tooltips of non-normalized fields (fields *without* ``stack: "normalize"``). For
-        example ``"s"`` for SI units. Use `D3's number format pattern
-        <https://github.com/d3/d3-format#locale_format>`__.
-
-        If ``config.numberFormatType`` is specified and ``config.customFormatTypes`` is
-        ``true``, this value will be passed as ``format`` alongside ``datum.value`` to the
-        ``config.numberFormatType`` function.
-    numberFormatType
-        `Custom format type
-        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
-        ``config.numberFormat``.
-
-        **Default value:** ``undefined`` -- This is equilvalent to call D3-format, which is
-        exposed as `format in Vega-Expression
-        <https://vega.github.io/vega/docs/expressions/#format>`__. **Note:** You must also
-        set ``customFormatTypes`` to ``true`` to use this feature.
+        **See also:** `height <https://vega.github.io/vega-lite/docs/size.html>`__
+        documentation.
+    name
+        Name of the visualization for later reference.
     padding
         The default visualization padding, in pixels, from the edge of the visualization
         canvas to the data rectangle. If a number, specifies padding for all sides. If an
@@ -7478,144 +7707,67 @@ class ThemeConfig(TypedDict, total=False):
 
         **Default value**: ``5``
     params
-        Dynamic variables or selections that parameterize a visualization.
-    point
-        Point-Specific Config
+        An array of parameters that may either be simple variables, or more complex
+        selections that map user input to data queries.
     projection
-        Projection configuration, which determines default properties for all `projections
-        <https://vega.github.io/vega-lite/docs/projection.html>`__. For a full list of
-        projection configuration options, please see the `corresponding section of the
-        projection documentation
-        <https://vega.github.io/vega-lite/docs/projection.html#config>`__.
-    range
-        An object hash that defines default range arrays or schemes for using with scales.
-        For a full list of scale range configuration options, please see the `corresponding
-        section of the scale documentation
-        <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
-    rect
-        Rect-Specific Config
-    rule
-        Rule-Specific Config
-    scale
-        Scale configuration determines default properties for all `scales
-        <https://vega.github.io/vega-lite/docs/scale.html>`__. For a full list of scale
-        configuration options, please see the `corresponding section of the scale
-        documentation <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
-    selection
-        An object hash for defining default properties for each type of selections.
-    square
-        Square-Specific Config
-    style
-        An object hash that defines key-value mappings to determine default properties for
-        marks with a given `style
-        <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__. The keys represent
-        styles names; the values have to be valid `mark configuration objects
-        <https://vega.github.io/vega-lite/docs/mark.html#config>`__.
-    text
-        Text-Specific Config
-    tick
-        Tick-Specific Config
-    timeFormat
-        Default time format for raw time values (without time units) in text marks, legend
-        labels and header labels.
+        An object defining properties of geographic projection, which will be applied to
+        ``shape`` path for ``"geoshape"`` marks and to ``latitude`` and ``"longitude"``
+        channels for other marks.
+    resolve
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing
+        The spacing in pixels between sub-views of the composition operator. An object of
+        the form ``{"row": number, "column": number}`` can be used to set different spacing
+        values for rows and columns.
 
-        **Default value:** ``"%b %d, %Y"`` **Note:** Axes automatically determine the format
-        for each label automatically so this config does not affect axes.
-    timeFormatType
-        `Custom format type
-        <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__ for
-        ``config.timeFormat``.
-
-        **Default value:** ``undefined`` -- This is equilvalent to call D3-time-format,
-        which is exposed as `timeFormat in Vega-Expression
-        <https://vega.github.io/vega/docs/expressions/#timeFormat>`__. **Note:** You must
-        also set ``customFormatTypes`` to ``true`` and there must *not* be a ``timeUnit``
-        defined to use this feature.
+        **Default value**: Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__
+        (``20`` by default)
     title
-        Title configuration, which determines default properties for all `titles
-        <https://vega.github.io/vega-lite/docs/title.html>`__. For a full list of title
-        configuration options, please see the `corresponding section of the title
-        documentation <https://vega.github.io/vega-lite/docs/title.html#config>`__.
-    tooltipFormat
-        Define `custom format configuration
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ for tooltips. If
-        unspecified, default format config will be applied.
-    trail
-        Trail-Specific Config
+        Title for the plot.
+    usermeta
+        Optional metadata that will be passed to Vega. This object is completely ignored by
+        Vega and Vega-Lite and can be used for custom metadata.
     view
-        Default properties for `single view plots
-        <https://vega.github.io/vega-lite/docs/spec.html#single>`__.
+        An object defining the view background's fill and stroke.
+
+        **Default value:** none (transparent)
+    width
+        The width of a visualization.
+
+        * For a plot with a continuous x-field, width should be a number.
+        * For a plot with either a discrete x-field or no x-field, width can be either a
+          number indicating a fixed width or an object in the form of ``{step: number}``
+          defining the width per discrete step. (No x-field is equivalent to having one
+          discrete step.)
+        * To enable responsive sizing on width, it should be set to ``"container"``.
+
+        **Default value:** Based on ``config.view.continuousWidth`` for a plot with a
+        continuous x-field and ``config.view.discreteWidth`` otherwise.
+
+        **Note:** For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        width of a single view and the ``"container"`` option cannot be used.
+
+        **See also:** `width <https://vega.github.io/vega-lite/docs/size.html>`__
+        documentation.
     """
 
-    arc: RectConfigKwds
-    area: AreaConfigKwds
-    aria: bool
+    align: RowCol[LayoutAlign_T, LayoutAlign_T] | LayoutAlign_T
     autosize: AutoSizeParamsKwds | AutosizeType_T
-    axis: AxisConfigKwds
-    axisBand: AxisConfigKwds
-    axisBottom: AxisConfigKwds
-    axisDiscrete: AxisConfigKwds
-    axisLeft: AxisConfigKwds
-    axisPoint: AxisConfigKwds
-    axisQuantitative: AxisConfigKwds
-    axisRight: AxisConfigKwds
-    axisTemporal: AxisConfigKwds
-    axisTop: AxisConfigKwds
-    axisX: AxisConfigKwds
-    axisXBand: AxisConfigKwds
-    axisXDiscrete: AxisConfigKwds
-    axisXPoint: AxisConfigKwds
-    axisXQuantitative: AxisConfigKwds
-    axisXTemporal: AxisConfigKwds
-    axisY: AxisConfigKwds
-    axisYBand: AxisConfigKwds
-    axisYDiscrete: AxisConfigKwds
-    axisYPoint: AxisConfigKwds
-    axisYQuantitative: AxisConfigKwds
-    axisYTemporal: AxisConfigKwds
     background: ColorHex | ColorName_T
-    bar: BarConfigKwds
-    boxplot: BoxPlotConfigKwds
-    circle: MarkConfigKwds
-    concat: CompositionConfigKwds
-    countTitle: str
-    customFormatTypes: bool
-    errorband: ErrorBandConfigKwds
-    errorbar: ErrorBarConfigKwds
-    facet: CompositionConfigKwds
-    fieldTitle: Literal["verbal", "functional", "plain"]
-    font: str
-    geoshape: MarkConfigKwds
-    header: HeaderConfigKwds
-    headerColumn: HeaderConfigKwds
-    headerFacet: HeaderConfigKwds
-    headerRow: HeaderConfigKwds
-    image: RectConfigKwds
-    legend: LegendConfigKwds
-    line: LineConfigKwds
-    lineBreak: str
-    locale: LocaleKwds
-    mark: MarkConfigKwds
-    normalizedNumberFormat: str
-    normalizedNumberFormatType: str
-    numberFormat: str
-    numberFormatType: str
+    bounds: Literal["full", "flush"]
+    center: bool | RowCol[bool, bool]
+    config: ConfigKwds
+    description: str
+    height: float | StepKwds | Literal["container"]
+    name: str
     padding: float | Map
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
-    point: MarkConfigKwds
-    projection: ProjectionConfigKwds
-    range: RangeConfigKwds
-    rect: RectConfigKwds
-    rule: MarkConfigKwds
-    scale: ScaleConfigKwds
-    selection: SelectionConfigKwds
-    square: MarkConfigKwds
-    style: StyleConfigIndexKwds
-    text: MarkConfigKwds
-    tick: TickConfigKwds
-    timeFormat: str
-    timeFormatType: str
-    title: TitleConfigKwds
-    tooltipFormat: FormatConfigKwds
-    trail: LineConfigKwds
-    view: ViewConfigKwds
+    projection: ProjectionKwds
+    resolve: ResolveKwds
+    spacing: float | RowCol[float, float]
+    title: str | Sequence[str] | TitleParamsKwds
+    usermeta: Map
+    view: ViewBackgroundKwds
+    width: float | StepKwds | Literal["container"]
