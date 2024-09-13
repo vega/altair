@@ -5,7 +5,8 @@ from typing import TYPE_CHECKING, Any, Callable, cast
 import pytest
 
 import altair.vegalite.v5 as alt
-from altair.vegalite.v5.schema._config import ConfigKwds, ThemeConfig
+from altair.typing import ThemeConfig
+from altair.vegalite.v5.schema._config import ConfigKwds
 from altair.vegalite.v5.schema._typing import is_color_hex
 from altair.vegalite.v5.theme import VEGA_THEMES, register_theme, themes
 
@@ -25,7 +26,7 @@ def chart() -> alt.Chart:
 
 def test_vega_themes(chart) -> None:
     for theme in VEGA_THEMES:
-        with alt.themes.enable(theme):  # pyright: ignore
+        with alt.themes.enable(theme):
             dct = chart.to_dict()
         assert dct["usermeta"] == {"embedOptions": {"theme": theme}}
         assert dct["config"] == {
@@ -35,7 +36,7 @@ def test_vega_themes(chart) -> None:
 
 def test_register_theme_decorator() -> None:
     @register_theme("unique name", enable=True)
-    def custom_theme() -> dict[str, int]:
+    def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
 
     assert themes.active == "unique name"
