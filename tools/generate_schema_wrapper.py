@@ -1069,6 +1069,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "Value",
         "ColorHex",
         "is_color_hex",
+        "RowCol",
         header=HEADER,
         extra=TYPING_EXTRA,
     )

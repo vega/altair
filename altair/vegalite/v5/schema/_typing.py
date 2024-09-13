@@ -69,6 +69,7 @@ __all__ = [
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
+    "RowCol",
     "ScaleInterpolateEnum_T",
     "ScaleType_T",
     "SelectionResolution_T",
