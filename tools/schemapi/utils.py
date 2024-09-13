@@ -577,7 +577,7 @@ class SchemaInfo:
         elif self.is_rowcol():
             row = self.properties["row"]
             t = row.to_type_repr(target="annotation", use_concrete=use_concrete)
-            tps.add(f"RowCol[{t}, {t}]")
+            tps.add(f"RowCol[{t}]")
         elif title in REMAP_TITLE:
             tps.update(REMAP_TITLE[title])
         elif (

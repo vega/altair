@@ -7753,11 +7753,11 @@ class ThemeConfig(TypedDict, total=False):
         documentation.
     """
 
-    align: RowCol[LayoutAlign_T, LayoutAlign_T] | LayoutAlign_T
+    align: RowCol[LayoutAlign_T] | LayoutAlign_T
     autosize: AutoSizeParamsKwds | AutosizeType_T
     background: ColorHex | ColorName_T
     bounds: Literal["full", "flush"]
-    center: bool | RowCol[bool, bool]
+    center: bool | RowCol[bool]
     config: ConfigKwds
     description: str
     height: float | StepKwds | Literal["container"]
@@ -7766,7 +7766,7 @@ class ThemeConfig(TypedDict, total=False):
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     projection: ProjectionKwds
     resolve: ResolveKwds
-    spacing: float | RowCol[float, float]
+    spacing: float | RowCol[float]
     title: str | Sequence[str] | TitleParamsKwds
     usermeta: Map
     view: ViewBackgroundKwds
