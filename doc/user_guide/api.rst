@@ -689,5 +689,6 @@ Typing
    ChartType
    EncodeKwds
    Optional
+   ThemeConfig
    is_chart_type
 
