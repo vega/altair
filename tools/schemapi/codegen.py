@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import re
+import sys
 import textwrap
 from dataclasses import dataclass
 from itertools import chain
-from typing import Any, Final, Iterable, Iterator
+from operator import attrgetter
+from typing import Any, Callable, Final, Iterable, Iterator, TypeVar, Union
 
 from .utils import (
     SchemaInfo,
@@ -18,6 +20,23 @@ from .utils import (
     process_description,
     spell_literal,
 )
+
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
+
+
+T1 = TypeVar("T1")
+T2 = TypeVar("T2")
+AttrGetter = TypeAliasType(
+    "AttrGetter", Callable[[T1], Union[T2, "tuple[T2, ...]"]], type_params=(T1, T2)
+)
+"""
+Intended to model the signature of ``operator.attrgetter``.
+
+Spelled more generically to support future extension.
+"""
 
 
 class CodeSnippet:
@@ -40,7 +59,10 @@ class ArgInfo:
     schema_info: SchemaInfo
 
     def iter_args(
-        self, *prop_groups: Iterable[str], exclude: str | Iterable[str] | None = None
+        self,
+        group: Iterable[str] | AttrGetter[ArgInfo, set[str]],
+        *more_groups: Iterable[str] | AttrGetter[ArgInfo, set[str]],
+        exclude: str | Iterable[str] | None = None,
     ) -> Iterator[tuple[str, SchemaInfo]]:
         """
         Yields (property_name, property_info).
@@ -56,7 +78,7 @@ class ArgInfo:
         """
         props = self.schema_info.properties
         it = chain.from_iterable(
-            sorted(g if isinstance(g, set) else set(g)) for g in prop_groups
+            sorted(g) for g in self._normalize_groups(group, *more_groups)
         )
         if exclude is not None:
             exclude = {exclude} if isinstance(exclude, str) else set(exclude)
@@ -66,6 +88,32 @@ class ArgInfo:
         else:
             for p in it:
                 yield p, props[p]
+
+    def _normalize_groups(
+        self, *groups: Iterable[str] | AttrGetter[ArgInfo, set[str]]
+    ) -> Iterator[set[str]]:
+        for group in groups:
+            if isinstance(group, set):
+                yield group
+            elif isinstance(group, Iterable):
+                yield set(group)
+            elif callable(group):
+                result = group(self)
+                if isinstance(result, set):
+                    yield result
+                else:
+                    yield from result
+            else:
+                msg = (
+                    f"Expected all cases to be reducible to a `set[str]`,"
+                    f" but got {type(group).__name__!r}"
+                )
+                raise TypeError(msg)
+
+
+arg_required_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("required", "kwds")
+arg_invalid_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("invalid_kwds")
+arg_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("kwds")
 
 
 def get_args(info: SchemaInfo) -> ArgInfo:
