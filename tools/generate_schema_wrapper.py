@@ -239,7 +239,12 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 """
 UNIVERSAL_TYPED_DICT = '''
 class {name}(TypedDict{metaclass_kwds}):{comment}
-    """{doc}"""
+    """
+    {summary}
+
+    Parameters
+    ----------
+    {doc}"""
 
     {typed_dict_args}
 '''
@@ -844,28 +849,6 @@ def _typed_dict_args(
     )
 
 
-def _typed_dict_doc(
-    info: SchemaInfo,
-    /,
-    *,
-    summary: str | None = None,
-    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
-    exclude: str | Iterable[str] | None = None,
-) -> str:
-    args = codegen.get_args(info)
-    it = chain.from_iterable(
-        (p, f"    {p_info.deep_description}")
-        for p, p_info in args.iter_args(groups, exclude=exclude)
-    )
-    lines = (
-        summary or f"{info.title} ``TypedDict`` wrapper.",
-        "",
-        "Parameters",
-        "----------",
-    )
-    return indent_docstring(chain(lines, it), indent_level=4, lstrip=False)
-
-
 def generate_typed_dict(
     info: SchemaInfo,
     name: str,
@@ -903,7 +886,13 @@ def generate_typed_dict(
         if override_args is None
         else "\n    ".join(override_args)
     )
-    td_doc = _typed_dict_doc(info, summary=summary, groups=groups, exclude=exclude)
+    doc = indent_docstring(
+        chain.from_iterable(
+            (p, f"    {p_info.deep_description}")
+            for p, p_info in arg_info.iter_args(groups, exclude=exclude)
+        ),
+        indent_level=4,
+    )
     if (kwds := arg_info.invalid_kwds) and list(
         arg_info.iter_args(kwds, exclude=exclude)
     ):
@@ -917,16 +906,16 @@ def generate_typed_dict(
             f"{td_args}\n    "
             f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
         )
-        td_doc = (
-            f"{td_doc}\n"
-            f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
+        doc = (
+            f"{doc}\n" f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
         )
 
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
         metaclass_kwds=metaclass_kwds,
         comment=comment,
-        doc=td_doc,
+        summary=summary or f"{info.title} ``TypedDict`` wrapper.",
+        doc=doc,
         typed_dict_args=td_args,
     )
 
