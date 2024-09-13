@@ -246,7 +246,7 @@ class {name}(TypedDict{metaclass_kwds}):{comment}
     ----------
     {doc}"""
 
-    {typed_dict_args}
+    {td_args}
 '''
 ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
 THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
@@ -836,27 +836,14 @@ def generate_mark_args(
     return {"method_args": ", ".join(method_args), "dict_args": ", ".join(dict_args)}
 
 
-def _typed_dict_args(
-    info: SchemaInfo,
-    /,
-    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
-    exclude: str | Iterable[str] | None = None,
-) -> str:
-    args = codegen.get_args(info)
-    return "\n    ".join(
-        f"{p}: {p_info.to_type_repr(target='annotation', use_concrete=True)}"
-        for p, p_info in args.iter_args(groups, exclude=exclude)
-    )
-
-
 def generate_typed_dict(
     info: SchemaInfo,
     name: str,
     *,
     summary: str | None = None,
-    override_args: Iterable[str] | None = None,
     groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
     exclude: str | Iterable[str] | None = None,
+    override_args: Iterable[str] | None = None,
 ) -> str:
     """
     Return a fully typed & documented ``TypedDict``.
@@ -881,11 +868,15 @@ def generate_typed_dict(
     arg_info = codegen.get_args(info)
     metaclass_kwds = ", total=False"
     comment = ""
-    td_args = (
-        _typed_dict_args(info, groups=groups, exclude=exclude)
+    args_it: Iterable[str] = (
+        (
+            f"{p}: {p_info.to_type_repr(target=TARGET, use_concrete=True)}"
+            for p, p_info in arg_info.iter_args(groups, exclude=exclude)
+        )
         if override_args is None
-        else "\n    ".join(override_args)
+        else override_args
     )
+    args = "\n    ".join(args_it)
     doc = indent_docstring(
         chain.from_iterable(
             (p, f"    {p_info.deep_description}")
@@ -902,8 +893,8 @@ def generate_typed_dict(
             info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
             for _, info in arg_info.iter_args(kwds, exclude=exclude)
         )
-        td_args = (
-            f"{td_args}\n    "
+        args = (
+            f"{args}\n    "
             f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
         )
         doc = (
@@ -916,7 +907,7 @@ def generate_typed_dict(
         comment=comment,
         summary=summary or f"{info.title} ``TypedDict`` wrapper.",
         doc=doc,
-        typed_dict_args=td_args,
+        td_args=args,
     )
 
 
