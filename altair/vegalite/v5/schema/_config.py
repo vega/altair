@@ -21,6 +21,7 @@ __all__ = [
     "AreaConfigKwds",
     "AutoSizeParamsKwds",
     "AxisConfigKwds",
+    "AxisResolveMapKwds",
     "BarConfigKwds",
     "BindCheckboxKwds",
     "BindDirectKwds",
@@ -44,6 +45,7 @@ __all__ = [
     "IntervalSelectionConfigKwds",
     "IntervalSelectionConfigWithoutTypeKwds",
     "LegendConfigKwds",
+    "LegendResolveMapKwds",
     "LegendStreamBindingKwds",
     "LineConfigKwds",
     "LineStringKwds",
@@ -61,21 +63,27 @@ __all__ = [
     "PointSelectionConfigWithoutTypeKwds",
     "PolygonKwds",
     "ProjectionConfigKwds",
+    "ProjectionKwds",
     "RadialGradientKwds",
     "RangeConfigKwds",
     "RectConfigKwds",
+    "ResolveKwds",
     "ScaleConfigKwds",
     "ScaleInvalidDataConfigKwds",
+    "ScaleResolveMapKwds",
     "SelectionConfigKwds",
+    "StepKwds",
     "StyleConfigIndexKwds",
     "ThemeConfig",
     "TickConfigKwds",
     "TimeIntervalStepKwds",
     "TimeLocaleKwds",
     "TitleConfigKwds",
+    "TitleParamsKwds",
     "TooltipContentKwds",
     "TopLevelSelectionParameterKwds",
     "VariableParameterKwds",
+    "ViewBackgroundKwds",
     "ViewConfigKwds",
 ]
 
@@ -1042,6 +1050,22 @@ class AxisConfigKwds(TypedDict, total=False):
     translate: float
     values: Sequence[str] | Sequence[bool] | Sequence[float] | Sequence[DateTimeKwds]
     zindex: float
+
+
+class AxisResolveMapKwds(TypedDict, total=False):
+    """
+    AxisResolveMap ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    x
+
+    y
+
+    """
+
+    x: ResolveMode_T
+    y: ResolveMode_T
 
 
 class BarConfigKwds(TypedDict, total=False):
@@ -2976,6 +3000,49 @@ class LegendConfigKwds(TypedDict, total=False):
     zindex: float
 
 
+class LegendResolveMapKwds(TypedDict, total=False):
+    """
+    LegendResolveMap ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    angle
+
+    color
+
+    fill
+
+    fillOpacity
+
+    opacity
+
+    shape
+
+    size
+
+    stroke
+
+    strokeDash
+
+    strokeOpacity
+
+    strokeWidth
+
+    """
+
+    angle: ResolveMode_T
+    color: ResolveMode_T
+    fill: ResolveMode_T
+    fillOpacity: ResolveMode_T
+    opacity: ResolveMode_T
+    shape: ResolveMode_T
+    size: ResolveMode_T
+    stroke: ResolveMode_T
+    strokeDash: ResolveMode_T
+    strokeOpacity: ResolveMode_T
+    strokeWidth: ResolveMode_T
+
+
 class LegendStreamBindingKwds(TypedDict, total=False):
     """
     LegendStreamBinding ``TypedDict`` wrapper.
@@ -4845,6 +4912,149 @@ class PolygonKwds(TypedDict, total=False):
     bbox: Sequence[float]
 
 
+class ProjectionKwds(TypedDict, total=False):
+    """
+    Projection ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    center
+        The projection's center, a two-element array of longitude and latitude in degrees.
+
+        **Default value:** ``[0, 0]``
+    clipAngle
+        The projection's clipping circle radius to the specified angle in degrees. If
+        ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
+        rather than small-circle clipping.
+    clipExtent
+        The projection's viewport clip extent to the specified bounds in pixels. The extent
+        bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
+        left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
+        bottom. If ``null``, no viewport clipping is performed.
+    coefficient
+        The coefficient parameter for the ``hammer`` projection.
+
+        **Default value:** ``2``
+    distance
+        For the ``satellite`` projection, the distance from the center of the sphere to the
+        point of view, as a proportion of the sphere's radius. The recommended maximum clip
+        angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
+        is also applied, then more conservative clipping may be necessary.
+
+        **Default value:** ``2.0``
+    extent
+
+    fit
+
+    fraction
+        The fraction parameter for the ``bottomley`` projection.
+
+        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+    lobes
+        The number of lobes in projections that support multi-lobe views: ``berghaus``,
+        ``gingery``, or ``healpix``. The default value varies based on the projection type.
+    parallel
+        The parallel parameter for projections that support it: ``armadillo``, ``bonne``,
+        ``craig``, ``cylindricalEqualArea``, ``cylindricalStereographic``,
+        ``hammerRetroazimuthal``, ``loximuthal``, or ``rectangularPolyconic``. The default
+        value varies based on the projection type.
+    parallels
+        For conic projections, the `two standard parallels
+        <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
+        The default depends on the specific conic projection used.
+    pointRadius
+        The default radius (in pixels) to use when drawing GeoJSON ``Point`` and
+        ``MultiPoint`` geometries. This parameter sets a constant default value. To modify
+        the point radius in response to data, see the corresponding parameter of the GeoPath
+        and GeoShape transforms.
+
+        **Default value:** ``4.5``
+    precision
+        The threshold for the projection's `adaptive resampling
+        <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
+        value corresponds to the `Douglas-Peucker distance
+        <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
+        If precision is not specified, returns the projection's current resampling precision
+        which defaults to ``√0.5 ≅ 0.70710…``.
+    radius
+        The radius parameter for the ``airy`` or ``gingery`` projection. The default value
+        varies based on the projection type.
+    ratio
+        The ratio parameter for the ``hill``, ``hufnagel``, or ``wagner`` projections. The
+        default value varies based on the projection type.
+    reflectX
+        Sets whether or not the x-dimension is reflected (negated) in the output.
+    reflectY
+        Sets whether or not the y-dimension is reflected (negated) in the output.
+    rotate
+        The projection's three-axis rotation to the specified angles, which must be a two-
+        or three-element array of numbers [``lambda``, ``phi``, ``gamma``] specifying the
+        rotation angles in degrees about each spherical axis. (These correspond to yaw,
+        pitch and roll.)
+
+        **Default value:** ``[0, 0, 0]``
+    scale
+        The projection's scale (zoom) factor, overriding automatic fitting. The default
+        scale is projection-specific. The scale factor corresponds linearly to the distance
+        between projected points; however, scale factor values are not equivalent across
+        projections.
+    size
+        Used in conjunction with fit, provides the width and height in pixels of the area to
+        which the projection should be automatically fit.
+    spacing
+        The spacing parameter for the ``lagrange`` projection.
+
+        **Default value:** ``0.5``
+    tilt
+        The tilt angle (in degrees) for the ``satellite`` projection.
+
+        **Default value:** ``0``.
+    translate
+        The projection's translation offset as a two-element array ``[tx, ty]``.
+    type
+        The cartographic projection to use. This value is case-insensitive, for example
+        ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
+        valid projection types `in the documentation
+        <https://vega.github.io/vega-lite/docs/projection.html#projection-types>`__.
+
+        **Default value:** ``equalEarth``
+    """
+
+    center: Sequence[float]
+    clipAngle: float
+    clipExtent: Sequence[Sequence[float]]
+    coefficient: float
+    distance: float
+    extent: Sequence[Sequence[float]]
+    fit: (
+        GeoJsonFeatureKwds
+        | GeoJsonFeatureCollectionKwds
+        | Sequence[GeoJsonFeatureKwds]
+        | Sequence[
+            GeoJsonFeatureKwds
+            | GeoJsonFeatureCollectionKwds
+            | Sequence[GeoJsonFeatureKwds]
+        ]
+    )
+    fraction: float
+    lobes: float
+    parallel: float
+    parallels: Sequence[float]
+    pointRadius: float
+    precision: float
+    radius: float
+    ratio: float
+    reflectX: bool
+    reflectY: bool
+    rotate: Sequence[float]
+    scale: float
+    size: Sequence[float]
+    spacing: float
+    tilt: float
+    translate: Sequence[float]
+    type: ProjectionType_T
+
+
 class ProjectionConfigKwds(TypedDict, total=False):
     """
     ProjectionConfig ``TypedDict`` wrapper.
@@ -5563,6 +5773,25 @@ class RectConfigKwds(TypedDict, total=False):
     y2: float | Literal["height"]
 
 
+class ResolveKwds(TypedDict, total=False):
+    """
+    Resolve ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    axis
+
+    legend
+
+    scale
+
+    """
+
+    axis: AxisResolveMapKwds
+    legend: LegendResolveMapKwds
+    scale: ScaleResolveMapKwds
+
+
 class ScaleConfigKwds(TypedDict, total=False):
     """
     ScaleConfig ``TypedDict`` wrapper.
@@ -5816,6 +6045,67 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     yOffset: Value[float] | Literal["zero-or-min"]
 
 
+class ScaleResolveMapKwds(TypedDict, total=False):
+    """
+    ScaleResolveMap ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    angle
+
+    color
+
+    fill
+
+    fillOpacity
+
+    opacity
+
+    radius
+
+    shape
+
+    size
+
+    stroke
+
+    strokeDash
+
+    strokeOpacity
+
+    strokeWidth
+
+    theta
+
+    x
+
+    xOffset
+
+    y
+
+    yOffset
+
+    """
+
+    angle: ResolveMode_T
+    color: ResolveMode_T
+    fill: ResolveMode_T
+    fillOpacity: ResolveMode_T
+    opacity: ResolveMode_T
+    radius: ResolveMode_T
+    shape: ResolveMode_T
+    size: ResolveMode_T
+    stroke: ResolveMode_T
+    strokeDash: ResolveMode_T
+    strokeOpacity: ResolveMode_T
+    strokeWidth: ResolveMode_T
+    theta: ResolveMode_T
+    x: ResolveMode_T
+    xOffset: ResolveMode_T
+    y: ResolveMode_T
+    yOffset: ResolveMode_T
+
+
 class SelectionConfigKwds(TypedDict, total=False):
     """
     SelectionConfig ``TypedDict`` wrapper.
@@ -5842,6 +6132,31 @@ class SelectionConfigKwds(TypedDict, total=False):
 
     interval: IntervalSelectionConfigWithoutTypeKwds
     point: PointSelectionConfigWithoutTypeKwds
+
+
+class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    """
+    Step ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    step
+        The size (width/height) per discrete step.
+
+    Notes
+    -----
+    The following keys may be specified as string literals **only**:
+
+        ['for']
+
+    See `PEP728`_ for type checker compatibility.
+
+    .. _PEP728:
+        https://peps.python.org/pep-0728/#reference-implementation
+    """
+
+    step: float
+    __extra_items__: StepFor_T
 
 
 class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -6528,6 +6843,137 @@ class TitleConfigKwds(TypedDict, total=False):
     zindex: float
 
 
+class TitleParamsKwds(TypedDict, total=False):
+    """
+    TitleParams ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    text
+        The title text.
+    align
+        Horizontal text alignment for title text. One of ``"left"``, ``"center"``, or
+        ``"right"``.
+    anchor
+        The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
+        ``"end"``. For example, with an orientation of top these anchor positions map to a
+        left-, center-, or right-aligned title.
+
+        **Default value:** ``"middle"`` for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`__ views. ``"start"`` for other
+        composite views.
+
+        **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`__, ``anchor`` is
+        only customizable only for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`__ views. For other composite
+        views, ``anchor`` is always ``"start"``.
+    angle
+        Angle in degrees of title and subtitle text.
+    aria
+        A boolean flag indicating if `ARIA attributes
+        <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ should be
+        included (SVG output only). If ``false``, the "aria-hidden" attribute will be set on
+        the output SVG group, removing the title from the ARIA accessibility tree.
+
+        **Default value:** ``true``
+    baseline
+        Vertical text baseline for title and subtitle text. One of ``"alphabetic"``
+        (default), ``"top"``, ``"middle"``, ``"bottom"``, ``"line-top"``, or
+        ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
+        to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
+        rather than *fontSize* alone.
+    color
+        Text color for title text.
+    dx
+        Delta offset for title and subtitle text x-coordinate.
+    dy
+        Delta offset for title and subtitle text y-coordinate.
+    font
+        Font name for title text.
+    fontSize
+        Font size in pixels for title text.
+    fontStyle
+        Font style for title text.
+    fontWeight
+        Font weight for title text. This can be either a string (e.g ``"bold"``,
+        ``"normal"``) or a number (``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700``).
+    frame
+        The reference frame for the anchor position, one of ``"bounds"`` (to anchor relative
+        to the full bounding box) or ``"group"`` (to anchor relative to the group width or
+        height).
+    limit
+        The maximum allowed length in pixels of title and subtitle text.
+    lineHeight
+        Line height in pixels for multi-line title text or title text with ``"line-top"`` or
+        ``"line-bottom"`` baseline.
+    offset
+        The orthogonal offset in pixels by which to displace the title group from its
+        position along the edge of the chart.
+    orient
+        Default title orientation (``"top"``, ``"bottom"``, ``"left"``, or ``"right"``)
+    style
+        A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`__
+        to apply to the title text mark.
+
+        **Default value:** ``"group-title"``.
+    subtitle
+        The subtitle Text.
+    subtitleColor
+        Text color for subtitle text.
+    subtitleFont
+        Font name for subtitle text.
+    subtitleFontSize
+        Font size in pixels for subtitle text.
+    subtitleFontStyle
+        Font style for subtitle text.
+    subtitleFontWeight
+        Font weight for subtitle text. This can be either a string (e.g ``"bold"``,
+        ``"normal"``) or a number (``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700``).
+    subtitleLineHeight
+        Line height in pixels for multi-line subtitle text.
+    subtitlePadding
+        The padding in pixels between title and subtitle text.
+    zindex
+        The integer z-index indicating the layering of the title group relative to other
+        axis, mark and legend groups.
+
+        **Default value:** ``0``.
+    """
+
+    text: str | Sequence[str]
+    align: Align_T
+    anchor: TitleAnchor_T
+    angle: float
+    aria: bool
+    baseline: TextBaseline_T
+    color: None | ColorHex | ColorName_T
+    dx: float
+    dy: float
+    font: str
+    fontSize: float
+    fontStyle: str
+    fontWeight: FontWeight_T
+    frame: str | TitleFrame_T
+    limit: float
+    lineHeight: float
+    offset: float
+    orient: TitleOrient_T
+    style: str | Sequence[str]
+    subtitle: str | Sequence[str]
+    subtitleColor: None | ColorHex | ColorName_T
+    subtitleFont: str
+    subtitleFontSize: float
+    subtitleFontStyle: str
+    subtitleFontWeight: FontWeight_T
+    subtitleLineHeight: float
+    subtitlePadding: float
+    zindex: float
+
+
 class TooltipContentKwds(TypedDict, total=False):
     """
     TooltipContent ``TypedDict`` wrapper.
@@ -6646,6 +7092,84 @@ class VariableParameterKwds(TypedDict, total=False):
     expr: str
     react: bool
     value: Any
+
+
+class ViewBackgroundKwds(TypedDict, total=False):
+    """
+    ViewBackground ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    cornerRadius
+        The radius in pixels of rounded rectangles or arcs' corners.
+
+        **Default value:** ``0``
+    cursor
+        The mouse cursor used over the view. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
+    fill
+        The fill color.
+
+        **Default value:** ``undefined``
+    fillOpacity
+        The fill opacity (value between [0,1]).
+
+        **Default value:** ``1``
+    opacity
+        The overall opacity (value between [0,1]).
+
+        **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
+        ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
+    stroke
+        The stroke color.
+
+        **Default value:** ``"#ddd"``
+    strokeCap
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
+
+        **Default value:** ``"butt"``
+    strokeDash
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
+        **Default value:** ``"miter"``
+    strokeMiterLimit
+        The miter limit at which to bevel a line join.
+    strokeOpacity
+        The stroke opacity (value between [0,1]).
+
+        **Default value:** ``1``
+    strokeWidth
+        The stroke width, in pixels.
+    style
+        A string or array of strings indicating the name of custom styles to apply to the
+        view background. A style is a named collection of mark property defaults defined
+        within the `style configuration
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__. If style is an
+        array, later styles will override earlier styles.
+
+        **Default value:** ``"cell"`` **Note:** Any specified view background properties
+        will augment the default style.
+    """
+
+    cornerRadius: float
+    cursor: Cursor_T
+    fill: None | ColorHex | ColorName_T
+    fillOpacity: float
+    opacity: float
+    stroke: None | ColorHex | ColorName_T
+    strokeCap: StrokeCap_T
+    strokeDash: Sequence[float]
+    strokeDashOffset: float
+    strokeJoin: StrokeJoin_T
+    strokeMiterLimit: float
+    strokeOpacity: float
+    strokeWidth: float
+    style: str | Sequence[str]
 
 
 class ViewConfigKwds(TypedDict, total=False):

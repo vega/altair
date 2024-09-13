@@ -903,11 +903,24 @@ def generate_typed_dict(
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     KWDS: Literal["Kwds"] = "Kwds"
     CONFIG: Literal["Config"] = "Config"
-    config = SchemaInfo.from_refname(CONFIG, load_schema(fp))
+    TOP_LEVEL_EXTRAS = (
+        "Step",
+        "Projection",
+        "Resolve",
+        "TitleParams",
+        "ViewBackground",
+    )
+    root = load_schema(fp)
+    config = SchemaInfo.from_refname(CONFIG, root)
+    theme_targets = find_theme_config_targets(config)
+    for name in TOP_LEVEL_EXTRAS:
+        theme_targets.update(
+            find_theme_config_targets(SchemaInfo.from_refname(name, root))
+        )
 
     relevant: dict[str, SchemaInfo] = {
         x.title: x
-        for x in sorted(find_theme_config_targets(config), key=attrgetter("refname"))
+        for x in sorted(theme_targets, key=attrgetter("refname"))
         if x.refname != CONFIG
     }
     SchemaInfo._remap_title.update(

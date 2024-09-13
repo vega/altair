@@ -80,6 +80,7 @@ __all__ = [
     "SortOrder_T",
     "StackOffset_T",
     "StandardType_T",
+    "StepFor_T",
     "StrokeCap_T",
     "StrokeJoin_T",
     "TextBaseline_T",
@@ -1175,6 +1176,7 @@ SortByChannel_T: TypeAlias = Literal[
 SortOrder_T: TypeAlias = Literal["ascending", "descending"]
 StackOffset_T: TypeAlias = Literal["zero", "center", "normalize"]
 StandardType_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal"]
+StepFor_T: TypeAlias = Literal["position", "offset"]
 StrokeCap_T: TypeAlias = Literal["butt", "round", "square"]
 StrokeJoin_T: TypeAlias = Literal["miter", "round", "bevel"]
 TextBaseline_T: TypeAlias = Literal[
