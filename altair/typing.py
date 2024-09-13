@@ -46,11 +46,13 @@ __all__ = [
     "ChartType",
     "EncodeKwds",
     "Optional",
+    "ThemeConfig",
     "is_chart_type",
 ]
 
 from altair.utils.schemapi import Optional
 from altair.vegalite.v5.api import ChartType, is_chart_type
+from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema.channels import (
     ChannelAngle,
     ChannelColor,
