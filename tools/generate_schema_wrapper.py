@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import Any, Final, Iterable, Iterator, Literal
+from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal
 from urllib import request
 
 import vl_convert as vlc
@@ -20,7 +20,14 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 
 
-from tools.schemapi import CodeSnippet, SchemaInfo, codegen
+from tools.schemapi import (  # noqa: F401
+    CodeSnippet,
+    SchemaInfo,
+    arg_invalid_kwds,
+    arg_kwds,
+    arg_required_kwds,
+    codegen,
+)
 from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
@@ -35,6 +42,9 @@ from tools.schemapi.utils import (
     ruff_write_lint_format_str,
     spell_literal,
 )
+
+if TYPE_CHECKING:
+    from tools.schemapi.codegen import ArgInfo, AttrGetter
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
@@ -808,7 +818,7 @@ def generate_mark_args(
     args = codegen.get_args(info)
     method_args: deque[str] = deque()
     dict_args: deque[str] = deque()
-    for p, p_info in args.iter_args(args.required | args.kwds, exclude="type"):
+    for p, p_info in args.iter_args(arg_required_kwds, exclude="type"):
         dict_args.append(f"{p}={p}")
         method_args.append(
             f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
@@ -816,19 +826,31 @@ def generate_mark_args(
     return {"method_args": ", ".join(method_args), "dict_args": ", ".join(dict_args)}
 
 
-def _typed_dict_args(info: SchemaInfo, /) -> str:
+def _typed_dict_args(
+    info: SchemaInfo,
+    /,
+    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
+    exclude: str | Iterable[str] | None = None,
+) -> str:
     args = codegen.get_args(info)
     return "\n    ".join(
         f"{p}: {p_info.to_type_repr(target='annotation', use_concrete=True)}"
-        for p, p_info in args.iter_args(args.required, args.kwds)
+        for p, p_info in args.iter_args(groups, exclude=exclude)
     )
 
 
-def _typed_dict_doc(info: SchemaInfo, /, *, summary: str | None = None) -> str:
+def _typed_dict_doc(
+    info: SchemaInfo,
+    /,
+    *,
+    summary: str | None = None,
+    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
+    exclude: str | Iterable[str] | None = None,
+) -> str:
     args = codegen.get_args(info)
     it = chain.from_iterable(
         (p, f"    {p_info.deep_description}")
-        for p, p_info in args.iter_args(args.required, args.kwds)
+        for p, p_info in args.iter_args(groups, exclude=exclude)
     )
     lines = (
         summary or f"{info.title} ``TypedDict`` wrapper.",
@@ -845,6 +867,8 @@ def generate_typed_dict(
     *,
     summary: str | None = None,
     override_args: Iterable[str] | None = None,
+    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
+    exclude: str | Iterable[str] | None = None,
 ) -> str:
     """
     Return a fully typed & documented ``TypedDict``.
@@ -870,17 +894,19 @@ def generate_typed_dict(
     metaclass_kwds = ", total=False"
     comment = ""
     td_args = (
-        _typed_dict_args(info)
+        _typed_dict_args(info, groups=groups, exclude=exclude)
         if override_args is None
         else "\n    ".join(override_args)
     )
-    td_doc = _typed_dict_doc(info, summary=summary)
-    if kwds := arg_info.invalid_kwds:
+    td_doc = _typed_dict_doc(info, summary=summary, groups=groups, exclude=exclude)
+    if (kwds := arg_info.invalid_kwds) and list(
+        arg_info.iter_args(kwds, exclude=exclude)
+    ):
         metaclass_kwds = f", closed=True{metaclass_kwds}"
         comment = "  # type: ignore[call-arg]"
         kwds_all_tps = chain.from_iterable(
             info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
-            for _, info in arg_info.iter_args(kwds)
+            for _, info in arg_info.iter_args(kwds, exclude=exclude)
         )
         td_args = (
             f"{td_args}\n    "
@@ -903,6 +929,7 @@ def generate_typed_dict(
 def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     KWDS: Literal["Kwds"] = "Kwds"
     CONFIG: Literal["Config"] = "Config"
+    TOP_LEVEL: Literal["TopLevelUnitSpec"] = "TopLevelUnitSpec"
     TOP_LEVEL_EXTRAS = (
         "Step",
         "Projection",
@@ -910,6 +937,7 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         "TitleParams",
         "ViewBackground",
     )
+    TOP_LEVEL_EXCLUDE = {"$schema", "data", "datasets", "encoding", "transform"}
     root = load_schema(fp)
     config = SchemaInfo.from_refname(CONFIG, root)
     theme_targets = find_theme_config_targets(config)
@@ -919,15 +947,13 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         )
 
     relevant: dict[str, SchemaInfo] = {
-        x.title: x
-        for x in sorted(theme_targets, key=attrgetter("refname"))
-        if x.refname != CONFIG
+        x.title: x for x in sorted(theme_targets, key=attrgetter("refname"))
     }
+
     SchemaInfo._remap_title.update(
         {"HexColor": ("ColorHex",), "Padding": ("float", "Map")}
     )
     SchemaInfo._remap_title.update((k, (f"{k}{KWDS}",)) for k in relevant)
-
     config_sub: Iterator[str] = (
         generate_typed_dict(info, name=f"{info.title}{KWDS}")
         for info in relevant.values()
@@ -935,7 +961,13 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
     yield f"__all__ = {[*config_sub_names, THEME_CONFIG]}\n\n"
     yield "\n".join(config_sub)
-    yield generate_typed_dict(config, THEME_CONFIG, summary=THEME_CONFIG_SUMMARY)
+    yield generate_typed_dict(
+        SchemaInfo.from_refname(TOP_LEVEL, root),
+        THEME_CONFIG,
+        summary=THEME_CONFIG_SUMMARY,
+        groups=arg_kwds,
+        exclude=TOP_LEVEL_EXCLUDE,
+    )
 
 
 def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[SchemaInfo]:
