@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import sys
 import textwrap
 import urllib.parse
 from html import unescape
@@ -21,6 +22,8 @@ from typing import (
     Mapping,
     MutableSequence,
     Sequence,
+    TypeVar,
+    Union,
     overload,
 )
 
@@ -33,10 +36,25 @@ if TYPE_CHECKING:
     from _collections_abc import KeysView
     from pathlib import Path
     from re import Pattern
-    from typing_extensions import LiteralString, Never, TypeAlias
 
     from mistune import BlockState
 
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
+if sys.version_info >= (3, 11):
+    from typing import LiteralString, Never
+else:
+    from typing_extensions import LiteralString, Never
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
+
+T = TypeVar("T")
+
+OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
 TargetType: TypeAlias = Literal["annotation", "doc"]
 
 EXCLUDE_KEYS: frozenset[
