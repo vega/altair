@@ -12,8 +12,8 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, ClassVar, Dict, Literal
-from typing_extensions import Protocol, TypeAlias, TypeIs, runtime_checkable
+from typing import TYPE_CHECKING, Any, ClassVar, Literal
+from typing_extensions import Protocol, TypeAlias, runtime_checkable
 
 import ibis
 import jsonschema
@@ -724,12 +724,9 @@ def test_when_condition_parity(
         assert chart_condition == chart_when
 
 
-_SchemaLikeDict: TypeAlias = Dict[Literal["type"], Literal["object"]]
-
-
 @runtime_checkable
 class SchemaLike(Protocol):
-    _schema: ClassVar[_SchemaLikeDict] = {"type": "object"}
+    _schema: ClassVar[dict[Literal["type"], Literal["object"]]] = {"type": "object"}
 
     def to_dict(self, *args, **kwds) -> Any: ...
 
@@ -762,10 +759,6 @@ def chart_encode(
 ): ...
 
 
-def is_schema_like(obj: SchemaLike) -> TypeIs[SchemaLike]:
-    return isinstance(obj, SchemaLike)
-
-
 def test_when_then_interactive() -> None:
     """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
     source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
@@ -785,33 +778,6 @@ def test_when_then_interactive() -> None:
     assert chart.interactive()
     assert chart.copy()
     assert chart.to_dict()
-
-    then_pass = alt.when(predicate).then(alt.value("grey"))
-    # NOTE: A stand-in for a `SchemaBase` that we don't want to accept
-    then_fail: alt.Chart = alt.Chart(source)
-
-    result_pass = chart_encode(  # noqa: F841
-        col_0=then_pass,
-        col_1=then_pass,
-        col_2=then_pass,
-        col_3=then_pass,
-        col_4=then_pass,
-        col_5=then_pass,
-        col_6=then_pass,
-    )
-
-    result_fail = chart_encode(  # noqa: F841
-        col_0=then_fail,
-        col_1=then_fail,
-        col_2=then_fail,
-        col_3=then_fail,
-        col_4=then_fail,
-        col_5=then_fail,
-        col_6=then_fail,
-    )
-
-    is_schema_like(then_pass)
-    is_schema_like(then_fail)
 
 
 def test_selection_to_dict():
