@@ -652,20 +652,28 @@ def test_when_multiple_fields():
 
 
 def test_when_typing(cars) -> None:
-    color = (
-        alt.when(alt.datum.Weight_in_lbs >= 3500)
-        .then(alt.value("black"))
-        .otherwise(alt.value("white"))
+    chart = alt.Chart(cars).mark_rect()
+
+    color_then = alt.when(alt.datum.Weight_in_lbs >= 3500).then(alt.value("black"))
+    color = color_then.otherwise(alt.value("white"))
+    color_condition = alt.condition(
+        alt.datum.Weight_in_lbs >= 3500, alt.value("black"), alt.value("white")
     )
-    source = cars
-    chart = (  # noqa: F841
-        alt.Chart(source)
-        .mark_rect()
-        .encode(
-            x=alt.X("Cylinders:N").axis(labelColor=color),
-            y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color)),
-            color=color,
-        )
+
+    chart_condition = chart.encode(  # noqa: F841
+        x=alt.X("Cylinders:N").axis(labelColor=color_condition),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color_condition)),
+        color=color_condition,
+    )
+    chart_otherwise = chart.encode(  # noqa: F841
+        x=alt.X("Cylinders:N").axis(labelColor=color),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color)),
+        color=color,
+    )
+    chart_then = chart.encode(  # noqa: F841
+        x=alt.X("Cylinders:N").axis(labelColor=color_then),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color_then)),
+        color=color_then,
     )
 
 
