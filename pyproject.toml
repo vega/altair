@@ -444,7 +444,31 @@ module = [
 ignore_missing_imports = true
 
 [tool.pyright]
+enableExperimentalFeatures=true
 extraPaths=["./tools"]
 pythonPlatform="All"
 pythonVersion="3.8"
+reportTypedDictNotRequiredAccess="none"
+reportIncompatibleMethodOverride="none"
 reportUnusedExpression="none"
+reportUnsupportedDunderAll="none"
+include=[
+    "./altair/**/*.py",
+    "./doc/*.py",
+	"./tests/**/*.py",
+	"./tools/**/*.py",
+]
+ignore=[
+    "./altair/vegalite/v5/display.py",
+    "./altair/vegalite/v5/schema/",
+    "./altair/utils/core.py",
+    "./altair/utils/_dfi_types.py",
+    "./altair/_magics.py",
+    "./altair/jupyter/",
+    "./sphinxext/",
+    "./tests/test_jupyter_chart.py",
+    "./tests/utils/",
+    "./tests/test_magics.py",
+    "./tests/vegalite/v5/test_geo_interface.py",
+    "../../../**/Lib", # stdlib
+]

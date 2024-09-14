@@ -68,6 +68,7 @@ In addition, Altair includes the following renderers:
   using the ``"image/png"`` MIME type.
 - ``"svg"``: renderer that renders and converts the chart to an SVG image,
   outputting it using the ``"image/svg+xml"`` MIME type.
+- ``"olli"``: renderer that uses `Olli`_ to generate accessible text structures for screen reader users.
 - ``"json"``: renderer that outputs the raw JSON chart specification, using the
   ``"application/json"`` MIME type.
 
@@ -713,3 +714,4 @@ see :ref:`display-general`.
 .. _Spyder: https://www.spyder-ide.org/
 .. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
 .. _webbrowser module: https://docs.python.org/3/library/webbrowser.html#webbrowser.register
+.. _Olli: https://mitvis.github.io/olli/

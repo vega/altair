@@ -651,6 +651,24 @@ def test_when_multiple_fields():
         )
 
 
+def test_when_typing(cars) -> None:
+    color = (
+        alt.when(alt.datum.Weight_in_lbs >= 3500)
+        .then(alt.value("black"))
+        .otherwise(alt.value("white"))
+    )
+    source = cars
+    chart = (  # noqa: F841
+        alt.Chart(source)
+        .mark_rect()
+        .encode(
+            x=alt.X("Cylinders:N").axis(labelColor=color),
+            y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color)),
+            color=color,
+        )
+    )
+
+
 @pytest.mark.parametrize(
     ("channel", "then", "otherwise"),
     [
