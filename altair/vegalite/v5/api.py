@@ -626,16 +626,6 @@ def _condition_to_selection(
     return selection
 
 
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
-    # https://peps.python.org/pep-0728/
-    # Parameter {"param", "value", "empty"}
-    # Predicate {"test", "value"}
-    empty: Optional[bool]
-    param: Parameter | str
-    test: _TestPredicateType
-    value: Any
-
-
 class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     # https://peps.python.org/pep-0728/
     # Likely a Field predicate
@@ -648,6 +638,17 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
 
 _Condition: TypeAlias = _ConditionExtra
 """A singular, non-chainable condition produced by ``.when()``."""
+
+
+class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    # Parameter {"param", "value", "empty"}
+    # Predicate {"test", "value"}
+    empty: Optional[bool]
+    param: Parameter | str
+    test: _TestPredicateType
+    value: Any
+
 
 _Conditions: TypeAlias = t.List[_ConditionClosed]
 """Chainable conditions produced by ``.when()`` and ``Then.when()``."""
