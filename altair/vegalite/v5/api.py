@@ -1152,7 +1152,6 @@ class ChainedWhen(_BaseWhen):
             )
         """
         condition = self._when_then(statement, kwds)
-
         if _is_condition_closed(condition):
             conditions = self._conditions.copy()
             conditions["condition"].append(condition)
@@ -4925,7 +4924,7 @@ def _remove_layer_props(  # noqa: C901
             # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
-            msg = f"There are inconsistent values {values} for {prop}"
+            msg = f"There are inconsistent values {values} for {prop}"  # pyright: ignore[reportPossiblyUnboundVariable]
             raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 
