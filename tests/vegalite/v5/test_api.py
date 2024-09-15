@@ -635,14 +635,24 @@ def test_when_multiple_fields():
     with pytest.raises(TypeError, match=chain_mixed_msg):
         when.then("field_1:Q").when(Genre="pop")
 
+    chained_when = when.then(alt.value(5)).when(
+        alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
+    )
+
+    chain_then_msg = re.compile(
+        r"Chained.+mixed.+field.+min\(foo\):Q.+'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'",
+        flags=re.DOTALL,
+    )
+
+    with pytest.raises(TypeError, match=chain_then_msg):
+        chained_when.then("min(foo):Q")
+
     chain_otherwise_msg = re.compile(
         r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
         flags=re.DOTALL,
     )
     with pytest.raises(TypeError, match=chain_otherwise_msg):
-        when.then(alt.value(5)).when(
-            alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
-        ).then("min(foo):Q").otherwise(
+        chained_when.then(alt.value(2)).otherwise(
             alt.AggregatedFieldDef(
                 "argmax", field="field_9", **{"as": "this_field_here"}
             )
