@@ -10,17 +10,7 @@ import sys
 import typing as t
 import warnings
 from copy import deepcopy as _deepcopy
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Literal,
-    Protocol,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, Sequence, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -34,6 +24,7 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
+from altair.utils.schemapi import ConditionLike
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -46,6 +37,14 @@ if sys.version_info >= (3, 13):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
+if sys.version_info >= (3, 12):
+    from typing import Protocol, runtime_checkable
+else:
+    from typing_extensions import Protocol, runtime_checkable  # noqa: F401
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -891,7 +890,7 @@ class When(_BaseWhen):
             return Then(_Conditional(condition=[condition]))
 
 
-class Then(SchemaBase, t.Generic[_C]):
+class Then(ConditionLike, t.Generic[_C]):
     """
     Utility class for ``when-then-otherwise`` conditions.
 
@@ -907,11 +906,8 @@ class Then(SchemaBase, t.Generic[_C]):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    _schema: t.ClassVar[dict[Literal["type"], Literal["object"]]] = {"type": "object"}
-
     def __init__(self, conditions: _Conditional[_C], /) -> None:
-        super().__init__(**conditions)
-        self.condition: _C
+        self.condition: _C = conditions["condition"]
 
     @overload
     def otherwise(self, statement: _TSchemaBase, /, **kwds: Any) -> _TSchemaBase: ...
@@ -1069,12 +1065,11 @@ class Then(SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
-        m = super().to_dict(*args, **kwds)
-        return _Conditional(condition=m["condition"])
+    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:
+        return _Conditional(condition=self.condition.copy())
 
     def __deepcopy__(self, memo: Any) -> Self:
-        return type(self)(_Conditional(condition=_deepcopy(self.condition)))
+        return type(self)(_Conditional(condition=_deepcopy(self.condition, memo)))
 
 
 class ChainedWhen(_BaseWhen):
