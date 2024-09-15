@@ -695,6 +695,10 @@ def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
     return isinstance(obj, str) or any(_is_extra(obj, *objs, kwds=kwds))
 
 
+def _is_condition_closed(obj: Map) -> TypeIs[_ConditionClosed]:
+    return {"empty", "param", "test", "value"} >= obj.keys()
+
+
 def _parse_when_constraints(
     constraints: dict[str, _FieldEqualType], /
 ) -> Iterator[BinaryExpression]:
@@ -1148,9 +1152,19 @@ class ChainedWhen(_BaseWhen):
             )
         """
         condition = self._when_then(statement, kwds)
-        conditions = self._conditions.copy()
-        conditions["condition"].append(condition)
-        return Then(conditions)
+
+        if _is_condition_closed(condition):
+            conditions = self._conditions.copy()
+            conditions["condition"].append(condition)
+            return Then(conditions)
+        else:
+            cond = _reveal_parsed_shorthand(condition)
+            msg = (
+                f"Chained conditions cannot be mixed with field conditions.\n"
+                f"Shorthand {statement!r} expanded to {cond!r}\n\n"
+                f"Use `alt.value({statement!r})` if this is not a shorthand string."
+            )
+            raise TypeError(msg)
 
 
 def when(
