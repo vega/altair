@@ -696,6 +696,7 @@ def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
 
 
 def _is_condition_closed(obj: Map) -> TypeIs[_ConditionClosed]:
+    """Return `True` if ``obj`` can be used in a chained condition."""
     return {"empty", "param", "test", "value"} >= obj.keys()
 
 
