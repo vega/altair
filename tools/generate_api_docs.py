@@ -121,7 +121,14 @@ def api_functions() -> list[str]:
         obj_name
         for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
         if obj_name
-        not in {"cast", "overload", "NamedTuple", "TypedDict", "is_chart_type"}
+        not in {
+            "cast",
+            "overload",
+            "NamedTuple",
+            "TypedDict",
+            "is_chart_type",
+            "runtime_checkable",
+        }
     ]
     return sorted(altair_api_functions)
 
