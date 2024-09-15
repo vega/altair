@@ -660,6 +660,9 @@ class _Conditional(TypedDict, t.Generic[_C], total=False):
     value: Any
 
 
+IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+
+
 class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     # https://peps.python.org/pep-0728/
     value: Required[Any]
