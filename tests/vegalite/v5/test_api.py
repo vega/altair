@@ -976,8 +976,8 @@ def test_selection():
 
 def test_transforms():
     # aggregate transform
-    agg1 = alt.AggregatedFieldDef(**{"as": "x1", "op": "mean", "field": "y"})
-    agg2 = alt.AggregatedFieldDef(**{"as": "x2", "op": "median", "field": "z"})
+    agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
+    agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
     kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
@@ -1070,19 +1070,26 @@ def test_transforms():
     # stack transform
     chart = alt.Chart().transform_stack("stacked", "x", groupby=["y"])
     assert chart.transform == [
-        alt.StackTransform(stack="x", groupby=["y"], **{"as": "stacked"})
+        alt.StackTransform(
+            groupby=["y"],
+            stack="x",
+            offset=Undefined,
+            sort=Undefined,
+            **{"as": "stacked"},
+        )
     ]
 
     # timeUnit transform
     chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
-    kwds = {"as": "foo", "field": "x", "timeUnit": "date"}
-    assert chart.transform == [alt.TimeUnitTransform(**kwds)]
+    assert chart.transform == [
+        alt.TimeUnitTransform(field="x", timeUnit="date", **{"as": "foo"})
+    ]
 
     # window transform
     chart = alt.Chart().transform_window(xsum="sum(x)", ymin="min(y)", frame=[None, 0])
     window = [
-        alt.WindowFieldDef(**{"as": "xsum", "field": "x", "op": "sum"}),
-        alt.WindowFieldDef(**{"as": "ymin", "field": "y", "op": "min"}),
+        alt.WindowFieldDef(field="x", op="sum", param=Undefined, **{"as": "xsum"}),
+        alt.WindowFieldDef(field="y", op="min", param=Undefined, **{"as": "ymin"}),
     ]
 
     # kwargs don't maintain order in Python < 3.6, so window list can
