@@ -661,11 +661,29 @@ _C = TypeVar("_C", _Conditions, _Condition)
 
 
 class _Conditional(TypedDict, t.Generic[_C], total=False):
+    """
+    A dictionary representation of a conditional encoding or property.
+
+    Parameters
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+    value
+        An optional default value, used when no predicates were met.
+    """
+
     condition: Required[_C]
     value: Any
 
 
 IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+"""
+Anything that can be converted into a conditional encoding or property.
+
+Notes
+-----
+Represents all outputs from `when-then-otherwise` conditions, which are not ``SchemaBase`` types.
+"""
 
 
 class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
