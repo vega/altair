@@ -832,6 +832,29 @@ This may represent **one of**:
 
 @runtime_checkable
 class SchemaLike(Generic[_JSON_VT_co], Protocol):  # type: ignore[misc]
+    """
+    Represents ``altair`` classes which *may* not derive ``SchemaBase``.
+
+    Should be kept tightly defined to the **minimum** requirements for:
+    - Converting into a form that can be validated by `jsonschema`_.
+    - Avoiding calling ``.to_dict()`` on a class external to ``altair``.
+
+    Attributes
+    ----------
+    _schema
+        A single item JSON Schema using the `type`_ keyword.
+
+        .. note::
+            more accurately described as a ``ClassVar``, see `discussion`_ for blocking issue.
+
+    .. _jsonschema:
+        https://github.com/python-jsonschema/jsonschema
+    .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+    .. _discussion:
+        https://github.com/python/typing/discussions/1424
+    """
+
     _schema: _TypeMap[_JSON_VT_co]
 
     def to_dict(self, *args, **kwds) -> Any: ...
