@@ -25,7 +25,7 @@ from packaging.version import Version
 
 import altair as alt
 from altair import SchemaBase
-from altair.utils.schemapi import Optional, Undefined
+from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
 try:
@@ -35,6 +35,7 @@ except ImportError:
 
 if TYPE_CHECKING:
     from altair import Color, ColorDatum, ColorValue, Then
+    from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
 ibis.set_backend("polars")
@@ -653,28 +654,42 @@ def test_when_multiple_fields():
 
 def test_when_typing(cars) -> None:
     chart = alt.Chart(cars).mark_rect()
+    predicate = alt.datum.Weight_in_lbs >= 3500
+    statement = alt.value("black")
+    default = alt.value("white")
 
-    color_then = alt.when(alt.datum.Weight_in_lbs >= 3500).then(alt.value("black"))
-    color = color_then.otherwise(alt.value("white"))
-    color_condition = alt.condition(
-        alt.datum.Weight_in_lbs >= 3500, alt.value("black"), alt.value("white")
-    )
+    then: alt.Then[_Conditions] = alt.when(predicate).then(statement)
+    otherwise: _Conditional[_Conditions] = then.otherwise(default)
+    condition: Map = alt.condition(predicate, statement, default)
 
-    chart_condition = chart.encode(  # noqa: F841
-        x=alt.X("Cylinders:N").axis(labelColor=color_condition),
-        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color_condition)),
-        color=color_condition,
-    )
-    chart_otherwise = chart.encode(  # noqa: F841
-        x=alt.X("Cylinders:N").axis(labelColor=color),
-        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color)),
-        color=color,
-    )
-    chart_then = chart.encode(  # noqa: F841
-        x=alt.X("Cylinders:N").axis(labelColor=color_then),
-        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color_then)),
-        color=color_then,
-    )
+    # NOTE: both `condition()` and `when-then-otherwise` are allowed in these three locations
+    chart.encode(
+        color=condition,
+        x=alt.X("Cylinders:N").axis(labelColor=condition),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=condition)),
+    ).to_dict()
+
+    chart.encode(
+        color=otherwise,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=otherwise)),
+    ).to_dict()
+
+    with pytest.raises(SchemaValidationError):
+        # NOTE: `when-then` is allowed as an encoding, but not as a `ConditionalAxisProperty`
+        # The latter fails validation since it does not have a default `value`
+        chart.encode(
+            color=then,
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
+        )
+
+    # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases
+    chart.encode(
+        color=then,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(labelColor=otherwise)),
+    ).to_dict()
 
 
 @pytest.mark.parametrize(
