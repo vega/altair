@@ -805,12 +805,16 @@ def test_save(format, engine, basic_chart):
     if format == "json":
         assert "$schema" in json.loads(content)
     elif format == "html":
+        assert isinstance(content, str)
         assert content.startswith("<!DOCTYPE html>")
     elif format == "svg":
+        assert isinstance(content, str)
         assert content.startswith("<svg")
     elif format == "png":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"\x89PNG")
     elif format == "pdf":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"%PDF-")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
