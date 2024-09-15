@@ -942,14 +942,20 @@ def test_facet_parse_data():
 def test_selection():
     # test instantiation of selections
     interval = alt.selection_interval(name="selec_1")
-    assert interval.param.select.type == "interval"
+    param = interval.param
+    assert isinstance(param, alt.SelectionParameter)
+    select = param.select
+    assert isinstance(select, alt.IntervalSelectionConfig)
+    assert select.type == "interval"
     assert interval.name == "selec_1"
 
     single = alt.selection_point(name="selec_2")
+    assert isinstance(single.param, alt.SelectionParameter)
     assert single.param.select.type == "point"
     assert single.name == "selec_2"
 
     multi = alt.selection_point(name="selec_3")
+    assert isinstance(multi.param, alt.SelectionParameter)
     assert multi.param.select.type == "point"
     assert multi.name == "selec_3"
 
