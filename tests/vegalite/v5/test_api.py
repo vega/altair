@@ -842,12 +842,16 @@ def test_save(format, engine, basic_chart):
     if format == "json":
         assert "$schema" in json.loads(content)
     elif format == "html":
+        assert isinstance(content, str)
         assert content.startswith("<!DOCTYPE html>")
     elif format == "svg":
+        assert isinstance(content, str)
         assert content.startswith("<svg")
     elif format == "png":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"\x89PNG")
     elif format == "pdf":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"%PDF-")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
@@ -979,14 +983,20 @@ def test_facet_parse_data():
 def test_selection():
     # test instantiation of selections
     interval = alt.selection_interval(name="selec_1")
-    assert interval.param.select.type == "interval"
+    param = interval.param
+    assert isinstance(param, alt.SelectionParameter)
+    select = param.select
+    assert isinstance(select, alt.IntervalSelectionConfig)
+    assert select.type == "interval"
     assert interval.name == "selec_1"
 
     single = alt.selection_point(name="selec_2")
+    assert isinstance(single.param, alt.SelectionParameter)
     assert single.param.select.type == "point"
     assert single.name == "selec_2"
 
     multi = alt.selection_point(name="selec_3")
+    assert isinstance(multi.param, alt.SelectionParameter)
     assert multi.param.select.type == "point"
     assert multi.name == "selec_3"
 
@@ -1013,8 +1023,8 @@ def test_selection():
 
 def test_transforms():
     # aggregate transform
-    agg1 = alt.AggregatedFieldDef(**{"as": "x1", "op": "mean", "field": "y"})
-    agg2 = alt.AggregatedFieldDef(**{"as": "x2", "op": "median", "field": "z"})
+    agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
+    agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
     kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
@@ -1107,19 +1117,26 @@ def test_transforms():
     # stack transform
     chart = alt.Chart().transform_stack("stacked", "x", groupby=["y"])
     assert chart.transform == [
-        alt.StackTransform(stack="x", groupby=["y"], **{"as": "stacked"})
+        alt.StackTransform(
+            groupby=["y"],
+            stack="x",
+            offset=Undefined,
+            sort=Undefined,
+            **{"as": "stacked"},
+        )
     ]
 
     # timeUnit transform
     chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
-    kwds = {"as": "foo", "field": "x", "timeUnit": "date"}
-    assert chart.transform == [alt.TimeUnitTransform(**kwds)]
+    assert chart.transform == [
+        alt.TimeUnitTransform(field="x", timeUnit="date", **{"as": "foo"})
+    ]
 
     # window transform
     chart = alt.Chart().transform_window(xsum="sum(x)", ymin="min(y)", frame=[None, 0])
     window = [
-        alt.WindowFieldDef(**{"as": "xsum", "field": "x", "op": "sum"}),
-        alt.WindowFieldDef(**{"as": "ymin", "field": "y", "op": "min"}),
+        alt.WindowFieldDef(field="x", op="sum", param=Undefined, **{"as": "xsum"}),
+        alt.WindowFieldDef(field="y", op="min", param=Undefined, **{"as": "ymin"}),
     ]
 
     # kwargs don't maintain order in Python < 3.6, so window list can
@@ -1255,7 +1272,9 @@ def test_selection_property():
 
 def test_LookupData():
     df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
-    lookup = alt.LookupData(data=df, key="x")
+    # Data type hints won't match with what TopLevelUnitSpec expects
+    # as there is some data processing happening when converting to a VL spec
+    lookup = alt.LookupData(data=df, key="x")  # pyright: ignore[reportArgumentType]
 
     dct = lookup.to_dict()
     assert dct["key"] == "x"
