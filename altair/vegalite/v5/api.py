@@ -1084,6 +1084,17 @@ class Then(ConditionLike, t.Generic[_C]):
     def __deepcopy__(self, memo: Any) -> Self:
         return type(self)(_Conditional(condition=_deepcopy(self.condition, memo)))
 
+    def __repr__(self) -> str:
+        name = type(self).__name__
+        COND = "condition: "
+        LB, RB = "{", "}"
+        if len(self.condition) == 1:
+            args = f"{COND}{self.condition!r}".replace("\n", "\n  ")
+        else:
+            conds = "\n    ".join(f"{c!r}" for c in self.condition)
+            args = f"{COND}[\n    " f"{conds}\n  ]"
+        return f"{name}({LB}\n  {args}\n{RB})"
+
 
 class ChainedWhen(_BaseWhen):
     """
