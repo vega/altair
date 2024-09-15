@@ -266,6 +266,8 @@ The parameters ``short``, ``long`` accept the same range of types::
 """
 '''
 
+INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -693,6 +695,7 @@ def generate_vegalite_channel_wrappers(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             "from typing_extensions import Self",
+            f"from altair.vegalite.v5.api import {INTO_CONDITION}",
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
@@ -913,7 +916,9 @@ def generate_encoding_artifacts(
         it_rst_names: Iterator[str] = (rst_syntax_for_class(c) for c in info.all_names)
 
         docstring_types: list[str] = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = ", ".join(chain(("str", next(it), "Map"), it))
+        tp_inner: str = ", ".join(
+            chain(("str", next(it), "Map"), it, [f"{INTO_CONDITION!r}"])
+        )
         tp_inner = f"Union[{tp_inner}]"
 
         if info.supports_arrays:
