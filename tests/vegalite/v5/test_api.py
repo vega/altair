@@ -12,8 +12,7 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, ClassVar, Literal
-from typing_extensions import Protocol, TypeAlias, runtime_checkable
+from typing import TYPE_CHECKING
 
 import ibis
 import jsonschema
@@ -24,7 +23,6 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from altair import SchemaBase
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
@@ -34,7 +32,6 @@ except ImportError:
     vlc = None
 
 if TYPE_CHECKING:
-    from altair import Color, ColorDatum, ColorValue, Then
     from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
@@ -745,41 +742,6 @@ def test_when_condition_parity(
         assert input_condition == input_when
     else:
         assert chart_condition == chart_when
-
-
-@runtime_checkable
-class SchemaLike(Protocol):
-    _schema: ClassVar[dict[Literal["type"], Literal["object"]]] = {"type": "object"}
-
-    def to_dict(self, *args, **kwds) -> Any: ...
-
-
-# New alias def
-Schema_3: TypeAlias = "Map | SchemaBase"
-
-# How we'd use `SchemaLike` in annotations
-Schema_4: TypeAlias = "SchemaBase | SchemaLike"
-
-# Combining 4 & 5 essentially
-Schema_5: TypeAlias = "Map | SchemaBase | SchemaLike"
-
-# Excluding `SchemaBase` from the alias
-Schema_6: TypeAlias = "Map | SchemaLike"
-
-
-def chart_encode(
-    col_0: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
-    col_1: Optional[
-        str | Color | Map | SchemaBase | ColorDatum | ColorValue
-    ] = Undefined,
-    col_2: Optional[
-        str | Color | Map | Then[Any] | ColorDatum | ColorValue
-    ] = Undefined,
-    col_3: Optional[str | Color | Schema_3 | ColorDatum | ColorValue] = Undefined,
-    col_4: Optional[str | Color | Map | Schema_4 | ColorDatum | ColorValue] = Undefined,
-    col_5: Optional[str | Color | Schema_5 | ColorDatum | ColorValue] = Undefined,
-    col_6: Optional[str | Color | Schema_6 | ColorDatum | ColorValue] = Undefined,
-): ...
 
 
 def test_when_then_interactive() -> None:
