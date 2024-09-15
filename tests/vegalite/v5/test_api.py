@@ -795,7 +795,7 @@ def test_when_then_interactive() -> None:
         .encode(
             x="IMDB_Rating:Q",
             y="Rotten_Tomatoes_Rating:Q",
-            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+            color=alt.when(predicate).then(alt.value("grey")),
         )
     )
     assert chart.interactive()
