@@ -1237,7 +1237,7 @@ def test_LookupData():
     df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
     # Data type hints won't match with what TopLevelUnitSpec expects
     # as there is some data processing happening when converting to a VL spec
-    lookup = alt.LookupData(data=df, key="x")  # type: ignore[arg-type]
+    lookup = alt.LookupData(data=df, key="x")  # pyright: ignore[reportArgumentType]
 
     dct = lookup.to_dict()
     assert dct["key"] == "x"
