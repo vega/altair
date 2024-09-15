@@ -33,7 +33,7 @@ from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
 from .theme import themes
 
-if sys.version_info >= (3, 13):
+if sys.version_info >= (3, 14):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
