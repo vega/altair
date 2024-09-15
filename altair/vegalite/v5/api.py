@@ -24,7 +24,7 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
-from altair.utils.schemapi import ConditionLike
+from altair.utils.schemapi import ConditionLike, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -355,6 +355,7 @@ TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
     _counter: int = 0
 
     @classmethod
@@ -457,6 +458,8 @@ class SelectionPredicateComposition(core.PredicateComposition):
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
@@ -471,6 +474,8 @@ class ParameterExpression(_expr_core.OperatorMixin):
 
 
 class SelectionExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
