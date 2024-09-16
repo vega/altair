@@ -361,7 +361,7 @@ Examples
 def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
     """Return ``True`` if the object is a hexadecimal color code."""
     # NOTE: Extracts compiled pattern from metadata,
-    # to avoid defining  in multiple places.
+    # to avoid defining in multiple places.
     it = iter(get_args(ColorHex))
     next(it)
     pattern: re.Pattern[str] = next(it)
