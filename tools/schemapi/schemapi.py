@@ -833,17 +833,18 @@ class SchemaLike(Generic[_JSON_VT_co], Protocol):  # type: ignore[misc]
     """
     Represents ``altair`` classes which *may* not derive ``SchemaBase``.
 
-    Should be kept tightly defined to the **minimum** requirements for:
-    - Converting into a form that can be validated by `jsonschema`_.
-    - Avoiding calling ``.to_dict()`` on a class external to ``altair``.
-
     Attributes
     ----------
     _schema
         A single item JSON Schema using the `type`_ keyword.
 
-        .. note::
-            more accurately described as a ``ClassVar``, see `discussion`_ for blocking issue.
+    Notes
+    -----
+    Should be kept tightly defined to the **minimum** requirements for:
+        - Converting into a form that can be validated by `jsonschema`_.
+        - Avoiding calling ``.to_dict()`` on a class external to ``altair``.
+    - ``_schema`` is more accurately described as a ``ClassVar``
+        - See `discussion`_ for blocking issue.
 
     .. _jsonschema:
         https://github.com/python-jsonschema/jsonschema
@@ -860,6 +861,21 @@ class SchemaLike(Generic[_JSON_VT_co], Protocol):  # type: ignore[misc]
 
 @runtime_checkable
 class ConditionLike(SchemaLike[Literal["object"]], Protocol):
+    """
+    Represents the wrapped state of a conditional encoding or property.
+
+    Attributes
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+
+    Notes
+    -----
+    - Can be extended with additional conditions.
+    - *Does not* define a default value, but can be finalized with one.
+    """
+
+    condition: Any
     _schema: _TypeMap[Literal["object"]] = {"type": "object"}
 
 
