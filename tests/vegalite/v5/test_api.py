@@ -425,7 +425,7 @@ def test_when_then_otherwise() -> None:
     when_then = alt.when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
 
-    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    expected = dict(alt.condition(select, alt.value(2, empty=False), alt.value(0)))
     with pytest.raises(TypeError, match="list"):
         when_then.otherwise([1, 2, 3])  # type: ignore
 
