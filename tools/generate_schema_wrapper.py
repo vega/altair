@@ -250,6 +250,8 @@ class {name}(TypedDict{metaclass_kwds}):{comment}
 '''
 ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
 THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
+PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
+ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
 ENCODE_KWDS_SUMMARY: Final = (
     "Encoding channels map properties of the data to visual properties of the chart."
 )
@@ -368,7 +370,7 @@ def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
 
 
 
-class RowCol(TypedDict, Generic[T], total=False):
+class RowColKwds(TypedDict, Generic[T], total=False):
     """
     A `Generic`_ two-item ``dict``.
 
@@ -944,7 +946,7 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
     }
 
     SchemaInfo._remap_title.update(
-        {"HexColor": ("ColorHex",), "Padding": ("float", "PaddingKwds")}
+        {"HexColor": ("ColorHex",), "Padding": ("float", PADDING_KWDS)}
     )
     SchemaInfo._remap_title.update((k, (f"{k}{KWDS}",)) for k in relevant)
     config_sub: Iterator[str] = (
@@ -952,7 +954,7 @@ def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
         for info in relevant.values()
     )
     config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
-    yield f"__all__ = {[*config_sub_names, THEME_CONFIG]}\n\n"
+    yield f"__all__ = {[*config_sub_names, PADDING_KWDS, ROW_COL_KWDS, THEME_CONFIG]}\n\n"
     yield "\n".join(config_sub)
     yield generate_typed_dict(
         SchemaInfo.from_refname(TOP_LEVEL, root),
@@ -1094,8 +1096,8 @@ def vegalite_main(skip_download: bool = False) -> None:
         "Value",
         "ColorHex",
         "is_color_hex",
-        "RowCol",
-        "PaddingKwds",
+        ROW_COL_KWDS,
+        PADDING_KWDS,
         header=HEADER,
         extra=TYPING_EXTRA,
     )

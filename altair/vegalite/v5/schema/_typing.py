@@ -70,7 +70,7 @@ __all__ = [
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
-    "RowCol",
+    "RowColKwds",
     "ScaleInterpolateEnum_T",
     "ScaleType_T",
     "SelectionResolution_T",
@@ -172,7 +172,7 @@ def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
     return bool(pattern.fullmatch(obj))
 
 
-class RowCol(TypedDict, Generic[T], total=False):
+class RowColKwds(TypedDict, Generic[T], total=False):
     """
     A `Generic`_ two-item ``dict``.
 

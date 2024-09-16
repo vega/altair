@@ -529,7 +529,7 @@ class SchemaInfo:
             raise ValueError(msg)
 
         if use_concrete:
-            if tps >= {"ColorHex", "ColorName_T", "str"}:
+            if tps >= {"ColorHex", TypeAliasTracer.fmt.format("ColorName"), "str"}:
                 # HACK: Remove regular `str` if HEX & CSS color codes are present as well
                 tps.discard("str")
             elif len(tps) == 0 and as_str:
@@ -577,7 +577,7 @@ class SchemaInfo:
         elif self.is_rowcol():
             row = self.properties["row"]
             t = row.to_type_repr(target="annotation", use_concrete=use_concrete)
-            tps.add(f"RowCol[{t}]")
+            tps.add(f"RowColKwds[{t}]")
         elif title in REMAP_TITLE:
             tps.update(REMAP_TITLE[title])
         elif (

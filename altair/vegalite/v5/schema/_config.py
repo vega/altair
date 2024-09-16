@@ -59,6 +59,7 @@ __all__ = [
     "MultiPolygonKwds",
     "NumberLocaleKwds",
     "OverlayMarkDefKwds",
+    "PaddingKwds",
     "PointKwds",
     "PointSelectionConfigKwds",
     "PointSelectionConfigWithoutTypeKwds",
@@ -69,6 +70,7 @@ __all__ = [
     "RangeConfigKwds",
     "RectConfigKwds",
     "ResolveKwds",
+    "RowColKwds",
     "ScaleConfigKwds",
     "ScaleInvalidDataConfigKwds",
     "ScaleResolveMapKwds",
@@ -7753,11 +7755,11 @@ class ThemeConfig(TypedDict, total=False):
         documentation.
     """
 
-    align: RowCol[LayoutAlign_T] | LayoutAlign_T
+    align: RowColKwds[LayoutAlign_T] | LayoutAlign_T
     autosize: AutoSizeParamsKwds | AutosizeType_T
     background: ColorHex | ColorName_T
     bounds: Literal["full", "flush"]
-    center: bool | RowCol[bool]
+    center: bool | RowColKwds[bool]
     config: ConfigKwds
     description: str
     height: float | StepKwds | Literal["container"]
@@ -7766,7 +7768,7 @@ class ThemeConfig(TypedDict, total=False):
     params: Sequence[VariableParameterKwds | TopLevelSelectionParameterKwds]
     projection: ProjectionKwds
     resolve: ResolveKwds
-    spacing: float | RowCol[float]
+    spacing: float | RowColKwds[float]
     title: str | Sequence[str] | TitleParamsKwds
     usermeta: Map
     view: ViewBackgroundKwds
