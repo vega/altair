@@ -691,4 +691,5 @@ Typing
    Optional
    ThemeConfig
    is_chart_type
+   theme
 

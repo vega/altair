@@ -48,8 +48,10 @@ __all__ = [
     "Optional",
     "ThemeConfig",
     "is_chart_type",
+    "theme",
 ]
 
+import altair.vegalite.v5.schema._config as theme
 from altair.utils.schemapi import Optional
 from altair.vegalite.v5.api import ChartType, is_chart_type
 from altair.vegalite.v5.schema._config import ThemeConfig
