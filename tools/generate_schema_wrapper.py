@@ -915,7 +915,7 @@ def generate_typed_dict(
         name=name,
         metaclass_kwds=metaclass_kwds,
         comment=comment,
-        summary=summary or f"{info.title} ``TypedDict`` wrapper.",
+        summary=summary or f"{rst_syntax_for_class(info.title)} ``TypedDict`` wrapper.",
         doc=doc,
         td_args=args,
     )

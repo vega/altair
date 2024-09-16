@@ -93,7 +93,7 @@ __all__ = [
 
 class AreaConfigKwds(TypedDict, total=False):
     """
-    AreaConfig ``TypedDict`` wrapper.
+    :class:`AreaConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -567,7 +567,7 @@ class AreaConfigKwds(TypedDict, total=False):
 
 class AutoSizeParamsKwds(TypedDict, total=False):
     """
-    AutoSizeParams ``TypedDict`` wrapper.
+    :class:`AutoSizeParams` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -601,7 +601,7 @@ class AutoSizeParamsKwds(TypedDict, total=False):
 
 class AxisConfigKwds(TypedDict, total=False):
     """
-    AxisConfig ``TypedDict`` wrapper.
+    :class:`AxisConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1057,7 +1057,7 @@ class AxisConfigKwds(TypedDict, total=False):
 
 class AxisResolveMapKwds(TypedDict, total=False):
     """
-    AxisResolveMap ``TypedDict`` wrapper.
+    :class:`AxisResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1073,7 +1073,7 @@ class AxisResolveMapKwds(TypedDict, total=False):
 
 class BarConfigKwds(TypedDict, total=False):
     """
-    BarConfig ``TypedDict`` wrapper.
+    :class:`BarConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1544,7 +1544,7 @@ class BarConfigKwds(TypedDict, total=False):
 
 class BindCheckboxKwds(TypedDict, total=False):
     """
-    BindCheckbox ``TypedDict`` wrapper.
+    :class:`BindCheckbox` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1570,7 +1570,7 @@ class BindCheckboxKwds(TypedDict, total=False):
 
 class BindDirectKwds(TypedDict, total=False):
     """
-    BindDirect ``TypedDict`` wrapper.
+    :class:`BindDirect` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1596,7 +1596,7 @@ class BindDirectKwds(TypedDict, total=False):
 
 class BindInputKwds(TypedDict, total=False):
     """
-    BindInput ``TypedDict`` wrapper.
+    :class:`BindInput` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1632,7 +1632,7 @@ class BindInputKwds(TypedDict, total=False):
 
 class BindRadioSelectKwds(TypedDict, total=False):
     """
-    BindRadioSelect ``TypedDict`` wrapper.
+    :class:`BindRadioSelect` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1665,7 +1665,7 @@ class BindRadioSelectKwds(TypedDict, total=False):
 
 class BindRangeKwds(TypedDict, total=False):
     """
-    BindRange ``TypedDict`` wrapper.
+    :class:`BindRange` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1703,7 +1703,7 @@ class BindRangeKwds(TypedDict, total=False):
 
 class BoxPlotConfigKwds(TypedDict, total=False):
     """
-    BoxPlotConfig ``TypedDict`` wrapper.
+    :class:`BoxPlotConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1783,7 +1783,7 @@ class BoxPlotConfigKwds(TypedDict, total=False):
 
 class BrushConfigKwds(TypedDict, total=False):
     """
-    BrushConfig ``TypedDict`` wrapper.
+    :class:`BrushConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1825,7 +1825,7 @@ class BrushConfigKwds(TypedDict, total=False):
 
 class CompositionConfigKwds(TypedDict, total=False):
     """
-    CompositionConfig ``TypedDict`` wrapper.
+    :class:`CompositionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1858,7 +1858,7 @@ class CompositionConfigKwds(TypedDict, total=False):
 
 class ConfigKwds(TypedDict, total=False):
     """
-    Config ``TypedDict`` wrapper.
+    :class:`Config` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2207,7 +2207,7 @@ class ConfigKwds(TypedDict, total=False):
 
 class DateTimeKwds(TypedDict, total=False):
     """
-    DateTime ``TypedDict`` wrapper.
+    :class:`DateTime` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2255,7 +2255,7 @@ class DateTimeKwds(TypedDict, total=False):
 
 class DerivedStreamKwds(TypedDict, total=False):
     """
-    DerivedStream ``TypedDict`` wrapper.
+    :class:`DerivedStream` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2289,7 +2289,7 @@ class DerivedStreamKwds(TypedDict, total=False):
 
 class ErrorBandConfigKwds(TypedDict, total=False):
     """
-    ErrorBandConfig ``TypedDict`` wrapper.
+    :class:`ErrorBandConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2359,7 +2359,7 @@ class ErrorBandConfigKwds(TypedDict, total=False):
 
 class ErrorBarConfigKwds(TypedDict, total=False):
     """
-    ErrorBarConfig ``TypedDict`` wrapper.
+    :class:`ErrorBarConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2409,7 +2409,7 @@ class ErrorBarConfigKwds(TypedDict, total=False):
 
 class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
     """
-    FeatureGeometryGeoJsonProperties ``TypedDict`` wrapper.
+    :class:`FeatureGeometryGeoJsonProperties` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2444,7 +2444,7 @@ class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
 
 class FormatConfigKwds(TypedDict, total=False):
     """
-    FormatConfig ``TypedDict`` wrapper.
+    :class:`FormatConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2513,7 +2513,7 @@ class FormatConfigKwds(TypedDict, total=False):
 
 class GeoJsonFeatureKwds(TypedDict, total=False):
     """
-    GeoJsonFeature ``TypedDict`` wrapper.
+    :class:`GeoJsonFeature` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2548,7 +2548,7 @@ class GeoJsonFeatureKwds(TypedDict, total=False):
 
 class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
     """
-    GeoJsonFeatureCollection ``TypedDict`` wrapper.
+    :class:`GeoJsonFeatureCollection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2568,7 +2568,7 @@ class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
 
 class GeometryCollectionKwds(TypedDict, total=False):
     """
-    GeometryCollection ``TypedDict`` wrapper.
+    :class:`GeometryCollection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2596,7 +2596,7 @@ class GeometryCollectionKwds(TypedDict, total=False):
 
 class GradientStopKwds(TypedDict, total=False):
     """
-    GradientStop ``TypedDict`` wrapper.
+    :class:`GradientStop` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2612,7 +2612,7 @@ class GradientStopKwds(TypedDict, total=False):
 
 class HeaderConfigKwds(TypedDict, total=False):
     """
-    HeaderConfig ``TypedDict`` wrapper.
+    :class:`HeaderConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2787,7 +2787,7 @@ class HeaderConfigKwds(TypedDict, total=False):
 
 class IntervalSelectionConfigKwds(TypedDict, total=False):
     """
-    IntervalSelectionConfig ``TypedDict`` wrapper.
+    :class:`IntervalSelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2897,7 +2897,7 @@ class IntervalSelectionConfigKwds(TypedDict, total=False):
 
 class IntervalSelectionConfigWithoutTypeKwds(TypedDict, total=False):
     """
-    IntervalSelectionConfigWithoutType ``TypedDict`` wrapper.
+    :class:`IntervalSelectionConfigWithoutType` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2999,7 +2999,7 @@ class IntervalSelectionConfigWithoutTypeKwds(TypedDict, total=False):
 
 class LegendConfigKwds(TypedDict, total=False):
     """
-    LegendConfig ``TypedDict`` wrapper.
+    :class:`LegendConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3354,7 +3354,7 @@ class LegendConfigKwds(TypedDict, total=False):
 
 class LegendResolveMapKwds(TypedDict, total=False):
     """
-    LegendResolveMap ``TypedDict`` wrapper.
+    :class:`LegendResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3397,7 +3397,7 @@ class LegendResolveMapKwds(TypedDict, total=False):
 
 class LegendStreamBindingKwds(TypedDict, total=False):
     """
-    LegendStreamBinding ``TypedDict`` wrapper.
+    :class:`LegendStreamBinding` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3410,7 +3410,7 @@ class LegendStreamBindingKwds(TypedDict, total=False):
 
 class LineConfigKwds(TypedDict, total=False):
     """
-    LineConfig ``TypedDict`` wrapper.
+    :class:`LineConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3873,7 +3873,7 @@ class LineConfigKwds(TypedDict, total=False):
 
 class LineStringKwds(TypedDict, total=False):
     """
-    LineString ``TypedDict`` wrapper.
+    :class:`LineString` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3893,7 +3893,7 @@ class LineStringKwds(TypedDict, total=False):
 
 class LinearGradientKwds(TypedDict, total=False):
     """
-    LinearGradient ``TypedDict`` wrapper.
+    :class:`LinearGradient` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3932,7 +3932,7 @@ class LinearGradientKwds(TypedDict, total=False):
 
 class LocaleKwds(TypedDict, total=False):
     """
-    Locale ``TypedDict`` wrapper.
+    :class:`Locale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3948,7 +3948,7 @@ class LocaleKwds(TypedDict, total=False):
 
 class MarkConfigKwds(TypedDict, total=False):
     """
-    MarkConfig ``TypedDict`` wrapper.
+    :class:`MarkConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4396,7 +4396,7 @@ class MarkConfigKwds(TypedDict, total=False):
 
 class MergedStreamKwds(TypedDict, total=False):
     """
-    MergedStream ``TypedDict`` wrapper.
+    :class:`MergedStream` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4430,7 +4430,7 @@ class MergedStreamKwds(TypedDict, total=False):
 
 class MultiLineStringKwds(TypedDict, total=False):
     """
-    MultiLineString ``TypedDict`` wrapper.
+    :class:`MultiLineString` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4450,7 +4450,7 @@ class MultiLineStringKwds(TypedDict, total=False):
 
 class MultiPointKwds(TypedDict, total=False):
     """
-    MultiPoint ``TypedDict`` wrapper.
+    :class:`MultiPoint` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4470,7 +4470,7 @@ class MultiPointKwds(TypedDict, total=False):
 
 class MultiPolygonKwds(TypedDict, total=False):
     """
-    MultiPolygon ``TypedDict`` wrapper.
+    :class:`MultiPolygon` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4490,7 +4490,7 @@ class MultiPolygonKwds(TypedDict, total=False):
 
 class NumberLocaleKwds(TypedDict, total=False):
     """
-    NumberLocale ``TypedDict`` wrapper.
+    :class:`NumberLocale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4524,7 +4524,7 @@ class NumberLocaleKwds(TypedDict, total=False):
 
 class OverlayMarkDefKwds(TypedDict, total=False):
     """
-    OverlayMarkDef ``TypedDict`` wrapper.
+    :class:`OverlayMarkDef` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5014,7 +5014,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
 
 class PointKwds(TypedDict, total=False):
     """
-    Point ``TypedDict`` wrapper.
+    :class:`Point` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5038,7 +5038,7 @@ class PointKwds(TypedDict, total=False):
 
 class PointSelectionConfigKwds(TypedDict, total=False):
     """
-    PointSelectionConfig ``TypedDict`` wrapper.
+    :class:`PointSelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5146,7 +5146,7 @@ class PointSelectionConfigKwds(TypedDict, total=False):
 
 class PointSelectionConfigWithoutTypeKwds(TypedDict, total=False):
     """
-    PointSelectionConfigWithoutType ``TypedDict`` wrapper.
+    :class:`PointSelectionConfigWithoutType` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5246,7 +5246,7 @@ class PointSelectionConfigWithoutTypeKwds(TypedDict, total=False):
 
 class PolygonKwds(TypedDict, total=False):
     """
-    Polygon ``TypedDict`` wrapper.
+    :class:`Polygon` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5266,7 +5266,7 @@ class PolygonKwds(TypedDict, total=False):
 
 class ProjectionKwds(TypedDict, total=False):
     """
-    Projection ``TypedDict`` wrapper.
+    :class:`Projection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5409,7 +5409,7 @@ class ProjectionKwds(TypedDict, total=False):
 
 class ProjectionConfigKwds(TypedDict, total=False):
     """
-    ProjectionConfig ``TypedDict`` wrapper.
+    :class:`ProjectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5552,7 +5552,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
 
 class RadialGradientKwds(TypedDict, total=False):
     """
-    RadialGradient ``TypedDict`` wrapper.
+    :class:`RadialGradient` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5607,7 +5607,7 @@ class RadialGradientKwds(TypedDict, total=False):
 
 class RangeConfigKwds(TypedDict, total=False):
     """
-    RangeConfig ``TypedDict`` wrapper.
+    :class:`RangeConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5661,7 +5661,7 @@ class RangeConfigKwds(TypedDict, total=False):
 
 class RectConfigKwds(TypedDict, total=False):
     """
-    RectConfig ``TypedDict`` wrapper.
+    :class:`RectConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6127,7 +6127,7 @@ class RectConfigKwds(TypedDict, total=False):
 
 class ResolveKwds(TypedDict, total=False):
     """
-    Resolve ``TypedDict`` wrapper.
+    :class:`Resolve` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6146,7 +6146,7 @@ class ResolveKwds(TypedDict, total=False):
 
 class ScaleConfigKwds(TypedDict, total=False):
     """
-    ScaleConfig ``TypedDict`` wrapper.
+    :class:`ScaleConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6329,7 +6329,7 @@ class ScaleConfigKwds(TypedDict, total=False):
 
 class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """
-    ScaleInvalidDataConfig ``TypedDict`` wrapper.
+    :class:`ScaleInvalidDataConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6399,7 +6399,7 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
 
 class ScaleResolveMapKwds(TypedDict, total=False):
     """
-    ScaleResolveMap ``TypedDict`` wrapper.
+    :class:`ScaleResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6460,7 +6460,7 @@ class ScaleResolveMapKwds(TypedDict, total=False):
 
 class SelectionConfigKwds(TypedDict, total=False):
     """
-    SelectionConfig ``TypedDict`` wrapper.
+    :class:`SelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6488,7 +6488,7 @@ class SelectionConfigKwds(TypedDict, total=False):
 
 class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     """
-    Step ``TypedDict`` wrapper.
+    :class:`Step` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6513,7 +6513,7 @@ class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
 
 class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     """
-    StyleConfigIndex ``TypedDict`` wrapper.
+    :class:`StyleConfigIndex` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6580,7 +6580,7 @@ class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore
 
 class TickConfigKwds(TypedDict, total=False):
     """
-    TickConfig ``TypedDict`` wrapper.
+    :class:`TickConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7039,7 +7039,7 @@ class TickConfigKwds(TypedDict, total=False):
 
 class TimeIntervalStepKwds(TypedDict, total=False):
     """
-    TimeIntervalStep ``TypedDict`` wrapper.
+    :class:`TimeIntervalStep` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7055,7 +7055,7 @@ class TimeIntervalStepKwds(TypedDict, total=False):
 
 class TimeLocaleKwds(TypedDict, total=False):
     """
-    TimeLocale ``TypedDict`` wrapper.
+    :class:`TimeLocale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7089,7 +7089,7 @@ class TimeLocaleKwds(TypedDict, total=False):
 
 class TitleConfigKwds(TypedDict, total=False):
     """
-    TitleConfig ``TypedDict`` wrapper.
+    :class:`TitleConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7197,7 +7197,7 @@ class TitleConfigKwds(TypedDict, total=False):
 
 class TitleParamsKwds(TypedDict, total=False):
     """
-    TitleParams ``TypedDict`` wrapper.
+    :class:`TitleParams` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7328,7 +7328,7 @@ class TitleParamsKwds(TypedDict, total=False):
 
 class TooltipContentKwds(TypedDict, total=False):
     """
-    TooltipContent ``TypedDict`` wrapper.
+    :class:`TooltipContent` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7341,7 +7341,7 @@ class TooltipContentKwds(TypedDict, total=False):
 
 class TopLevelSelectionParameterKwds(TypedDict, total=False):
     """
-    TopLevelSelectionParameter ``TypedDict`` wrapper.
+    :class:`TopLevelSelectionParameter` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7403,7 +7403,7 @@ class TopLevelSelectionParameterKwds(TypedDict, total=False):
 
 class VariableParameterKwds(TypedDict, total=False):
     """
-    VariableParameter ``TypedDict`` wrapper.
+    :class:`VariableParameter` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7448,7 +7448,7 @@ class VariableParameterKwds(TypedDict, total=False):
 
 class ViewBackgroundKwds(TypedDict, total=False):
     """
-    ViewBackground ``TypedDict`` wrapper.
+    :class:`ViewBackground` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7526,7 +7526,7 @@ class ViewBackgroundKwds(TypedDict, total=False):
 
 class ViewConfigKwds(TypedDict, total=False):
     """
-    ViewConfig ``TypedDict`` wrapper.
+    :class:`ViewConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
