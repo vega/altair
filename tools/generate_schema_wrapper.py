@@ -1076,6 +1076,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         HEADER,
         "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
         import_typing_extensions((3, 14), "TypedDict", include_sys=True),
+        f"from ._typing import {ROW_COL_KWDS}, {PADDING_KWDS}",
         "\n\n",
         import_type_checking("from ._typing import * # noqa: F403"),
         "\n\n",
