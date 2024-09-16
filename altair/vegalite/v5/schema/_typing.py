@@ -131,7 +131,6 @@ class Value(TypedDict, Generic[T]):
 
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
-
     """
 
     value: T
@@ -184,7 +183,6 @@ class RowCol(TypedDict, Generic[T], total=False):
 
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
-
     """
 
     column: T
