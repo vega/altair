@@ -636,7 +636,19 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
 
 
 _Condition: TypeAlias = _ConditionExtra
-"""A singular, non-chainable condition produced by ``.when()``."""
+"""
+A singular, *possibly* non-chainable condition produced by ``.when()``.
+
+The default **permissive** representation.
+
+Allows arbitrary additional keys that *may* be present in a `Conditional Field`_
+but not a `Conditional Value`_.
+
+.. _Conditional Field:
+    https://vega.github.io/vega-lite/docs/condition.html#field
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
 
 
 class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -650,7 +662,14 @@ class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[cal
 
 
 _Conditions: TypeAlias = t.List[_ConditionClosed]
-"""Chainable conditions produced by ``.when()`` and ``Then.when()``."""
+"""
+Chainable conditions produced by ``.when()`` and ``Then.when()``.
+
+All must be a `Conditional Value`_.
+
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
 
 _C = TypeVar("_C", _Conditions, _Condition)
 
