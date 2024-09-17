@@ -16,7 +16,7 @@ jobs:
         python-version-file: "pyproject.toml"
     # Installing all dependencies and not just the linters as mypy needs them for type checking
     - name: Install dependencies
-      run: uv sync --all-extras --dev
+      run: uv sync
     - name: Lint with ruff
       run: |        
         uvx ruff check .        
