@@ -132,11 +132,9 @@ class _TypeAliasTracer:
             "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
             "import re",
             import_typing_extensions(
-                (3, 13),
-                "TypedDict",
-                "TypeIs",
-                reason="`TypedDict` had multiple revisions.",
+                (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
             ),
+            import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),

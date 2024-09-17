@@ -7,10 +7,15 @@ import re
 import sys
 from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
 
-if sys.version_info >= (3, 13):  # `TypedDict` had multiple revisions.
-    from typing import TypedDict, TypeIs
+if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
+    from typing import TypedDict
 else:
-    from typing_extensions import TypedDict, TypeIs
+    from typing_extensions import TypedDict
+
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 
 if sys.version_info >= (3, 12):
     from typing import TypeAliasType
