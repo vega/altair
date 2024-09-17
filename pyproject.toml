@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.10.0; python_version<\"3.13\"",
+    "typing_extensions>=4.10.0; python_version<\"3.14\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
