@@ -26,4 +26,4 @@ jobs:
         uvx ruff format --check .
     - name: Lint with mypy
       run: |
-        mypy altair tests
+        uvx mypy altair tests
