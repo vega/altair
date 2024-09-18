@@ -298,6 +298,7 @@ Chain calls to express precise queries:
 You can see more in :func:`when` and throughout many gallery examples:
 
 - :ref:`gallery_dot_dash_plot`
+- :ref:`gallery_interactive_bar_select_highlight`
 - :ref:`gallery_multiline_tooltip_standard`
 - :ref:`gallery_scatter_point_paths_hover`
 - :ref:`gallery_waterfall_chart`
