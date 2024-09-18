@@ -257,6 +257,52 @@ we can change the order in which they are laid out via the following encoding::
 
 You can see an example of this in the :ref:`gallery_selection_zorder` gallery example.
 
+Untitled More When
+^^^^^^^^^^^^^^^^^^
+Simple conditions may be expressed without defining a default:
+
+.. altair-plot::
+    
+    source = data.cars()
+    brush = alt.selection_interval()
+    color = alt.when(brush).then("Origin")
+    
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(x="Horsepower", y="Miles_per_Gallon", color=color)
+        .add_params(brush)
+    )
+    points
+
+Chain calls to express precise queries:
+
+.. altair-plot::
+
+    source = data.cars()
+    color = (
+        alt.when(alt.datum.Miles_per_Gallon >= 30, Origin="Europe")
+        .then(alt.value("crimson"))
+        .when(alt.datum.Horsepower > 150)
+        .then(alt.value("goldenrod"))
+        .otherwise(alt.value("grey"))
+    )
+
+    points = (
+        alt.Chart(source)
+        .mark_point()
+        .encode(x="Horsepower", y="Miles_per_Gallon", color=color)
+    )
+    points
+
+You can see more in :func:`when` and throughout many gallery examples:
+
+- :ref:`gallery_dot_dash_plot`
+- :ref:`gallery_multiline_tooltip_standard`
+- :ref:`gallery_scatter_point_paths_hover`
+- :ref:`gallery_waterfall_chart`
+
+
 Filtering Data
 ^^^^^^^^^^^^^^
 
