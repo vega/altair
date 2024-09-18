@@ -318,7 +318,7 @@ selection:
         return alt.Chart(cars).mark_rect().encode(
             x="Cylinders:O",
             y="Origin:N",
-            color=alt.when(brush).then("count()").otherwise(alt.value("lightgray")),
+            color=alt.when(selector).then("count()").otherwise(alt.value("lightgray")),
         ).properties(
             width=300,
             height=180
