@@ -117,3 +117,27 @@ class RSTParse(_RSTParse):
 
 
 parser: RSTParse = RSTParse(RSTRenderer())
+@dataclasses.dataclass
+class VegaExprParam:
+    name: str
+    required: bool
+    variadic: bool = False
+
+    @classmethod
+    def iter_params(cls, raw_texts: Iterable[str], /) -> Iterator[Self]:
+        """Yields an ordered parameter list."""
+        is_required: bool = True
+        for s in raw_texts:
+            if s not in {"(", ")"}:
+                if s == "[":
+                    is_required = False
+                    continue
+                elif s == "]":
+                    is_required = True
+                    continue
+                elif s.isalnum():
+                    yield cls(s, required=is_required)
+                elif s == "...":
+                    yield cls("*args", required=False, variadic=True)
+                else:
+                    continue
