@@ -11,7 +11,8 @@ from urllib import request
 import mistune
 import mistune.util
 
-from tools.schemapi.utils import RSTParse, RSTRenderer
+from tools.schemapi.utils import RSTParse as _RSTParse
+from tools.schemapi.utils import RSTRenderer
 
 if TYPE_CHECKING:
     import sys
@@ -71,3 +72,48 @@ def strip_include_tag(s: str, /) -> str:
         https://shopify.github.io/liquid/
     """
     return LIQUID_INCLUDE.sub(r"", s)
+
+
+class RSTParse(_RSTParse):
+    """
+    Minor extension to support partial `ast`_ conversion.
+
+    Only need to convert the docstring tokens to `.rst`.
+
+    NOTE
+    ----
+    Once `PR`_ is merged, move this to the parent class and rename
+
+    .. _ast:
+        https://mistune.lepture.com/en/latest/guide.html#abstract-syntax-tree
+    .. _PR:
+        https://github.com/vega/altair/pull/3536
+    """
+
+    def __init__(
+        self,
+        renderer: BaseRenderer,
+        block: BlockParser | None = None,
+        inline: InlineParser | None = None,
+        plugins=None,
+    ) -> None:
+        super().__init__(renderer, block, inline, plugins)
+        if self.renderer is None:
+            msg = "Must provide a renderer, got `None`"
+            raise TypeError(msg)
+        self.renderer: BaseRenderer
+
+    def render_tokens(self, tokens: Iterable[Token], /) -> LiteralString:
+        """
+        Render ast tokens originating from another parser.
+
+        Parameters
+        ----------
+        tokens
+            All tokens will be rendered into a single `.rst` string
+        """
+        state = self.block.state_cls()
+        return self.renderer(self._iter_render(tokens, state), state)
+
+
+parser: RSTParse = RSTParse(RSTRenderer())
