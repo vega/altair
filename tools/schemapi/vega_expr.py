@@ -40,6 +40,8 @@ SOFTBREAK: Literal["softbreak"] = "softbreak"
 TEXT: Literal["text"] = "text"
 CHILDREN: Literal["children"] = "children"
 
+RETURN_ANNOTATION = "FunctionExpression"
+
 
 def download_expressions_md(url: str, /) -> Path:
     """Download to a temporary file, return that as a ``pathlib.Path``."""
@@ -132,6 +134,17 @@ class VegaExprNode:
     _children: Sequence[Token] = dataclasses.field(repr=False)
     doc: str = ""
     parameters: list[VegaExprParam] = dataclasses.field(default_factory=list)
+
+    def to_signature(self) -> str:
+        pre_params = f"def {self.name_safe}(cls, "
+        post_params = f", /) -> {RETURN_ANNOTATION}:"
+        param_list = ""
+        if all(p.required for p in self.parameters):
+            # NOTE: covers 101/147 cases
+            param_list = ", ".join(p.name for p in self.parameters)
+        else:
+            param_list = "<Not yet handled>"
+        return f"{pre_params}{param_list}{post_params}"
 
     def with_parameters(self) -> Self:
         raw_texts = self._split_signature_tokens()
