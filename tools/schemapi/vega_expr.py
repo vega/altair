@@ -312,3 +312,21 @@ class VegaExprParam:
                     yield cls("*args", required=False, variadic=True)
                 else:
                     continue
+
+
+def parse_expressions(url: str, /) -> Iterator[tuple[str, VegaExprNode]]:
+    """Download, read markdown and iteratively parse into signature representations."""
+    for tok in read_tokens(download_expressions_md(url)):
+        if (
+            (children := tok.get(CHILDREN)) is not None
+            and (child := next(iter(children)).get(RAW)) is not None
+            and (match := FUNCTION_DEF_LINE.match(child))
+        ):
+            node = VegaExprNode(match[1], children)
+            if node.is_callable():
+                yield node.name, node.with_parameters().with_doc()
+    request.urlcleanup()
+
+
+def test_parse() -> dict[str, VegaExprNode]:
+    return dict(parse_expressions(EXPRESSIONS_URL))
