@@ -24,7 +24,10 @@ if TYPE_CHECKING:
         from typing import LiteralString, Self, TypeAlias
     else:
         from typing_extensions import LiteralString, Self, TypeAlias
-    Token: TypeAlias = "dict[str, Any]"
+
+Token: TypeAlias = "dict[str, Any]"
+WorkInProgress: TypeAlias = Any
+"""Marker for a type that will not be final."""
 
 
 EXPRESSIONS_URL = (
@@ -44,6 +47,7 @@ RETURN_ANNOTATION = "FunctionExpression"
 EXPR_ANNOTATION = "IntoExpression"
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
+DECORATOR = r"@classmethod"
 
 
 def download_expressions_md(url: str, /) -> Path:
@@ -163,11 +167,9 @@ class VegaExprNode:
         return self
 
     @functools.cached_property
-    def parameter_names(self) -> frozenset[str]:
+    def parameter_names(self) -> tuple[str, ...]:
         if self.parameters:
-            return frozenset(
-                param.name for param in self.parameters if not param.variadic
-            )
+            return tuple(param.name for param in self.parameters if not param.variadic)
         else:
             msg = (
                 f"Cannot provide `parameter_names` until they have been initialized via:\n"
@@ -384,6 +386,15 @@ def parse_expressions(url: str, /) -> Iterator[tuple[str, VegaExprNode]]:
             if node.is_callable():
                 yield node.name, node.with_parameters().with_doc()
     request.urlcleanup()
+
+
+def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
+    if node.is_overloaded():
+        body_params = STAR_ARGS[1:]
+    else:
+        body_params = f"({', '.join(param.name for param in node.parameters)})"
+    body = f"return {RETURN_ANNOTATION}({node.name}, {body_params})"
+    return DECORATOR, node.to_signature(), node.doc, body
 
 
 def test_parse() -> dict[str, VegaExprNode]:
