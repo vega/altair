@@ -43,8 +43,13 @@ SOFTBREAK: Literal["softbreak"] = "softbreak"
 TEXT: Literal["text"] = "text"
 CHILDREN: Literal["children"] = "children"
 
-RETURN_ANNOTATION = "FunctionExpression"
-EXPR_ANNOTATION = "IntoExpression"
+RETURN_WRAPPER = "FunctionExpression"
+RETURN_ANNOTATION = "Expression"
+# NOTE: No benefit to annotating with the actual wrapper
+# - `Expression` is shorter, and has all the functionality/attributes
+
+INPUT_ANNOTATION = "IntoExpression"
+
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
 DECORATOR = r"@classmethod"
@@ -348,9 +353,9 @@ class VegaExprParam:
     def to_str(self) -> str:
         """Return as an annotated parameter, with a default if needed."""
         if self.required:
-            return f"{self.name}: {EXPR_ANNOTATION}"
+            return f"{self.name}: {INPUT_ANNOTATION}"
         elif not self.variadic:
-            return f"{self.name}: {EXPR_ANNOTATION} = {NONE}"
+            return f"{self.name}: {INPUT_ANNOTATION} = {NONE}"
         else:
             return self.star_args()
 
@@ -393,7 +398,7 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
         body_params = STAR_ARGS[1:]
     else:
         body_params = f"({', '.join(param.name for param in node.parameters)})"
-    body = f"return {RETURN_ANNOTATION}({node.name}, {body_params})"
+    body = f"return {RETURN_WRAPPER}({node.name}, {body_params})"
     return DECORATOR, node.to_signature(), node.doc, body
 
 
