@@ -72,7 +72,7 @@ and selection parameters follow the same pattern as you will see further down
 in the :ref:`encoding-channel-binding` section.
 
 As you can see above,
-we are still using :ref:`conditions <conditions-filters>` to make the chart respond to the selection,
+we are still using :ref:`conditions <conditions>` to make the chart respond to the selection,
 just as we did without widgets.
 Bindings and input elements can also be used to filter data
 allowing the user to see just the selected points as in the example below.
