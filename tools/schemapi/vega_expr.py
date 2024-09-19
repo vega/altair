@@ -29,6 +29,12 @@ if TYPE_CHECKING:
 EXPRESSIONS_URL = (
     "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
 )
+TYPE: Literal[r"type"] = "type"
+RAW: Literal["raw"] = "raw"
+SOFTBREAK: Literal["softbreak"] = "softbreak"
+TEXT: Literal["text"] = "text"
+CHILDREN: Literal["children"] = "children"
+
 
 def download_expressions_md(url: str, /) -> Path:
     """Download to a temporary file, return that as a ``pathlib.Path``."""
