@@ -118,6 +118,7 @@ class RSTParse(_RSTParse):
 
 parser: RSTParse = RSTParse(RSTRenderer())
 
+
 @dataclasses.dataclass
 class VegaExprNode:
     """
@@ -142,7 +143,7 @@ class VegaExprNode:
         return self
 
     def with_doc(self) -> Self:
-        self.doc = parser.render_tokens(self._doc_tokens())
+        self.doc = self._doc_post_process(parser.render_tokens(self._doc_tokens()))
         return self
 
     @functools.cached_property
@@ -192,6 +193,32 @@ class VegaExprNode:
                 continue
         msg = f"Expected to find a text node marking the start of docstring content.\nFailed for:\n\n{self!r}"
         raise NotImplementedError(msg)
+
+    def _doc_post_process(self, rendered: str, /) -> str:
+        r"""
+        Utilizing properties found during parsing to improve docs.
+
+        Temporarily handling this here.
+
+        TODO
+        ----
+        - [x] Replace \*param_name\* -> \`\`param_name\`\`.
+        - [x] References to ``func`` -> ``alt.expr.func``
+            - **Doesn't include other vega expressions yet**
+        - [x] Artifacts like: ``monthAbbrevFormat(0) -&gt; &quot;Jan&quot;``
+        - [ ] Split after first sentence ends
+        - [ ] Replace "For example:" -> an example block
+        - [ ] Fix relative links to vega docs
+            - There's code in ``utils`` for this
+        """
+        highlight_params = re.sub(
+            rf"\*({'|'.join(self.parameter_names)})\*", r"``\g<1>``", rendered
+        )
+        with_alt_references = re.sub(
+            rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
+        )
+        unescaped = mistune.util.unescape(with_alt_references)
+        return unescaped
 
     @staticmethod
     def deep_split_punctuation(s: str, /) -> Iterator[str]:
