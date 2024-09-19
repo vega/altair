@@ -29,6 +29,10 @@ if TYPE_CHECKING:
 EXPRESSIONS_URL = (
     "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
 )
+
+FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
+LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
+
 TYPE: Literal[r"type"] = "type"
 RAW: Literal["raw"] = "raw"
 SOFTBREAK: Literal["softbreak"] = "softbreak"
@@ -58,3 +62,12 @@ def read_tokens(source: Path, /) -> list[Any]:
     """
     return mistune.create_markdown(renderer="ast").read(source)[0]
 
+
+def strip_include_tag(s: str, /) -> str:
+    """
+    Removes `liquid`_ templating markup.
+
+    .. _liquid:
+        https://shopify.github.io/liquid/
+    """
+    return LIQUID_INCLUDE.sub(r"", s)
