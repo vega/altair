@@ -17,11 +17,38 @@ if TYPE_CHECKING:
     import sys
     from re import Pattern
 
-    from mistune import BaseRenderer, BlockParser, BlockState, InlineParser
+    from mistune import BaseRenderer, BlockParser, InlineParser
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString, Self, TypeAlias
     else:
         from typing_extensions import LiteralString, Self, TypeAlias
     Token: TypeAlias = "dict[str, Any]"
+
+
+EXPRESSIONS_URL = (
+    "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
+)
+
+def download_expressions_md(url: str, /) -> Path:
+    """Download to a temporary file, return that as a ``pathlib.Path``."""
+    tmp, _ = request.urlretrieve(url)
+    fp = Path(tmp)
+    if not fp.exists():
+        msg = (
+            f"Expressions download failed: {fp!s}.\n\n"
+            f"Try manually accessing resource: {url!r}"
+        )
+        raise FileNotFoundError(msg)
+    else:
+        return fp
+
+
+def read_tokens(source: Path, /) -> list[Any]:
+    """
+    Read from ``source``, drop ``BlockState``.
+
+    Factored out to provide accurate typing.
+    """
+    return mistune.create_markdown(renderer="ast").read(source)[0]
 
