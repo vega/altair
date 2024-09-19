@@ -149,7 +149,9 @@ class VegaExprNode:
     @functools.cached_property
     def parameter_names(self) -> frozenset[str]:
         if self.parameters:
-            return frozenset(param.name for param in self.parameters)
+            return frozenset(
+                param.name for param in self.parameters if not param.variadic
+            )
         else:
             msg = (
                 f"Cannot provide `parameter_names` until they have been initialized via:\n"
