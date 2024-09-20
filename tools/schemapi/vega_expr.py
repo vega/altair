@@ -167,7 +167,8 @@ class VegaExprNode:
     def to_signature(self) -> str:
         """NOTE: 101/147 cases are all required args."""
         pre_params = f"def {self.name_safe}(cls, "
-        post_params = f", /) -> {RETURN_ANNOTATION}:"
+        post_params = ")" if self.is_variadic() else ", /)"
+        post_params = f"{post_params} -> {RETURN_ANNOTATION}:"
         if self.is_incompatible_override():
             post_params = f"{post_params}  {IGNORE_OVERRIDE}"
         param_list = ""
@@ -235,7 +236,10 @@ class VegaExprNode:
                 return self[idx + 1 :]
             else:
                 continue
-        msg = f"Expected to find a text node marking the start of docstring content.\nFailed for:\n\n{self!r}"
+        msg = (
+            f"Expected to find a text node marking the start of docstring content.\n"
+            f"Failed for:\n\n{self!r}"
+        )
         raise NotImplementedError(msg)
 
     def _doc_post_process(self, rendered: str, /) -> str:
@@ -343,6 +347,14 @@ class VegaExprNode:
                 return self[idx + 1][TYPE] == SOFTBREAK
             else:
                 continue
+        for idx, p in enumerate(self.parameters):
+            if not p.required:
+                others = self.parameters[idx + 1 :]
+                if not others:
+                    return False
+                else:
+                    return any(sp.required for sp in others)
+
         return False
 
     def is_keyword(self) -> bool:
@@ -355,6 +367,10 @@ class VegaExprNode:
         Requires an ignore comment for a type checker.
         """
         return self.name_safe in _SCHEMA_BASE_MEMBERS
+
+    def is_variadic(self) -> bool:
+        """Position-only parameter separator `"/"` not allowed after `"*"` parameter."""
+        return self.is_overloaded() or any(p.variadic for p in self.parameters)
 
     def __iter__(self) -> Iterator[Token]:
         yield from self._children
