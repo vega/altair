@@ -5,6 +5,7 @@ import functools
 import keyword
 import re
 from inspect import getmembers
+from itertools import chain
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
 from urllib import request
@@ -50,12 +51,16 @@ RETURN_ANNOTATION = "Expression"
 # NOTE: No benefit to annotating with the actual wrapper
 # - `Expression` is shorter, and has all the functionality/attributes
 
+CONST_WRAPPER = "ConstExpression"
+CONST_META = "_ConstExpressionType"
+
 INPUT_ANNOTATION = "IntoExpression"
 
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
 DECORATOR = r"@classmethod"
 IGNORE_OVERRIDE = r"# type: ignore[override]"
+IGNORE_MISC = r"# type: ignore[misc]"
 
 
 def download_expressions_md(url: str, /) -> Path:
@@ -436,14 +441,182 @@ def parse_expressions(url: str, /) -> Iterator[tuple[str, VegaExprNode]]:
     request.urlcleanup()
 
 
+EXPR_MODULE_PRE = '''\
+"""Tools for creating transform & filter expressions with a python syntax."""
+
+from __future__ import annotations
+
+import sys
+from typing import Any, TYPE_CHECKING
+
+from altair.expr.core import {const}, {func}, {return_ann}, {input_ann}
+from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+
+class {metaclass}(type):
+    """Metaclass providing read-only class properties for :class:`expr`."""
+
+    @property
+    def NaN(cls) -> {return_ann}:
+        """Not a number (same as JavaScript literal NaN)."""
+        return {const}("NaN")
+
+    @property
+    def LN10(cls) -> {return_ann}:
+        """The natural log of 10 (alias to Math.LN10)."""
+        return {const}("LN10")
+
+    @property
+    def E(cls) -> {return_ann}:
+        """The transcendental number e (alias to Math.E)."""
+        return {const}("E")
+
+    @property
+    def LOG10E(cls) -> {return_ann}:
+        """The base 10 logarithm e (alias to Math.LOG10E)."""
+        return {const}("LOG10E")
+
+    @property
+    def LOG2E(cls) -> {return_ann}:
+        """The base 2 logarithm of e (alias to Math.LOG2E)."""
+        return {const}("LOG2E")
+
+    @property
+    def SQRT1_2(cls) -> {return_ann}:
+        """The square root of 0.5 (alias to Math.SQRT1_2)."""
+        return {const}("SQRT1_2")
+
+    @property
+    def LN2(cls) -> {return_ann}:
+        """The natural log of 2 (alias to Math.LN2)."""
+        return {const}("LN2")
+
+    @property
+    def SQRT2(cls) -> {return_ann}:
+        """The square root of 2 (alias to Math.SQRT1_2)."""
+        return {const}("SQRT2")
+
+    @property
+    def PI(cls) -> {return_ann}:
+        """The transcendental number pi (alias to Math.PI)."""
+        return {const}("PI")
+'''
+
+
+EXPR_MODULE_POST = """\
+_ExprType = expr
+# NOTE: Compatibility alias for previous type of `alt.expr`.
+# `_ExprType` was not referenced in any internal imports/tests.
+"""
+
+EXPR_CLS_DOC = """
+    Utility providing *constants* and *classmethods* to construct expressions.
+
+    `Expressions`_ can be used to write basic formulas that enable custom interactions.
+
+    Alternatively, an `inline expression`_ may be defined via :class:`expr()`.
+
+    Parameters
+    ----------
+    expr: str
+        A `vega expression`_ string.
+
+    Returns
+    -------
+    ``ExprRef``
+
+    .. _Expressions:
+        https://altair-viz.github.io/user_guide/interactions.html#expressions
+    .. _inline expression:
+       https://altair-viz.github.io/user_guide/interactions.html#inline-expressions
+    .. _vega expression:
+       https://vega.github.io/vega/docs/expressions/
+
+    Examples
+    --------
+    >>> import altair as alt
+
+    >>> bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
+    >>> param_width = alt.param(bind=bind_range, name="param_width")
+    >>> param_color = alt.param(
+    ...     expr=alt.expr.if_(param_width < 200, "red", "black"),
+    ...     name="param_color",
+    ... )
+    >>> y = alt.Y("yval").axis(titleColor=param_color)
+
+    >>> y
+    Y({
+      axis: {'titleColor': Parameter('param_color', VariableParameter({
+        expr: if((param_width < 200),'red','black'),
+        name: 'param_color'
+      }))},
+      shorthand: 'yval'
+    })
+    """
+
+EXPR_CLS_TEMPLATE = '''\
+class expr({base}, metaclass={metaclass}):
+    """{doc}"""
+
+    @override
+    def __new__(cls: type[{base}], expr: str) -> {base}:  {type_ignore}
+        return {base}(expr=expr)
+'''
+
+EXPR_METHOD_TEMPLATE = '''\
+    {decorator}
+    {signature}
+        """
+        {doc}\
+        """
+        {body}
+'''
+
+
+def render_expr_cls():
+    return EXPR_CLS_TEMPLATE.format(
+        base="_ExprRef",
+        metaclass=CONST_META,
+        doc=EXPR_CLS_DOC,
+        type_ignore=IGNORE_MISC,
+    )
+
+
 def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
     if node.is_overloaded():
         body_params = STAR_ARGS[1:]
     else:
         body_params = f"({', '.join(param.name for param in node.parameters)})"
     body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
-    return DECORATOR, node.to_signature(), node.doc, body
+    return EXPR_METHOD_TEMPLATE.format(
+        decorator=DECORATOR, signature=node.to_signature(), doc=node.doc, body=body
+    )
 
 
 def test_parse() -> dict[str, VegaExprNode]:
     return dict(parse_expressions(EXPRESSIONS_URL))
+
+
+def render_expr_full() -> str:
+    it = (render_expr_method(node) for _, node in parse_expressions(EXPRESSIONS_URL))
+    return "\n".join(
+        chain(
+            (
+                EXPR_MODULE_PRE.format(
+                    metaclass=CONST_META,
+                    const=CONST_WRAPPER,
+                    return_ann=RETURN_ANNOTATION,
+                    input_ann=INPUT_ANNOTATION,
+                    func=RETURN_WRAPPER,
+                ),
+                render_expr_cls(),
+            ),
+            it,
+            [EXPR_MODULE_POST],
+        )
+    )
