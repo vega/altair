@@ -4,6 +4,7 @@ import dataclasses
 import functools
 import keyword
 import re
+from inspect import getmembers
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
 from urllib import request
@@ -11,6 +12,7 @@ from urllib import request
 import mistune
 import mistune.util
 
+from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 from tools.schemapi.utils import RSTParse as _RSTParse
 from tools.schemapi.utils import RSTRenderer
 
@@ -53,6 +55,7 @@ INPUT_ANNOTATION = "IntoExpression"
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
 DECORATOR = r"@classmethod"
+IGNORE_OVERRIDE = r"# type: ignore[override]"
 
 
 def download_expressions_md(url: str, /) -> Path:
@@ -86,6 +89,20 @@ def strip_include_tag(s: str, /) -> str:
         https://shopify.github.io/liquid/
     """
     return LIQUID_INCLUDE.sub(r"", s)
+
+
+def _override_predicate(obj: Any, /) -> bool:
+    return (
+        callable(obj)
+        and (name := obj.__name__)
+        and isinstance(name, str)
+        and not (name.startswith("_"))
+    )
+
+
+_SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
+    nm for nm, _ in getmembers(_SchemaBase, _override_predicate)
+)
 
 
 class RSTParse(_RSTParse):
@@ -151,6 +168,8 @@ class VegaExprNode:
         """NOTE: 101/147 cases are all required args."""
         pre_params = f"def {self.name_safe}(cls, "
         post_params = f", /) -> {RETURN_ANNOTATION}:"
+        if self.is_incompatible_override():
+            post_params = f"{post_params}  {IGNORE_OVERRIDE}"
         param_list = ""
         if self.is_overloaded():
             param_list = VegaExprParam.star_args()
@@ -328,6 +347,14 @@ class VegaExprNode:
 
     def is_keyword(self) -> bool:
         return keyword.iskeyword(self.name)
+
+    def is_incompatible_override(self) -> bool:
+        """
+        ``self.name_safe`` shadows an unrelated ``SchemaBase`` method.
+
+        Requires an ignore comment for a type checker.
+        """
+        return self.name_safe in _SCHEMA_BASE_MEMBERS
 
     def __iter__(self) -> Iterator[Token]:
         yield from self._children
