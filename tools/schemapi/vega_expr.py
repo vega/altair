@@ -302,7 +302,7 @@ class VegaExprNode:
             # - the `.md` handles this by prefixing the `<a name=...` for the string version
             # - however this is another kind of overload
             # - but with more documentation, than the inline overload for color functions
-            return True
+            return False
         elif self.is_bound_variable_name():
             return False
         it = iter(self)
