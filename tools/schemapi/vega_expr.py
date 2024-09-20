@@ -441,7 +441,7 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
         body_params = STAR_ARGS[1:]
     else:
         body_params = f"({', '.join(param.name for param in node.parameters)})"
-    body = f"return {RETURN_WRAPPER}({node.name}, {body_params})"
+    body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
     return DECORATOR, node.to_signature(), node.doc, body
 
 
