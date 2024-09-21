@@ -9,6 +9,7 @@ from inspect import getmembers
 from itertools import chain
 from pathlib import Path
 from textwrap import TextWrapper as _TextWrapper
+from textwrap import indent
 from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
 from urllib import request
 
@@ -17,13 +18,13 @@ import mistune.util
 
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 from tools.schemapi.utils import RSTParse as _RSTParse
-from tools.schemapi.utils import RSTRenderer
+from tools.schemapi.utils import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
     import sys
     from re import Pattern
 
-    from mistune import BaseRenderer, BlockParser, InlineParser
+    from mistune import BlockParser, BlockState, InlineParser
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString, Self, TypeAlias
@@ -39,9 +40,11 @@ EXPRESSIONS_URL = (
     "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
 )
 VEGA_DOCS_URL = "https://vega.github.io/vega/docs/"
+EXPRESSIONS_DOCS_URL = f"{VEGA_DOCS_URL}expressions/"
 
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
 LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
+SENTENCE_BREAK: Pattern[str] = re.compile(r"(?<!\.)\. ")
 
 TYPE: Literal[r"type"] = r"type"
 RAW: Literal["raw"] = "raw"
@@ -113,6 +116,33 @@ _SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
 )
 
 
+class RSTRenderer(_RSTRenderer):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def link(self, token: Token, state: BlockState) -> str:
+        """Store link url, for appending at the end of doc."""
+        attrs = token["attrs"]
+        url: str = attrs["url"]
+        if url.startswith("#"):
+            url = f"{EXPRESSIONS_DOCS_URL}{url}"
+        text = self.render_children(token, state)
+        text = text.replace("`", "")
+        inline = f"`{text}`_"
+        state.env["ref_links"][text] = {"url": url}
+        return inline
+
+    def text(self, token: Token, state: BlockState) -> str:
+        text = super().text(token, state)
+        return strip_include_tag(text)
+
+
+def _iter_link_lines(ref_links: Any, /) -> Iterator[str]:
+    links: dict[str, Any] = ref_links
+    for ref_name, attrs in links.items():
+        yield from (f".. _{ref_name}:", f"    {attrs['url']}")
+
+
 class RSTParse(_RSTParse):
     """
     Minor extension to support partial `ast`_ conversion.
@@ -131,7 +161,7 @@ class RSTParse(_RSTParse):
 
     def __init__(
         self,
-        renderer: BaseRenderer,
+        renderer: RSTRenderer,
         block: BlockParser | None = None,
         inline: InlineParser | None = None,
         plugins=None,
@@ -140,9 +170,9 @@ class RSTParse(_RSTParse):
         if self.renderer is None:
             msg = "Must provide a renderer, got `None`"
             raise TypeError(msg)
-        self.renderer: BaseRenderer
+        self.renderer: RSTRenderer
 
-    def render_tokens(self, tokens: Iterable[Token], /) -> LiteralString:
+    def render_tokens(self, tokens: Iterable[Token], /) -> str:
         """
         Render ast tokens originating from another parser.
 
@@ -152,7 +182,11 @@ class RSTParse(_RSTParse):
             All tokens will be rendered into a single `.rst` string
         """
         state = self.block.state_cls()
-        return self.renderer(self._iter_render(tokens, state), state)
+        result = self.renderer(self._iter_render(tokens, state), state)
+        if links := state.env.get("ref_links", {}):
+            return "\n".join(chain([result], _iter_link_lines(links)))
+        else:
+            return result
 
 
 parser: RSTParse = RSTParse(RSTRenderer())
@@ -166,14 +200,19 @@ text_wrap = _TextWrapper(
 
 
 def _doc_fmt(doc: str, /) -> str:
-    sentences: deque[str] = deque(re.split(r"\. ", doc))
+    sentences: deque[str] = deque(SENTENCE_BREAK.split(doc))
     if len(sentences) > 1:
+        references: str = ""
         summary = f"{sentences.popleft()}.\n"
         last_line = sentences.pop().strip()
         sentences = deque(f"{s}. " for s in sentences)
+        if "\n\n.. _" in last_line:
+            last_line, references = last_line.split("\n\n", maxsplit=1)
         sentences.append(last_line)
         sentences = deque(text_wrap.wrap("".join(sentences)))
         sentences.appendleft(summary)
+        if references:
+            sentences.extend(("", indent(references, 8 * " ")))
         return "\n".join(sentences)
     else:
         return sentences.pop().strip()
@@ -273,10 +312,11 @@ class VegaExprNode:
 
         Temporarily handling this here.
         """
-        strip_include = strip_include_tag(rendered)
-        highlight_params = re.sub(
-            rf"\*({'|'.join(self.parameter_names)})\*", r"``\g<1>``", strip_include
-        )
+        # NOTE: Avoids adding backticks to parameter names that are also used in a link
+        # - All cases of these are for `unit|units`
+        pre, post = "[^`_]", "[^`]"
+        pattern = rf"({pre})\*({'|'.join(self.parameter_names)})\*({post})"
+        highlight_params = re.sub(pattern, r"\g<1>``\g<2>``\g<3>", rendered)
         with_alt_references = re.sub(
             rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
         )
