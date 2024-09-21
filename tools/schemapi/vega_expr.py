@@ -38,6 +38,7 @@ WorkInProgress: TypeAlias = Any
 EXPRESSIONS_URL = (
     "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
 )
+VEGA_DOCS_URL = "https://vega.github.io/vega/docs/"
 
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
 LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
@@ -280,7 +281,8 @@ class VegaExprNode:
             rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
         )
         unescaped = mistune.util.unescape(with_alt_references)
-        numpydoc_style = _doc_fmt(unescaped)
+        non_relative_links = re.sub(r"\.\.\/", VEGA_DOCS_URL, unescaped)
+        numpydoc_style = _doc_fmt(non_relative_links)
         return numpydoc_style
 
     @staticmethod
