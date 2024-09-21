@@ -264,8 +264,9 @@ class VegaExprNode:
         - [ ] Fix relative links to vega docs
             - There's code in ``utils`` for this
         """
+        strip_include = strip_include_tag(rendered)
         highlight_params = re.sub(
-            rf"\*({'|'.join(self.parameter_names)})\*", r"``\g<1>``", rendered
+            rf"\*({'|'.join(self.parameter_names)})\*", r"``\g<1>``", strip_include
         )
         with_alt_references = re.sub(
             rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
