@@ -16,6 +16,7 @@ HTML_TEMPLATE = jinja2.Template(
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
 {%- endif %}
   <style>
     #{{ output_div }}.vega-embed {
@@ -208,6 +209,7 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <style>
     #{{ output_div }}.vega-embed {
       width: 100%;
