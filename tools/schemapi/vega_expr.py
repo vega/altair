@@ -254,11 +254,7 @@ class VegaExprNode:
                 break
 
     def _doc_tokens(self) -> Sequence[Token]:
-        """
-        Return the slice of `self.children` that contains docstring content.
-
-        Works for 100% of cases.
-        """
+        """Return the slice of `self.children` that contains docstring content."""
         for idx, item in enumerate(self):
             if item[TYPE] == SOFTBREAK and self[idx + 1][TYPE] == TEXT:
                 return self[idx + 1 :]
@@ -271,22 +267,10 @@ class VegaExprNode:
         raise NotImplementedError(msg)
 
     def _doc_post_process(self, rendered: str, /) -> str:
-        r"""
+        """
         Utilizing properties found during parsing to improve docs.
 
         Temporarily handling this here.
-
-        TODO
-        ----
-        - [x] Replace \*param_name\* -> \`\`param_name\`\`.
-        - [x] References to ``func`` -> ``alt.expr.func``
-            - **Doesn't include other vega expressions yet**
-        - [x] Artifacts like: ``monthAbbrevFormat(0) -&gt; &quot;Jan&quot;``
-        - [x] Split after first sentence ends
-        - [x] Wrap wide docs
-        - [ ] Replace "For example:" -> an example block
-        - [ ] Fix relative links to vega docs
-            - There's code in ``utils`` for this
         """
         strip_include = strip_include_tag(rendered)
         highlight_params = re.sub(
