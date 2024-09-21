@@ -4,9 +4,11 @@ import dataclasses
 import functools
 import keyword
 import re
+from collections import deque
 from inspect import getmembers
 from itertools import chain
 from pathlib import Path
+from textwrap import TextWrapper as _TextWrapper
 from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
 from urllib import request
 
@@ -153,6 +155,27 @@ class RSTParse(_RSTParse):
 
 
 parser: RSTParse = RSTParse(RSTRenderer())
+text_wrap = _TextWrapper(
+    width=100,
+    break_long_words=False,
+    break_on_hyphens=False,
+    initial_indent=8 * " ",
+    subsequent_indent=8 * " ",
+)
+
+
+def _doc_fmt(doc: str, /) -> str:
+    sentences: deque[str] = deque(re.split(r"\. ", doc))
+    if len(sentences) > 1:
+        summary = f"{sentences.popleft()}.\n"
+        last_line = sentences.pop().strip()
+        sentences = deque(f"{s}. " for s in sentences)
+        sentences.append(last_line)
+        sentences = deque(text_wrap.wrap("".join(sentences)))
+        sentences.appendleft(summary)
+        return "\n".join(sentences)
+    else:
+        return sentences.pop().strip()
 
 
 @dataclasses.dataclass
@@ -259,7 +282,8 @@ class VegaExprNode:
         - [x] References to ``func`` -> ``alt.expr.func``
             - **Doesn't include other vega expressions yet**
         - [x] Artifacts like: ``monthAbbrevFormat(0) -&gt; &quot;Jan&quot;``
-        - [ ] Split after first sentence ends
+        - [x] Split after first sentence ends
+        - [x] Wrap wide docs
         - [ ] Replace "For example:" -> an example block
         - [ ] Fix relative links to vega docs
             - There's code in ``utils`` for this
@@ -272,7 +296,8 @@ class VegaExprNode:
             rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
         )
         unescaped = mistune.util.unescape(with_alt_references)
-        return unescaped
+        numpydoc_style = _doc_fmt(unescaped)
+        return numpydoc_style
 
     @staticmethod
     def deep_split_punctuation(s: str, /) -> Iterator[str]:
@@ -573,7 +598,7 @@ EXPR_METHOD_TEMPLATE = '''\
     {decorator}
     {signature}
         """
-        {doc}\
+        {doc}
         """
         {body}
 '''
