@@ -74,6 +74,7 @@ CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 
 BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
+    _schema = load_schema()
     _rootschema = load_schema()
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[Any]]:
@@ -410,6 +411,17 @@ class SchemaGenerator(codegen.SchemaGenerator):
     )
 
 
+class RootSchemaGenerator(SchemaGenerator):
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+
+        {init_code}
+    '''
+    )
+
+
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent(
         '''
@@ -521,6 +533,7 @@ def load_schema_with_shorthand_properties(fp: Path, /) -> dict[str, Any]:
         "description": "shorthand for field, aggregate, and type",
     }
     for propschema in encoding.properties.values():
+
         def_dict = get_field_datum_value_defs(propschema, schema)
         if field_ref := def_dict.get("field", None):
             defschema: dict[str, Any] = {"$ref": field_ref}
@@ -529,7 +542,7 @@ def load_schema_with_shorthand_properties(fp: Path, /) -> dict[str, Any]:
             # shorthand property.
             defschema["properties"]["shorthand"] = shorthand
             if "required" not in defschema:
-                defschema["required"] = ["shorthand"]
+                defschema["required"] = ["shorthand"]  # type: ignore
             elif "shorthand" not in defschema["required"]:
                 defschema["required"].append("shorthand")
             schema["definitions"][field_ref.split("/")[-1]] = defschema
@@ -562,7 +575,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
                 if k in properties:
                     def_dict[k] = definition
         else:
-            recursive_dict_update(next_schema, root, def_dict)
+            recursive_dict_update(next_schema, root, def_dict)  # type: ignore
     elif "anyOf" in schema:
         for sub_schema in schema["anyOf"]:
             recursive_dict_update(sub_schema, root, def_dict)
@@ -583,7 +596,7 @@ def get_field_datum_value_defs(
             msg = "Unexpected schema structure"
             raise ValueError(msg)
     else:
-        recursive_dict_update(schema, root, def_dict)
+        recursive_dict_update(schema, root, def_dict)  # type: ignore
 
     return {i: j for i, j in def_dict.items() if j}
 
@@ -673,16 +686,15 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile=SCHEMA_FILE),
         BASE_SCHEMA.format(basename=basename),
-        schema_class(
+        RootSchemaGenerator(
             "Root",
             schema=rootschema,
             basename=basename,
-            schemarepr=CodeSnippet(f"{basename}._rootschema"),
-        ),
+        ).schema_class(),
     ]
 
     for name in toposort(graph):
-        contents.append(definitions[name].schema_class())
+        contents.append(definitions[name].schema_class())  # noqa: PERF401
 
     contents.append("")  # end with newline
     return "\n".join(contents)
@@ -762,7 +774,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
             else:
                 raise NotImplementedError
 
-            class_defs.append(gen.schema_class())
+            class_defs.append(gen.schema_class())  # pyright: ignore
 
         channel_infos[prop] = channel_info
 

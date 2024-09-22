@@ -173,7 +173,7 @@ def select_items_from_schema(
         for prop in props:
             try:
                 yield prop, properties[prop], prop in required
-            except KeyError as err:
+            except KeyError as err:  # noqa: PERF203
                 msg = f"Can't find property: {prop}"
                 raise Exception(msg) from err
 

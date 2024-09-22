@@ -23,7 +23,6 @@ from typing import (
     overload,
 )
 
-import jsonschema
 import narwhals.stable.v1 as nw
 from narwhals.dependencies import get_polars, is_pandas_dataframe
 from narwhals.typing import IntoDataFrame
@@ -885,13 +884,9 @@ class _ChannelCache:
             obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
-            try:
-                # Don't force validation here; some objects won't be valid until
-                # they're created in the context of a chart.
-                return tp.from_dict(obj, validate=False)
-            except jsonschema.ValidationError:
-                # our attempts at finding the correct class have failed
-                return obj
+            # Don't force validation here; some objects won't be valid until
+            # they're created in the context of a chart.
+            return tp.from_dict(obj, validate=False)
         else:
             warnings.warn(f"Unrecognized encoding channel {encoding!r}", stacklevel=1)
             return obj

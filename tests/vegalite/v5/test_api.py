@@ -23,6 +23,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair.utils import schemapi
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
@@ -533,8 +534,6 @@ def test_when_labels_position_based_on_condition() -> None:
     import numpy as np
     import pandas as pd
 
-    from altair.utils.schemapi import SchemaValidationError
-
     rand = np.random.RandomState(42)
     df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
 
@@ -575,7 +574,9 @@ def test_when_labels_position_based_on_condition() -> None:
     fail_condition = alt.condition(
         param_width < 200, alt.value("red"), alt.value("black")
     )
-    with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
+    with pytest.raises(
+        schemapi.SchemaValidationError, match="invalid value for `expr`"
+    ):
         alt.param(expr=fail_condition)  # type: ignore
 
 
@@ -1301,7 +1302,7 @@ def test_themes():
         assert "config" not in chart.to_dict()
 
 
-def test_chart_from_dict():
+def test_chart_from_dict() -> None:
     base = alt.Chart("data.csv").mark_point().encode(x="x:Q", y="y:Q")
 
     charts = [

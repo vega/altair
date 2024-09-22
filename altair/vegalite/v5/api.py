@@ -10,9 +10,17 @@ import sys
 import typing as t
 import warnings
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Literal,
+    Protocol,
+    Sequence,
+    TypeVar,
+    Union,
+    overload,
+)
 
-import jsonschema
 import narwhals.stable.v1 as nw
 
 from altair import utils
@@ -24,7 +32,7 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
-from altair.utils.schemapi import ConditionLike, _TypeMap
+from altair.utils.schemapi import ConditionLike, _is_valid, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -437,7 +445,7 @@ class Parameter(_expr_core.OperatorMixin):
         # fields or encodings list, then we want to return an expression.
         if check_fields_and_encodings(self, field_name):
             return SelectionExpression(_attrexpr)
-        return _expr_core.GetAttrExpression(self.name, field_name)
+        return _attrexpr
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
@@ -493,13 +501,10 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     param = parameter.param
     if utils.is_undefined(param) or isinstance(param, core.VariableParameter):
         return False
-    for prop in ["fields", "encodings"]:
-        try:
-            if field_name in getattr(param.select, prop):
-                return True
-        except (AttributeError, TypeError):
-            pass
-
+    select = param.select
+    for prop in "fields", "encodings":
+        if not utils.is_undefined(p := select._get(prop)) and field_name in p:
+            return True
     return False
 
 
@@ -3799,13 +3804,13 @@ class Chart(
         jsonschema.ValidationError :
             If ``validate`` and ``dct`` does not conform to the schema
         """
+        if not validate:
+            return super().from_dict(dct, validate=False)
         _tp: Any
         for tp in TopLevelMixin.__subclasses__():
             _tp = super() if tp is Chart else tp
-            try:
-                return _tp.from_dict(dct, validate=validate)
-            except jsonschema.ValidationError:
-                pass
+            if _is_valid(dct, _tp):
+                return _tp.from_dict(dct, validate=False)
 
         # As a last resort, try using the Root vegalite object
         return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
@@ -4921,17 +4926,13 @@ def _repeat_names(
     return params_named
 
 
-def _remove_layer_props(  # noqa: C901
+def _remove_layer_props(
     chart: LayerChart, subcharts: list[ChartType], layer_props: Iterable[str]
 ) -> tuple[dict[str, Any], list[ChartType]]:
     def remove_prop(subchart: ChartType, prop: str) -> ChartType:
-        # If subchart is a UnitSpec, then subchart["height"] raises a KeyError
-        try:
-            if subchart[prop] is not Undefined:
-                subchart = subchart.copy()
-                subchart[prop] = Undefined
-        except KeyError:
-            pass
+        if not utils.is_undefined(subchart._get(prop)):
+            subchart = subchart.copy()
+            subchart[prop] = Undefined
         return subchart
 
     output_dict: dict[str, Any] = {}
@@ -4944,15 +4945,8 @@ def _remove_layer_props(  # noqa: C901
         if chart[prop] is Undefined:
             # Top level does not have this prop.
             # Check for consistent props within the subcharts.
-            values = []
-            for c in subcharts:
-                # If c is a UnitSpec, then c["height"] raises a KeyError.
-                try:
-                    val = c[prop]
-                    if val is not Undefined:
-                        values.append(val)
-                except KeyError:
-                    pass
+            values = [v for c in subcharts if not utils.is_undefined(v := c._get(prop))]
+
             if len(values) == 0:
                 pass
             elif all(v == values[0] for v in values[1:]):

@@ -258,8 +258,16 @@ extend-select=[
     "PLR1736",
     # literal-membership
     "PLR6201",
+    # unnecessary-lambda
+    "PLW0108",
     # unspecified-encoding
     "PLW1514",
+    # exception handling #
+    # ------------------ #
+    # try-except-pass
+    "S110",
+    # try-except-continue
+    "S112",
 ]
 select = [
     # flake8-bugbear
@@ -325,6 +333,8 @@ select = [
     "I001",
     # complex-structure
     "C901",
+    # Perflint
+    "PERF",
 ]
 ignore = [  
     # Whitespace before ':'

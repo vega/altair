@@ -21,14 +21,8 @@ import pytest
 
 import altair as alt
 from altair import load_schema
-from altair.utils.schemapi import (
-    _DEFAULT_JSON_SCHEMA_DRAFT_URL,
-    SchemaBase,
-    SchemaValidationError,
-    Undefined,
-    UndefinedType,
-    _FromDict,
-)
+from altair.utils import schemapi
+from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType
 from altair.vegalite.v5.schema.channels import X
 from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
@@ -42,9 +36,9 @@ _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 
 
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
-    # See comments next to definition of _DEFAULT_JSON_SCHEMA_DRAFT_URL
+    # See comments next to definition of `_DEFAULT_DIALECT_URI`
     # for details why we need this test
-    assert _DEFAULT_JSON_SCHEMA_DRAFT_URL == _JSON_SCHEMA_DRAFT_URL, (
+    assert schemapi._DEFAULT_DIALECT_URI == _JSON_SCHEMA_DRAFT_URL, (
         "The default json schema URL, which is hardcoded,"
         + " is not the same as the one used in the Vega-Lite schema."
         + " You need to update the default value."
@@ -54,7 +48,23 @@ def test_actual_json_schema_draft_is_same_as_hardcoded_default():
 class _TestSchema(SchemaBase):
     @classmethod
     def _default_wrapper_classes(cls):
-        return _TestSchema.__subclasses__()
+        return schemapi._subclasses(_TestSchema)
+
+    @classmethod
+    def from_dict(
+        cls: type[schemapi.TSchemaBase], dct: dict[str, Any], validate: bool = True
+    ) -> schemapi.TSchemaBase:
+        """
+        Overrides ``SchemaBase``, which uses a cached ``FromDict.hash_tps``.
+
+        The cached version is based on an iterator over:
+
+            schemapi._subclasses(VegaLiteSchema)
+        """
+        if validate:
+            cls.validate(dct)
+        converter = schemapi._FromDict(cls._default_wrapper_classes())
+        return converter.from_dict(dct, cls)
 
 
 class MySchema(_TestSchema):
@@ -389,13 +399,10 @@ def test_class_with_no_schema():
     assert str(err.value).startswith("Cannot instantiate object")
 
 
-@pytest.mark.parametrize("use_json", [True, False])
-def test_hash_schema(use_json):
-    classes = _TestSchema._default_wrapper_classes()
-
-    for cls in classes:
-        hsh1 = _FromDict.hash_schema(cls._schema, use_json=use_json)
-        hsh2 = _FromDict.hash_schema(cls._schema, use_json=use_json)
+def test_hash_schema():
+    for cls in _TestSchema._default_wrapper_classes():
+        hsh1 = schemapi._hash_schema(cls._schema)
+        hsh2 = schemapi._hash_schema(cls._schema)
         assert hsh1 == hsh2
         assert hash(hsh1) == hash(hsh2)
 
@@ -407,7 +414,7 @@ def test_schema_validation_error():
     except jsonschema.ValidationError as err:
         the_err = err
 
-    assert isinstance(the_err, SchemaValidationError)
+    assert isinstance(the_err, schemapi.SchemaValidationError)
     message = str(the_err)
 
     assert the_err.message in message
@@ -871,7 +878,7 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         warnings.filterwarnings("ignore", category=UserWarning)
         chart = chart_func()
     expected_error_message = inspect.cleandoc(expected_error_message)
-    with pytest.raises(SchemaValidationError, match=expected_error_message):
+    with pytest.raises(schemapi.SchemaValidationError, match=expected_error_message):
         chart.to_dict()
 
 
