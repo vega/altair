@@ -1,6 +1,8 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+from __future__ import annotations
+
 # These errors need to be ignored as they come from the overload methods
 # which trigger two kind of errors in mypy:
 # * all of them do not have an implementation in this file
@@ -8,12 +10,13 @@
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
-
-from __future__ import annotations
-
+import sys
 from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
-from typing_extensions import TypeAlias
 
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
 import narwhals.stable.v1 as nw
 
 from altair.utils import infer_encoding_types as _infer_encoding_types
@@ -23,13 +26,16 @@ from altair.utils.schemapi import Undefined, with_property_setters
 from . import core
 from ._typing import *  # noqa: F403
 
-# ruff: noqa: F405
 if TYPE_CHECKING:
-    from typing_extensions import Self
-
+    # ruff: noqa: F405
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
     from altair.vegalite.v5.api import IntoCondition
+
+    if sys.version_info >= (3, 11):
+        from typing import Self
+    else:
+        from typing_extensions import Self
 
 
 __all__ = [

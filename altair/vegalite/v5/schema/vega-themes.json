@@ -28,12 +28,6 @@
     "circle": {
       "fill": "#6929c4"
     },
-    "group": {
-      "fill": "#ffffff"
-    },
-    "path": {
-      "stroke": "#6929c4"
-    },
     "range": {
       "category": [
         "#6929c4",
@@ -85,9 +79,6 @@
     "rect": {
       "fill": "#6929c4"
     },
-    "shape": {
-      "stroke": "#6929c4"
-    },
     "style": {
       "guide-label": {
         "fill": "#525252",
@@ -99,9 +90,6 @@
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
-    },
-    "symbol": {
-      "stroke": "#6929c4"
     },
     "title": {
       "anchor": "start",
@@ -145,12 +133,6 @@
     "circle": {
       "fill": "#d4bbff"
     },
-    "group": {
-      "fill": "#161616"
-    },
-    "path": {
-      "stroke": "#d4bbff"
-    },
     "range": {
       "category": [
         "#8a3ffc",
@@ -202,9 +184,6 @@
     "rect": {
       "fill": "#d4bbff"
     },
-    "shape": {
-      "stroke": "#d4bbff"
-    },
     "style": {
       "guide-label": {
         "fill": "#c6c6c6",
@@ -216,9 +195,6 @@
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
-    },
-    "symbol": {
-      "stroke": "#d4bbff"
     },
     "title": {
       "anchor": "start",
@@ -262,12 +238,6 @@
     "circle": {
       "fill": "#d4bbff"
     },
-    "group": {
-      "fill": "#161616"
-    },
-    "path": {
-      "stroke": "#d4bbff"
-    },
     "range": {
       "category": [
         "#8a3ffc",
@@ -319,9 +289,6 @@
     "rect": {
       "fill": "#d4bbff"
     },
-    "shape": {
-      "stroke": "#d4bbff"
-    },
     "style": {
       "guide-label": {
         "fill": "#c6c6c6",
@@ -333,9 +300,6 @@
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
-    },
-    "symbol": {
-      "stroke": "#d4bbff"
     },
     "title": {
       "anchor": "start",
@@ -378,12 +342,6 @@
     "background": "#ffffff",
     "circle": {
       "fill": "#6929c4"
-    },
-    "group": {
-      "fill": "#ffffff"
-    },
-    "path": {
-      "stroke": "#6929c4"
     },
     "range": {
       "category": [
@@ -436,9 +394,6 @@
     "rect": {
       "fill": "#6929c4"
     },
-    "shape": {
-      "stroke": "#6929c4"
-    },
     "style": {
       "guide-label": {
         "fill": "#525252",
@@ -450,9 +405,6 @@
         "font": "IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,\".sfnstext-regular\",sans-serif",
         "fontWeight": 400
       }
-    },
-    "symbol": {
-      "stroke": "#6929c4"
     },
     "title": {
       "anchor": "start",
@@ -522,9 +474,6 @@
       "stroke": "#4572a7",
       "strokeWidth": 2
     },
-    "path": {
-      "stroke": "#4572a7"
-    },
     "range": {
       "category": [
         "#4572a7",
@@ -541,14 +490,6 @@
     },
     "rect": {
       "fill": "#4572a7"
-    },
-    "shape": {
-      "stroke": "#4572a7"
-    },
-    "symbol": {
-      "fill": "#4572a7",
-      "size": 50,
-      "strokeWidth": 1.5
     }
   },
   "fivethirtyeight": {
@@ -581,9 +522,6 @@
       "fill": "#30a2da",
       "stroke": null
     },
-    "group": {
-      "fill": "#f0f0f0"
-    },
     "legend": {
       "labelColor": "#333",
       "labelFontSize": 11,
@@ -597,10 +535,6 @@
     "line": {
       "stroke": "#30a2da",
       "strokeWidth": 2
-    },
-    "path": {
-      "stroke": "#30a2da",
-      "strokeWidth": 0.5
     },
     "point": {
       "filled": true,
@@ -640,9 +574,6 @@
     "rect": {
       "fill": "#30a2da"
     },
-    "shape": {
-      "stroke": "#30a2da"
-    },
     "title": {
       "anchor": "start",
       "fontSize": 24,
@@ -669,18 +600,12 @@
       "titleFontSize": 16,
       "titleFontWeight": "normal"
     },
-    "group": {
-      "fill": "#e5e5e5"
-    },
     "legend": {
       "labelBaseline": "middle",
       "labelFontSize": 11,
       "symbolSize": 40
     },
     "line": {
-      "stroke": "#000"
-    },
-    "path": {
       "stroke": "#000"
     },
     "range": {
@@ -699,13 +624,6 @@
     },
     "rect": {
       "fill": "#000"
-    },
-    "shape": {
-      "stroke": "#000"
-    },
-    "symbol": {
-      "fill": "#000",
-      "size": 40
     }
   },
   "googlecharts": {
@@ -731,9 +649,6 @@
       "right": 10,
       "top": 10
     },
-    "path": {
-      "stroke": "#3366CC"
-    },
     "range": {
       "category": [
         "#4285F4",
@@ -758,9 +673,6 @@
     "rect": {
       "fill": "#3366CC"
     },
-    "shape": {
-      "stroke": "#3366CC"
-    },
     "style": {
       "group-title": {
         "font": "Arial, sans-serif",
@@ -774,9 +686,6 @@
         "font": "Arial, sans-serif",
         "fontSize": 12
       }
-    },
-    "symbol": {
-      "stroke": "#3366CC"
     },
     "title": {
       "anchor": "start",
@@ -829,9 +738,6 @@
       "stroke": "#82c6df",
       "strokeWidth": 2
     },
-    "path": {
-      "stroke": "#82c6df"
-    },
     "range": {
       "category": [
         "#ec8431",
@@ -879,13 +785,6 @@
     },
     "rect": {
       "fill": "#82c6df"
-    },
-    "shape": {
-      "stroke": "#82c6df"
-    },
-    "symbol": {
-      "fill": "#82c6df",
-      "size": 30
     },
     "title": {
       "anchor": "start",
@@ -963,9 +862,6 @@
       "strokeJoin": "round",
       "strokeWidth": 3
     },
-    "path": {
-      "stroke": "#118DFF"
-    },
     "point": {
       "fill": "#118DFF",
       "filled": true,
@@ -1005,14 +901,6 @@
     },
     "rect": {
       "fill": "#118DFF"
-    },
-    "shape": {
-      "stroke": "#118DFF"
-    },
-    "symbol": {
-      "fill": "#118DFF",
-      "size": 50,
-      "strokeWidth": 1.5
     },
     "text": {
       "fill": "#605E5C",
@@ -1061,9 +949,6 @@
     "line": {
       "stroke": "#ab5787"
     },
-    "path": {
-      "stroke": "#ab5787"
-    },
     "range": {
       "category": [
         "#ab5787",
@@ -1080,13 +965,6 @@
     },
     "rect": {
       "fill": "#ab5787"
-    },
-    "shape": {
-      "stroke": "#ab5787"
-    },
-    "symbol": {
-      "fill": "#ab5787",
-      "size": 30
     }
   },
   "urbaninstitute": {
@@ -1143,10 +1021,6 @@
       "stroke": "#1696d2",
       "strokeWidth": 5
     },
-    "path": {
-      "stroke": "#1696d2",
-      "strokeWidth": 0.5
-    },
     "point": {
       "filled": true
     },
@@ -1201,18 +1075,11 @@
     "rect": {
       "fill": "#1696d2"
     },
-    "shape": {
-      "stroke": "#1696d2"
-    },
     "style": {
       "bar": {
         "fill": "#1696d2",
         "stroke": null
       }
-    },
-    "symbol": {
-      "fill": "#1696d2",
-      "size": 30
     },
     "text": {
       "align": "center",
@@ -1273,9 +1140,6 @@
     "line": {
       "stroke": "#3e5c69"
     },
-    "path": {
-      "stroke": "#3e5c69"
-    },
     "range": {
       "category": [
         "#3e5c69",
@@ -1289,12 +1153,6 @@
       ]
     },
     "rect": {
-      "fill": "#3e5c69"
-    },
-    "shape": {
-      "stroke": "#3e5c69"
-    },
-    "symbol": {
       "fill": "#3e5c69"
     }
   }
