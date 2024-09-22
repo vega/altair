@@ -266,6 +266,8 @@ The parameters ``short``, ``long`` accept the same range of types::
 """
 '''
 
+INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -693,6 +695,7 @@ def generate_vegalite_channel_wrappers(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             "from typing_extensions import Self",
+            f"from altair.vegalite.v5.api import {INTO_CONDITION}",
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
@@ -900,20 +903,33 @@ def generate_encoding_artifacts(
         - but this translates poorly to an IDE
         - `info.supports_arrays`
     """
+    PREFIX_INTERNAL = "Any"
+    PREFIX_EXPORT = "Channel"
     signature_args: list[str] = ["self", "*args: Any"]
-    type_aliases: list[str] = []
+    internal_aliases: list[str] = []
+    export_aliases: list[str] = []
     typed_dict_args: list[str] = []
     signature_doc_params: list[str] = ["", "Parameters", "----------"]
     typed_dict_doc_params: list[str] = ["", "Parameters", "----------"]
 
     for channel, info in channel_infos.items():
-        alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
+        channel_name = f"{channel[0].upper()}{channel[1:]}"
 
-        it: Iterator[str] = info.all_names
+        names = list(info.all_names)
         it_rst_names: Iterator[str] = (rst_syntax_for_class(c) for c in info.all_names)
 
         docstring_types: list[str] = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = ", ".join(chain(("str", next(it), "Map"), it))
+        if len(names) > 1:
+            # NOTE: Another level of internal aliases are generated, for channels w/ 2-3 types.
+            # These are represent only types defined in `channels.py` and not the full range accepted.
+            any_name = f"{PREFIX_INTERNAL}{channel_name}"
+            internal_aliases.append(
+                f"{any_name}: TypeAlias = Union[{', '.join(names)}]"
+            )
+            tp_inner: str = ", ".join(("str", any_name, f"{INTO_CONDITION!r}", "Map"))
+        else:
+            tp_inner = ", ".join(("str", names[0], f"{INTO_CONDITION!r}", "Map"))
+
         tp_inner = f"Union[{tp_inner}]"
 
         if info.supports_arrays:
@@ -922,7 +938,7 @@ def generate_encoding_artifacts(
 
         doc_types_flat: str = ", ".join(chain(docstring_types, it_rst_names))
 
-        type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        export_aliases.append(f"{PREFIX_EXPORT}{channel_name}: TypeAlias = {tp_inner}")
         # We use the full type hints instead of the alias in the signatures below
         # as IDEs such as VS Code would else show the name of the alias instead
         # of the expanded full type hints. The later are more useful to users.
@@ -942,7 +958,13 @@ def generate_encoding_artifacts(
         channels="\n    ".join(typed_dict_args),
         docstring=indent_docstring(typed_dict_doc_params, indent_level=4, lstrip=False),
     )
-    artifacts: Iterable[str] = *type_aliases, method, typed_dict
+    artifacts: Iterable[str] = (
+        *internal_aliases,
+        "",
+        *export_aliases,
+        method,
+        typed_dict,
+    )
     yield from artifacts
 
 

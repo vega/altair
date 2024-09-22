@@ -12,7 +12,7 @@ from .core import (
 from .deprecation import AltairDeprecationWarning, deprecated, deprecated_warn
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
-from .schemapi import Optional, SchemaBase, Undefined, is_undefined
+from .schemapi import Optional, SchemaBase, SchemaLike, Undefined, is_undefined
 
 __all__ = (
     "SHORTHAND_KEYS",
@@ -20,6 +20,7 @@ __all__ = (
     "Optional",
     "PluginRegistry",
     "SchemaBase",
+    "SchemaLike",
     "Undefined",
     "deprecated",
     "deprecated_warn",
