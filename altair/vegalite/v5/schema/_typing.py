@@ -1,42 +1,11 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+
 from __future__ import annotations
 
-import re
-import sys
-from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
-
-if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
-    from typing import TypedDict
-else:
-    from typing_extensions import TypedDict
-
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
-
-if sys.version_info >= (3, 12):
-    from typing import TypeAliasType
-else:
-    from typing_extensions import TypeAliasType
-
-if sys.version_info >= (3, 11):
-    from typing import LiteralString
-else:
-    from typing_extensions import LiteralString
-
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated, get_args
-else:
-    from typing_extensions import Annotated, get_args
-
+from typing import Any, Literal, Mapping, Sequence, TypeVar, Union
+from typing_extensions import TypeAlias, TypeAliasType
 
 __all__ = [
     "AggregateOp_T",
@@ -47,7 +16,6 @@ __all__ = [
     "BinnedTimeUnit_T",
     "Blend_T",
     "BoxPlot_T",
-    "ColorHex",
     "ColorName_T",
     "ColorScheme_T",
     "CompositeMark_T",
@@ -71,11 +39,9 @@ __all__ = [
     "OneOrSeq",
     "Orient_T",
     "Orientation_T",
-    "PaddingKwds",
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
-    "RowColKwds",
     "ScaleInterpolateEnum_T",
     "ScaleType_T",
     "SelectionResolution_T",
@@ -87,7 +53,6 @@ __all__ = [
     "SortOrder_T",
     "StackOffset_T",
     "StandardType_T",
-    "StepFor_T",
     "StrokeCap_T",
     "StrokeJoin_T",
     "TextBaseline_T",
@@ -100,17 +65,14 @@ __all__ = [
     "Type_T",
     "UtcMultiTimeUnit_T",
     "UtcSingleTimeUnit_T",
-    "Value",
     "VegaThemes",
     "WindowOnlyOp_T",
-    "is_color_hex",
 ]
 
 
 T = TypeVar("T")
 OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
-"""
-One of ``T`` specified type(s), or a `Sequence` of such.
+"""One of ``T`` specified type(s), or a `Sequence` of such.
 
 Examples
 --------
@@ -123,83 +85,6 @@ The parameters ``short``, ``long`` accept the same range of types::
         long: Union[str, bool, float, Sequence[Union[str, bool, float]],
     ): ...
 """
-
-
-class Value(TypedDict, Generic[T]):
-    """
-    A `Generic`_ single item ``dict``.
-
-    Parameters
-    ----------
-    value: T
-        Wrapped value.
-
-    .. _Generic:
-        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
-    """
-
-    value: T
-
-
-ColorHex = Annotated[
-    LiteralString,
-    re.compile(r"#[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}([0-9a-f]{2})?", re.IGNORECASE),
-]
-"""
-A `hexadecimal`_ color code.
-
-Corresponds to the ``json-schema`` string format:
-
-    {"format": "color-hex", "type": "string"}
-
-Examples
---------
-:
-
-    "#f0f8ff"
-    "#7fffd4"
-    "#000000"
-    "#0000FF"
-    "#0000ff80"
-
-.. _hexadecimal:
-    https://www.w3schools.com/html/html_colors_hex.asp
-"""
-
-
-def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
-    """Return ``True`` if the object is a hexadecimal color code."""
-    # NOTE: Extracts compiled pattern from metadata,
-    # to avoid defining in multiple places.
-    it = iter(get_args(ColorHex))
-    next(it)
-    pattern: re.Pattern[str] = next(it)
-    return bool(pattern.fullmatch(obj))
-
-
-class RowColKwds(TypedDict, Generic[T], total=False):
-    """
-    A `Generic`_ two-item ``dict``.
-
-    Parameters
-    ----------
-    column: T
-    row: T
-
-    .. _Generic:
-        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
-    """
-
-    column: T
-    row: T
-
-
-class PaddingKwds(TypedDict, total=False):
-    bottom: float
-    left: float
-    right: float
-    top: float
-
 
 VegaThemes: TypeAlias = Literal[
     "carbong10",
@@ -1184,7 +1069,6 @@ SortByChannel_T: TypeAlias = Literal[
 SortOrder_T: TypeAlias = Literal["ascending", "descending"]
 StackOffset_T: TypeAlias = Literal["zero", "center", "normalize"]
 StandardType_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal"]
-StepFor_T: TypeAlias = Literal["position", "offset"]
 StrokeCap_T: TypeAlias = Literal["butt", "round", "square"]
 StrokeJoin_T: TypeAlias = Literal["miter", "round", "bevel"]
 TextBaseline_T: TypeAlias = Literal[

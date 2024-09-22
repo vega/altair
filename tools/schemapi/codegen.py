@@ -3,12 +3,9 @@
 from __future__ import annotations
 
 import re
-import sys
 import textwrap
 from dataclasses import dataclass
-from itertools import chain
-from operator import attrgetter
-from typing import Any, Callable, Final, Iterable, Iterator, TypeVar, Union
+from typing import Final
 
 from .utils import (
     SchemaInfo,
@@ -17,26 +14,8 @@ from .utils import (
     indent_docstring,
     is_valid_identifier,
     jsonschema_to_python_types,
-    process_description,
     spell_literal,
 )
-
-if sys.version_info >= (3, 12):
-    from typing import TypeAliasType
-else:
-    from typing_extensions import TypeAliasType
-
-
-T1 = TypeVar("T1")
-T2 = TypeVar("T2")
-AttrGetter = TypeAliasType(
-    "AttrGetter", Callable[[T1], Union[T2, "tuple[T2, ...]"]], type_params=(T1, T2)
-)
-"""
-Intended to model the signature of ``operator.attrgetter``.
-
-Spelled more generically to support future extension.
-"""
 
 
 class CodeSnippet:
@@ -56,64 +35,6 @@ class ArgInfo:
     kwds: set[str]
     invalid_kwds: set[str]
     additional: bool
-    schema_info: SchemaInfo
-
-    def iter_args(
-        self,
-        group: Iterable[str] | AttrGetter[ArgInfo, set[str]],
-        *more_groups: Iterable[str] | AttrGetter[ArgInfo, set[str]],
-        exclude: str | Iterable[str] | None = None,
-    ) -> Iterator[tuple[str, SchemaInfo]]:
-        r"""
-        Yields (property_name, property_info).
-
-        Useful for signatures and docstrings.
-
-        Parameters
-        ----------
-        group, \*more_groups
-            Each group will independently sorted, and chained.
-        exclude
-            Property name(s) to omit if they appear during iteration.
-        """
-        props = self.schema_info.properties
-        it = chain.from_iterable(
-            sorted(g) for g in self._normalize_groups(group, *more_groups)
-        )
-        if exclude is not None:
-            exclude = {exclude} if isinstance(exclude, str) else set(exclude)
-            for p in it:
-                if p not in exclude:
-                    yield p, props[p]
-        else:
-            for p in it:
-                yield p, props[p]
-
-    def _normalize_groups(
-        self, *groups: Iterable[str] | AttrGetter[ArgInfo, set[str]]
-    ) -> Iterator[set[str]]:
-        for group in groups:
-            if isinstance(group, set):
-                yield group
-            elif isinstance(group, Iterable):
-                yield set(group)
-            elif callable(group):
-                result = group(self)
-                if isinstance(result, set):
-                    yield result
-                else:
-                    yield from result
-            else:
-                msg = (
-                    f"Expected all cases to be reducible to a `set[str]`,"
-                    f" but got {type(group).__name__!r}"
-                )
-                raise TypeError(msg)
-
-
-arg_required_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("required", "kwds")
-arg_invalid_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("invalid_kwds")
-arg_kwds: AttrGetter[ArgInfo, set[str]] = attrgetter("kwds")
 
 
 def get_args(info: SchemaInfo) -> ArgInfo:
@@ -125,9 +46,22 @@ def get_args(info: SchemaInfo) -> ArgInfo:
     invalid_kwds: set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
-    if info.is_empty() or info.is_anyOf():
+
+    if info.is_allOf():
+        # recursively call function on all children
+        arginfo = [get_args(child) for child in info.allOf]
+        nonkeyword = all(args.nonkeyword for args in arginfo)
+        required = set.union(set(), *(args.required for args in arginfo))
+        kwds = set.union(set(), *(args.kwds for args in arginfo))
+        kwds -= required
+        invalid_kwds = set.union(set(), *(args.invalid_kwds for args in arginfo))
+        additional = all(args.additional for args in arginfo)
+    elif info.is_empty() or info.is_compound():
         nonkeyword = True
         additional = True
+    elif info.is_value():
+        nonkeyword = True
+        additional = False
     elif info.is_object():
         invalid_kwds = {p for p in info.required if not is_valid_identifier(p)} | {
             p for p in info.properties if not is_valid_identifier(p)
@@ -139,19 +73,8 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         additional = True
         # additional = info.additionalProperties or info.patternProperties
     else:
-        nonkeyword = True
-        additional = False
-        if info.is_allOf():
-            # recursively call function on all children
-            msg = f"Branch is reachable with:\n{info.raw_schema!r}"
-            raise NotImplementedError(msg)
-            arginfo: list[ArgInfo] = [get_args(child) for child in info.allOf]
-            nonkeyword = all(args.nonkeyword for args in arginfo)
-            required = {args.required for args in arginfo}
-            kwds = {args.kwds for args in arginfo}
-            kwds -= required
-            invalid_kwds = {args.invalid_kwds for args in arginfo}
-            additional = all(args.additional for args in arginfo)
+        msg = "Schema object not understood"
+        raise ValueError(msg)
 
     return ArgInfo(
         nonkeyword=nonkeyword,
@@ -159,7 +82,6 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         kwds=kwds,
         invalid_kwds=invalid_kwds,
         additional=additional,
-        schema_info=info,
     )
 
 
@@ -207,10 +129,13 @@ class SchemaGenerator:
     """
     ).lstrip()
 
+    def _process_description(self, description: str):
+        return description
+
     def __init__(
         self,
         classname: str,
-        schema: dict[str, Any],
+        schema: dict,
         rootschema: dict | None = None,
         basename: str | list[str] = "SchemaBase",
         schemarepr: object | None = None,
@@ -229,24 +154,19 @@ class SchemaGenerator:
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
-    def subclasses(self) -> Iterator[str]:
-        """
-        Return an Iterator over subclass names, if any.
-
-        NOTE
-        ----
-        *Does not represent subclasses**.
-
-        Represents a ``Union`` of schemas (``SchemaInfo.anyOf``).
-        """
-        for child in SchemaInfo(self.schema, self.rootschema).anyOf:
-            if child.is_reference():
-                yield child.refname
+    def subclasses(self) -> list[str]:
+        """Return a list of subclass names, if any."""
+        info = SchemaInfo(self.schema, self.rootschema)
+        return [child.refname for child in info.anyOf if child.is_reference()]
 
     def schema_class(self) -> str:
         """Generate code for a schema class."""
-        rootschema: dict = self.rootschema or self.schema
-        schemarepr: object = self.schemarepr or self.schema
+        rootschema: dict = (
+            self.rootschema if self.rootschema is not None else self.schema
+        )
+        schemarepr: object = (
+            self.schemarepr if self.schemarepr is not None else self.schema
+        )
         rootschemarepr = self.rootschemarepr
         if rootschemarepr is None:
             if rootschema is self.schema:
@@ -284,7 +204,7 @@ class SchemaGenerator:
             # https://numpydoc.readthedocs.io/en/latest/format.html#extended-summary
             # Remove condition from description
             desc: str = re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
-            ext_summary: list[str] = process_description(desc).splitlines()
+            ext_summary: list[str] = self._process_description(desc).splitlines()
             # Remove lines which contain the "raw-html" directive which cannot be processed
             # by Sphinx at this level of the docstring. It works for descriptions
             # of attributes which is why we do not do the same below. The removed
@@ -297,13 +217,17 @@ class SchemaGenerator:
 
         if info.properties:
             arg_info = self.arg_info
-            it = chain.from_iterable(
-                (f"{p} : {p_info.to_type_repr()}", f"    {p_info.deep_description}")
-                for p, p_info in arg_info.iter_args(
-                    arg_info.required, arg_kwds, arg_invalid_kwds
-                )
-            )
-            doc.extend(chain(["", "Parameters", "----------", ""], it))
+            doc += ["", "Parameters", "----------", ""]
+            for prop in (
+                sorted(arg_info.required)
+                + sorted(arg_info.kwds)
+                + sorted(arg_info.invalid_kwds)
+            ):
+                propinfo = info.properties[prop]
+                doc += [
+                    f"{prop} : {propinfo.get_python_type_representation()}",
+                    f"    {self._process_description(propinfo.deep_description)}",
+                ]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent: int = 0) -> str:
@@ -319,7 +243,10 @@ class SchemaGenerator:
             initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
 
-    def init_args(self) -> tuple[list[str], list[str]]:
+    def init_args(
+        self, additional_types: list[str] | None = None
+    ) -> tuple[list[str], list[str]]:
+        additional_types = additional_types or []
         info = self.info
         arg_info = self.arg_info
 
@@ -330,23 +257,32 @@ class SchemaGenerator:
         args: list[str] = ["self"]
         super_args: list[str] = []
 
-        self.init_kwds: list[str] = sorted(arg_info.kwds)
-        init_required: list[str] = sorted(arg_info.required)
-        _nodefault: list[str] = sorted(nodefault)
+        self.init_kwds = sorted(arg_info.kwds)
 
         if nodefault:
-            args.extend(_nodefault)
+            args.extend(sorted(nodefault))
         elif arg_info.nonkeyword:
             args.append("*args")
             super_args.append("*args")
 
-        it = (
-            f"{p}: {info.properties[p].to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-            for p in chain(init_required, self.init_kwds)
+        args.extend(
+            f"{p}: Optional[Union["
+            + ", ".join(
+                [
+                    *additional_types,
+                    *info.properties[p].get_python_type_representation(
+                        for_type_hints=True, return_as_str=False
+                    ),
+                ]
+            )
+            + "]] = Undefined"
+            for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
-        args.extend(it)
         super_args.extend(
-            f"{p}={p}" for p in chain(_nodefault, init_required, self.init_kwds)
+            f"{p}={p}"
+            for p in sorted(nodefault)
+            + sorted(arg_info.required)
+            + sorted(arg_info.kwds)
         )
 
         if arg_info.additional:
@@ -366,10 +302,16 @@ class SchemaGenerator:
 
         if prop_infos:
             contents.extend(
-                f"{p}: {info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-                for p, info in prop_infos.items()
+                [
+                    f"{p}: "
+                    + info.get_python_type_representation(
+                        for_type_hints=True, additional_type_hints=["UndefinedType"]
+                    )
+                    + " = Undefined"
+                    for p, info in prop_infos.items()
+                ]
             )
-        elif isinstance(si.type, str):
+        elif si.type:
             py_type = jsonschema_to_python_types[si.type]
             if py_type == "list":
                 # Try to get a type hint like "List[str]" which is more specific
@@ -433,6 +375,6 @@ class SchemaGenerator:
         if not self.haspropsetters:
             return None
         args = self.init_kwds
-        type_hints = (hint for a in args for hint in self.setter_hint(a, indent))
+        type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
 
         return ("\n" + indent * " ").join(type_hints)

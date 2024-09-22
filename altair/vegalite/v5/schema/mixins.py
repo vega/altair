@@ -3,23 +3,25 @@
 
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING, Literal, Sequence
 
-from altair.utils import Undefined, use_signature
+from altair.utils import use_signature
+from altair.utils.schemapi import Undefined
 
 from . import core
 
 if TYPE_CHECKING:
     from altair import Parameter, SchemaBase
 
-if TYPE_CHECKING:
-    # ruff: noqa: F405
-    import sys
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
-    if sys.version_info >= (3, 11):
-        from typing import Self
-    else:
-        from typing_extensions import Self
+
+# ruff: noqa: F405
+if TYPE_CHECKING:
     from altair.typing import Optional
 
     from ._typing import *  # noqa: F403
