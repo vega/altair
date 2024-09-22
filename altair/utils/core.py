@@ -27,7 +27,7 @@ import narwhals.stable.v1 as nw
 from narwhals.dependencies import get_polars, is_pandas_dataframe
 from narwhals.typing import IntoDataFrame
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase, SchemaLike, Undefined
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
@@ -868,6 +868,8 @@ class _ChannelCache:
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [self._wrap_in_channel(el, encoding) for el in obj]
+        elif isinstance(obj, SchemaLike):
+            obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
             # Don't force validation here; some objects won't be valid until

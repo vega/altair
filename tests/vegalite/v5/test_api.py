@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING
 
 import ibis
 import jsonschema
@@ -23,13 +24,17 @@ from packaging.version import Version
 
 import altair as alt
 from altair.utils import schemapi
-from altair.utils.schemapi import Optional, Undefined
+from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
 try:
     import vl_convert as vlc
 except ImportError:
     vlc = None
+
+if TYPE_CHECKING:
+    from altair.vegalite.v5.api import _Conditional, _Conditions
+    from altair.vegalite.v5.schema._typing import Map
 
 ibis.set_backend("polars")
 
@@ -421,7 +426,7 @@ def test_when_then_otherwise() -> None:
     when_then = alt.when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
 
-    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    expected = dict(alt.condition(select, alt.value(2, empty=False), alt.value(0)))
     with pytest.raises(TypeError, match="list"):
         when_then.otherwise([1, 2, 3])  # type: ignore
 
@@ -631,14 +636,24 @@ def test_when_multiple_fields():
     with pytest.raises(TypeError, match=chain_mixed_msg):
         when.then("field_1:Q").when(Genre="pop")
 
+    chained_when = when.then(alt.value(5)).when(
+        alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
+    )
+
+    chain_then_msg = re.compile(
+        r"Chained.+mixed.+field.+min\(foo\):Q.+'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'",
+        flags=re.DOTALL,
+    )
+
+    with pytest.raises(TypeError, match=chain_then_msg):
+        chained_when.then("min(foo):Q")
+
     chain_otherwise_msg = re.compile(
         r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
         flags=re.DOTALL,
     )
     with pytest.raises(TypeError, match=chain_otherwise_msg):
-        when.then(alt.value(5)).when(
-            alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
-        ).then("min(foo):Q").otherwise(
+        chained_when.then(alt.value(2)).otherwise(
             alt.AggregatedFieldDef(
                 "argmax", field="field_9", **{"as": "this_field_here"}
             )
@@ -646,21 +661,43 @@ def test_when_multiple_fields():
 
 
 def test_when_typing(cars) -> None:
-    color = (
-        alt.when(alt.datum.Weight_in_lbs >= 3500)
-        .then(alt.value("black"))
-        .otherwise(alt.value("white"))
-    )
-    source = cars
-    chart = (  # noqa: F841
-        alt.Chart(source)
-        .mark_rect()
-        .encode(
-            x=alt.X("Cylinders:N").axis(labelColor=color),
-            y=alt.Y("Origin:N", axis=alt.Axis(tickColor=color)),
-            color=color,
+    chart = alt.Chart(cars).mark_rect()
+    predicate = alt.datum.Weight_in_lbs >= 3500
+    statement = alt.value("black")
+    default = alt.value("white")
+
+    then: alt.Then[_Conditions] = alt.when(predicate).then(statement)
+    otherwise: _Conditional[_Conditions] = then.otherwise(default)
+    condition: Map = alt.condition(predicate, statement, default)
+
+    # NOTE: both `condition()` and `when-then-otherwise` are allowed in these three locations
+    chart.encode(
+        color=condition,
+        x=alt.X("Cylinders:N").axis(labelColor=condition),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=condition)),
+    ).to_dict()
+
+    chart.encode(
+        color=otherwise,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=otherwise)),
+    ).to_dict()
+
+    with pytest.raises(SchemaValidationError):
+        # NOTE: `when-then` is allowed as an encoding, but not as a `ConditionalAxisProperty`
+        # The latter fails validation since it does not have a default `value`
+        chart.encode(
+            color=then,
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
         )
-    )
+
+    # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases
+    chart.encode(
+        color=then,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(labelColor=otherwise)),
+    ).to_dict()
 
 
 @pytest.mark.parametrize(
@@ -731,7 +768,7 @@ def test_when_then_interactive() -> None:
         .encode(
             x="IMDB_Rating:Q",
             y="Rotten_Tomatoes_Rating:Q",
-            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+            color=alt.when(predicate).then(alt.value("grey")),
         )
     )
     assert chart.interactive()
