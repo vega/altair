@@ -672,7 +672,7 @@ def generate_vegalite_channel_wrappers(
                 channel_info.value_class_name = temp_name
                 gen = ValueSchemaGenerator(temp_name, nodefault=["value"], **kwds)
 
-            class_defs.append(gen.schema_class())
+            class_defs.append(gen.schema_class())  # pyright: ignore
 
         channel_infos[prop] = channel_info
 
