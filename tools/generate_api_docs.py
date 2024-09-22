@@ -117,13 +117,12 @@ def encoding_wrappers() -> list[str]:
 
 def api_functions() -> list[str]:
     # Exclude `typing` functions/SpecialForm(s)
-    altair_api_functions = [
-        obj_name
-        for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
-        if obj_name
-        not in {"cast", "overload", "NamedTuple", "TypedDict", "is_chart_type"}
-    ]
-    return sorted(altair_api_functions)
+    KEEP = set(alt.api.__all__) - set(alt.typing.__all__)  # type: ignore[attr-defined]
+    return sorted(
+        name
+        for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
+        if name in KEEP
+    )
 
 
 def api_classes() -> list[str]:
@@ -132,7 +131,7 @@ def api_classes() -> list[str]:
 
 
 def type_hints() -> list[str]:
-    return [s for s in sorted(iter_objects(alt.typing)) if s != "annotations"]
+    return sorted(s for s in iter_objects(alt.typing) if s in alt.typing.__all__)
 
 
 def lowlevel_wrappers() -> list[str]:

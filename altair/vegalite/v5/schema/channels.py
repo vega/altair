@@ -30,6 +30,7 @@ if TYPE_CHECKING:
     # ruff: noqa: F405
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
+    from altair.vegalite.v5.api import IntoCondition
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -24920,122 +24921,132 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super().__init__(value=value, **kwds)
 
 
-ChannelAngle: TypeAlias = Union[str, Angle, Map, AngleDatum, AngleValue]
-ChannelColor: TypeAlias = Union[str, Color, Map, ColorDatum, ColorValue]
-ChannelColumn: TypeAlias = Union[str, Column, Map]
-ChannelDescription: TypeAlias = Union[str, Description, Map, DescriptionValue]
-ChannelDetail: TypeAlias = OneOrSeq[Union[str, Detail, Map]]
-ChannelFacet: TypeAlias = Union[str, Facet, Map]
-ChannelFill: TypeAlias = Union[str, Fill, Map, FillDatum, FillValue]
-ChannelFillOpacity: TypeAlias = Union[
-    str, FillOpacity, Map, FillOpacityDatum, FillOpacityValue
+AnyAngle: TypeAlias = Union[Angle, AngleDatum, AngleValue]
+AnyColor: TypeAlias = Union[Color, ColorDatum, ColorValue]
+AnyDescription: TypeAlias = Union[Description, DescriptionValue]
+AnyFill: TypeAlias = Union[Fill, FillDatum, FillValue]
+AnyFillOpacity: TypeAlias = Union[FillOpacity, FillOpacityDatum, FillOpacityValue]
+AnyHref: TypeAlias = Union[Href, HrefValue]
+AnyLatitude: TypeAlias = Union[Latitude, LatitudeDatum]
+AnyLatitude2: TypeAlias = Union[Latitude2, Latitude2Datum, Latitude2Value]
+AnyLongitude: TypeAlias = Union[Longitude, LongitudeDatum]
+AnyLongitude2: TypeAlias = Union[Longitude2, Longitude2Datum, Longitude2Value]
+AnyOpacity: TypeAlias = Union[Opacity, OpacityDatum, OpacityValue]
+AnyOrder: TypeAlias = Union[Order, OrderValue]
+AnyRadius: TypeAlias = Union[Radius, RadiusDatum, RadiusValue]
+AnyRadius2: TypeAlias = Union[Radius2, Radius2Datum, Radius2Value]
+AnyShape: TypeAlias = Union[Shape, ShapeDatum, ShapeValue]
+AnySize: TypeAlias = Union[Size, SizeDatum, SizeValue]
+AnyStroke: TypeAlias = Union[Stroke, StrokeDatum, StrokeValue]
+AnyStrokeDash: TypeAlias = Union[StrokeDash, StrokeDashDatum, StrokeDashValue]
+AnyStrokeOpacity: TypeAlias = Union[
+    StrokeOpacity, StrokeOpacityDatum, StrokeOpacityValue
 ]
-ChannelHref: TypeAlias = Union[str, Href, Map, HrefValue]
-ChannelKey: TypeAlias = Union[str, Key, Map]
-ChannelLatitude: TypeAlias = Union[str, Latitude, Map, LatitudeDatum]
-ChannelLatitude2: TypeAlias = Union[str, Latitude2, Map, Latitude2Datum, Latitude2Value]
-ChannelLongitude: TypeAlias = Union[str, Longitude, Map, LongitudeDatum]
-ChannelLongitude2: TypeAlias = Union[
-    str, Longitude2, Map, Longitude2Datum, Longitude2Value
-]
-ChannelOpacity: TypeAlias = Union[str, Opacity, Map, OpacityDatum, OpacityValue]
-ChannelOrder: TypeAlias = OneOrSeq[Union[str, Order, Map, OrderValue]]
-ChannelRadius: TypeAlias = Union[str, Radius, Map, RadiusDatum, RadiusValue]
-ChannelRadius2: TypeAlias = Union[str, Radius2, Map, Radius2Datum, Radius2Value]
-ChannelRow: TypeAlias = Union[str, Row, Map]
-ChannelShape: TypeAlias = Union[str, Shape, Map, ShapeDatum, ShapeValue]
-ChannelSize: TypeAlias = Union[str, Size, Map, SizeDatum, SizeValue]
-ChannelStroke: TypeAlias = Union[str, Stroke, Map, StrokeDatum, StrokeValue]
-ChannelStrokeDash: TypeAlias = Union[
-    str, StrokeDash, Map, StrokeDashDatum, StrokeDashValue
-]
-ChannelStrokeOpacity: TypeAlias = Union[
-    str, StrokeOpacity, Map, StrokeOpacityDatum, StrokeOpacityValue
-]
-ChannelStrokeWidth: TypeAlias = Union[
-    str, StrokeWidth, Map, StrokeWidthDatum, StrokeWidthValue
-]
-ChannelText: TypeAlias = Union[str, Text, Map, TextDatum, TextValue]
-ChannelTheta: TypeAlias = Union[str, Theta, Map, ThetaDatum, ThetaValue]
-ChannelTheta2: TypeAlias = Union[str, Theta2, Map, Theta2Datum, Theta2Value]
-ChannelTooltip: TypeAlias = OneOrSeq[Union[str, Tooltip, Map, TooltipValue]]
-ChannelUrl: TypeAlias = Union[str, Url, Map, UrlValue]
-ChannelX: TypeAlias = Union[str, X, Map, XDatum, XValue]
-ChannelX2: TypeAlias = Union[str, X2, Map, X2Datum, X2Value]
-ChannelXError: TypeAlias = Union[str, XError, Map, XErrorValue]
-ChannelXError2: TypeAlias = Union[str, XError2, Map, XError2Value]
-ChannelXOffset: TypeAlias = Union[str, XOffset, Map, XOffsetDatum, XOffsetValue]
-ChannelY: TypeAlias = Union[str, Y, Map, YDatum, YValue]
-ChannelY2: TypeAlias = Union[str, Y2, Map, Y2Datum, Y2Value]
-ChannelYError: TypeAlias = Union[str, YError, Map, YErrorValue]
-ChannelYError2: TypeAlias = Union[str, YError2, Map, YError2Value]
-ChannelYOffset: TypeAlias = Union[str, YOffset, Map, YOffsetDatum, YOffsetValue]
+AnyStrokeWidth: TypeAlias = Union[StrokeWidth, StrokeWidthDatum, StrokeWidthValue]
+AnyText: TypeAlias = Union[Text, TextDatum, TextValue]
+AnyTheta: TypeAlias = Union[Theta, ThetaDatum, ThetaValue]
+AnyTheta2: TypeAlias = Union[Theta2, Theta2Datum, Theta2Value]
+AnyTooltip: TypeAlias = Union[Tooltip, TooltipValue]
+AnyUrl: TypeAlias = Union[Url, UrlValue]
+AnyX: TypeAlias = Union[X, XDatum, XValue]
+AnyX2: TypeAlias = Union[X2, X2Datum, X2Value]
+AnyXError: TypeAlias = Union[XError, XErrorValue]
+AnyXError2: TypeAlias = Union[XError2, XError2Value]
+AnyXOffset: TypeAlias = Union[XOffset, XOffsetDatum, XOffsetValue]
+AnyY: TypeAlias = Union[Y, YDatum, YValue]
+AnyY2: TypeAlias = Union[Y2, Y2Datum, Y2Value]
+AnyYError: TypeAlias = Union[YError, YErrorValue]
+AnyYError2: TypeAlias = Union[YError2, YError2Value]
+AnyYOffset: TypeAlias = Union[YOffset, YOffsetDatum, YOffsetValue]
+
+ChannelAngle: TypeAlias = Union[str, AnyAngle, "IntoCondition", Map]
+ChannelColor: TypeAlias = Union[str, AnyColor, "IntoCondition", Map]
+ChannelColumn: TypeAlias = Union[str, Column, "IntoCondition", Map]
+ChannelDescription: TypeAlias = Union[str, AnyDescription, "IntoCondition", Map]
+ChannelDetail: TypeAlias = OneOrSeq[Union[str, Detail, "IntoCondition", Map]]
+ChannelFacet: TypeAlias = Union[str, Facet, "IntoCondition", Map]
+ChannelFill: TypeAlias = Union[str, AnyFill, "IntoCondition", Map]
+ChannelFillOpacity: TypeAlias = Union[str, AnyFillOpacity, "IntoCondition", Map]
+ChannelHref: TypeAlias = Union[str, AnyHref, "IntoCondition", Map]
+ChannelKey: TypeAlias = Union[str, Key, "IntoCondition", Map]
+ChannelLatitude: TypeAlias = Union[str, AnyLatitude, "IntoCondition", Map]
+ChannelLatitude2: TypeAlias = Union[str, AnyLatitude2, "IntoCondition", Map]
+ChannelLongitude: TypeAlias = Union[str, AnyLongitude, "IntoCondition", Map]
+ChannelLongitude2: TypeAlias = Union[str, AnyLongitude2, "IntoCondition", Map]
+ChannelOpacity: TypeAlias = Union[str, AnyOpacity, "IntoCondition", Map]
+ChannelOrder: TypeAlias = OneOrSeq[Union[str, AnyOrder, "IntoCondition", Map]]
+ChannelRadius: TypeAlias = Union[str, AnyRadius, "IntoCondition", Map]
+ChannelRadius2: TypeAlias = Union[str, AnyRadius2, "IntoCondition", Map]
+ChannelRow: TypeAlias = Union[str, Row, "IntoCondition", Map]
+ChannelShape: TypeAlias = Union[str, AnyShape, "IntoCondition", Map]
+ChannelSize: TypeAlias = Union[str, AnySize, "IntoCondition", Map]
+ChannelStroke: TypeAlias = Union[str, AnyStroke, "IntoCondition", Map]
+ChannelStrokeDash: TypeAlias = Union[str, AnyStrokeDash, "IntoCondition", Map]
+ChannelStrokeOpacity: TypeAlias = Union[str, AnyStrokeOpacity, "IntoCondition", Map]
+ChannelStrokeWidth: TypeAlias = Union[str, AnyStrokeWidth, "IntoCondition", Map]
+ChannelText: TypeAlias = Union[str, AnyText, "IntoCondition", Map]
+ChannelTheta: TypeAlias = Union[str, AnyTheta, "IntoCondition", Map]
+ChannelTheta2: TypeAlias = Union[str, AnyTheta2, "IntoCondition", Map]
+ChannelTooltip: TypeAlias = OneOrSeq[Union[str, AnyTooltip, "IntoCondition", Map]]
+ChannelUrl: TypeAlias = Union[str, AnyUrl, "IntoCondition", Map]
+ChannelX: TypeAlias = Union[str, AnyX, "IntoCondition", Map]
+ChannelX2: TypeAlias = Union[str, AnyX2, "IntoCondition", Map]
+ChannelXError: TypeAlias = Union[str, AnyXError, "IntoCondition", Map]
+ChannelXError2: TypeAlias = Union[str, AnyXError2, "IntoCondition", Map]
+ChannelXOffset: TypeAlias = Union[str, AnyXOffset, "IntoCondition", Map]
+ChannelY: TypeAlias = Union[str, AnyY, "IntoCondition", Map]
+ChannelY2: TypeAlias = Union[str, AnyY2, "IntoCondition", Map]
+ChannelYError: TypeAlias = Union[str, AnyYError, "IntoCondition", Map]
+ChannelYError2: TypeAlias = Union[str, AnyYError2, "IntoCondition", Map]
+ChannelYOffset: TypeAlias = Union[str, AnyYOffset, "IntoCondition", Map]
 
 
 class _EncodingMixin:
     def encode(
         self,
         *args: Any,
-        angle: Optional[str | Angle | Map | AngleDatum | AngleValue] = Undefined,
-        color: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
-        column: Optional[str | Column | Map] = Undefined,
-        description: Optional[str | Description | Map | DescriptionValue] = Undefined,
-        detail: Optional[OneOrSeq[str | Detail | Map]] = Undefined,
-        facet: Optional[str | Facet | Map] = Undefined,
-        fill: Optional[str | Fill | Map | FillDatum | FillValue] = Undefined,
-        fillOpacity: Optional[
-            str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
-        ] = Undefined,
-        href: Optional[str | Href | Map | HrefValue] = Undefined,
-        key: Optional[str | Key | Map] = Undefined,
-        latitude: Optional[str | Latitude | Map | LatitudeDatum] = Undefined,
-        latitude2: Optional[
-            str | Latitude2 | Map | Latitude2Datum | Latitude2Value
-        ] = Undefined,
-        longitude: Optional[str | Longitude | Map | LongitudeDatum] = Undefined,
-        longitude2: Optional[
-            str | Longitude2 | Map | Longitude2Datum | Longitude2Value
-        ] = Undefined,
-        opacity: Optional[
-            str | Opacity | Map | OpacityDatum | OpacityValue
-        ] = Undefined,
-        order: Optional[OneOrSeq[str | Order | Map | OrderValue]] = Undefined,
-        radius: Optional[str | Radius | Map | RadiusDatum | RadiusValue] = Undefined,
-        radius2: Optional[
-            str | Radius2 | Map | Radius2Datum | Radius2Value
-        ] = Undefined,
-        row: Optional[str | Row | Map] = Undefined,
-        shape: Optional[str | Shape | Map | ShapeDatum | ShapeValue] = Undefined,
-        size: Optional[str | Size | Map | SizeDatum | SizeValue] = Undefined,
-        stroke: Optional[str | Stroke | Map | StrokeDatum | StrokeValue] = Undefined,
-        strokeDash: Optional[
-            str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
-        ] = Undefined,
+        angle: Optional[str | AnyAngle | IntoCondition | Map] = Undefined,
+        color: Optional[str | AnyColor | IntoCondition | Map] = Undefined,
+        column: Optional[str | Column | IntoCondition | Map] = Undefined,
+        description: Optional[str | AnyDescription | IntoCondition | Map] = Undefined,
+        detail: Optional[OneOrSeq[str | Detail | IntoCondition | Map]] = Undefined,
+        facet: Optional[str | Facet | IntoCondition | Map] = Undefined,
+        fill: Optional[str | AnyFill | IntoCondition | Map] = Undefined,
+        fillOpacity: Optional[str | AnyFillOpacity | IntoCondition | Map] = Undefined,
+        href: Optional[str | AnyHref | IntoCondition | Map] = Undefined,
+        key: Optional[str | Key | IntoCondition | Map] = Undefined,
+        latitude: Optional[str | AnyLatitude | IntoCondition | Map] = Undefined,
+        latitude2: Optional[str | AnyLatitude2 | IntoCondition | Map] = Undefined,
+        longitude: Optional[str | AnyLongitude | IntoCondition | Map] = Undefined,
+        longitude2: Optional[str | AnyLongitude2 | IntoCondition | Map] = Undefined,
+        opacity: Optional[str | AnyOpacity | IntoCondition | Map] = Undefined,
+        order: Optional[OneOrSeq[str | AnyOrder | IntoCondition | Map]] = Undefined,
+        radius: Optional[str | AnyRadius | IntoCondition | Map] = Undefined,
+        radius2: Optional[str | AnyRadius2 | IntoCondition | Map] = Undefined,
+        row: Optional[str | Row | IntoCondition | Map] = Undefined,
+        shape: Optional[str | AnyShape | IntoCondition | Map] = Undefined,
+        size: Optional[str | AnySize | IntoCondition | Map] = Undefined,
+        stroke: Optional[str | AnyStroke | IntoCondition | Map] = Undefined,
+        strokeDash: Optional[str | AnyStrokeDash | IntoCondition | Map] = Undefined,
         strokeOpacity: Optional[
-            str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
+            str | AnyStrokeOpacity | IntoCondition | Map
         ] = Undefined,
-        strokeWidth: Optional[
-            str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
-        ] = Undefined,
-        text: Optional[str | Text | Map | TextDatum | TextValue] = Undefined,
-        theta: Optional[str | Theta | Map | ThetaDatum | ThetaValue] = Undefined,
-        theta2: Optional[str | Theta2 | Map | Theta2Datum | Theta2Value] = Undefined,
-        tooltip: Optional[OneOrSeq[str | Tooltip | Map | TooltipValue]] = Undefined,
-        url: Optional[str | Url | Map | UrlValue] = Undefined,
-        x: Optional[str | X | Map | XDatum | XValue] = Undefined,
-        x2: Optional[str | X2 | Map | X2Datum | X2Value] = Undefined,
-        xError: Optional[str | XError | Map | XErrorValue] = Undefined,
-        xError2: Optional[str | XError2 | Map | XError2Value] = Undefined,
-        xOffset: Optional[
-            str | XOffset | Map | XOffsetDatum | XOffsetValue
-        ] = Undefined,
-        y: Optional[str | Y | Map | YDatum | YValue] = Undefined,
-        y2: Optional[str | Y2 | Map | Y2Datum | Y2Value] = Undefined,
-        yError: Optional[str | YError | Map | YErrorValue] = Undefined,
-        yError2: Optional[str | YError2 | Map | YError2Value] = Undefined,
-        yOffset: Optional[
-            str | YOffset | Map | YOffsetDatum | YOffsetValue
-        ] = Undefined,
+        strokeWidth: Optional[str | AnyStrokeWidth | IntoCondition | Map] = Undefined,
+        text: Optional[str | AnyText | IntoCondition | Map] = Undefined,
+        theta: Optional[str | AnyTheta | IntoCondition | Map] = Undefined,
+        theta2: Optional[str | AnyTheta2 | IntoCondition | Map] = Undefined,
+        tooltip: Optional[OneOrSeq[str | AnyTooltip | IntoCondition | Map]] = Undefined,
+        url: Optional[str | AnyUrl | IntoCondition | Map] = Undefined,
+        x: Optional[str | AnyX | IntoCondition | Map] = Undefined,
+        x2: Optional[str | AnyX2 | IntoCondition | Map] = Undefined,
+        xError: Optional[str | AnyXError | IntoCondition | Map] = Undefined,
+        xError2: Optional[str | AnyXError2 | IntoCondition | Map] = Undefined,
+        xOffset: Optional[str | AnyXOffset | IntoCondition | Map] = Undefined,
+        y: Optional[str | AnyY | IntoCondition | Map] = Undefined,
+        y2: Optional[str | AnyY2 | IntoCondition | Map] = Undefined,
+        yError: Optional[str | AnyYError | IntoCondition | Map] = Undefined,
+        yError2: Optional[str | AnyYError2 | IntoCondition | Map] = Undefined,
+        yOffset: Optional[str | AnyYOffset | IntoCondition | Map] = Undefined,
     ) -> Self:
         """
         Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`).
@@ -25466,43 +25477,43 @@ class EncodeKwds(TypedDict, total=False):
         Offset of y-position of the marks
     """
 
-    angle: str | Angle | Map | AngleDatum | AngleValue
-    color: str | Color | Map | ColorDatum | ColorValue
-    column: str | Column | Map
-    description: str | Description | Map | DescriptionValue
-    detail: OneOrSeq[str | Detail | Map]
-    facet: str | Facet | Map
-    fill: str | Fill | Map | FillDatum | FillValue
-    fillOpacity: str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
-    href: str | Href | Map | HrefValue
-    key: str | Key | Map
-    latitude: str | Latitude | Map | LatitudeDatum
-    latitude2: str | Latitude2 | Map | Latitude2Datum | Latitude2Value
-    longitude: str | Longitude | Map | LongitudeDatum
-    longitude2: str | Longitude2 | Map | Longitude2Datum | Longitude2Value
-    opacity: str | Opacity | Map | OpacityDatum | OpacityValue
-    order: OneOrSeq[str | Order | Map | OrderValue]
-    radius: str | Radius | Map | RadiusDatum | RadiusValue
-    radius2: str | Radius2 | Map | Radius2Datum | Radius2Value
-    row: str | Row | Map
-    shape: str | Shape | Map | ShapeDatum | ShapeValue
-    size: str | Size | Map | SizeDatum | SizeValue
-    stroke: str | Stroke | Map | StrokeDatum | StrokeValue
-    strokeDash: str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
-    strokeOpacity: str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
-    strokeWidth: str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
-    text: str | Text | Map | TextDatum | TextValue
-    theta: str | Theta | Map | ThetaDatum | ThetaValue
-    theta2: str | Theta2 | Map | Theta2Datum | Theta2Value
-    tooltip: OneOrSeq[str | Tooltip | Map | TooltipValue]
-    url: str | Url | Map | UrlValue
-    x: str | X | Map | XDatum | XValue
-    x2: str | X2 | Map | X2Datum | X2Value
-    xError: str | XError | Map | XErrorValue
-    xError2: str | XError2 | Map | XError2Value
-    xOffset: str | XOffset | Map | XOffsetDatum | XOffsetValue
-    y: str | Y | Map | YDatum | YValue
-    y2: str | Y2 | Map | Y2Datum | Y2Value
-    yError: str | YError | Map | YErrorValue
-    yError2: str | YError2 | Map | YError2Value
-    yOffset: str | YOffset | Map | YOffsetDatum | YOffsetValue
+    angle: str | AnyAngle | IntoCondition | Map
+    color: str | AnyColor | IntoCondition | Map
+    column: str | Column | IntoCondition | Map
+    description: str | AnyDescription | IntoCondition | Map
+    detail: OneOrSeq[str | Detail | IntoCondition | Map]
+    facet: str | Facet | IntoCondition | Map
+    fill: str | AnyFill | IntoCondition | Map
+    fillOpacity: str | AnyFillOpacity | IntoCondition | Map
+    href: str | AnyHref | IntoCondition | Map
+    key: str | Key | IntoCondition | Map
+    latitude: str | AnyLatitude | IntoCondition | Map
+    latitude2: str | AnyLatitude2 | IntoCondition | Map
+    longitude: str | AnyLongitude | IntoCondition | Map
+    longitude2: str | AnyLongitude2 | IntoCondition | Map
+    opacity: str | AnyOpacity | IntoCondition | Map
+    order: OneOrSeq[str | AnyOrder | IntoCondition | Map]
+    radius: str | AnyRadius | IntoCondition | Map
+    radius2: str | AnyRadius2 | IntoCondition | Map
+    row: str | Row | IntoCondition | Map
+    shape: str | AnyShape | IntoCondition | Map
+    size: str | AnySize | IntoCondition | Map
+    stroke: str | AnyStroke | IntoCondition | Map
+    strokeDash: str | AnyStrokeDash | IntoCondition | Map
+    strokeOpacity: str | AnyStrokeOpacity | IntoCondition | Map
+    strokeWidth: str | AnyStrokeWidth | IntoCondition | Map
+    text: str | AnyText | IntoCondition | Map
+    theta: str | AnyTheta | IntoCondition | Map
+    theta2: str | AnyTheta2 | IntoCondition | Map
+    tooltip: OneOrSeq[str | AnyTooltip | IntoCondition | Map]
+    url: str | AnyUrl | IntoCondition | Map
+    x: str | AnyX | IntoCondition | Map
+    x2: str | AnyX2 | IntoCondition | Map
+    xError: str | AnyXError | IntoCondition | Map
+    xError2: str | AnyXError2 | IntoCondition | Map
+    xOffset: str | AnyXOffset | IntoCondition | Map
+    y: str | AnyY | IntoCondition | Map
+    y2: str | AnyY2 | IntoCondition | Map
+    yError: str | AnyYError | IntoCondition | Map
+    yError2: str | AnyYError2 | IntoCondition | Map
+    yOffset: str | AnyYOffset | IntoCondition | Map
