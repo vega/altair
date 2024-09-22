@@ -112,7 +112,7 @@ installer = "uv"
 
 [tool.hatch.envs.default.scripts]
 generate-schema-wrapper = [
-    "mypy tools/schemapi/schemapi.py",
+    "mypy tools",
     "python tools/generate_schema_wrapper.py",
     "test"
 ]
@@ -449,7 +449,7 @@ module = [
     "ibis.*",
     # This refers to schemapi in the tools folder which is imported
     # by the tools scripts such as generate_schema_wrapper.py
-    "schemapi.*"
+    # "schemapi.*"
 ]
 ignore_missing_imports = true
 
