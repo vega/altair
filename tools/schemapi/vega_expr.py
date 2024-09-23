@@ -10,7 +10,18 @@ from itertools import chain
 from pathlib import Path
 from textwrap import TextWrapper as _TextWrapper
 from textwrap import indent
-from typing import TYPE_CHECKING, Any, Iterable, Iterator, Literal, Sequence, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Iterable,
+    Iterator,
+    Literal,
+    Mapping,
+    Sequence,
+    overload,
+)
 from urllib import request
 
 import mistune
@@ -22,7 +33,7 @@ from tools.schemapi.utils import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
     import sys
-    from re import Pattern
+    from re import Match, Pattern
 
     from mistune import BlockParser, BlockState, InlineParser
 
@@ -30,6 +41,7 @@ if TYPE_CHECKING:
         from typing import LiteralString, Self, TypeAlias
     else:
         from typing_extensions import LiteralString, Self, TypeAlias
+    from _typeshed import SupportsKeysAndGetItem
 
 Token: TypeAlias = "dict[str, Any]"
 WorkInProgress: TypeAlias = Any
@@ -218,6 +230,81 @@ def _doc_fmt(doc: str, /) -> str:
         return sentences.pop().strip()
 
 
+class ReplaceMany:
+    def __init__(
+        self,
+        m: Mapping[str, str] | None = None,
+        /,
+        fmt_match: str = "(?P<key>{0})",
+        fmt_replace: str = "{0}",
+    ) -> None:
+        self._mapping: dict[str, str] = dict(m) if m else {}
+        self._fmt_match: str = fmt_match
+        self._fmt_replace: str = fmt_replace
+        self.pattern: Pattern[str]
+        self.repl: Callable[[Match[str]], str]
+
+    def update(
+        self,
+        m: SupportsKeysAndGetItem[str, str] | Iterable[tuple[str, str]],
+        /,
+        **kwds: str,
+    ) -> None:
+        """Update replacements mapping."""
+        self._mapping.update(m, **kwds)
+
+    def clear(self) -> None:
+        """Reset replacements mapping."""
+        self._mapping.clear()
+
+    def prepare(self) -> None:
+        """
+        Compile replacement pattern and generate substitution function.
+
+        Notes
+        -----
+        Should be called **after** all (old, new) pairs have been collected.
+        """
+        self.pattern = self._compile()
+        self.repl = self._replacer()
+
+    def __call__(self, s: str, count: int = 0, /) -> str:
+        """
+        Replace the leftmost non-overlapping occurrences of ``self.pattern`` in ``s`` using ``self.repl``.
+
+        Wraps `re.sub`_
+
+        .. _re.sub:
+            _https://docs.python.org/3/library/re.html#re.sub
+        """
+        return self.pattern.sub(self.repl, s, count)
+
+    def _compile(self) -> Pattern[str]:
+        if not self._mapping:
+            name = self._mapping.__qualname__
+            msg = (
+                f"Requires {name!r} to be populated, but got:\n"
+                f"{name}={self._mapping!r}"
+            )
+            raise TypeError(msg)
+        return re.compile(rf"{self._fmt_match.format('|'.join(self._mapping))}")
+
+    def _replacer(self) -> Callable[[Match[str]], str]:
+        def repl(m: Match[str], /) -> str:
+            return self._fmt_replace.format(self._mapping[m["key"]])
+
+        return repl
+
+    def __getitem__(self, key: str) -> str:
+        return self._mapping[key]
+
+    def __setitem__(self, key: str, value: str) -> None:
+        self._mapping[key] = value
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(\n    {self._mapping!r}\n)"
+
+
 class VegaExprNode:
     """
     ``SchemaInfo``-like, but operates on `expressions.md`_.
@@ -226,15 +313,20 @@ class VegaExprNode:
         https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md
     """
 
+    remap_title: ClassVar[ReplaceMany] = ReplaceMany(
+        fmt_match=r"(?P<key>{0})\(", fmt_replace="{0}("
+    )
+
     def __init__(self, name: str, children: Sequence[Token], /) -> None:
         self.name: str = name
         self._children: Sequence[Token] = children
         self.parameters: list[VegaExprParam] = []
         self.doc: str = ""
+        self.signature: str = ""
 
-    def to_signature(self) -> str:
+    def with_signature(self) -> Self:
         """NOTE: 101/147 cases are all required args."""
-        pre_params = f"def {self.name_safe}(cls, "
+        pre_params = f"def {self.title}(cls, "
         post_params = ")" if self.is_variadic() else ", /)"
         post_params = f"{post_params} -> {RETURN_ANNOTATION}:"
         if self.is_incompatible_override():
@@ -244,7 +336,8 @@ class VegaExprNode:
             param_list = VegaExprParam.star_args()
         else:
             param_list = ", ".join(p.to_str() for p in self.parameters)
-        return f"{pre_params}{param_list}{post_params}"
+        self.signature = f"{pre_params}{param_list}{post_params}"
+        return self
 
     def with_parameters(self) -> Self:
         raw_texts = self._split_signature_tokens()
@@ -271,9 +364,15 @@ class VegaExprNode:
             raise TypeError(msg)
 
     @property
-    def name_safe(self) -> str:
-        """Use for the method definition, but not when calling internally."""
-        return f"{self.name}_" if self.is_keyword() else self.name
+    def title(self) -> str:
+        """
+        Use for the method definition, but not when calling internally.
+
+        Updates ``VegaExprNode.remap_title`` for documentation example substitutions.
+        """
+        title = f"{self.name}_" if self.is_keyword() else self.name
+        type(self).remap_title.update({self.name: f"alt.expr.{title}"})
+        return title
 
     def _split_signature_tokens(self) -> Iterator[str]:
         """Very rough splitting/cleaning of relevant token raw text."""
@@ -317,9 +416,7 @@ class VegaExprNode:
         pre, post = "[^`_]", "[^`]"
         pattern = rf"({pre})\*({'|'.join(self.parameter_names)})\*({post})"
         highlight_params = re.sub(pattern, r"\g<1>``\g<2>``\g<3>", rendered)
-        with_alt_references = re.sub(
-            rf"({self.name}\()", f"alt.expr.{self.name_safe}(", highlight_params
-        )
+        with_alt_references = type(self).remap_title(highlight_params)
         unescaped = mistune.util.unescape(with_alt_references)
         non_relative_links = re.sub(r"\.\.\/", VEGA_DOCS_URL, unescaped)
         numpydoc_style = _doc_fmt(non_relative_links)
@@ -423,7 +520,7 @@ class VegaExprNode:
 
         Requires an ignore comment for a type checker.
         """
-        return self.name_safe in _SCHEMA_BASE_MEMBERS
+        return self.title in _SCHEMA_BASE_MEMBERS
 
     def is_variadic(self) -> bool:
         """Position-only parameter separator `"/"` not allowed after `"*"` parameter."""
@@ -488,7 +585,7 @@ class VegaExprParam:
                     continue
 
 
-def parse_expressions(url: str, /) -> Iterator[tuple[str, VegaExprNode]]:
+def _parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
     """Download, read markdown and iteratively parse into signature representations."""
     for tok in read_tokens(download_expressions_md(url)):
         if (
@@ -498,8 +595,20 @@ def parse_expressions(url: str, /) -> Iterator[tuple[str, VegaExprNode]]:
         ):
             node = VegaExprNode(match[1], children)
             if node.is_callable():
-                yield node.name, node.with_parameters().with_doc()
+                yield node.with_parameters().with_signature()
     request.urlcleanup()
+
+
+def parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
+    """
+    Eagerly parse signatures of relevant definitions, then yield with docs.
+
+    Ensures each doc can use all remapped names, regardless of the order they appear.
+    """
+    eager = tuple(_parse_expressions(url))
+    VegaExprNode.remap_title.prepare()
+    for node in eager:
+        yield node.with_doc()
 
 
 EXPR_MODULE_PRE = '''\
@@ -655,16 +764,17 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
         body_params = f"({', '.join(param.name for param in node.parameters)})"
     body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
     return EXPR_METHOD_TEMPLATE.format(
-        decorator=DECORATOR, signature=node.to_signature(), doc=node.doc, body=body
+        decorator=DECORATOR, signature=node.signature, doc=node.doc, body=body
     )
 
 
 def test_parse() -> dict[str, VegaExprNode]:
-    return dict(parse_expressions(EXPRESSIONS_URL))
+    """Temporary introspection tool."""
+    return {node.name: node for node in parse_expressions(EXPRESSIONS_URL)}
 
 
 def render_expr_full() -> str:
-    it = (render_expr_method(node) for _, node in parse_expressions(EXPRESSIONS_URL))
+    it = (render_expr_method(node) for node in parse_expressions(EXPRESSIONS_URL))
     return "\n".join(
         chain(
             (
