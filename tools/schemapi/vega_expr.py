@@ -95,7 +95,7 @@ def download_expressions_md(url: str, /) -> Path:
         return fp
 
 
-def read_tokens(source: Path, /) -> list[Any]:
+def read_tokens(source: Path, /) -> list[Token]:
     """
     Read from ``source``, drop ``BlockState``.
 
@@ -348,6 +348,7 @@ class VegaExprNode:
         raw_texts = self._split_signature_tokens()
         name = next(raw_texts)
         # NOTE: Overwriting the <a name> with the rendered text
+        # - required for `clamprange` -> `clampRange`
         if self.name != name:
             self.name = name
         self.parameters = list(VegaExprParam.iter_params(raw_texts))
@@ -379,23 +380,49 @@ class VegaExprNode:
         type(self).remap_title.update({self.name: f"alt.expr.{title}"})
         return title
 
-    def _split_signature_tokens(self) -> Iterator[str]:
-        """Very rough splitting/cleaning of relevant token raw text."""
-        it = iter(self)
+    def _signature_tokens(self) -> Iterator[Token]:
+        """
+        Target for signature appears between 2 softbreak tokens.
+
+        - Proceeds to the first token **after** a softbreak
+        - Yield **only** text tokens
+        - Skips all inline html tags
+        - Stops at 2nd softbreak
+        """
+        it: Iterator[Token] = iter(self)
         current = next(it)
-        # NOTE: softbreak(s) denote the line the sig appears on
         while current[TYPE] != SOFTBREAK:
             current = next(it)
-        current = next(it)
-        while current[TYPE] != SOFTBREAK:
-            # NOTE: This drops html markup tags
-            if current[TYPE] == TEXT:
-                clean = strip_include_tag(current[RAW]).strip(", -")
-                if clean not in {", ", ""}:
-                    yield from VegaExprNode.deep_split_punctuation(clean)
-            current = next(it, None)
-            if current is None:
+        next(it)
+        for target in it:
+            if target[TYPE] == TEXT:
+                yield target
+            elif target[TYPE] == SOFTBREAK:
                 break
+            else:
+                continue
+
+    def _split_signature_tokens(self) -> Iterator[str]:
+        """
+        Normalize the text content of the signature.
+
+        Examples
+        --------
+        The following definition:
+
+            <a name="sequence" href="#sequence">#</a>
+            <b>sequence</b>([<i>start</i>, ]<i>stop</i>[, <i>step</i>])<br/>
+            Returns an array containing an arithmetic sequence of numbers.
+            ...
+
+        Will yield:
+
+            ['sequence', '(', '[', 'start', ']', 'stop', '[', 'step', ']', ')']
+        """
+        for tok in self._signature_tokens():
+            clean = strip_include_tag(tok[RAW]).strip(", -")
+            if clean not in {", ", ""}:
+                yield from VegaExprNode.deep_split_punctuation(clean)
 
     def _doc_tokens(self) -> Sequence[Token]:
         """Return the slice of `self.children` that contains docstring content."""
@@ -538,7 +565,7 @@ class VegaExprNode:
 
     def is_incompatible_override(self) -> bool:
         """
-        ``self.name_safe`` shadows an unrelated ``SchemaBase`` method.
+        ``self.title`` shadows an unrelated ``SchemaBase`` method.
 
         Requires an ignore comment for a type checker.
         """
