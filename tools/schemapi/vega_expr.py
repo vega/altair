@@ -493,8 +493,17 @@ class VegaExprNode:
 
             lab(l, a, b[, opacity]) | lab(specifier)
 
+        Looping of parameters is for signatures like `sequence`_:
+
+            sequence([start, ]stop[, step])
+
+        The optional first parameter, followed by a required one would need an
+        ``@overload`` in ``python``.
+
         .. _color functions:
             https://vega.github.io/vega/docs/expressions/#color-functions
+        .. _sequence:
+            https://vega.github.io/vega/docs/expressions/#sequence
         """
         for idx, item in enumerate(self):
             if item[TYPE] == TEXT and item.get(RAW, "") == "]) |":
