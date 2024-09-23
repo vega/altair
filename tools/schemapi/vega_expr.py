@@ -212,6 +212,11 @@ text_wrap = _TextWrapper(
 
 
 def _doc_fmt(doc: str, /) -> str:
+    """
+    FIXME: Currently doing too many things.
+
+    Primarily using to exclude summary line + references from ``textwrap``.
+    """
     sentences: deque[str] = deque(SENTENCE_BREAK.split(doc))
     if len(sentences) > 1:
         references: str = ""
