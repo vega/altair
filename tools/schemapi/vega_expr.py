@@ -459,30 +459,26 @@ class VegaExprNode:
         .. _constants:
             https://vega.github.io/vega/docs/expressions/#constants
         """
-        name = self.name
-        if name.startswith("string_"):
-            # HACK: There are string/array functions that overlap
-            # - the `.md` handles this by prefixing the `<a name=...` for the string version
-            # - however this is another kind of overload
-            # - but with more documentation, than the inline overload for color functions
+        if self.is_overloaded_string_array() or self.is_bound_variable_name():
             return False
-        elif self.is_bound_variable_name():
-            return False
-        it = iter(self)
-        name = name.lower()
-        current = next(it).get(RAW, "").lower()
+        it: Iterator[Token] = iter(self)
+        current: str = next(it, {}).get(RAW, "").lower()
+        name: str = self.name.lower()
         while current != name:
-            el = next(it, None)
-            if el is None:
-                print(f"Failed match: {name!r}")
-                return True
-            current = el.get(RAW, "").lower()
+            if (el := next(it, None)) is not None:
+                current = el.get(RAW, "").lower()
+            else:
+                return False
         next(it)
         return next(it).get(RAW, "") == "("
 
     def is_bound_variable_name(self) -> bool:
         """
         ``Vega`` `bound variables`_.
+
+        These do not provide signatures:
+
+            {"datum", "event", "signal"}
 
         .. _bound variables:
             https://vega.github.io/vega/docs/expressions/#bound-variables
@@ -524,6 +520,18 @@ class VegaExprNode:
                     return any(sp.required for sp in others)
 
         return False
+
+    def is_overloaded_string_array(self) -> bool:
+        """
+        HACK: There are string/array functions that overlap.
+
+        - the `.md` handles this by prefixing the `<a name=...` for the string version
+        - This is very different to the handled overload kinds
+        - Both definitions have full documentation and appear under different sections
+            - Unlike color functions, sequence
+            - These are inline
+        """
+        return self.name.startswith("string_")
 
     def is_keyword(self) -> bool:
         return keyword.iskeyword(self.name)
