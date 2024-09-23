@@ -218,7 +218,6 @@ def _doc_fmt(doc: str, /) -> str:
         return sentences.pop().strip()
 
 
-@dataclasses.dataclass
 class VegaExprNode:
     """
     ``SchemaInfo``-like, but operates on `expressions.md`_.
@@ -227,10 +226,11 @@ class VegaExprNode:
         https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md
     """
 
-    name: str
-    _children: Sequence[Token] = dataclasses.field(repr=False)
-    doc: str = ""
-    parameters: list[VegaExprParam] = dataclasses.field(default_factory=list)
+    def __init__(self, name: str, children: Sequence[Token], /) -> None:
+        self.name: str = name
+        self._children: Sequence[Token] = children
+        self.parameters: list[VegaExprParam] = []
+        self.doc: str = ""
 
     def to_signature(self) -> str:
         """NOTE: 101/147 cases are all required args."""
@@ -438,6 +438,15 @@ class VegaExprNode:
     def __getitem__(self, index: slice) -> Sequence[Token]: ...
     def __getitem__(self, index: int | slice) -> Token | Sequence[Token]:
         return self._children.__getitem__(index)
+
+    def __repr__(self) -> str:
+        return (
+            f"{type(self).__name__}(\n    "
+            f"name={self.name!r},\n    "
+            f"parameters={self.parameters!r},\n    "
+            f"doc={self.doc!r}\n"
+            ")"
+        )
 
 
 @dataclasses.dataclass
