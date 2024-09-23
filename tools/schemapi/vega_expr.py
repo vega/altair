@@ -48,32 +48,43 @@ WorkInProgress: TypeAlias = Any
 """Marker for a type that will not be final."""
 
 
+# NOTE: Urls/fragments
 EXPRESSIONS_URL = (
     "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
 )
 VEGA_DOCS_URL = "https://vega.github.io/vega/docs/"
 EXPRESSIONS_DOCS_URL = f"{VEGA_DOCS_URL}expressions/"
 
+# NOTE: Regex patterns
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
 LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
 SENTENCE_BREAK: Pattern[str] = re.compile(r"(?<!\.)\. ")
 
+# NOTE: `mistune` token keys/values
 TYPE: Literal[r"type"] = r"type"
 RAW: Literal["raw"] = "raw"
 SOFTBREAK: Literal["softbreak"] = "softbreak"
 TEXT: Literal["text"] = "text"
 CHILDREN: Literal["children"] = "children"
 
+# NOTE: Punctuation/markers
+ELLIPSIS: Literal["..."] = "..."
+OPEN_PAREN: Literal["("] = "("
+CLOSE_PAREN: Literal[")"] = ")"
+OPEN_BRACKET: Literal["["] = "["
+CLOSE_BRACKET: Literal["]"] = "]"
+INLINE_OVERLOAD: Literal[" |"] = " |"
+
+# NOTE: `altair` types (for annotations)
 RETURN_WRAPPER = "FunctionExpression"
 RETURN_ANNOTATION = "Expression"
 # NOTE: No benefit to annotating with the actual wrapper
 # - `Expression` is shorter, and has all the functionality/attributes
-
 CONST_WRAPPER = "ConstExpression"
 CONST_META = "_ConstExpressionType"
-
 INPUT_ANNOTATION = "IntoExpression"
 
+# NOTE: `python`/`mypy` related literals
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
 DECORATOR = r"@classmethod"
@@ -336,7 +347,6 @@ class VegaExprNode:
         post_params = f"{post_params} -> {RETURN_ANNOTATION}:"
         if self.is_incompatible_override():
             post_params = f"{post_params}  {IGNORE_OVERRIDE}"
-        param_list = ""
         if self.is_overloaded():
             param_list = VegaExprParam.star_args()
         else:
@@ -456,18 +466,27 @@ class VegaExprNode:
 
     @staticmethod
     def deep_split_punctuation(s: str, /) -> Iterator[str]:
-        """Deep splitting of ending punctuation."""
+        """
+        When ``s`` ends with one of these markers:
+
+            ")", "]", "...", " |"
+
+        - Split ``s`` into rest, match
+            - using the length of the match to index
+        - Append match to ``end``
+        - Recurse
+        """  # noqa: D400
         if s.isalnum():
             yield s
         else:
             end: list[str] = []
-            if s.endswith((")", "]")):
+            if s.endswith((CLOSE_PAREN, CLOSE_BRACKET)):
                 end.append(s[-1])
                 s = s[:-1]
-            elif s.endswith("..."):
+            elif s.endswith(ELLIPSIS):
                 end.append(s[-3:])
                 s = s[:-3]
-            elif s.endswith(" |"):
+            elif s.endswith(INLINE_OVERLOAD):
                 end.append(s[-2:])
                 s = s[:-2]
             if len(s) == 1:
@@ -497,7 +516,7 @@ class VegaExprNode:
             else:
                 return False
         next(it)
-        return next(it).get(RAW, "") == "("
+        return next(it).get(RAW, "") == OPEN_PAREN
 
     def is_bound_variable_name(self) -> bool:
         """
@@ -534,7 +553,7 @@ class VegaExprNode:
             https://vega.github.io/vega/docs/expressions/#sequence
         """
         for idx, item in enumerate(self):
-            if item[TYPE] == TEXT and item.get(RAW, "") == "]) |":
+            if item[TYPE] == TEXT and item.get(RAW, "").endswith(INLINE_OVERLOAD):
                 return self[idx + 1][TYPE] == SOFTBREAK
             else:
                 continue
@@ -619,16 +638,16 @@ class VegaExprParam:
         """Yields an ordered parameter list."""
         is_required: bool = True
         for s in raw_texts:
-            if s not in {"(", ")"}:
-                if s == "[":
+            if s not in {OPEN_PAREN, CLOSE_PAREN}:
+                if s == OPEN_BRACKET:
                     is_required = False
                     continue
-                elif s == "]":
+                elif s == CLOSE_BRACKET:
                     is_required = True
                     continue
                 elif s.isalnum():
                     yield cls(s, required=is_required)
-                elif s == "...":
+                elif s == ELLIPSIS:
                     yield cls(STAR_ARGS, required=False, variadic=True)
                 else:
                     continue
