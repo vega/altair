@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import sys
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, Dict, Final, Literal, TypeVar, get_args
+from typing import TYPE_CHECKING, Callable, Final, Literal, get_args
 
 from altair.utils.theme import ThemeRegistry
+from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema._typing import VegaThemes
 
 if sys.version_info >= (3, 10):
@@ -16,6 +17,8 @@ else:
 
 
 if TYPE_CHECKING:
+    from altair.utils.plugin_registry import Plugin
+
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
@@ -26,7 +29,6 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
 
 P = ParamSpec("P")
-R = TypeVar("R", bound=Dict[str, Any])
 AltairThemes: TypeAlias = Literal["default", "opaque"]
 VEGA_THEMES: list[LiteralString] = list(get_args(VegaThemes))
 
@@ -37,7 +39,7 @@ class VegaTheme:
     def __init__(self, theme: str) -> None:
         self.theme = theme
 
-    def __call__(self) -> dict[str, dict[str, dict[str, str | int]]]:
+    def __call__(self) -> ThemeConfig:
         return {
             "usermeta": {"embedOptions": {"theme": self.theme}},
             "config": {"view": {"continuousWidth": 300, "continuousHeight": 300}},
@@ -66,7 +68,7 @@ themes.register(
         }
     },
 )
-themes.register("none", dict)
+themes.register("none", ThemeConfig)
 
 for theme in VEGA_THEMES:
     themes.register(theme, VegaTheme(theme))
@@ -78,7 +80,7 @@ themes.enable("default")
 # https://github.com/vega/altair/pull/3526#discussion_r1743350127
 def register_theme(
     name: LiteralString, *, enable: bool
-) -> Callable[[Callable[P, R]], Callable[P, R]]:
+) -> Callable[[Plugin[ThemeConfig]], Plugin[ThemeConfig]]:
     """
     Decorator for registering a theme function.
 
@@ -93,14 +95,12 @@ def register_theme(
     --------
     Register and enable a theme::
 
-        from __future__ import annotations
-
-        from typing import Any
         import altair as alt
+        from altair.typing import ThemeConfig
 
 
         @alt.register_theme("param_font_size", enable=True)
-        def custom_theme() -> dict[str, Any]:
+        def custom_theme() -> ThemeConfig:
             sizes = 12, 14, 16, 18, 20
             return {
                 "autosize": {"contains": "content", "resize": True},
@@ -134,13 +134,13 @@ def register_theme(
 
     """
 
-    def decorate(func: Callable[P, R], /) -> Callable[P, R]:
+    def decorate(func: Plugin[ThemeConfig], /) -> Plugin[ThemeConfig]:
         themes.register(name, func)
         if enable:
             themes.enable(name)
 
         @wraps(func)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> ThemeConfig:
             return func(*args, **kwargs)
 
         return wrapper
