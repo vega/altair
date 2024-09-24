@@ -88,7 +88,14 @@ def test_abs():
 
 @pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
 def test_expr_funcs(veganame: str, methodname: str):
-    """Test all functions defined in expr.funcs."""
+    """
+    Test all functions defined in expr.funcs.
+
+    # FIXME: These tests are no longer suitable
+    They only work for functions with a **single** argument:
+
+        TypeError: expr.if_() missing 2 required positional arguments: 'thenValue' and 'elseValue'.
+    """
     func = getattr(expr, methodname)
     z = func(datum.xxx)
     assert repr(z) == f"{veganame}(datum.xxx)"
