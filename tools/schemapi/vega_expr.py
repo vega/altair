@@ -249,16 +249,17 @@ def _doc_fmt(doc: str, /) -> str:
 class ReplaceMany:
     def __init__(
         self,
-        m: Mapping[str, str] | None = None,
+        mapping: Mapping[str, str] | None = None,
         /,
         fmt_match: str = "(?P<key>{0})",
         fmt_replace: str = "{0}",
     ) -> None:
-        self._mapping: dict[str, str] = dict(m) if m else {}
+        self._mapping: dict[str, str] = dict(mapping) if mapping else {}
         self._fmt_match: str = fmt_match
         self._fmt_replace: str = fmt_replace
         self.pattern: Pattern[str]
         self.repl: Callable[[Match[str]], str]
+        self._is_prepared: bool = False
 
     def update(
         self,
@@ -273,7 +274,7 @@ class ReplaceMany:
         """Reset replacements mapping."""
         self._mapping.clear()
 
-    def prepare(self) -> None:
+    def refresh(self) -> None:
         """
         Compile replacement pattern and generate substitution function.
 
@@ -283,16 +284,19 @@ class ReplaceMany:
         """
         self.pattern = self._compile()
         self.repl = self._replacer()
+        self._is_prepared = True
 
-    def __call__(self, s: str, count: int = 0, /) -> str:
+    def __call__(self, s: str, count: int = 0, /, refresh: bool = False) -> str:
         """
         Replace the leftmost non-overlapping occurrences of ``self.pattern`` in ``s`` using ``self.repl``.
 
         Wraps `re.sub`_
 
         .. _re.sub:
-            _https://docs.python.org/3/library/re.html#re.sub
+            https://docs.python.org/3/library/re.html#re.sub
         """
+        if not self._is_prepared or refresh:
+            self.refresh()
         return self.pattern.sub(self.repl, s, count)
 
     def _compile(self) -> Pattern[str]:
@@ -674,7 +678,7 @@ def parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
     Ensures each doc can use all remapped names, regardless of the order they appear.
     """
     eager = tuple(_parse_expressions(url))
-    VegaExprNode.remap_title.prepare()
+    VegaExprNode.remap_title.refresh()
     for node in eager:
         yield node.with_doc()
 
