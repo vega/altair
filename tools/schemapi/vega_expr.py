@@ -404,13 +404,8 @@ class VegaExprNode:
         return self
 
     def with_parameters(self) -> Self:
-        raw_texts = self._split_signature_tokens()
-        name = next(raw_texts)
-        # NOTE: Overwriting the <a name> with the rendered text
-        # - required for `clamprange` -> `clampRange`
-        if self.name != name:
-            self.name = name
-        self.parameters = list(VegaExprParam.iter_params(raw_texts))
+        split: Iterator[str] = self._split_signature_tokens(exclude_name=True)
+        self.parameters = list(VegaExprParam.iter_params(split))
         return self
 
     def with_doc(self) -> Self:
@@ -466,7 +461,7 @@ class VegaExprNode:
             else:
                 continue
 
-    def _split_signature_tokens(self) -> Iterator[str]:
+    def _split_signature_tokens(self, *, exclude_name: bool = False) -> Iterator[str]:
         """
         Normalize the text content of the signature.
 
@@ -482,10 +477,15 @@ class VegaExprNode:
         Will yield:
 
             ['sequence', '(', '[', 'start', ']', 'stop', '[', 'step', ']', ')']
+
+        When called with ``exclude_name=True``:
+
+            ['(', '[', 'start', ']', 'stop', '[', 'step', ']', ')']
         """
+        EXCLUDE: set[str] = {", ", "", self.name} if exclude_name else {", ", ""}
         for tok in self._signature_tokens():
             clean = strip_include_tag(tok[RAW]).strip(", -")
-            if clean not in {", ", ""}:
+            if clean not in EXCLUDE:
                 yield from VegaExprNode.deep_split_punctuation(clean)
 
     def _doc_tokens(self) -> Sequence[Token]:
@@ -558,19 +558,26 @@ class VegaExprNode:
         - Most of the parsing is to handle varying signatures.
         - Constants can just be referenced by name, so can skip those
 
+        Notes
+        -----
+        - Overwriting the <a name> with the rendered text
+        - required for `clamprange` -> `clampRange`
+
         .. _constants:
             https://vega.github.io/vega/docs/expressions/#constants
         """
         if self.is_overloaded_string_array() or self.is_bound_variable_name():
             return False
         it: Iterator[Token] = iter(self)
-        current: str = next(it, {}).get(RAW, "").lower()
-        name: str = self.name.lower()
-        while current != name:
+        current: str = next(it, {}).get(RAW, "")
+        name: str = self.name.casefold()
+        while current.casefold() != name:
             if (el := next(it, None)) is not None:
-                current = el.get(RAW, "").lower()
+                current = el.get(RAW, "")
             else:
                 return False
+        if current != self.name:
+            self.name = current
         next(it)
         return next(it).get(RAW, "") == OPEN_PAREN
 
