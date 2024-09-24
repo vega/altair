@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import enum
 import keyword
 import re
 from collections import deque
@@ -29,6 +30,9 @@ import mistune.util
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 from tools.schemapi.utils import RSTParse as _RSTParse
 from tools.schemapi.utils import RSTRenderer as _RSTRenderer
+from tools.schemapi.utils import (
+    ruff_write_lint_format_str as _ruff_write_lint_format_str,
+)
 
 if TYPE_CHECKING:
     import sys
@@ -42,17 +46,22 @@ if TYPE_CHECKING:
         from typing_extensions import LiteralString, Self, TypeAlias
     from _typeshed import SupportsKeysAndGetItem
 
+__all__ = ["render_expr_full", "test_parse", "write_expr_module"]
+
 Token: TypeAlias = "dict[str, Any]"
 WorkInProgress: TypeAlias = Any
 """Marker for a type that will not be final."""
 
 
 # NOTE: Urls/fragments
-EXPRESSIONS_URL = (
-    "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
-)
 VEGA_DOCS_URL = "https://vega.github.io/vega/docs/"
 EXPRESSIONS_DOCS_URL = f"{VEGA_DOCS_URL}expressions/"
+
+
+class Source(str, enum.Enum):
+    LIVE = "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
+    STATIC = "https://raw.githubusercontent.com/vega/vega/ff98519cce32b776a98d01dd982467d76fc9ee34/docs/docs/expressions.md"
+
 
 # NOTE: Regex patterns
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
@@ -354,7 +363,7 @@ class ReplaceMany:
 
     def _compile(self) -> Pattern[str]:
         if not self._mapping:
-            name = self._mapping.__qualname__
+            name = self._mapping.__qualname__  # type: ignore[attr-defined]
             msg = (
                 f"Requires {name!r} to be populated, but got:\n"
                 f"{name}={self._mapping!r}"
@@ -922,11 +931,12 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
 
 def test_parse() -> dict[str, VegaExprNode]:
     """Temporary introspection tool."""
-    return {node.name: node for node in parse_expressions(EXPRESSIONS_URL)}
+    return {node.name: node for node in parse_expressions(Source.LIVE.value)}
 
 
 def render_expr_full() -> str:
-    it = (render_expr_method(node) for node in parse_expressions(EXPRESSIONS_URL))
+    """Temporary sample of **pre-ruff** module."""
+    it = (render_expr_method(node) for node in parse_expressions(Source.LIVE.value))
     return "\n".join(
         chain(
             (
@@ -943,3 +953,48 @@ def render_expr_full() -> str:
             [EXPR_MODULE_POST],
         )
     )
+
+
+def write_expr_module(
+    source_url: Literal["live", "static"] | str, output: Path
+) -> None:
+    """
+    Parse an ``expressions.md`` into a ``.py`` module.
+
+    Parameters
+    ----------
+    source_url
+        - ``"live"``: current version
+        - ``"static"``: most recent version available during testing
+        - Or provide an alternative as a ``str``
+    output
+        Target path to write to.
+    """
+    if source_url == "live":
+        url = Source.LIVE.value
+    elif source_url == "static":
+        url = Source.STATIC.value
+    else:
+        url = source_url
+    content = (
+        EXPR_MODULE_PRE.format(
+            metaclass=CONST_META,
+            const=CONST_WRAPPER,
+            return_ann=RETURN_ANNOTATION,
+            input_ann=INPUT_ANNOTATION,
+            func=RETURN_WRAPPER,
+        ),
+        EXPR_CLS_TEMPLATE.format(
+            base="_ExprRef",
+            metaclass=CONST_META,
+            doc=EXPR_CLS_DOC,
+            type_ignore=IGNORE_MISC,
+        ),
+    )
+    contents = chain(
+        content,
+        (render_expr_method(node) for node in parse_expressions(url)),
+        [EXPR_MODULE_POST],
+    )
+    print(f"Generating\n {url!s}\n  ->{output!s}")
+    _ruff_write_lint_format_str(output, contents)

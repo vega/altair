@@ -27,6 +27,7 @@ from tools.schemapi import (  # noqa: F401
     arg_kwds,
     arg_required_kwds,
     codegen,
+    write_expr_module,
 )
 from tools.schemapi.utils import (
     SchemaProperties,
@@ -61,6 +62,9 @@ from __future__ import annotations\n
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
+EXPR_FILE: Path = (
+    Path(__file__).parent / ".." / "altair" / "expr" / "dummy.py"
+).resolve()
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -1206,6 +1210,7 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
+    write_expr_module(source_url="static", output=EXPR_FILE)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
