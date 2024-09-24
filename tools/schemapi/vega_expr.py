@@ -500,7 +500,38 @@ class VegaExprNode:
         for tok in self._signature_tokens():
             clean = strip_include_tag(tok[RAW]).strip(", -")
             if clean not in EXCLUDE:
-                yield from VegaExprNode.deep_split_punctuation(clean)
+                yield from VegaExprNode._split_markers(clean)
+
+    @staticmethod
+    def _split_markers(s: str, /) -> Iterator[str]:
+        """
+        When ``s`` ends with one of these markers:
+
+            ")", "]", "...", " |"
+
+        - Split ``s`` into rest, match
+            - using the length of the match to index
+        - Append match to ``end``
+        - Recurse
+        """  # noqa: D400
+        if s.isalnum():
+            yield s
+        else:
+            end: list[str] = []
+            if s.endswith((CLOSE_PAREN, CLOSE_BRACKET)):
+                end.append(s[-1])
+                s = s[:-1]
+            elif s.endswith(ELLIPSIS):
+                end.append(s[-3:])
+                s = s[:-3]
+            elif s.endswith(INLINE_OVERLOAD):
+                end.append(s[-2:])
+                s = s[:-2]
+            if len(s) == 1:
+                yield s
+            elif len(s) > 1:
+                yield from VegaExprNode._split_markers(s)
+            yield from end
 
     def _doc_tokens(self) -> Sequence[Token]:
         """Return the slice of `self.children` that contains docstring content."""
@@ -533,37 +564,6 @@ class VegaExprNode:
         non_relative_links = re.sub(r"\.\.\/", VEGA_DOCS_URL, unescaped)
         numpydoc_style = _doc_fmt(non_relative_links)
         return numpydoc_style
-
-    @staticmethod
-    def deep_split_punctuation(s: str, /) -> Iterator[str]:
-        """
-        When ``s`` ends with one of these markers:
-
-            ")", "]", "...", " |"
-
-        - Split ``s`` into rest, match
-            - using the length of the match to index
-        - Append match to ``end``
-        - Recurse
-        """  # noqa: D400
-        if s.isalnum():
-            yield s
-        else:
-            end: list[str] = []
-            if s.endswith((CLOSE_PAREN, CLOSE_BRACKET)):
-                end.append(s[-1])
-                s = s[:-1]
-            elif s.endswith(ELLIPSIS):
-                end.append(s[-3:])
-                s = s[:-3]
-            elif s.endswith(INLINE_OVERLOAD):
-                end.append(s[-2:])
-                s = s[:-2]
-            if len(s) == 1:
-                yield s
-            elif len(s) > 1:
-                yield from VegaExprNode.deep_split_punctuation(s)
-            yield from end
 
     def is_callable(self) -> bool:
         """
