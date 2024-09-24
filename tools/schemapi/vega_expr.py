@@ -389,8 +389,31 @@ class VegaExprNode:
         self.doc: str = ""
         self.signature: str = ""
 
+    def with_doc(self) -> Self:
+        """
+        Parses docstring content in full.
+
+        Accessible via ``self.doc``
+        """
+        self.doc = self._doc_post_process(parser.render_tokens(self._doc_tokens()))
+        return self
+
+    def with_parameters(self) -> Self:
+        """
+        Parses signature content into an intermediate representation.
+
+        Accessible via  ``self.parameters``.
+        """
+        split: Iterator[str] = self._split_signature_tokens(exclude_name=True)
+        self.parameters = list(VegaExprParam.iter_params(split))
+        return self
+
     def with_signature(self) -> Self:
-        """NOTE: 101/147 cases are all required args."""
+        """
+        Parses ``self.parameters`` into a full signature definition line.
+
+        Accessible via  ``self.signature``
+        """
         pre_params = f"def {self.title}(cls, "
         post_params = ")" if self.is_variadic() else ", /)"
         post_params = f"{post_params} -> {RETURN_ANNOTATION}:"
@@ -401,15 +424,6 @@ class VegaExprNode:
         else:
             param_list = ", ".join(p.to_str() for p in self.parameters)
         self.signature = f"{pre_params}{param_list}{post_params}"
-        return self
-
-    def with_parameters(self) -> Self:
-        split: Iterator[str] = self._split_signature_tokens(exclude_name=True)
-        self.parameters = list(VegaExprParam.iter_params(split))
-        return self
-
-    def with_doc(self) -> Self:
-        self.doc = self._doc_post_process(parser.render_tokens(self._doc_tokens()))
         return self
 
     def parameter_names(self, *, variadic: bool = True) -> Iterator[str]:
