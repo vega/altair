@@ -143,11 +143,19 @@ class RSTRenderer(_RSTRenderer):
         super().__init__()
 
     def link(self, token: Token, state: BlockState) -> str:
-        """Store link url, for appending at the end of doc."""
+        """
+        Store link url, for appending at the end of doc.
+
+        TODO
+        ----
+        - Parameterize `"#"`, `"../"` expansion during init
+        """
         attrs = token["attrs"]
         url: str = attrs["url"]
         if url.startswith("#"):
             url = f"{EXPRESSIONS_DOCS_URL}{url}"
+        else:
+            url = url.replace(r"../", VEGA_DOCS_URL)
         text = self.render_children(token, state)
         text = text.replace("`", "")
         inline = f"`{text}`_"
@@ -561,8 +569,7 @@ class VegaExprNode:
         highlight_params = re.sub(pattern, r"\g<1>``\g<2>``\g<3>", rendered)
         with_alt_references = type(self).remap_title(highlight_params)
         unescaped = mistune.util.unescape(with_alt_references)
-        non_relative_links = re.sub(r"\.\.\/", VEGA_DOCS_URL, unescaped)
-        numpydoc_style = _doc_fmt(non_relative_links)
+        numpydoc_style = _doc_fmt(unescaped)
         return numpydoc_style
 
     def is_callable(self) -> bool:
