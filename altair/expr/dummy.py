@@ -121,12 +121,12 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def isArray(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is an array, false otherwise."""
-        return FunctionExpression("isArray", (value))
+        return FunctionExpression("isArray", (value,))
 
     @classmethod
     def isBoolean(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is a boolean (``true`` or ``false``), false otherwise."""
-        return FunctionExpression("isBoolean", (value))
+        return FunctionExpression("isBoolean", (value,))
 
     @classmethod
     def isDate(cls, value: IntoExpression, /) -> Expression:
@@ -136,7 +136,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         This method will return false for timestamp numbers or date-formatted strings; it recognizes
         Date objects only.
         """
-        return FunctionExpression("isDate", (value))
+        return FunctionExpression("isDate", (value,))
 
     @classmethod
     def isDefined(cls, value: IntoExpression, /) -> Expression:
@@ -145,7 +145,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         This method will return true for ``null`` and ``NaN`` values.
         """
-        return FunctionExpression("isDefined", (value))
+        return FunctionExpression("isDefined", (value,))
 
     @classmethod
     def isNumber(cls, value: IntoExpression, /) -> Expression:
@@ -154,27 +154,27 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         ``NaN`` and ``Infinity`` are considered numbers.
         """
-        return FunctionExpression("isNumber", (value))
+        return FunctionExpression("isNumber", (value,))
 
     @classmethod
     def isObject(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is an object (including arrays and Dates), false otherwise."""
-        return FunctionExpression("isObject", (value))
+        return FunctionExpression("isObject", (value,))
 
     @classmethod
     def isRegExp(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is a RegExp (regular expression) object, false otherwise."""
-        return FunctionExpression("isRegExp", (value))
+        return FunctionExpression("isRegExp", (value,))
 
     @classmethod
     def isString(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is a string, false otherwise."""
-        return FunctionExpression("isString", (value))
+        return FunctionExpression("isString", (value,))
 
     @classmethod
     def isValid(cls, value: IntoExpression, /) -> Expression:
         """Returns true if ``value`` is not ``null``, ``undefined``, or ``NaN``, false otherwise."""
-        return FunctionExpression("isValid", (value))
+        return FunctionExpression("isValid", (value,))
 
     @classmethod
     def toBoolean(cls, value: IntoExpression, /) -> Expression:
@@ -183,7 +183,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         Null values and empty strings are mapped to ``null``.
         """
-        return FunctionExpression("toBoolean", (value))
+        return FunctionExpression("toBoolean", (value,))
 
     @classmethod
     def toDate(cls, value: IntoExpression, /) -> Expression:
@@ -194,7 +194,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         provided, it is used to perform date parsing, otherwise ``Date.parse`` is used. Be aware
         that ``Date.parse`` has different implementations across browsers!
         """
-        return FunctionExpression("toDate", (value))
+        return FunctionExpression("toDate", (value,))
 
     @classmethod
     def toNumber(cls, value: IntoExpression, /) -> Expression:
@@ -203,7 +203,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         Null values and empty strings are mapped to ``null``.
         """
-        return FunctionExpression("toNumber", (value))
+        return FunctionExpression("toNumber", (value,))
 
     @classmethod
     def toString(cls, value: IntoExpression, /) -> Expression:
@@ -212,7 +212,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         Null values and empty strings are mapped to ``null``.
         """
-        return FunctionExpression("toString", (value))
+        return FunctionExpression("toString", (value,))
 
     @classmethod
     def if_(
@@ -240,7 +240,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Number.isNaN:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNan
         """
-        return FunctionExpression("isNaN", (value))
+        return FunctionExpression("isNaN", (value,))
 
     @classmethod
     def isFinite(cls, value: IntoExpression, /) -> Expression:
@@ -252,7 +252,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Number.isFinite:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite
         """
-        return FunctionExpression("isFinite", (value))
+        return FunctionExpression("isFinite", (value,))
 
     @classmethod
     def abs(cls, value: IntoExpression, /) -> Expression:
@@ -264,7 +264,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.abs:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs
         """
-        return FunctionExpression("abs", (value))
+        return FunctionExpression("abs", (value,))
 
     @classmethod
     def acos(cls, value: IntoExpression, /) -> Expression:
@@ -276,7 +276,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.acos:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/acos
         """
-        return FunctionExpression("acos", (value))
+        return FunctionExpression("acos", (value,))
 
     @classmethod
     def asin(cls, value: IntoExpression, /) -> Expression:
@@ -288,7 +288,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.asin:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/asin
         """
-        return FunctionExpression("asin", (value))
+        return FunctionExpression("asin", (value,))
 
     @classmethod
     def atan(cls, value: IntoExpression, /) -> Expression:
@@ -300,7 +300,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.atan:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan
         """
-        return FunctionExpression("atan", (value))
+        return FunctionExpression("atan", (value,))
 
     @classmethod
     def atan2(cls, dy: IntoExpression, dx: IntoExpression, /) -> Expression:
@@ -324,7 +324,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.ceil:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
         """
-        return FunctionExpression("ceil", (value))
+        return FunctionExpression("ceil", (value,))
 
     @classmethod
     def clamp(
@@ -343,7 +343,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.cos:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cos
         """
-        return FunctionExpression("cos", (value))
+        return FunctionExpression("cos", (value,))
 
     @classmethod
     def exp(cls, exponent: IntoExpression, /) -> Expression:
@@ -355,7 +355,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.exp:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/exp
         """
-        return FunctionExpression("exp", (exponent))
+        return FunctionExpression("exp", (exponent,))
 
     @classmethod
     def floor(cls, value: IntoExpression, /) -> Expression:
@@ -367,7 +367,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.floor:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
         """
-        return FunctionExpression("floor", (value))
+        return FunctionExpression("floor", (value,))
 
     @classmethod
     def hypot(cls, value: IntoExpression, /) -> Expression:
@@ -379,7 +379,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.hypot:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
         """
-        return FunctionExpression("hypot", (value))
+        return FunctionExpression("hypot", (value,))
 
     @classmethod
     def log(cls, value: IntoExpression, /) -> Expression:
@@ -391,7 +391,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.log:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log
         """
-        return FunctionExpression("log", (value))
+        return FunctionExpression("log", (value,))
 
     @classmethod
     def max(
@@ -443,7 +443,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.round:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
         """
-        return FunctionExpression("round", (value))
+        return FunctionExpression("round", (value,))
 
     @classmethod
     def sin(cls, value: IntoExpression, /) -> Expression:
@@ -455,7 +455,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.sin:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sin
         """
-        return FunctionExpression("sin", (value))
+        return FunctionExpression("sin", (value,))
 
     @classmethod
     def sqrt(cls, value: IntoExpression, /) -> Expression:
@@ -467,7 +467,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.sqrt:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt
         """
-        return FunctionExpression("sqrt", (value))
+        return FunctionExpression("sqrt", (value,))
 
     @classmethod
     def tan(cls, value: IntoExpression, /) -> Expression:
@@ -479,7 +479,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         .. _Math.tan:
             https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/tan
         """
-        return FunctionExpression("tan", (value))
+        return FunctionExpression("tan", (value,))
 
     @classmethod
     def sampleNormal(
@@ -549,32 +549,32 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def date(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the day of the month for the given ``datetime`` value, in local time."""
-        return FunctionExpression("date", (datetime))
+        return FunctionExpression("date", (datetime,))
 
     @classmethod
     def day(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the day of the week for the given ``datetime`` value, in local time."""
-        return FunctionExpression("day", (datetime))
+        return FunctionExpression("day", (datetime,))
 
     @classmethod
     def dayofyear(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the one-based day of the year for the given ``datetime`` value, in local time."""
-        return FunctionExpression("dayofyear", (datetime))
+        return FunctionExpression("dayofyear", (datetime,))
 
     @classmethod
     def year(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the year for the given ``datetime`` value, in local time."""
-        return FunctionExpression("year", (datetime))
+        return FunctionExpression("year", (datetime,))
 
     @classmethod
     def quarter(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the quarter of the year (0-3) for the given ``datetime`` value, in local time."""
-        return FunctionExpression("quarter", (datetime))
+        return FunctionExpression("quarter", (datetime,))
 
     @classmethod
     def month(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the (zero-based) month for the given ``datetime`` value, in local time."""
-        return FunctionExpression("month", (datetime))
+        return FunctionExpression("month", (datetime,))
 
     @classmethod
     def week(cls, date: IntoExpression, /) -> Expression:
@@ -585,37 +585,37 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         considered to be in week 0, the first Sunday of the year is the start of week 1, the second
         Sunday week 2, *etc.*.
         """
-        return FunctionExpression("week", (date))
+        return FunctionExpression("week", (date,))
 
     @classmethod
     def hours(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the hours component for the given ``datetime`` value, in local time."""
-        return FunctionExpression("hours", (datetime))
+        return FunctionExpression("hours", (datetime,))
 
     @classmethod
     def minutes(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the minutes component for the given ``datetime`` value, in local time."""
-        return FunctionExpression("minutes", (datetime))
+        return FunctionExpression("minutes", (datetime,))
 
     @classmethod
     def seconds(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the seconds component for the given ``datetime`` value, in local time."""
-        return FunctionExpression("seconds", (datetime))
+        return FunctionExpression("seconds", (datetime,))
 
     @classmethod
     def milliseconds(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the milliseconds component for the given ``datetime`` value, in local time."""
-        return FunctionExpression("milliseconds", (datetime))
+        return FunctionExpression("milliseconds", (datetime,))
 
     @classmethod
     def time(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the epoch-based timestamp for the given ``datetime`` value."""
-        return FunctionExpression("time", (datetime))
+        return FunctionExpression("time", (datetime,))
 
     @classmethod
     def timezoneoffset(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the timezone offset from the local timezone to UTC for the given ``datetime`` value."""
-        return FunctionExpression("timezoneoffset", (datetime))
+        return FunctionExpression("timezoneoffset", (datetime,))
 
     @classmethod
     def timeOffset(
@@ -674,32 +674,32 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def utcdate(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the day of the month for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcdate", (datetime))
+        return FunctionExpression("utcdate", (datetime,))
 
     @classmethod
     def utcday(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the day of the week for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcday", (datetime))
+        return FunctionExpression("utcday", (datetime,))
 
     @classmethod
     def utcdayofyear(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the one-based day of the year for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcdayofyear", (datetime))
+        return FunctionExpression("utcdayofyear", (datetime,))
 
     @classmethod
     def utcyear(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the year for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcyear", (datetime))
+        return FunctionExpression("utcyear", (datetime,))
 
     @classmethod
     def utcquarter(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the quarter of the year (0-3) for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcquarter", (datetime))
+        return FunctionExpression("utcquarter", (datetime,))
 
     @classmethod
     def utcmonth(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the (zero-based) month for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcmonth", (datetime))
+        return FunctionExpression("utcmonth", (datetime,))
 
     @classmethod
     def utcweek(cls, date: IntoExpression, /) -> Expression:
@@ -710,27 +710,27 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         considered to be in week 0, the first Sunday of the year is the start of week 1, the second
         Sunday week 2, *etc.*.
         """
-        return FunctionExpression("utcweek", (date))
+        return FunctionExpression("utcweek", (date,))
 
     @classmethod
     def utchours(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the hours component for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utchours", (datetime))
+        return FunctionExpression("utchours", (datetime,))
 
     @classmethod
     def utcminutes(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the minutes component for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcminutes", (datetime))
+        return FunctionExpression("utcminutes", (datetime,))
 
     @classmethod
     def utcseconds(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the seconds component for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcseconds", (datetime))
+        return FunctionExpression("utcseconds", (datetime,))
 
     @classmethod
     def utcmilliseconds(cls, datetime: IntoExpression, /) -> Expression:
         """Returns the milliseconds component for the given ``datetime`` value, in UTC time."""
-        return FunctionExpression("utcmilliseconds", (datetime))
+        return FunctionExpression("utcmilliseconds", (datetime,))
 
     @classmethod
     def utcOffset(
@@ -770,7 +770,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def extent(cls, array: IntoExpression, /) -> Expression:
         """Returns a new *[min, max]* array with the minimum and maximum values of the input array, ignoring ``null``, ``undefined``, and ``NaN`` values."""
-        return FunctionExpression("extent", (array))
+        return FunctionExpression("extent", (array,))
 
     @classmethod
     def clampRange(
@@ -811,7 +811,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def length(cls, array: IntoExpression, /) -> Expression:
         """Returns the length of the input ``array``."""
-        return FunctionExpression("length", (array))
+        return FunctionExpression("length", (array,))
 
     @classmethod
     def lerp(cls, array: IntoExpression, fraction: IntoExpression, /) -> Expression:
@@ -830,7 +830,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         Similar to the built-in ``Array.pop`` method, except that it does not remove the last
         element. This method is a convenient shorthand for ``array[array.length - 1]``.
         """
-        return FunctionExpression("peek", (array))
+        return FunctionExpression("peek", (array,))
 
     @classmethod
     def pluck(cls, array: IntoExpression, field: IntoExpression, /) -> Expression:
@@ -848,7 +848,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         The first array element becomes the last, and the last array element becomes the first.
         """
-        return FunctionExpression("reverse", (array))
+        return FunctionExpression("reverse", (array,))
 
     @classmethod
     def sequence(cls, *args: Any) -> Expression:
@@ -879,12 +879,12 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def span(cls, array: IntoExpression, /) -> Expression:
         """Returns the span of ``array``: the difference between the last and first elements, or *array[array.length-1] - array[0]*."""
-        return FunctionExpression("span", (array))
+        return FunctionExpression("span", (array,))
 
     @classmethod
     def lower(cls, string: IntoExpression, /) -> Expression:
         """Transforms ``string`` to lower-case letters."""
-        return FunctionExpression("lower", (string))
+        return FunctionExpression("lower", (string,))
 
     @classmethod
     def pad(
@@ -911,7 +911,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         Same as JavaScript's ``parseFloat``.
         """
-        return FunctionExpression("parseFloat", (string))
+        return FunctionExpression("parseFloat", (string,))
 
     @classmethod
     def parseInt(cls, string: IntoExpression, /) -> Expression:
@@ -920,7 +920,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         Same as JavaScript's ``parseInt``.
         """
-        return FunctionExpression("parseInt", (string))
+        return FunctionExpression("parseInt", (string,))
 
     @classmethod
     def replace(
@@ -955,7 +955,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def trim(cls, string: IntoExpression, /) -> Expression:
         """Returns a trimmed string with preceding and trailing whitespace removed."""
-        return FunctionExpression("trim", (string))
+        return FunctionExpression("trim", (string,))
 
     @classmethod
     def truncate(
@@ -980,7 +980,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     @classmethod
     def upper(cls, string: IntoExpression, /) -> Expression:
         """Transforms ``string`` to upper-case letters."""
-        return FunctionExpression("upper", (string))
+        return FunctionExpression("upper", (string,))
 
     @classmethod
     def merge(
@@ -1002,7 +1002,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         For example: ``alt.expr.dayFormat(0) -> "Sunday"``.
         """
-        return FunctionExpression("dayFormat", (day))
+        return FunctionExpression("dayFormat", (day,))
 
     @classmethod
     def dayAbbrevFormat(cls, day: IntoExpression, /) -> Expression:
@@ -1011,7 +1011,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         For example: ``alt.expr.dayAbbrevFormat(0) -> "Sun"``.
         """
-        return FunctionExpression("dayAbbrevFormat", (day))
+        return FunctionExpression("dayAbbrevFormat", (day,))
 
     @classmethod
     def format(cls, value: IntoExpression, specifier: IntoExpression, /) -> Expression:
@@ -1033,7 +1033,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         For example: ``alt.expr.monthFormat(0) -> "January"``.
         """
-        return FunctionExpression("monthFormat", (month))
+        return FunctionExpression("monthFormat", (month,))
 
     @classmethod
     def monthAbbrevFormat(cls, month: IntoExpression, /) -> Expression:
@@ -1042,7 +1042,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         For example: ``alt.expr.monthAbbrevFormat(0) -> "Jan"``.
         """
-        return FunctionExpression("monthAbbrevFormat", (month))
+        return FunctionExpression("monthAbbrevFormat", (month,))
 
     @classmethod
     def timeUnitSpecifier(
@@ -1240,7 +1240,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         If no arguments are provided, the immediate parent group is returned. If a group name is
         provided, the matching ancestor group item is returned.
         """
-        return FunctionExpression("group", (name))
+        return FunctionExpression("group", (name,))
 
     @classmethod
     def xy(cls, item: IntoExpression = None, /) -> Expression:
@@ -1251,7 +1251,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         scenegraph ``item`` (or string group name) is provided, the coordinate space of the group
         item is used.
         """
-        return FunctionExpression("xy", (item))
+        return FunctionExpression("xy", (item,))
 
     @classmethod
     def x(cls, item: IntoExpression = None, /) -> Expression:
@@ -1262,7 +1262,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         scenegraph ``item`` (or string group name) is provided, the coordinate space of the group
         item is used.
         """
-        return FunctionExpression("x", (item))
+        return FunctionExpression("x", (item,))
 
     @classmethod
     def y(cls, item: IntoExpression = None, /) -> Expression:
@@ -1273,22 +1273,22 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
         scenegraph ``item`` (or string group name) is provided, the coordinate space of the group
         item is used.
         """
-        return FunctionExpression("y", (item))
+        return FunctionExpression("y", (item,))
 
     @classmethod
     def pinchDistance(cls, event: IntoExpression, /) -> Expression:
         """Returns the pixel distance between the first two touch points of a multi-touch event."""
-        return FunctionExpression("pinchDistance", (event))
+        return FunctionExpression("pinchDistance", (event,))
 
     @classmethod
     def pinchAngle(cls, event: IntoExpression, /) -> Expression:
         """Returns the angle of the line connecting the first two touch points of a multi-touch event."""
-        return FunctionExpression("pinchAngle", (event))
+        return FunctionExpression("pinchAngle", (event,))
 
     @classmethod
     def inScope(cls, item: IntoExpression, /) -> Expression:
         """Returns true if the given scenegraph ``item`` is a descendant of the group mark in which the event handler was defined, false otherwise."""
-        return FunctionExpression("inScope", (item))
+        return FunctionExpression("inScope", (item,))
 
     @classmethod
     def data(cls, name: IntoExpression, /) -> Expression:
@@ -1297,7 +1297,7 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
 
         If the data set is not found, returns an empty array.
         """
-        return FunctionExpression("data", (name))
+        return FunctionExpression("data", (name,))
 
     @classmethod
     def indata(

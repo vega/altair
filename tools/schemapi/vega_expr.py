@@ -922,7 +922,11 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
     if node.is_overloaded():
         body_params = STAR_ARGS[1:]
     else:
-        body_params = f"({', '.join(node.parameter_names())})"
+        body_params = ", ".join(node.parameter_names())
+        if "," not in body_params:
+            body_params = f"({body_params}, )"
+        else:
+            body_params = f"({body_params})"
     body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
     return EXPR_METHOD_TEMPLATE.format(
         decorator=DECORATOR, signature=node.signature, doc=node.doc, body=body
