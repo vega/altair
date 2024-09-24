@@ -54,9 +54,12 @@ Documentation = "https://altair-viz.github.io"
 Source = "https://github.com/vega/altair"
 
 [project.optional-dependencies]
-all = [
-    "vega_datasets>=0.9.0",
+save = [
     "vl-convert-python>=1.6.0",
+]
+all = [
+    "altair[save]",
+    "vega_datasets>=0.9.0",
     "pandas>=0.25.3",
     "numpy",
     "pyarrow>=11",
