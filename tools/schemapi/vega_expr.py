@@ -247,6 +247,52 @@ def _doc_fmt(doc: str, /) -> str:
 
 
 class ReplaceMany:
+    """
+    Perform many ``1:1`` replacements on a given text.
+
+    Structured wrapper around a `dict`_ and `re.sub`_.
+
+    Parameters
+    ----------
+    mapping
+        Optional initial mapping.
+    fmt_match
+        **Combined** format string/regex pattern.
+        Receives the keys of the final ``self._mapping`` as a positional argument.
+
+        .. note::
+            Special characters must be escaped **first**, if present.
+
+    fmt_replace
+        Format string applied to a succesful match, after substition.
+        Receives ``self._mapping[key]`` as a positional argument.
+
+    .. _dict:
+        https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
+    .. _re.sub:
+        https://docs.python.org/3/library/re.html#re.sub
+
+    Examples
+    --------
+    Providing a mapping during construction:
+
+        string = "The dog chased the cat, chasing the mouse. Poor mouse"
+        animal_replacer = ReplaceMany({"dog": "cat"})
+        >>> animal_replacer(string)
+        'The cat chased the cat, chasing the mouse. Poor mouse'
+
+    Updating with new replacements:
+
+        animal_replacer.update({"cat": "mouse", "mouse": "dog"}, duck="rabbit")
+        >>> animal_replacer(string, refresh=True)
+        'The cat chased the mouse, chasing the dog. Poor dog'
+
+    Further calls will continue using the most recent update:
+
+        >>> animal_replacer("duck")
+        'rabbit'
+    """
+
     def __init__(
         self,
         mapping: Mapping[str, str] | None = None,
