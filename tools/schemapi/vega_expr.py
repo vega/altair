@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import functools
 import keyword
 import re
 from collections import deque
@@ -418,10 +417,15 @@ class VegaExprNode:
         self.doc = self._doc_post_process(parser.render_tokens(self._doc_tokens()))
         return self
 
-    @functools.cached_property
-    def parameter_names(self) -> tuple[str, ...]:
+    def parameter_names(self, *, variadic: bool = True) -> Iterator[str]:
+        """Pass ``variadic=False`` to omit names like``*args``."""
         if self.parameters:
-            return tuple(param.name for param in self.parameters if not param.variadic)
+            it: Iterator[str] = (
+                (p.name for p in self.parameters)
+                if variadic
+                else (p.name for p in self.parameters if not p.variadic)
+            )
+            yield from it
         else:
             msg = (
                 f"Cannot provide `parameter_names` until they have been initialized via:\n"
@@ -506,7 +510,9 @@ class VegaExprNode:
         # NOTE: Avoids adding backticks to parameter names that are also used in a link
         # - All cases of these are for `unit|units`
         pre, post = "[^`_]", "[^`]"
-        pattern = rf"({pre})\*({'|'.join(self.parameter_names)})\*({post})"
+        pattern = (
+            rf"({pre})\*({'|'.join(self.parameter_names(variadic=False))})\*({post})"
+        )
         highlight_params = re.sub(pattern, r"\g<1>``\g<2>``\g<3>", rendered)
         with_alt_references = type(self).remap_title(highlight_params)
         unescaped = mistune.util.unescape(with_alt_references)
@@ -866,7 +872,7 @@ EXPR_METHOD_TEMPLATE = '''\
 '''
 
 
-def render_expr_cls():
+def render_expr_cls() -> WorkInProgress:
     return EXPR_CLS_TEMPLATE.format(
         base="_ExprRef",
         metaclass=CONST_META,
@@ -879,7 +885,7 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
     if node.is_overloaded():
         body_params = STAR_ARGS[1:]
     else:
-        body_params = f"({', '.join(param.name for param in node.parameters)})"
+        body_params = f"({', '.join(node.parameter_names())})"
     body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
     return EXPR_METHOD_TEMPLATE.format(
         decorator=DECORATOR, signature=node.signature, doc=node.doc, body=body
