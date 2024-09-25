@@ -18,7 +18,11 @@ if TYPE_CHECKING:
 
 
 class _ConstExpressionType(type):
-    """Metaclass providing read-only class properties for :class:`expr`."""
+    """
+    Metaclass for :class:`expr`.
+
+    Currently providing read-only class properties, representing JavaScript constants.
+    """
 
     @property
     def NaN(cls) -> Expression:

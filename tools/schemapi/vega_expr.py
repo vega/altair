@@ -89,7 +89,7 @@ RETURN_ANNOTATION = "Expression"
 # NOTE: No benefit to annotating with the actual wrapper
 # - `Expression` is shorter, and has all the functionality/attributes
 CONST_WRAPPER = "ConstExpression"
-CONST_META = "_ConstExpressionType"
+CLS_META = "_ConstExpressionType"
 INPUT_ANNOTATION = "IntoExpression"
 
 # NOTE: `python`/`mypy` related literals
@@ -772,7 +772,11 @@ if TYPE_CHECKING:
 
 
 class {metaclass}(type):
-    """Metaclass providing read-only class properties for :class:`expr`."""
+    """
+    Metaclass for :class:`expr`.
+
+    Currently providing read-only class properties, representing JavaScript constants.
+    """
 
     @property
     def NaN(cls) -> {return_ann}:
@@ -917,7 +921,7 @@ def write_expr_module(
         url = source_url
     content = (
         MODULE_PRE.format(
-            metaclass=CONST_META,
+            metaclass=CLS_META,
             const=CONST_WRAPPER,
             return_ann=RETURN_ANNOTATION,
             input_ann=INPUT_ANNOTATION,
@@ -925,7 +929,7 @@ def write_expr_module(
         ),
         CLS_TEMPLATE.format(
             base="_ExprRef",
-            metaclass=CONST_META,
+            metaclass=CLS_META,
             doc=CLS_DOC,
             type_ignore=IGNORE_MISC,
         ),
