@@ -46,7 +46,7 @@ if TYPE_CHECKING:
         from typing_extensions import LiteralString, Self, TypeAlias
     from _typeshed import SupportsKeysAndGetItem
 
-__all__ = ["render_expr_full", "test_parse", "write_expr_module"]
+__all__ = ["write_expr_module"]
 
 
 WorkInProgress: TypeAlias = Any
@@ -798,7 +798,6 @@ class {metaclass}(type):
         return {const}("PI")
 '''
 
-
 EXPR_MODULE_POST = """\
 _ExprType = expr
 # NOTE: Compatibility alias for previous type of `alt.expr`.
@@ -869,15 +868,6 @@ EXPR_METHOD_TEMPLATE = '''\
 '''
 
 
-def render_expr_cls() -> WorkInProgress:
-    return EXPR_CLS_TEMPLATE.format(
-        base="_ExprRef",
-        metaclass=CONST_META,
-        doc=EXPR_CLS_DOC,
-        type_ignore=IGNORE_MISC,
-    )
-
-
 def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
     if node.is_overloaded():
         body_params = STAR_ARGS[1:]
@@ -890,32 +880,6 @@ def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
     body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
     return EXPR_METHOD_TEMPLATE.format(
         decorator=DECORATOR, signature=node.signature, doc=node.doc, body=body
-    )
-
-
-def test_parse() -> dict[str, VegaExprNode]:
-    """Temporary introspection tool."""
-    return {node.name: node for node in parse_expressions(Source.LIVE.value)}
-
-
-def render_expr_full() -> str:
-    """Temporary sample of **pre-ruff** module."""
-    it = (render_expr_method(node) for node in parse_expressions(Source.LIVE.value))
-    return "\n".join(
-        chain(
-            (
-                EXPR_MODULE_PRE.format(
-                    metaclass=CONST_META,
-                    const=CONST_WRAPPER,
-                    return_ann=RETURN_ANNOTATION,
-                    input_ann=INPUT_ANNOTATION,
-                    func=RETURN_WRAPPER,
-                ),
-                render_expr_cls(),
-            ),
-            it,
-            [EXPR_MODULE_POST],
-        )
     )
 
 
