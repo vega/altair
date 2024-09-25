@@ -20,6 +20,7 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 
 
+from tools.markup import rst_syntax_for_class
 from tools.schemapi import (  # noqa: F401
     CodeSnippet,
     SchemaInfo,
@@ -38,7 +39,6 @@ from tools.schemapi.utils import (
     import_typing_extensions,
     indent_docstring,
     resolve_references,
-    rst_syntax_for_class,
     ruff_format_py,
     ruff_write_lint_format_str,
     spell_literal,

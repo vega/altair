@@ -27,9 +27,9 @@ from urllib import request
 import mistune
 import mistune.util
 
+from tools.markup import RSTParse, Token, read_ast_tokens
+from tools.markup import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
-from tools.schemapi.utils import RSTParse as _RSTParse
-from tools.schemapi.utils import RSTRenderer as _RSTRenderer
 from tools.schemapi.utils import (
     ruff_write_lint_format_str as _ruff_write_lint_format_str,
 )
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
     import sys
     from re import Match, Pattern
 
-    from mistune import BlockParser, BlockState, InlineParser
+    from mistune import BlockState
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString, Self, TypeAlias
@@ -48,7 +48,7 @@ if TYPE_CHECKING:
 
 __all__ = ["render_expr_full", "test_parse", "write_expr_module"]
 
-Token: TypeAlias = "dict[str, Any]"
+
 WorkInProgress: TypeAlias = Any
 """Marker for a type that will not be final."""
 
@@ -100,6 +100,20 @@ IGNORE_OVERRIDE = r"# type: ignore[override]"
 IGNORE_MISC = r"# type: ignore[misc]"
 
 
+def _override_predicate(obj: Any, /) -> bool:
+    return (
+        callable(obj)
+        and (name := obj.__name__)
+        and isinstance(name, str)
+        and not (name.startswith("_"))
+    )
+
+
+_SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
+    nm for nm, _ in getmembers(_SchemaBase, _override_predicate)
+)
+
+
 def download_expressions_md(url: str, /) -> Path:
     """Download to a temporary file, return that as a ``pathlib.Path``."""
     tmp, _ = request.urlretrieve(url)
@@ -114,15 +128,6 @@ def download_expressions_md(url: str, /) -> Path:
         return fp
 
 
-def read_tokens(source: Path, /) -> list[Token]:
-    """
-    Read from ``source``, drop ``BlockState``.
-
-    Factored out to provide accurate typing.
-    """
-    return mistune.create_markdown(renderer="ast").read(source)[0]
-
-
 def strip_include_tag(s: str, /) -> str:
     """
     Removes `liquid`_ templating markup.
@@ -133,18 +138,12 @@ def strip_include_tag(s: str, /) -> str:
     return LIQUID_INCLUDE.sub(r"", s)
 
 
-def _override_predicate(obj: Any, /) -> bool:
-    return (
-        callable(obj)
-        and (name := obj.__name__)
-        and isinstance(name, str)
-        and not (name.startswith("_"))
-    )
-
-
-_SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
-    nm for nm, _ in getmembers(_SchemaBase, _override_predicate)
-)
+def expand_urls(url: str, /) -> str:
+    if url.startswith("#"):
+        url = f"{EXPRESSIONS_DOCS_URL}{url}"
+    else:
+        url = url.replace(r"../", VEGA_DOCS_URL)
+    return url
 
 
 class RSTRenderer(_RSTRenderer):
@@ -160,11 +159,7 @@ class RSTRenderer(_RSTRenderer):
         - Parameterize `"#"`, `"../"` expansion during init
         """
         attrs = token["attrs"]
-        url: str = attrs["url"]
-        if url.startswith("#"):
-            url = f"{EXPRESSIONS_DOCS_URL}{url}"
-        else:
-            url = url.replace(r"../", VEGA_DOCS_URL)
+        url = expand_urls(attrs["url"])
         text = self.render_children(token, state)
         text = text.replace("`", "")
         inline = f"`{text}`_"
@@ -175,55 +170,17 @@ class RSTRenderer(_RSTRenderer):
         text = super().text(token, state)
         return strip_include_tag(text)
 
+    def _with_links(self, s: str, links: dict[str, Any] | Any, /) -> str:
+        it = chain.from_iterable(
+            (f".. _{ref_name}:", f"    {attrs['url']}")
+            for ref_name, attrs in links.items()
+        )
+        return "\n".join(chain([s], it))
 
-def _iter_link_lines(ref_links: Any, /) -> Iterator[str]:
-    links: dict[str, Any] = ref_links
-    for ref_name, attrs in links.items():
-        yield from (f".. _{ref_name}:", f"    {attrs['url']}")
-
-
-class RSTParse(_RSTParse):
-    """
-    Minor extension to support partial `ast`_ conversion.
-
-    Only need to convert the docstring tokens to `.rst`.
-
-    NOTE
-    ----
-    Once `PR`_ is merged, move this to the parent class and rename
-
-    .. _ast:
-        https://mistune.lepture.com/en/latest/guide.html#abstract-syntax-tree
-    .. _PR:
-        https://github.com/vega/altair/pull/3536
-    """
-
-    def __init__(
-        self,
-        renderer: RSTRenderer,
-        block: BlockParser | None = None,
-        inline: InlineParser | None = None,
-        plugins=None,
-    ) -> None:
-        super().__init__(renderer, block, inline, plugins)
-        if self.renderer is None:
-            msg = "Must provide a renderer, got `None`"
-            raise TypeError(msg)
-        self.renderer: RSTRenderer
-
-    def render_tokens(self, tokens: Iterable[Token], /) -> str:
-        """
-        Render ast tokens originating from another parser.
-
-        Parameters
-        ----------
-        tokens
-            All tokens will be rendered into a single `.rst` string
-        """
-        state = self.block.state_cls()
-        result = self.renderer(self._iter_render(tokens, state), state)
+    def __call__(self, tokens: Iterable[Token], state: BlockState) -> str:
+        result = super().__call__(tokens, state)
         if links := state.env.get("ref_links", {}):
-            return "\n".join(chain([result], _iter_link_lines(links)))
+            return self._with_links(result, links)
         else:
             return result
 
@@ -748,7 +705,7 @@ class VegaExprParam:
 
 def _parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
     """Download, read markdown and iteratively parse into signature representations."""
-    for tok in read_tokens(download_expressions_md(url)):
+    for tok in read_ast_tokens(download_expressions_md(url)):
         if (
             (children := tok.get(CHILDREN)) is not None
             and (child := next(iter(children)).get(RAW)) is not None
