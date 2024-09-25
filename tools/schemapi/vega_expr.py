@@ -780,13 +780,16 @@ from __future__ import annotations
 import sys
 from typing import Any, TYPE_CHECKING
 
-from altair.expr.core import {const}, {func}, {return_ann}, {input_ann}
+from altair.expr.core import {const}, {func}
 from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
 
 if sys.version_info >= (3, 12):
     from typing import override
 else:
     from typing_extensions import override
+
+if TYPE_CHECKING:
+    from altair.expr.core import {return_ann}, {input_ann}
 
 
 class {metaclass}(type):
