@@ -388,16 +388,20 @@ class VegaExprNode:
 
         Accessible via  ``self.signature``
         """
-        pre_params = f"def {self.title}(cls, "
-        post_params = ")" if self.is_variadic() else ", /)"
-        post_params = f"{post_params} -> {RETURN_ANNOTATION}:"
-        if self.is_incompatible_override():
-            post_params = f"{post_params}  {IGNORE_OVERRIDE}"
-        if self.is_overloaded():
-            param_list = VegaExprParam.star_args()
-        else:
-            param_list = ", ".join(p.to_str() for p in self.parameters)
-        self.signature = f"{pre_params}{param_list}{post_params}"
+        param_list = (
+            VegaExprParam.star_args()
+            if self.is_overloaded()
+            else ", ".join(p.to_str() for p in self.parameters)
+        )
+        self.signature = METHOD_SIGNATURE.format(
+            title=self.title,
+            param_list=param_list,
+            marker="" if self.is_variadic() else ", /",
+            return_ann=RETURN_ANNOTATION,
+            type_ignore=(
+                f"  {IGNORE_OVERRIDE}" if self.is_incompatible_override() else ""
+            ),
+        )
         return self
 
     def parameter_names(self, *, variadic: bool = True) -> Iterator[str]:
@@ -425,7 +429,7 @@ class VegaExprNode:
                 if len(self.parameters) == 1
                 else f"({','.join(self.parameter_names())})"
             )
-        return EXPR_METHOD_TEMPLATE.format(
+        return METHOD_TEMPLATE.format(
             decorator=DECORATOR,
             signature=self.signature,
             doc=self.doc,
@@ -747,7 +751,7 @@ def parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
         yield node.with_doc()
 
 
-EXPR_MODULE_PRE = '''\
+MODULE_PRE = '''\
 """Tools for creating transform & filter expressions with a python syntax."""
 
 from __future__ import annotations
@@ -816,13 +820,13 @@ class {metaclass}(type):
         return {const}("PI")
 '''
 
-EXPR_MODULE_POST = """\
+MODULE_POST = """\
 _ExprType = expr
 # NOTE: Compatibility alias for previous type of `alt.expr`.
 # `_ExprType` was not referenced in any internal imports/tests.
 """
 
-EXPR_CLS_DOC = """
+CLS_DOC = """
     Utility providing *constants* and *classmethods* to construct expressions.
 
     `Expressions`_ can be used to write basic formulas that enable custom interactions.
@@ -867,7 +871,7 @@ EXPR_CLS_DOC = """
     })
     """
 
-EXPR_CLS_TEMPLATE = '''\
+CLS_TEMPLATE = '''\
 class expr({base}, metaclass={metaclass}):
     """{doc}"""
 
@@ -876,7 +880,11 @@ class expr({base}, metaclass={metaclass}):
         return {base}(expr=expr)
 '''
 
-EXPR_METHOD_TEMPLATE = '''\
+METHOD_SIGNATURE = (
+    """def {title}(cls, {param_list}{marker}) -> {return_ann}:{type_ignore}"""
+)
+
+METHOD_TEMPLATE = '''\
     {decorator}
     {signature}
         """
@@ -908,24 +916,24 @@ def write_expr_module(
     else:
         url = source_url
     content = (
-        EXPR_MODULE_PRE.format(
+        MODULE_PRE.format(
             metaclass=CONST_META,
             const=CONST_WRAPPER,
             return_ann=RETURN_ANNOTATION,
             input_ann=INPUT_ANNOTATION,
             func=RETURN_WRAPPER,
         ),
-        EXPR_CLS_TEMPLATE.format(
+        CLS_TEMPLATE.format(
             base="_ExprRef",
             metaclass=CONST_META,
-            doc=EXPR_CLS_DOC,
+            doc=CLS_DOC,
             type_ignore=IGNORE_MISC,
         ),
     )
     contents = chain(
         content,
         (node.render() for node in parse_expressions(url)),
-        [EXPR_MODULE_POST],
+        [MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")
     _ruff_write_lint_format_str(output, contents)
