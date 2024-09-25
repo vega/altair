@@ -237,4 +237,4 @@ class GetItemExpression(Expression):
         return f"{self.group}[{self.name!r}]"
 
 
-IntoExpression: TypeAlias = Union[bool, None, str, OperatorMixin, Dict[str, Any]]
+IntoExpression: TypeAlias = Union[bool, None, str, float, OperatorMixin, Dict[str, Any]]
