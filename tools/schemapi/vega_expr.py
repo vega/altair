@@ -89,7 +89,7 @@ RETURN_ANNOTATION = "Expression"
 # NOTE: No benefit to annotating with the actual wrapper
 # - `Expression` is shorter, and has all the functionality/attributes
 CONST_WRAPPER = "ConstExpression"
-CLS_META = "_ConstExpressionType"
+CLS_META = "_ExprMeta"
 INPUT_ANNOTATION = "IntoExpression"
 
 # NOTE: `python`/`mypy` related literals

@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from altair.expr.core import Expression, IntoExpression
 
 
-class _ConstExpressionType(type):
+class _ExprMeta(type):
     """
     Metaclass for :class:`expr`.
 
@@ -70,7 +70,7 @@ class _ConstExpressionType(type):
         return ConstExpression("PI")
 
 
-class expr(_ExprRef, metaclass=_ConstExpressionType):
+class expr(_ExprRef, metaclass=_ExprMeta):
     """
     Utility providing *constants* and *classmethods* to construct expressions.
 

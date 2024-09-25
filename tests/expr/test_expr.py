@@ -9,7 +9,7 @@ import pytest
 from jsonschema.exceptions import ValidationError
 
 from altair import datum, expr, ExprRef
-from altair.expr import _ConstExpressionType
+from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
 
 if TYPE_CHECKING:
@@ -112,7 +112,7 @@ def test_expr_methods(
     assert repr(fn_call) == f"{veganame}({datum_args})"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts."""
     const = getattr(expr, constname)
@@ -120,7 +120,7 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):
