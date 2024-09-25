@@ -10,7 +10,6 @@ from jsonschema.exceptions import ValidationError
 
 from altair import datum, expr, ExprRef
 from altair.expr import _ConstExpressionType
-from altair.expr import dummy as dummy
 from altair.expr.core import Expression, GetAttrExpression
 
 if TYPE_CHECKING:
