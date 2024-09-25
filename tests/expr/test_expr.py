@@ -3,7 +3,7 @@ from __future__ import annotations
 import operator
 import sys
 from inspect import classify_class_attrs, getmembers, signature
-from typing import TYPE_CHECKING, Any, Iterator, cast
+from typing import TYPE_CHECKING, Any, Callable, Iterable, Iterator, TypeVar, cast
 
 import pytest
 from jsonschema.exceptions import ValidationError
@@ -11,14 +11,12 @@ from jsonschema.exceptions import ValidationError
 from altair import datum, expr, ExprRef
 from altair.expr import _ConstExpressionType
 from altair.expr import dummy as dummy
-from altair.expr.core import GetAttrExpression
+from altair.expr.core import Expression, GetAttrExpression
 
 if TYPE_CHECKING:
-    from inspect import Signature
-    from typing import Callable, Container
+    from inspect import _IntrospectableCallable
 
-    from altair.expr.core import Expression
-
+T = TypeVar("T")
 
 # This maps vega expression function names to the Python name
 VEGA_REMAP = {"if_": "if"}
@@ -45,41 +43,23 @@ def _get_property_names(tp: type[Any], /) -> Iterator[str]:
 
 
 def signature_n_params(
-    sig: Signature, /, *, exclude: Container[str] = frozenset(("cls", "self"))
+    obj: _IntrospectableCallable,
+    /,
+    *,
+    exclude: Iterable[str] = frozenset(("cls", "self")),
 ) -> int:
-    return len([p for p in sig.parameters.values() if p.name not in exclude])
+    sig = signature(obj)
+    return len(set(sig.parameters).difference(exclude))
 
 
-def _get_classmethod_members(
-    tp: type[Any], /
-) -> Iterator[tuple[str, Callable[..., Any]]]:
+def _iter_classmethod_specs(
+    tp: type[T], /
+) -> Iterator[tuple[str, Callable[..., Expression], int]]:
     for m in classify_class_attrs(tp):
         if m.kind == "class method" and m.defining_class is tp:
-            yield m.name, cast("classmethod[Any, Any, Any]", m.object).__func__
-
-
-def _get_classmethod_signatures(
-    tp: type[Any], /
-) -> Iterator[tuple[str, Callable[..., Expression], int]]:
-    for name, fn in _get_classmethod_members(tp):
-        yield (
-            VEGA_REMAP.get(name, name),
-            fn.__get__(tp),
-            signature_n_params(signature(fn)),
-        )
-
-
-@pytest.mark.parametrize(
-    ("veganame", "fn", "n_params"), _get_classmethod_signatures(dummy.expr)
-)
-def test_dummy_expr_funcs(
-    veganame: str, fn: Callable[..., Expression], n_params: int
-) -> None:
-    datum_names = [f"col_{n}" for n in range(n_params)]
-    datum_args = ",".join(f"datum.{nm}" for nm in datum_names)
-
-    fn_call = fn(*(GetAttrExpression("datum", nm) for nm in datum_names))
-    assert repr(fn_call) == f"{veganame}({datum_args})"
+            name = m.name
+            fn = cast("classmethod[T, ..., Expression]", m.object).__func__
+            yield (VEGA_REMAP.get(name, name), fn.__get__(tp), signature_n_params(fn))
 
 
 def test_unary_operations():
@@ -131,6 +111,17 @@ def test_binary_operations():
 def test_abs():
     z = abs(datum.xxx)
     assert repr(z) == "abs(datum.xxx)"
+
+
+@pytest.mark.parametrize(("veganame", "fn", "n_params"), _iter_classmethod_specs(expr))
+def test_expr_methods(
+    veganame: str, fn: Callable[..., Expression], n_params: int
+) -> None:
+    datum_names = [f"col_{n}" for n in range(n_params)]
+    datum_args = ",".join(f"datum.{nm}" for nm in datum_names)
+
+    fn_call = fn(*(GetAttrExpression("datum", nm) for nm in datum_names))
+    assert repr(fn_call) == f"{veganame}({datum_args})"
 
 
 @pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
