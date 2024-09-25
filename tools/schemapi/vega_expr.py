@@ -416,6 +416,24 @@ class VegaExprNode:
             )
             raise TypeError(msg)
 
+    def render(self) -> str:
+        if self.is_overloaded():
+            body_params = STAR_ARGS[1:]
+        else:
+            body_params = (
+                f"({self.parameters[0].name},)"
+                if len(self.parameters) == 1
+                else f"({','.join(self.parameter_names())})"
+            )
+        return EXPR_METHOD_TEMPLATE.format(
+            decorator=DECORATOR,
+            signature=self.signature,
+            doc=self.doc,
+            return_wrapper=RETURN_WRAPPER,
+            name=f"{self.name!r}",
+            body_params=body_params,
+        )
+
     @property
     def title(self) -> str:
         """
@@ -864,23 +882,8 @@ EXPR_METHOD_TEMPLATE = '''\
         """
         {doc}
         """
-        {body}
+        return {return_wrapper}({name}, {body_params})
 '''
-
-
-def render_expr_method(node: VegaExprNode, /) -> WorkInProgress:
-    if node.is_overloaded():
-        body_params = STAR_ARGS[1:]
-    else:
-        body_params = ", ".join(node.parameter_names())
-        if "," not in body_params:
-            body_params = f"({body_params}, )"
-        else:
-            body_params = f"({body_params})"
-    body = f"return {RETURN_WRAPPER}({node.name!r}, {body_params})"
-    return EXPR_METHOD_TEMPLATE.format(
-        decorator=DECORATOR, signature=node.signature, doc=node.doc, body=body
-    )
 
 
 def write_expr_module(
@@ -921,7 +924,7 @@ def write_expr_module(
     )
     contents = chain(
         content,
-        (render_expr_method(node) for node in parse_expressions(url)),
+        (node.render() for node in parse_expressions(url)),
         [EXPR_MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")
