@@ -63,7 +63,7 @@ SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
 EXPR_FILE: Path = (
-    Path(__file__).parent / ".." / "altair" / "expr" / "dummy.py"
+    Path(__file__).parent / ".." / "altair" / "expr" / "__init__.py"
 ).resolve()
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
