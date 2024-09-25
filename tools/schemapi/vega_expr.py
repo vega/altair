@@ -41,16 +41,12 @@ if TYPE_CHECKING:
     from mistune import BlockState
 
     if sys.version_info >= (3, 11):
-        from typing import LiteralString, Self, TypeAlias
+        from typing import LiteralString, Self
     else:
-        from typing_extensions import LiteralString, Self, TypeAlias
+        from typing_extensions import LiteralString, Self
     from _typeshed import SupportsKeysAndGetItem
 
-__all__ = ["write_expr_module"]
-
-
-WorkInProgress: TypeAlias = Any
-"""Marker for a type that will not be final."""
+__all__ = ["parse_expressions", "write_expr_module"]
 
 
 # NOTE: Urls/fragments
@@ -379,7 +375,7 @@ class VegaExprNode:
         Accessible via  ``self.parameters``.
         """
         split: Iterator[str] = self._split_signature_tokens(exclude_name=True)
-        self.parameters = list(VegaExprParam.iter_params(split))
+        self.parameters = list(VegaExprParam.from_texts(split))
         return self
 
     def with_signature(self) -> Self:
@@ -391,7 +387,7 @@ class VegaExprNode:
         param_list = (
             VegaExprParam.star_args()
             if self.is_overloaded()
-            else ", ".join(p.to_str() for p in self.parameters)
+            else ", ".join(p.render() for p in self.parameters)
         )
         self.signature = METHOD_SIGNATURE.format(
             title=self.title,
@@ -685,6 +681,30 @@ class VegaExprNode:
             ")"
         )
 
+    @classmethod
+    def from_tokens(cls, tokens: Iterable[Token], /) -> Iterator[Self]:
+        """
+        Lazy, filtered partial parser.
+
+        Applies a series of filters before rendering everything but the docs.
+
+        Parameters
+        ----------
+        tokens
+            `ast tokens`_ produced by ``mistune``
+
+        .. _ast tokens:
+            https://mistune.lepture.com/en/latest/guide.html#abstract-syntax-tree
+        """
+        for tok in tokens:
+            if (
+                (children := tok.get(CHILDREN)) is not None
+                and (child := next(iter(children)).get(RAW)) is not None
+                and (match := FUNCTION_DEF_LINE.match(child))
+                and (node := cls(match[1], children)).is_callable()
+            ):
+                yield node.with_parameters().with_signature()
+
 
 @dataclasses.dataclass
 class VegaExprParam:
@@ -696,7 +716,7 @@ class VegaExprParam:
     def star_args() -> LiteralString:
         return f"{STAR_ARGS}: Any"
 
-    def to_str(self) -> str:
+    def render(self) -> str:
         """Return as an annotated parameter, with a default if needed."""
         if self.required:
             return f"{self.name}: {INPUT_ANNOTATION}"
@@ -706,7 +726,7 @@ class VegaExprParam:
             return self.star_args()
 
     @classmethod
-    def iter_params(cls, raw_texts: Iterable[str], /) -> Iterator[Self]:
+    def from_texts(cls, raw_texts: Iterable[str], /) -> Iterator[Self]:
         """Yields an ordered parameter list."""
         is_required: bool = True
         for s in raw_texts:
@@ -725,29 +745,17 @@ class VegaExprParam:
                     continue
 
 
-def _parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
-    """Download, read markdown and iteratively parse into signature representations."""
-    for tok in read_ast_tokens(download_expressions_md(url)):
-        if (
-            (children := tok.get(CHILDREN)) is not None
-            and (child := next(iter(children)).get(RAW)) is not None
-            and (match := FUNCTION_DEF_LINE.match(child))
-        ):
-            node = VegaExprNode(match[1], children)
-            if node.is_callable():
-                yield node.with_parameters().with_signature()
-    request.urlcleanup()
-
-
 def parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
     """
-    Eagerly parse signatures of relevant definitions, then yield with docs.
+    Download, read markdown and eagerly parse signatures of relevant definitions.
 
-    Ensures each doc can use all remapped names, regardless of the order they appear.
+    Yields with docs to ensure each can use all remapped names, regardless of the order they appear.
     """
-    eager = tuple(_parse_expressions(url))
+    tokens = read_ast_tokens(download_expressions_md(url))
+    expr_nodes = tuple(VegaExprNode.from_tokens(tokens))
+    request.urlcleanup()
     VegaExprNode.remap_title.refresh()
-    for node in eager:
+    for node in expr_nodes:
         yield node.with_doc()
 
 
