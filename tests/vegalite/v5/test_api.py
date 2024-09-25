@@ -557,9 +557,13 @@ def test_when_labels_position_based_on_condition() -> None:
     # `mypy` will flag structural errors here
     cond = when["condition"][0]
     otherwise = when["value"]
-    param_color_py_when = alt.param(
-        expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
-    )
+
+    # TODO: Open an issue on making `OperatorMixin` generic
+    # Something like this would be used as the return type for all `__dunder__` methods:
+    # R = TypeVar("R", Expression, SelectionPredicateComposition)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    param_color_py_when = alt.param(expr=alt.expr.if_(test, cond["value"], otherwise))
     assert param_color_py_expr.expr == param_color_py_when.expr
 
     chart = (
@@ -600,7 +604,9 @@ def test_when_expressions_inside_parameters() -> None:
     cond = when_then_otherwise["condition"][0]
     otherwise = when_then_otherwise["value"]
     expected = alt.expr.if_(alt.datum.b >= 0, 10, -20)
-    actual = alt.expr.if_(cond["test"], cond["value"], otherwise)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    actual = alt.expr.if_(test, cond["value"], otherwise)
     assert expected == actual
 
     text_conditioned = bar.mark_text(
