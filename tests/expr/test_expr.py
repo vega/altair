@@ -25,17 +25,6 @@ def _is_property(obj: Any, /) -> bool:
     return isinstance(obj, property)
 
 
-def _get_classmethod_names(tp: type[Any], /) -> Iterator[str]:
-    for m in classify_class_attrs(tp):
-        if m.kind == "class method" and m.defining_class is tp:
-            yield m.name
-
-
-def _remap_classmethod_names(tp: type[Any], /) -> Iterator[tuple[str, str]]:
-    for name in _get_classmethod_names(tp):
-        yield VEGA_REMAP.get(name, name), name
-
-
 def _get_property_names(tp: type[Any], /) -> Iterator[str]:
     for nm, _ in getmembers(tp, _is_property):
         yield nm
@@ -121,21 +110,6 @@ def test_expr_methods(
 
     fn_call = fn(*(GetAttrExpression("datum", nm) for nm in datum_names))
     assert repr(fn_call) == f"{veganame}({datum_args})"
-
-
-@pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
-def test_expr_funcs(veganame: str, methodname: str):
-    """
-    Test all functions defined in expr.funcs.
-
-    # FIXME: These tests are no longer suitable
-    They only work for functions with a **single** argument:
-
-        TypeError: expr.if_() missing 2 required positional arguments: 'thenValue' and 'elseValue'.
-    """
-    func = getattr(expr, methodname)
-    z = func(datum.xxx)
-    assert repr(z) == f"{veganame}(datum.xxx)"
 
 
 @pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
