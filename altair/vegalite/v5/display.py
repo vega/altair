@@ -100,7 +100,7 @@ def jupyter_renderer(spec: dict, **metadata):
     JupyterChart.enable_offline(offline=offline)  # type: ignore[attr-defined]
 
     # propagate embed options
-    embed_options = metadata.get("embed_options", None)
+    embed_options = metadata.get("embed_options")
 
     # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
     # conditionally defined in AnyWidget
