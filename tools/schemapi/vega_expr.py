@@ -61,7 +61,6 @@ class Source(str, enum.Enum):
 
 # NOTE: Regex patterns
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
-LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
 SENTENCE_BREAK: Pattern[str] = re.compile(r"(?<!\.)\. ")
 
 # NOTE: `mistune` token keys/values
@@ -124,16 +123,6 @@ def download_expressions_md(url: str, /) -> Path:
         return fp
 
 
-def strip_include_tag(s: str, /) -> str:
-    """
-    Removes `liquid`_ templating markup.
-
-    .. _liquid:
-        https://shopify.github.io/liquid/
-    """
-    return LIQUID_INCLUDE.sub(r"", s)
-
-
 def expand_urls(url: str, /) -> str:
     if url.startswith("#"):
         url = f"{EXPRESSIONS_DOCS_URL}{url}"
@@ -161,10 +150,6 @@ class RSTRenderer(_RSTRenderer):
         inline = f"`{text}`_"
         state.env["ref_links"][text] = {"url": url}
         return inline
-
-    def text(self, token: Token, state: BlockState) -> str:
-        text = super().text(token, state)
-        return strip_include_tag(text)
 
     def _with_links(self, s: str, links: dict[str, Any] | Any, /) -> str:
         it = chain.from_iterable(
@@ -518,7 +503,7 @@ class VegaExprNode:
         """
         EXCLUDE: set[str] = {", ", "", self.name} if exclude_name else {", ", ""}
         for tok in self._signature_tokens():
-            clean = strip_include_tag(tok[RAW]).strip(", -")
+            clean = tok[RAW].strip(", -")
             if clean not in EXCLUDE:
                 yield from VegaExprNode._split_markers(clean)
 

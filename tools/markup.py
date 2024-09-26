@@ -6,7 +6,8 @@ import re
 from html import unescape
 from typing import TYPE_CHECKING, Any, Iterable, Literal
 
-import mistune
+from mistune import InlineParser as _InlineParser
+from mistune import Markdown as _Markdown
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
@@ -19,12 +20,13 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     from re import Pattern
 
-    from mistune import BaseRenderer, BlockParser, BlockState, InlineParser
+    from mistune import BaseRenderer, BlockParser, BlockState, InlineState
 
 Token: TypeAlias = "dict[str, Any]"
 
 _RE_LINK: Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
 _RE_SPECIAL: Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
+_RE_LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
 
 
 class RSTRenderer(_RSTRenderer):
@@ -36,7 +38,7 @@ class RSTRenderer(_RSTRenderer):
         return rf"\ :raw-html:`{html}`\ "
 
 
-class RSTParse(mistune.Markdown):
+class RSTParse(_Markdown):
     """
     Minor extension to support partial `ast`_ conversion.
 
@@ -50,7 +52,7 @@ class RSTParse(mistune.Markdown):
         self,
         renderer: BaseRenderer | Literal["ast"] | None,
         block: BlockParser | None = None,
-        inline: InlineParser | None = None,
+        inline: _InlineParser | None = None,
         plugins=None,
     ) -> None:
         if renderer == "ast":
@@ -82,7 +84,7 @@ class RSTParseVegaLite(RSTParse):
         self,
         renderer: RSTRenderer | None = None,
         block: BlockParser | None = None,
-        inline: InlineParser | None = None,
+        inline: _InlineParser | None = None,
         plugins=None,
     ) -> None:
         super().__init__(renderer or RSTRenderer(), block, inline, plugins)
@@ -109,13 +111,27 @@ class RSTParseVegaLite(RSTParse):
         return description.strip()
 
 
+class InlineParser(_InlineParser):
+    def __init__(self, hard_wrap: bool = False) -> None:
+        super().__init__(hard_wrap)
+
+    def process_text(self, text: str, state: InlineState) -> None:
+        """
+        Removes `liquid`_ templating markup.
+
+        .. _liquid:
+        https://shopify.github.io/liquid/
+        """
+        state.append_token({"type": "text", "raw": _RE_LIQUID_INCLUDE.sub(r"", text)})
+
+
 def read_ast_tokens(source: Path, /) -> list[Token]:
     """
     Read from ``source``, drop ``BlockState``.
 
     Factored out to provide accurate typing.
     """
-    return mistune.create_markdown(renderer="ast").read(source)[0]
+    return _Markdown(renderer=None, inline=InlineParser()).read(source)[0]
 
 
 def rst_syntax_for_class(class_name: str) -> str:
