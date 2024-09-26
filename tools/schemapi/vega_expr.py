@@ -375,7 +375,10 @@ class VegaExprNode:
 
         Accessible via ``self.doc``
         """
-        self.doc = self._doc_post_process(parser.render_tokens(self._doc_tokens()))
+        s: str = parser.render_tokens(self._doc_tokens())
+        s = italics_to_backticks(s, self.parameter_names(variadic=False))
+        s = type(self).remap_title(s)
+        self.doc = _doc_fmt(s)
         return self
 
     def with_parameters(self) -> Self:
@@ -547,16 +550,6 @@ class VegaExprNode:
             f"Failed for:\n\n{self!r}"
         )
         raise NotImplementedError(msg)
-
-    def _doc_post_process(self, s: str, /) -> str:
-        """
-        Utilizing properties found during parsing to improve docs.
-
-        Temporarily handling this here.
-        """
-        backtick_params = italics_to_backticks(s, self.parameter_names(variadic=False))
-        with_alt_references = type(self).remap_title(backtick_params)
-        return _doc_fmt(with_alt_references)
 
     def is_callable(self) -> bool:
         """
