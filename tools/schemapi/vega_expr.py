@@ -52,6 +52,8 @@ EXPRESSIONS_DOCS_URL: LiteralString = f"{VEGA_DOCS_URL}expressions/"
 
 
 class Source(str, enum.Enum):
+    """Enumerations for ``expressions.md`` source files."""
+
     LIVE = "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
     STATIC = "https://raw.githubusercontent.com/vega/vega/ff98519cce32b776a98d01dd982467d76fc9ee34/docs/docs/expressions.md"
 
@@ -98,6 +100,152 @@ DECORATOR: LiteralString = r"@classmethod"
 IGNORE_OVERRIDE: LiteralString = r"# type: ignore[override]"
 IGNORE_MISC: LiteralString = r"# type: ignore[misc]"
 
+MODULE_PRE = '''\
+"""Tools for creating transform & filter expressions with a python syntax."""
+
+from __future__ import annotations
+
+import sys
+from typing import Any, TYPE_CHECKING
+
+from altair.expr.core import {const}, {func}
+from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+if TYPE_CHECKING:
+    from altair.expr.core import {return_ann}, {input_ann}
+
+
+class {metaclass}(type):
+    """
+    Metaclass for :class:`expr`.
+
+    Currently providing read-only class properties, representing JavaScript constants.
+    """
+
+    @property
+    def NaN(cls) -> {return_ann}:
+        """Not a number (same as JavaScript literal NaN)."""
+        return {const}("NaN")
+
+    @property
+    def LN10(cls) -> {return_ann}:
+        """The natural log of 10 (alias to Math.LN10)."""
+        return {const}("LN10")
+
+    @property
+    def E(cls) -> {return_ann}:
+        """The transcendental number e (alias to Math.E)."""
+        return {const}("E")
+
+    @property
+    def LOG10E(cls) -> {return_ann}:
+        """The base 10 logarithm e (alias to Math.LOG10E)."""
+        return {const}("LOG10E")
+
+    @property
+    def LOG2E(cls) -> {return_ann}:
+        """The base 2 logarithm of e (alias to Math.LOG2E)."""
+        return {const}("LOG2E")
+
+    @property
+    def SQRT1_2(cls) -> {return_ann}:
+        """The square root of 0.5 (alias to Math.SQRT1_2)."""
+        return {const}("SQRT1_2")
+
+    @property
+    def LN2(cls) -> {return_ann}:
+        """The natural log of 2 (alias to Math.LN2)."""
+        return {const}("LN2")
+
+    @property
+    def SQRT2(cls) -> {return_ann}:
+        """The square root of 2 (alias to Math.SQRT1_2)."""
+        return {const}("SQRT2")
+
+    @property
+    def PI(cls) -> {return_ann}:
+        """The transcendental number pi (alias to Math.PI)."""
+        return {const}("PI")
+'''
+
+MODULE_POST = """\
+_ExprType = expr
+# NOTE: Compatibility alias for previous type of `alt.expr`.
+# `_ExprType` was not referenced in any internal imports/tests.
+"""
+
+CLS_DOC = """
+    Utility providing *constants* and *classmethods* to construct expressions.
+
+    `Expressions`_ can be used to write basic formulas that enable custom interactions.
+
+    Alternatively, an `inline expression`_ may be defined via :class:`expr()`.
+
+    Parameters
+    ----------
+    expr: str
+        A `vega expression`_ string.
+
+    Returns
+    -------
+    ``ExprRef``
+
+    .. _Expressions:
+        https://altair-viz.github.io/user_guide/interactions.html#expressions
+    .. _inline expression:
+       https://altair-viz.github.io/user_guide/interactions.html#inline-expressions
+    .. _vega expression:
+       https://vega.github.io/vega/docs/expressions/
+
+    Examples
+    --------
+    >>> import altair as alt
+
+    >>> bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
+    >>> param_width = alt.param(bind=bind_range, name="param_width")
+    >>> param_color = alt.param(
+    ...     expr=alt.expr.if_(param_width < 200, "red", "black"),
+    ...     name="param_color",
+    ... )
+    >>> y = alt.Y("yval").axis(titleColor=param_color)
+
+    >>> y
+    Y({
+      axis: {'titleColor': Parameter('param_color', VariableParameter({
+        expr: if((param_width < 200),'red','black'),
+        name: 'param_color'
+      }))},
+      shorthand: 'yval'
+    })
+    """
+
+CLS_TEMPLATE = '''\
+class expr({base}, metaclass={metaclass}):
+    """{doc}"""
+
+    @override
+    def __new__(cls: type[{base}], expr: str) -> {base}:  {type_ignore}
+        return {base}(expr=expr)
+'''
+
+METHOD_SIGNATURE = (
+    """def {title}(cls, {param_list}{marker}) -> {return_ann}:{type_ignore}"""
+)
+
+METHOD_TEMPLATE = '''\
+    {decorator}
+    {signature}
+        """
+        {doc}
+        """
+        return {return_wrapper}({name}, {body_params})
+'''
+
 
 def _override_predicate(obj: Any, /) -> bool:
     return callable(obj) and not (name := obj.__name__).startswith("_")  # noqa: F841
@@ -108,40 +256,12 @@ _SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
 )
 
 
-def download_expressions_md(url: str, /) -> Path:
-    """Download to a temporary file, return that as a ``pathlib.Path``."""
-    tmp, _ = request.urlretrieve(url)
-    fp = Path(tmp)
-    if not fp.exists():
-        msg = (
-            f"Expressions download failed: {fp!s}.\n\n"
-            f"Try manually accessing resource: {url!r}"
-        )
-        raise FileNotFoundError(msg)
-    else:
-        return fp
-
-
-def expand_urls(url: str, /) -> str:
-    if url.startswith("#"):
-        url = f"{EXPRESSIONS_DOCS_URL}{url}"
-    else:
-        url = url.replace(r"../", VEGA_DOCS_URL)
-    return url
-
-
 class RSTRenderer(_RSTRenderer):
     def __init__(self) -> None:
         super().__init__()
 
     def link(self, token: Token, state: BlockState) -> str:
-        """
-        Store link url, for appending at the end of doc.
-
-        TODO
-        ----
-        - Parameterize `"#"`, `"../"` expansion during init
-        """
+        """Store link url, for appending at the end of doc."""
         attrs = token["attrs"]
         url = expand_urls(attrs["url"])
         text = self.render_children(token, state)
@@ -173,30 +293,6 @@ text_wrap = _TextWrapper(
     initial_indent=METHOD_INDENT,
     subsequent_indent=METHOD_INDENT,
 )
-
-
-def _doc_fmt(doc: str, /) -> str:
-    """
-    FIXME: Currently doing too many things.
-
-    Primarily using to exclude summary line + references from ``textwrap``.
-    """
-    sentences: deque[str] = deque(SENTENCE_BREAK.split(doc))
-    if len(sentences) > 1:
-        references: str = ""
-        summary = f"{sentences.popleft()}.\n"
-        last_line = sentences.pop().strip()
-        sentences = deque(f"{s}. " for s in sentences)
-        if SECTION_BREAK in last_line:
-            last_line, references = last_line.split(SECTION_BREAK, maxsplit=1)
-        sentences.append(last_line)
-        sentences = deque(text_wrap.wrap("".join(sentences)))
-        sentences.appendleft(summary)
-        if references:
-            sentences.extend(("", indent(references, METHOD_INDENT)))
-        return "\n".join(sentences)
-    else:
-        return sentences.pop().strip()
 
 
 class ReplaceMany:
@@ -324,35 +420,7 @@ class ReplaceMany:
         return f"{type(self).__name__}(\n    {self._mapping!r}\n)"
 
 
-def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
-    """
-    Perform a targeted replacement, considering links.
-
-    Parameters
-    ----------
-    s
-        String containing rendered `.rst`.
-    names
-        Group of names the replacement applies to.
-
-    Notes
-    -----
-    - Avoids adding backticks to parameter names that are also used in a link.
-    - All cases of these are for `unit|units`.
-
-    Examples
-    --------
-    >>> italics_to_backticks(
-    ...     "some text and *name* and more text but also *other* text",
-    ...     ("name", "other"),
-    ... )
-    "some text and ``name`` and more text but also ``other`` text"
-    """
-    pattern = rf"(?P<not_link_start>[^`_])\*(?P<name>{'|'.join(names)})\*(?P<not_link_end>[^`])"
-    return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
-
-
-class VegaExprNode:
+class VegaExprDef:
     """
     ``SchemaInfo``-like, but operates on `expressions.md`_.
 
@@ -380,7 +448,7 @@ class VegaExprNode:
         s: str = parser.render_tokens(self._doc_tokens())
         s = italics_to_backticks(s, self.parameter_names(variadic=False))
         s = type(self).remap_title(s)
-        self.doc = _doc_fmt(s)
+        self.doc = format_doc(s)
         return self
 
     def with_parameters(self) -> Self:
@@ -432,6 +500,7 @@ class VegaExprNode:
             raise TypeError(msg)
 
     def render(self) -> str:
+        """Return fully parsed method definition."""
         if self.is_overloaded():
             body_params = STAR_ARGS[1:]
         else:
@@ -454,7 +523,7 @@ class VegaExprNode:
         """
         Use for the method definition, but not when calling internally.
 
-        Updates ``VegaExprNode.remap_title`` for documentation example substitutions.
+        Updates ``remap_title`` class variable for documentation example substitutions.
         """
         title = f"{self.name}_" if self.is_keyword() else self.name
         type(self).remap_title.update({self.name: f"alt.expr.{title}"})
@@ -507,7 +576,7 @@ class VegaExprNode:
         for tok in self._signature_tokens():
             clean = tok[RAW].strip(", -")
             if clean not in EXCLUDE:
-                yield from VegaExprNode._split_markers(clean)
+                yield from VegaExprDef._split_markers(clean)
 
     @staticmethod
     def _split_markers(s: str, /) -> Iterator[str]:
@@ -537,7 +606,7 @@ class VegaExprNode:
             if len(s) == 1:
                 yield s
             elif len(s) > 1:
-                yield from VegaExprNode._split_markers(s)
+                yield from VegaExprDef._split_markers(s)
             yield from end
 
     def _doc_tokens(self) -> Sequence[Token]:
@@ -742,165 +811,104 @@ class VegaExprParam:
                     continue
 
 
-def parse_expressions(url: str, /) -> Iterator[VegaExprNode]:
+def download_expressions_md(url: str, /) -> Path:
+    """Download to a temporary file, return that as a ``pathlib.Path``."""
+    tmp, _ = request.urlretrieve(url)
+    fp = Path(tmp)
+    if not fp.exists():
+        msg = (
+            f"Expressions download failed: {fp!s}.\n\n"
+            f"Try manually accessing resource: {url!r}"
+        )
+        raise FileNotFoundError(msg)
+    else:
+        return fp
+
+
+def expand_urls(url: str, /) -> str:
+    if url.startswith("#"):
+        url = f"{EXPRESSIONS_DOCS_URL}{url}"
+    else:
+        url = url.replace(r"../", VEGA_DOCS_URL)
+    return url
+
+
+def format_doc(doc: str, /) -> str:
+    """
+    Format rendered docstring content.
+
+    Primarily used to prevent wrapping on `summary line`_ and references.
+
+    Notes
+    -----
+    - Source is very different to `vega-lite`
+    - There are no real sections, so these are created here
+    - Single line docs are unchanged
+    - Multi-line have everything following the first line wrappped.
+        - With a double break inserted for a summary line
+    - Reference-like links section (if present) are also ommitted from wrapping
+
+    .. _summary line:
+        https://numpydoc.readthedocs.io/en/latest/format.html#short-summary
+    """
+    sentences: deque[str] = deque(SENTENCE_BREAK.split(doc))
+    if len(sentences) > 1:
+        references: str = ""
+        summary = f"{sentences.popleft()}.\n"
+        last_line = sentences.pop().strip()
+        sentences = deque(f"{s}. " for s in sentences)
+        if SECTION_BREAK in last_line:
+            last_line, references = last_line.split(SECTION_BREAK, maxsplit=1)
+        sentences.append(last_line)
+        sentences = deque(text_wrap.wrap("".join(sentences)))
+        sentences.appendleft(summary)
+        if references:
+            sentences.extend(("", indent(references, METHOD_INDENT)))
+        return "\n".join(sentences)
+    else:
+        return sentences.pop().strip()
+
+
+def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
+    """
+    Perform a targeted replacement, considering links.
+
+    Parameters
+    ----------
+    s
+        String containing rendered `.rst`.
+    names
+        Group of names the replacement applies to.
+
+    Notes
+    -----
+    - Avoids adding backticks to parameter names that are also used in a link.
+    - All cases of these are for `unit|units`.
+
+    Examples
+    --------
+    >>> italics_to_backticks(
+    ...     "some text and *name* and more text but also *other* text",
+    ...     ("name", "other"),
+    ... )
+    "some text and ``name`` and more text but also ``other`` text"
+    """
+    pattern = rf"(?P<not_link_start>[^`_])\*(?P<name>{'|'.join(names)})\*(?P<not_link_end>[^`])"
+    return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
+
+
+def parse_expressions(url: str, /) -> Iterator[VegaExprDef]:
     """
     Download, read markdown and eagerly parse signatures of relevant definitions.
 
     Yields with docs to ensure each can use all remapped names, regardless of the order they appear.
     """
     tokens = read_ast_tokens(download_expressions_md(url))
-    expr_nodes = tuple(VegaExprNode.from_tokens(tokens))
+    expr_defs = tuple(VegaExprDef.from_tokens(tokens))
     request.urlcleanup()
-    VegaExprNode.remap_title.refresh()
-    for node in expr_nodes:
-        yield node.with_doc()
-
-
-MODULE_PRE = '''\
-"""Tools for creating transform & filter expressions with a python syntax."""
-
-from __future__ import annotations
-
-import sys
-from typing import Any, TYPE_CHECKING
-
-from altair.expr.core import {const}, {func}
-from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
-
-if sys.version_info >= (3, 12):
-    from typing import override
-else:
-    from typing_extensions import override
-
-if TYPE_CHECKING:
-    from altair.expr.core import {return_ann}, {input_ann}
-
-
-class {metaclass}(type):
-    """
-    Metaclass for :class:`expr`.
-
-    Currently providing read-only class properties, representing JavaScript constants.
-    """
-
-    @property
-    def NaN(cls) -> {return_ann}:
-        """Not a number (same as JavaScript literal NaN)."""
-        return {const}("NaN")
-
-    @property
-    def LN10(cls) -> {return_ann}:
-        """The natural log of 10 (alias to Math.LN10)."""
-        return {const}("LN10")
-
-    @property
-    def E(cls) -> {return_ann}:
-        """The transcendental number e (alias to Math.E)."""
-        return {const}("E")
-
-    @property
-    def LOG10E(cls) -> {return_ann}:
-        """The base 10 logarithm e (alias to Math.LOG10E)."""
-        return {const}("LOG10E")
-
-    @property
-    def LOG2E(cls) -> {return_ann}:
-        """The base 2 logarithm of e (alias to Math.LOG2E)."""
-        return {const}("LOG2E")
-
-    @property
-    def SQRT1_2(cls) -> {return_ann}:
-        """The square root of 0.5 (alias to Math.SQRT1_2)."""
-        return {const}("SQRT1_2")
-
-    @property
-    def LN2(cls) -> {return_ann}:
-        """The natural log of 2 (alias to Math.LN2)."""
-        return {const}("LN2")
-
-    @property
-    def SQRT2(cls) -> {return_ann}:
-        """The square root of 2 (alias to Math.SQRT1_2)."""
-        return {const}("SQRT2")
-
-    @property
-    def PI(cls) -> {return_ann}:
-        """The transcendental number pi (alias to Math.PI)."""
-        return {const}("PI")
-'''
-
-MODULE_POST = """\
-_ExprType = expr
-# NOTE: Compatibility alias for previous type of `alt.expr`.
-# `_ExprType` was not referenced in any internal imports/tests.
-"""
-
-CLS_DOC = """
-    Utility providing *constants* and *classmethods* to construct expressions.
-
-    `Expressions`_ can be used to write basic formulas that enable custom interactions.
-
-    Alternatively, an `inline expression`_ may be defined via :class:`expr()`.
-
-    Parameters
-    ----------
-    expr: str
-        A `vega expression`_ string.
-
-    Returns
-    -------
-    ``ExprRef``
-
-    .. _Expressions:
-        https://altair-viz.github.io/user_guide/interactions.html#expressions
-    .. _inline expression:
-       https://altair-viz.github.io/user_guide/interactions.html#inline-expressions
-    .. _vega expression:
-       https://vega.github.io/vega/docs/expressions/
-
-    Examples
-    --------
-    >>> import altair as alt
-
-    >>> bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
-    >>> param_width = alt.param(bind=bind_range, name="param_width")
-    >>> param_color = alt.param(
-    ...     expr=alt.expr.if_(param_width < 200, "red", "black"),
-    ...     name="param_color",
-    ... )
-    >>> y = alt.Y("yval").axis(titleColor=param_color)
-
-    >>> y
-    Y({
-      axis: {'titleColor': Parameter('param_color', VariableParameter({
-        expr: if((param_width < 200),'red','black'),
-        name: 'param_color'
-      }))},
-      shorthand: 'yval'
-    })
-    """
-
-CLS_TEMPLATE = '''\
-class expr({base}, metaclass={metaclass}):
-    """{doc}"""
-
-    @override
-    def __new__(cls: type[{base}], expr: str) -> {base}:  {type_ignore}
-        return {base}(expr=expr)
-'''
-
-METHOD_SIGNATURE = (
-    """def {title}(cls, {param_list}{marker}) -> {return_ann}:{type_ignore}"""
-)
-
-METHOD_TEMPLATE = '''\
-    {decorator}
-    {signature}
-        """
-        {doc}
-        """
-        return {return_wrapper}({name}, {body_params})
-'''
+    VegaExprDef.remap_title.refresh()
+    for expr_def in expr_defs:
+        yield expr_def.with_doc()
 
 
 def write_expr_module(
@@ -941,7 +949,7 @@ def write_expr_module(
     )
     contents = chain(
         content,
-        (node.render() for node in parse_expressions(url)),
+        (expr_def.render() for expr_def in parse_expressions(url)),
         [MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")
