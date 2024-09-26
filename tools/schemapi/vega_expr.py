@@ -93,12 +93,7 @@ IGNORE_MISC = r"# type: ignore[misc]"
 
 
 def _override_predicate(obj: Any, /) -> bool:
-    return (
-        callable(obj)
-        and (name := obj.__name__)
-        and isinstance(name, str)
-        and not (name.startswith("_"))
-    )
+    return callable(obj) and not (name := obj.__name__).startswith("_")  # noqa: F841
 
 
 _SCHEMA_BASE_MEMBERS: frozenset[str] = frozenset(
