@@ -75,6 +75,9 @@ OPEN_BRACKET: Literal["["] = "["
 CLOSE_BRACKET: Literal["]"] = "]"
 INLINE_OVERLOAD: Literal[" |"] = " |"
 
+METHOD_INDENT: LiteralString = 8 * " "
+SECTION_BREAK: Literal["\n\n"] = "\n\n"
+
 # NOTE: `altair` types (for annotations)
 RETURN_WRAPPER = "FunctionExpression"
 RETURN_ANNOTATION = "Expression"
@@ -163,8 +166,8 @@ text_wrap = _TextWrapper(
     width=100,
     break_long_words=False,
     break_on_hyphens=False,
-    initial_indent=8 * " ",
-    subsequent_indent=8 * " ",
+    initial_indent=METHOD_INDENT,
+    subsequent_indent=METHOD_INDENT,
 )
 
 
@@ -180,13 +183,13 @@ def _doc_fmt(doc: str, /) -> str:
         summary = f"{sentences.popleft()}.\n"
         last_line = sentences.pop().strip()
         sentences = deque(f"{s}. " for s in sentences)
-        if "\n\n.. _" in last_line:
-            last_line, references = last_line.split("\n\n", maxsplit=1)
+        if SECTION_BREAK in last_line:
+            last_line, references = last_line.split(SECTION_BREAK, maxsplit=1)
         sentences.append(last_line)
         sentences = deque(text_wrap.wrap("".join(sentences)))
         sentences.appendleft(summary)
         if references:
-            sentences.extend(("", indent(references, 8 * " ")))
+            sentences.extend(("", indent(references, METHOD_INDENT)))
         return "\n".join(sentences)
     else:
         return sentences.pop().strip()
