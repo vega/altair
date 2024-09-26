@@ -47,8 +47,8 @@ __all__ = ["parse_expressions", "write_expr_module"]
 
 
 # NOTE: Urls/fragments
-VEGA_DOCS_URL = "https://vega.github.io/vega/docs/"
-EXPRESSIONS_DOCS_URL = f"{VEGA_DOCS_URL}expressions/"
+VEGA_DOCS_URL: LiteralString = "https://vega.github.io/vega/docs/"
+EXPRESSIONS_DOCS_URL: LiteralString = f"{VEGA_DOCS_URL}expressions/"
 
 
 class Source(str, enum.Enum):
@@ -79,20 +79,24 @@ METHOD_INDENT: LiteralString = 8 * " "
 SECTION_BREAK: Literal["\n\n"] = "\n\n"
 
 # NOTE: `altair` types (for annotations)
-RETURN_WRAPPER = "FunctionExpression"
-RETURN_ANNOTATION = "Expression"
-# NOTE: No benefit to annotating with the actual wrapper
-# - `Expression` is shorter, and has all the functionality/attributes
-CONST_WRAPPER = "ConstExpression"
-CLS_META = "_ExprMeta"
-INPUT_ANNOTATION = "IntoExpression"
+RETURN_WRAPPER: LiteralString = "FunctionExpression"
+RETURN_ANNOTATION: LiteralString = "Expression"
+"""
+The annotation is intentionally *less* specific than the real type.
+
+``Expression`` is shorter, while preserving all the user-facing functionality
+"""
+
+CONST_WRAPPER: LiteralString = "ConstExpression"
+CLS_META: LiteralString = "_ExprMeta"
+INPUT_ANNOTATION: LiteralString = "IntoExpression"
 
 # NOTE: `python`/`mypy` related literals
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
-DECORATOR = r"@classmethod"
-IGNORE_OVERRIDE = r"# type: ignore[override]"
-IGNORE_MISC = r"# type: ignore[misc]"
+DECORATOR: LiteralString = r"@classmethod"
+IGNORE_OVERRIDE: LiteralString = r"# type: ignore[override]"
+IGNORE_MISC: LiteralString = r"# type: ignore[misc]"
 
 
 def _override_predicate(obj: Any, /) -> bool:
