@@ -340,6 +340,34 @@ class ReplaceMany:
         return f"{type(self).__name__}(\n    {self._mapping!r}\n)"
 
 
+def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
+    """
+    Perform a targeted replacement, considering links.
+
+    Parameters
+    ----------
+    s
+        String containing rendered `.rst`.
+    names
+        Group of names the replacement applies to.
+
+    Notes
+    -----
+    - Avoids adding backticks to parameter names that are also used in a link.
+    - All cases of these are for `unit|units`.
+
+    Examples
+    --------
+    >>> italics_to_backticks(
+    ...     "some text and *name* and more text but also *other* text",
+    ...     ("name", "other"),
+    ... )
+    "some text and ``name`` and more text but also ``other`` text"
+    """
+    pattern = rf"(?P<not_link_start>[^`_])\*(?P<name>{'|'.join(names)})\*(?P<not_link_end>[^`])"
+    return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
+
+
 class VegaExprNode:
     """
     ``SchemaInfo``-like, but operates on `expressions.md`_.
@@ -538,20 +566,14 @@ class VegaExprNode:
         )
         raise NotImplementedError(msg)
 
-    def _doc_post_process(self, rendered: str, /) -> str:
+    def _doc_post_process(self, s: str, /) -> str:
         """
         Utilizing properties found during parsing to improve docs.
 
         Temporarily handling this here.
         """
-        # NOTE: Avoids adding backticks to parameter names that are also used in a link
-        # - All cases of these are for `unit|units`
-        pre, post = "[^`_]", "[^`]"
-        pattern = (
-            rf"({pre})\*({'|'.join(self.parameter_names(variadic=False))})\*({post})"
-        )
-        highlight_params = re.sub(pattern, r"\g<1>``\g<2>``\g<3>", rendered)
-        with_alt_references = type(self).remap_title(highlight_params)
+        backtick_params = italics_to_backticks(s, self.parameter_names(variadic=False))
+        with_alt_references = type(self).remap_title(backtick_params)
         unescaped = mistune.util.unescape(with_alt_references)
         numpydoc_style = _doc_fmt(unescaped)
         return numpydoc_style
