@@ -24,9 +24,6 @@ from typing import (
 )
 from urllib import request
 
-import mistune
-import mistune.util
-
 from tools.markup import RSTParse, Token, read_ast_tokens
 from tools.markup import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
@@ -559,9 +556,7 @@ class VegaExprNode:
         """
         backtick_params = italics_to_backticks(s, self.parameter_names(variadic=False))
         with_alt_references = type(self).remap_title(backtick_params)
-        unescaped = mistune.util.unescape(with_alt_references)
-        numpydoc_style = _doc_fmt(unescaped)
-        return numpydoc_style
+        return _doc_fmt(with_alt_references)
 
     def is_callable(self) -> bool:
         """

@@ -6,6 +6,7 @@ import re
 from html import unescape
 from typing import TYPE_CHECKING, Any, Iterable, Literal
 
+import mistune.util
 from mistune import InlineParser as _InlineParser
 from mistune import Markdown as _Markdown
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
@@ -76,7 +77,8 @@ class RSTParse(_Markdown):
             msg = "Unable to render tokens without a renderer."
             raise TypeError(msg)
         state = self.block.state_cls()
-        return self.renderer(self._iter_render(tokens, state), state)
+        s = self.renderer(self._iter_render(tokens, state), state)
+        return mistune.util.unescape(s)
 
 
 class RSTParseVegaLite(RSTParse):
