@@ -436,6 +436,18 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("pow", (value, exponent))
 
     @classmethod
+    def random(cls) -> Expression:
+        """
+        Returns a pseudo-random number in the range [0,1).
+
+        Same as JavaScript's `Math.random`_.
+
+        .. _Math.random:
+            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+        """
+        return FunctionExpression("random", ())
+
+    @classmethod
     def round(cls, value: IntoExpression, /) -> Expression:
         """
         Rounds ``value`` to the nearest integer.
@@ -498,6 +510,60 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("sampleNormal", (mean, stdev))
 
     @classmethod
+    def cumulativeNormal(
+        cls,
+        value: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `cumulative distribution function`_ at the given input domain ``value`` for a normal distribution with specified ``mean`` and standard deviation ``stdev``.
+
+        If unspecified, the mean defaults to ``0`` and the standard deviation defaults to ``1``.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("cumulativeNormal", (value, mean, stdev))
+
+    @classmethod
+    def densityNormal(
+        cls,
+        value: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `probability density function`_ at the given input domain ``value``, for a normal distribution with specified ``mean`` and standard deviation ``stdev``.
+
+        If unspecified, the mean defaults to ``0`` and the standard deviation defaults to ``1``.
+
+        .. _probability density function:
+            https://en.wikipedia.org/wiki/Probability_density_function
+        """
+        return FunctionExpression("densityNormal", (value, mean, stdev))
+
+    @classmethod
+    def quantileNormal(
+        cls,
+        probability: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the quantile value (the inverse of the `cumulative distribution function`_) for the given input ``probability``, for a normal distribution with specified ``mean`` and standard deviation ``stdev``.
+
+        If unspecified, the mean defaults to ``0`` and the standard deviation defaults to ``1``.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("quantileNormal", (probability, mean, stdev))
+
+    @classmethod
     def sampleLogNormal(
         cls, mean: IntoExpression = None, stdev: IntoExpression = None, /
     ) -> Expression:
@@ -513,6 +579,63 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("sampleLogNormal", (mean, stdev))
 
     @classmethod
+    def cumulativeLogNormal(
+        cls,
+        value: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `cumulative distribution function`_ at the given input domain ``value`` for a log-normal distribution with specified log ``mean`` and log standard deviation ``stdev``.
+
+        If unspecified, the log mean defaults to ``0`` and the log standard deviation defaults to
+        ``1``.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("cumulativeLogNormal", (value, mean, stdev))
+
+    @classmethod
+    def densityLogNormal(
+        cls,
+        value: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `probability density function`_ at the given input domain ``value``, for a log-normal distribution with specified log ``mean`` and log standard deviation ``stdev``.
+
+        If unspecified, the log mean defaults to ``0`` and the log standard deviation defaults to
+        ``1``.
+
+        .. _probability density function:
+            https://en.wikipedia.org/wiki/Probability_density_function
+        """
+        return FunctionExpression("densityLogNormal", (value, mean, stdev))
+
+    @classmethod
+    def quantileLogNormal(
+        cls,
+        probability: IntoExpression,
+        mean: IntoExpression = None,
+        stdev: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the quantile value (the inverse of the `cumulative distribution function`_) for the given input ``probability``, for a log-normal distribution with specified log ``mean`` and log standard deviation ``stdev``.
+
+        If unspecified, the log mean defaults to ``0`` and the log standard deviation defaults to
+        ``1``.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("quantileLogNormal", (probability, mean, stdev))
+
+    @classmethod
     def sampleUniform(
         cls, min: IntoExpression = None, max: IntoExpression = None, /
     ) -> Expression:
@@ -526,6 +649,68 @@ class expr(_ExprRef, metaclass=_ExprMeta):
             https://en.wikipedia.org/wiki/Uniform_distribution_(continuous
         """
         return FunctionExpression("sampleUniform", (min, max))
+
+    @classmethod
+    def cumulativeUniform(
+        cls,
+        value: IntoExpression,
+        min: IntoExpression = None,
+        max: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `cumulative distribution function`_ at the given input domain ``value`` for a uniform distribution over the interval [``min``, ``max``).
+
+        If unspecified, ``min`` defaults to ``0`` and ``max`` defaults to ``1``. If only one
+        argument is provided, it is interpreted as the ``max`` value.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("cumulativeUniform", (value, min, max))
+
+    @classmethod
+    def densityUniform(
+        cls,
+        value: IntoExpression,
+        min: IntoExpression = None,
+        max: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the value of the `probability density function`_ at the given input domain ``value``,  for a uniform distribution over the interval [``min``, ``max``).
+
+        If unspecified, ``min`` defaults to ``0`` and ``max`` defaults to ``1``. If only one
+        argument is provided, it is interpreted as the ``max`` value.
+
+        .. _probability density function:
+            https://en.wikipedia.org/wiki/Probability_density_function
+        """
+        return FunctionExpression("densityUniform", (value, min, max))
+
+    @classmethod
+    def quantileUniform(
+        cls,
+        probability: IntoExpression,
+        min: IntoExpression = None,
+        max: IntoExpression = None,
+        /,
+    ) -> Expression:
+        """
+        Returns the quantile value (the inverse of the `cumulative distribution function`_) for the given input ``probability``,  for a uniform distribution over the interval [``min``, ``max``).
+
+        If unspecified, ``min`` defaults to ``0`` and ``max`` defaults to ``1``. If only one
+        argument is provided, it is interpreted as the ``max`` value.
+
+        .. _cumulative distribution function:
+            https://en.wikipedia.org/wiki/Cumulative_distribution_function
+        """
+        return FunctionExpression("quantileUniform", (probability, min, max))
+
+    @classmethod
+    def now(cls) -> Expression:
+        """Returns the timestamp for the current time."""
+        return FunctionExpression("now", ())
 
     @classmethod
     def datetime(
@@ -1235,6 +1420,39 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("hcl", args)
 
     @classmethod
+    def luminance(cls, specifier: IntoExpression, /) -> Expression:
+        """
+        Returns the luminance for the given color ``specifier`` (compatible with `d3-color's rgb function`_).
+
+        The luminance is calculated according to the `W3C Web Content Accessibility Guidelines`_.
+
+        .. _d3-color's rgb function:
+            https://github.com/d3/d3-color#rgb
+        .. _W3C Web Content Accessibility Guidelines:
+            https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+        """
+        return FunctionExpression("luminance", (specifier,))
+
+    @classmethod
+    def contrast(
+        cls, specifier1: IntoExpression, specifier2: IntoExpression, /
+    ) -> Expression:
+        """
+        Returns the contrast ratio between the input color specifiers as a float between 1 and 21.
+
+        The contrast is calculated according to the `W3C Web Content Accessibility Guidelines`_.
+
+        .. _W3C Web Content Accessibility Guidelines:
+            https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+        """
+        return FunctionExpression("contrast", (specifier1, specifier2))
+
+    @classmethod
+    def item(cls) -> Expression:
+        """Returns the current scenegraph item that is the target of the event."""
+        return FunctionExpression("item", ())
+
+    @classmethod
     def group(cls, name: IntoExpression = None, /) -> Expression:
         """
         Returns the scenegraph group mark item in which the current event has occurred.
@@ -1637,6 +1855,30 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     def treeAncestors(cls, name: IntoExpression, node: IntoExpression, /) -> Expression:
         """For the hierarchy data set with the given ``name``, returns the array of ancestors nodes, starting with the input ``node``, then followed by each parent up to the root."""
         return FunctionExpression("treeAncestors", (name, node))
+
+    @classmethod
+    def containerSize(cls) -> Expression:
+        """
+        Returns the current CSS box size (``[el.clientWidth, el.clientHeight]``) of the parent DOM element that contains the Vega view.
+
+        If there is no container element, returns ``[undefined, undefined]``.
+        """
+        return FunctionExpression("containerSize", ())
+
+    @classmethod
+    def screen(cls) -> Expression:
+        """
+        Returns the `window.screen`_ object, or ``{}`` if Vega is not running in a browser environment.
+
+        .. _window.screen:
+        https://developer.mozilla.org/en-US/docs/Web/API/Window/screen
+        """
+        return FunctionExpression("screen", ())
+
+    @classmethod
+    def windowSize(cls) -> Expression:
+        """Returns the current window size (``[window.innerWidth, window.innerHeight]``) or ``[undefined, undefined]`` if Vega is not running in a browser environment."""
+        return FunctionExpression("windowSize", ())
 
     @classmethod
     def warn(

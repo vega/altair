@@ -59,7 +59,9 @@ class Source(str, enum.Enum):
 
 
 # NOTE: Regex patterns
-FUNCTION_DEF_LINE: Pattern[str] = re.compile(r"<a name=\"(.+)\" href=\"#(.+)\">")
+FUNCTION_DEF_LINE: Pattern[str] = re.compile(
+    r"<a name=\"(?P<name>.+)\" href=\"#(.+)\">"
+)
 SENTENCE_BREAK: Pattern[str] = re.compile(r"(?<!\.)\. ")
 
 # NOTE: `mistune` token keys/values
@@ -234,7 +236,7 @@ class expr({base}, metaclass={metaclass}):
 '''
 
 METHOD_SIGNATURE = (
-    """def {title}(cls, {param_list}{marker}) -> {return_ann}:{type_ignore}"""
+    """def {title}(cls{sep}{param_list}{marker}) -> {return_ann}:{type_ignore}"""
 )
 
 METHOD_TEMPLATE = '''\
@@ -420,6 +422,16 @@ class ReplaceMany:
         return f"{type(self).__name__}(\n    {self._mapping!r}\n)"
 
 
+class Special(enum.Enum):
+    """
+    Special-case identifiers.
+
+    Representing ``VegaExprDef`` states that may be otherwise ambiguous.
+    """
+
+    NO_PARAMETERS = enum.auto()
+
+
 class VegaExprDef:
     """
     ``SchemaInfo``-like, but operates on `expressions.md`_.
@@ -438,6 +450,7 @@ class VegaExprDef:
         self.parameters: list[VegaExprParam] = []
         self.doc: str = ""
         self.signature: str = ""
+        self._special: set[Special] = set()
 
     def with_doc(self) -> Self:
         """
@@ -459,6 +472,8 @@ class VegaExprDef:
         """
         split: Iterator[str] = self._split_signature_tokens(exclude_name=True)
         self.parameters = list(VegaExprParam.from_texts(split))
+        if not self.parameters:
+            self._special.add(Special.NO_PARAMETERS)
         return self
 
     def with_signature(self) -> Self:
@@ -474,8 +489,9 @@ class VegaExprDef:
         )
         self.signature = METHOD_SIGNATURE.format(
             title=self.title,
+            sep="" if self.is_no_parameters() else ",",
             param_list=param_list,
-            marker="" if self.is_variadic() else ", /",
+            marker="" if (self.is_variadic() or self.is_no_parameters()) else ", /",
             return_ann=RETURN_ANNOTATION,
             type_ignore=(
                 f"  {IGNORE_OVERRIDE}" if self.is_incompatible_override() else ""
@@ -492,10 +508,13 @@ class VegaExprDef:
                 else (p.name for p in self.parameters if not p.variadic)
             )
             yield from it
+        elif self.is_no_parameters():
+            yield from ()
         else:
             msg = (
                 f"Cannot provide `parameter_names` until they have been initialized via:\n"
-                f"{type(self).__name__}.with_parameters()"
+                f"{type(self).__name__}.with_parameters()\n\n"
+                f"{self!r}"
             )
             raise TypeError(msg)
 
@@ -572,10 +591,18 @@ class VegaExprDef:
 
             ['(', '[', 'start', ']', 'stop', '[', 'step', ']', ')']
         """
-        EXCLUDE: set[str] = {", ", "", self.name} if exclude_name else {", ", ""}
-        for tok in self._signature_tokens():
-            clean = tok[RAW].strip(", -")
-            if clean not in EXCLUDE:
+        EXCLUDE_INNER: set[str] = {self.name} if exclude_name else set()
+        EXCLUDE: set[str] = {", "} | EXCLUDE_INNER
+        for token in self._signature_tokens():
+            raw: str = token[RAW]
+            if raw == OPEN_PAREN:
+                yield raw
+            elif raw.startswith(OPEN_PAREN):
+                yield raw[0]
+                for s in raw[1:].split(","):
+                    if (clean := s.strip(" -")) not in EXCLUDE_INNER:
+                        yield from VegaExprDef._split_markers(clean)
+            elif (clean := raw.strip(", -")) not in EXCLUDE:
                 yield from VegaExprDef._split_markers(clean)
 
     @staticmethod
@@ -650,7 +677,7 @@ class VegaExprDef:
         if current != self.name:
             self.name = current
         next(it)
-        return next(it).get(RAW, "") == OPEN_PAREN
+        return next(it).get(RAW, "").startswith(OPEN_PAREN)
 
     def is_bound_variable_name(self) -> bool:
         """
@@ -728,6 +755,18 @@ class VegaExprDef:
         """Position-only parameter separator `"/"` not allowed after `"*"` parameter."""
         return self.is_overloaded() or any(p.variadic for p in self.parameters)
 
+    def is_no_parameters(self) -> bool:
+        """
+        Signature has been parsed for parameters, but none were present.
+
+        For example the definition for `now`_ would **only** return ``True``
+        after calling ``self.with_parameters()``.
+
+        .. _now:
+            https://vega.github.io/vega/docs/expressions/#now
+        """
+        return bool(self._special) and Special.NO_PARAMETERS in self._special
+
     def __iter__(self) -> Iterator[Token]:
         yield from self._children
 
@@ -767,7 +806,7 @@ class VegaExprDef:
                 (children := tok.get(CHILDREN)) is not None
                 and (child := next(iter(children)).get(RAW)) is not None
                 and (match := FUNCTION_DEF_LINE.match(child))
-                and (node := cls(match[1], children)).is_callable()
+                and (node := cls(match["name"], children)).is_callable()
             ):
                 yield node.with_parameters().with_signature()
 
