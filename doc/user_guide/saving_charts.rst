@@ -157,7 +157,7 @@ As an alternative, the ``inline=True`` keyword argument may be provided to ``cha
 
 .. note::
 
-   Calling ``chart.save`` with ``inline=True`` requires installation via ``pip install "altair[save]"`` or ``pip install "altair[all]"``.
+   Calling ``chart.save`` with ``inline=True`` requires :ref:`additional-dependencies`.
 
 
 .. _saving-png:
@@ -174,7 +174,9 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
 
 .. note::
 
-   Saving these images requires installation via ``pip install "altair[save]"`` or ``pip install "altair[all]"``.
+   :ref:`additional-dependencies` are required to save charts as images by running the javascript
+   code necessary to interpret the Vega-Lite specification and output it in the form of an image.
+
 
 altair_saver
 ^^^^^^^^^^^^
@@ -199,6 +201,22 @@ To change the physical size of the resulting image while preserving the resoluti
 size at the default resolution of 72 ppi::
 
     chart.save('chart.png', scale_factor=2)
+
+.. _additional-dependencies:
+
+Additional Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~
+Saving charts to images or offline HTML files requires the vl-convert_ package::
+
+    conda install -c conda-forge vl-convert-python
+
+or::
+
+    pip install vl-convert-python
+
+vl-convert_ does not require any external dependencies.
+See the vl-convert documentation for information and for known
+`limitations <https://github.com/vega/vl-convert#limitations>`_.
 
 Sharable URL
 ~~~~~~~~~~~~
