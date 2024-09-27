@@ -55,7 +55,8 @@ class Source(str, enum.Enum):
     """Enumerations for ``expressions.md`` source files."""
 
     LIVE = "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
-    STATIC = "https://raw.githubusercontent.com/vega/vega/ff98519cce32b776a98d01dd982467d76fc9ee34/docs/docs/expressions.md"
+    STATIC = "https://raw.githubusercontent.com/vega/vega/fb2e60274071033b4c427410ef43375b6f314cf2/docs/docs/expressions.md"
+    OLD = "https://raw.githubusercontent.com/vega/vega/ff98519cce32b776a98d01dd982467d76fc9ee34/docs/docs/expressions.md"
 
 
 # NOTE: Regex patterns
