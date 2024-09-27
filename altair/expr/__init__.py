@@ -1871,7 +1871,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         Returns the `window.screen`_ object, or ``{}`` if Vega is not running in a browser environment.
 
         .. _window.screen:
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/screen
+            https://developer.mozilla.org/en-US/docs/Web/API/Window/screen
         """
         return FunctionExpression("screen", ())
 

@@ -904,6 +904,10 @@ def format_doc(doc: str, /) -> str:
         if references:
             sentences.extend(("", indent(references, METHOD_INDENT)))
         return "\n".join(sentences)
+    elif SECTION_BREAK in doc:
+        # NOTE: 2 cases have a single line with a reference
+        summary, references = doc.split(SECTION_BREAK, maxsplit=1)
+        return "\n".join((summary, "", indent(references, METHOD_INDENT)))
     else:
         return sentences.pop().strip()
 
