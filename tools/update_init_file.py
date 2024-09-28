@@ -126,6 +126,8 @@ def _is_relevant(attr: t.Any, name: str, /) -> bool:
     ):
         return False
     elif ismodule(attr):
+        # TODO: Exclude `v5.theme` as it will collide with `alt.theme`
+
         # Only include modules which are part of Altair. This excludes built-in
         # modules (they do not have a __file__ attribute), standard library,
         # and third-party packages.
