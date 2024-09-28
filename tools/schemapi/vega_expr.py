@@ -97,6 +97,7 @@ IGNORE_OVERRIDE: LiteralString = r"# type: ignore[override]"
 IGNORE_MISC: LiteralString = r"# type: ignore[misc]"
 
 MODULE_PRE = '''\
+{header}
 """Tools for creating transform & filter expressions with a python syntax."""
 
 from __future__ import annotations
@@ -948,7 +949,7 @@ def parse_expressions(url: str, /) -> Iterator[VegaExprDef]:
         yield expr_def.with_doc()
 
 
-def write_expr_module(version: str, output: Path) -> None:
+def write_expr_module(version: str, output: Path, *, header: str) -> None:
     """
     Parse an ``expressions.md`` into a ``.py`` module.
 
@@ -962,6 +963,7 @@ def write_expr_module(version: str, output: Path) -> None:
     url = EXPRESSIONS_URL_TEMPLATE.format(version=version)
     content = (
         MODULE_PRE.format(
+            header=header,
             metaclass=CLS_META,
             const=CONST_WRAPPER,
             return_ann=RETURN_ANNOTATION,

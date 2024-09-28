@@ -1211,7 +1211,11 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
-    write_expr_module(VEGA_VERSION, output=EXPR_FILE)
+    write_expr_module(
+        VEGA_VERSION,
+        output=EXPR_FILE,
+        header=HEADER_COMMENT,
+    )
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

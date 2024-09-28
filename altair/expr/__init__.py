@@ -1,3 +1,6 @@
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
+
 """Tools for creating transform & filter expressions with a python syntax."""
 
 from __future__ import annotations
