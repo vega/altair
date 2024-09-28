@@ -49,14 +49,7 @@ __all__ = ["parse_expressions", "write_expr_module"]
 # NOTE: Urls/fragments
 VEGA_DOCS_URL: LiteralString = "https://vega.github.io/vega/docs/"
 EXPRESSIONS_DOCS_URL: LiteralString = f"{VEGA_DOCS_URL}expressions/"
-
-
-class Source(str, enum.Enum):
-    """Enumerations for ``expressions.md`` source files."""
-
-    LIVE = "https://raw.githubusercontent.com/vega/vega/main/docs/docs/expressions.md"
-    STATIC = "https://raw.githubusercontent.com/vega/vega/fb2e60274071033b4c427410ef43375b6f314cf2/docs/docs/expressions.md"
-    OLD = "https://raw.githubusercontent.com/vega/vega/ff98519cce32b776a98d01dd982467d76fc9ee34/docs/docs/expressions.md"
+EXPRESSIONS_URL_TEMPLATE = "https://raw.githubusercontent.com/vega/vega/refs/tags/{version}/docs/docs/expressions.md"
 
 
 # NOTE: Regex patterns
@@ -955,27 +948,18 @@ def parse_expressions(url: str, /) -> Iterator[VegaExprDef]:
         yield expr_def.with_doc()
 
 
-def write_expr_module(
-    source_url: Literal["live", "static"] | str, output: Path
-) -> None:
+def write_expr_module(version: str, output: Path) -> None:
     """
     Parse an ``expressions.md`` into a ``.py`` module.
 
     Parameters
     ----------
-    source_url
-        - ``"live"``: current version
-        - ``"static"``: most recent version available during testing
-        - Or provide an alternative as a ``str``
+    version
+        Vega release version, e.g. ``"v5.30.0"``.
     output
         Target path to write to.
     """
-    if source_url == "live":
-        url = Source.LIVE.value
-    elif source_url == "static":
-        url = Source.STATIC.value
-    else:
-        url = source_url
+    url = EXPRESSIONS_URL_TEMPLATE.format(version=version)
     content = (
         MODULE_PRE.format(
             metaclass=CLS_META,

@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from tools.schemapi.codegen import ArgInfo, AttrGetter
 
 SCHEMA_VERSION: Final = "v5.20.1"
+VEGA_VERSION: Final = "v5.30.0"
 
 
 HEADER_COMMENT = """\
@@ -1210,7 +1211,7 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
-    write_expr_module(source_url="static", output=EXPR_FILE)
+    write_expr_module(VEGA_VERSION, output=EXPR_FILE)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

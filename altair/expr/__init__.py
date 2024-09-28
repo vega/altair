@@ -1064,16 +1064,6 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("slice", (array, start, end))
 
     @classmethod
-    def sort(cls, array: IntoExpression, /) -> Expression:
-        """
-        Sorts the array in natural order using `ascending from Vega Utils`_.
-
-        .. _ascending from Vega Utils:
-            https://vega.github.io/vega/docs/api/util/#ascending
-        """
-        return FunctionExpression("sort", (array,))
-
-    @classmethod
     def span(cls, array: IntoExpression, /) -> Expression:
         """Returns the span of ``array``: the difference between the last and first elements, or *array[array.length-1] - array[0]*."""
         return FunctionExpression("span", (array,))
