@@ -710,6 +710,9 @@ outside the chart itself; For example, the container may be a ``<div>`` element 
 
 Chart Themes
 ------------
+..
+    _comment: First mention of alt.themes
+
 Altair makes available a theme registry that lets users apply chart configurations
 globally within any Python session. This is done via the ``alt.themes`` object.
 
@@ -837,6 +840,9 @@ fill unless otherwise specified:
 
 
 If you want to restore the default theme, use:
+
+..
+    _comment: Last mention of alt.themes
 
 .. altair-plot::
    :output: none

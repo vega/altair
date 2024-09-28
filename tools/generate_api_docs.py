@@ -134,6 +134,11 @@ def type_hints() -> list[str]:
     return sorted(s for s in iter_objects(alt.typing) if s in alt.typing.__all__)
 
 
+# TODO: Currently only the `TypedDict`(s) are visible (only via `alt.typing.___`)
+# Related: https://github.com/vega/altair/issues/3607
+def theme() -> list[str]: ...
+
+
 def lowlevel_wrappers() -> list[str]:
     objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
     # The names of these two classes are also used for classes in alt.channels. Due to

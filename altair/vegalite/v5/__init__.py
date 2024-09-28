@@ -21,4 +21,6 @@ from .display import (
     renderers,
 )
 from .schema import *
+
+# NOTE: `theme` contents -> `vegalite.v5`
 from .theme import register_theme, themes

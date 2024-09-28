@@ -1286,6 +1286,7 @@ def test_LookupData():
 def test_themes():
     chart = alt.Chart("foo.txt").mark_point()
 
+    # NOTE: Only other tests using `alt.themes`
     with alt.themes.enable("default"):
         assert chart.to_dict()["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}

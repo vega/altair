@@ -31,6 +31,8 @@ from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
+
+# NOTE: Relative themes import
 from .theme import themes
 
 if sys.version_info >= (3, 14):
@@ -1901,6 +1903,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 vegalite_spec["$schema"] = SCHEMA_URL
 
             # apply theme from theme registry
+
+            # NOTE: Single use of `themes`
             if theme := themes.get():
                 vegalite_spec = utils.update_nested(theme(), vegalite_spec, copy=True)
             else:

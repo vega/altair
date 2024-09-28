@@ -53,6 +53,8 @@ class VegaTheme:
 # themes that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistry API.
 ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.theme"
+
+# NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 themes.register(

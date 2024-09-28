@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING, Any, Callable, cast
 import pytest
 
 import altair.vegalite.v5 as alt
+
+# NOTE: Imports assuming existing structure
 from altair.typing import ThemeConfig
 from altair.vegalite.v5.schema._config import ConfigKwds
 from altair.vegalite.v5.schema._typing import is_color_hex
@@ -26,6 +28,7 @@ def chart() -> alt.Chart:
 
 def test_vega_themes(chart) -> None:
     for theme in VEGA_THEMES:
+        # NOTE: Assuming this is available in `alt.___`
         with alt.themes.enable(theme):
             dct = chart.to_dict()
         assert dct["usermeta"] == {"embedOptions": {"theme": theme}}

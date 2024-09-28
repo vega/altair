@@ -19,6 +19,8 @@ if TYPE_CHECKING:
 
 ThemeType = Plugin[ThemeConfig]
 
+# NOTE: Parameterising type vars, overriding `enable`
+
 
 # HACK: See for `LiteralString` requirement in `name`
 # https://github.com/vega/altair/pull/3526#discussion_r1743350127

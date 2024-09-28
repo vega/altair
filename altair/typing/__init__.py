@@ -51,6 +51,7 @@ __all__ = [
     "theme",
 ]
 
+# TODO: Remove `theme`, `ThemeConfig` imports
 from altair.typing import theme
 from altair.typing.theme import ThemeConfig
 from altair.utils.schemapi import Optional
