@@ -626,7 +626,6 @@ __all__ = [
     "selection_point",
     "sequence",
     "sphere",
-    "theme",
     "themes",
     "to_csv",
     "to_json",

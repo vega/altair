@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 
 from tools.schemapi.utils import ruff_write_lint_format_str
 
-_TYPING_CONSTRUCTS = {
+_TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAlias,
     t.TypeVar,
     t.cast,
@@ -35,6 +35,8 @@ _TYPING_CONSTRUCTS = {
     te.deprecated,
     te.TypeAliasType,
 }
+
+EXCLUDE_MODULES: set[str] = {"altair.vegalite.v5.theme"}
 
 
 def update__all__variable() -> None:
@@ -126,12 +128,11 @@ def _is_relevant(attr: t.Any, name: str, /) -> bool:
     ):
         return False
     elif ismodule(attr):
-        # TODO: Exclude `v5.theme` as it will collide with `alt.theme`
-
         # Only include modules which are part of Altair. This excludes built-in
         # modules (they do not have a __file__ attribute), standard library,
         # and third-party packages.
-        return getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
+        is_altair = getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
+        return is_altair and attr.__name__ not in EXCLUDE_MODULES
     else:
         return True
 
