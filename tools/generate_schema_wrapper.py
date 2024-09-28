@@ -61,6 +61,9 @@ from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+VL_PACKAGE_TEMPLATE = (
+    "https://raw.githubusercontent.com/vega/vega-lite/refs/tags/{version}/package.json"
+)
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
 EXPR_FILE: Path = (
@@ -469,6 +472,15 @@ def schema_class(*args, **kwargs) -> str:
 
 def schema_url(version: str = SCHEMA_VERSION) -> str:
     return SCHEMA_URL_TEMPLATE.format(library="vega-lite", version=version)
+
+
+def vegalite_to_vega_version(vl_version: str, /) -> str:
+    """Return the minimum supported ``vega`` release for a ``vega-lite`` version."""
+    with request.urlopen(VL_PACKAGE_TEMPLATE.format(version=vl_version)) as response:
+        package_json = json.load(response)
+
+    version_spec = package_json["peerDependencies"]["vega"]
+    return f"v{version_spec.lstrip('^~')}"
 
 
 def download_schemafile(
