@@ -34,7 +34,7 @@ class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
         self,
         name: LiteralString | AltairThemes | VegaThemes | None = None,
         **options: Any,
-    ) -> PluginEnabler:
+    ) -> PluginEnabler[Plugin[ThemeConfig], ThemeConfig]:
         """
         Enable a theme by name.
 
