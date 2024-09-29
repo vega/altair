@@ -46,14 +46,9 @@ __all__ = [
     "ChartType",
     "EncodeKwds",
     "Optional",
-    "ThemeConfig",
     "is_chart_type",
-    "theme",
 ]
 
-# TODO: Remove `theme`, `ThemeConfig` imports
-from altair.typing import theme
-from altair.typing.theme import ThemeConfig
 from altair.utils.schemapi import Optional
 from altair.vegalite.v5.api import ChartType, is_chart_type
 from altair.vegalite.v5.schema.channels import (
