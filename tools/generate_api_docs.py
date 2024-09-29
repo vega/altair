@@ -136,7 +136,7 @@ def type_hints() -> list[str]:
 
 # TODO: Currently only the `TypedDict`(s) are visible (only via `alt.typing.___`)
 # Related: https://github.com/vega/altair/issues/3607
-def theme() -> list[str]: ...
+def theme() -> list[str]: ...  # type: ignore[empty-body]
 
 
 def lowlevel_wrappers() -> list[str]:

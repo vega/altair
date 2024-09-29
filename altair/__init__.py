@@ -617,7 +617,6 @@ __all__ = [
     "mixins",
     "param",
     "parse_shorthand",
-    "register_theme",
     "renderers",
     "repeat",
     "sample",
@@ -626,7 +625,7 @@ __all__ = [
     "selection_point",
     "sequence",
     "sphere",
-    "themes",
+    "theme",
     "to_csv",
     "to_json",
     "to_values",
@@ -652,7 +651,7 @@ from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
-from altair import typing
+from altair import typing, theme
 
 
 def load_ipython_extension(ipython):

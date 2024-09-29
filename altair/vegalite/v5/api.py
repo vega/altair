@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any, Literal, Sequence, TypeVar, Union, overlo
 import jsonschema
 import narwhals.stable.v1 as nw
 
-from altair import utils
+from altair import theme, utils
 from altair.expr import core as _expr_core
 from altair.utils import Optional, SchemaBase, Undefined
 from altair.utils._vegafusion_data import (
@@ -31,9 +31,6 @@ from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
-
-# NOTE: Relative themes import
-from .theme import themes
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -1902,11 +1899,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if "$schema" not in vegalite_spec:
                 vegalite_spec["$schema"] = SCHEMA_URL
 
-            # apply theme from theme registry
-
-            # NOTE: Single use of `themes`
-            if theme := themes.get():
-                vegalite_spec = utils.update_nested(theme(), vegalite_spec, copy=True)
+            if func := theme.get():
+                vegalite_spec = utils.update_nested(func(), vegalite_spec, copy=True)
             else:
                 msg = (
                     f"Expected a theme to be set but got {None!r}.\n"
