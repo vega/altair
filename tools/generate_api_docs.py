@@ -120,7 +120,7 @@ def api_functions() -> list[str]:
     KEEP = set(alt.api.__all__) - set(alt.typing.__all__)  # type: ignore[attr-defined]
     return sorted(
         name
-        for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
+        for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)
         if name in KEEP
     )
 

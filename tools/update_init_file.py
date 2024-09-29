@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import typing as t
 import typing_extensions as te
+from importlib import import_module as _import_module
+from importlib.util import find_spec as _find_spec
 from inspect import getattr_static, ismodule
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, Iterator
 
 from tools.schemapi.utils import ruff_write_lint_format_str
 
@@ -36,7 +38,7 @@ _TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAliasType,
 }
 
-EXCLUDE_MODULES: set[str] = {"altair.vegalite.v5.theme"}
+DYNAMIC_ALL: tuple[te.LiteralString, ...] = ("altair.vegalite.v5",)
 
 
 def update__all__variable() -> None:
@@ -77,6 +79,10 @@ def update__all__variable() -> None:
     # Write new version of altair/__init__.py
     # Format file content with ruff
     ruff_write_lint_format_str(init_path, new_lines)
+
+    for source in DYNAMIC_ALL:
+        print(f"Updating dynamic all: {source!r}")
+        update_dynamic__all__(source)
 
 
 def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
@@ -131,10 +137,108 @@ def _is_relevant(attr: t.Any, name: str, /) -> bool:
         # Only include modules which are part of Altair. This excludes built-in
         # modules (they do not have a __file__ attribute), standard library,
         # and third-party packages.
-        is_altair = getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
-        return is_altair and attr.__name__ not in EXCLUDE_MODULES
+        return getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
     else:
         return True
+
+
+def _retrieve_all(name: str, /) -> list[str]:
+    """Import `name` and return a defined ``__all__``."""
+    found = _import_module(name).__all__
+    if not found:
+        msg = (
+            f"Expected to find a populated `__all__` for {name!r},\n"
+            f"but got: {found!r}"
+        )
+        raise AttributeError(msg)
+    return found
+
+
+def normalize_source(src: str | Path, /) -> Path:
+    """
+    Return the ``Path`` representation of a module/package.
+
+    Returned unchanged if already a ``Path``.
+    """
+    if isinstance(src, str):
+        if src.startswith("altair."):
+            if (spec := _find_spec(src)) and (origin := spec.origin):
+                src = origin
+            else:
+                raise ModuleNotFoundError(src, spec)
+        return Path(src)
+    else:
+        return src
+
+
+def extract_lines(fp: Path, /) -> list[str]:
+    """Return all lines in ``fp`` with whitespace stripped."""
+    with Path(fp).open(encoding="utf-8") as f:
+        lines = f.readlines()
+        if not lines:
+            msg = f"Found no content when reading lines for:\n{lines!r}"
+            raise NotImplementedError(msg)
+    return [line.strip() for line in lines]
+
+
+def _normalize_import_lines(lines: Iterable[str]) -> Iterator[str]:
+    """
+    Collapses file content to contain one line per import source.
+
+    Preserves only lines **before** an existing ``__all__``.
+    """
+    it: Iterator[str] = iter(lines)
+    for line in it:
+        if line.endswith("("):
+            line = line.rstrip("( ")
+            for s_line in it:
+                if s_line.endswith(","):
+                    line = f"{line} {s_line}"
+                elif s_line.endswith(")"):
+                    break
+                else:
+                    NotImplementedError(f"Unexpected line:\n{s_line!r}")
+            yield line.rstrip(",")
+        elif line.startswith("__all__"):
+            break
+        else:
+            yield line
+
+
+def process_lines(lines: Iterable[str], /) -> Iterator[str]:
+    """Normalize imports, follow ``*``(s), reconstruct `__all__``."""
+    _all: set[str] = set()
+    for line in _normalize_import_lines(lines):
+        if line.startswith("#") or line == "":
+            yield line
+        elif "import" in line:
+            origin_stmt, members = line.split(" import ", maxsplit=1)
+            if members == "*":
+                _, origin = origin_stmt.split("from ")
+                targets = _retrieve_all(origin)
+            else:
+                targets = members.split(", ")
+            _all.update(targets)
+            yield line
+        else:
+            msg = f"Unexpected line:\n{line!r}"
+            raise NotImplementedError(msg)
+    yield f"__all__ = {sorted(_all)}"
+
+
+def update_dynamic__all__(source: str | Path, /) -> None:
+    """
+    ## Relies on all `*` imports leading to an `__all__`.
+
+    Acceptable `source`:
+
+        "altair.package.subpackage.etc"
+        Path(...)
+
+    """
+    fp = normalize_source(source)
+    content = process_lines(extract_lines(fp))
+    ruff_write_lint_format_str(fp, content)
 
 
 if __name__ == "__main__":
