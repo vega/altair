@@ -164,6 +164,91 @@ API Functions
    vconcat
    when
 
+Theme
+-----
+.. currentmodule:: altair.theme
+
+.. autosummary::
+   :toctree: generated/theme/
+   :nosignatures:
+
+   ThemeConfig
+   enable
+   get
+   names
+   register
+   themes
+   unregister
+   AreaConfigKwds
+   AutoSizeParamsKwds
+   AxisConfigKwds
+   AxisResolveMapKwds
+   BarConfigKwds
+   BindCheckboxKwds
+   BindDirectKwds
+   BindInputKwds
+   BindRadioSelectKwds
+   BindRangeKwds
+   BoxPlotConfigKwds
+   BrushConfigKwds
+   CompositionConfigKwds
+   ConfigKwds
+   DateTimeKwds
+   DerivedStreamKwds
+   ErrorBandConfigKwds
+   ErrorBarConfigKwds
+   FeatureGeometryGeoJsonPropertiesKwds
+   FormatConfigKwds
+   GeoJsonFeatureCollectionKwds
+   GeoJsonFeatureKwds
+   GeometryCollectionKwds
+   GradientStopKwds
+   HeaderConfigKwds
+   IntervalSelectionConfigKwds
+   IntervalSelectionConfigWithoutTypeKwds
+   LegendConfigKwds
+   LegendResolveMapKwds
+   LegendStreamBindingKwds
+   LineConfigKwds
+   LineStringKwds
+   LinearGradientKwds
+   LocaleKwds
+   MarkConfigKwds
+   MergedStreamKwds
+   MultiLineStringKwds
+   MultiPointKwds
+   MultiPolygonKwds
+   NumberLocaleKwds
+   OverlayMarkDefKwds
+   PaddingKwds
+   PointKwds
+   PointSelectionConfigKwds
+   PointSelectionConfigWithoutTypeKwds
+   PolygonKwds
+   ProjectionConfigKwds
+   ProjectionKwds
+   RadialGradientKwds
+   RangeConfigKwds
+   RectConfigKwds
+   ResolveKwds
+   RowColKwds
+   ScaleConfigKwds
+   ScaleInvalidDataConfigKwds
+   ScaleResolveMapKwds
+   SelectionConfigKwds
+   StepKwds
+   StyleConfigIndexKwds
+   TickConfigKwds
+   TimeIntervalStepKwds
+   TimeLocaleKwds
+   TitleConfigKwds
+   TitleParamsKwds
+   TooltipContentKwds
+   TopLevelSelectionParameterKwds
+   VariableParameterKwds
+   ViewBackgroundKwds
+   ViewConfigKwds
+
 Low-Level Schema Wrappers
 -------------------------
 .. currentmodule:: altair

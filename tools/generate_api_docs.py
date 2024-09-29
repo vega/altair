@@ -53,6 +53,16 @@ API Functions
 
    {api_functions}
 
+Theme
+-----
+.. currentmodule:: altair.theme
+
+.. autosummary::
+   :toctree: generated/theme/
+   :nosignatures:
+
+   {theme_objects}
+
 Low-Level Schema Wrappers
 -------------------------
 .. currentmodule:: altair
@@ -134,9 +144,11 @@ def type_hints() -> list[str]:
     return sorted(s for s in iter_objects(alt.typing) if s in alt.typing.__all__)
 
 
-# TODO: Currently only the `TypedDict`(s) are visible (only via `alt.typing.___`)
-# Related: https://github.com/vega/altair/issues/3607
-def theme() -> list[str]: ...  # type: ignore[empty-body]
+def theme() -> list[str]:
+    return sorted(
+        sorted(s for s in iter_objects(alt.theme) if s in alt.theme.__all__),
+        key=lambda s: s.endswith("Kwds"),
+    )
 
 
 def lowlevel_wrappers() -> list[str]:
@@ -161,6 +173,7 @@ def write_api_file() -> None:
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
             api_classes=sep.join(api_classes()),
             typing_objects=sep.join(type_hints()),
+            theme_objects=sep.join(theme()),
         ),
         encoding="utf-8",
     )
