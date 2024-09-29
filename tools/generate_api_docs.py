@@ -108,16 +108,16 @@ def iter_objects(
 
 
 def toplevel_charts() -> list[str]:
-    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))  # type: ignore[attr-defined]
+    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))
 
 
 def encoding_wrappers() -> list[str]:
-    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
+    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))
 
 
 def api_functions() -> list[str]:
     # Exclude `typing` functions/SpecialForm(s)
-    KEEP = set(alt.api.__all__) - set(alt.typing.__all__)  # type: ignore[attr-defined]
+    KEEP = set(alt.api.__all__) - set(alt.typing.__all__)
     return sorted(
         name
         for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)
@@ -140,7 +140,7 @@ def theme() -> list[str]: ...  # type: ignore[empty-body]
 
 
 def lowlevel_wrappers() -> list[str]:
-    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
+    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
     # The names of these two classes are also used for classes in alt.channels. Due to
     # how imports are set up, these channel classes overwrite the two low-level classes
     # in the top-level Altair namespace. Therefore, they cannot be imported as e.g.
