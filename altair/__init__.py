@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # ruff: noqa
 __version__ = "5.5.0dev"
 
@@ -652,9 +654,28 @@ from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
 from altair import typing, theme
+from typing import Any as _Any
 
 
 def load_ipython_extension(ipython):
     from altair._magics import vegalite
 
     ipython.register_magic_function(vegalite, "cell")
+
+
+def __getattr__(name: str) -> _Any:
+    from altair.utils.deprecation import deprecated_warn
+
+    if name == "themes":
+        deprecated_warn(
+            "Most of the `ThemeRegistry` API is accessible via `altair.theme`.\n"
+            "See the updated User Guide for further details:\n"
+            "https://altair-viz.github.io/user_guide/customization.html#chart-themes",
+            version="5.5.0",
+            alternative="altair.theme.themes",
+            stacklevel=3,
+        )
+        return theme.themes
+    else:
+        msg = f"module {__name__!r} has no attribute {name!r}"
+        raise AttributeError(msg)
