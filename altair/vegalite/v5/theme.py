@@ -2,22 +2,14 @@
 
 from __future__ import annotations
 
-import sys
-from functools import wraps
-from typing import TYPE_CHECKING, Callable, Final, Literal, get_args
+from typing import TYPE_CHECKING, Any, Final, Literal, get_args
 
-from altair.utils.theme import ThemeRegistry
+from altair.utils.plugin_registry import Plugin, PluginRegistry
 from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema._typing import VegaThemes
 
-if sys.version_info >= (3, 10):
-    from typing import ParamSpec
-else:
-    from typing_extensions import ParamSpec
-
-
 if TYPE_CHECKING:
-    from altair.utils.plugin_registry import Plugin
+    import sys
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -28,9 +20,45 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-P = ParamSpec("P")
+    from altair.utils.plugin_registry import PluginEnabler
+
+
 AltairThemes: TypeAlias = Literal["default", "opaque"]
 VEGA_THEMES: list[LiteralString] = list(get_args(VegaThemes))
+
+
+# HACK: See for `LiteralString` requirement in `name`
+# https://github.com/vega/altair/pull/3526#discussion_r1743350127
+class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
+    def enable(
+        self,
+        name: LiteralString | AltairThemes | VegaThemes | None = None,
+        **options: Any,
+    ) -> PluginEnabler:
+        """
+        Enable a theme by name.
+
+        This can be either called directly, or used as a context manager.
+
+        Parameters
+        ----------
+        name : string (optional)
+            The name of the theme to enable. If not specified, then use the
+            current active name.
+        **options :
+            Any additional parameters will be passed to the theme as keyword
+            arguments
+
+        Returns
+        -------
+        PluginEnabler:
+            An object that allows enable() to be used as a context manager
+
+        Notes
+        -----
+        Default `vega` themes can be previewed at https://vega.github.io/vega-themes/
+        """
+        return super().enable(name, **options)
 
 
 class VegaTheme:
