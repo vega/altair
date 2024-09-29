@@ -55,7 +55,7 @@ from tools.schemapi.utils import (
 if TYPE_CHECKING:
     from tools.schemapi.codegen import ArgInfo, AttrGetter
 
-T = TypeVar("T", str, Iterable[str])
+T = TypeVar("T", bound="str | Iterable[str]")
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
