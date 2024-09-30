@@ -51,11 +51,8 @@ def update__all__variable() -> None:
     # Read existing file content
     import altair as alt
 
-    encoding = "utf-8"
-    init_path = Path(alt.__file__)
-    with init_path.open(encoding=encoding) as f:
-        lines = f.readlines()
-    lines = [line.strip("\n") for line in lines]
+    init_path = normalize_source("altair")
+    lines = extract_lines(init_path, strip_chars="\n")
 
     # Find first and last line of the definition of __all__
     first_definition_line = None
@@ -81,7 +78,7 @@ def update__all__variable() -> None:
     ruff_write_lint_format_str(init_path, new_lines)
 
     for source in DYNAMIC_ALL:
-        print(f"Updating dynamic all: {source!r}")
+        print(f"Updating `__all__`\n " f"{source!r}\n  ->{normalize_source(source)!s}")
         update_dynamic__all__(source)
 
 
@@ -161,7 +158,7 @@ def normalize_source(src: str | Path, /) -> Path:
     Returned unchanged if already a ``Path``.
     """
     if isinstance(src, str):
-        if src.startswith("altair."):
+        if src == "altair" or src.startswith("altair."):
             if (spec := _find_spec(src)) and (origin := spec.origin):
                 src = origin
             else:
@@ -171,14 +168,14 @@ def normalize_source(src: str | Path, /) -> Path:
         return src
 
 
-def extract_lines(fp: Path, /) -> list[str]:
+def extract_lines(fp: Path, /, strip_chars: str | None = None) -> list[str]:
     """Return all lines in ``fp`` with whitespace stripped."""
     with Path(fp).open(encoding="utf-8") as f:
         lines = f.readlines()
         if not lines:
             msg = f"Found no content when reading lines for:\n{lines!r}"
             raise NotImplementedError(msg)
-    return [line.strip() for line in lines]
+    return [line.strip(strip_chars) for line in lines]
 
 
 def _normalize_import_lines(lines: Iterable[str]) -> Iterator[str]:
