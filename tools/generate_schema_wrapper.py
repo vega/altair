@@ -1019,20 +1019,47 @@ def generate_vegalite_config_mixin(fp: Path, /) -> str:
 
 
 def generate_schema__init__(
-    version: str,
     *modules: str,
-    package_name: str = "altair.vegalite.{0}.schema",
+    package: str,
     expand: dict[Path, ModuleDef[Any]] | None = None,
 ) -> Iterator[str]:
-    # NOTE: `expand`
-    # - Should run after generating `core`, `channels`
-    # - Only needed for `mypy`, the default works at runtime
-    package_name = package_name.format(version.split(".")[0])
+    """
+    Generate schema subpackage init contents.
+
+    Parameters
+    ----------
+    *modules
+        Module names to expose, in addition to their members::
+
+            ...schema.__init__.__all__ = [
+                ...,
+                module_1.__name__,
+                module_1.__all__,
+                module_2.__name__,
+                module_2.__all__,
+                ...,
+            ]
+    package
+        Absolute, dotted path for `schema`, e.g::
+
+            "altair.vegalite.v5.schema"
+    expand
+        Required for 2nd-pass, which explicitly defines the new ``__all__``, using newly generated names.
+
+        .. note::
+            The default `import idiom`_ works at runtime, and for ``pyright`` - but not ``mypy``.
+            See `issue`_.
+
+    .. _import idiom:
+        https://typing.readthedocs.io/en/latest/spec/distributing.html#library-interface-public-and-private-symbols
+    .. _issue:
+        https://github.com/python/mypy/issues/15300
+    """
     yield f"# ruff: noqa: F403, F405\n{HEADER_COMMENT}"
-    yield f"from {package_name} import {', '.join(modules)}"
-    yield from (f"from {package_name}.{mod} import *" for mod in modules)
-    yield f"SCHEMA_VERSION = '{version}'\n"
-    yield f"SCHEMA_URL = {schema_url(version)!r}\n"
+    yield f"from {package} import {', '.join(modules)}"
+    yield from (f"from {package}.{mod} import *" for mod in modules)
+    yield f"SCHEMA_VERSION = {SCHEMA_VERSION!r}\n"
+    yield f"SCHEMA_URL = {schema_url()!r}\n"
     base_all: list[str] = ["SCHEMA_URL", "SCHEMA_VERSION", *modules]
     if expand:
         base_all.extend(
@@ -1042,6 +1069,17 @@ def generate_schema__init__(
     else:
         yield f"__all__ = {base_all}"
         yield from (f"__all__ += {mod}.__all__" for mod in modules)
+
+
+def path_to_module_str(
+    fp: Path,
+    /,
+    root: Literal["altair", "doc", "sphinxext", "tests", "tools"] = "altair",
+) -> str:
+    idx = fp.parts.index(root)
+    start = idx + 1 if root == "altair" else idx
+    end = -2 if fp.stem == "__init__" else -1
+    return ".".join(fp.parts[start:end])
 
 
 def vegalite_main(skip_download: bool = False) -> None:
@@ -1061,9 +1099,10 @@ def vegalite_main(skip_download: bool = False) -> None:
 
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"
+    pkg_schema = path_to_module_str(outfile)
     print(f"Writing {outfile!s}")
     ruff_write_lint_format_str(
-        outfile, generate_schema__init__(version, "channels", "core")
+        outfile, generate_schema__init__("channels", "core", package=pkg_schema)
     )
 
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
@@ -1086,7 +1125,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Expand `schema.__init__.__all__` with new classes
     ruff_write_lint_format_str(
         outfile,
-        generate_schema__init__(version, "channels", "core", expand=modules),
+        generate_schema__init__("channels", "core", package=pkg_schema, expand=modules),
     )
 
     # generate the mark mixin
