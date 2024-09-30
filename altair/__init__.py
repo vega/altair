@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 # ruff: noqa
 __version__ = "5.5.0dev"
 
