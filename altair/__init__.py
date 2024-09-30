@@ -670,7 +670,8 @@ def __getattr__(name: str) -> _Any:
         deprecated_warn(
             "Most of the `ThemeRegistry` API is accessible via `altair.theme`.\n"
             "See the updated User Guide for further details:\n"
-            "https://altair-viz.github.io/user_guide/customization.html#chart-themes",
+            "    https://altair-viz.github.io/user_guide/api.html#theme\n"
+            "    https://altair-viz.github.io/user_guide/customization.html#chart-themes",
             version="5.5.0",
             alternative="altair.theme.themes",
             stacklevel=3,
