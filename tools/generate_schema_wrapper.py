@@ -1078,8 +1078,8 @@ def path_to_module_str(
 ) -> str:
     idx = fp.parts.index(root)
     start = idx + 1 if root == "altair" else idx
-    end = -2 if fp.stem == "__init__" else -1
-    return ".".join(fp.parts[start:end])
+    parents = fp.parts[start:-1]
+    return ".".join(parents if fp.stem == "__init__" else (*parents, fp.stem))
 
 
 def vegalite_main(skip_download: bool = False) -> None:
