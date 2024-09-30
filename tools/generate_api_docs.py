@@ -159,10 +159,11 @@ def type_hints() -> list[str]:
 
 
 def theme() -> list[str]:
-    return sorted(
-        sorted(s for s in iter_objects(alt.theme) if s in alt.theme.__all__),
-        key=lambda s: s.endswith("Kwds"),
-    )
+    sort_1 = sorted(s for s in iter_objects(alt.theme) if s in alt.theme.__all__)
+    # Display functions before `TypedDict`, but show `ThemeConfig` before `Kwds`
+    sort_2 = sorted(sort_1, key=lambda s: s.endswith("Kwds"))
+    sort_3 = sorted(sort_2, key=lambda s: not s.islower())
+    return sort_3
 
 
 def lowlevel_wrappers() -> list[str]:

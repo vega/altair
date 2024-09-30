@@ -180,13 +180,13 @@ Theme
    :toctree: generated/theme/
    :nosignatures:
 
-   ThemeConfig
    enable
    get
    names
    register
    themes
    unregister
+   ThemeConfig
    AreaConfigKwds
    AutoSizeParamsKwds
    AxisConfigKwds
