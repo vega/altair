@@ -9,6 +9,8 @@ Please refer to the `full user guide <http://altair-viz.github.io>`_ for
 further details, as this low-level documentation may not be enough to give
 full guidelines on their use.
 
+.. _api-toplevel:
+
 Top-Level Objects
 -----------------
 .. currentmodule:: altair
@@ -25,6 +27,8 @@ Top-Level Objects
    RepeatChart
    TopLevelMixin
    VConcatChart
+
+.. _api-channels:
 
 Encoding Channels
 -----------------
@@ -134,6 +138,8 @@ Encoding Channels
    YOffsetValue
    YValue
 
+.. _api-functions:
+
 API Functions
 -------------
 .. currentmodule:: altair
@@ -163,6 +169,8 @@ API Functions
    value
    vconcat
    when
+
+.. _api-theme:
 
 Theme
 -----
@@ -248,6 +256,8 @@ Theme
    VariableParameterKwds
    ViewBackgroundKwds
    ViewConfigKwds
+
+.. _api-core:
 
 Low-Level Schema Wrappers
 -------------------------
@@ -710,6 +720,8 @@ Low-Level Schema Wrappers
    WindowOnlyOp
    WindowTransform
 
+.. _api-cls:
+
 API Utility Classes
 -------------------
 .. currentmodule:: altair
@@ -722,6 +734,8 @@ API Utility Classes
    When
    Then
    ChainedWhen
+
+.. _api-typing:
 
 Typing
 ------

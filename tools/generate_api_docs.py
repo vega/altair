@@ -23,6 +23,8 @@ Please refer to the `full user guide <http://altair-viz.github.io>`_ for
 further details, as this low-level documentation may not be enough to give
 full guidelines on their use.
 
+.. _api-toplevel:
+
 Top-Level Objects
 -----------------
 .. currentmodule:: altair
@@ -32,6 +34,8 @@ Top-Level Objects
    :nosignatures:
 
    {toplevel_charts}
+
+.. _api-channels:
 
 Encoding Channels
 -----------------
@@ -43,6 +47,8 @@ Encoding Channels
 
    {encoding_wrappers}
 
+.. _api-functions:
+
 API Functions
 -------------
 .. currentmodule:: altair
@@ -52,6 +58,8 @@ API Functions
    :nosignatures:
 
    {api_functions}
+
+.. _api-theme:
 
 Theme
 -----
@@ -63,6 +71,8 @@ Theme
 
    {theme_objects}
 
+.. _api-core:
+
 Low-Level Schema Wrappers
 -------------------------
 .. currentmodule:: altair
@@ -73,6 +83,8 @@ Low-Level Schema Wrappers
 
    {lowlevel_wrappers}
 
+.. _api-cls:
+
 API Utility Classes
 -------------------
 .. currentmodule:: altair
@@ -82,6 +94,8 @@ API Utility Classes
    :nosignatures:
 
    {api_classes}
+
+.. _api-typing:
 
 Typing
 ------
