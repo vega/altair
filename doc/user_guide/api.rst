@@ -180,9 +180,11 @@ Theme
    :toctree: generated/theme/
    :nosignatures:
 
+   active
    enable
    get
    names
+   options
    register
    themes
    unregister

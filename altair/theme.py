@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from functools import wraps as _wraps
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
+from typing import overload as _overload
 
 from altair.vegalite.v5.schema._config import (
     AreaConfigKwds,
@@ -81,7 +82,7 @@ from altair.vegalite.v5.theme import themes
 
 if TYPE_CHECKING:
     import sys
-    from typing import Callable
+    from typing import Any, Callable, Literal
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -157,7 +158,6 @@ __all__ = [
     "StepKwds",
     "StyleConfigIndexKwds",
     "ThemeConfig",
-    "ThemeConfig",
     "TickConfigKwds",
     "TimeIntervalStepKwds",
     "TimeLocaleKwds",
@@ -168,9 +168,11 @@ __all__ = [
     "VariableParameterKwds",
     "ViewBackgroundKwds",
     "ViewConfigKwds",
+    "active",
     "enable",
     "get",
     "names",
+    "options",
     "register",
     "themes",
     "unregister",
@@ -264,3 +266,25 @@ def unregister(name: LiteralString) -> Plugin[ThemeConfig] | None:
 enable = themes.enable
 get = themes.get
 names = themes.names
+active: str
+"""Return the name of the currently active theme."""
+options: dict[str, Any]
+"""Return the current themes options dictionary."""
+
+
+def __dir__() -> list[str]:
+    return __all__
+
+
+@_overload
+def __getattr__(name: Literal["active"]) -> str: ...
+@_overload
+def __getattr__(name: Literal["options"]) -> dict[str, Any]: ...
+def __getattr__(name: Literal["active", "options"]) -> str | dict[str, Any]:
+    if name == "active":
+        return themes.active
+    elif name == "options":
+        return themes.options
+    else:
+        msg = f"module {__name__!r} has no attribute {name!r}"
+        raise AttributeError(msg)
