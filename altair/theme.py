@@ -277,10 +277,10 @@ def __dir__() -> list[str]:
 
 
 @_overload
-def __getattr__(name: Literal["active"]) -> str: ...
+def __getattr__(name: Literal["active"]) -> str: ...  # type: ignore[misc]
 @_overload
-def __getattr__(name: Literal["options"]) -> dict[str, Any]: ...
-def __getattr__(name: Literal["active", "options"]) -> str | dict[str, Any]:
+def __getattr__(name: Literal["options"]) -> dict[str, Any]: ...  # type: ignore[misc]
+def __getattr__(name: str) -> Any:
     if name == "active":
         return themes.active
     elif name == "options":
