@@ -34,7 +34,7 @@ def test_vega_themes(chart) -> None:
         }
 
 
-def test_register_theme_decorator() -> None:
+def test_theme_register_decorator() -> None:
     @theme.register("unique name", enable=True)
     def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
