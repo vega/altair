@@ -10,6 +10,7 @@ from altair.vegalite.v5.schema._typing import VegaThemes
 
 if TYPE_CHECKING:
     import sys
+    from functools import partial
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -59,6 +60,14 @@ class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
         Default `vega` themes can be previewed at https://vega.github.io/vega-themes/
         """
         return super().enable(name, **options)
+
+    def get(self) -> partial[ThemeConfig] | Plugin[ThemeConfig] | None:
+        """Return the currently active theme."""
+        return super().get()
+
+    def names(self) -> list[str]:
+        """Return the names of the registered and entry points themes."""
+        return super().names()
 
 
 class VegaTheme:
