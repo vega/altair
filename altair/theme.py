@@ -251,7 +251,7 @@ def register(
     return decorate
 
 
-def unregister(name: LiteralString) -> Plugin[ThemeConfig] | None:
+def unregister(name: LiteralString) -> Plugin[ThemeConfig]:
     """
     Remove and return a previously registered theme.
 
@@ -259,8 +259,22 @@ def unregister(name: LiteralString) -> Plugin[ThemeConfig] | None:
     ----------
     name
         Unique name assigned in ``alt.theme.themes``.
+
+    Raises
+    ------
+    TypeError
+        When ``name`` has not been registered.
     """
-    return themes.register(name, None)
+    plugin = themes.register(name, None)
+    if plugin is None:
+        msg = (
+            f"Found no theme named {name!r} in registry.\n"
+            f"Registered themes:\n"
+            f"{names()!r}"
+        )
+        raise TypeError(msg)
+    else:
+        return plugin
 
 
 enable = themes.enable
