@@ -39,9 +39,10 @@ def test_theme_register_decorator() -> None:
     def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
 
-    assert theme.themes.active == "unique name"
+    assert theme.themes.active == "unique name" == theme.active
     registered = theme.themes.get()
     assert registered is not None
+    assert registered == theme.get()
     assert registered() == {"height": 400, "width": 700} == custom_theme()
 
 
