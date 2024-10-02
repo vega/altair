@@ -548,7 +548,7 @@ def test_when_labels_position_based_on_condition() -> None:
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
     when = (
-        alt.when(param_width_lt_200)
+        alt.when(param_width_lt_200.expr)
         .then(alt.value("red"))
         .otherwise(alt.value("black"))
     )
@@ -560,7 +560,11 @@ def test_when_labels_position_based_on_condition() -> None:
     param_color_py_when = alt.param(
         expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
     )
-    assert param_color_py_expr.expr == param_color_py_when.expr
+    lhs_param = param_color_py_expr.param
+    rhs_param = param_color_py_when.param
+    assert isinstance(lhs_param, alt.VariableParameter)
+    assert isinstance(rhs_param, alt.VariableParameter)
+    assert repr(lhs_param.expr) == repr(rhs_param.expr)
 
     chart = (
         alt.Chart(df)
