@@ -231,12 +231,18 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 As you might have noticed,
 the selected points are sometimes obscured by some of the unselected points.
 To bring the selected points to the foreground,
-we can change the order in which they are laid out via the following
-encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
-You can see an example of this in the :ref:`gallery_selection_zorder` gallery example.
+we can change the order in which they are laid out via the following conditional ``order`` encoding:
 
-Filtering Data
-^^^^^^^^^^^^^^
+.. altair-plot::
+
+    # Lower numbers for `order` means further into the background
+    selected_on_top = alt.when(brush).then(alt.value(1)).otherwise(alt.value(0))
+    chart.encode(order=selected_on_top) | chart.encode(order=selected_on_top, x='Acceleration:Q')
+
+You can see another example of this in the :ref:`gallery_selection_zorder` gallery example.
+
+Filters
+~~~~~~~
 
 Using a selection parameter to filter data works in much the same way
 as using it within ``condition``.
