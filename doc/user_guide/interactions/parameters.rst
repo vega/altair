@@ -302,9 +302,6 @@ we can change the order in which they are laid out via the following encoding::
     order = alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
 
 
-.. altair-plot::
-
-
 
 Filters
 ~~~~~~~
