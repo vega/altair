@@ -647,12 +647,12 @@ style to be able to tell them apart.
         empty=False,
     )
 
-    either_or_but_not_both = (alex | morgan) & ~(alex & morgan)
+    exlusive_or = (alex | morgan) & ~(alex & morgan)
 
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.when(either_or_but_not_both).then("count()").otherwise(alt.value("grey")),
+        color=alt.when(exlusive_or).then("count()").otherwise(alt.value("grey")),
     ).add_params(
         alex, morgan
     ).properties(
