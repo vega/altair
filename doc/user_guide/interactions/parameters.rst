@@ -548,7 +548,7 @@ Try holding shift to select multiple points on either hover or click.
 Conditional branches
 ^^^^^^^^^^^^^^^^^^^^
 
-:fun:`when` allows the use of multiple ``then`` (``elif``) branches
+:func:`when` allows the use of multiple ``then`` (``elif``) branches
 which can change the behavior of a single encoding
 in response to multiple different parameters.
 Here,
