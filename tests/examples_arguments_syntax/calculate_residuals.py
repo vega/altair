@@ -10,23 +10,25 @@ Adapted from `Calculate Residuals <https://vega.github.io/vega-lite/examples/joi
 # category: advanced calculations
 
 import altair as alt
+from vega_datasets import data
 
-imdb_rating = alt.datum["IMDB Rating"]
+imdb_rating = alt.datum["IMDB_Rating"]
+source = data.movies.url
 
 chart = (
-    alt.Chart("https://vega.github.io/vega-lite/data/movies.json")
+    alt.Chart(source)
     .mark_point()
     .transform_filter(imdb_rating != None)
     .transform_filter(
-        alt.FieldRangePredicate("Release Date", [None, 2019], timeUnit="year")
+        alt.FieldRangePredicate("Release_Date", [None, 2019], timeUnit="year")
     )
-    .transform_joinaggregate(AverageRating="mean(IMDB Rating)")
-    .transform_calculate(RatingDelta=imdb_rating - alt.datum.AverageRating)
+    .transform_joinaggregate(Average_Rating="mean(IMDB_Rating)")
+    .transform_calculate(Rating_Delta=imdb_rating - alt.datum.Average_Rating)
     .encode(
-        x="Release Date:T",
-        y=alt.Y("RatingDelta:Q", title="Rating Delta"),
+        x=alt.X("Release_Date:T", title="Release Date"),
+        y=alt.Y("Rating_Delta:Q", title="Rating Delta"),
         color=alt.Color(
-            "RatingDelta:Q",
+            "Rating_Delta:Q",
             title="Rating Delta",
             scale=alt.Scale(domainMid=0),
         ),
