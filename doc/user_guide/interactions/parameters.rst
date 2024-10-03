@@ -201,8 +201,7 @@ and is similar to an ``if-else`` statement written in Python::
         # .otherwise(alt.value("lightgray"))
         color = alt.value("lightgray")
 
-As a convenience,
-simple conditions may be expressed without defining a default:
+Omitting the ``.otherwise()`` clause will use the channel default instead:
 
 .. altair-plot::
 
@@ -218,7 +217,7 @@ simple conditions may be expressed without defining a default:
     )
     points
 
-Multiple conditional branches (``elif`` in Python)
+Multiple conditional branches (``if, elif, ..., elif`` in Python)
 are expressed via chained calls to :func:`when`.
 You will see an example with working code in :ref:`conditional-branches`
 when you have learned about different selection types.
