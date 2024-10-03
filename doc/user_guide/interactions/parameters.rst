@@ -399,7 +399,7 @@ empty selection contains none of the points:
 The ``empty=False`` argument could instead be set inside :func:`when`,
 so that you don't need to redefine the same selection, e.g.::
 
-    brush = alt.selection()
+    brush = alt.selection_interval()
     ...
     color=alt.when(brush).then(...)
     size=alt.when(brush, empty=False).then(...)
