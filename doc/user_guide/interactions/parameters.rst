@@ -221,16 +221,8 @@ Multiple conditional branches (``if, elif, ..., elif`` in Python)
 are expressed via chained calls to :func:`when`.
 You will see an example with working code in :ref:`conditional-branches`
 when you have learned about different selection types.
-For now, you can use this pseudocode
-as an example of what the syntax would look like::
 
-    alt.when(brush1)
-    .then(alt.value("goldenrod"))
-    .when(brush2)
-    .then(alt.value("crimson"))
-    .otherwise(alt.value("grey"))
-
-More advanced usage can be found
+More advanced use of conditions can be found
 in the :func:`when` API reference
 and in these gallery examples:
 
