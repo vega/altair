@@ -388,7 +388,8 @@ empty selection contains none of the points:
    make_example(interval_x)
 
 The ``empty=False`` argument could instead be set inside :func:`when`,
-so that you don't need to redefine the same selection, e.g.::
+to change the behavior of each condition when an empty selection is passed,
+rather than having to define separate selection objects::
 
     brush = alt.selection_interval()
     ...
