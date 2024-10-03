@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.10.0; python_version<\"3.13\"",
+    "typing_extensions>=4.10.0; python_version<\"3.14\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
@@ -112,7 +112,7 @@ installer = "uv"
 
 [tool.hatch.envs.default.scripts]
 generate-schema-wrapper = [
-    "mypy tools/schemapi/schemapi.py",
+    "mypy tools",
     "python tools/generate_schema_wrapper.py",
     "test"
 ]
@@ -439,12 +439,36 @@ module = [
     "ibis.*",
     # This refers to schemapi in the tools folder which is imported
     # by the tools scripts such as generate_schema_wrapper.py
-    "schemapi.*"
+    # "schemapi.*"
 ]
 ignore_missing_imports = true
 
 [tool.pyright]
+enableExperimentalFeatures=true
 extraPaths=["./tools"]
 pythonPlatform="All"
 pythonVersion="3.8"
+reportTypedDictNotRequiredAccess="none"
+reportIncompatibleMethodOverride="none"
 reportUnusedExpression="none"
+reportUnsupportedDunderAll="none"
+include=[
+    "./altair/**/*.py",
+    "./doc/*.py",
+	"./tests/**/*.py",
+	"./tools/**/*.py",
+]
+ignore=[
+    "./altair/vegalite/v5/display.py",
+    "./altair/vegalite/v5/schema/",
+    "./altair/utils/core.py",
+    "./altair/utils/_dfi_types.py",
+    "./altair/_magics.py",
+    "./altair/jupyter/",
+    "./sphinxext/",
+    "./tests/test_jupyter_chart.py",
+    "./tests/utils/",
+    "./tests/test_magics.py",
+    "./tests/vegalite/v5/test_geo_interface.py",
+    "../../../**/Lib", # stdlib
+]

@@ -11,6 +11,7 @@ from packaging.version import Version
 from pandas.api.types import infer_dtype
 
 import altair as alt
+from altair.utils import core
 from altair.utils.core import infer_encoding_types, parse_shorthand, update_nested
 from tests import skip_requires_pyarrow
 
@@ -267,18 +268,40 @@ def test_update_nested():
 
 
 @pytest.fixture
-def channels():
+def channels() -> types.ModuleType:
     channels = types.ModuleType("channels")
     exec(FAKE_CHANNELS_MODULE, channels.__dict__)
     return channels
+
+
+@pytest.fixture
+def channels_cached(channels) -> core._ChannelCache:
+    """Previously ``_ChannelCache.from_channels``."""
+    cached = core._ChannelCache.__new__(core._ChannelCache)
+    cached.channel_to_name = {
+        c: c._encoding_name
+        for c in channels.__dict__.values()
+        if isinstance(c, type)
+        and issubclass(c, alt.SchemaBase)
+        and hasattr(c, "_encoding_name")
+    }
+    cached.name_to_channel = core._invert_group_channels(cached.channel_to_name)
+    return cached
 
 
 def _getargs(*args, **kwargs):
     return args, kwargs
 
 
-# NOTE: Dependent on a no longer needed implementation detail
-def test_infer_encoding_types(channels):
+def test_infer_encoding_types(
+    monkeypatch: pytest.MonkeyPatch, channels, channels_cached
+):
+    # Indirectly initialize `_CHANNEL_CACHE`
+    infer_encoding_types((), {})
+    # Replace with contents of `FAKE_CHANNELS_MODULE`
+    # Scoped to only this test
+    monkeypatch.setattr(core, "_CHANNEL_CACHE", channels_cached)
+
     expected = {
         "x": channels.X("xval"),
         "y": channels.YValue("yval"),
@@ -289,17 +312,17 @@ def test_infer_encoding_types(channels):
     args, kwds = _getargs(
         channels.X("xval"), channels.YValue("yval"), channels.StrokeWidthValue(4)
     )
-    assert infer_encoding_types(args, kwds, channels) == expected
+    assert infer_encoding_types(args, kwds) == expected
 
     # All keyword args
     args, kwds = _getargs(x="xval", y=alt.value("yval"), strokeWidth=alt.value(4))
-    assert infer_encoding_types(args, kwds, channels) == expected
+    assert infer_encoding_types(args, kwds) == expected
 
     # Mixed positional & keyword
     args, kwds = _getargs(
         channels.X("xval"), channels.YValue("yval"), strokeWidth=alt.value(4)
     )
-    assert infer_encoding_types(args, kwds, channels) == expected
+    assert infer_encoding_types(args, kwds) == expected
 
 
 def test_infer_encoding_types_with_condition():

@@ -5,42 +5,62 @@ from __future__ import annotations
 import argparse
 import copy
 import json
-import re
 import sys
 import textwrap
+from collections import deque
 from dataclasses import dataclass
 from itertools import chain
+from operator import attrgetter
 from pathlib import Path
-from typing import Final, Iterable, Iterator, Literal
+from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal
 from urllib import request
 
 import vl_convert as vlc
 
 sys.path.insert(0, str(Path.cwd()))
-from tools.schemapi import CodeSnippet, SchemaInfo, codegen
+
+
+from tools.schemapi import (  # noqa: F401
+    CodeSnippet,
+    SchemaInfo,
+    arg_invalid_kwds,
+    arg_kwds,
+    arg_required_kwds,
+    codegen,
+)
 from tools.schemapi.utils import (
+    SchemaProperties,
     TypeAliasTracer,
+    finalize_type_reprs,
     get_valid_identifier,
+    import_type_checking,
+    import_typing_extensions,
     indent_docstring,
     resolve_references,
-    rst_parse,
     rst_syntax_for_class,
     ruff_format_py,
     ruff_write_lint_format_str,
     spell_literal,
 )
 
+if TYPE_CHECKING:
+    from tools.schemapi.codegen import ArgInfo, AttrGetter
+
 SCHEMA_VERSION: Final = "v5.20.1"
 
-reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
-reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 
-HEADER: Final = """\
+HEADER_COMMENT = """\
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 """
 
+HEADER: Final = f"""{HEADER_COMMENT}
+from __future__ import annotations\n
+"""
+
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+SCHEMA_FILE = "vega-lite-schema.json"
+THEMES_FILE = "vega-themes.json"
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -181,11 +201,17 @@ class DatumChannelMixin:
         )
 """
 
+MARK_MIXIN: Final = '''
+class MarkMethodMixin:
+    """A mixin class that defines mark methods"""
+
+{methods}
+'''
+
 MARK_METHOD: Final = '''
-def mark_{mark}({def_arglist}) -> Self:
-    """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)
-    """
-    kwds = dict({dict_arglist})
+def mark_{mark}(self, {method_args}, **kwds) -> Self:
+    """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
+    kwds = dict({dict_args}, **kwds)
     copy = self.copy(deep=False)  # type: ignore[attr-defined]
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
@@ -211,10 +237,43 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
     return copy
 """
+UNIVERSAL_TYPED_DICT = '''
+class {name}(TypedDict{metaclass_kwds}):{comment}
+    """
+    {summary}
+
+    Parameters
+    ----------
+    {doc}"""
+
+    {td_args}
+'''
+ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
+THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
+PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
+ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
+ENCODE_KWDS_SUMMARY: Final = (
+    "Encoding channels map properties of the data to visual properties of the chart."
+)
+THEME_CONFIG_SUMMARY: Final = (
+    "Top-Level Configuration ``TypedDict`` for creating a consistent theme."
+)
+EXTRA_ITEMS_MESSAGE: Final = """\
+    Notes
+    -----
+    The following keys may be specified as string literals **only**:
+
+        {invalid_kwds}
+
+    See `PEP728`_ for type checker compatibility.
+
+    .. _PEP728:
+        https://peps.python.org/pep-0728/#reference-implementation
+"""
 
 ENCODE_METHOD: Final = '''
 class _EncodingMixin:
-    def encode({method_args}) -> Self:
+    def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
         # Compat prep for `infer_encoding_types` signature
@@ -238,20 +297,14 @@ class _EncodingMixin:
         return copy
 '''
 
-ENCODE_TYPED_DICT: Final = '''
-class EncodeKwds(TypedDict, total=False):
-    """Encoding channels map properties of the data to visual properties of the chart.
-    {docstring}"""
-    {channels}
-
-'''
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
 # Revisit if this starts to become more common
 TYPING_EXTRA: Final = '''
 T = TypeVar("T")
 OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
-"""One of ``T`` specified type(s), or a `Sequence` of such.
+"""
+One of ``T`` specified type(s), or a `Sequence` of such.
 
 Examples
 --------
@@ -264,7 +317,85 @@ The parameters ``short``, ``long`` accept the same range of types::
         long: Union[str, bool, float, Sequence[Union[str, bool, float]],
     ): ...
 """
+
+class Value(TypedDict, Generic[T]):
+    """
+    A `Generic`_ single item ``dict``.
+
+    Parameters
+    ----------
+    value: T
+        Wrapped value.
+
+    .. _Generic:
+        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+    """
+
+    value: T
+
+
+ColorHex = Annotated[
+    LiteralString,
+    re.compile(r"#[0-9a-f]{2}[0-9a-f]{2}[0-9a-f]{2}([0-9a-f]{2})?", re.IGNORECASE),
+]
+"""
+A `hexadecimal`_ color code.
+
+Corresponds to the ``json-schema`` string format:
+
+    {"format": "color-hex", "type": "string"}
+
+Examples
+--------
+:
+
+    "#f0f8ff"
+    "#7fffd4"
+    "#000000"
+    "#0000FF"
+    "#0000ff80"
+
+.. _hexadecimal:
+    https://www.w3schools.com/html/html_colors_hex.asp
+"""
+
+def is_color_hex(obj: Any) -> TypeIs[ColorHex]:
+    """Return ``True`` if the object is a hexadecimal color code."""
+    # NOTE: Extracts compiled pattern from metadata,
+    # to avoid defining in multiple places.
+    it = iter(get_args(ColorHex))
+    next(it)
+    pattern: re.Pattern[str] = next(it)
+    return bool(pattern.fullmatch(obj))
+
+
+
+class RowColKwds(TypedDict, Generic[T], total=False):
+    """
+    A `Generic`_ two-item ``dict``.
+
+    Parameters
+    ----------
+    column: T
+    row: T
+
+    .. _Generic:
+        https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+    """
+
+    column: T
+    row: T
+
+
+class PaddingKwds(TypedDict, total=False):
+    bottom: float
+    left: float
+    right: float
+    top: float
 '''
+
+_ChannelType = Literal["field", "datum", "value"]
+INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
 
 
 class SchemaGenerator(codegen.SchemaGenerator):
@@ -277,28 +408,6 @@ class SchemaGenerator(codegen.SchemaGenerator):
         {init_code}
     '''
     )
-
-    @staticmethod
-    def _process_description(description: str) -> str:
-        return process_description(description)
-
-
-def process_description(description: str) -> str:
-    # remove formatting from links
-    description = "".join(
-        [
-            reSpecial.sub("", d) if i % 2 else d
-            for i, d in enumerate(reLink.split(description))
-        ]
-    )
-    description = rst_parse(description)
-    # Some entries in the Vega-Lite schema miss the second occurence of '__'
-    description = description.replace("__Default value: ", "__Default value:__ ")
-    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
-    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
-    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
-    return description.strip()
 
 
 class FieldSchemaGenerator(SchemaGenerator):
@@ -363,7 +472,7 @@ def download_schemafile(
     url = schema_url(version=version)
     schemadir = Path(schemapath)
     schemadir.mkdir(parents=True, exist_ok=True)
-    fp = schemadir / "vega-lite-schema.json"
+    fp = schemadir / SCHEMA_FILE
     if not skip_download:
         request.urlretrieve(url, fp)
     elif not fp.exists():
@@ -372,8 +481,19 @@ def download_schemafile(
     return fp
 
 
+def _vega_lite_props_only(
+    themes: dict[str, dict[str, Any]], props: SchemaProperties, /
+) -> Iterator[tuple[str, dict[str, Any]]]:
+    """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
+    keep = props.keys()
+    for name, theme_spec in themes.items():
+        yield name, {k: v for k, v in theme_spec.items() if k in keep}
+
+
 def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
-    themes = vlc.get_themes()
+    root = load_schema(fp.parent / SCHEMA_FILE)
+    vl_props = SchemaInfo.from_refname("Config", root).properties
+    themes = dict(_vega_lite_props_only(vlc.get_themes(), vl_props))
     data = json.dumps(themes, indent=indent, sort_keys=True)
     fp.write_text(data, encoding="utf8")
 
@@ -381,36 +501,33 @@ def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
     TypeAliasTracer.update_aliases(("VegaThemes", spell_literal(theme_names)))
 
 
-def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
-    with schemapath.open(encoding="utf8") as f:
-        schema = json.load(f)
+def load_schema(fp: Path, /) -> dict[str, Any]:
+    """Reads and returns the root schema from ``fp``."""
+    with fp.open(encoding="utf8") as f:
+        root_schema = json.load(f)
+    return root_schema
 
-    schema = _add_shorthand_property_to_field_encodings(schema)
-    return schema
 
-
-def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
+def load_schema_with_shorthand_properties(fp: Path, /) -> dict[str, Any]:
+    schema = load_schema(fp)
     encoding_def = "FacetedEncoding"
-
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
-
-    for _, propschema in encoding.properties.items():
+    shorthand = {
+        "anyOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}},
+            {"$ref": "#/definitions/RepeatRef"},
+        ],
+        "description": "shorthand for field, aggregate, and type",
+    }
+    for propschema in encoding.properties.values():
         def_dict = get_field_datum_value_defs(propschema, schema)
-
-        field_ref = def_dict.get("field")
-        if field_ref is not None:
-            defschema = {"$ref": field_ref}
+        if field_ref := def_dict.get("field", None):
+            defschema: dict[str, Any] = {"$ref": field_ref}
             defschema = copy.deepcopy(resolve_references(defschema, schema))
             # For Encoding field definitions, we patch the schema by adding the
             # shorthand property.
-            defschema["properties"]["shorthand"] = {
-                "anyOf": [
-                    {"type": "string"},
-                    {"type": "array", "items": {"type": "string"}},
-                    {"$ref": "#/definitions/RepeatRef"},
-                ],
-                "description": "shorthand for field, aggregate, and type",
-            }
+            defschema["properties"]["shorthand"] = shorthand
             if "required" not in defschema:
                 defschema["required"] = ["shorthand"]
             elif "shorthand" not in defschema["required"]:
@@ -429,7 +546,7 @@ def copy_schemapi_util() -> None:
     with source_fp.open(encoding="utf8") as source, destination_fp.open(
         "w", encoding="utf8"
     ) as dest:
-        dest.write(HEADER)
+        dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":
         ruff_format_py(destination_fp)
@@ -451,9 +568,14 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
             recursive_dict_update(sub_schema, root, def_dict)
 
 
-def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, str]:
-    def_dict: dict[str, str | None] = dict.fromkeys(("field", "datum", "value"))
-    schema = propschema.schema
+def get_field_datum_value_defs(
+    propschema: SchemaInfo, root: dict[str, Any]
+) -> dict[_ChannelType, str]:
+    def_dict: dict[_ChannelType, str | None] = dict.fromkeys(
+        ("field", "datum", "value")
+    )
+    _schema = propschema.schema
+    schema = _schema if isinstance(_schema, dict) else dict(_schema)
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:
             def_dict["field"] = propschema.ref
@@ -497,14 +619,13 @@ def toposort(graph: dict[str, list[str]]) -> list[str]:
     return stack
 
 
-def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
+def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
-
-    rootschema = load_schema_with_shorthand_properties(schema_file)
-
+    rootschema = load_schema_with_shorthand_properties(fp)
     definitions: dict[str, SchemaGenerator] = {}
+    graph: dict[str, list[str]] = {}
 
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
@@ -518,9 +639,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
             basename=basename,
             rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
         )
-
-    graph: dict[str, list[str]] = {}
-
     for name, schema in definitions.items():
         graph[name] = []
         for child_name in schema.subclasses():
@@ -537,25 +655,23 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     # of exported classes which are also defined in the channels or api modules which takes
     # precedent in the generated __init__.py files one and two levels up.
     # Importing these classes from multiple modules confuses type checkers.
-    EXCLUDE = {"Color", "Text", "LookupData", "Dict"}
+    EXCLUDE = {"Color", "Text", "LookupData", "Dict", "FacetMapping"}
     it = (c for c in definitions.keys() - EXCLUDE if not c.startswith("_"))
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
-
     contents = [
         HEADER,
-        "from __future__ import annotations\n"
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
         "import pkgutil",
         "import json\n",
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
-        _type_checking_only_imports(
+        import_type_checking(
             "from altair import Parameter",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
-        LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
+        LOAD_SCHEMA.format(schemafile=SCHEMA_FILE),
         BASE_SCHEMA.format(basename=basename),
         schema_class(
             "Root",
@@ -570,14 +686,6 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     contents.append("")  # end with newline
     return "\n".join(contents)
-
-
-def _type_checking_only_imports(*imports: str) -> str:
-    return (
-        "\n# ruff: noqa: F405\nif TYPE_CHECKING:\n"
-        + "\n".join(f"    {s}" for s in imports)
-        + "\n"
-    )
 
 
 @dataclass
@@ -609,22 +717,15 @@ class ChannelInfo:
                 yield self.value_class_name
 
 
-def generate_vegalite_channel_wrappers(
-    schemafile: Path, version: str, imports: list[str] | None = None
-) -> str:
-    schema = load_schema_with_shorthand_properties(schemafile)
-
+def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
+    schema = load_schema_with_shorthand_properties(fp)
     encoding_def = "FacetedEncoding"
-
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
-
     channel_infos: dict[str, ChannelInfo] = {}
-
-    class_defs = []
+    class_defs: list[Any] = []
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
-
         supports_arrays = any(
             schema_info.is_array() for schema_info in propschema.anyOf
         )
@@ -641,7 +742,7 @@ def generate_vegalite_channel_wrappers(
 
             gen: SchemaGenerator
             defschema = {"$ref": definition}
-            kwds = {
+            kwds: dict[str, Any] = {
                 "basename": basename,
                 "schema": defschema,
                 "rootschema": schema,
@@ -658,6 +759,8 @@ def generate_vegalite_channel_wrappers(
                 temp_name = f"{classname}Value"
                 channel_info.value_class_name = temp_name
                 gen = ValueSchemaGenerator(temp_name, nodefault=["value"], **kwds)
+            else:
+                raise NotImplementedError
 
             class_defs.append(gen.schema_class())
 
@@ -670,14 +773,12 @@ def generate_vegalite_channel_wrappers(
         "ValueChannelMixin",
         "with_property_setters",
     )
-
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
     all_ = list(chain(it, COMPAT_EXPORTS))
-
-    imports = imports or [
-        "from __future__ import annotations\n",
+    imports = [
+        "import sys",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
-        "from typing_extensions import TypeAlias",
+        import_typing_extensions((3, 10), "TypeAlias"),
         "import narwhals.stable.v1 as nw",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
@@ -689,108 +790,215 @@ def generate_vegalite_channel_wrappers(
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
-        _type_checking_only_imports(
+        import_type_checking(
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            "from typing_extensions import Self",
+            f"from altair.vegalite.v5.api import {INTO_CONDITION}",
+            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
         CHANNEL_MIXINS,
         *class_defs,
-        *generate_encoding_artifacts(channel_infos, ENCODE_METHOD, ENCODE_TYPED_DICT),
+        *generate_encoding_artifacts(
+            channel_infos, ENCODE_METHOD, facet_encoding=encoding
+        ),
     ]
     return "\n".join(contents)
 
 
-def generate_vegalite_mark_mixin(
-    schemafile: Path, markdefs: dict[str, str]
-) -> tuple[list[str], str]:
-    with schemafile.open(encoding="utf8") as f:
-        schema = json.load(f)
-
-    class_name = "MarkMethodMixin"
-
-    imports = [
-        "from typing import Any, Sequence, List, Literal, Union",
-        "",
-        "from altair.utils.schemapi import Undefined, UndefinedType",
-        "from . import core",
-    ]
-
-    code = [
-        f"class {class_name}:",
-        '    """A mixin class that defines mark methods"""',
-    ]
+def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
+    schema = load_schema(fp)
+    code: list[str] = []
 
     for mark_enum, mark_def in markdefs.items():
-        if "enum" in schema["definitions"][mark_enum]:
-            marks = schema["definitions"][mark_enum]["enum"]
-        else:
-            marks = [schema["definitions"][mark_enum]["const"]]
-        info = SchemaInfo({"$ref": f"#/definitions/{mark_def}"}, rootschema=schema)
-
-        # adapted from SchemaInfo.init_code
-        arg_info = codegen.get_args(info)
-        arg_info.required -= {"type"}
-        arg_info.kwds -= {"type"}
-
-        def_args = ["self"] + [
-            f"{p}: "
-            + info.properties[p].get_python_type_representation(
-                for_type_hints=True,
-                additional_type_hints=["UndefinedType"],
-            )
-            + " = Undefined"
-            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
-        ]
-        dict_args = [
-            f"{p}={p}" for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
-        ]
-
-        if arg_info.additional or arg_info.invalid_kwds:
-            def_args.append("**kwds")
-            dict_args.append("**kwds")
+        _def = schema["definitions"][mark_enum]
+        marks: list[Any] = _def["enum"] if "enum" in _def else [_def["const"]]
+        info = SchemaInfo.from_refname(mark_def, rootschema=schema)
+        mark_args = generate_mark_args(info)
 
         for mark in marks:
             # TODO: only include args relevant to given type?
-            mark_method = MARK_METHOD.format(
-                mark=mark,
-                mark_def=mark_def,
-                def_arglist=", ".join(def_args),
-                dict_arglist=", ".join(dict_args),
-            )
+            mark_method = MARK_METHOD.format(mark=mark, mark_def=mark_def, **mark_args)
             code.append("\n    ".join(mark_method.splitlines()))
 
-    return imports, "\n".join(code)
+    return MARK_MIXIN.format(methods="\n".join(code))
 
 
-def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
-    imports = [
-        "from . import core",
-        "from altair.utils import use_signature",
-    ]
+def generate_mark_args(
+    info: SchemaInfo, /
+) -> dict[Literal["method_args", "dict_args"], str]:
+    args = codegen.get_args(info)
+    method_args: deque[str] = deque()
+    dict_args: deque[str] = deque()
+    for p, p_info in args.iter_args(arg_required_kwds, exclude="type"):
+        dict_args.append(f"{p}={p}")
+        method_args.append(
+            f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
+        )
+    return {"method_args": ", ".join(method_args), "dict_args": ", ".join(dict_args)}
 
+
+def generate_typed_dict(
+    info: SchemaInfo,
+    name: str,
+    *,
+    summary: str | None = None,
+    groups: Iterable[str] | AttrGetter[ArgInfo, set[str]] = arg_required_kwds,
+    exclude: str | Iterable[str] | None = None,
+    override_args: Iterable[str] | None = None,
+) -> str:
+    """
+    Return a fully typed & documented ``TypedDict``.
+
+    Parameters
+    ----------
+    info
+        JSON Schema wrapper.
+    name
+        Full target class name.
+        Include a pre/post-fix if ``SchemaInfo.title`` already exists.
+    summary
+        When provided, used instead of generated summary line.
+    groups
+        A subset of ``ArgInfo``, or a callable that can derive one.
+    exclude
+        Property name(s) to omit if they appear during iteration.
+    override_args
+        When provided, used instead of any ``ArgInfo`` related handling.
+
+        .. note::
+            See ``EncodeKwds``.
+
+    Notes
+    -----
+    - Internally handles keys that are not valid python identifiers
+    - The union of their types will be added to ``__extra_items__``
+    """
+    TARGET: Literal["annotation"] = "annotation"
+    arg_info = codegen.get_args(info)
+    metaclass_kwds = ", total=False"
+    comment = ""
+    args_it: Iterable[str] = (
+        (
+            f"{p}: {p_info.to_type_repr(target=TARGET, use_concrete=True)}"
+            for p, p_info in arg_info.iter_args(groups, exclude=exclude)
+        )
+        if override_args is None
+        else override_args
+    )
+    args = "\n    ".join(args_it)
+    doc = indent_docstring(
+        chain.from_iterable(
+            (p, f"    {p_info.deep_description}")
+            for p, p_info in arg_info.iter_args(groups, exclude=exclude)
+        ),
+        indent_level=4,
+    )
+    # NOTE: The RHS eager eval is used to skip `invalid_kwds`,
+    # if they have been marked for exclusion
+    if (kwds := arg_info.invalid_kwds) and list(
+        arg_info.iter_args(kwds, exclude=exclude)
+    ):
+        metaclass_kwds = f", closed=True{metaclass_kwds}"
+        comment = "  # type: ignore[call-arg]"
+        kwds_all_tps = chain.from_iterable(
+            info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
+            for _, info in arg_info.iter_args(kwds, exclude=exclude)
+        )
+        args = (
+            f"{args}\n    "
+            f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
+        )
+        doc = (
+            f"{doc}\n" f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
+        )
+
+    return UNIVERSAL_TYPED_DICT.format(
+        name=name,
+        metaclass_kwds=metaclass_kwds,
+        comment=comment,
+        summary=summary or f"{rst_syntax_for_class(info.title)} ``TypedDict`` wrapper.",
+        doc=doc,
+        td_args=args,
+    )
+
+
+def generate_config_typed_dicts(fp: Path, /) -> Iterator[str]:
+    KWDS: Literal["Kwds"] = "Kwds"
+    CONFIG: Literal["Config"] = "Config"
+    TOP_LEVEL: Literal["TopLevelUnitSpec"] = "TopLevelUnitSpec"
+    TOP_LEVEL_EXTRAS = (
+        "Step",
+        "Projection",
+        "Resolve",
+        "TitleParams",
+        "ViewBackground",
+    )
+    TOP_LEVEL_EXCLUDE = {"$schema", "data", "datasets", "encoding", "transform"}
+    root = load_schema(fp)
+    config = SchemaInfo.from_refname(CONFIG, root)
+    theme_targets = find_theme_config_targets(config)
+    for name in TOP_LEVEL_EXTRAS:
+        theme_targets.update(
+            find_theme_config_targets(SchemaInfo.from_refname(name, root))
+        )
+
+    relevant: dict[str, SchemaInfo] = {
+        x.title: x for x in sorted(theme_targets, key=attrgetter("refname"))
+    }
+
+    SchemaInfo._remap_title.update(
+        {"HexColor": ("ColorHex",), "Padding": ("float", PADDING_KWDS)}
+    )
+    SchemaInfo._remap_title.update((k, (f"{k}{KWDS}",)) for k in relevant)
+    config_sub: Iterator[str] = (
+        generate_typed_dict(info, name=f"{info.title}{KWDS}")
+        for info in relevant.values()
+    )
+    config_sub_names = (f"{nm}{KWDS}" for nm in relevant)
+    yield f"__all__ = {[*config_sub_names, PADDING_KWDS, ROW_COL_KWDS, THEME_CONFIG]}\n\n"
+    yield "\n".join(config_sub)
+    yield generate_typed_dict(
+        SchemaInfo.from_refname(TOP_LEVEL, root),
+        THEME_CONFIG,
+        summary=THEME_CONFIG_SUMMARY,
+        groups=arg_kwds,
+        exclude=TOP_LEVEL_EXCLUDE,
+    )
+
+
+def find_theme_config_targets(info: SchemaInfo, depth: int = 0, /) -> set[SchemaInfo]:
+    """Equivalent to `get_all_objects`."""
+    MAX_DEPTH = 6
+    seen: set[SchemaInfo] = set()
+    if info.is_theme_config_target() and info not in seen:
+        seen.add(info)
+    if depth < MAX_DEPTH:
+        for prop_info in info.iter_descendants():
+            seen.update(find_theme_config_targets(prop_info, depth + 1))
+    return seen
+
+
+def generate_vegalite_config_mixin(fp: Path, /) -> str:
     class_name = "ConfigMethodMixin"
-
+    CONFIG: Literal["Config"] = "Config"
     code = [
         f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
-    with schemafile.open(encoding="utf8") as f:
-        schema = json.load(f)
-    info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
+    info = SchemaInfo.from_refname(CONFIG, rootschema=load_schema(fp))
 
     # configure() method
-    method = CONFIG_METHOD.format(classname="Config", method="configure")
+    method = CONFIG_METHOD.format(classname=CONFIG, method="configure")
     code.append("\n    ".join(method.splitlines()))
 
     # configure_prop() methods
     for prop, prop_info in info.properties.items():
         classname = prop_info.refname
-        if classname and classname.endswith("Config"):
+        if classname and classname.endswith(CONFIG):
             method = CONFIG_PROP_METHOD.format(classname=classname, prop=prop)
             code.append("\n    ".join(method.splitlines()))
-    return imports, "\n".join(code)
+    return "\n".join(code)
 
 
 def vegalite_main(skip_download: bool = False) -> None:
@@ -804,7 +1012,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         skip_download=skip_download,
     )
 
-    fp_themes = schemapath / "vega-themes.json"
+    fp_themes = schemapath / THEMES_FILE
     print(f"Updating themes\n {schemafile!s}\n  ->{fp_themes!s}")
     update_vega_themes(fp_themes)
 
@@ -819,6 +1027,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     ruff_write_lint_format_str(outfile, content)
 
+    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
+
     files: dict[Path, str | Iterable[str]] = {}
 
     # Generate the core schema wrappers
@@ -829,33 +1039,31 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile, version=version)
+    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
 
     # generate the mark mixin
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
     fp_mixins = schemapath / "mixins.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
-    mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
-    config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
-    try_except_imports = [
-        "if sys.version_info >= (3, 11):",
-        "    from typing import Self",
-        "else:",
-        "    from typing_extensions import Self",
-    ]
-    stdlib_imports = ["from __future__ import annotations\n", "import sys"]
+    mixins_imports = (
+        "from typing import Any, Sequence, List, Literal, Union",
+        "from altair.utils import use_signature, Undefined",
+        "from . import core",
+    )
+
+    mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+    config_mixin = generate_vegalite_config_mixin(schemafile)
     content_mixins = [
         HEADER,
-        "\n".join(stdlib_imports),
         "\n\n",
-        "\n".join(sorted({*mark_imports, *config_imports})),
+        "\n".join(mixins_imports),
         "\n\n",
-        "\n".join(try_except_imports),
-        "\n\n",
-        _type_checking_only_imports(
-            "from altair import Parameter, SchemaBase",
+        import_type_checking(
+            "import sys",
+            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
+            "from altair import Parameter, SchemaBase",
         ),
         "\n\n\n",
         mark_mixin,
@@ -864,6 +1072,20 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     files[fp_mixins] = content_mixins
 
+    # Generate theme-related Config hierarchy of TypedDict
+    fp_theme_config: Path = schemapath / "_config.py"
+    content_theme_config = [
+        HEADER,
+        "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
+        import_typing_extensions((3, 14), "TypedDict", include_sys=True),
+        f"from ._typing import {ROW_COL_KWDS}, {PADDING_KWDS}",
+        "\n\n",
+        import_type_checking("from ._typing import * # noqa: F403"),
+        "\n\n",
+        *generate_config_typed_dicts(schemafile),
+    ]
+    files[fp_theme_config] = content_theme_config
+
     # Write `_typing.py` TypeAlias, for import in generated modules
     fp_typing = schemapath / "_typing.py"
     msg = (
@@ -871,9 +1093,16 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
     )
     print(msg)
-    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
     TypeAliasTracer.write_module(
-        fp_typing, "OneOrSeq", header=HEADER, extra=TYPING_EXTRA
+        fp_typing,
+        "OneOrSeq",
+        "Value",
+        "ColorHex",
+        "is_color_hex",
+        ROW_COL_KWDS,
+        PADDING_KWDS,
+        header=HEADER,
+        extra=TYPING_EXTRA,
     )
     # Write the pre-generated modules
     for fp, contents in files.items():
@@ -882,7 +1111,10 @@ def vegalite_main(skip_download: bool = False) -> None:
 
 
 def generate_encoding_artifacts(
-    channel_infos: dict[str, ChannelInfo], fmt_method: str, fmt_typed_dict: str
+    channel_infos: dict[str, ChannelInfo],
+    fmt_method: str,
+    *,
+    facet_encoding: SchemaInfo,
 ) -> Iterator[str]:
     """
     Generate ``Chart.encode()`` and related typing structures.
@@ -899,20 +1131,32 @@ def generate_encoding_artifacts(
         - but this translates poorly to an IDE
         - `info.supports_arrays`
     """
-    signature_args: list[str] = ["self", "*args: Any"]
-    type_aliases: list[str] = []
+    PREFIX_INTERNAL = "Any"
+    PREFIX_EXPORT = "Channel"
+    signature_args: list[str] = []
+    internal_aliases: list[str] = []
+    export_aliases: list[str] = []
     typed_dict_args: list[str] = []
     signature_doc_params: list[str] = ["", "Parameters", "----------"]
-    typed_dict_doc_params: list[str] = ["", "Parameters", "----------"]
 
     for channel, info in channel_infos.items():
-        alias_name: str = f"Channel{channel[0].upper()}{channel[1:]}"
+        channel_name = f"{channel[0].upper()}{channel[1:]}"
 
-        it: Iterator[str] = info.all_names
+        names = list(info.all_names)
         it_rst_names: Iterator[str] = (rst_syntax_for_class(c) for c in info.all_names)
 
         docstring_types: list[str] = ["str", next(it_rst_names), "Dict"]
-        tp_inner: str = ", ".join(chain(("str", next(it), "Map"), it))
+        if len(names) > 1:
+            # NOTE: Another level of internal aliases are generated, for channels w/ 2-3 types.
+            # These are represent only types defined in `channels.py` and not the full range accepted.
+            any_name = f"{PREFIX_INTERNAL}{channel_name}"
+            internal_aliases.append(
+                f"{any_name}: TypeAlias = Union[{', '.join(names)}]"
+            )
+            tp_inner: str = ", ".join(("str", any_name, f"{INTO_CONDITION!r}", "Map"))
+        else:
+            tp_inner = ", ".join(("str", names[0], f"{INTO_CONDITION!r}", "Map"))
+
         tp_inner = f"Union[{tp_inner}]"
 
         if info.supports_arrays:
@@ -921,27 +1165,34 @@ def generate_encoding_artifacts(
 
         doc_types_flat: str = ", ".join(chain(docstring_types, it_rst_names))
 
-        type_aliases.append(f"{alias_name}: TypeAlias = {tp_inner}")
+        export_aliases.append(f"{PREFIX_EXPORT}{channel_name}: TypeAlias = {tp_inner}")
         # We use the full type hints instead of the alias in the signatures below
         # as IDEs such as VS Code would else show the name of the alias instead
         # of the expanded full type hints. The later are more useful to users.
         typed_dict_args.append(f"{channel}: {tp_inner}")
         signature_args.append(f"{channel}: Optional[{tp_inner}] = Undefined")
 
-        description: str = f"    {process_description(info.deep_description)}"
+        description: str = f"    {info.deep_description}"
 
         signature_doc_params.extend((f"{channel} : {doc_types_flat}", description))
-        typed_dict_doc_params.extend((f"{channel}", description))
 
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
     )
-    typed_dict: str = fmt_typed_dict.format(
-        channels="\n    ".join(typed_dict_args),
-        docstring=indent_docstring(typed_dict_doc_params, indent_level=4, lstrip=False),
+    typed_dict = generate_typed_dict(
+        facet_encoding,
+        ENCODE_KWDS,
+        summary=ENCODE_KWDS_SUMMARY,
+        override_args=typed_dict_args,
     )
-    artifacts: Iterable[str] = *type_aliases, method, typed_dict
+    artifacts: Iterable[str] = (
+        *internal_aliases,
+        "",
+        *export_aliases,
+        method,
+        typed_dict,
+    )
     yield from artifacts
 
 

@@ -1,3 +1,4 @@
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -63,7 +64,8 @@ def test_duration_raises():
 
     # Check that exception mentions the duration[ns] type,
     # which is what the pandas timedelta is converted into
-    assert (
-        'Field "timedelta" has type "Duration" which is not supported by Altair'
-        in e.value.args[0]
+
+    assert re.match(
+        r'^Field "timedelta" has type "Duration.*" which is not supported by Altair',
+        e.value.args[0],
     )

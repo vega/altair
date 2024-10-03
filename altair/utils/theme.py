@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 
-from .plugin_registry import PluginRegistry
+from altair.utils.plugin_registry import Plugin, PluginRegistry
+from altair.vegalite.v5.schema._config import ThemeConfig
 
 if sys.version_info >= (3, 11):
     from typing import LiteralString
@@ -16,10 +17,12 @@ if TYPE_CHECKING:
     from altair.utils.plugin_registry import PluginEnabler
     from altair.vegalite.v5.theme import AltairThemes, VegaThemes
 
-ThemeType = Callable[..., dict]
+ThemeType = Plugin[ThemeConfig]
 
 
-class ThemeRegistry(PluginRegistry[ThemeType, dict]):
+# HACK: See for `LiteralString` requirement in `name`
+# https://github.com/vega/altair/pull/3526#discussion_r1743350127
+class ThemeRegistry(PluginRegistry[ThemeType, ThemeConfig]):
     def enable(
         self, name: LiteralString | AltairThemes | VegaThemes | None = None, **options
     ) -> PluginEnabler:

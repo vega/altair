@@ -12,28 +12,36 @@ from collections.abc import Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Callable, Iterator, Literal, TypeVar, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Iterator,
+    Literal,
+    TypeVar,
+    cast,
+    overload,
+)
 
 import jsonschema
 import narwhals.stable.v1 as nw
 from narwhals.dependencies import get_polars, is_pandas_dataframe
 from narwhals.typing import IntoDataFrame
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase, SchemaLike, Undefined
 
 if sys.version_info >= (3, 12):
-    from typing import Protocol, runtime_checkable
+    from typing import Protocol, TypeAliasType, runtime_checkable
 else:
-    from typing_extensions import Protocol, runtime_checkable
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable
 if sys.version_info >= (3, 10):
-    from typing import ParamSpec
+    from typing import Concatenate, ParamSpec
 else:
-    from typing_extensions import ParamSpec
+    from typing_extensions import Concatenate, ParamSpec
 
 
 if TYPE_CHECKING:
     import typing as t
-    from types import ModuleType
 
     import pandas as pd
     from narwhals.typing import IntoExpr
@@ -41,9 +49,21 @@ if TYPE_CHECKING:
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
 
-V = TypeVar("V")
-P = ParamSpec("P")
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
+T = TypeVar("T")
+P = ParamSpec("P")
+R = TypeVar("R")
+
+WrapsFunc = TypeAliasType("WrapsFunc", Callable[..., R], type_params=(R,))
+WrappedFunc = TypeAliasType("WrappedFunc", Callable[P, R], type_params=(P, R))
+# NOTE: Requires stringized form to avoid `< (3, 11)` issues
+# See: https://github.com/vega/altair/actions/runs/10667859416/job/29567290871?pr=3565
+WrapsMethod = TypeAliasType(
+    "WrapsMethod", "Callable[Concatenate[T, ...], R]", type_params=(T, R)
+)
+WrappedMethod = TypeAliasType(
+    "WrappedMethod", Callable[Concatenate[T, P], R], type_params=(T, P, R)
+)
 
 
 @runtime_checkable
@@ -709,38 +729,62 @@ def infer_vegalite_type_for_narwhals(
         raise ValueError(msg)
 
 
-def use_signature(obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
-    """Apply call signature and documentation of `obj` to the decorated method."""
+def use_signature(tp: Callable[P, Any], /):
+    """
+    Use the signature and doc of ``tp`` for the decorated callable ``cb``.
 
-    def decorate(func: Callable[..., V]) -> Callable[P, V]:
-        # call-signature of func is exposed via __wrapped__.
-        # we want it to mimic obj.__init__
+    - **Overload 1**: Decorating method
+    - **Overload 2**: Decorating function
 
-        # error: Accessing "__init__" on an instance is unsound,
-        # since instance.__init__ could be from an incompatible subclass  [misc]
-        wrapped = (
-            obj.__init__ if (isinstance(obj, type) and issubclass(obj, object)) else obj  # type: ignore [misc]
-        )
-        func.__wrapped__ = wrapped  # type: ignore[attr-defined]
-        func._uses_signature = obj  # type: ignore[attr-defined]
+    Returns
+    -------
+    **Adding the annotation breaks typing**:
 
-        # Supplement the docstring of func with information from obj
-        if doc_in := obj.__doc__:
-            doc_lines = doc_in.splitlines(keepends=True)[1:]
-            # Patch in a reference to the class this docstring is copied from,
-            # to generate a hyperlink.
-            line_1 = f"{func.__doc__ or f'Refer to :class:`{obj.__name__}`'}\n"
-            func.__doc__ = "".join((line_1, *doc_lines))
-            return func
+        Overload[Callable[[WrapsMethod[T, R]], WrappedMethod[T, P, R]], Callable[[WrapsFunc[R]], WrappedFunc[P, R]]]
+    """
+
+    @overload
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+
+    @overload
+    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
+
+    def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
+        """
+        Raises when no doc was found.
+
+        Notes
+        -----
+        - Reference to ``tp`` is stored in ``cb.__wrapped__``.
+        - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
+        """
+        cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+
+        if doc_in := tp.__doc__:
+            line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"
+            cb.__doc__ = "".join((line_1, *doc_in.splitlines(keepends=True)[1:]))
+            return cb
         else:
-            msg = f"Found no doc for {obj!r}"
+            msg = f"Found no doc for {tp!r}"
             raise AttributeError(msg)
 
     return decorate
 
 
+@overload
 def update_nested(
     original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[False] = ...,
+) -> t.MutableMapping[Any, Any]: ...
+@overload
+def update_nested(
+    original: t.Mapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[True],
+) -> t.MutableMapping[Any, Any]: ...
+def update_nested(
+    original: Any,
     update: t.Mapping[Any, Any],
     copy: bool = False,
 ) -> t.MutableMapping[Any, Any]:
@@ -813,22 +857,6 @@ class _ChannelCache:
     name_to_channel: dict[str, dict[_ChannelType, type[SchemaBase]]]
 
     @classmethod
-    def from_channels(cls, channels: ModuleType, /) -> _ChannelCache:
-        # - This branch is only kept for tests that depend on mocking `channels`.
-        # - No longer needs to pass around `channels` reference and rebuild every call.
-        c_to_n = {
-            c: c._encoding_name
-            for c in channels.__dict__.values()
-            if isinstance(c, type)
-            and issubclass(c, SchemaBase)
-            and hasattr(c, "_encoding_name")
-        }
-        self = cls.__new__(cls)
-        self.channel_to_name = c_to_n
-        self.name_to_channel = _invert_group_channels(c_to_n)
-        return self
-
-    @classmethod
     def from_cache(cls) -> _ChannelCache:
         global _CHANNEL_CACHE
         try:
@@ -853,6 +881,8 @@ class _ChannelCache:
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [self._wrap_in_channel(el, encoding) for el in obj]
+        elif isinstance(obj, SchemaLike):
+            obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
             try:
@@ -925,9 +955,7 @@ def _invert_group_channels(
     return {k: _reduce(chans) for k, chans in grouper}
 
 
-def infer_encoding_types(
-    args: tuple[Any, ...], kwargs: dict[str, Any], channels: ModuleType | None = None
-):
+def infer_encoding_types(args: tuple[Any, ...], kwargs: dict[str, Any]):
     """
     Infer typed keyword arguments for args and kwargs.
 
@@ -937,8 +965,6 @@ def infer_encoding_types(
         Sequence of function args
     kwargs : MutableMapping
         Dict of function kwargs
-    channels : ModuleType
-        The module containing all altair encoding channel classes.
 
     Returns
     -------
@@ -946,11 +972,7 @@ def infer_encoding_types(
         All args and kwargs in a single dict, with keys and types
         based on the channels mapping.
     """
-    cache = (
-        _ChannelCache.from_channels(channels)
-        if channels
-        else _ChannelCache.from_cache()
-    )
+    cache = _ChannelCache.from_cache()
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
         el = next(iter(arg), None) if isinstance(arg, (list, tuple)) else arg

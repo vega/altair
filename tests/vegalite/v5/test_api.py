@@ -10,8 +10,9 @@ import pathlib
 import re
 import sys
 import tempfile
-from datetime import date
+from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING
 
 import ibis
 import jsonschema
@@ -22,13 +23,17 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from altair.utils.schemapi import Optional, Undefined
+from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
 try:
     import vl_convert as vlc
 except ImportError:
     vlc = None
+
+if TYPE_CHECKING:
+    from altair.vegalite.v5.api import _Conditional, _Conditions
+    from altair.vegalite.v5.schema._typing import Map
 
 ibis.set_backend("polars")
 
@@ -420,7 +425,7 @@ def test_when_then_otherwise() -> None:
     when_then = alt.when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
 
-    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    expected = dict(alt.condition(select, alt.value(2, empty=False), alt.value(0)))
     with pytest.raises(TypeError, match="list"):
         when_then.otherwise([1, 2, 3])  # type: ignore
 
@@ -543,7 +548,7 @@ def test_when_labels_position_based_on_condition() -> None:
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
     when = (
-        alt.when(param_width_lt_200)
+        alt.when(param_width_lt_200.expr)
         .then(alt.value("red"))
         .otherwise(alt.value("black"))
     )
@@ -555,7 +560,11 @@ def test_when_labels_position_based_on_condition() -> None:
     param_color_py_when = alt.param(
         expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
     )
-    assert param_color_py_expr.expr == param_color_py_when.expr
+    lhs_param = param_color_py_expr.param
+    rhs_param = param_color_py_when.param
+    assert isinstance(lhs_param, alt.VariableParameter)
+    assert isinstance(rhs_param, alt.VariableParameter)
+    assert repr(lhs_param.expr) == repr(rhs_param.expr)
 
     chart = (
         alt.Chart(df)
@@ -630,18 +639,68 @@ def test_when_multiple_fields():
     with pytest.raises(TypeError, match=chain_mixed_msg):
         when.then("field_1:Q").when(Genre="pop")
 
+    chained_when = when.then(alt.value(5)).when(
+        alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
+    )
+
+    chain_then_msg = re.compile(
+        r"Chained.+mixed.+field.+min\(foo\):Q.+'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'",
+        flags=re.DOTALL,
+    )
+
+    with pytest.raises(TypeError, match=chain_then_msg):
+        chained_when.then("min(foo):Q")
+
     chain_otherwise_msg = re.compile(
         r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
         flags=re.DOTALL,
     )
     with pytest.raises(TypeError, match=chain_otherwise_msg):
-        when.then(alt.value(5)).when(
-            alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
-        ).then("min(foo):Q").otherwise(
+        chained_when.then(alt.value(2)).otherwise(
             alt.AggregatedFieldDef(
                 "argmax", field="field_9", **{"as": "this_field_here"}
             )
         )
+
+
+def test_when_typing(cars) -> None:
+    chart = alt.Chart(cars).mark_rect()
+    predicate = alt.datum.Weight_in_lbs >= 3500
+    statement = alt.value("black")
+    default = alt.value("white")
+
+    then: alt.Then[_Conditions] = alt.when(predicate).then(statement)
+    otherwise: _Conditional[_Conditions] = then.otherwise(default)
+    condition: Map = alt.condition(predicate, statement, default)
+
+    # NOTE: both `condition()` and `when-then-otherwise` are allowed in these three locations
+    chart.encode(
+        color=condition,
+        x=alt.X("Cylinders:N").axis(labelColor=condition),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=condition)),
+    ).to_dict()
+
+    chart.encode(
+        color=otherwise,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(tickColor=otherwise)),
+    ).to_dict()
+
+    with pytest.raises(SchemaValidationError):
+        # NOTE: `when-then` is allowed as an encoding, but not as a `ConditionalAxisProperty`
+        # The latter fails validation since it does not have a default `value`
+        chart.encode(
+            color=then,
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
+        )
+
+    # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases
+    chart.encode(
+        color=then,
+        x=alt.X("Cylinders:N").axis(labelColor=otherwise),
+        y=alt.Y("Origin:N", axis=alt.Axis(labelColor=otherwise)),
+    ).to_dict()
 
 
 @pytest.mark.parametrize(
@@ -712,7 +771,7 @@ def test_when_then_interactive() -> None:
         .encode(
             x="IMDB_Rating:Q",
             y="Rotten_Tomatoes_Rating:Q",
-            color=alt.when(predicate).then(alt.value("grey")),  # type: ignore[arg-type]
+            color=alt.when(predicate).then(alt.value("grey")),
         )
     )
     assert chart.interactive()
@@ -787,12 +846,16 @@ def test_save(format, engine, basic_chart):
     if format == "json":
         assert "$schema" in json.loads(content)
     elif format == "html":
+        assert isinstance(content, str)
         assert content.startswith("<!DOCTYPE html>")
     elif format == "svg":
+        assert isinstance(content, str)
         assert content.startswith("<svg")
     elif format == "png":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"\x89PNG")
     elif format == "pdf":
+        assert not isinstance(content, (str, bytearray, memoryview))
         assert content.startswith(b"%PDF-")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
@@ -924,14 +987,20 @@ def test_facet_parse_data():
 def test_selection():
     # test instantiation of selections
     interval = alt.selection_interval(name="selec_1")
-    assert interval.param.select.type == "interval"
+    param = interval.param
+    assert isinstance(param, alt.SelectionParameter)
+    select = param.select
+    assert isinstance(select, alt.IntervalSelectionConfig)
+    assert select.type == "interval"
     assert interval.name == "selec_1"
 
     single = alt.selection_point(name="selec_2")
+    assert isinstance(single.param, alt.SelectionParameter)
     assert single.param.select.type == "point"
     assert single.name == "selec_2"
 
     multi = alt.selection_point(name="selec_3")
+    assert isinstance(multi.param, alt.SelectionParameter)
     assert multi.param.select.type == "point"
     assert multi.name == "selec_3"
 
@@ -958,8 +1027,8 @@ def test_selection():
 
 def test_transforms():
     # aggregate transform
-    agg1 = alt.AggregatedFieldDef(**{"as": "x1", "op": "mean", "field": "y"})
-    agg2 = alt.AggregatedFieldDef(**{"as": "x2", "op": "median", "field": "z"})
+    agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
+    agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
     kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
@@ -1052,19 +1121,26 @@ def test_transforms():
     # stack transform
     chart = alt.Chart().transform_stack("stacked", "x", groupby=["y"])
     assert chart.transform == [
-        alt.StackTransform(stack="x", groupby=["y"], **{"as": "stacked"})
+        alt.StackTransform(
+            groupby=["y"],
+            stack="x",
+            offset=Undefined,
+            sort=Undefined,
+            **{"as": "stacked"},
+        )
     ]
 
     # timeUnit transform
     chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
-    kwds = {"as": "foo", "field": "x", "timeUnit": "date"}
-    assert chart.transform == [alt.TimeUnitTransform(**kwds)]
+    assert chart.transform == [
+        alt.TimeUnitTransform(field="x", timeUnit="date", **{"as": "foo"})
+    ]
 
     # window transform
     chart = alt.Chart().transform_window(xsum="sum(x)", ymin="min(y)", frame=[None, 0])
     window = [
-        alt.WindowFieldDef(**{"as": "xsum", "field": "x", "op": "sum"}),
-        alt.WindowFieldDef(**{"as": "ymin", "field": "y", "op": "min"}),
+        alt.WindowFieldDef(field="x", op="sum", param=Undefined, **{"as": "xsum"}),
+        alt.WindowFieldDef(field="y", op="min", param=Undefined, **{"as": "ymin"}),
     ]
 
     # kwargs don't maintain order in Python < 3.6, so window list can
@@ -1200,7 +1276,9 @@ def test_selection_property():
 
 def test_LookupData():
     df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
-    lookup = alt.LookupData(data=df, key="x")
+    # Data type hints won't match with what TopLevelUnitSpec expects
+    # as there is some data processing happening when converting to a VL spec
+    lookup = alt.LookupData(data=df, key="x")  # pyright: ignore[reportArgumentType]
 
     dct = lookup.to_dict()
     assert dct["key"] == "x"
@@ -1547,4 +1625,39 @@ def test_ibis_with_date_32():
         {"a": 1, "b": "2020-01-01T00:00:00"},
         {"a": 2, "b": "2020-01-02T00:00:00"},
         {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
+)
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    df = pl.DataFrame(
+        {
+            "a": [1, 2, 3],
+            "b": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
+        }
+    )
+    tbl = ibis.memtable(df)
+    # "poison" `arrow_table_from_dfi_dataframe` to check that it does not get called
+    # if we use the vegafusion transformer
+    monkeypatch.setattr(
+        "altair.utils.data.arrow_table_from_dfi_dataframe", lambda x: 1 / 0
+    )
+    tbl = ibis.memtable(df)
+    with alt.data_transformers.enable("vegafusion"):
+        result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict(format="vega")
+    assert next(iter(result["data"]))["values"] == [
+        {"a": 1, "b": "2020-01-01T00:00:00.000"},
+        {"a": 2, "b": "2020-01-02T00:00:00.000"},
+        {"a": 3, "b": "2020-01-03T00:00:00.000"},
     ]
