@@ -607,7 +607,7 @@ selection
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
+        color=alt.when(alex | morgan).then("count()").otherwise(alt.value("grey")),
     ).add_params(
         alex, morgan
     ).properties(
