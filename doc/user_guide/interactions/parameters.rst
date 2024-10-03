@@ -344,9 +344,13 @@ via mouse actions. By default, points are selected on click:
     point = alt.selection_point()
     make_example(point)
 
-By changing some arguments, we can select points when hovering over them rather than on
-click. We can also set the ``nearest`` flag to ``True`` so that the nearest
-point is highlighted:
+By changing the ``on`` parameter to `'pointerover'`, we can select points when hovering over them rather than on
+click.
+The ``on`` parameter accepts `any "Event Stream Selector" supported by Vega
+<https://vega.github.io/vega/docs/event-streams/#selector>`_
+and you can see more elaborate example at the end of the :ref:`parameter-composition` section.
+We can also set the ``nearest`` flag to ``True`` so that the nearest
+point is highlighted instead of when the pointer is directly touching a point:
 
 .. altair-plot::
 
