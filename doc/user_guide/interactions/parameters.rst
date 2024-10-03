@@ -513,7 +513,7 @@ Combining Parameters
 
 Multiple parameters can be combined in a single chart,
 either via multiple separate response conditions,
-different conditional branches in :fun:`when`,
+different conditional branches in :func:`when`,
 or parameter composition.
 
 Multiple conditions
