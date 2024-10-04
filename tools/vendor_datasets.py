@@ -112,6 +112,8 @@ DATASET_NAMES_USED = (
     "world_110m",
     "zipcodes",
 )
+"""Every name that is referenced in *at least* one example/test."""
+
 
 DATASETS_JSON = {
     # "7zip": {"filename": "7zip.png", "format": "png"},
@@ -194,6 +196,13 @@ DATASETS_JSON = {
     "world-110m": {"filename": "world-110m.json", "format": "json"},
     "zipcodes": {"filename": "zipcodes.csv", "format": "csv"},
 }
+"""Inlined `datasets.json`_.
+
+- Excluding images
+
+.. _datasets.json:
+    https://github.com/altair-viz/vega_datasets/blob/136e850447b49031f04baa137ce5c37a6678bbb1/vega_datasets/datasets.json
+"""
 
 
 class DataLoader:
