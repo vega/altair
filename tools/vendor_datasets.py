@@ -3,9 +3,13 @@ from __future__ import annotations
 import sys
 from functools import cached_property, partial
 from pathlib import Path
-from typing import Any, ClassVar, Literal, cast
+from typing import Any, Callable, ClassVar, Literal
 from urllib.request import urlopen
 
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
@@ -18,6 +22,12 @@ import polars as pl
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
 
+ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv"]
+
+
+def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
+    return suffix in {".csv", ".json", ".tsv"}
+
 
 def _py_to_js(s: str, /):
     return s.replace("_", "-")
@@ -27,17 +37,19 @@ def _js_to_py(s: str, /):
     return s.replace("-", "_")
 
 
-ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv"]
-
-
 class Dataset:
+    read_fn: ClassVar[dict[ExtSupported, Callable[..., pl.DataFrame]]] = {
+        ".csv": pl.read_csv,
+        ".json": pl.read_json,
+        ".tsv": partial(pl.read_csv, separator="\t"),
+    }
+
     def __init__(self, name: str, /, base_url: str) -> None:
         self.name: str = name
         file_name = DATASETS_JSON[_py_to_js(name)]["filename"]
         suffix = Path(file_name).suffix
-        self.extension: ExtSupported
-        if suffix in {".csv", ".json", ".tsv"}:
-            self.extension = cast(ExtSupported, suffix)
+        if is_ext_supported(suffix):
+            self.extension: ExtSupported = suffix
         else:
             raise NotImplementedError(suffix, file_name)
 
@@ -45,7 +57,8 @@ class Dataset:
 
     def __call__(self, **kwds: Any) -> pl.DataFrame:
         with urlopen(self.url) as f:
-            content = ext_fn(self.extension, **kwds)(f)
+            fn = self.read_fn[self.extension]
+            content = fn(f, **kwds)
         return content
 
     def __repr__(self) -> str:
@@ -57,19 +70,7 @@ class Dataset:
         )
 
 
-def ext_fn(ext: ExtSupported, /):
-    """Very basic mapping to `polars` eager functions."""
-    if ext == ".csv":
-        return pl.read_csv
-    elif ext == ".json":
-        return pl.read_json
-    elif ext == ".tsv":
-        return partial(pl.read_csv, separator="\t")
-    else:
-        raise
-
-
-DATASET_NAMES_USED = [
+DATASET_NAMES_USED = (
     "airports",
     "anscombe",
     "barley",
@@ -110,7 +111,7 @@ DATASET_NAMES_USED = [
     "windvectors",
     "world_110m",
     "zipcodes",
-]
+)
 
 DATASETS_JSON = {
     # "7zip": {"filename": "7zip.png", "format": "png"},
