@@ -153,11 +153,14 @@ TEMPLATE = jinja2.Template(
 <head>
   <meta charset="UTF-8">
   <style>
+    #header {
+        padding: 10px 0 20px;
+        height: 20px;
+    }
     #{{ output_div }}.vega-embed {
       width: 100%;
       display: flex;
     }
-
     #{{ output_div }}.vega-embed details,
     #{{ output_div }}.vega-embed details summary {
       position: relative;
@@ -168,6 +171,29 @@ TEMPLATE = jinja2.Template(
   <script type="text/javascript" src="{{ base_url }}/vega-embed@{{ vegaembed_version }}"></script>
 </head>
 <body>
+  <div id="header">
+    Theme:
+    <select id="themes">
+      <option value="default">default</option>
+      <option value="excel">excel</option>
+      <option value="ggplot2">ggplot2</option>
+      <option value="quartz">quartz</option>
+      <option value="vox">vox</option>
+      <option value="dark">dark</option>
+      <option value="fivethirtyeight">fivethirtyeight</option>
+      <option value="latimes">latimes</option>
+      <option value="urbaninstitute">urbaninstitute</option>
+      <option value="googlecharts">googlecharts</option>
+      <option value="powerbi">powerbi</option>
+      <optgroup label="Carbon">
+        <option value="carbonwhite">carbonwhite</option>
+        <option value="carbong10">carbong10</option>
+        <option value="carbong90">carbong90</option>
+        <option value="carbong100">carbong100</option>
+      </optgroup>
+    </select>
+    <br />
+  </div>
   <div id="{{ output_div }}"></div>
   <script>
     (function(vegaEmbed) {
