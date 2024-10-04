@@ -1,3 +1,4 @@
+import jinja2
 import polars as pl
 
 import altair as alt
@@ -143,6 +144,91 @@ alt_theme_test = (
         subtitle="Adapted from https://vega.github.io/vega-themes/",
         offset=16,
     )
+)
+
+TEMPLATE = jinja2.Template(
+    """
+{%- if fullhtml -%}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+{%- endif %}
+  <style>
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+{%- if not requirejs %}
+  <script type="text/javascript" src="{{ base_url }}/vega@{{ vega_version }}"></script>
+  {%- if mode == 'vega-lite' %}
+  <script type="text/javascript" src="{{ base_url }}/vega-lite@{{ vegalite_version }}"></script>
+  {%- endif %}
+  <script type="text/javascript" src="{{ base_url }}/vega-embed@{{ vegaembed_version }}"></script>
+{%- endif %}
+{%- if fullhtml %}
+{%- if requirejs %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+<script>
+requirejs.config({
+    "paths": {
+        "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
+        "vega-lib": "{{ base_url }}/vega-lib?noext",
+        "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
+        "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+    }
+});
+</script>
+{%- endif %}
+</head>
+<body>
+{%- endif %}
+  <div id="{{ output_div }}"></div>
+  <script>
+    {%- if requirejs and not fullhtml %}
+    requirejs.config({
+        "paths": {
+            "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
+            "vega-lib": "{{ base_url }}/vega-lib?noext",
+            "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
+            "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+        }
+    });
+    {% endif %}
+    {% if requirejs -%}
+    require(['vega-embed'],
+    {%- else -%}
+    (
+    {%- endif -%}
+    function(vegaEmbed) {
+      var spec = {{ spec }};
+      var embedOpt = {{ embed_options }};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('{{ output_div }}');
+      vegaEmbed("#{{ output_div }}", spec, embedOpt)
+        .catch(error => showError(el, error));
+    }){% if not requirejs %}(vegaEmbed){% endif %};
+
+  </script>
+{%- if fullhtml %}
+</body>
+</html>
+{%- endif %}
+"""
 )
 
 alt_theme_test  # noqa: B018
