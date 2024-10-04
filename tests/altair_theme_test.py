@@ -136,20 +136,22 @@ area = (
 )
 
 
-alt_theme_test = (
-    (bar | line)
-    & (point_shape | bar_facet).resolve_scale(color="independent")
-    & (point | area)
-    & rect_heatmap
-    & geoshape
-).properties(
-    title=alt.Title(
-        "Vega-Altair Theme Test",
-        fontSize=20,
-        subtitle="Adapted from https://vega.github.io/vega-themes/",
-        offset=16,
+def alt_theme_test() -> alt.VConcatChart:
+    return (
+        (bar | line)
+        & (point_shape | bar_facet).resolve_scale(color="independent")
+        & (point | area)
+        & rect_heatmap
+        & geoshape
+    ).properties(
+        title=alt.Title(
+            "Vega-Altair Theme Test",
+            fontSize=20,
+            subtitle="Adapted from https://vega.github.io/vega-themes/",
+            offset=16,
+        )
     )
-)
+
 
 TEMPLATE = jinja2.Template(
     """\
@@ -201,6 +203,10 @@ TEMPLATE = jinja2.Template(
   </div>
   <div id="{{ output_div }}"></div>
   <script>
+    var themes = document.querySelector("#themes");
+    var currentLocation = window.location;
+    var url = new URL(currentLocation);
+
     (function(vegaEmbed) {
       var spec = {{ spec }};
       var embedOpt = {{ embed_options }};
@@ -232,7 +238,7 @@ def render_write(fp: str | Path, /) -> None:
     ## Remove before review
     """
     content = TEMPLATE.render(
-        spec=json.dumps(alt_theme_test.to_dict(context={"pre_transform": False})),
+        spec=json.dumps(alt_theme_test().to_dict(context={"pre_transform": False})),
         embed_options=json.dumps({"mode": "vega-lite"}),
         mode="vega-lite",
         vegalite_version=alt.VEGALITE_VERSION,
