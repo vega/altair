@@ -1,3 +1,10 @@
+"""
+Adapted from `altair-viz/vega_datasets`_.
+
+.. _altair-viz/vega_datasets:
+    https://github.com/altair-viz/vega_datasets
+"""
+
 from __future__ import annotations
 
 import sys
