@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
 import jinja2
 import polars as pl
 
@@ -219,4 +224,25 @@ TEMPLATE = jinja2.Template(
 """
 )
 
-alt_theme_test  # noqa: B018
+
+def render_write(fp: str | Path, /) -> None:
+    """
+    Debug tool, effectively `alt.Chart.save` w/ template.
+
+    ## Remove before review
+    """
+    content = TEMPLATE.render(
+        spec=json.dumps(alt_theme_test.to_dict(context={"pre_transform": False})),
+        embed_options=json.dumps({"mode": "vega-lite"}),
+        mode="vega-lite",
+        vegalite_version=alt.VEGALITE_VERSION,
+        vegaembed_version=alt.VEGAEMBED_VERSION,
+        vega_version=alt.VEGA_VERSION,
+        base_url="https://cdn.jsdelivr.net/npm",
+        output_div="vis",
+    )
+    if isinstance(fp, (str, Path)):
+        with Path(fp).open(mode="w", encoding="utf-8") as f:
+            f.write(content)
+    else:
+        raise TypeError(fp)
