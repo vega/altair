@@ -3,7 +3,7 @@ from __future__ import annotations
 import sys
 from functools import cached_property, partial
 from pathlib import Path
-from typing import Any, Literal, cast
+from typing import Any, ClassVar, Literal, cast
 from urllib.request import urlopen
 
 if sys.version_info >= (3, 10):
@@ -15,20 +15,25 @@ import polars as pl
 
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
-SOURCE_TAG = "v1.29.0"  # 5 years ago
-CURRENT_TAG = "v2.9.0"
-USE_TAG = CURRENT_TAG
+_OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
+_CURRENT_SOURCE_TAG = "v2.9.0"
 
-BASE_URL = f"https://cdn.jsdelivr.net/npm/vega-datasets@{USE_TAG}/data/"
+
+def _py_to_js(s: str, /):
+    return s.replace("_", "-")
+
+
+def _js_to_py(s: str, /):
+    return s.replace("-", "_")
+
 
 ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv"]
 
 
 class Dataset:
-    def __init__(self, name: str, /) -> None:
+    def __init__(self, name: str, /, base_url: str) -> None:
         self.name: str = name
-        js_name = name.replace("_", "-")
-        file_name = DATASETS_JSON[js_name]["filename"]
+        file_name = DATASETS_JSON[_py_to_js(name)]["filename"]
         suffix = Path(file_name).suffix
         self.extension: ExtSupported
         if suffix in {".csv", ".json", ".tsv"}:
@@ -36,7 +41,7 @@ class Dataset:
         else:
             raise NotImplementedError(suffix, file_name)
 
-        self.url: str = f"{BASE_URL}{file_name}"
+        self.url: str = f"{base_url}{file_name}"
 
     def __call__(self, **kwds: Any) -> pl.DataFrame:
         with urlopen(self.url) as f:
@@ -191,22 +196,29 @@ DATASETS_JSON = {
 
 
 class DataLoader:
+    source_tag: ClassVar[str] = "v2.9.0"
+    _base_url_fmt: str = "https://cdn.jsdelivr.net/npm/vega-datasets@{0}/data/"
+
+    @property
+    def base_url(self) -> str:
+        return self._base_url_fmt.format(self.source_tag)
+
     @cached_property
     def _dataset_names(self) -> list[str]:
         return sorted(DATASETS_JSON)
 
     @cached_property
     def _py_js_names(self) -> dict[str, str]:
-        return {name.replace("-", "_"): name for name in self._dataset_names}
+        return {_js_to_py(name): name for name in self._dataset_names}
 
     def list_datasets(self) -> list[str]:
         return list(self._py_js_names)
 
     def __getattr__(self, name: str) -> Dataset:
         if name in self._py_js_names:
-            return Dataset(self._py_js_names[name])
+            return Dataset(self._py_js_names[name], self.base_url)
         else:
-            msg = f"No dataset named '{name}'"
+            msg = f"No dataset named {name!r}"
             raise AttributeError(msg)
 
     def __dir__(self) -> list[str]:
