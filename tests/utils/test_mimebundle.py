@@ -3,16 +3,7 @@ import pytest
 import altair as alt
 from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
-
-try:
-    import vegafusion as vf  # type: ignore
-except ImportError:
-    vf = None
+from tests import skip_requires_vegafusion, skip_requires_vl_convert
 
 
 @pytest.fixture
@@ -168,10 +159,8 @@ def vega_spec():
     }
 
 
+@skip_requires_vl_convert
 def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run mimebundle tests")
-
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
@@ -233,7 +222,7 @@ def check_pre_transformed_vega_spec(vega_spec):
     assert len(data_0.get("transform", [])) == 0
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion is not installed")
+@skip_requires_vegafusion
 def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
     with alt.data_transformers.enable("vegafusion"):
         bundle = spec_to_mimebundle(
@@ -246,7 +235,7 @@ def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
         check_pre_transformed_vega_spec(vega_spec)
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion is not installed")
+@skip_requires_vegafusion
 def test_vegafusion_chart_to_vega_mime_bundle(vegalite_spec):
     chart = alt.Chart.from_dict(vegalite_spec)
     with alt.data_transformers.enable("vegafusion"), alt.renderers.enable("json"):
