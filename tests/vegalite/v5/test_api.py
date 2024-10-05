@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
 import ibis
@@ -25,11 +26,6 @@ from packaging.version import Version
 import altair as alt
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
 
 if TYPE_CHECKING:
     from altair.vegalite.v5.api import _Conditional, _Conditions
@@ -833,7 +829,7 @@ def test_save(format, engine, basic_chart):
                 basic_chart.save(out, format=format, engine=engine)
             assert f"Unsupported format: '{format}'" in str(err.value)
             return
-        elif vlc is None:
+        elif find_spec("vl_convert") is None:
             with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
             assert "vl-convert-python" in str(err.value)
