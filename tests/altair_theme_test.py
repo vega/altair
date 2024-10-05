@@ -4,12 +4,11 @@ import json
 from pathlib import Path
 
 import jinja2
-import polars as pl
 
 import altair as alt
 from vega_datasets import data
 
-common_data = pl.DataFrame(
+common_data = alt.InlineData(
     [
         {"Index": 1, "Value": 28, "Position": 1, "Category": "A"},
         {"Index": 2, "Value": 55, "Position": 2, "Category": "A"},
@@ -43,10 +42,10 @@ line = (
     alt.Chart(common_data, width=240, height=150, title="Line")
     .mark_line()
     .encode(
-        x=alt.X("Position").axis(grid=False),
+        x=alt.X("Position:O").axis(grid=False),
         y=alt.Y("Value:Q").axis(grid=False),
-        color=alt.Color("Category").legend(None),
-        tooltip=["Index", "Value", "Position", "Category"],
+        color=alt.Color("Category:N").legend(None),
+        tooltip=["Index:O", "Value:Q", "Position:O", "Category:N"],
     )
 )
 
@@ -56,9 +55,9 @@ point_shape = (
     .encode(
         x=alt.X("Position:O").axis(grid=False),
         y=alt.Y("Value:Q").axis(grid=False),
-        shape=alt.Shape("Category").legend(None),
-        color=alt.Color("Category").legend(None),
-        tooltip=["Index", "Value", "Position", "Category"],
+        shape=alt.Shape("Category:N").legend(None),
+        color=alt.Color("Category:N").legend(None),
+        tooltip=["Index:O", "Value:Q", "Position:O", "Category:N"],
     )
 )
 
