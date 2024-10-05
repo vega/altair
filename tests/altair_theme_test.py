@@ -3,14 +3,18 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import jinja2
 
-import altair as alt
-from vega_datasets import data
+if TYPE_CHECKING:
+    from altair.typing import ChartType
 
 
-def alt_theme_test() -> alt.VConcatChart:
+def alt_theme_test() -> ChartType:
+    import altair as alt
+    from vega_datasets import data
+
     common_data = alt.InlineData(
         [
             {"Index": 1, "Value": 28, "Position": 1, "Category": "A"},
@@ -263,6 +267,8 @@ def render_write(fp: str | Path, /) -> None:
 
     ## Remove before review
     """
+    import altair as alt
+
     content = TEMPLATE.render(
         spec=json.dumps(alt_theme_test().to_dict(context={"pre_transform": False})),
         vegalite_version=alt.VEGALITE_VERSION,
