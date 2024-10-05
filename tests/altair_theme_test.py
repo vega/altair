@@ -203,13 +203,37 @@ TEMPLATE = jinja2.Template(
   </div>
   <div id="{{ output_div }}"></div>
   <script>
+    // Vega Theme Test - But single view, no renderer option
+    var spec = {{ spec }};
+    var container = document.querySelector("#{{ output_div }}");
     var themes = document.querySelector("#themes");
     var currentLocation = window.location;
     var url = new URL(currentLocation);
 
+    themes.addEventListener("change", function () {
+      theme = themes.options[themes.selectedIndex].value;
+      url.searchParams.set("theme", `${themes.options[themes.selectedIndex].value}`);
+      window.history.replaceState(null, null, url);
+      refresh();
+    });
+
+    function refresh() {
+      const themeName = themes.options[themes.selectedIndex].value;
+      container.innerHTML = "";
+      var el = document.createElement("div");
+      el.setAttribute("class", "view");
+      container.appendChild(el);
+      vegaEmbed(el, spec, {
+          config: theme,
+          defaultStyle: true,
+          mode: "vega-lite"
+      });
+    }
+
+    // Mostly the standard template
+    // - Need to adapt these two ideas into one
     (function(vegaEmbed) {
-      var spec = {{ spec }};
-      var embedOpt = {{ embed_options }};
+      var embedOpt = { mode: "vega-lite" };
 
       function showError(el, error){
           el.innerHTML = ('<div style="color:red;">'
@@ -239,8 +263,6 @@ def render_write(fp: str | Path, /) -> None:
     """
     content = TEMPLATE.render(
         spec=json.dumps(alt_theme_test().to_dict(context={"pre_transform": False})),
-        embed_options=json.dumps({"mode": "vega-lite"}),
-        mode="vega-lite",
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
         vega_version=alt.VEGA_VERSION,
