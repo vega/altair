@@ -106,7 +106,7 @@ geoshape = (
 
 point = (
     alt.Chart(data.movies.url, height=250, width=250, title="Point")
-    .mark_point()
+    .mark_point(tooltip=True)
     .transform_filter(alt.datum["IMDB_Rating"] != None)  # noqa: E711
     .transform_filter(
         alt.FieldRangePredicate("Release_Date", [None, 2019], timeUnit="year")
