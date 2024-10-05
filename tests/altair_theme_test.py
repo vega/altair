@@ -224,7 +224,7 @@ TEMPLATE = jinja2.Template(
       el.setAttribute("class", "view");
       container.appendChild(el);
       vegaEmbed(el, spec, {
-          config: theme,
+          theme: themeName,
           defaultStyle: true,
           mode: "vega-lite"
       });
