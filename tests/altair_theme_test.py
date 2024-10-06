@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 import jinja2
@@ -159,7 +158,7 @@ def alt_theme_test() -> ChartType:
     return compound_chart
 
 
-TEMPLATE = jinja2.Template(
+THEME_TEST_TEMPLATE = jinja2.Template(
     """\
 <!DOCTYPE html>
 <html>
@@ -261,15 +260,10 @@ TEMPLATE = jinja2.Template(
 )
 
 
-def render_write(fp: str | Path, /) -> None:
-    """
-    Debug tool, effectively `alt.Chart.save` w/ template.
-
-    ## Remove before review
-    """
+def render_theme_test() -> str:
     import altair as alt
 
-    content = TEMPLATE.render(
+    return THEME_TEST_TEMPLATE.render(
         spec=json.dumps(alt_theme_test().to_dict(context={"pre_transform": False})),
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
@@ -277,8 +271,3 @@ def render_write(fp: str | Path, /) -> None:
         base_url="https://cdn.jsdelivr.net/npm",
         output_div="vis",
     )
-    if isinstance(fp, (str, Path)):
-        with Path(fp).open(mode="w", encoding="utf-8") as f:
-            f.write(content)
-    else:
-        raise TypeError(fp)
