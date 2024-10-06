@@ -848,6 +848,13 @@ If you want to restore the default theme, use:
 
    alt.themes.enable('default')
 
+When experimenting with your theme, you can use the code below to see how 
+it translates across a range of charts/marks:
+
+.. altair-code-ref:: tests.altair_theme_test.alt_theme_test
+    :fold:
+    :summary: Show Vega-Altair Theme Test code
+
 
 For more ideas on themes, see the `Vega Themes`_ repository.
 
