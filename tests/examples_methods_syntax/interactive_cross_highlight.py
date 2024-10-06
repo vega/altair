@@ -29,7 +29,7 @@ circ = rect.mark_point().encode(
 bar = alt.Chart(source, width=550, height=200).mark_bar().encode(
     x='Major_Genre:N',
     y='count()',
-    color=alt.condition(pts, alt.ColorValue("steelblue"), alt.ColorValue("grey"))
+    color=alt.when(pts).then(alt.ColorValue("steelblue")).otherwise(alt.ColorValue("grey"))
 ).add_params(pts)
 
 alt.vconcat(

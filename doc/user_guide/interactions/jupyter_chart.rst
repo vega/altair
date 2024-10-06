@@ -105,14 +105,12 @@ is available as ``jchart.params.cutoff``.
 
     slider = alt.binding_range(min=0, max=100, step=1)
     cutoff = alt.param(name="cutoff", bind=slider, value=50)
+    predicate = alt.datum.xval < cutoff
 
     chart = alt.Chart(df).mark_point().encode(
         x='xval',
         y='yval',
-        color=alt.condition(
-            alt.datum.xval < cutoff,
-            alt.value('red'), alt.value('blue')
-        )
+        color=alt.when(predicate).then(alt.value("red")).otherwise(alt.value("blue")),
     ).add_params(
         cutoff
     )
@@ -201,14 +199,12 @@ variable's value only from the ``IntSlider`` ipywidget.
     })
 
     cutoff = alt.param(name="cutoff", value=50)
+    predicate = alt.datum.xval < cutoff
 
     chart = alt.Chart(df).mark_point().encode(
         x='xval',
         y='yval',
-        color=alt.condition(
-            alt.datum.xval < cutoff,
-            alt.value('red'), alt.value('blue')
-        )
+        color=alt.when(predicate).then(alt.value("red")).otherwise(alt.value("blue"))
     ).add_params(
         cutoff
     )
@@ -253,7 +249,7 @@ the legend.
     chart = alt.Chart(source).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('grey')),
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("grey")),
     ).add_params(brush)
 
     jchart = alt.JupyterChart(chart)
@@ -306,7 +302,7 @@ extract the selected rows in the input DataFrame.
     chart = alt.Chart(source).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('grey')),
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("grey")),
     ).add_params(brush)
 
     jchart = alt.JupyterChart(chart)
@@ -344,7 +340,7 @@ is a dictionary from column names to selection intervals
     chart = alt.Chart(source).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Cylinders:O', alt.value('grey')),
+        color=alt.when(brush).then("Cylinders:O").otherwise(alt.value("grey")),
     ).add_params(brush)
 
     jchart = alt.JupyterChart(chart)
@@ -399,7 +395,7 @@ is used to combine the chart and HTML table in a column layout.
     chart_widget = alt.JupyterChart(alt.Chart(source).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Cylinders:O', alt.value('grey')),
+        color=alt.when(brush).then("Cylinders:O").otherwise(alt.value("grey")),
     ).add_params(brush))
 
     table_widget = HTML(value=source.iloc[:0].to_html())

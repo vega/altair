@@ -12,9 +12,11 @@ from vega_datasets import data
 
 source = data.ohlc()
 
-open_close_color = alt.condition("datum.open <= datum.close",
-                                 alt.value("#06982d"),
-                                 alt.value("#ae1325"))
+open_close_color = (
+    alt.when("datum.open <= datum.close")
+    .then(alt.value("#06982d"))
+    .otherwise(alt.value("#ae1325"))
+)
 
 base = alt.Chart(source).encode(
     alt.X('date:T',
