@@ -20,7 +20,10 @@ def basic_spec():
 
 
 def make_final_spec(alt, basic_spec):
-    theme = alt.themes.get()
+    from altair.theme import themes
+
+    theme = themes.get()
+    assert theme
     spec = theme()
     spec.update(basic_spec)
     return spec
@@ -67,10 +70,12 @@ def test_basic_chart_from_dict(alt, basic_spec):
 
 @pytest.mark.parametrize("alt", [v5])
 def test_theme_enable(alt, basic_spec):
-    active_theme = alt.themes.active
+    from altair.theme import themes
+
+    active_theme = themes.active
 
     try:
-        alt.themes.enable("none")
+        themes.enable("none")
 
         chart = alt.Chart.from_dict(basic_spec)
         dct = chart.to_dict()
@@ -83,7 +88,7 @@ def test_theme_enable(alt, basic_spec):
         assert dct == basic_spec
     finally:
         # reset the theme to its initial value
-        alt.themes.enable(active_theme)
+        themes.enable(active_theme)  # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize("alt", [v5])

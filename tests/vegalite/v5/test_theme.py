@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING, Any, Callable, cast
 import pytest
 
 import altair.vegalite.v5 as alt
-from altair.typing import ThemeConfig
-from altair.vegalite.v5.schema._config import ConfigKwds
+from altair import theme
+from altair.theme import ConfigKwds, ThemeConfig
 from altair.vegalite.v5.schema._typing import is_color_hex
-from altair.vegalite.v5.theme import VEGA_THEMES, register_theme, themes
+from altair.vegalite.v5.theme import VEGA_THEMES
 
 if TYPE_CHECKING:
     import sys
@@ -25,24 +25,43 @@ def chart() -> alt.Chart:
 
 
 def test_vega_themes(chart) -> None:
-    for theme in VEGA_THEMES:
-        with alt.themes.enable(theme):
+    for theme_name in VEGA_THEMES:
+        with theme.enable(theme_name):
             dct = chart.to_dict()
-        assert dct["usermeta"] == {"embedOptions": {"theme": theme}}
+        assert dct["usermeta"] == {"embedOptions": {"theme": theme_name}}
         assert dct["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
 
-def test_register_theme_decorator() -> None:
-    @register_theme("unique name", enable=True)
+def test_theme_register_decorator() -> None:
+    @theme.register("unique name", enable=True)
     def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
 
-    assert themes.active == "unique name"
-    registered = themes.get()
+    assert theme.themes.active == "unique name" == theme.active
+    registered = theme.themes.get()
     assert registered is not None
+    assert registered == theme.get()
     assert registered() == {"height": 400, "width": 700} == custom_theme()
+
+
+def test_theme_unregister() -> None:
+    @theme.register("big square", enable=True)
+    def custom_theme() -> ThemeConfig:
+        return {"height": 1000, "width": 1000}
+
+    assert theme.active == "big square"
+    fn = theme.unregister("big square")
+    assert fn() == custom_theme()
+    assert theme.active == theme.themes.active
+    # BUG: https://github.com/vega/altair/issues/3619
+    # assert theme.active != "big square"
+
+    with pytest.raises(
+        TypeError, match=r"Found no theme named 'big square' in registry."
+    ):
+        theme.unregister("big square")
 
 
 @pytest.mark.parametrize(
@@ -982,5 +1001,6 @@ def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
     See ``(test_vega_themes|test_register_theme_decorator)`` for comprehensive suite.
     """
     name = cast("LiteralString", theme_func.__qualname__)
-    register_theme(name, enable=True)
+    theme.register(name, enable=True)(theme_func)
     assert chart.to_dict(validate=True)
+    assert theme.get() == theme_func
