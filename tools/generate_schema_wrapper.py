@@ -51,6 +51,7 @@ if TYPE_CHECKING:
     from http.client import HTTPResponse
 
     from tools.schemapi.codegen import ArgInfo, AttrGetter
+    from vl_convert import VegaThemes
 
 
 def vl_convert_to_vega_version(
@@ -556,8 +557,8 @@ def download_schemafile(
 
 
 def _vega_lite_props_only(
-    themes: dict[str, dict[str, Any]], props: SchemaProperties, /
-) -> Iterator[tuple[str, dict[str, Any]]]:
+    themes: dict[VegaThemes, dict[str, Any]], props: SchemaProperties, /
+) -> Iterator[tuple[VegaThemes, dict[str, Any]]]:
     """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
     keep = props.keys()
     for name, theme_spec in themes.items():
