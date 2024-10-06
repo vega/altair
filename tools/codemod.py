@@ -35,7 +35,7 @@ def parse_module(name: str, /) -> ast.Module:
 if sys.version_info >= (3, 9):
 
     def unparse(obj: ast.AST, /) -> str:
-        return ast.unparse(obj)  # type: ignore
+        return ast.unparse(obj)
 else:
 
     def unparse(obj: ast.AST, /) -> str:
