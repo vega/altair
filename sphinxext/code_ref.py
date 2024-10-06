@@ -97,7 +97,6 @@ class CodeRefDirective(SphinxDirective):
             :fold: flag
             :summary: str
 
-
     Examples
     --------
     Reference a function, generating a code block:

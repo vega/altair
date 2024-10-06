@@ -23,8 +23,6 @@ def parse_module(name: str, /) -> ast.Module:
         tests.____
         doc.____
         sphinxext.____
-
-
     """
     if (spec := find_spec(name)) and (origin := spec.origin):
         return ast.parse(Path(origin).read_bytes())
