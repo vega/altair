@@ -129,7 +129,7 @@ javascript-enabled web browser:
     </body>
     </html>
 
-You can view the result here: `chart.html </_static/chart.html>`_.
+You can view the result here: `chart.html <../_static/chart.html>`_.
 
 By default, ``canvas`` is used for rendering the visualization in vegaEmbed. To 
 change to ``svg`` rendering, use the ``embed_options`` as such:

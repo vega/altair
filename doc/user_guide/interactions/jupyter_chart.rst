@@ -49,7 +49,7 @@ cell evaluates to a ``JupyterChart`` instance. For example:
     jchart = alt.JupyterChart(chart)
     jchart
 
-.. image:: /_static/jupyter_chart/simple_bar.svg
+.. image:: ../../_static/jupyter_chart/simple_bar.svg
   :alt: Bar chart with letters A through I on the x-axis
 
 
@@ -65,7 +65,7 @@ will immediately be displayed in place of the old one.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/updating_charts.mov">
+      <source src="../../_static/jupyter_chart/updating_charts.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -123,7 +123,7 @@ is available as ``jchart.params.cutoff``.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/accessing_variable_params.mov">
+      <source src="../../_static/jupyter_chart/accessing_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -146,7 +146,7 @@ the ``cutoff`` parameter.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/observing_variable_params.mov">
+      <source src="../../_static/jupyter_chart/observing_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -158,7 +158,7 @@ attribute. Here's an example of updating the ``cutoff`` variable parameter by as
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/setting_variable_params.mov">
+      <source src="../../_static/jupyter_chart/setting_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -180,7 +180,7 @@ to the value of an ipywidgets ``IntSlider``.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/linking_variable_params.mov">
+      <source src="../../_static/jupyter_chart/linking_variable_params.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -219,7 +219,7 @@ variable's value only from the ``IntSlider`` ipywidget.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/linking_variable_params2.mov">
+      <source src="../../_static/jupyter_chart/linking_variable_params2.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -262,7 +262,7 @@ the legend.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/point_selection_param.mov">
+      <source src="../../_static/jupyter_chart/point_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -315,7 +315,7 @@ extract the selected rows in the input DataFrame.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/index_selection_param.mov">
+      <source src="../../_static/jupyter_chart/index_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -354,7 +354,7 @@ is a dictionary from column names to selection intervals
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/interval_selection_param.mov">
+      <source src="../../_static/jupyter_chart/interval_selection_param.mov">
       Your browser does not support the video tag.
     </video>
 
@@ -424,7 +424,7 @@ is used to combine the chart and HTML table in a column layout.
 .. raw:: html
 
     <video controls>
-      <source src="/_static/jupyter_chart/linking_interval_selection.mov">
+      <source src="../../_static/jupyter_chart/linking_interval_selection.mov">
       Your browser does not support the video tag.
     </video>
 

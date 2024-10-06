@@ -872,7 +872,7 @@ Italian locale (named ``it-IT``) for both currencies and dates:
    )
    chart
 
-.. image:: /_static/stocks_it-IT.svg
+.. image:: ../_static/stocks_it-IT.svg
   :alt: Area chart of stock prices using Italian locale
 
 See https://unpkg.com/d3-format/locale/ for a list of available format locale names, and
