@@ -8,12 +8,13 @@ Adapted from `altair-viz/vega_datasets`_.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import tempfile
 from functools import cached_property, partial
 from pathlib import Path
 from typing import Any, Callable, ClassVar, Literal, TypedDict
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 if sys.version_info >= (3, 13):
     from typing import TypeIs
@@ -73,8 +74,15 @@ _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
 _SUB_DIR = "data"
 
 
+def request_github(url: str, /) -> Request:
+    headers = {}
+    if tok := os.environ.get("VEGA_GITHUB_TOKEN"):
+        headers["Authorization"] = tok
+    return Request(url, headers=headers)
+
+
 def request_trees(tag: str, /) -> GitHubTreeResponse:
-    with urlopen(f"{_GITHUB_TREE_BASE_URL}{tag}") as response:
+    with urlopen(request_github(f"{_GITHUB_TREE_BASE_URL}{tag}")) as response:
         content: GitHubTreeResponse = json.load(response)
     query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
     if data_url := next(query, None):
