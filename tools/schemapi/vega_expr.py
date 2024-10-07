@@ -7,7 +7,6 @@ import re
 from collections import deque
 from inspect import getmembers
 from itertools import chain
-from pathlib import Path
 from textwrap import TextWrapper as _TextWrapper
 from textwrap import indent
 from typing import (
@@ -22,7 +21,6 @@ from typing import (
     Sequence,
     overload,
 )
-from urllib import request
 
 from tools.markup import RSTParse, Token, read_ast_tokens
 from tools.markup import RSTRenderer as _RSTRenderer
@@ -33,6 +31,7 @@ from tools.schemapi.utils import (
 
 if TYPE_CHECKING:
     import sys
+    from pathlib import Path
     from re import Match, Pattern
 
     from mistune import BlockState
@@ -42,6 +41,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString, Self
     from _typeshed import SupportsKeysAndGetItem
+
+    from tools.markup import Url
 
 __all__ = ["parse_expressions", "write_expr_module"]
 
@@ -845,20 +846,6 @@ class VegaExprParam:
                     continue
 
 
-def download_expressions_md(url: str, /) -> Path:
-    """Download to a temporary file, return that as a ``pathlib.Path``."""
-    tmp, _ = request.urlretrieve(url)
-    fp = Path(tmp)
-    if not fp.exists():
-        msg = (
-            f"Expressions download failed: {fp!s}.\n\n"
-            f"Try manually accessing resource: {url!r}"
-        )
-        raise FileNotFoundError(msg)
-    else:
-        return fp
-
-
 def expand_urls(url: str, /) -> str:
     if url.startswith("#"):
         url = f"{EXPRESSIONS_DOCS_URL}{url}"
@@ -935,15 +922,14 @@ def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
     return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
 
 
-def parse_expressions(url: str, /) -> Iterator[VegaExprDef]:
+def parse_expressions(source: Url | Path, /) -> Iterator[VegaExprDef]:
     """
-    Download, read markdown and eagerly parse signatures of relevant definitions.
+    Download remote or read local `.md` resource and eagerly parse signatures of relevant definitions.
 
     Yields with docs to ensure each can use all remapped names, regardless of the order they appear.
     """
-    tokens = read_ast_tokens(download_expressions_md(url))
+    tokens = read_ast_tokens(source)
     expr_defs = tuple(VegaExprDef.from_tokens(tokens))
-    request.urlcleanup()
     VegaExprDef.remap_title.refresh()
     for expr_def in expr_defs:
         yield expr_def.with_doc()

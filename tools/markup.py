@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import re
 from html import unescape
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Iterable, Literal
+from urllib import request
 
 import mistune.util
 from mistune import InlineParser as _InlineParser
@@ -13,7 +15,6 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
     import sys
-    from pathlib import Path
 
     if sys.version_info >= (3, 11):
         from typing import TypeAlias
@@ -22,6 +23,8 @@ if TYPE_CHECKING:
     from re import Pattern
 
     from mistune import BaseRenderer, BlockParser, BlockState, InlineState
+
+    Url: TypeAlias = str
 
 Token: TypeAlias = "dict[str, Any]"
 
@@ -127,13 +130,20 @@ class InlineParser(_InlineParser):
         state.append_token({"type": "text", "raw": _RE_LIQUID_INCLUDE.sub(r"", text)})
 
 
-def read_ast_tokens(source: Path, /) -> list[Token]:
+def read_ast_tokens(source: Url | Path, /) -> list[Token]:
     """
     Read from ``source``, drop ``BlockState``.
 
     Factored out to provide accurate typing.
     """
-    return _Markdown(renderer=None, inline=InlineParser()).read(source)[0]
+    markdown = _Markdown(renderer=None, inline=InlineParser())
+    if isinstance(source, Path):
+        tokens = markdown.read(source)
+    else:
+        with request.urlopen(source) as response:
+            s = response.read().decode("utf-8")
+        tokens = markdown.parse(s, markdown.block.state_cls())
+    return tokens[0]
 
 
 def rst_syntax_for_class(class_name: str) -> str:
