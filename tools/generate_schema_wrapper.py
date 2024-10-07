@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import copy
 import json
-import re
 import sys
 import textwrap
 from collections import deque
@@ -13,10 +12,8 @@ from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal, cast
+from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal
 from urllib import request
-
-from packaging.version import Version
 
 import vl_convert as vlc
 
@@ -48,70 +45,8 @@ from tools.schemapi.utils import (
 )
 
 if TYPE_CHECKING:
-    from http.client import HTTPResponse
-
     from tools.schemapi.codegen import ArgInfo, AttrGetter
     from vl_convert import VegaThemes
-
-
-def vl_convert_to_vega_version(
-    *,
-    version: str | None = None,
-    url_fmt: str = "https://raw.githubusercontent.com/vega/vl-convert/refs/tags/vl-convert-vendor%40{0}/vl-convert-vendor/src/main.rs",
-    prefix: bytes = b"const VEGA_PATH",
-    pattern: str = r".+\/pin\/vega@(?P<vega_version>v\d\.\d{1,3}\.\d{1,3})",
-) -> str:
-    """
-    Return the minimum supported ``vega`` release for a ``vl_convert`` version.
-
-    Parameters
-    ----------
-    version
-        A target `vl_convert` release.
-        Defaults to currently installed version.
-    url_fmt
-        Format string for source file.
-    prefix
-        Byte string prefix of target line.
-    pattern
-        Matches and extracts vega version, e.g. `"v5.30.0"`.
-
-    Examples
-    --------
-    >>> vl_convert_to_vega_version(version="0.2.0")
-    'v5.22.1'
-    >>> vl_convert_to_vega_version(version="1.0.0")
-    'v5.25.0'
-    >>> vl_convert_to_vega_version(version="1.3.0")
-    'v5.28.0'
-    >>> vl_convert_to_vega_version(version="1.6.1")
-    'v5.30.0'
-    """
-    MIN_VL_CONVERT = "0.2.0"
-    vlc_version: str = version or vlc.__version__  # pyright: ignore[reportAttributeAccessIssue]
-    if Version(vlc_version) < Version(MIN_VL_CONVERT):
-        msg = (
-            f"Operation requires `vl_convert>={MIN_VL_CONVERT!r}`\n"
-            f"but got: {version!r}"
-        )
-        raise NotImplementedError(msg)
-    with request.urlopen(url_fmt.format(vlc_version)) as response:
-        response = cast("HTTPResponse", response)
-        line = response.readline()
-        while not line.startswith(prefix):
-            line = response.readline()
-            if line.startswith(b"fn main"):
-                msg = f"Failed to find {prefix!r} in {url_fmt.format(vlc_version)}."
-                raise ValueError(msg)
-        src_line = line.decode()
-    if match := re.match(pattern, src_line):
-        return match.group("vega_version")
-    else:
-        msg = (
-            f"Failed to match a vega version specifier.\n"
-            f"{src_line=}\n{pattern=}\n{match=}\n"
-        )
-        raise NotImplementedError(msg)
 
 
 SCHEMA_VERSION: Final = "v5.20.1"
