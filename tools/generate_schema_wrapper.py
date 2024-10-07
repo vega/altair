@@ -115,7 +115,6 @@ def vl_convert_to_vega_version(
 
 
 SCHEMA_VERSION: Final = "v5.20.1"
-VEGA_VERSION: Final[str] = vl_convert_to_vega_version()
 
 
 HEADER_COMMENT = """\
@@ -1282,7 +1281,7 @@ def main() -> None:
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     write_expr_module(
-        VEGA_VERSION,
+        vlc.get_vega_version(),
         output=EXPR_FILE,
         header=HEADER_COMMENT,
     )

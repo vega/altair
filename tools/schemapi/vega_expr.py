@@ -960,6 +960,7 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
     output
         Target path to write to.
     """
+    version = version if version.startswith("v") else f"v{version}"
     url = EXPRESSIONS_URL_TEMPLATE.format(version=version)
     content = (
         MODULE_PRE.format(
