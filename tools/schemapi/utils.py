@@ -8,7 +8,6 @@ import subprocess
 import sys
 import textwrap
 import urllib.parse
-from html import unescape
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
@@ -27,9 +26,7 @@ from typing import (
     overload,
 )
 
-import mistune
-from mistune.renderers.rst import RSTRenderer as _RSTRenderer
-
+from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
@@ -37,7 +34,6 @@ if TYPE_CHECKING:
     from pathlib import Path
     from re import Pattern
 
-    from mistune import BlockState
 
 if sys.version_info >= (3, 12):
     from typing import TypeAliasType
@@ -76,8 +72,7 @@ jsonschema_to_python_types: dict[str, str] = {
 }
 
 _VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
-_RE_LINK: Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
-_RE_SPECIAL: Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
+
 _RE_LIST_MISSING_ASTERISK: Pattern[str] = re.compile(r"^-(?=[ `\"a-z])", re.MULTILINE)
 _RE_LIST_MISSING_WHITESPACE: Pattern[str] = re.compile(r"^\*(?=[`\"a-z])", re.MULTILINE)
 
@@ -1083,30 +1078,6 @@ rather than repeating long literals in every method definition.
 """
 
 
-class RSTRenderer(_RSTRenderer):
-    def __init__(self) -> None:
-        super().__init__()
-
-    def inline_html(self, token: dict[str, Any], state: BlockState) -> str:
-        html = token["raw"]
-        return rf"\ :raw-html:`{html}`\ "
-
-
-class RSTParse(mistune.Markdown):
-    def __init__(
-        self,
-        renderer: mistune.BaseRenderer,
-        block: mistune.BlockParser | None = None,
-        inline: mistune.InlineParser | None = None,
-        plugins=None,
-    ) -> None:
-        super().__init__(renderer, block, inline, plugins)
-
-    def __call__(self, s: str) -> str:
-        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
-        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
-
-
 def indent_docstring(  # noqa: C901
     lines: Iterable[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
@@ -1192,31 +1163,10 @@ def fix_docstring_issues(docstring: str) -> str:
     )
 
 
-def rst_syntax_for_class(class_name: str) -> str:
-    return f":class:`{class_name}`"
-
-
-rst_parse: RSTParse = RSTParse(RSTRenderer())
+rst_parse: RSTParseVegaLite = RSTParseVegaLite()
 
 
 # TODO: Investigate `mistune.Markdown.(before|after)_render_hooks`.
 def process_description(description: str) -> str:
     """Parse a JSON encoded markdown description into an `RST` string."""
-    # remove formatting from links
-    description = "".join(
-        _RE_SPECIAL.sub("", d) if i % 2 else d
-        for i, d in enumerate(_RE_LINK.split(description))
-    )
-    description = rst_parse(description)
-    # Some entries in the Vega-Lite schema miss the second occurence of '__'
-    description = description.replace("__Default value: ", "__Default value:__ ")
-    # Links to the vega-lite documentation cannot be relative but instead need to
-    # contain the full URL.
-    description = description.replace(
-        "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
-    )
-    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
-    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
-    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
-    return description.strip()
+    return rst_parse(description)
