@@ -135,6 +135,17 @@ def request_trees_to_df(tag: str, /) -> pl.DataFrame:
     return df.select(*sorted(df.columns))
 
 
+def request_trees_to_df_batched(*tags: str, delay: int = 5) -> pl.DataFrame:
+    import random
+    import time
+
+    dfs: list[pl.DataFrame] = []
+    for tag in tags:
+        time.sleep(delay + random.triangular())
+        dfs.append(request_trees_to_df(tag))
+    return pl.concat(dfs)
+
+
 def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> None:
     metadata = request_trees_to_df(tag)
     if not fp.exists():
