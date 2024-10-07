@@ -7,11 +7,12 @@ Adapted from `altair-viz/vega_datasets`_.
 
 from __future__ import annotations
 
+import json
 import sys
 import tempfile
 from functools import cached_property, partial
 from pathlib import Path
-from typing import Any, Callable, ClassVar, Literal
+from typing import Any, Callable, ClassVar, Literal, TypedDict
 from urllib.request import urlopen
 
 if sys.version_info >= (3, 13):
@@ -25,12 +26,130 @@ else:
 
 import polars as pl
 
+
+class GitHubTree(TypedDict):
+    path: str
+    mode: str
+    type: str
+    sha: str
+    size: int
+    url: str
+
+
+class GitHubTreeResponse(TypedDict):
+    sha: str
+    url: str
+    tree: list[GitHubTree]
+    truncated: bool
+
+
+class GitHubBlobResponse(TypedDict):
+    content: str
+    sha: str
+    node_id: str
+    size: int | None
+    encoding: str
+    url: str
+
+
+class ParsedTree(TypedDict):
+    file_name: str
+    name_js: str
+    name_py: str
+    suffix: str
+    size: int
+    url: str
+    ext_supported: bool
+
+
+class ParsedTreeResponse(TypedDict):
+    tag: str
+    url: str
+    tree: list[ParsedTree]
+
+
+_GITHUB_TREE_BASE_URL = "https://api.github.com/repos/vega/vega-datasets/git/trees/"
+_NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
+_SUB_DIR = "data"
+
+
+def request_trees(tag: str, /) -> GitHubTreeResponse:
+    with urlopen(f"{_GITHUB_TREE_BASE_URL}{tag}") as response:
+        content: GitHubTreeResponse = json.load(response)
+    query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
+    if data_url := next(query, None):
+        with urlopen(data_url) as response:
+            data_dir: GitHubTreeResponse = json.load(response)
+        return data_dir
+    else:
+        raise FileNotFoundError
+
+
+def parse_github_tree(tree: GitHubTree, /) -> ParsedTree:
+    path = Path(tree["path"])
+    return ParsedTree(
+        file_name=path.name,
+        name_js=path.stem,
+        name_py=_js_to_py(path.stem),
+        suffix=path.suffix,
+        size=tree["size"],
+        url=tree["url"],
+        ext_supported=is_ext_supported(path.suffix),
+    )
+
+
+def parse_github_tree_response(
+    tree: GitHubTreeResponse, /, tag: str
+) -> ParsedTreeResponse:
+    return ParsedTreeResponse(
+        tag=tag, url=tree["url"], tree=[parse_github_tree(t) for t in tree["tree"]]
+    )
+
+
+def request_trees_to_df(tag: str, /) -> pl.DataFrame:
+    response = request_trees(tag)
+    parsed = parse_github_tree_response(response, tag=tag)
+    df = (
+        pl.DataFrame(parsed["tree"])
+        .lazy()
+        .rename({"url": "url_github"})
+        .with_columns(name_collision=pl.col("name_py").is_duplicated(), tag=pl.lit(tag))
+        .with_columns(
+            url_npm=pl.concat_str(
+                pl.lit(_NPM_BASE_URL),
+                pl.col("tag"),
+                pl.lit(f"/{_SUB_DIR}/"),
+                pl.col("file_name"),
+            )
+        )
+        .collect()
+    )
+    return df.select(*sorted(df.columns))
+
+
+def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> None:
+    metadata = request_trees_to_df(tag)
+    if not fp.exists():
+        fp.touch()
+    metadata.write_parquet(fp, compression="zstd", compression_level=17)
+    if write_schema:
+        schema = {name: tp.__name__ for name, tp in metadata.schema.to_python().items()}
+        fp_schema = fp.with_name(f"{fp.stem}-schema.json")
+        if not fp_schema.exists():
+            fp_schema.touch()
+        with fp_schema.open("w") as f:
+            json.dump(schema, f, indent=2)
+
+
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
 
 ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow"]
+"""
+- `'flights-200k.(arrow|json)'` key collison using stem
+"""
 
 
 def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
