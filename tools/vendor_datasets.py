@@ -8,6 +8,7 @@ Adapted from `altair-viz/vega_datasets`_.
 from __future__ import annotations
 
 import sys
+import tempfile
 from functools import cached_property, partial
 from pathlib import Path
 from typing import Any, Callable, ClassVar, Literal
@@ -29,11 +30,11 @@ import polars as pl
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
 
-ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv"]
+ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow"]
 
 
 def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
-    return suffix in {".csv", ".json", ".tsv"}
+    return suffix in {".csv", ".json", ".tsv", ".arrow"}
 
 
 def _py_to_js(s: str, /):
@@ -49,6 +50,7 @@ class Dataset:
         ".csv": pl.read_csv,
         ".json": pl.read_json,
         ".tsv": partial(pl.read_csv, separator="\t"),
+        ".arrow": partial(pl.read_ipc, use_pyarrow=True),
     }
 
     def __init__(self, name: str, /, base_url: str) -> None:
@@ -63,9 +65,10 @@ class Dataset:
         self.url: str = f"{base_url}{file_name}"
 
     def __call__(self, **kwds: Any) -> pl.DataFrame:
-        with urlopen(self.url) as f:
-            fn = self.read_fn[self.extension]
-            content = fn(f, **kwds)
+        fn = self.read_fn[self.extension]
+        with tempfile.NamedTemporaryFile() as tmp, urlopen(self.url) as f:
+            tmp.write(f.read())
+            content = fn(tmp, **kwds)
         return content
 
     def __repr__(self) -> str:
