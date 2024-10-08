@@ -314,6 +314,32 @@ def collect_tags(
     tags = request_tags_to_df(n_head, warn_lower=warn_lower)
     _write_parquet(tags, fp, write_schema=write_schema)
 
+
+def refresh_tags(fp: Path, *, limit_new: int = 10) -> pl.DataFrame:
+    if fp.exists():
+        print("Checking for new tags")
+        prev = pl.read_parquet(fp)
+        prev_latest = prev.sort(_SEM_VER_FIELDS, descending=True).head(1)
+        curr_latest = request_tags_to_df(1)
+        if curr_latest.equals(prev_latest):
+            print(f"Already up-to-date {fp!s}")
+            return prev
+        else:
+            # Work out how far behind?
+            print(f"Refreshing {fp!s}")
+            fresh = (
+                pl.concat((request_tags_to_df(limit_new), prev), how="vertical")
+                .unique("sha")
+                .sort(_SEM_VER_FIELDS, descending=True)
+            )
+            _write_parquet(fresh, fp, write_schema=True)
+            print(f"Collected {fresh.height - prev.height} new tags")
+            return fresh
+    else:
+        print(f"Initializing {fp!s}")
+        collect_tags(None, fp)
+        return pl.read_parquet(fp)
+
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
