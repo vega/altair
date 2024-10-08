@@ -36,14 +36,32 @@ if TYPE_CHECKING:
 
 _GITHUB_URL = "https://api.github.com/"
 _GITHUB_VEGA_DATASETS_URL = f"{_GITHUB_URL}repos/vega/vega-datasets/"
+_GITHUB_TAGS_URL = f"{_GITHUB_VEGA_DATASETS_URL}tags"
 _GITHUB_TREES_URL = f"{_GITHUB_VEGA_DATASETS_URL}git/trees/"
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
 _SUB_DIR = "data"
+_TAGS_MAX_PAGE: Literal[100] = 100
+_SEM_VER_FIELDS: tuple[
+    Literal["major"], Literal["minor"], Literal["patch"], Literal["pre_release"]
+] = "major", "minor", "patch", "pre_release"
+
 
 def _is_str(obj: Any) -> TypeIs[str]:
     return isinstance(obj, str)
 
 
+class GitHubTag(TypedDict):
+    name: str
+    node_id: str
+    commit: dict[Literal["sha", "url"], str]
+    zipball_url: str
+    tarball_url: str
+
+
+class ParsedTag(TypedDict):
+    tag: str
+    sha: str
+    trees_url: str
 
 
 class GitHubTree(TypedDict):
@@ -153,6 +171,55 @@ def _request_trees(tag: str | Any, /) -> GitHubTreesResponse:
         raise FileNotFoundError
 
 
+def _request_tags(n: int = 30, *, warn_lower: bool) -> list[GitHubTag]:
+    """https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags."""
+    if n < 1 or n > _TAGS_MAX_PAGE:
+        raise ValueError(n)
+    with urlopen(_request_github(f"{_GITHUB_TAGS_URL}?per_page={n}")) as response:
+        content: list[GitHubTag] = json.load(response)
+    if warn_lower and len(content) < n:
+        earliest = response[-1]["name"]
+        n_response = len(content)
+        msg = f"Requested {n=} tags, but got {n_response}\n" f"{earliest=}"
+        warnings.warn(msg, stacklevel=3)
+    return content
+
+
+def _parse_tag(tag: GitHubTag, /) -> ParsedTag:
+    sha = tag["commit"]["sha"]
+    return ParsedTag(tag=tag["name"], sha=sha, trees_url=f"{_GITHUB_TREES_URL}{sha}")
+
+
+def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
+    """
+    Extracts components of a `SemVer`_ string into sortable columns.
+
+    .. _SemVer:
+        https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
+    """
+    fields = pl.col(_SEM_VER_FIELDS)
+    pattern = r"""(?x)
+        v(?<major>[[:digit:]]*)\.
+        (?<minor>[[:digit:]]*)\.
+        (?<patch>[[:digit:]]*)
+        (\-next\.)?
+        (?<pre_release>[[:digit:]]*)?
+    """
+    sem_ver = pl.col(col_tag).str.extract_groups(pattern).struct.field(*_SEM_VER_FIELDS)
+    return (
+        df.lazy()
+        .with_columns(sem_ver)
+        .with_columns(pl.when(fields.str.len_chars() > 0).then(fields).cast(pl.Int64))
+        .with_columns(is_pre_release=pl.col("pre_release").is_not_null())
+        .collect()
+    )
+
+
+def request_tags_to_df(n_head: int | None, *, warn_lower: bool = False) -> pl.DataFrame:
+    response = _request_tags(n=n_head or _TAGS_MAX_PAGE, warn_lower=warn_lower)
+    return pl.DataFrame([_parse_tag(tag) for tag in response]).pipe(_with_sem_ver)
+
+
 def _parse_tree(tree: GitHubTree, /) -> ParsedTree:
     """For a single tree (file) convert to an IR with only relevant properties."""
     path = Path(tree["path"])
@@ -239,6 +306,13 @@ def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> Non
     """
     metadata = request_trees_to_df(tag)
     _write_parquet(metadata, fp, write_schema=write_schema)
+
+
+def collect_tags(
+    n_head: int | None, fp: Path, *, warn_lower: bool = False, write_schema: bool = True
+):
+    tags = request_tags_to_df(n_head, warn_lower=warn_lower)
+    _write_parquet(tags, fp, write_schema=write_schema)
 
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
