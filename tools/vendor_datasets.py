@@ -13,7 +13,7 @@ import tempfile
 import warnings
 from functools import cached_property, partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypedDict, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypedDict
 from urllib.request import Request, urlopen
 
 import polars as pl
@@ -31,8 +31,9 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     from tools.schemapi.utils import OneOrSeq
 
-    _T = TypeVar("_T")
-    _Guard: TypeAlias = Callable[[Any], TypeIs[_T]]
+
+_ItemSlice: TypeAlias = "tuple[int | None, int | str | None]"
+"""Query result scalar selection."""
 
 _GITHUB_URL = "https://api.github.com/"
 _GITHUB_VEGA_DATASETS_URL = f"{_GITHUB_URL}repos/vega/vega-datasets/"
@@ -339,6 +340,28 @@ def refresh_tags(fp: Path, *, limit_new: int = 10) -> pl.DataFrame:
         print(f"Initializing {fp!s}")
         collect_tags(None, fp)
         return pl.read_parquet(fp)
+
+
+def url_from(
+    fp: Path,
+    *predicates: OneOrSeq[str | pl.Expr],
+    item: _ItemSlice = (0, "url_npm"),
+    **constraints: Any,
+) -> str:
+    """Querying multi-version trees metadata for `npm` url to fetch."""
+    if fp.suffix != ".parquet":
+        raise NotImplementedError(fp.suffix)
+    items = pl.scan_parquet(fp).filter(*predicates, **constraints).collect()
+    if items.is_empty():
+        msg = f"Found no results for:\n" f"{predicates!r}\n{constraints!r}"
+        raise NotImplementedError(msg)
+    r = items.item(*item)
+    if _is_str(r):
+        return r
+    else:
+        msg = f"Expected 'str' but got {type(r).__name__!r} from {r!r}."
+        raise TypeError(msg)
+
 
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
