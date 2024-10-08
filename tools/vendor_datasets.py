@@ -165,7 +165,7 @@ def _request_trees(tag: str | Any, /) -> GitHubTreesResponse:
         content: GitHubTreesResponse = json.load(response)
     query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
     if data_url := next(query, None):
-        with urlopen(data_url) as response:
+        with urlopen(_request_github(data_url)) as response:
             data_dir: GitHubTreesResponse = json.load(response)
         return data_dir
     else:
