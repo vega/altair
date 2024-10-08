@@ -9,26 +9,51 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 import tempfile
+import warnings
 from functools import cached_property, partial
 from pathlib import Path
-from typing import Any, Callable, ClassVar, Literal, TypedDict
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypedDict, TypeVar
 from urllib.request import Request, urlopen
-
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
 
 import polars as pl
 
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    from tools.schemapi.utils import OneOrSeq
+
+    _T = TypeVar("_T")
+    _Guard: TypeAlias = Callable[[Any], TypeIs[_T]]
+
+_GITHUB_URL = "https://api.github.com/"
+_GITHUB_VEGA_DATASETS_URL = f"{_GITHUB_URL}repos/vega/vega-datasets/"
+_GITHUB_TREES_URL = f"{_GITHUB_VEGA_DATASETS_URL}git/trees/"
+_NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
+_SUB_DIR = "data"
+
+def _is_str(obj: Any) -> TypeIs[str]:
+    return isinstance(obj, str)
+
+
+
 
 class GitHubTree(TypedDict):
+    """
+    A single file's metadata within the response of `Get a tree`_.
+
+    .. _Get a tree:
+        https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
+    """
+
     path: str
     mode: str
     type: str
@@ -37,7 +62,16 @@ class GitHubTree(TypedDict):
     url: str
 
 
-class GitHubTreeResponse(TypedDict):
+class GitHubTreesResponse(TypedDict):
+    """
+    Response from `Get a tree`_.
+
+    Describes directory metadata, with files stored in ``"tree"``.
+
+    .. _Get a tree:
+        https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
+    """
+
     sha: str
     url: str
     tree: list[GitHubTree]
@@ -45,6 +79,15 @@ class GitHubTreeResponse(TypedDict):
 
 
 class GitHubBlobResponse(TypedDict):
+    """
+    Response from `Get a blob`_.
+
+    Obtained by following ``GitHubTree["url"]``.
+
+    .. _Get a blob:
+        https://docs.github.com/en/rest/git/blobs?apiVersion=2022-11-28#get-a-blob
+    """
+
     content: str
     sha: str
     node_id: str
@@ -63,37 +106,55 @@ class ParsedTree(TypedDict):
     ext_supported: bool
 
 
-class ParsedTreeResponse(TypedDict):
+class ParsedTreesResponse(TypedDict):
     tag: str
     url: str
     tree: list[ParsedTree]
 
 
-_GITHUB_TREE_BASE_URL = "https://api.github.com/repos/vega/vega-datasets/git/trees/"
-_NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
-_SUB_DIR = "data"
+def _request_github(url: str, /, *, raw: bool = False) -> Request:
+    """
+    Wrap a request url with a `personal access token`_ - if set as an env var.
 
+    By default the endpoint returns json, specify raw to get blob data.
+    See `Media types`_.
 
-def request_github(url: str, /) -> Request:
+    .. _personal access token:
+        https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+    .. _Media types:
+        https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28#media-types
+    """
     headers = {}
     if tok := os.environ.get("VEGA_GITHUB_TOKEN"):
         headers["Authorization"] = tok
+    if raw:
+        headers["Accept"] = "application/vnd.github.raw+json"
     return Request(url, headers=headers)
 
 
-def request_trees(tag: str, /) -> GitHubTreeResponse:
-    with urlopen(request_github(f"{_GITHUB_TREE_BASE_URL}{tag}")) as response:
-        content: GitHubTreeResponse = json.load(response)
+def _request_trees(tag: str | Any, /) -> GitHubTreesResponse:
+    """
+    For a given ``tag``, perform 2x requests to get directory metadata.
+
+    Returns response unchanged - but with annotations.
+    """
+    if _is_str(tag):
+        url = tag if tag.startswith(_GITHUB_TREES_URL) else f"{_GITHUB_TREES_URL}{tag}"
+    else:
+        url = tag["trees_url"]
+    with urlopen(_request_github(url)) as response:
+        content: GitHubTreesResponse = json.load(response)
     query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
     if data_url := next(query, None):
         with urlopen(data_url) as response:
-            data_dir: GitHubTreeResponse = json.load(response)
+            data_dir: GitHubTreesResponse = json.load(response)
         return data_dir
     else:
         raise FileNotFoundError
 
 
-def parse_github_tree(tree: GitHubTree, /) -> ParsedTree:
+def _parse_tree(tree: GitHubTree, /) -> ParsedTree:
+    """For a single tree (file) convert to an IR with only relevant properties."""
     path = Path(tree["path"])
     return ParsedTree(
         file_name=path.name,
@@ -106,17 +167,18 @@ def parse_github_tree(tree: GitHubTree, /) -> ParsedTree:
     )
 
 
-def parse_github_tree_response(
-    tree: GitHubTreeResponse, /, tag: str
-) -> ParsedTreeResponse:
-    return ParsedTreeResponse(
-        tag=tag, url=tree["url"], tree=[parse_github_tree(t) for t in tree["tree"]]
+def _parse_trees_response(
+    tree: GitHubTreesResponse, /, tag: str
+) -> ParsedTreesResponse:
+    """For a tree response (directory of files) convert to an IR with only relevant properties."""
+    return ParsedTreesResponse(
+        tag=tag, url=tree["url"], tree=[_parse_tree(t) for t in tree["tree"]]
     )
 
 
 def request_trees_to_df(tag: str, /) -> pl.DataFrame:
-    response = request_trees(tag)
-    parsed = parse_github_tree_response(response, tag=tag)
+    response = _request_trees(tag)
+    parsed = _parse_trees_response(response, tag=tag)
     df = (
         pl.DataFrame(parsed["tree"])
         .lazy()
@@ -146,19 +208,37 @@ def request_trees_to_df_batched(*tags: str, delay: int = 5) -> pl.DataFrame:
     return pl.concat(dfs)
 
 
-def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> None:
-    metadata = request_trees_to_df(tag)
+def _write_parquet(
+    frame: pl.DataFrame | pl.LazyFrame, fp: Path, /, *, write_schema: bool
+) -> None:
+    """
+    Write ``frame`` to ``fp``, with some extra safety.
+
+    When ``write_schema``, an addtional ``...-schema.json`` file is produced
+    that describes the metadata columns.
+    """
     if not fp.exists():
         fp.touch()
-    metadata.write_parquet(fp, compression="zstd", compression_level=17)
+    df = frame.lazy().collect()
+    df.write_parquet(fp, compression="zstd", compression_level=17)
     if write_schema:
-        schema = {name: tp.__name__ for name, tp in metadata.schema.to_python().items()}
+        schema = {name: tp.__name__ for name, tp in df.schema.to_python().items()}
         fp_schema = fp.with_name(f"{fp.stem}-schema.json")
         if not fp_schema.exists():
             fp_schema.touch()
         with fp_schema.open("w") as f:
             json.dump(schema, f, indent=2)
 
+
+def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> None:
+    """
+    Retrieve directory info for a given version ``tag``, writing to ``fp``.
+
+    When ``write_schema``, an addtional ``...-schema.json`` file is produced
+    that describes the metadata columns.
+    """
+    metadata = request_trees_to_df(tag)
+    _write_parquet(metadata, fp, write_schema=write_schema)
 
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
