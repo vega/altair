@@ -421,51 +421,6 @@ class Dataset:
         )
 
 
-DATASET_NAMES_USED = (
-    "airports",
-    "anscombe",
-    "barley",
-    "cars",
-    "co2_concentration",
-    "countries",
-    "disasters",
-    "driving",
-    "earthquakes",
-    "flights_2k",
-    "flights_5k",
-    "flights_airport",
-    "gapminder_health_income",
-    "github",
-    "income",
-    "iowa_electricity",
-    "iris",
-    "jobs",
-    "londonBoroughs",
-    "londonCentroids",
-    "londonTubeLines",
-    "monarchs",
-    "movies",
-    "normal_2d",
-    "ohlc",
-    "population",
-    "population_engineers_hurricanes",
-    "seattle_weather",
-    "sp500",
-    "stocks",
-    "unemployment",
-    "unemployment_across_industries",
-    "us_10m",
-    "us_employment",
-    "us_state_capitals",
-    "us_unemployment",
-    "wheat",
-    "windvectors",
-    "world_110m",
-    "zipcodes",
-)
-"""Every name that is referenced in *at least* one example/test."""
-
-
 DATASETS_JSON = {
     # "7zip": {"filename": "7zip.png", "format": "png"},
     "airports": {"filename": "airports.csv", "format": "csv"},
