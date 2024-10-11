@@ -9,6 +9,7 @@ from altair import theme
 from altair.theme import ConfigKwds, ThemeConfig
 from altair.vegalite.v5.schema._typing import is_color_hex
 from altair.vegalite.v5.theme import VEGA_THEMES
+from tests import slow
 
 if TYPE_CHECKING:
     import sys
@@ -32,6 +33,44 @@ def test_vega_themes(chart) -> None:
         assert dct["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
+
+
+@slow
+def test_theme_remote_lambda() -> None:
+    """
+    Compatibility test for ``lambda`` usage in `dash-vega-components`_.
+
+    A ``lambda`` here is to fetch the remote resource **once**, wrapping the result in a function.
+
+    .. _dash-vega-components:
+        https://github.com/vega/dash-vega-components/blob/c3e8cae873580bc7a52bc01daea1f27a7df02b8b/example_app.py#L13-L17
+    """
+    import altair as alt  # noqa: I001
+    from urllib.request import urlopen
+    import json
+
+    URL = "https://gist.githubusercontent.com/binste/b4042fa76a89d72d45cbbb9355ec6906/raw/e36f79d722bcd9dd954389b1753a2d4a18113227/altair_theme.json"
+    with urlopen(URL) as response:
+        custom_theme = json.load(response)
+
+    alt.theme.register("remote_binste", enable=True)(lambda: custom_theme)
+    assert alt.theme.active == "remote_binste"
+
+    # NOTE: A decorator-compatible way to define an "anonymous" function
+    @alt.theme.register("remote_binste_2", enable=True)
+    def _():
+        return custom_theme
+
+    assert alt.theme.active == "remote_binste_2"
+
+    decorated_theme = alt.theme.get()
+    alt.theme.enable("remote_binste")
+    assert alt.theme.active == "remote_binste"
+    lambda_theme = alt.theme.get()
+
+    assert decorated_theme
+    assert lambda_theme
+    assert decorated_theme() == lambda_theme()
 
 
 def test_theme_register_decorator() -> None:
