@@ -9,39 +9,62 @@ from __future__ import annotations
 
 import json
 import os
+import random
 import tempfile
+import time
+import urllib.request
 import warnings
 from functools import cached_property, partial
+from itertools import islice
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypedDict
-from urllib.request import Request, urlopen
+from typing import (
+    IO,
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Iterable,
+    Literal,
+    NamedTuple,
+    Sequence,
+    TypedDict,
+    get_args,
+)
+from urllib.request import urlopen
 
 import polars as pl
 
 if TYPE_CHECKING:
     import sys
+    from email.message import Message
+    from typing import MutableMapping, TypeVar
+    from urllib.request import OpenerDirector, Request
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
     else:
         from typing_extensions import TypeIs
+    if sys.version_info >= (3, 11):
+        from typing import LiteralString, Required
+    else:
+        from typing_extensions import LiteralString, Required
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
     from tools.schemapi.utils import OneOrSeq
 
+    _Frame = TypeVar("_Frame", pl.DataFrame, pl.LazyFrame)
+    _PathName: TypeAlias = Literal["dir", "tags", "trees"]
 
-_ItemSlice: TypeAlias = "tuple[int | None, int | str | None]"
+
+_ItemSlice: TypeAlias = (
+    "tuple[int | None, int | Literal['url_npm', 'url_github'] | None]"
+)
 """Query result scalar selection."""
 
-_GITHUB_URL = "https://api.github.com/"
-_GITHUB_VEGA_DATASETS_URL = f"{_GITHUB_URL}repos/vega/vega-datasets/"
-_GITHUB_TAGS_URL = f"{_GITHUB_VEGA_DATASETS_URL}tags"
-_GITHUB_TREES_URL = f"{_GITHUB_VEGA_DATASETS_URL}git/trees/"
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
 _SUB_DIR = "data"
-_TAGS_MAX_PAGE: Literal[100] = 100
 _SEM_VER_FIELDS: tuple[
     Literal["major"], Literal["minor"], Literal["patch"], Literal["pre_release"]
 ] = "major", "minor", "patch", "pre_release"
@@ -49,6 +72,14 @@ _SEM_VER_FIELDS: tuple[
 
 def _is_str(obj: Any) -> TypeIs[str]:
     return isinstance(obj, str)
+
+
+class GitHubUrl(NamedTuple):
+    BASE: LiteralString
+    RATE: LiteralString
+    REPO: LiteralString
+    TAGS: LiteralString
+    TREES: LiteralString
 
 
 class GitHubTag(TypedDict):
@@ -63,6 +94,14 @@ class ParsedTag(TypedDict):
     tag: str
     sha: str
     trees_url: str
+
+
+class ReParsedTag(ParsedTag):
+    major: int
+    minor: int
+    patch: int
+    pre_release: int | None
+    is_pre_release: bool
 
 
 class GitHubTree(TypedDict):
@@ -97,24 +136,6 @@ class GitHubTreesResponse(TypedDict):
     truncated: bool
 
 
-class GitHubBlobResponse(TypedDict):
-    """
-    Response from `Get a blob`_.
-
-    Obtained by following ``GitHubTree["url"]``.
-
-    .. _Get a blob:
-        https://docs.github.com/en/rest/git/blobs?apiVersion=2022-11-28#get-a-blob
-    """
-
-    content: str
-    sha: str
-    node_id: str
-    size: int | None
-    encoding: str
-    url: str
-
-
 class ParsedTree(TypedDict):
     file_name: str
     name_js: str
@@ -123,6 +144,11 @@ class ParsedTree(TypedDict):
     size: int
     url: str
     ext_supported: bool
+    tag: str
+
+
+class QueryTree(ParsedTree, total=False):
+    name_js: Required[str]
 
 
 class ParsedTreesResponse(TypedDict):
@@ -131,64 +157,442 @@ class ParsedTreesResponse(TypedDict):
     tree: list[ParsedTree]
 
 
-def _request_github(url: str, /, *, raw: bool = False) -> Request:
+class GitHubRateLimit(TypedDict):
+    limit: int
+    used: int
+    remaining: int
+    reset: int
+
+
+class ParsedRateLimit(GitHubRateLimit):
+    reset_time: time.struct_time
+    is_limited: bool
+    is_auth: bool
+
+
+class GitHubRateLimitResources(TypedDict, total=False):
     """
-    Wrap a request url with a `personal access token`_ - if set as an env var.
+    A subset of response from `Get rate limit status for the authenticated user`_.
 
-    By default the endpoint returns json, specify raw to get blob data.
-    See `Media types`_.
+    .. _Get rate limit status for the authenticated user:
+        https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user
+    """
 
-    .. _personal access token:
+    core: Required[GitHubRateLimit]
+    search: Required[GitHubRateLimit]
+    graphql: GitHubRateLimit
+    integration_manifest: GitHubRateLimit
+    code_search: GitHubRateLimit
+
+
+class _ErrorHandler(urllib.request.BaseHandler):
+    """
+    Adds `rate limit`_ info to a forbidden error.
+
+    .. _rate limit:
+        https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28
+    """
+
+    def http_error_default(
+        self, req: Request, fp: IO[bytes] | None, code: int, msg: str, hdrs: Message
+    ):
+        if code == 403 and (reset := hdrs.get("X-RateLimit-Reset", None)):
+            limit = hdrs.get("X-RateLimit-Limit", "")
+            remaining = hdrs.get("X-RateLimit-Remaining", "")
+            msg = (
+                f"{msg}\n\nFailed to balance rate limit.\n"
+                f"{limit=}, {remaining=}\n"
+                f"Reset: {time.localtime(int(reset))!r}"
+            )
+        raise urllib.request.HTTPError(req.full_url, code, msg, hdrs, fp)
+
+
+class _GitHubRequestNamespace:
+    """
+    Fetching resources from the `GitHub API`_.
+
+    .. _GitHub API:
+        https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api?apiVersion=2022-11-28
+    """
+
+    _ENV_VAR: LiteralString = "VEGA_GITHUB_TOKEN"
+    _TAGS_MAX_PAGE: Literal[100] = 100
+    _VERSION: LiteralString = "2022-11-28"
+    _UNAUTH_RATE_LIMIT: Literal[60] = 60
+    _TAGS_COST: Literal[1] = 1
+    _TREES_COST: Literal[2] = 2
+    _UNAUTH_DELAY: Literal[5] = 5
+    _AUTH_DELAY: Literal[1] = 1
+    _UNAUTH_TREES_LIMIT: Literal[10] = 10
+
+    def __init__(self, gh: _GitHub, /) -> None:
+        self._gh = gh
+
+    @property
+    def url(self) -> GitHubUrl:
+        return self._gh.url
+
+    def rate_limit(self) -> GitHubRateLimitResources:
+        """https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user."""
+        with self._gh._opener.open(self._request(self.url.RATE)) as response:
+            content: GitHubRateLimitResources = json.load(response)["resources"]
+        return content
+
+    def tags(self, n: int, *, warn_lower: bool) -> list[GitHubTag]:
+        """https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags."""
+        if n < 1 or n > self._TAGS_MAX_PAGE:
+            raise ValueError(n)
+        req = self._request(f"{self.url.TAGS}?per_page={n}")
+        with self._gh._opener.open(req) as response:
+            content: list[GitHubTag] = json.load(response)
+        if warn_lower and len(content) < n:
+            earliest = response[-1]["name"]
+            n_response = len(content)
+            msg = f"Requested {n=} tags, but got {n_response}\n" f"{earliest=}"
+            warnings.warn(msg, stacklevel=3)
+        return content
+
+    def trees(self, tag: str | ParsedTag, /) -> GitHubTreesResponse:
+        """
+        For a given ``tag``, perform **2x requests** to get directory metadata.
+
+        Returns response unchanged - but with annotations.
+        """
+        if _is_str(tag):
+            url = tag if tag.startswith(self.url.TREES) else f"{self.url.TREES}{tag}"
+        else:
+            url = tag["trees_url"]
+        with self._gh._opener.open(self._request(url)) as response:
+            content: GitHubTreesResponse = json.load(response)
+        query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
+        if data_url := next(query, None):
+            with self._gh._opener.open(self._request(data_url)) as response:
+                data_dir: GitHubTreesResponse = json.load(response)
+            return data_dir
+        else:
+            raise FileNotFoundError
+
+    def _request(self, url: str, /, *, raw: bool = False) -> Request:
+        """
+        Wrap a request url with a `personal access token`_ - if set as an env var.
+
+        By default the endpoint returns json, specify raw to get blob data.
+        See `Media types`_.
+
+        .. _personal access token:
         https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-    .. _Media types:
+        .. _Media types:
         https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28#media-types
-    """
-    headers = {}
-    if tok := os.environ.get("VEGA_GITHUB_TOKEN"):
-        headers["Authorization"] = tok
-    if raw:
-        headers["Accept"] = "application/vnd.github.raw+json"
-    return Request(url, headers=headers)
+        """
+        headers: MutableMapping[str, str] = {"X-GitHub-Api-Version": self._VERSION}
+        if tok := os.environ.get(self._ENV_VAR):
+            headers["Authorization"] = (
+                tok if tok.startswith("Bearer ") else f"Bearer {tok}"
+            )
+        if raw:
+            headers["Accept"] = "application/vnd.github.raw+json"
+        return urllib.request.Request(url, headers=headers)
 
 
-def _request_trees(tag: str | Any, /) -> GitHubTreesResponse:
+class _GitHubParseNamespace:
     """
-    For a given ``tag``, perform 2x requests to get directory metadata.
+    Transform responses into intermediate representations.
 
-    Returns response unchanged - but with annotations.
+    Where relevant:
+    - Adding cheap to compute metadata
+    - Dropping information that we don't need for the task
     """
-    if _is_str(tag):
-        url = tag if tag.startswith(_GITHUB_TREES_URL) else f"{_GITHUB_TREES_URL}{tag}"
+
+    def __init__(self, gh: _GitHub, /) -> None:
+        self._gh = gh
+
+    @property
+    def url(self) -> GitHubUrl:
+        return self._gh.url
+
+    def rate_limit(self, rate_limit: GitHubRateLimitResources, /) -> ParsedRateLimit:
+        core = rate_limit["core"]
+        reset = core["reset"]
+        return ParsedRateLimit(
+            **core,
+            reset_time=time.localtime(reset),
+            is_limited=core["remaining"] == 0,
+            is_auth=core["limit"] > self._gh.req._UNAUTH_RATE_LIMIT,
+        )
+
+    def tag(self, tag: GitHubTag, /) -> ParsedTag:
+        sha = tag["commit"]["sha"]
+        return ParsedTag(tag=tag["name"], sha=sha, trees_url=f"{self.url.TREES}{sha}")
+
+    def tags(self, tags: list[GitHubTag], /) -> list[ParsedTag]:
+        return [self.tag(t) for t in tags]
+
+    def tree(self, tree: GitHubTree, tag: str, /) -> ParsedTree:
+        """For a single tree (file) convert to an IR with only relevant properties."""
+        path = Path(tree["path"])
+        return ParsedTree(
+            file_name=path.name,
+            name_js=path.stem,
+            name_py=_js_to_py(path.stem),
+            suffix=path.suffix,
+            size=tree["size"],
+            url=tree["url"],
+            ext_supported=is_ext_supported(path.suffix),
+            tag=tag,
+        )
+
+    def trees(self, tree: GitHubTreesResponse, /, tag: str) -> list[ParsedTree]:
+        """For a tree response (directory of files) convert to an IR with only relevant properties."""
+        return [self.tree(t, tag) for t in tree["tree"]]
+
+
+class _GitHubQueryNamespace:
+    """**WIP** Interfacing with the cached metadata."""
+
+    def __init__(self, gh: _GitHub, /) -> None:
+        self._gh = gh
+
+    @property
+    def paths(self) -> dict[_PathName, Path]:
+        return self._gh._paths
+
+    def url_from(
+        self,
+        *predicates: OneOrSeq[str | pl.Expr],
+        item: _ItemSlice = (0, "url_npm"),
+        **constraints: Any,
+    ) -> str:
+        """Querying multi-version trees metadata for `npm` url to fetch."""
+        fp = self.paths["trees"]
+        if fp.suffix != ".parquet":
+            raise NotImplementedError(fp.suffix)
+        items = pl.scan_parquet(fp).filter(*predicates, **constraints).collect()
+        if items.is_empty():
+            msg = f"Found no results for:\n" f"{predicates!r}\n{constraints!r}"
+            raise NotImplementedError(msg)
+        r = items.item(*item)
+        if _is_str(r):
+            return r
+        else:
+            msg = f"Expected 'str' but got {type(r).__name__!r} from {r!r}."
+            raise TypeError(msg)
+
+
+class _GitHub:
+    """
+    Primary interface with the GitHub API.
+
+    Maintains up-to-date metadata, describing **every** available dataset across **all known** releases.
+
+    - Uses `tags`_, `trees`_, `rate_limit`_ endpoints.
+    - Organizes distinct groups of operations into property accessor namespaces.
+
+
+    .. _tags:
+        https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags
+    .. _trees:
+        https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
+    .. _rate_limit:
+        https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user
+
+    """
+
+    _opener: ClassVar[OpenerDirector] = urllib.request.build_opener(_ErrorHandler)
+
+    def __init__(
+        self,
+        output_dir: Path,
+        name_tags: str,
+        name_trees: str,
+        *,
+        write_schema: bool,
+        base_url: LiteralString = "https://api.github.com/",
+    ) -> None:
+        # When ``write_schema``, addtional ``...-schema.json`` file(s) are produced
+        # that describes column types - in a non-binary format.
+        self._write_schema: bool = write_schema
+        output_dir.mkdir(exist_ok=True)
+        self._paths: dict[_PathName, Path] = {
+            "dir": output_dir,
+            "tags": output_dir / f"{name_tags}.parquet",
+            "trees": output_dir / f"{name_trees}.parquet",
+        }
+        repo = f"{base_url}repos/vega/vega-datasets/"
+        self._url = GitHubUrl(
+            BASE=base_url,
+            RATE=f"{base_url}rate_limit",
+            REPO=repo,
+            TAGS=f"{repo}tags",
+            TREES=f"{repo}git/trees/",
+        )
+
+    @property
+    def req(self) -> _GitHubRequestNamespace:
+        return _GitHubRequestNamespace(self)
+
+    @property
+    def parse(self) -> _GitHubParseNamespace:
+        return _GitHubParseNamespace(self)
+
+    @property
+    def query(self) -> _GitHubQueryNamespace:
+        return _GitHubQueryNamespace(self)
+
+    @property
+    def url(self) -> GitHubUrl:
+        return self._url
+
+    def rate_limit(self) -> ParsedRateLimit:
+        return self.parse.rate_limit(self.req.rate_limit())
+
+    def tags(self, n_head: int | None, *, warn_lower: bool = False) -> pl.DataFrame:
+        tags = self.req.tags(n_head or self.req._TAGS_MAX_PAGE, warn_lower=warn_lower)
+        return pl.DataFrame(self.parse.tags(tags)).pipe(_with_sem_ver)
+
+    def trees(self, tag: str | ParsedTag, /) -> pl.DataFrame:
+        """Retrieve directory info for a given version ``tag``."""
+        trees = self.req.trees(tag)
+        tag_v = _tag_from(tag) if _is_str(tag) else tag["tag"]
+        parsed = self.parse.trees(trees, tag=tag_v)
+        df = (
+            pl.DataFrame(parsed)
+            .lazy()
+            .rename({"url": "url_github"})
+            .with_columns(name_collision=pl.col("name_py").is_duplicated())
+            .with_columns(
+                url_npm=pl.concat_str(
+                    pl.lit(_NPM_BASE_URL),
+                    pl.col("tag"),
+                    pl.lit(f"/{_SUB_DIR}/"),
+                    pl.col("file_name"),
+                )
+            )
+            .collect()
+        )
+        return df.select(*sorted(df.columns))
+
+    def refresh(
+        self, fp_tags: Path | None = None, fp_trees: Path | None = None
+    ) -> pl.DataFrame:
+        """
+        Use known tags to discover and update missing trees metadata.
+
+        Aims to stay well-within API rate limits, both for authenticated ad unauthenticated users.
+        """
+        rate_limit = self.rate_limit()
+        if rate_limit["is_limited"]:
+            raise NotImplementedError(rate_limit)
+        fp_tags = fp_tags or self._paths["tags"]
+        fp_trees = fp_trees or self._paths["trees"]
+        IS_AUTH = rate_limit["is_auth"]
+        UNAUTH_LIMIT = self.req._UNAUTH_TREES_LIMIT
+
+        tags = (
+            self._refresh_tags(fp_tags)
+            if IS_AUTH or rate_limit["remaining"] > UNAUTH_LIMIT
+            else pl.read_parquet(fp_tags)
+        )
+        trees = pl.read_parquet(fp_trees)
+
+        missing_trees = tags.join(
+            trees.select(pl.col("tag").unique()), on="tag", how="anti"
+        )
+        if missing_trees.is_empty():
+            print(f"Already up-to-date {fp_trees!s}")
+            return trees
+        else:
+            missing = (
+                ReParsedTag(**row)
+                for row in islice(
+                    missing_trees.iter_rows(named=True),
+                    None if IS_AUTH else UNAUTH_LIMIT,
+                )
+            )
+            fresh_rows = self._trees_batched(missing)
+            print(
+                f"Finished collection.\n"
+                f"Writing {fresh_rows.height} new rows to {fp_trees!s}"
+            )
+            refreshed = pl.concat((trees, fresh_rows)).pipe(_sort_sem_ver)
+            _write_parquet(refreshed, fp_trees, write_schema=self._write_schema)
+            return refreshed
+
+    def _trees_batched(self, tags: Iterable[str | ParsedTag], /) -> pl.DataFrame:
+        rate_limit = self.rate_limit()
+        if rate_limit["is_limited"]:
+            raise NotImplementedError(rate_limit)
+        elif not isinstance(tags, Sequence):
+            tags = tuple(tags)
+        req = self.req
+        n = len(tags)
+        cost = req._TREES_COST * n
+        if rate_limit["remaining"] < cost:
+            raise NotImplementedError(rate_limit, cost)
+        delay_secs = req._AUTH_DELAY if rate_limit["is_auth"] else req._UNAUTH_DELAY
+        print(
+            f"Collecting metadata for {n} missing releases.\n"
+            f"Using {delay_secs=} between requests ..."
+        )
+        dfs: list[pl.DataFrame] = []
+        for tag in tags:
+            time.sleep(delay_secs + random.triangular())
+            dfs.append(self.trees(tag))
+        return pl.concat(dfs)
+
+    def _refresh_tags(
+        self, fp: Path | None = None, *, limit_new: int | None = None
+    ) -> pl.DataFrame:
+        n_new_tags: int = 0
+        fp = fp or self._paths["tags"]
+        if not fp.exists():
+            print(f"Initializing {fp!s}")
+            tags = self.tags(limit_new)
+            n_new_tags = tags.height
+        else:
+            print("Checking for new tags")
+            prev = pl.scan_parquet(fp)
+            curr_latest = self.tags(1)
+            if curr_latest.equals(prev.pipe(_sort_sem_ver).head(1).collect()):
+                print(f"Already up-to-date {fp!s}")
+                return prev.collect()
+            else:
+                print(f"Refreshing {fp!s}")
+                prev_eager = prev.collect()
+                tags = (
+                    pl.concat((self.tags(limit_new), prev_eager), how="vertical")
+                    .unique("sha")
+                    .pipe(_sort_sem_ver)
+                )
+                n_new_tags = tags.height - prev_eager.height
+        print(f"Collected {n_new_tags} new tags")
+        _write_parquet(tags, fp, write_schema=self._write_schema)
+        return tags
+
+
+GitHub = _GitHub(
+    Path(__file__).parent / "_vega_datasets_data",
+    name_trees="metadata_full",
+    name_tags="tags",
+    write_schema=True,
+)
+
+#######################################################################################
+
+
+def _tag_from(s: str, /) -> str:
+    # - Actual tag
+    # - Trees url (using ref name)
+    # - npm url (works w/o the `v` prefix)
+    trees_url = GitHub.url.TREES
+    if s.startswith("v"):
+        return s
+    elif s.startswith(trees_url):
+        return s.replace(trees_url, "")
+    elif s.startswith(_NPM_BASE_URL):
+        s, _ = s.replace(_NPM_BASE_URL, "").split("/")
+        return s if s.startswith("v") else f"v{s}"
     else:
-        url = tag["trees_url"]
-    with urlopen(_request_github(url)) as response:
-        content: GitHubTreesResponse = json.load(response)
-    query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
-    if data_url := next(query, None):
-        with urlopen(_request_github(data_url)) as response:
-            data_dir: GitHubTreesResponse = json.load(response)
-        return data_dir
-    else:
-        raise FileNotFoundError
-
-
-def _request_tags(n: int = 30, *, warn_lower: bool) -> list[GitHubTag]:
-    """https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags."""
-    if n < 1 or n > _TAGS_MAX_PAGE:
-        raise ValueError(n)
-    with urlopen(_request_github(f"{_GITHUB_TAGS_URL}?per_page={n}")) as response:
-        content: list[GitHubTag] = json.load(response)
-    if warn_lower and len(content) < n:
-        earliest = response[-1]["name"]
-        n_response = len(content)
-        msg = f"Requested {n=} tags, but got {n_response}\n" f"{earliest=}"
-        warnings.warn(msg, stacklevel=3)
-    return content
-
-
-def _parse_tag(tag: GitHubTag, /) -> ParsedTag:
-    sha = tag["commit"]["sha"]
-    return ParsedTag(tag=tag["name"], sha=sha, trees_url=f"{_GITHUB_TREES_URL}{sha}")
+        raise TypeError(s)
 
 
 def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
@@ -216,64 +620,9 @@ def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
     )
 
 
-def request_tags_to_df(n_head: int | None, *, warn_lower: bool = False) -> pl.DataFrame:
-    response = _request_tags(n=n_head or _TAGS_MAX_PAGE, warn_lower=warn_lower)
-    return pl.DataFrame([_parse_tag(tag) for tag in response]).pipe(_with_sem_ver)
-
-
-def _parse_tree(tree: GitHubTree, /) -> ParsedTree:
-    """For a single tree (file) convert to an IR with only relevant properties."""
-    path = Path(tree["path"])
-    return ParsedTree(
-        file_name=path.name,
-        name_js=path.stem,
-        name_py=_js_to_py(path.stem),
-        suffix=path.suffix,
-        size=tree["size"],
-        url=tree["url"],
-        ext_supported=is_ext_supported(path.suffix),
-    )
-
-
-def _parse_trees_response(
-    tree: GitHubTreesResponse, /, tag: str
-) -> ParsedTreesResponse:
-    """For a tree response (directory of files) convert to an IR with only relevant properties."""
-    return ParsedTreesResponse(
-        tag=tag, url=tree["url"], tree=[_parse_tree(t) for t in tree["tree"]]
-    )
-
-
-def request_trees_to_df(tag: str, /) -> pl.DataFrame:
-    response = _request_trees(tag)
-    parsed = _parse_trees_response(response, tag=tag)
-    df = (
-        pl.DataFrame(parsed["tree"])
-        .lazy()
-        .rename({"url": "url_github"})
-        .with_columns(name_collision=pl.col("name_py").is_duplicated(), tag=pl.lit(tag))
-        .with_columns(
-            url_npm=pl.concat_str(
-                pl.lit(_NPM_BASE_URL),
-                pl.col("tag"),
-                pl.lit(f"/{_SUB_DIR}/"),
-                pl.col("file_name"),
-            )
-        )
-        .collect()
-    )
-    return df.select(*sorted(df.columns))
-
-
-def request_trees_to_df_batched(*tags: str, delay: int = 5) -> pl.DataFrame:
-    import random
-    import time
-
-    dfs: list[pl.DataFrame] = []
-    for tag in tags:
-        time.sleep(delay + random.triangular())
-        dfs.append(request_trees_to_df(tag))
-    return pl.concat(dfs)
+def _sort_sem_ver(frame: _Frame, /) -> _Frame:
+    """Sort ``frame``, displaying in descending release order."""
+    return frame.sort(_SEM_VER_FIELDS, descending=True)
 
 
 def _write_parquet(
@@ -296,71 +645,6 @@ def _write_parquet(
             fp_schema.touch()
         with fp_schema.open("w") as f:
             json.dump(schema, f, indent=2)
-
-
-def collect_metadata(tag: str, /, fp: Path, *, write_schema: bool = True) -> None:
-    """
-    Retrieve directory info for a given version ``tag``, writing to ``fp``.
-
-    When ``write_schema``, an addtional ``...-schema.json`` file is produced
-    that describes the metadata columns.
-    """
-    metadata = request_trees_to_df(tag)
-    _write_parquet(metadata, fp, write_schema=write_schema)
-
-
-def collect_tags(
-    n_head: int | None, fp: Path, *, warn_lower: bool = False, write_schema: bool = True
-):
-    tags = request_tags_to_df(n_head, warn_lower=warn_lower)
-    _write_parquet(tags, fp, write_schema=write_schema)
-
-
-def refresh_tags(fp: Path, *, limit_new: int = 10) -> pl.DataFrame:
-    if fp.exists():
-        print("Checking for new tags")
-        prev = pl.read_parquet(fp)
-        prev_latest = prev.sort(_SEM_VER_FIELDS, descending=True).head(1)
-        curr_latest = request_tags_to_df(1)
-        if curr_latest.equals(prev_latest):
-            print(f"Already up-to-date {fp!s}")
-            return prev
-        else:
-            # Work out how far behind?
-            print(f"Refreshing {fp!s}")
-            fresh = (
-                pl.concat((request_tags_to_df(limit_new), prev), how="vertical")
-                .unique("sha")
-                .sort(_SEM_VER_FIELDS, descending=True)
-            )
-            _write_parquet(fresh, fp, write_schema=True)
-            print(f"Collected {fresh.height - prev.height} new tags")
-            return fresh
-    else:
-        print(f"Initializing {fp!s}")
-        collect_tags(None, fp)
-        return pl.read_parquet(fp)
-
-
-def url_from(
-    fp: Path,
-    *predicates: OneOrSeq[str | pl.Expr],
-    item: _ItemSlice = (0, "url_npm"),
-    **constraints: Any,
-) -> str:
-    """Querying multi-version trees metadata for `npm` url to fetch."""
-    if fp.suffix != ".parquet":
-        raise NotImplementedError(fp.suffix)
-    items = pl.scan_parquet(fp).filter(*predicates, **constraints).collect()
-    if items.is_empty():
-        msg = f"Found no results for:\n" f"{predicates!r}\n{constraints!r}"
-        raise NotImplementedError(msg)
-    r = items.item(*item)
-    if _is_str(r):
-        return r
-    else:
-        msg = f"Expected 'str' but got {type(r).__name__!r} from {r!r}."
-        raise TypeError(msg)
 
 
 # This is the tag in http://github.com/vega/vega-datasets from
