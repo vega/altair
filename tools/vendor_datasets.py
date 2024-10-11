@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import sys
 import tempfile
 import time
 import urllib.request
@@ -24,18 +25,23 @@ from typing import (
     Callable,
     ClassVar,
     Iterable,
+    Iterator,
     Literal,
     NamedTuple,
     Sequence,
-    TypedDict,
+    cast,
     get_args,
 )
 from urllib.request import urlopen
 
 import polars as pl
 
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
 if TYPE_CHECKING:
-    import sys
     from email.message import Message
     from typing import MutableMapping, TypeVar
     from urllib.request import OpenerDirector, Request
@@ -147,8 +153,15 @@ class ParsedTree(TypedDict):
     tag: str
 
 
-class QueryTree(ParsedTree, total=False):
+class QueryTree(TypedDict, total=False):
+    file_name: str
     name_js: Required[str]
+    name_py: str
+    suffix: str
+    size: int
+    url: str
+    ext_supported: bool
+    tag: str
 
 
 class ParsedTreesResponse(TypedDict):
@@ -501,13 +514,10 @@ class _GitHub:
             print(f"Already up-to-date {fp_trees!s}")
             return trees
         else:
-            missing = (
-                ReParsedTag(**row)
-                for row in islice(
-                    missing_trees.iter_rows(named=True),
-                    None if IS_AUTH else UNAUTH_LIMIT,
-                )
+            it = islice(
+                missing_trees.iter_rows(named=True), None if IS_AUTH else UNAUTH_LIMIT
             )
+            missing = cast("Iterator[ReParsedTag]", it)
             fresh_rows = self._trees_batched(missing)
             print(
                 f"Finished collection.\n"
@@ -847,14 +857,16 @@ class DataLoader:
         if name.endswith(get_args(ExtSupported)):
             name, suffix = name.rsplit(".", maxsplit=1)
             suffix = "." + suffix
-        else:
-            suffix = ext
-        if suffix is not None:
             if not is_ext_supported(suffix):
                 raise TypeError(suffix)
             else:
                 constraints["suffix"] = suffix
-        q = QueryTree(name_js=name, **constraints)
+        elif ext is not None:
+            if not is_ext_supported(ext):
+                raise TypeError(ext)
+            else:
+                constraints["suffix"] = ext
+        q = QueryTree(name_js=name, **constraints)  # type: ignore[typeddict-item]
         return GitHub.query.url_from(**q)
 
 
