@@ -1,21 +1,33 @@
 """Tests of various renderers."""
 
 import json
+from importlib.metadata import version as importlib_version
 
 import pytest
+from packaging.version import Version
 
 import altair.vegalite.v5 as alt
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
+from tests import skip_requires_vl_convert
 
 try:
     import anywidget
 
 except ImportError:
     anywidget = None  # type: ignore
+
+
+skip_requires_anywidget = pytest.mark.skipif(
+    not anywidget, reason="anywidget not importable"
+)
+if Version(importlib_version("ipywidgets")) < Version("8.1.4"):
+    # See https://github.com/vega/altair/issues/3234#issuecomment-2268515312
+    jupyter_marks = skip_requires_anywidget(
+        pytest.mark.filterwarnings(
+            "ignore:Deprecated in traitlets 4.1.*:DeprecationWarning"
+        )
+    )
+else:
+    jupyter_marks = skip_requires_anywidget
 
 
 @pytest.fixture
@@ -76,10 +88,8 @@ def test_json_renderer_embed_options(chart, renderer="json"):
             assert metadata == {mimetype: {"option": "foo"}}
 
 
+@skip_requires_vl_convert
 def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run this test")
-
     # Check that setting embed_options to None doesn't crash
     from altair.utils.mimebundle import spec_to_mimebundle
 
@@ -94,12 +104,9 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
         assert bundle["image/svg+xml"].startswith("<svg")
 
 
-@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
+@jupyter_marks
 def test_jupyter_renderer_mimetype(chart, renderer="jupyter") -> None:
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled."""
-    if not anywidget:
-        pytest.skip("anywidget not importable; skipping test")
-
     with alt.renderers.enable(renderer):
         assert (
             "application/vnd.jupyter.widget-view+json"

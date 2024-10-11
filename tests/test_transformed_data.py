@@ -6,7 +6,8 @@ from vega_datasets import data
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_methods_syntax
+from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
+import narwhals as nw
 
 try:
     import vegafusion as vf  # type: ignore
@@ -16,9 +17,7 @@ except ImportError:
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
-@pytest.mark.filterwarnings(
-    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning"
-)
+@ignore_DataFrameGroupBy
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
@@ -35,9 +34,9 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("gapminder_bubble_plot.py", 187, ["income", "population"]),
     ("grouped_bar_chart2.py", 9, ["Group", "Value_start"]),
     ("hexbins.py", 84, ["xFeaturePos", "mean_temp_max"]),
-    ("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"]),
+    pytest.param("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"], marks=slow),
     ("histogram_scatterplot.py", 64, ["bin_maxbins_10_Rotten_Tomatoes_Rating", "__count"]),
-    ("interactive_legend.py", 1708, ["sum_count_start", "series"]),
+    pytest.param("interactive_legend.py", 1708, ["sum_count_start", "series"], marks=slow),
     ("iowa_electricity.py", 51, ["net_generation_start", "year"]),
     ("isotype.py", 37, ["animal", "x"]),
     ("isotype_grid.py", 100, ["row", "col"]),
@@ -47,7 +46,7 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("layered_histogram.py", 113, ["bin_maxbins_100_Measurement"]),
     ("line_chart_with_cumsum.py", 52, ["cumulative_wheat"]),
     ("line_custom_order.py", 55, ["miles", "gas"]),
-    ("line_percent.py", 30, ["sex", "perc"]),
+    pytest.param("line_percent.py", 30, ["sex", "perc"], marks=slow),
     ("line_with_log_scale.py", 15, ["year", "sum_people"]),
     ("multifeature_scatter_plot.py", 150, ["petalWidth", "species"]),
     ("natural_disasters.py", 686, ["Deaths", "Year"]),
@@ -59,10 +58,10 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("pyramid.py", 3, ["category", "value_start"]),
     ("stacked_bar_chart_sorted_segments.py", 60, ["variety", "site"]),
     ("stem_and_leaf.py", 100, ["stem", "leaf"]),
-    ("streamgraph.py", 1708, ["series", "sum_count"]),
+    pytest.param("streamgraph.py", 1708, ["series", "sum_count"], marks=slow),
     ("top_k_items.py", 10, ["rank", "IMDB_Rating_start"]),
     ("top_k_letters.py", 9, ["rank", "letters"]),
-    ("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"]),
+    pytest.param("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"], marks=slow),
     ("area_faceted.py", 492, ["date", "price"]),
     ("distributions_faceted_histogram.py", 20, ["Origin", "__count"]),
     ("us_population_over_time.py", 38, ["sex", "people_start"]),
@@ -74,16 +73,18 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
-    chart = eval_block(source)
+    chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
+    assert df is not None
+    nw_df = nw.from_native(df, eager_only=True, strict=True)
 
-    assert len(df) == rows
-    assert set(cols).issubset(set(df.columns))
+    assert len(nw_df) == rows 
+    assert set(cols).issubset(set(nw_df.columns))
 
 
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
@@ -97,7 +98,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("histogram_responsive.py", [20, 20], [["__count"], ["__count"]]),
     ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB_Rating"]]),
     ("horizon_graph.py", [20, 20], [["x"], ["ny"]]),
-    ("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]]),
+    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]], marks=slow),
     ("interval_selection.py", [123, 123], [["price_start"], ["date"]]),
     ("layered_chart_with_dual_axis.py", [12, 12], [["month_date"], ["average_precipitation"]]),
     ("layered_heatmap_text.py", [9, 9], [["Cylinders"], ["mean_horsepower"]]),
@@ -111,11 +112,11 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         "scatter_with_layered_histogram.py",
         [2, 19],
         [["gender"], ["__count"]],
-        marks=pytest.mark.xfail(
+        marks=(slow, pytest.mark.xfail(
             XDIST_ENABLED,
             reason="Possibly `numpy` conflict with `xdist`.\n"
             "Very intermittent, but only affects `to_reconstruct=False`."
-        ),
+        )),
     ),
     ("scatter_with_minimap.py", [1461, 1461], [["date"], ["date"]]),
     ("scatter_with_rolling_mean.py", [1461, 1461], [["date"], ["rolling_mean"]]),
@@ -130,20 +131,24 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
-    chart = eval_block(source)
+    chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
+   
+    assert isinstance(chart, (alt.LayerChart, alt.ConcatChart, alt.HConcatChart, alt.VConcatChart))
     dfs = chart.transformed_data()
 
     if not to_reconstruct:
         # Only run assert statements if the chart is not reconstructed. Reason
         # is that for some charts, the original chart contained duplicated datasets
         # which disappear when reconstructing the chart.
+        
+        nw_dfs = (nw.from_native(d, eager_only=True, strict=True) for d in dfs)
         assert len(dfs) == len(all_rows)
-        for df, rows, cols in zip(dfs, all_rows, all_cols):
+        for df, rows, cols in zip(nw_dfs, all_rows, all_cols):
             assert len(df) == rows
             assert set(cols).issubset(set(df.columns))
 
@@ -166,10 +171,13 @@ def test_transformed_data_exclude(to_reconstruct):
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
+    assert isinstance(chart, alt.LayerChart)
     datasets = chart.transformed_data(exclude=["some_annotation"])
 
-    assert len(datasets) == 2
-    assert len(datasets[0]) == 52
-    assert "wheat_start" in datasets[0]
-    assert len(datasets[1]) == 1
-    assert "mean_wheat" in datasets[1]
+    _datasets = [nw.from_native(d, eager_only=True, strict=True) for d in datasets]
+    assert len(datasets) == len(_datasets)
+    assert len(_datasets) == 2
+    assert len(_datasets[0]) == 52
+    assert "wheat_start" in _datasets[0]
+    assert len(_datasets[1]) == 1 
+    assert "mean_wheat" in _datasets[1] 

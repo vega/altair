@@ -18,10 +18,12 @@ from typing import (
     Any,
     Dict,
     Final,
+    Generic,
     Iterable,
     Iterator,
     List,
     Literal,
+    Mapping,
     Sequence,
     TypeVar,
     Union,
@@ -41,7 +43,13 @@ from packaging.version import Version
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
+if sys.version_info >= (3, 12):
+    from typing import Protocol, TypeAliasType, runtime_checkable
+else:
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable
+
 if TYPE_CHECKING:
+    from types import ModuleType
     from typing import ClassVar
 
     from referencing import Registry
@@ -57,6 +65,7 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    _OptionalModule: TypeAlias = "ModuleType | None"
 
 ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
@@ -522,11 +531,7 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
             for k, v in obj.items()
             if v is not Undefined
         }
-    elif (
-        hasattr(obj, "to_dict")
-        and (module_name := obj.__module__)
-        and module_name.startswith("altair")
-    ):
+    elif isinstance(obj, SchemaLike):
         return obj.to_dict()
     elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
         return pd_opt.Timestamp(obj).isoformat()
@@ -559,9 +564,25 @@ def _resolve_references(
 
 
 class SchemaValidationError(jsonschema.ValidationError):
-    """A wrapper for jsonschema.ValidationError with friendlier traceback."""
-
     def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
+        """
+        A wrapper for ``jsonschema.ValidationError`` with friendlier traceback.
+
+        Parameters
+        ----------
+        obj
+            The instance that failed ``self.validate(...)``.
+        err
+            The original ``ValidationError``.
+
+        Notes
+        -----
+        We do not raise `from err` as else the resulting traceback is very long
+        as it contains part of the Vega-Lite schema.
+
+        It would also first show the less helpful `ValidationError` instead of
+        the more user friendly `SchemaValidationError`.
+        """
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
@@ -769,6 +790,95 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         )
         message += "".join(it)
         return message
+
+
+_JSON_VT_co = TypeVar(
+    "_JSON_VT_co",
+    Literal["string"],
+    Literal["object"],
+    Literal["array"],
+    covariant=True,
+)
+"""
+One of a subset of JSON Schema `primitive types`_:
+
+    ["string", "object", "array"]
+
+.. _primitive types:
+    https://json-schema.org/draft-07/json-schema-validation#rfc.section.6.1.1
+"""
+
+_TypeMap = TypeAliasType(
+    "_TypeMap", Mapping[Literal["type"], _JSON_VT_co], type_params=(_JSON_VT_co,)
+)
+"""
+A single item JSON Schema using the `type`_ keyword.
+
+This may represent **one of**:
+
+    {"type": "string"}
+    {"type": "object"}
+    {"type": "array"}
+
+.. _type:
+    https://json-schema.org/understanding-json-schema/reference/type
+"""
+
+# NOTE: Type checkers want opposing things:
+# - `mypy`   : Covariant type variable "_JSON_VT_co" used in protocol where invariant one is expected  [misc]
+# - `pyright`: Type variable "_JSON_VT_co" used in generic protocol "SchemaLike" should be covariant [reportInvalidTypeVarUse]
+# Siding with `pyright` as this is consistent with https://github.com/python/typeshed/blob/9e506eb5e8fc2823db8c60ad561b1145ff114947/stdlib/typing.pyi#L690
+
+
+@runtime_checkable
+class SchemaLike(Generic[_JSON_VT_co], Protocol):  # type: ignore[misc]
+    """
+    Represents ``altair`` classes which *may* not derive ``SchemaBase``.
+
+    Attributes
+    ----------
+    _schema
+        A single item JSON Schema using the `type`_ keyword.
+
+    Notes
+    -----
+    Should be kept tightly defined to the **minimum** requirements for:
+        - Converting into a form that can be validated by `jsonschema`_.
+        - Avoiding calling ``.to_dict()`` on a class external to ``altair``.
+    - ``_schema`` is more accurately described as a ``ClassVar``
+        - See `discussion`_ for blocking issue.
+
+    .. _jsonschema:
+        https://github.com/python-jsonschema/jsonschema
+    .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+    .. _discussion:
+        https://github.com/python/typing/discussions/1424
+    """
+
+    _schema: _TypeMap[_JSON_VT_co]
+
+    def to_dict(self, *args, **kwds) -> Any: ...
+
+
+@runtime_checkable
+class ConditionLike(SchemaLike[Literal["object"]], Protocol):
+    """
+    Represents the wrapped state of a conditional encoding or property.
+
+    Attributes
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+
+    Notes
+    -----
+    - Can be extended with additional conditions.
+    - *Does not* define a default value, but can be finalized with one.
+    """
+
+    condition: Any
+    _schema: _TypeMap[Literal["object"]] = {"type": "object"}
 
 
 class UndefinedType:
@@ -991,88 +1101,45 @@ class SchemaBase:
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this object
+            A context dictionary.
 
         Raises
         ------
         SchemaValidationError :
-            if validate=True and the dict does not conform to the schema
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
-        if context is None:
-            context = {}
-        if ignore is None:
-            ignore = []
-        # The following return the package only if it has already been
-        # imported - otherwise they return None. This is useful for
-        # isinstance checks - for example, if pandas has not been imported,
-        # then an object is definitely not a `pandas.Timestamp`.
-        pd_opt = sys.modules.get("pandas")
-        np_opt = sys.modules.get("numpy")
+        context = context or {}
+        ignore = ignore or []
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
 
         if self._args and not self._kwds:
-            result = _todict(
-                self._args[0], context=context, np_opt=np_opt, pd_opt=pd_opt
-            )
+            kwds = self._args[0]
         elif not self._args:
             kwds = self._kwds.copy()
-            # parsed_shorthand is added by FieldChannelMixin.
-            # It's used below to replace shorthand with its long form equivalent
-            # parsed_shorthand is removed from context if it exists so that it is
-            # not passed to child to_dict function calls
-            parsed_shorthand = context.pop("parsed_shorthand", {})
-            # Prevent that pandas categorical data is automatically sorted
-            # when a non-ordinal data type is specifed manually
-            # or if the encoding channel does not support sorting
-            if "sort" in parsed_shorthand and (
-                "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
-            ):
-                parsed_shorthand.pop("sort")
-
-            kwds.update(
-                {
-                    k: v
-                    for k, v in parsed_shorthand.items()
-                    if kwds.get(k, Undefined) is Undefined
-                }
-            )
-            kwds = {
-                k: v for k, v in kwds.items() if k not in {*list(ignore), "shorthand"}
-            }
-            if "mark" in kwds and isinstance(kwds["mark"], str):
-                kwds["mark"] = {"type": kwds["mark"]}
-            result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
+            exclude = {*ignore, "shorthand"}
+            if parsed := context.pop("parsed_shorthand", None):
+                kwds = _replace_parsed_shorthand(parsed, kwds)
+            kwds = {k: v for k, v in kwds.items() if k not in exclude}
+            if (mark := kwds.get("mark")) and isinstance(mark, str):
+                kwds["mark"] = {"type": mark}
         else:
-            msg = (
-                f"{self.__class__} instance has both a value and properties : "
-                "cannot serialize to dict"
-            )
+            msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
             raise ValueError(msg)
+        result = _todict(kwds, context=context, **opts)
         if validate:
+            # NOTE: Don't raise `from err`, see `SchemaValidationError` doc
             try:
                 self.validate(result)
             except jsonschema.ValidationError as err:
-                # We do not raise `from err` as else the resulting
-                # traceback is very long as it contains part
-                # of the Vega-Lite schema. It would also first
-                # show the less helpful ValidationError instead of
-                # the more user friendly SchemaValidationError
                 raise SchemaValidationError(self, err) from None
         return result
 
@@ -1092,30 +1159,27 @@ class SchemaBase:
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
+            A context dictionary.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
+        Raises
+        ------
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
         Notes
         -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        str
-            The JSON specification of the chart object.
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if ignore is None:
             ignore = []
@@ -1143,15 +1207,10 @@ class SchemaBase:
         validate : boolean
             If True (default), then validate the input against the schema.
 
-        Returns
-        -------
-        obj : Schema object
-            The wrapped schema
-
         Raises
         ------
         jsonschema.ValidationError :
-            if validate=True and dct does not conform to the schema
+            If ``validate`` and ``dct`` does not conform to the schema
         """
         if validate:
             cls.validate(dct)
@@ -1214,13 +1273,8 @@ class SchemaBase:
         cls, name: str, value: Any, schema: dict[str, Any] | None = None
     ) -> None:
         """Validate a property against property schema in the context of the rootschema."""
-        # The following return the package only if it has already been
-        # imported - otherwise they return None. This is useful for
-        # isinstance checks - for example, if pandas has not been imported,
-        # then an object is definitely not a `pandas.Timestamp`.
-        pd_opt = sys.modules.get("pandas")
-        np_opt = sys.modules.get("numpy")
-        value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
+        opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
+        value = _todict(value, context={}, **opts)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
@@ -1228,6 +1282,71 @@ class SchemaBase:
 
     def __dir__(self) -> list[str]:
         return sorted(chain(super().__dir__(), self._kwds))
+
+
+def _get_optional_modules(**modules: str) -> dict[str, _OptionalModule]:
+    """
+    Returns packages only if they have already been imported - otherwise they return `None`.
+
+    This is useful for `isinstance` checks.
+
+    For example, if `pandas` has not been imported, then an object is
+    definitely not a `pandas.Timestamp`.
+
+    Parameters
+    ----------
+    **modules
+        Keyword-only binding from `{alias: module_name}`.
+
+    Examples
+    --------
+    >>> import pandas as pd  # doctest: +SKIP
+    >>> import polars as pl  # doctest: +SKIP
+    >>> from altair.utils.schemapi import _get_optional_modules  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(pd="pandas", pl="polars", ibis="ibis")  # doctest: +SKIP
+    {
+        "pd": <module 'pandas' from '...'>,
+        "pl": <module 'polars' from '...'>,
+        "ibis": None,
+    }
+
+    If the user later imports ``ibis``, it would appear in subsequent calls.
+
+    >>> import ibis  # doctest: +SKIP
+    >>>
+    >>> _get_optional_modules(ibis="ibis")  # doctest: +SKIP
+    {
+        "ibis": <module 'ibis' from '...'>,
+    }
+    """
+    return {k: sys.modules.get(v) for k, v in modules.items()}
+
+
+def _replace_parsed_shorthand(
+    parsed_shorthand: dict[str, Any], kwds: dict[str, Any]
+) -> dict[str, Any]:
+    """
+    `parsed_shorthand` is added by `FieldChannelMixin`.
+
+    It's used below to replace shorthand with its long form equivalent
+    `parsed_shorthand` is removed from `context` if it exists so that it is
+    not passed to child `to_dict` function calls.
+    """
+    # Prevent that pandas categorical data is automatically sorted
+    # when a non-ordinal data type is specifed manually
+    # or if the encoding channel does not support sorting
+    if "sort" in parsed_shorthand and (
+        "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
+    ):
+        parsed_shorthand.pop("sort")
+
+    kwds.update(
+        (k, v)
+        for k, v in parsed_shorthand.items()
+        if kwds.get(k, Undefined) is Undefined
+    )
+    return kwds
 
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)

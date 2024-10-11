@@ -1,3 +1,4 @@
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -6,12 +7,8 @@ import narwhals.stable.v1 as nw
 import pandas as pd
 import pytest
 
-try:
-    import pyarrow as pa
-except ImportError:
-    pa = None
-
 from altair.utils.data import to_values
+from tests import skip_requires_pyarrow
 
 
 def windows_has_tzdata():
@@ -30,9 +27,11 @@ def windows_has_tzdata():
     sys.platform == "win32" and not windows_has_tzdata(),
     reason="Timezone database is not installed on Windows",
 )
-@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+@skip_requires_pyarrow
 def test_arrow_timestamp_conversion():
     """Test that arrow timestamp values are converted to ISO-8601 strings."""
+    import pyarrow as pa
+
     data = {
         "date": [datetime(2004, 8, 1), datetime(2004, 9, 1), None],
         "value": [102, 129, 139],
@@ -51,8 +50,10 @@ def test_arrow_timestamp_conversion():
     assert values == expected_values
 
 
-@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+@skip_requires_pyarrow
 def test_duration_raises():
+    import pyarrow as pa
+
     td = pd.timedelta_range(0, periods=3, freq="h")
     df = pd.DataFrame(td).reset_index()
     df.columns = ["id", "timedelta"]
@@ -63,7 +64,8 @@ def test_duration_raises():
 
     # Check that exception mentions the duration[ns] type,
     # which is what the pandas timedelta is converted into
-    assert (
-        'Field "timedelta" has type "Duration" which is not supported by Altair'
-        in e.value.args[0]
+
+    assert re.match(
+        r'^Field "timedelta" has type "Duration.*" which is not supported by Altair',
+        e.value.args[0],
     )

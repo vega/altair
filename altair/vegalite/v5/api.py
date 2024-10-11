@@ -10,33 +10,21 @@ import sys
 import typing as t
 import warnings
 from copy import deepcopy as _deepcopy
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Literal,
-    Protocol,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, Sequence, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
 
 from altair import utils
 from altair.expr import core as _expr_core
-from altair.utils import Optional, Undefined
+from altair.utils import Optional, SchemaBase, Undefined
 from altair.utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
-from altair.utils.core import (
-    to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
-)
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
+from altair.utils.schemapi import ConditionLike, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -45,10 +33,18 @@ from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map
 from .theme import themes
 
-if sys.version_info >= (3, 13):
+if sys.version_info >= (3, 14):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
+if sys.version_info >= (3, 12):
+    from typing import Protocol, runtime_checkable
+else:
+    from typing_extensions import Protocol, runtime_checkable  # noqa: F401
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -125,7 +121,6 @@ if TYPE_CHECKING:
         ProjectionType,
         RepeatMapping,
         RepeatRef,
-        SchemaBase,
         SelectionParameter,
         SequenceGenerator,
         SortField,
@@ -194,7 +189,7 @@ __all__ = [
 ]
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
-_TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
+_TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 
 # ------------------------------------------------------------------------
@@ -312,11 +307,26 @@ class LookupData(core.LookupData):
 
 
 class FacetMapping(core.FacetMapping):
+    """
+    FacetMapping schema wrapper.
+
+    Parameters
+    ----------
+    column : str, :class:`FacetFieldDef`, :class:`Column`
+        A field definition for the horizontal facet of trellis plots.
+    row : str, :class:`FacetFieldDef`, :class:`Row`
+        A field definition for the vertical facet of trellis plots.
+    """
+
     _class_is_valid_at_instantiation = False
 
-    @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        column: Optional[str | FacetFieldDef | Column] = Undefined,
+        row: Optional[str | FacetFieldDef | Row] = Undefined,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(column=column, row=row, **kwargs)  # type: ignore[arg-type]
 
     def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
@@ -345,6 +355,7 @@ TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
     _counter: int = 0
 
     @classmethod
@@ -447,6 +458,8 @@ class SelectionPredicateComposition(core.PredicateComposition):
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
@@ -461,6 +474,8 @@ class ParameterExpression(_expr_core.OperatorMixin):
 
 
 class SelectionExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
@@ -498,7 +513,7 @@ _TestPredicateType: TypeAlias = Union[
 _PredicateType: TypeAlias = Union[
     Parameter,
     core.Expr,
-    Map,
+    "_ConditionExtra",
     _TestPredicateType,
     _expr_core.OperatorMixin,
 ]
@@ -509,7 +524,7 @@ _ComposablePredicateType: TypeAlias = Union[
 ]
 """Permitted types for `&` reduced predicates."""
 
-_StatementType: TypeAlias = Union[core.SchemaBase, Map, str]
+_StatementType: TypeAlias = Union[SchemaBase, Map, str]
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -523,16 +538,10 @@ else:
 ```
 """
 
-_ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
-"""Intermediate type representing a converted `_PredicateType`.
-
-Prior to parsing any `_StatementType`.
-"""
-
 _LiteralValue: TypeAlias = Union[str, bool, float, int]
 """Primitive python value types."""
 
-_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
+_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -545,15 +554,15 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
-def _get_predicate_expr(p: Parameter) -> Optional[str | SchemaBase]:
+def _get_predicate_expr(p: Parameter) -> Optional[_TestPredicateType]:
     # https://vega.github.io/vega-lite/docs/predicate.html
     return getattr(p.param, "expr", Undefined)
 
 
 def _predicate_to_condition(
     predicate: _PredicateType, *, empty: Optional[bool] = Undefined
-) -> _ConditionType:
-    condition: _ConditionType
+) -> _Condition:
+    condition: _Condition
     if isinstance(predicate, Parameter):
         predicate_expr = _get_predicate_expr(predicate)
         if predicate.param_type == "selection" or utils.is_undefined(predicate_expr):
@@ -580,13 +589,13 @@ def _predicate_to_condition(
 
 
 def _condition_to_selection(
-    condition: _ConditionType,
+    condition: _Condition,
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs: Any,
-) -> SchemaBase | dict[str, _ConditionType | Any]:
-    selection: SchemaBase | dict[str, _ConditionType | Any]
-    if isinstance(if_true, core.SchemaBase):
+) -> SchemaBase | _Conditional[_Condition]:
+    selection: SchemaBase | _Conditional[_Condition]
+    if isinstance(if_true, SchemaBase):
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
         if isinstance(if_false, str):
@@ -599,30 +608,21 @@ def _condition_to_selection(
         else:
             if_true = utils.parse_shorthand(if_true)
             if_true.update(kwargs)
-    condition.update(if_true)
-    if isinstance(if_false, core.SchemaBase):
+    cond_mutable: Any = dict(condition)
+    cond_mutable.update(if_true)
+    if isinstance(if_false, SchemaBase):
         # For the selection, the channel definitions all allow selections
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
-        selection.condition = condition
+        selection.condition = cond_mutable
     elif isinstance(if_false, (str, dict)):
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = dict(condition=condition, **if_false)
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
     else:
         raise TypeError(if_false)
     return selection
-
-
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
-    # https://peps.python.org/pep-0728/
-    # Parameter {"param", "value", "empty"}
-    # Predicate {"test", "value"}
-    empty: Optional[bool]
-    param: Parameter | str
-    test: _TestPredicateType
-    value: Any
 
 
 class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -636,17 +636,68 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
 
 
 _Condition: TypeAlias = _ConditionExtra
-"""A singular, non-chainable condition produced by ``.when()``."""
+"""
+A singular, *possibly* non-chainable condition produced by ``.when()``.
+
+The default **permissive** representation.
+
+Allows arbitrary additional keys that *may* be present in a `Conditional Field`_
+but not a `Conditional Value`_.
+
+.. _Conditional Field:
+    https://vega.github.io/vega-lite/docs/condition.html#field
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
+
+
+class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    # Parameter {"param", "value", "empty"}
+    # Predicate {"test", "value"}
+    empty: Optional[bool]
+    param: Parameter | str
+    test: _TestPredicateType
+    value: Any
+
 
 _Conditions: TypeAlias = t.List[_ConditionClosed]
-"""Chainable conditions produced by ``.when()`` and ``Then.when()``."""
+"""
+Chainable conditions produced by ``.when()`` and ``Then.when()``.
+
+All must be a `Conditional Value`_.
+
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
 
 _C = TypeVar("_C", _Conditions, _Condition)
 
 
 class _Conditional(TypedDict, t.Generic[_C], total=False):
+    """
+    A dictionary representation of a conditional encoding or property.
+
+    Parameters
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+    value
+        An optional default value, used when no predicates were met.
+    """
+
     condition: Required[_C]
     value: Any
+
+
+IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+"""
+Anything that can be converted into a conditional encoding or property.
+
+Notes
+-----
+Represents all outputs from `when-then-otherwise` conditions, which are not ``SchemaBase`` types.
+"""
 
 
 class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -662,8 +713,8 @@ def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
 
 def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
     for el in objs:
-        if isinstance(el, (core.SchemaBase, t.Mapping)):
-            item = el.to_dict(validate=False) if isinstance(el, core.SchemaBase) else el
+        if isinstance(el, (SchemaBase, t.Mapping)):
+            item = el.to_dict(validate=False) if isinstance(el, SchemaBase) else el
             yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
         else:
             continue
@@ -674,6 +725,11 @@ def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
     # 1 - Originated from parse_shorthand
     # 2 - Used a wrapper or `dict` directly, including `extra_keys`
     return isinstance(obj, str) or any(_is_extra(obj, *objs, kwds=kwds))
+
+
+def _is_condition_closed(obj: Map) -> TypeIs[_ConditionClosed]:
+    """Return `True` if ``obj`` can be used in a chained condition."""
+    return {"empty", "param", "test", "value"} >= obj.keys()
 
 
 def _parse_when_constraints(
@@ -743,7 +799,7 @@ def _parse_when(
     *more_predicates: _ComposablePredicateType,
     empty: Optional[bool],
     **constraints: _FieldEqualType,
-) -> _ConditionType:
+) -> _Condition:
     composed: _PredicateType
     if utils.is_undefined(predicate):
         if more_predicates or constraints:
@@ -774,7 +830,7 @@ def _parse_literal(val: Any, /) -> dict[str, Any]:
 
 
 def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
-    if isinstance(statement, core.SchemaBase):
+    if isinstance(statement, SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
         statement = _parse_literal(statement)
@@ -786,7 +842,7 @@ def _parse_otherwise(
     statement: _StatementType, conditions: _Conditional[Any], kwds: dict[str, Any], /
 ) -> SchemaBase | _Conditional[Any]:
     selection: SchemaBase | _Conditional[Any]
-    if isinstance(statement, core.SchemaBase):
+    if isinstance(statement, SchemaBase):
         selection = statement.copy()
         conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
@@ -800,7 +856,7 @@ def _parse_otherwise(
 
 class _BaseWhen(Protocol):
     # NOTE: Temporary solution to non-SchemaBase copy
-    _condition: _ConditionType
+    _condition: _Condition
 
     def _when_then(
         self, statement: _StatementType, kwds: dict[str, Any], /
@@ -824,7 +880,7 @@ class When(_BaseWhen):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    def __init__(self, condition: _ConditionType, /) -> None:
+    def __init__(self, condition: _Condition, /) -> None:
         self._condition = condition
 
     def __repr__(self) -> str:
@@ -879,7 +935,7 @@ class When(_BaseWhen):
             return Then(_Conditional(condition=[condition]))
 
 
-class Then(core.SchemaBase, t.Generic[_C]):
+class Then(ConditionLike, t.Generic[_C]):
     """
     Utility class for ``when-then-otherwise`` conditions.
 
@@ -895,11 +951,8 @@ class Then(core.SchemaBase, t.Generic[_C]):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    _schema = {"type": "object"}
-
     def __init__(self, conditions: _Conditional[_C], /) -> None:
-        super().__init__(**conditions)
-        self.condition: _C
+        self.condition: _C = conditions["condition"]
 
     @overload
     def otherwise(self, statement: _TSchemaBase, /, **kwds: Any) -> _TSchemaBase: ...
@@ -1057,12 +1110,22 @@ class Then(core.SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
-        m = super().to_dict(*args, **kwds)
-        return _Conditional(condition=m["condition"])
+    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:
+        return _Conditional(condition=self.condition.copy())
 
     def __deepcopy__(self, memo: Any) -> Self:
-        return type(self)(_Conditional(condition=_deepcopy(self.condition)))
+        return type(self)(_Conditional(condition=_deepcopy(self.condition, memo)))
+
+    def __repr__(self) -> str:
+        name = type(self).__name__
+        COND = "condition: "
+        LB, RB = "{", "}"
+        if len(self.condition) == 1:
+            args = f"{COND}{self.condition!r}".replace("\n", "\n  ")
+        else:
+            conds = "\n    ".join(f"{c!r}" for c in self.condition)
+            args = f"{COND}[\n    " f"{conds}\n  ]"
+        return f"{name}({LB}\n  {args}\n{RB})"
 
 
 class ChainedWhen(_BaseWhen):
@@ -1080,7 +1143,7 @@ class ChainedWhen(_BaseWhen):
 
     def __init__(
         self,
-        condition: _ConditionType,
+        condition: _Condition,
         conditions: _Conditional[_Conditions],
         /,
     ) -> None:
@@ -1133,9 +1196,18 @@ class ChainedWhen(_BaseWhen):
             )
         """
         condition = self._when_then(statement, kwds)
-        conditions = self._conditions.copy()
-        conditions["condition"].append(condition)
-        return Then(conditions)
+        if _is_condition_closed(condition):
+            conditions = self._conditions.copy()
+            conditions["condition"].append(condition)
+            return Then(conditions)
+        else:
+            cond = _reveal_parsed_shorthand(condition)
+            msg = (
+                f"Chained conditions cannot be mixed with field conditions.\n"
+                f"Shorthand {statement!r} expanded to {cond!r}\n\n"
+                f"Use `alt.value({statement!r})` if this is not a shorthand string."
+            )
+            raise TypeError(msg)
 
 
 def when(
@@ -1652,7 +1724,7 @@ def condition(
     *,
     empty: Optional[bool] = ...,
     **kwargs: Any,
-) -> dict[str, _ConditionType | Any]: ...
+) -> _Conditional[_Condition]: ...
 @overload
 def condition(
     predicate: _PredicateType,
@@ -1661,7 +1733,7 @@ def condition(
     *,
     empty: Optional[bool] = ...,
     **kwargs: Any,
-) -> dict[str, _ConditionType | Any]: ...
+) -> _Conditional[_Condition]: ...
 @overload
 def condition(
     predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any
@@ -1674,7 +1746,7 @@ def condition(
     *,
     empty: Optional[bool] = Undefined,
     **kwargs: Any,
-) -> SchemaBase | dict[str, _ConditionType | Any]:
+) -> SchemaBase | _Conditional[_Condition]:
     """
     A conditional attribute or encoding.
 
@@ -1716,12 +1788,29 @@ def _top_schema_base(  # noqa: ANN202
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
-    Use for instance methods.
+    Use for methods, called from `TopLevelMixin` that are defined in `SchemaBase`.
+
+    Notes
+    -----
+    - The `super` sub-branch is not statically checked *here*.
+        - It would widen the inferred intersection to:
+            - `(<subclass of SchemaBase and TopLevelMixin> | super)`
+        - Both dunder attributes are not in the `super` type stubs
+            - Requiring 2x *# type: ignore[attr-defined]*
+    - However it is required at runtime for any cases that use `super(..., copy)`.
+    - The inferred type **is** used statically **outside** of this function.
     """
-    if isinstance(obj, core.SchemaBase) and isinstance(obj, TopLevelMixin):
+    if (isinstance(obj, SchemaBase) and isinstance(obj, TopLevelMixin)) or (
+        not TYPE_CHECKING
+        and (
+            isinstance(obj, super)
+            and issubclass(obj.__self_class__, SchemaBase)
+            and obj.__thisclass__ is TopLevelMixin
+        )
+    ):
         return obj
     else:
-        msg = f"{type(obj).__name__!r} does not derive from {type(core.SchemaBase).__name__!r}"
+        msg = f"{type(obj).__name__!r} does not derive from {SchemaBase.__name__!r}"
         raise TypeError(msg)
 
 
@@ -1735,7 +1824,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         validate: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
@@ -1745,31 +1834,25 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
-        format : str, optional
-            Chart specification format, one of "vega-lite" (default) or "vega"
+            If True (default), then validate the result against the schema.
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this chart
+            A context dictionary.
 
         Raises
         ------
-        SchemaValidationError
-            if validate=True and the dict does not conform to the schema
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         # Validate format
         if format not in {"vega-lite", "vega"}:
@@ -1797,7 +1880,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         original_data = getattr(copy, "data", Undefined)
         if not utils.is_undefined(original_data):
             try:
-                data = _to_eager_narwhals_dataframe(original_data)
+                data = nw.from_native(original_data, eager_or_interchange_only=True)
             except TypeError:
                 # Non-narwhalifiable type supported by Altair, such as dict
                 data = original_data
@@ -1807,10 +1890,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        # TopLevelMixin instance does not necessarily have to_dict defined
-        # but due to how Altair is set up this should hold.
-        # Too complex to type hint right now
-        vegalite_spec: Any = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
@@ -1862,7 +1942,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
         **kwargs: Any,
@@ -1873,24 +1953,31 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the result against the schema.
         indent : int, optional
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
-        format : str, optional
-            The chart specification format. One of "vega-lite" (default) or "vega".
-            The "vega" format relies on the active Vega-Lite compiler plugin, which
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
             by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
+            A context dictionary.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
+
+        Raises
+        ------
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         if ignore is None:
             ignore = []
@@ -3595,13 +3682,14 @@ class _EncodingMixin(channels._EncodingMixin):
             self = _top_schema_base(self).copy(deep=False)
             data, self.data = self.data, Undefined
 
-        if facet_specified:
+        f: Facet | FacetMapping
+        if not utils.is_undefined(facet):
             f = channels.Facet(facet) if isinstance(facet, str) else facet
         else:
             r: Any = row
             f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)  # pyright: ignore[reportArgumentType]
 
 
 class Chart(
@@ -3697,24 +3785,19 @@ class Chart(
         cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> _TSchemaBase:
         """
-        Construct class from a dictionary representation.
+        Construct a ``Chart`` from a dictionary representation.
 
         Parameters
         ----------
         dct : dictionary
-            The dict from which to construct the class
+            The dict from which to construct the ``Chart``.
         validate : boolean
             If True (default), then validate the input against the schema.
-
-        Returns
-        -------
-        obj : Chart object
-            The wrapped schema
 
         Raises
         ------
         jsonschema.ValidationError :
-            if validate=True and dct does not conform to the schema
+            If ``validate`` and ``dct`` does not conform to the schema
         """
         _tp: Any
         for tp in TopLevelMixin.__subclasses__():
@@ -3731,41 +3814,35 @@ class Chart(
         self,
         validate: bool = True,
         *,
-        format: str = "vega-lite",
+        format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """
-        Convert the chart to a dictionary suitable for JSON export.
+        Convert the ``Chart`` to a dictionary suitable for JSON export.
 
         Parameters
         ----------
         validate : bool, optional
-            If True (default), then validate the output dictionary
-            against the schema.
-        format : str, optional
-            Chart specification format, one of "vega-lite" (default) or "vega"
+            If True (default), then validate the result against the schema.
+        format : {"vega-lite", "vega"}, optional
+            The chart specification format.
+            The `"vega"` format relies on the active Vega-Lite compiler plugin, which
+            by default requires the vl-convert-python package.
         ignore : list[str], optional
-            A list of keys to ignore. It is usually not needed
-            to specify this argument as a user.
+            A list of keys to ignore.
         context : dict[str, Any], optional
-            A context dictionary. It is usually not needed
-            to specify this argument as a user.
-
-        Notes
-        -----
-        Technical: The ignore parameter will *not* be passed to child to_dict
-        function calls.
-
-        Returns
-        -------
-        dict
-            The dictionary representation of this chart
+            A context dictionary.
 
         Raises
         ------
-        SchemaValidationError
-            if validate=True and the dict does not conform to the schema
+        SchemaValidationError :
+            If ``validate`` and the result does not conform to the schema.
+
+        Notes
+        -----
+        - ``ignore``, ``context`` are usually not needed to be specified as a user.
+        - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         context = context or {}
         kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
@@ -3945,7 +4022,7 @@ def _check_if_valid_subspec(
     ],
 ) -> None:
     """Raise a `TypeError` if `spec` is not a valid sub-spec."""
-    if not isinstance(spec, core.SchemaBase):
+    if not isinstance(spec, SchemaBase):
         msg = f"Only chart objects can be used in {classname}."
         raise TypeError(msg)
     for attr in TOPLEVEL_ONLY_KEYS:
@@ -4246,7 +4323,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
 def concat(*charts: ConcatType, **kwargs: Any) -> ConcatChart:
     """Concatenate charts horizontally."""
-    return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
+    return ConcatChart(concat=charts, **kwargs)
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
@@ -4350,7 +4427,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 def hconcat(*charts: ConcatType, **kwargs: Any) -> HConcatChart:
     """Concatenate charts horizontally."""
-    return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
+    return HConcatChart(hconcat=charts, **kwargs)
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
@@ -4456,7 +4533,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 def vconcat(*charts: ConcatType, **kwargs: Any) -> VConcatChart:
     """Concatenate charts vertically."""
-    return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
+    return VConcatChart(vconcat=charts, **kwargs)
 
 
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
@@ -4582,7 +4659,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
 def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
     """Layer multiple charts."""
-    return LayerChart(layer=charts, **kwargs)  # pyright: ignore
+    return LayerChart(layer=charts, **kwargs)
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
@@ -4975,7 +5052,7 @@ def _remove_layer_props(  # noqa: C901
             # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
-            msg = f"There are inconsistent values {values} for {prop}"
+            msg = f"There are inconsistent values {values} for {prop}"  # pyright: ignore[reportPossiblyUnboundVariable]
             raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 

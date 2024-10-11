@@ -68,6 +68,7 @@ In addition, Altair includes the following renderers:
   using the ``"image/png"`` MIME type.
 - ``"svg"``: renderer that renders and converts the chart to an SVG image,
   outputting it using the ``"image/svg+xml"`` MIME type.
+- ``"olli"``: renderer that uses `Olli`_ to generate accessible text structures for screen reader users.
 - ``"json"``: renderer that outputs the raw JSON chart specification, using the
   ``"application/json"`` MIME type.
 
@@ -171,7 +172,7 @@ Package                                                                         
 `Marimo <https://docs.marimo.io/guides/plotting.html>`_                                                                              ✔                                    ✔
 `Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
 `Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
-`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                              
+`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                    ✔
 ===================================================================================================================================  ===================================  =============================
 
 The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well. 
@@ -713,3 +714,4 @@ see :ref:`display-general`.
 .. _Spyder: https://www.spyder-ide.org/
 .. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
 .. _webbrowser module: https://docs.python.org/3/library/webbrowser.html#webbrowser.register
+.. _Olli: https://mitvis.github.io/olli/
