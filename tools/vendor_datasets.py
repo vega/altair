@@ -824,5 +824,38 @@ class DataLoader:
     def __dir__(self) -> list[str]:
         return self.list_datasets()
 
+    # BUG: # 1.6.0 exists on GH but not npm?
+    def __call__(
+        self,
+        name: str,
+        ext: ExtSupported | None = None,
+        /,
+        tag: LiteralString | Literal["latest"] | None = None,
+    ):
+        """
+        **WIP** Will be using this *instead of* attribute access.
+
+        - Original supports this as well
+        - Will only be using the actual (js_name)
+        - Some have hyphens, others underscores
+        """
+        constraints: dict[Literal["tag", "suffix"], str] = {}
+        if tag == "latest":
+            raise NotImplementedError(tag)
+        elif tag is not None:
+            constraints["tag"] = tag
+        if name.endswith(get_args(ExtSupported)):
+            name, suffix = name.rsplit(".", maxsplit=1)
+            suffix = "." + suffix
+        else:
+            suffix = ext
+        if suffix is not None:
+            if not is_ext_supported(suffix):
+                raise TypeError(suffix)
+            else:
+                constraints["suffix"] = suffix
+        q = QueryTree(name_js=name, **constraints)
+        return GitHub.query.url_from(**q)
+
 
 data = DataLoader()
