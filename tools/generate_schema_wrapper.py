@@ -29,14 +29,8 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 
 
-from tools.schemapi import (  # noqa: F401
-    CodeSnippet,
-    SchemaInfo,
-    arg_invalid_kwds,
-    arg_kwds,
-    arg_required_kwds,
-    codegen,
-)
+from tools.markup import rst_syntax_for_class
+from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
@@ -46,11 +40,11 @@ from tools.schemapi.utils import (
     import_typing_extensions,
     indent_docstring,
     resolve_references,
-    rst_syntax_for_class,
     ruff_format_py,
     ruff_write_lint_format_str,
     spell_literal,
 )
+from tools.vega_expr import write_expr_module
 
 if TYPE_CHECKING:
     from tools.schemapi.codegen import ArgInfo, AttrGetter
@@ -71,8 +65,14 @@ from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+VL_PACKAGE_TEMPLATE = (
+    "https://raw.githubusercontent.com/vega/vega-lite/refs/tags/{version}/package.json"
+)
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
+EXPR_FILE: Path = (
+    Path(__file__).parent / ".." / "altair" / "expr" / "__init__.py"
+).resolve()
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -288,10 +288,7 @@ class _EncodingMixin:
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {dict_literal}
         if args:
             kwargs = {{k: v for k, v in kwargs.items() if v is not Undefined}}
 
@@ -1269,6 +1266,7 @@ def generate_encoding_artifacts(
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
+        dict_literal="{" + ", ".join(f"{kwd!r}:{kwd}" for kwd in channel_infos) + "}",
     )
     typed_dict = generate_typed_dict(
         facet_encoding,
@@ -1296,6 +1294,11 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
+    write_expr_module(
+        vlc.get_vega_version(),
+        output=EXPR_FILE,
+        header=HEADER_COMMENT,
+    )
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
