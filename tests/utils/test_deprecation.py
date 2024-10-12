@@ -47,7 +47,7 @@ def test_deprecated_import():
     import altair as alt
 
     pattern = re.compile(
-        r"altair=5\.5\.0.+\.theme\.themes instead.+user.guide",
+        r"altair=5\.5\.0.+\.theme instead.+user.guide",
         flags=re.DOTALL | re.IGNORECASE,
     )
     with pytest.warns(AltairDeprecationWarning, match=pattern):

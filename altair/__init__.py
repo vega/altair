@@ -671,7 +671,7 @@ def __getattr__(name: str) -> _Any:
             "    https://altair-viz.github.io/user_guide/api.html#theme\n"
             "    https://altair-viz.github.io/user_guide/customization.html#chart-themes",
             version="5.5.0",
-            alternative="altair.theme.themes",
+            alternative="altair.theme",
             stacklevel=3,
         )
         return theme.themes
