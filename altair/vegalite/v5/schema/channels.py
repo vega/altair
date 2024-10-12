@@ -25256,10 +25256,48 @@ class _EncodingMixin:
         yOffset : str, :class:`YOffset`, Dict, :class:`YOffsetDatum`, :class:`YOffsetValue`
             Offset of y-position of the marks
         """
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {
+            "angle": angle,
+            "color": color,
+            "column": column,
+            "description": description,
+            "detail": detail,
+            "facet": facet,
+            "fill": fill,
+            "fillOpacity": fillOpacity,
+            "href": href,
+            "key": key,
+            "latitude": latitude,
+            "latitude2": latitude2,
+            "longitude": longitude,
+            "longitude2": longitude2,
+            "opacity": opacity,
+            "order": order,
+            "radius": radius,
+            "radius2": radius2,
+            "row": row,
+            "shape": shape,
+            "size": size,
+            "stroke": stroke,
+            "strokeDash": strokeDash,
+            "strokeOpacity": strokeOpacity,
+            "strokeWidth": strokeWidth,
+            "text": text,
+            "theta": theta,
+            "theta2": theta2,
+            "tooltip": tooltip,
+            "url": url,
+            "x": x,
+            "x2": x2,
+            "xError": xError,
+            "xError2": xError2,
+            "xOffset": xOffset,
+            "y": y,
+            "y2": y2,
+            "yError": yError,
+            "yError2": yError2,
+            "yOffset": yOffset,
+        }
         if args:
             kwargs = {k: v for k, v in kwargs.items() if v is not Undefined}
 

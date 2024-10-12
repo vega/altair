@@ -278,10 +278,7 @@ class _EncodingMixin:
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {dict_literal}
         if args:
             kwargs = {{k: v for k, v in kwargs.items() if v is not Undefined}}
 
@@ -1181,6 +1178,7 @@ def generate_encoding_artifacts(
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
+        dict_literal="{" + ", ".join(f"{kwd!r}:{kwd}" for kwd in channel_infos) + "}",
     )
     typed_dict = generate_typed_dict(
         facet_encoding,
