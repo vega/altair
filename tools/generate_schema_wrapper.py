@@ -21,15 +21,7 @@ sys.path.insert(0, str(Path.cwd()))
 
 
 from tools.markup import rst_syntax_for_class
-from tools.schemapi import (  # noqa: F401
-    CodeSnippet,
-    SchemaInfo,
-    arg_invalid_kwds,
-    arg_kwds,
-    arg_required_kwds,
-    codegen,
-    write_expr_module,
-)
+from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
@@ -43,6 +35,7 @@ from tools.schemapi.utils import (
     ruff_write_lint_format_str,
     spell_literal,
 )
+from tools.vega_expr import write_expr_module
 
 if TYPE_CHECKING:
     from tools.schemapi.codegen import ArgInfo, AttrGetter
