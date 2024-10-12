@@ -9,6 +9,7 @@ from tools.schemapi.codegen import (
 )
 from tools.schemapi.schemapi import SchemaBase, Undefined
 from tools.schemapi.utils import OneOrSeq, SchemaInfo
+from tools.vega_expr import write_expr_module
 
 __all__ = [
     "CodeSnippet",
@@ -21,4 +22,5 @@ __all__ = [
     "arg_required_kwds",
     "codegen",
     "utils",
+    "write_expr_module",
 ]
