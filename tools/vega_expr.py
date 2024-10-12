@@ -1,3 +1,10 @@
+"""
+Parsing `Vega Expressions`_ docs to write the ``alt.expr`` module.
+
+.. _Vega Expressions:
+   https://vega.github.io/vega/docs/expressions/
+"""
+
 from __future__ import annotations
 
 import dataclasses
