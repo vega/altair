@@ -12,6 +12,8 @@ if TYPE_CHECKING:
 def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"
     try:
+        import vegafusion as vf  # type: ignore
+
         version = importlib_version("vegafusion")
         embed_version = importlib_version("vegafusion-python-embed")
         if version != embed_version or Version(version) < Version(min_version):
@@ -23,7 +25,6 @@ def import_vegafusion() -> ModuleType:
                 f" - vegafusion-python-embed=={embed_version}\n"
             )
             raise RuntimeError(msg)
-        import vegafusion as vf  # type: ignore
 
         return vf
     except ImportError as err:
