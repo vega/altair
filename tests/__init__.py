@@ -56,6 +56,18 @@ Applies when `vl-convert`_ import would fail.
    https://github.com/vega/vl-convert
 """
 
+skip_requires_vegafusion: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("vegafusion") is None, reason="`vegafusion` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `vegafusion`_ import would fail.
+
+.. _vegafusion:
+    https://github.com/vega/vegafusion
+"""
+
 
 skip_requires_pyarrow: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("pyarrow") is None, reason="`pyarrow` not installed."

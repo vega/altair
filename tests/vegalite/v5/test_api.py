@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
 import ibis
@@ -25,11 +26,6 @@ from packaging.version import Version
 import altair as alt
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
 
 if TYPE_CHECKING:
     from altair.vegalite.v5.api import _Conditional, _Conditions
@@ -557,9 +553,13 @@ def test_when_labels_position_based_on_condition() -> None:
     # `mypy` will flag structural errors here
     cond = when["condition"][0]
     otherwise = when["value"]
-    param_color_py_when = alt.param(
-        expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
-    )
+
+    # TODO: Open an issue on making `OperatorMixin` generic
+    # Something like this would be used as the return type for all `__dunder__` methods:
+    # R = TypeVar("R", Expression, SelectionPredicateComposition)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    param_color_py_when = alt.param(expr=alt.expr.if_(test, cond["value"], otherwise))
     lhs_param = param_color_py_expr.param
     rhs_param = param_color_py_when.param
     assert isinstance(lhs_param, alt.VariableParameter)
@@ -604,7 +604,9 @@ def test_when_expressions_inside_parameters() -> None:
     cond = when_then_otherwise["condition"][0]
     otherwise = when_then_otherwise["value"]
     expected = alt.expr.if_(alt.datum.b >= 0, 10, -20)
-    actual = alt.expr.if_(cond["test"], cond["value"], otherwise)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    actual = alt.expr.if_(test, cond["value"], otherwise)
     assert expected == actual
 
     text_conditioned = bar.mark_text(
@@ -833,7 +835,7 @@ def test_save(format, engine, basic_chart):
                 basic_chart.save(out, format=format, engine=engine)
             assert f"Unsupported format: '{format}'" in str(err.value)
             return
-        elif vlc is None:
+        elif find_spec("vl_convert") is None:
             with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
             assert "vl-convert-python" in str(err.value)
