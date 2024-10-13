@@ -12,7 +12,15 @@ if TYPE_CHECKING:
 
 def alt_theme_test() -> ChartType:
     import altair as alt
-    from vega_datasets import data
+
+    VEGA_DATASETS = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/"
+
+    us_10m = f"{VEGA_DATASETS}us-10m.json"
+    unemployment = f"{VEGA_DATASETS}unemployment.tsv"
+    movies = f"{VEGA_DATASETS}movies.json"
+    barley = f"{VEGA_DATASETS}barley.json"
+    seattle_weather = f"{VEGA_DATASETS}seattle-weather.csv"
+    iowa_electricity = f"{VEGA_DATASETS}iowa-electricity.csv"
 
     common_data = alt.InlineData(
         [
@@ -44,7 +52,6 @@ def alt_theme_test() -> ChartType:
             x=alt.X("Index:O").axis(offset=1), y=alt.Y("Value:Q"), tooltip="Value:Q"
         )
     )
-
     line = (
         alt.Chart(common_data, width=240, height=150, title="Line")
         .mark_line()
@@ -55,7 +62,6 @@ def alt_theme_test() -> ChartType:
             tooltip=["Index:O", "Value:Q", "Position:O", "Category:N"],
         )
     )
-
     point_shape = (
         alt.Chart(common_data, width=200, height=200, title="Point (Shape)")
         .mark_point()
@@ -67,18 +73,14 @@ def alt_theme_test() -> ChartType:
             tooltip=["Index:O", "Value:Q", "Position:O", "Category:N"],
         )
     )
-
     bar_facet = (
-        alt.Chart(
-            data.barley(), width=220, title=alt.Title("Bar (Facet)", anchor="middle")
-        )
+        alt.Chart(barley, width=220, title=alt.Title("Bar (Facet)", anchor="middle"))
         .mark_bar(tooltip=True)
-        .encode(column="year:O", x="yield", y="variety", color="site")
+        .encode(column="year:O", x="yield:Q", y="variety:N", color="site:N")
     )
-
     rect_heatmap = (
         alt.Chart(
-            data.seattle_weather(),
+            seattle_weather,
             title=alt.Title(
                 "Rect (Heatmap)", subtitle="Daily Max Temperatures (C) in Seattle, WA"
             ),
@@ -88,17 +90,16 @@ def alt_theme_test() -> ChartType:
         .encode(
             x=alt.X("date(date):O").title("Day").axis(format="%e", labelAngle=0),
             y=alt.Y("month(date):O").title("Month"),
-            color=alt.Color("max(temp_max)").title(None),
+            color=alt.Color("max(temp_max):Q").title(None),
             tooltip=[
-                alt.Tooltip("monthdate(date)", title="Date"),
-                alt.Tooltip("max(temp_max)", title="Max Temp"),
+                alt.Tooltip("monthdate(date):O", title="Date"),
+                alt.Tooltip("max(temp_max):Q", title="Max Temp"),
             ],
         )
     )
-
     geoshape = (
         alt.Chart(
-            alt.topo_feature(data.us_10m.url, "counties"),
+            alt.topo_feature(us_10m, "counties"),
             title=alt.Title("Geoshape", subtitle="Unemployment rate per county"),
             width=500,
             height=300,
@@ -106,13 +107,12 @@ def alt_theme_test() -> ChartType:
         .mark_geoshape(tooltip=True)
         .encode(color="rate:Q")
         .transform_lookup(
-            "id", alt.LookupData(alt.UrlData(data.unemployment.url), "id", ["rate"])
+            "id", alt.LookupData(alt.UrlData(unemployment), "id", ["rate"])
         )
         .project(type="albersUsa")
     )
-
     point = (
-        alt.Chart(data.movies.url, height=250, width=250, title="Point")
+        alt.Chart(movies, height=250, width=250, title="Point")
         .mark_point(tooltip=True)
         .transform_filter(alt.datum["IMDB_Rating"] != None)
         .transform_filter(
@@ -128,9 +128,8 @@ def alt_theme_test() -> ChartType:
             color=alt.Color("Rating_Delta:Q").title("Rating Delta").scale(domainMid=0),
         )
     )
-
     area = (
-        alt.Chart(data.iowa_electricity(), title="Area", height=250, width=250)
+        alt.Chart(iowa_electricity, title="Area", height=250, width=250)
         .mark_area(tooltip=True)
         .encode(
             alt.X("year:T").title("Year"),
