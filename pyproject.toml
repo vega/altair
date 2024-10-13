@@ -437,9 +437,6 @@ module = [
     "ipykernel.*",
     "ibis.*",
     "vegafusion.*",
-    # This refers to schemapi in the tools folder which is imported
-    # by the tools scripts such as generate_schema_wrapper.py
-    # "schemapi.*"
 ]
 ignore_missing_imports = true
 
