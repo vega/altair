@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"
     try:
-        import vegafusion as vf  # type: ignore
+        import vegafusion as vf
 
         version = importlib_version("vegafusion")
         embed_version = importlib_version("vegafusion-python-embed")
