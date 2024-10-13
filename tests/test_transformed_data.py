@@ -10,7 +10,7 @@ from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
 import narwhals as nw
 
 try:
-    import vegafusion as vf  # type: ignore
+    import vegafusion as vf
 except ImportError:
     vf = None
 
