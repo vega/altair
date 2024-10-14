@@ -5,9 +5,17 @@ import subprocess
 import sys
 import textwrap
 from importlib.util import find_spec
-from itertools import chain
 from pathlib import Path
-from typing import Iterable, Literal
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    from typing import Iterable, Iterator, Literal
+
+    _Code: TypeAlias = "str | Iterable[str]"
 
 
 def parse_module(name: str, /) -> ast.Module:
@@ -96,6 +104,64 @@ def validate_body(fn: ast.FunctionDef, /) -> tuple[list[ast.stmt], ast.expr]:
         return body, last.value
 
 
+def normalize_code(code: _Code, /) -> str:
+    if not isinstance(code, str):
+        code = "\n".join(code)
+    return code
+
+
+def iter_func_def_unparse(
+    module_name: str,
+    func_name: str,
+    /,
+    *,
+    return_transform: Literal["assign"] | None = None,
+    assign_to: str = "chart",
+) -> Iterator[str]:
+    # Planning to add pyscript code before/after
+    # Then add `ruff check` to clean up duplicate imports (on the whole thing)
+    # Optional: assign the return to `assign_to`
+    #   - Allows writing modular code that doesn't depend on the variable names in the original function
+    mod = parse_module(module_name)
+    fn = find_func_def(mod, func_name)
+    body, ret = validate_body(fn)
+    for node in body:
+        yield unparse(node)
+    yield ""
+    ret_value = unparse(ret)
+    if return_transform is None:
+        yield ret_value
+    elif return_transform == "assign":
+        yield f"{assign_to} = {ret_value}"
+    else:
+        raise TypeError(return_transform)
+
+
+def embed_extract_func_def(
+    module_name: str,
+    func_name: str,
+    /,
+    before_code: _Code | None = None,
+    after_code: _Code | None = None,
+    assign_to: str = "chart",
+    indent: int | None = None,
+):
+    parts: list[_Code] = []
+    if before_code is not None:
+        parts.append(before_code)
+    parts.append(
+        iter_func_def_unparse(
+            module_name, func_name, return_transform="assign", assign_to=assign_to
+        )
+    )
+    if after_code is not None:
+        parts.append(after_code)
+    normed = "\n".join(normalize_code(s) for s in parts)
+    checked = ruff_check_str(normed)
+    formatted = ruff_format_str(checked)
+    return textwrap.indent(formatted, " " * indent) if indent else formatted
+
+
 def extract_func_def(
     module_name: str,
     func_name: str,
@@ -137,10 +203,7 @@ def extract_func_def(
     """
     if output not in {"altair-plot", "code-block", "str"}:
         raise TypeError(output)
-    mod = parse_module(module_name)
-    fn = find_func_def(mod, func_name)
-    body, ret = validate_body(fn)
-    it = chain((unparse(node) for node in body), ["", unparse(ret)])
+    it = iter_func_def_unparse(module_name, func_name)
     s = ruff_format_str(it, trailing_comma=False) if format else "\n".join(it)
     if output == "str":
         return s
@@ -148,14 +211,29 @@ def extract_func_def(
         return f".. {output}::\n\n{textwrap.indent(s, ' ' * 4)}\n"
 
 
+# TODO: Move these and `tools.schemapi.utils.ruff_` into a `Ruff` class
+# - Then can support configuring an instance like the `mistune` classes
+def ruff_check_str(code: _Code, /) -> str:
+    encoded = normalize_code(code).encode()
+    cmd = [
+        "ruff",
+        "check",
+        "--fix",
+        "--ignore",
+        "E711",  # Comparison to `None`
+        "--stdin-filename",
+        "placeholder.py",
+    ]
+    capture_output = True
+    r = subprocess.run(cmd, input=encoded, check=True, capture_output=capture_output)
+    return r.stdout.decode()
+
+
 def ruff_format_str(
     code: str | Iterable[str], /, *, trailing_comma: bool = True
 ) -> str:
     # NOTE: Brought this back w/ changes after removing in #3536
-    if not isinstance(code, str):
-        code = "\n".join(code)
-    encoded = code.encode()
-
+    encoded = normalize_code(code).encode()
     cmd = ["ruff", "format", "--stdin-filename", "placeholder.py"]
     if not trailing_comma:
         cmd.extend(("--config", "format.skip-magic-trailing-comma = true"))

@@ -9,7 +9,7 @@ from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
-from tools.codemod import extract_func_def
+from tools.codemod import embed_extract_func_def, extract_func_def
 
 if TYPE_CHECKING:
     import sys
@@ -32,6 +32,10 @@ _OUTPUT_REMAP: Mapping[_OutputShort, _OutputLong] = {
 }
 _Option: TypeAlias = Literal["output", "fold", "summary"]
 
+_PYSCRIPT_URL_FMT = "https://pyscript.net/releases/{0}/core.js"
+_PYSCRIPT_VERSION = "2024.10.1"
+_PYSCRIPT_URL = _PYSCRIPT_URL_FMT.format(_PYSCRIPT_VERSION)
+
 
 def validate_output(output: Any) -> _OutputLong:
     output = output.strip().lower()
@@ -41,6 +45,17 @@ def validate_output(output: Any) -> _OutputLong:
     else:
         short: _OutputShort = output
         return _OUTPUT_REMAP[short]
+
+
+def validate_packages(packages: Any) -> str:
+    if packages is None:
+        return "[]"
+    else:
+        split = [pkg.strip() for pkg in packages.split(",")]
+        if len(split) == 1:
+            return f'["{split[0]}"]'
+        else:
+            return f'[{",".join(split)}]'
 
 
 def raw_html(text: str, /) -> nodes.raw:
@@ -84,6 +99,86 @@ def maybe_details(
             yield raw_html("</details></p>")
 
     return list(gen())
+
+
+before_code = """
+from js import document
+from pyscript import display
+import altair as alt
+from vega_datasets import data
+
+def apply_embed_input(*args):
+    selected_theme = document.getElementById("embed_theme").value
+    alt.renderers.set_embed_options(theme=selected_theme)
+    display(chart, append=False, target="render_altair")
+"""
+
+
+# TODO: Work out the api for PyScriptDirective
+# - Which things here can be parameters?
+# - How should before/after be sourced?
+#   - E.g. options text/directive contents/jinja template (file/inline import)
+def extract_theme_test():
+    return embed_extract_func_def(
+        "tests.altair_theme_test",
+        "alt_theme_test",
+        before_code=before_code,
+        after_code="apply_embed_input()",
+        assign_to="chart",
+        indent=4,
+    )
+
+
+class PyScriptDirective(SphinxDirective):
+    has_content: ClassVar[Literal[False]] = False
+    option_spec = {"packages": validate_packages}
+
+    def run(self) -> Sequence[nodes.Node]:
+        carbon_names = "carbong10", "carbong100", "carbong90", "carbonwhite"
+        standard_names = (
+            "default",
+            "dark",
+            "excel",
+            "fivethirtyeight",
+            "ggplot2",
+            "googlecharts",
+            "latimes",
+            "powerbi",
+            "quartz",
+            "urbaninstitute",
+            "vox",
+        )
+        results = []
+        results.extend(
+            (
+                raw_html("<div><p>\n"),
+                raw_html('<label for="embed_theme">Select theme:</label>\n'),
+                raw_html('<select id="embed_theme" py-input="apply_embed_input">\n'),
+            )
+        )
+        results.extend(
+            raw_html(f"<option value={nm!r}>{nm}</option>\n") for nm in standard_names
+        )
+        results.append(raw_html('<optgroup label="Carbon">\n'))
+        results.extend(
+            raw_html(f"<option value={nm!r}>{nm}</option>\n") for nm in carbon_names
+        )
+
+        results.extend((raw_html("</optgroup>\n"), raw_html("</select>\n")))
+        results.append(raw_html('<div id="render_altair">loading...</div>\n'))
+
+        packages: str = self.options.get("packages", [])
+        LB, RB = "{", "}"
+        _pkg_stmt = f"""{LB}"packages":{packages}{RB}"""
+        results.extend(
+            (
+                raw_html(f"<script type=\"py\" config='{_pkg_stmt}'>\n"),
+                raw_html(extract_theme_test()),
+                raw_html("</script>\n"),
+                raw_html("</div></p>\n"),
+            )
+        )
+        return results
 
 
 class CodeRefDirective(SphinxDirective):
@@ -162,3 +257,5 @@ class CodeRefDirective(SphinxDirective):
 
 def setup(app: Sphinx) -> None:
     app.add_directive_to_domain("py", "altair-code-ref", CodeRefDirective)
+    app.add_js_file(_PYSCRIPT_URL, loading_method="defer", type="module")
+    app.add_directive("altair-pyscript", PyScriptDirective)

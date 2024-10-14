@@ -797,6 +797,9 @@ See `Vega Theme Test`_ for an interactive demo of themes inherited from `Vega Th
 
 See `Vega-Altair Theme Test`_ for an interactive demo of themes inherited from `Vega Themes`_.
 
+.. altair-pyscript::
+    :packages: altair
+
 Defining a Custom Theme
 ~~~~~~~~~~~~~~~~~~~~~~~
 The theme registry also allows defining and registering custom themes.
