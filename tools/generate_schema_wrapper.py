@@ -1214,11 +1214,10 @@ def main() -> None:
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
-    from tools import generate_api_docs, generate_static_docs, update_init_file
+    from tools import generate_api_docs, update_init_file
 
     generate_api_docs.write_api_file()
     update_init_file.update__all__variable()
-    generate_static_docs.write_static_docs()
 
 
 if __name__ == "__main__":
