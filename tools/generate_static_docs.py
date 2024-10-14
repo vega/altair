@@ -35,7 +35,7 @@ def render_write(qual_name: str, output: Path) -> None:
             kwds = {"mode": "wb"}
         else:
             raise TypeError(content)
-        with output.open(**kwds) as f:
+        with output.open(**kwds) as f:  # type: ignore[misc]
             f.write(content)
     else:
         raise TypeError(mod, func_name)
