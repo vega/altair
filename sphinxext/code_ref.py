@@ -9,20 +9,38 @@ from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
+from altair.vegalite.v5.schema._typing import VegaThemes
 from tools.codemod import embed_extract_func_def, extract_func_def
 
 if TYPE_CHECKING:
     import sys
-    from typing import Any, Callable, ClassVar, Iterable, Iterator, Mapping, Sequence
+    from typing import (
+        Any,
+        Callable,
+        ClassVar,
+        Iterable,
+        Iterator,
+        Mapping,
+        Sequence,
+        TypeVar,
+        Union,
+    )
 
     from docutils.parsers.rst.states import RSTState, RSTStateMachine
     from docutils.statemachine import StringList
     from sphinx.application import Sphinx
 
+    if sys.version_info >= (3, 12):
+        from typing import TypeAliasType
+    else:
+        from typing_extensions import TypeAliasType
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
+
+    T = TypeVar("T")
+    OneOrIter = TypeAliasType("OneOrIter", Union[T, Iterable[T]], type_params=(T,))
 
 _OutputShort: TypeAlias = Literal["code", "plot"]
 _OutputLong: TypeAlias = Literal["code-block", "altair-plot"]
@@ -49,7 +67,7 @@ def validate_output(output: Any) -> _OutputLong:
 
 def validate_packages(packages: Any) -> str:
     if packages is None:
-        return "[]"
+        return '["altair"]'
     else:
         split = [pkg.strip() for pkg in packages.split(",")]
         if len(split) == 1:
@@ -101,84 +119,136 @@ def maybe_details(
     return list(gen())
 
 
-before_code = """
-from js import document
-from pyscript import display
-import altair as alt
-from vega_datasets import data
-
-def apply_embed_input(*args):
-    selected_theme = document.getElementById("embed_theme").value
-    alt.renderers.set_embed_options(theme=selected_theme)
-    display(chart, append=False, target="render_altair")
-"""
+def theme_names() -> tuple[Sequence[str], Sequence[str]]:
+    names: set[VegaThemes] = set(get_args(VegaThemes))
+    carbon = {nm for nm in names if nm.startswith("carbon")}
+    return ["default", *sorted(names - carbon)], sorted(carbon)
 
 
-# TODO: Work out the api for PyScriptDirective
-# - Which things here can be parameters?
-# - How should before/after be sourced?
-#   - E.g. options text/directive contents/jinja template (file/inline import)
-def extract_theme_test():
-    return embed_extract_func_def(
-        "tests.altair_theme_test",
-        "alt_theme_test",
-        before_code=before_code,
-        after_code="apply_embed_input()",
-        assign_to="chart",
-        indent=4,
+def option(label: str, value: str | None = None, /) -> nodes.raw:
+    s = f"<option value={value!r}>" if value else "<option>"
+    return raw_html(f"{s}{label}</option>\n")
+
+
+def optgroup(label: str, *options: OneOrIter[nodes.raw]) -> Iterator[nodes.raw]:
+    yield raw_html(f"<optgroup label={label!r}>\n")
+    for opt in options:
+        if isinstance(opt, nodes.raw):
+            yield opt
+        else:
+            yield from opt
+    yield raw_html("</optgroup>\n")
+
+
+def dropdown(
+    id: str, label: str | None, extra_select: str, *options: OneOrIter[nodes.raw]
+) -> Iterator[nodes.raw]:
+    if label:
+        yield raw_html(f"<label for={id!r}>{label}</label>\n")
+    select_text = f"<select id={id!r}"
+    if extra_select:
+        select_text = f"{select_text} {extra_select}"
+    yield raw_html(f"{select_text}>\n")
+    for opt in options:
+        if isinstance(opt, nodes.raw):
+            yield opt
+        else:
+            yield from opt
+    yield raw_html("</select>\n")
+
+
+def pyscript(
+    packages: str, target_div_id: str, loading_label: str, py_code: str
+) -> Iterator[nodes.raw]:
+    PY = "py"
+    LB, RB = "{", "}"
+    packages = f""""packages":{packages}"""
+    yield raw_html(f"<div id={target_div_id!r}>{loading_label}</div>\n")
+    yield raw_html(f"<script type={PY!r} config='{LB}{packages}{RB}'>\n")
+    yield raw_html(py_code)
+    yield raw_html("</script>\n")
+
+
+def _before_code(refresh_name: str, select_id: str, target_div_id: str) -> str:
+    INDENT = " " * 4
+    return (
+        f"from js import document\n"
+        f"from pyscript import display\n"
+        f"import altair as alt\n\n"
+        f"def {refresh_name}(*args):\n"
+        f"{INDENT}selected = document.getElementById({select_id!r}).value\n"
+        f"{INDENT}alt.renderers.set_embed_options(theme=selected)\n"
+        f"{INDENT}display(chart, append=False, target={target_div_id!r})\n"
     )
 
 
-class PyScriptDirective(SphinxDirective):
+class ThemeDirective(SphinxDirective):
+    """
+    Theme preview directive.
+
+    Similar to ``CodeRefDirective``, but uses `PyScript`_ to access the browser.
+
+    .. _PyScript:
+        https://pyscript.net/
+    """
+
     has_content: ClassVar[Literal[False]] = False
-    option_spec = {"packages": validate_packages}
+    required_arguments: ClassVar[Literal[1]] = 1
+    option_spec = {
+        "packages": validate_packages,
+        "dropdown-label": directives.unchanged,
+        "loading-label": directives.unchanged,
+        "fold": directives.flag,
+    }
 
     def run(self) -> Sequence[nodes.Node]:
-        carbon_names = "carbong10", "carbong100", "carbong90", "carbonwhite"
-        standard_names = (
-            "default",
-            "dark",
-            "excel",
-            "fivethirtyeight",
-            "ggplot2",
-            "googlecharts",
-            "latimes",
-            "powerbi",
-            "quartz",
-            "urbaninstitute",
-            "vox",
-        )
-        results = []
+        results: list[nodes.Node] = []
+        SELECT_ID = "embed_theme"
+        REFRESH_NAME = "apply_embed_input"
+        TARGET_DIV_ID = "render_altair"
+        standard_names, carbon_names = theme_names()
+
+        qual_name = self.arguments[0]
+        module_name, func_name = qual_name.rsplit(".", 1)
+        dropdown_label = self.options.get("dropdown-label", "Select theme:")
+        loading_label = self.options.get("loading-label", "loading...")
+        packages: str = self.options.get("packages", validate_packages(None))
+
+        results.append(raw_html("<div><p>\n"))
         results.extend(
-            (
-                raw_html("<div><p>\n"),
-                raw_html('<label for="embed_theme">Select theme:</label>\n'),
-                raw_html('<select id="embed_theme" py-input="apply_embed_input">\n'),
+            dropdown(
+                SELECT_ID,
+                dropdown_label,
+                f"py-input={REFRESH_NAME!r}",
+                (option(nm) for nm in standard_names),
+                optgroup("Carbon", (option(nm) for nm in carbon_names)),
             )
         )
-        results.extend(
-            raw_html(f"<option value={nm!r}>{nm}</option>\n") for nm in standard_names
+        py_code = embed_extract_func_def(
+            module_name,
+            func_name,
+            before_code=_before_code(REFRESH_NAME, SELECT_ID, TARGET_DIV_ID),
+            after_code=f"{REFRESH_NAME}()",
+            assign_to="chart",
+            indent=4,
         )
-        results.append(raw_html('<optgroup label="Carbon">\n'))
         results.extend(
-            raw_html(f"<option value={nm!r}>{nm}</option>\n") for nm in carbon_names
+            pyscript(packages, TARGET_DIV_ID, loading_label, py_code=py_code)
+        )
+        results.append(raw_html("</div></p>\n"))
+        return maybe_details(
+            results, self.options, default_summary="Show Vega-Altair Theme Test"
         )
 
-        results.extend((raw_html("</optgroup>\n"), raw_html("</select>\n")))
-        results.append(raw_html('<div id="render_altair">loading...</div>\n'))
 
-        packages: str = self.options.get("packages", [])
-        LB, RB = "{", "}"
-        _pkg_stmt = f"""{LB}"packages":{packages}{RB}"""
-        results.extend(
-            (
-                raw_html(f"<script type=\"py\" config='{_pkg_stmt}'>\n"),
-                raw_html(extract_theme_test()),
-                raw_html("</script>\n"),
-                raw_html("</div></p>\n"),
-            )
-        )
-        return results
+class PyScriptDirective(SphinxDirective):
+    """Placeholder for non-theme related directive."""
+
+    has_content: ClassVar[Literal[False]] = False
+    option_spec = {"packages": directives.unchanged}
+
+    def run(self) -> Sequence[nodes.Node]:
+        raise NotImplementedError
 
 
 class CodeRefDirective(SphinxDirective):
@@ -258,4 +328,5 @@ class CodeRefDirective(SphinxDirective):
 def setup(app: Sphinx) -> None:
     app.add_directive_to_domain("py", "altair-code-ref", CodeRefDirective)
     app.add_js_file(_PYSCRIPT_URL, loading_method="defer", type="module")
-    app.add_directive("altair-pyscript", PyScriptDirective)
+    # app.add_directive("altair-pyscript", PyScriptDirective)
+    app.add_directive("altair-theme", ThemeDirective)

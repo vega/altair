@@ -797,8 +797,8 @@ See `Vega Theme Test`_ for an interactive demo of themes inherited from `Vega Th
 
 See `Vega-Altair Theme Test`_ for an interactive demo of themes inherited from `Vega Themes`_.
 
-.. altair-pyscript::
-    :packages: altair
+.. altair-theme:: tests.altair_theme_test.alt_theme_test
+    :fold:
 
 Defining a Custom Theme
 ~~~~~~~~~~~~~~~~~~~~~~~
