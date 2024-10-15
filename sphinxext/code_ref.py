@@ -81,10 +81,7 @@ def raw_html(text: str, /) -> nodes.raw:
 
 
 def maybe_details(
-    parsed: Iterable[nodes.Node],
-    options: dict[_Option, Any],
-    *,
-    default_summary: str = "Show code",
+    parsed: Iterable[nodes.Node], options: dict[_Option, Any], *, default_summary: str
 ) -> Sequence[nodes.Node]:
     """
     Wrap ``parsed`` in a folding `details`_ block if requested.
@@ -199,6 +196,7 @@ class ThemeDirective(SphinxDirective):
         "dropdown-label": directives.unchanged,
         "loading-label": directives.unchanged,
         "fold": directives.flag,
+        "summary": directives.unchanged_required,
     }
 
     def run(self) -> Sequence[nodes.Node]:
@@ -322,7 +320,7 @@ class CodeRefDirective(SphinxDirective):
         output: _OutputLong = self.options.get("output", "code-block")
         content = extract_func_def(module_name, func_name, output=output)
         parsed = nested_parse_to_nodes(self.state, content)
-        return maybe_details(parsed, self.options)
+        return maybe_details(parsed, self.options, default_summary="Show code")
 
 
 def setup(app: Sphinx) -> None:
