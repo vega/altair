@@ -20,6 +20,7 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 
 
+from tools.codemod import ruff
 from tools.markup import rst_syntax_for_class
 from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
@@ -31,8 +32,6 @@ from tools.schemapi.utils import (
     import_typing_extensions,
     indent_docstring,
     resolve_references,
-    ruff_format_py,
-    ruff_write_lint_format_str,
     spell_literal,
 )
 from tools.vega_expr import write_expr_module
@@ -548,7 +547,7 @@ def copy_schemapi_util() -> None:
         dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":
-        ruff_format_py(destination_fp)
+        ruff.format(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -1024,7 +1023,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n",
     ]
-    ruff_write_lint_format_str(outfile, content)
+    ruff.write_lint_format(outfile, content)
 
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
 
@@ -1106,7 +1105,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
-        ruff_write_lint_format_str(fp, contents)
+        ruff.write_lint_format(fp, contents)
 
 
 def generate_encoding_artifacts(

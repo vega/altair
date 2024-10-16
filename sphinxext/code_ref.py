@@ -10,7 +10,7 @@ from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
 from altair.vegalite.v5.schema._typing import VegaThemes
-from tools.codemod import embed_extract_func_def, extract_func_def
+from tools.codemod import extract_func_def, extract_func_def_embed
 
 if TYPE_CHECKING:
     import sys
@@ -222,11 +222,11 @@ class ThemeDirective(SphinxDirective):
                 optgroup("Carbon", (option(nm) for nm in carbon_names)),
             )
         )
-        py_code = embed_extract_func_def(
+        py_code = extract_func_def_embed(
             module_name,
             func_name,
-            before_code=_before_code(REFRESH_NAME, SELECT_ID, TARGET_DIV_ID),
-            after_code=f"{REFRESH_NAME}()",
+            before=_before_code(REFRESH_NAME, SELECT_ID, TARGET_DIV_ID),
+            after=f"{REFRESH_NAME}()",
             assign_to="chart",
             indent=4,
         )
