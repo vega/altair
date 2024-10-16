@@ -52,6 +52,10 @@ else:
         """
         # HACK: Will only be used during build/docs
         # - This branch is just to satisfy linters
+        import warnings
+
+        msg = f"Called `ast.unparse()` on {sys.version_info!r}\nFunction not available before {(3, 9)!r}"
+        warnings.warn(msg, ImportWarning, stacklevel=2)
         return "<ast.unparse() UNAVAILABLE>"
 
 
