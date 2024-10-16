@@ -26,7 +26,7 @@ skip_requires_anywidget = pytest.mark.skipif(
 
 
 try:
-    import vegafusion  # type: ignore # noqa: F401
+    import vegafusion  # noqa: F401
 
     transformers = ["default", "vegafusion"]
 except ImportError:

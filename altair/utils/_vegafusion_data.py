@@ -26,7 +26,7 @@ from altair.vegalite.data import default_data_transformer
 if TYPE_CHECKING:
     from narwhals.typing import IntoDataFrame
 
-    from vegafusion.runtime import ChartState  # type: ignore
+    from vegafusion.runtime import ChartState
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
