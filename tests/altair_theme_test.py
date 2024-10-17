@@ -14,14 +14,11 @@ def alt_theme_test() -> ChartType:
     import altair as alt
 
     VEGA_DATASETS = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/"
-
     us_10m = f"{VEGA_DATASETS}us-10m.json"
     unemployment = f"{VEGA_DATASETS}unemployment.tsv"
     movies = f"{VEGA_DATASETS}movies.json"
     barley = f"{VEGA_DATASETS}barley.json"
-    seattle_weather = f"{VEGA_DATASETS}seattle-weather.csv"
     iowa_electricity = f"{VEGA_DATASETS}iowa-electricity.csv"
-
     common_data = alt.InlineData(
         [
             {"Index": 1, "Value": 28, "Position": 1, "Category": "A"},
@@ -45,15 +42,20 @@ def alt_theme_test() -> ChartType:
         ]
     )
 
+    HEIGHT_SMALL = 140
+    STANDARD = 180
+    WIDTH_GEO = int(STANDARD * 1.667)
+
     bar = (
-        alt.Chart(common_data, title="Bar", width=480, height=150)
+        alt.Chart(common_data, height=HEIGHT_SMALL, width=STANDARD, title="Bar")
         .mark_bar()
         .encode(
             x=alt.X("Index:O").axis(offset=1), y=alt.Y("Value:Q"), tooltip="Value:Q"
         )
+        .transform_filter(alt.datum["Index"] <= 9)
     )
     line = (
-        alt.Chart(common_data, width=240, height=150, title="Line")
+        alt.Chart(common_data, height=HEIGHT_SMALL, width=STANDARD, title="Line")
         .mark_line()
         .encode(
             x=alt.X("Position:O").axis(grid=False),
@@ -63,7 +65,9 @@ def alt_theme_test() -> ChartType:
         )
     )
     point_shape = (
-        alt.Chart(common_data, width=200, height=200, title="Point (Shape)")
+        alt.Chart(
+            common_data, height=HEIGHT_SMALL, width=STANDARD, title="Point (Shape)"
+        )
         .mark_point()
         .encode(
             x=alt.X("Position:O").axis(grid=False),
@@ -73,46 +77,8 @@ def alt_theme_test() -> ChartType:
             tooltip=["Index:O", "Value:Q", "Position:O", "Category:N"],
         )
     )
-    bar_facet = (
-        alt.Chart(barley, width=220, title=alt.Title("Bar (Facet)", anchor="middle"))
-        .mark_bar(tooltip=True)
-        .encode(column="year:O", x="yield:Q", y="variety:N", color="site:N")
-    )
-    rect_heatmap = (
-        alt.Chart(
-            seattle_weather,
-            title=alt.Title(
-                "Rect (Heatmap)", subtitle="Daily Max Temperatures (C) in Seattle, WA"
-            ),
-            height=200,
-        )
-        .mark_rect()
-        .encode(
-            x=alt.X("date(date):O").title("Day").axis(format="%e", labelAngle=0),
-            y=alt.Y("month(date):O").title("Month"),
-            color=alt.Color("max(temp_max):Q").title(None),
-            tooltip=[
-                alt.Tooltip("monthdate(date):O", title="Date"),
-                alt.Tooltip("max(temp_max):Q", title="Max Temp"),
-            ],
-        )
-    )
-    geoshape = (
-        alt.Chart(
-            alt.topo_feature(us_10m, "counties"),
-            title=alt.Title("Geoshape", subtitle="Unemployment rate per county"),
-            width=500,
-            height=300,
-        )
-        .mark_geoshape(tooltip=True)
-        .encode(color="rate:Q")
-        .transform_lookup(
-            "id", alt.LookupData(alt.UrlData(unemployment), "id", ["rate"])
-        )
-        .project(type="albersUsa")
-    )
     point = (
-        alt.Chart(movies, height=250, width=250, title="Point")
+        alt.Chart(movies, height=STANDARD, width=STANDARD, title="Point")
         .mark_point(tooltip=True)
         .transform_filter(alt.datum["IMDB_Rating"] != None)
         .transform_filter(
@@ -128,30 +94,51 @@ def alt_theme_test() -> ChartType:
             color=alt.Color("Rating_Delta:Q").title("Rating Delta").scale(domainMid=0),
         )
     )
+    bar_stack = (
+        alt.Chart(barley, height=STANDARD, width=STANDARD, title="Bar (Stacked)")
+        .mark_bar(tooltip=True)
+        .encode(
+            x="sum(yield):Q",
+            y=alt.Y("variety:N"),
+            color=alt.Color("site:N").legend(orient="bottom", columns=2),
+        )
+    )
     area = (
-        alt.Chart(iowa_electricity, title="Area", height=250, width=250)
+        alt.Chart(iowa_electricity, height=STANDARD, width=STANDARD, title="Area")
         .mark_area(tooltip=True)
         .encode(
-            alt.X("year:T").title("Year"),
-            alt.Y("net_generation:Q")
+            x=alt.X("year:T").title("Year"),
+            y=alt.Y("net_generation:Q")
             .title("Share of net generation")
             .stack("normalize")
             .axis(format=".0%"),
-            alt.Color("source:N").title("Electricity source"),
+            color=alt.Color("source:N")
+            .title("Electricity source")
+            .legend(orient="bottom", columns=2),
         )
     )
+    geoshape = (
+        alt.Chart(
+            alt.topo_feature(us_10m, "counties"),
+            height=STANDARD,
+            width=WIDTH_GEO,
+            title=alt.Title("Geoshape", subtitle="Unemployment rate per county"),
+        )
+        .mark_geoshape(tooltip=True)
+        .encode(color="rate:Q")
+        .transform_lookup(
+            "id", alt.LookupData(alt.UrlData(unemployment), "id", ["rate"])
+        )
+        .project(type="albersUsa")
+    )
+
     compound_chart = (
-        (bar | line)
-        & (point_shape | bar_facet).resolve_scale(color="independent")
-        & (point | area)
-        & rect_heatmap
-        & geoshape
+        (bar | line | point_shape) & (point | bar_stack) & (area | geoshape)
     ).properties(
         title=alt.Title(
             "Vega-Altair Theme Test",
             fontSize=20,
             subtitle="Adapted from https://vega.github.io/vega-themes/",
-            offset=16,
         )
     )
     return compound_chart
