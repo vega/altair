@@ -29,12 +29,10 @@ from typing import (
     overload,
 )
 
+from tools.codemod import ruff
 from tools.markup import RSTParse, Token, read_ast_tokens
 from tools.markup import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
-from tools.schemapi.utils import (
-    ruff_write_lint_format_str as _ruff_write_lint_format_str,
-)
 
 if TYPE_CHECKING:
     import sys
@@ -977,4 +975,4 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
         [MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")
-    _ruff_write_lint_format_str(output, contents)
+    ruff.write_lint_format(output, contents)

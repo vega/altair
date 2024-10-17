@@ -10,7 +10,7 @@ from inspect import getattr_static, ismodule
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable, Iterator
 
-from tools.schemapi.utils import ruff_write_lint_format_str
+from tools.codemod import ruff
 
 _TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAlias,
@@ -75,7 +75,7 @@ def update__all__variable() -> None:
     ]
     # Write new version of altair/__init__.py
     # Format file content with ruff
-    ruff_write_lint_format_str(init_path, new_lines)
+    ruff.write_lint_format(init_path, new_lines)
 
     for source in DYNAMIC_ALL:
         print(f"Updating `__all__`\n " f"{source!r}\n  ->{normalize_source(source)!s}")
@@ -235,7 +235,7 @@ def update_dynamic__all__(source: str | Path, /) -> None:
     """
     fp = normalize_source(source)
     content = process_lines(extract_lines(fp))
-    ruff_write_lint_format_str(fp, content)
+    ruff.write_lint_format(fp, content)
 
 
 if __name__ == "__main__":

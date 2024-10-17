@@ -797,10 +797,16 @@ If you would like to use any theme just for a single chart, you can use the
     such as :meth:`~Chart.to_dict`, :meth:`~Chart.to_json`, :meth:`~Chart.save`.
     See https://github.com/vega/altair/issues/3586
 
+Built-in Themes
+~~~~~~~~~~~~~~~
 Currently Altair does not offer many built-in themes, but we plan to add
 more options in the future.
 
-See `Vega Theme Test`_ for an interactive demo of themes inherited from `Vega Themes`_.
+You can get a feel for the themes inherited from `Vega Themes`_ via *Vega-Altair Theme Test* below:
+
+.. altair-theme:: tests.altair_theme_test.alt_theme_test
+    :fold:
+    :summary: Show Vega-Altair Theme Test
 
 Defining a Custom Theme
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -843,7 +849,14 @@ If you want to restore the default theme, use:
 .. altair-plot::
    :output: none
 
-   alt.theme.enable('default')
+   alt.themes.enable('default')
+
+When experimenting with your theme, you can use the code below to see how 
+it translates across a range of charts/marks:
+
+.. altair-code-ref:: tests.altair_theme_test.alt_theme_test
+    :fold:
+    :summary: Show Vega-Altair Theme Test code
 
 
 For more ideas on themes, see the `Vega Themes`_ repository.
@@ -892,4 +905,3 @@ The configured localization settings persist upon saving.
 
 .. _Vega Themes: https://github.com/vega/vega-themes/
 .. _`D3's localization support`: https://d3-wiki.readthedocs.io/zh-cn/master/Localization/
-.. _Vega Theme Test: https://vega.github.io/vega-themes/?renderer=canvas
