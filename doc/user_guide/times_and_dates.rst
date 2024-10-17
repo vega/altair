@@ -187,12 +187,13 @@ way that Altair expects:
 
     df = pd.DataFrame({'local': ['2018-01-01T00:00:00'],
                        'utc': ['2018-01-01T00:00:00Z']})
+    when_compliant = alt.when(compliant=True)
 
     alt.Chart(df).transform_calculate(
         compliant="hours(datum.local) != hours(datum.utc) ? true : false",
-    ).mark_text(size=20, baseline='middle').encode(
-        text=alt.condition('datum.compliant', alt.value('OK'), alt.value('not OK')),
-        color=alt.condition('datum.compliant', alt.value('green'), alt.value('red'))
+    ).mark_text(size=20, baseline="middle").encode(
+        text=when_compliant.then(alt.value("OK")).otherwise(alt.value("not OK")),
+        color=when_compliant.then(alt.value("green")).otherwise(alt.value("red")),
     ).properties(width=80, height=50)
 
 If the above output contains a red "not OK":

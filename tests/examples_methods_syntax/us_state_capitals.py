@@ -32,12 +32,12 @@ base = alt.Chart(capitals).encode(
 
 text = base.mark_text(dy=-5, align='right').encode( 
     alt.Text('city:N'),
-    opacity=alt.condition(~hover, alt.value(0), alt.value(1))
+    opacity=alt.when(~hover).then(alt.value(0)).otherwise(alt.value(1))
 )
 
 points = base.mark_point().encode(
     color=alt.value('black'),
-    size=alt.condition(~hover, alt.value(30), alt.value(100))
+    size=alt.when(~hover).then(alt.value(30)).otherwise(alt.value(100))
 ).add_params(hover)
 
 background + points + text

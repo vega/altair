@@ -28,10 +28,11 @@ line = alt.Chart(source).mark_line(interpolate="basis").encode(
     y="y:Q",
     color="category:N"
 )
+when_near = alt.when(nearest)
 
 # Draw points on the line, and highlight based on selection
 points = line.mark_point().encode(
-    opacity=alt.condition(nearest, alt.value(1), alt.value(0))
+    opacity=when_near.then(alt.value(1)).otherwise(alt.value(0))
 )
 
 # Draw a rule at the location of the selection
@@ -41,7 +42,7 @@ rules = alt.Chart(source).transform_pivot(
     groupby=["x"]
 ).mark_rule(color="gray").encode(
     x="x:Q",
-    opacity=alt.condition(nearest, alt.value(0.3), alt.value(0)),
+    opacity=when_near.then(alt.value(0.3)).otherwise(alt.value(0)),
     tooltip=[alt.Tooltip(c, type="quantitative") for c in columns],
 ).add_params(nearest)
 

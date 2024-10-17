@@ -127,13 +127,10 @@ Text Table Heatmap
             .legend(direction="horizontal")
     )
 
+    predicate = alt.datum.num_cars > 100
     text = base.mark_text(baseline="middle").encode(
         text="num_cars:Q",
-        color=alt.condition(
-            alt.datum.num_cars > 100,
-            alt.value("black"),
-            alt.value("white"),
-        ),
+        color=alt.when(predicate).then(alt.value("black")).otherwise(alt.value("white")),
     )
 
     heatmap + text

@@ -18,7 +18,7 @@ brush = alt.selection_interval()
 points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
-    color=alt.condition(brush, alt.value('steelblue'), alt.value('grey'))
+    color=alt.when(brush).then(alt.value("steelblue")).otherwise(alt.value("grey"))
 ).add_params(brush)
 
 # Base chart for data tables

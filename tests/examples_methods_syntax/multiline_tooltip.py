@@ -41,15 +41,16 @@ selectors = alt.Chart(source).mark_point().encode(
 ).add_params(
     nearest
 )
+when_near = alt.when(nearest)
 
 # Draw points on the line, and highlight based on selection
 points = line.mark_point().encode(
-    opacity=alt.condition(nearest, alt.value(1), alt.value(0))
+    opacity=when_near.then(alt.value(1)).otherwise(alt.value(0))
 )
 
 # Draw text labels near the points, and highlight based on selection
 text = line.mark_text(align="left", dx=5, dy=-5).encode(
-    text=alt.condition(nearest, "y:Q", alt.value(" "))
+    text=when_near.then("y:Q").otherwise(alt.value(" "))
 )
 
 # Draw a rule at the location of the selection
