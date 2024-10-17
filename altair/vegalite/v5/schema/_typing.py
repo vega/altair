@@ -481,6 +481,7 @@ ColorScheme_T: TypeAlias = Literal[
     "category20",
     "category20b",
     "category20c",
+    "observable10",
     "dark2",
     "paired",
     "pastel1",
