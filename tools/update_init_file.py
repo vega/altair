@@ -8,7 +8,7 @@ from inspect import getattr_static, ismodule
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from tools.schemapi.utils import ruff_write_lint_format_str
+from tools.codemod import ruff
 
 _TYPING_CONSTRUCTS = {
     te.TypeAlias,
@@ -74,7 +74,7 @@ def update__all__variable() -> None:
     ]
     # Write new version of altair/__init__.py
     # Format file content with ruff
-    ruff_write_lint_format_str(init_path, new_lines)
+    ruff.write_lint_format(init_path, new_lines)
 
 
 def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
