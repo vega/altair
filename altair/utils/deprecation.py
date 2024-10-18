@@ -17,6 +17,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
 
+__all__ = ["AltairDeprecationWarning", "deprecated", "deprecated_warn"]
+
 
 class AltairDeprecationWarning(DeprecationWarning): ...
 
