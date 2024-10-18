@@ -715,10 +715,10 @@ Chart Themes
    This material was changed considerably with the release of Altair ``5.5.0``.
 
 Altair makes available a theme registry that lets users apply chart configurations
-globally within any Python session. For most use cases we have dedicated :ref:`helper functions <api-theme>`, but
-the registry may also be accessed directly via :obj:`altair.theme.themes`.
+globally within any Python session. 
+The :mod:`altair.theme` module provides :ref:`helper functions <api-theme>` to interact with the registry.
 
-The themes registry consists of functions which define a specification dictionary
+Each theme in the registry is a function which define a specification dictionary
 that will be added to every created chart.
 For example, the default theme configures the default size of a single chart:
 
