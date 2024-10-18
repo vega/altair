@@ -673,6 +673,7 @@ def __getattr__(name: str) -> _Any:
             version="5.5.0",
             alternative="altair.theme",
             stacklevel=3,
+            action="once",
         )
         return theme._themes
     else:

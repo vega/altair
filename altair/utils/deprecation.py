@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import sys
+import threading
 import warnings
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 if sys.version_info >= (3, 13):
     from warnings import deprecated as _deprecated
@@ -81,6 +82,7 @@ def deprecated_warn(
     alternative: LiteralString | None = None,
     category: type[AltairDeprecationWarning] = AltairDeprecationWarning,
     stacklevel: int = 2,
+    action: Literal["once"] | None = None,
 ) -> None:
     """
     Indicate that the current code path is deprecated.
@@ -112,4 +114,41 @@ def deprecated_warn(
     [warnings.warn](https://docs.python.org/3/library/warnings.html#warnings.warn)
     """
     msg = _format_message(version, alternative, message)
-    warnings.warn(msg, category=category, stacklevel=stacklevel)
+    if action is None:
+        warnings.warn(msg, category=category, stacklevel=stacklevel)
+    elif action == "once":
+        _warn_once(msg, category=category, stacklevel=stacklevel)
+    else:
+        raise NotImplementedError(action)
+
+
+class _WarningsMonitor:
+    def __init__(self) -> None:
+        self._warned: dict[LiteralString, Literal[True]] = {}
+        self._lock = threading.Lock()
+
+    def __contains__(self, key: LiteralString, /) -> bool:
+        with self._lock:
+            return key in self._warned
+
+    def hit(self, key: LiteralString, /) -> None:
+        with self._lock:
+            self._warned[key] = True
+
+    def clear(self) -> None:
+        with self._lock:
+            self._warned.clear()
+
+
+_warnings_monitor = _WarningsMonitor()
+
+
+def _warn_once(
+    msg: LiteralString, /, *, category: type[AltairDeprecationWarning], stacklevel: int
+) -> None:
+    global _warnings_monitor
+    if msg in _warnings_monitor:
+        return
+    else:
+        _warnings_monitor.hit(msg)
+        warnings.warn(msg, category=category, stacklevel=stacklevel + 1)

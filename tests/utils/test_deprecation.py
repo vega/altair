@@ -5,6 +5,7 @@ import pytest
 
 from altair.utils.deprecation import (
     AltairDeprecationWarning,
+    _warnings_monitor,
     deprecated,
     deprecated_warn,
 )
@@ -42,8 +43,6 @@ def test_deprecation_warn():
 
 
 def test_deprecated_import():
-    from warnings import catch_warnings, filterwarnings
-
     import altair as alt
 
     pattern = re.compile(
@@ -53,9 +52,13 @@ def test_deprecated_import():
     with pytest.warns(AltairDeprecationWarning, match=pattern):
         alt.themes
 
+    # NOTE: Tests that second access does not trigger a warning
+    assert alt.themes
+    # Then reset cache
+    _warnings_monitor.clear()
+
     with pytest.warns(AltairDeprecationWarning, match=pattern):
         from altair import themes  # noqa: F401
 
-    with catch_warnings():
-        filterwarnings("ignore", category=AltairDeprecationWarning)
-        assert alt.themes == alt.theme._themes
+    assert alt.themes == alt.theme._themes
+    _warnings_monitor.clear()
