@@ -187,7 +187,7 @@ def register(
     Parameters
     ----------
     name
-        Unique name assigned in ``alt.theme.themes``.
+        Unique name assigned in registry.
     enable
         Auto-enable the wrapped theme.
 
@@ -220,7 +220,12 @@ def register(
                 "width": 350,
             }
 
-    Until another theme has been enabled, all charts will use defaults set in ``custom_theme``::
+    We can then see the ``name`` parameter displayed when checking::
+
+        theme.active
+        "param_font_size"
+
+    Until another theme has been enabled, all charts will use defaults set in ``custom_theme()``::
 
         from vega_datasets import data
 
