@@ -58,4 +58,4 @@ def test_deprecated_import():
 
     with catch_warnings():
         filterwarnings("ignore", category=AltairDeprecationWarning)
-        assert alt.themes == alt.theme.themes
+        assert alt.themes == alt.theme._themes

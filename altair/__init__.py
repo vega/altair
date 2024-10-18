@@ -674,7 +674,7 @@ def __getattr__(name: str) -> _Any:
             alternative="altair.theme",
             stacklevel=3,
         )
-        return theme.themes
+        return theme._themes
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
         raise AttributeError(msg)

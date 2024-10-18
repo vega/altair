@@ -78,7 +78,7 @@ from altair.vegalite.v5.schema._config import (
     ViewBackgroundKwds,
     ViewConfigKwds,
 )
-from altair.vegalite.v5.theme import themes
+from altair.vegalite.v5.theme import themes as _themes
 
 if TYPE_CHECKING:
     import sys
@@ -174,7 +174,6 @@ __all__ = [
     "names",
     "options",
     "register",
-    "themes",
     "unregister",
 ]
 
@@ -238,9 +237,9 @@ def register(
     # HACK: See for `LiteralString` requirement in `name`
     # https://github.com/vega/altair/pull/3526#discussion_r1743350127
     def decorate(func: Plugin[ThemeConfig], /) -> Plugin[ThemeConfig]:
-        themes.register(name, func)
+        _themes.register(name, func)
         if enable:
-            themes.enable(name)
+            _themes.enable(name)
 
         @_wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> ThemeConfig:
@@ -258,14 +257,14 @@ def unregister(name: LiteralString) -> Plugin[ThemeConfig]:
     Parameters
     ----------
     name
-        Unique name assigned in ``alt.theme.themes``.
+        Unique name assigned during ``alt.theme.register``.
 
     Raises
     ------
     TypeError
         When ``name`` has not been registered.
     """
-    plugin = themes.register(name, None)
+    plugin = _themes.register(name, None)
     if plugin is None:
         msg = (
             f"Found no theme named {name!r} in registry.\n"
@@ -277,9 +276,9 @@ def unregister(name: LiteralString) -> Plugin[ThemeConfig]:
         return plugin
 
 
-enable = themes.enable
-get = themes.get
-names = themes.names
+enable = _themes.enable
+get = _themes.get
+names = _themes.names
 active: str
 """Return the name of the currently active theme."""
 options: dict[str, Any]
@@ -296,9 +295,9 @@ def __getattr__(name: Literal["active"]) -> str: ...  # type: ignore[misc]
 def __getattr__(name: Literal["options"]) -> dict[str, Any]: ...  # type: ignore[misc]
 def __getattr__(name: str) -> Any:
     if name == "active":
-        return themes.active
+        return _themes.active
     elif name == "options":
-        return themes.options
+        return _themes.options
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
         raise AttributeError(msg)

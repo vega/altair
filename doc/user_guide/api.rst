@@ -186,7 +186,6 @@ Theme
    names
    options
    register
-   themes
    unregister
    ThemeConfig
    AreaConfigKwds

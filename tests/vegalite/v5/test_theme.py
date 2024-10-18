@@ -78,8 +78,8 @@ def test_theme_register_decorator() -> None:
     def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
 
-    assert theme.themes.active == "unique name" == theme.active
-    registered = theme.themes.get()
+    assert theme._themes.active == "unique name" == theme.active
+    registered = theme._themes.get()
     assert registered is not None
     assert registered == theme.get()
     assert registered() == {"height": 400, "width": 700} == custom_theme()
@@ -93,7 +93,7 @@ def test_theme_unregister() -> None:
     assert theme.active == "big square"
     fn = theme.unregister("big square")
     assert fn() == custom_theme()
-    assert theme.active == theme.themes.active
+    assert theme.active == theme._themes.active
     # BUG: https://github.com/vega/altair/issues/3619
     # assert theme.active != "big square"
 
