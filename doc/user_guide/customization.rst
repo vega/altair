@@ -687,6 +687,36 @@ the subchart rather than to the overall chart:
        height=100
    )
 
+If you want to set the chart size relative to the number of observations in a faceted chart you can set the width using ``step`` size:
+
+.. altair-plot::
+
+    source = pd.DataFrame(
+        [
+            {"category": "A", "group": "x", "value": 0.1},
+            # {"category":"A", "group":"y", "value":0.6},
+            # {"category":"A", "group":"z", "value":0.9},
+            {"category": "B", "group": "x", "value": 0.7},
+            {"category": "B", "group": "y", "value": 0.2},
+            {"category": "B", "group": "z", "value": 1.1},
+            {"category": "C", "group": "x", "value": 0.6},
+            {"category": "C", "group": "y", "value": 0.1},
+            # {"category":"C", "group":"z", "value":0.2}
+        ]
+    )
+
+    alt.Chart(source).mark_bar().encode(
+        x="group",
+        y="value",
+        column="category",
+    ).resolve_scale(
+        x="independent"
+      ).properties(
+        width=alt.Step(50),
+        height=150,
+    )
+
+
 If you want your chart size to respond to the width of the HTML page or container in which
 it is rendered, you can set ``width`` or ``height`` to the string ``"container"``:
 
