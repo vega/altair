@@ -687,7 +687,7 @@ the subchart rather than to the overall chart:
        height=100
    )
 
-If you want to set the chart size relative to the number of observations in a faceted chart you can set the width using ``step`` size:
+To change the chart size relative to the number of distinct categories, you can use the ``step`` class to specify the width/height for each category:
 
 .. altair-plot::
 
