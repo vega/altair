@@ -624,7 +624,7 @@ But since ``mark_bar(size=10)`` only controls the width of the bars, it might be
       y='value:Q'
   )
 
-Therefore, it is often preferred to set the width of the chart relative to the number of distinct categories using  ``Step``, which you can can see an example of a few charts down.
+Therefore, it is often preferred to set the width of the entire chart relative to the number of distinct categories using :class:`Step`, which you can can see an example of a few charts down.
 
 .. _customization-chart-size:
 
@@ -637,9 +637,9 @@ For example:
 
    import altair as alt
    from vega_datasets import data
-   
+
    cars = data.cars()
-   
+
    alt.Chart(cars).mark_bar().encode(
        x='Origin',
        y='count()'
@@ -664,7 +664,7 @@ the subchart rather than to the overall chart:
        x='independent'
    )
 
-To change the chart size relative to the number of distinct categories, you can use the ``step`` class to specify the width/height for each category rather than for the entire chart:
+To change the chart size relative to the number of distinct categories, you can use the :class:`Step` class to specify the width/height for each category rather than for the entire chart:
 
 .. altair-plot::
 
