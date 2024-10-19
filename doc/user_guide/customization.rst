@@ -624,32 +624,7 @@ But since ``mark_bar(size=10)`` only controls the width of the bars, it might be
       y='value:Q'
   )
 
-The width of the chart containing the bar plot can be controlled through setting the ``width``
-property of the chart, either to a pixel value for any chart, or to a step value
-in the case of discrete scales.
-
-Here is an example of setting the width to a single value for the whole chart:
-
-.. altair-plot::
-
-  alt.Chart(data).mark_bar(size=30).encode(
-      x='name:O',
-      y='value:Q'
-  ).properties(width=200)
-
-The width of the bars are set using ``mark_bar(size=30)`` and the width of the chart is set using ``properties(width=100)``
-
-Here is an example of setting the step width for a discrete scale:
-
-.. altair-plot::
-
-  alt.Chart(data).mark_bar(size=30).encode(
-      x='name:N',
-      y='value:Q'
-  ).properties(width=alt.Step(100))
-
-The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the chart is set using ``width=alt.Step(100)``
-
+Therefore, it is often preferred to set the width of the entire chart relative to the number of distinct categories using :class:`Step`, which you can can see an example of a few charts down.
 
 .. _customization-chart-size:
 
@@ -662,9 +637,9 @@ For example:
 
    import altair as alt
    from vega_datasets import data
-   
+
    cars = data.cars()
-   
+
    alt.Chart(cars).mark_bar().encode(
        x='Origin',
        y='count()'
@@ -685,7 +660,25 @@ the subchart rather than to the overall chart:
    ).properties(
        width=100,
        height=100
+   ).resolve_scale(
+       x='independent'
    )
+
+To change the chart size relative to the number of distinct categories, you can use the :class:`Step` class to specify the width/height for each category rather than for the entire chart:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+       column='Cylinders:Q'
+   ).properties(
+       width=alt.Step(35),
+       height=100
+   ).resolve_scale(
+       x='independent'
+   )
+
 
 If you want your chart size to respond to the width of the HTML page or container in which
 it is rendered, you can set ``width`` or ``height`` to the string ``"container"``:
