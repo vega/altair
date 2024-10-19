@@ -666,7 +666,21 @@ def __getattr__(name: str) -> _Any:
 
     if name == "themes":
         deprecated_warn(
-            "Most of the `ThemeRegistry` API is accessible via `altair.theme`.\n"
+            "Most cases require only the following change:\n\n"
+            "    # Deprecated\n"
+            "    alt.themes.enable('quartz')\n\n"
+            "    # Updated\n"
+            "    alt.theme.enable('quartz')\n\n"
+            "If your code registers a theme, make the following change:\n\n"
+            "    # Deprecated\n"
+            "    def custom_theme():\n"
+            "        return {'height': 400, 'width': 700}\n"
+            "    alt.themes.register('theme_name', custom_theme)\n"
+            "    alt.themes.enable('theme_name')\n\n"
+            "    # Updated\n"
+            "    @alt.theme.register('theme_name', enable=True)\n"
+            "    def custom_theme() -> alt.theme.ThemeConfig:\n"
+            "        return {'height': 400, 'width': 700}\n\n"
             "See the updated User Guide for further details:\n"
             "    https://altair-viz.github.io/user_guide/api.html#theme\n"
             "    https://altair-viz.github.io/user_guide/customization.html#chart-themes",
