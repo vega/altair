@@ -685,33 +685,24 @@ the subchart rather than to the overall chart:
    ).properties(
        width=100,
        height=100
+   ).resolve_scale(
+       x='independent'
    )
 
-To change the chart size relative to the number of distinct categories, you can use the ``step`` class to specify the width/height for each category:
+To change the chart size relative to the number of distinct categories, you can use the ``step`` class to specify the width/height for each category rather than for the entire chart:
 
 .. altair-plot::
 
-    source = pd.DataFrame(
-        [
-            {"category": "A", "group": "x", "value": 0.1},
-            {"category": "B", "group": "x", "value": 0.7},
-            {"category": "B", "group": "y", "value": 0.2},
-            {"category": "B", "group": "z", "value": 1.1},
-            {"category": "C", "group": "x", "value": 0.6},
-            {"category": "C", "group": "y", "value": 0.1},
-        ]
-    )
-
-    alt.Chart(source).mark_bar().encode(
-        x="group",
-        y="value",
-        column="category",
-    ).resolve_scale(
-        x="independent"
-      ).properties(
-        width=alt.Step(50),
-        height=150,
-    )
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+       column='Cylinders:Q'
+   ).properties(
+       width=alt.Step(35),
+       height=100
+   ).resolve_scale(
+       x='independent'
+   )
 
 
 If you want your chart size to respond to the width of the HTML page or container in which
