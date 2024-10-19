@@ -29,7 +29,7 @@ def _format_message(
     message: LiteralString | None,
     /,
 ) -> LiteralString:
-    output = f"Deprecated in `altair={version}`."
+    output = f"\nDeprecated in `altair={version}`."
     if alternative:
         output = f"{output} Use {alternative} instead."
     return f"{output}\n{message}" if message else output
