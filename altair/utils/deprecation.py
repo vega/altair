@@ -17,7 +17,12 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
 
-__all__ = ["AltairDeprecationWarning", "deprecated", "deprecated_warn"]
+__all__ = [
+    "AltairDeprecationWarning",
+    "deprecated",
+    "deprecated_static_only",
+    "deprecated_warn",
+]
 
 
 class AltairDeprecationWarning(DeprecationWarning): ...
@@ -122,6 +127,30 @@ def deprecated_warn(
         _warn_once(msg, category=category, stacklevel=stacklevel)
     else:
         raise NotImplementedError(action)
+
+
+deprecated_static_only = _deprecated
+"""
+Using this decorator **exactly as described**, ensures the message is displayed to a static type checker.
+
+**BE CAREFUL USING THIS**.
+
+See screenshots in `comment`_ for motivation.
+
+Every use should look like::
+
+    @deprecated_static_only(
+        "Deprecated in `altair=5.5.0`. Use altair.other instead.",
+        category=None,
+    )
+    def old_function(*args): ...
+
+If a runtime warning is desired, use `@alt.utils.deprecated` instead.
+
+.. _comment:
+    https://github.com/vega/altair/pull/3618#issuecomment-2423991968
+---
+"""
 
 
 class _WarningsMonitor:

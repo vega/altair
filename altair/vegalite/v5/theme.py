@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Final, Literal, get_args
 
+from altair.utils.deprecation import deprecated_static_only
 from altair.utils.plugin_registry import Plugin, PluginRegistry
 from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema._typing import VegaThemes
@@ -68,6 +69,15 @@ class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
     def names(self) -> list[str]:
         """Return the names of the registered and entry points themes."""
         return super().names()
+
+    @deprecated_static_only(
+        "Deprecated in `altair=5.5.0`. Use @altair.theme.register instead.",
+        category=None,
+    )
+    def register(
+        self, name: str, value: Plugin[ThemeConfig] | None
+    ) -> Plugin[ThemeConfig] | None:
+        return super().register(name, value)
 
 
 class VegaTheme:

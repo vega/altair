@@ -242,7 +242,7 @@ def register(
     # HACK: See for `LiteralString` requirement in `name`
     # https://github.com/vega/altair/pull/3526#discussion_r1743350127
     def decorate(func: Plugin[ThemeConfig], /) -> Plugin[ThemeConfig]:
-        _themes.register(name, func)
+        _register(name, func)
         if enable:
             _themes.enable(name)
 
@@ -269,7 +269,7 @@ def unregister(name: LiteralString) -> Plugin[ThemeConfig]:
     TypeError
         When ``name`` has not been registered.
     """
-    plugin = _themes.register(name, None)
+    plugin = _register(name, None)
     if plugin is None:
         msg = (
             f"Found no theme named {name!r} in registry.\n"
@@ -306,3 +306,16 @@ def __getattr__(name: str) -> Any:
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
         raise AttributeError(msg)
+
+
+def _register(
+    name: LiteralString, fn: Plugin[ThemeConfig] | None, /
+) -> Plugin[ThemeConfig] | None:
+    if fn is None:
+        return _themes._plugins.pop(name, None)
+    elif _themes.plugin_type(fn):
+        _themes._plugins[name] = fn
+        return fn
+    else:
+        msg = f"{type(fn).__name__!r} is not a callable theme\n\n{fn!r}"
+        raise TypeError(msg)

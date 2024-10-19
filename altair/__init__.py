@@ -652,7 +652,6 @@ from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
 from altair import typing, theme
-from typing import Any as _Any
 
 
 def load_ipython_extension(ipython):
@@ -661,7 +660,7 @@ def load_ipython_extension(ipython):
     ipython.register_magic_function(vegalite, "cell")
 
 
-def __getattr__(name: str) -> _Any:
+def __getattr__(name: str):
     from altair.utils.deprecation import deprecated_warn
 
     if name == "themes":
