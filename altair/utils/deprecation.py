@@ -131,7 +131,7 @@ def deprecated_warn(
 
 deprecated_static_only = _deprecated
 """
-Using this decorator **exactly as described**, ensures the message is displayed to a static type checker.
+Using this decorator **exactly as described**, ensures ``message`` is displayed to a static type checker.
 
 **BE CAREFUL USING THIS**.
 
@@ -146,6 +146,17 @@ Every use should look like::
     def old_function(*args): ...
 
 If a runtime warning is desired, use `@alt.utils.deprecated` instead.
+
+Parameters
+----------
+message : LiteralString
+    - **Not** a variable
+    - **Not** use placeholders
+    - **Not** use concatenation
+    - **Do not use anything that could be considered dynamic**
+
+category : None
+    You **need** to explicitly pass ``None``
 
 .. _comment:
     https://github.com/vega/altair/pull/3618#issuecomment-2423991968
