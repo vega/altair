@@ -17,14 +17,12 @@ df = pd.DataFrame({
 
 slider = alt.binding_range(min=0, max=100, step=1)
 cutoff = alt.param(bind=slider, value=50)
+predicate = alt.datum.xval < cutoff
 
 alt.Chart(df).mark_point().encode(
     x='xval',
     y='yval',
-    color=alt.condition(
-        alt.datum.xval < cutoff,
-        alt.value('red'), alt.value('blue')
-    )
+    color=alt.when(predicate).then(alt.value("red")).otherwise(alt.value("blue")),
 ).add_params(
     cutoff
 )

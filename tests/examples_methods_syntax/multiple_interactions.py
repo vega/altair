@@ -62,32 +62,32 @@ filter_genres = base.add_params(
 rating_radio = alt.binding_radio(options=ratings, name="Rating")
 rating_select = alt.selection_point(fields=['MPAA_Rating'], bind=rating_radio)
 
-rating_color_condition = alt.condition(
-    rating_select,
-    alt.Color('MPAA_Rating:N').legend(None),
-    alt.value('lightgray')
+rating_color = (
+    alt.when(rating_select)
+    .then(alt.Color("MPAA_Rating:N").legend(None))
+    .otherwise(alt.value("lightgray"))
 )
 
 highlight_ratings = base.add_params(
     rating_select
 ).encode(
-    color=rating_color_condition
+    color=rating_color
 ).properties(title="Radio Button Highlighting")
 
 # Boolean selection for format changes
 input_checkbox = alt.binding_checkbox(name="Big Budget Films ")
 checkbox_selection = alt.param(bind=input_checkbox)
 
-size_checkbox_condition = alt.condition(
-    checkbox_selection,
-    alt.Size('Big_Budget_Film:N').scale(range=[25, 150]),
-    alt.SizeValue(25)
+size_checkbox = (
+    alt.when(checkbox_selection)
+    .then(alt.Size('Big_Budget_Film:N').scale(range=[25, 150]))
+    .otherwise(alt.value(25))
 )
 
 budget_sizing = base.add_params(
     checkbox_selection
 ).encode(
-    size=size_checkbox_condition
+    size=size_checkbox
 ).properties(title="Checkbox Formatting")
 
 (filter_year | budget_sizing) & (highlight_ratings | filter_genres)

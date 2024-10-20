@@ -17,7 +17,7 @@ alt.Chart(source).mark_area().encode(
     alt.X('yearmonth(date):T').axis(domain=False, format='%Y', tickSize=0),
     alt.Y('sum(count):Q').stack('center').axis(None),
     alt.Color('series:N').scale(scheme='category20b'),
-    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
+    opacity=alt.when(selection).then(alt.value(1)).otherwise(alt.value(0.2))
 ).add_params(
     selection
 )
