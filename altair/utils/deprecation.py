@@ -34,7 +34,7 @@ def _format_message(
     message: LiteralString | None,
     /,
 ) -> LiteralString:
-    output = f"\nDeprecated in `altair={version}`."
+    output = f"\nDeprecated since `altair={version}`."
     if alternative:
         output = f"{output} Use {alternative} instead."
     return f"{output}\n{message}" if message else output
@@ -140,7 +140,7 @@ See screenshots in `comment`_ for motivation.
 Every use should look like::
 
     @deprecated_static_only(
-        "Deprecated in `altair=5.5.0`. Use altair.other instead.",
+        "Deprecated since `altair=5.5.0`. Use altair.other instead.",
         category=None,
     )
     def old_function(*args): ...

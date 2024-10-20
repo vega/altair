@@ -71,7 +71,7 @@ class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
         return super().names()
 
     @deprecated_static_only(
-        "Deprecated in `altair=5.5.0`. Use @altair.theme.register instead.",
+        "Deprecated since `altair=5.5.0`. Use @altair.theme.register instead.",
         category=None,
     )
     def register(
