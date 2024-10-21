@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, NewType
+from typing import Any, NewType
 
 # Type representing the "{selection}_store" dataset that corresponds to a
 # Vega-Lite selection
-Store = NewType("Store", List[Dict[str, Any]])
+Store = NewType("Store", list[dict[str, Any]])
 
 
 @dataclass(frozen=True, eq=True)

@@ -5,7 +5,8 @@ from __future__ import annotations
 
 import re
 import sys
-from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
+from collections.abc import Mapping, Sequence
+from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args
 
 if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
     from typing import TypedDict
@@ -31,11 +32,6 @@ if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     from typing_extensions import TypeAlias
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated, get_args
-else:
-    from typing_extensions import Annotated, get_args
 
 
 __all__ = [

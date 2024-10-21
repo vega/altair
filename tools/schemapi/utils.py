@@ -4,28 +4,16 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
 import sys
 import textwrap
 import urllib.parse
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Iterable,
-    Iterator,
-    Literal,
-    Mapping,
-    MutableSequence,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
 
+from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
@@ -91,13 +79,6 @@ class _TypeAliasTracer:
         A format specifier to produce the `TypeAlias` name.
 
         Will be provided a `SchemaInfo.title` as a single positional argument.
-    *ruff_check
-        Optional [ruff rule codes](https://docs.astral.sh/ruff/rules/),
-        each prefixed with `--select ` and follow a `ruff check --fix ` call.
-
-        If not provided, uses `[tool.ruff.lint.select]` from `pyproject.toml`.
-    ruff_format
-        Optional argument list supplied to [ruff format](https://docs.astral.sh/ruff/formatter/#ruff-format)
 
     Attributes
     ----------
@@ -111,12 +92,7 @@ class _TypeAliasTracer:
         Prefined import statements to appear at beginning of module.
     """
 
-    def __init__(
-        self,
-        fmt: str = "{}_T",
-        *ruff_check: str,
-        ruff_format: Sequence[str] | None = None,
-    ) -> None:
+    def __init__(self, fmt: str = "{}_T") -> None:
         self.fmt: str = fmt
         self._literals: dict[str, str] = {}
         self._literals_invert: dict[str, str] = {}
@@ -124,7 +100,7 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -133,12 +109,7 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
-        self._cmd_check: list[str] = ["--fix"]
-        self._cmd_format: Sequence[str] = ruff_format or ()
-        for c in ruff_check:
-            self._cmd_check.extend(("--extend-select", c))
 
     def _update_literals(self, name: str, tp: str, /) -> None:
         """Produces an inverted index, to reuse a `Literal` when `SchemaInfo.title` is empty."""
@@ -223,13 +194,6 @@ class _TypeAliasTracer:
         extra
             `tools.generate_schema_wrapper.TYPING_EXTRA`.
         """
-        ruff_format: MutableSequence[str | Path] = ["ruff", "format", fp]
-        if self._cmd_format:
-            ruff_format.extend(self._cmd_format)
-        commands: tuple[Sequence[str | Path], ...] = (
-            ["ruff", "check", fp, *self._cmd_check],
-            ruff_format,
-        )
         static = (header, "\n", *self._imports, "\n\n")
         self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
         all_ = [*iter(self._aliases), *extra_all]
@@ -238,10 +202,7 @@ class _TypeAliasTracer:
             [f"__all__ = {all_}", "\n\n", extra],
             self.generate_aliases(),
         )
-        fp.write_text("\n".join(it), encoding="utf-8")
-        for cmd in commands:
-            r = subprocess.run(cmd, check=True)
-            r.check_returncode()
+        ruff.write_lint_format(fp, it)
 
     @property
     def n_entries(self) -> int:
@@ -997,49 +958,6 @@ def unwrap_literal(tp: str, /) -> str:
     return re.sub(r"Literal\[(.+)\]", r"\g<1>", tp)
 
 
-def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
-    """
-    Format an existing file.
-
-    Running on `win32` after writing lines will ensure "lf" is used before:
-    ```bash
-    ruff format --diff --check .
-    ```
-    """
-    cmd: MutableSequence[str | Path] = ["ruff", "format", fp]
-    if extra_args:
-        cmd.extend(extra_args)
-    r = subprocess.run(cmd, check=True)
-    r.check_returncode()
-
-
-def ruff_write_lint_format_str(
-    fp: Path, code: str | Iterable[str], /, *, encoding: str = "utf-8"
-) -> None:
-    """
-    Combined steps of writing, `ruff check`, `ruff format`.
-
-    Notes
-    -----
-    - `fp` is written to first, as the size before formatting will be the smallest
-        - Better utilizes `ruff` performance, rather than `python` str and io
-    - `code` is no longer bound to `list`
-    - Encoding set as default
-    - `I001/2` are `isort` rules, to sort imports.
-    """
-    commands: Iterable[Sequence[str | Path]] = (
-        ["ruff", "check", fp, "--fix"],
-        ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
-    )
-    if not isinstance(code, str):
-        code = "\n".join(code)
-    fp.write_text(code, encoding=encoding)
-    for cmd in commands:
-        r = subprocess.run(cmd, check=True)
-        r.check_returncode()
-    ruff_format_py(fp)
-
-
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
     imps = "\n".join(f"    {s}" for s in imports)
@@ -1066,7 +984,7 @@ def import_typing_extensions(
     )
 
 
-TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T")
 """An instance of `_TypeAliasTracer`.
 
 Collects a cache of unique `Literal` types used globally.
