@@ -11,7 +11,7 @@ from __future__ import annotations
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
 import sys
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
@@ -28,6 +28,8 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    from collections.abc import Sequence
+
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
     from altair.vegalite.v5.api import IntoCondition

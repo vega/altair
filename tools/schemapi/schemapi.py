@@ -7,6 +7,7 @@ import json
 import sys
 import textwrap
 from collections import defaultdict
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
@@ -14,15 +15,9 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     Final,
     Generic,
-    Iterable,
-    Iterator,
-    List,
     Literal,
-    Mapping,
-    Sequence,
     TypeVar,
     Union,
     cast,
@@ -65,8 +60,8 @@ if TYPE_CHECKING:
         from typing_extensions import Never, Self
     _OptionalModule: TypeAlias = "ModuleType | None"
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
+ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -1349,7 +1344,7 @@ def _replace_parsed_shorthand(
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
 
-_CopyImpl = TypeVar("_CopyImpl", SchemaBase, Dict[Any, Any], List[Any])
+_CopyImpl = TypeVar("_CopyImpl", SchemaBase, dict[Any, Any], list[Any])
 """
 Types which have an implementation in ``SchemaBase.copy()``.
 

@@ -7,22 +7,11 @@ import re
 import sys
 import textwrap
 import urllib.parse
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Iterable,
-    Iterator,
-    Literal,
-    Mapping,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -111,7 +100,7 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -120,7 +109,6 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:
