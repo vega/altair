@@ -8,20 +8,11 @@ import re
 import sys
 import traceback
 import warnings
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterator,
-    Literal,
-    TypeVar,
-    cast,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw

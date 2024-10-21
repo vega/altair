@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict
+from typing import TYPE_CHECKING, Any, Literal, TypedDict
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -14,6 +14,8 @@ from ._typing import PaddingKwds, RowColKwds
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    from collections.abc import Sequence
+
     from ._typing import *  # noqa: F403
 
 

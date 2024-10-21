@@ -10,7 +10,7 @@ import sys
 import typing as t
 import warnings
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -47,8 +47,9 @@ else:
     from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator, Sequence
     from pathlib import Path
-    from typing import IO, Iterable, Iterator
+    from typing import IO
 
     from altair.utils.core import DataFrameLike
 
@@ -661,7 +662,7 @@ class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[cal
     value: Any
 
 
-_Conditions: TypeAlias = t.List[_ConditionClosed]
+_Conditions: TypeAlias = list[_ConditionClosed]
 """
 Chainable conditions produced by ``.when()`` and ``Then.when()``.
 

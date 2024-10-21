@@ -7,7 +7,10 @@
 from __future__ import annotations
 
 import enum
-from typing import Any, Iterable, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 class DtypeKind(enum.IntEnum):

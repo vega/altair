@@ -5,9 +5,12 @@ from __future__ import annotations
 import types
 from pathlib import Path
 from types import ModuleType
-from typing import Final, Iterator
+from typing import TYPE_CHECKING, Final
 
 import altair as alt
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 API_FILENAME: Final = str(Path.cwd() / "doc" / "user_guide" / "api.rst")
 

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from typing import Iterable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def open_html_in_browser(

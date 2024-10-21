@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Union
+from typing import Any, Union
 from typing_extensions import TypeAlias
 
 from altair.utils import SchemaBase
@@ -237,4 +237,4 @@ class GetItemExpression(Expression):
         return f"{self.group}[{self.name!r}]"
 
 
-IntoExpression: TypeAlias = Union[bool, None, str, float, OperatorMixin, Dict[str, Any]]
+IntoExpression: TypeAlias = Union[bool, None, str, float, OperatorMixin, dict[str, Any]]

@@ -6,10 +6,12 @@ import subprocess
 import sys
 import textwrap
 import warnings
+from ast import unparse
 from collections import deque
+from collections.abc import Iterable
 from importlib.util import find_spec
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterable, TypeVar, overload
+from typing import TYPE_CHECKING, Any, TypeVar, overload
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType
@@ -22,7 +24,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
 
-    from typing import ClassVar, Iterator, Literal
+    from collections.abc import Iterator
+    from typing import ClassVar, Literal
 
 
 __all__ = ["extract_func_def", "extract_func_def_embed", "ruff", "ruff_inline_docs"]
@@ -54,25 +57,6 @@ def parse_module(name: str, /) -> ast.Module:
         return ast.parse(Path(origin).read_bytes())
     else:
         raise FileNotFoundError(name)
-
-
-if sys.version_info >= (3, 9):
-
-    def unparse(obj: ast.AST, /) -> str:
-        return ast.unparse(obj)
-else:
-
-    def unparse(obj: ast.AST, /) -> str:
-        """
-        Added in ``3.9``.
-
-        https://docs.python.org/3/library/ast.html#ast.unparse
-        """
-        # HACK: Will only be used during build/docs
-        # - This branch is just to satisfy linters
-        msg = f"Called `ast.unparse()` on {sys.version_info!r}\nFunction not available before {(3, 9)!r}"
-        warnings.warn(msg, ImportWarning, stacklevel=2)
-        return "<ast.unparse() UNAVAILABLE>"
 
 
 def find_func_def(mod: ast.Module, fn_name: str, /) -> ast.FunctionDef:

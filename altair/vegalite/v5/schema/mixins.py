@@ -3,14 +3,14 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, Sequence
+from typing import TYPE_CHECKING, Literal
 
 from altair.utils import Undefined, use_signature
 
 from . import core
 
 if TYPE_CHECKING:
-    from altair import Parameter, SchemaBase
+    from collections.abc import Sequence
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
@@ -20,6 +20,7 @@ if TYPE_CHECKING:
         from typing import Self
     else:
         from typing_extensions import Self
+    from altair import Parameter, SchemaBase
     from altair.typing import Optional
 
     from ._typing import *  # noqa: F403
