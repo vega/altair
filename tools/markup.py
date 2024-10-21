@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from html import unescape
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterable, Literal
+from typing import TYPE_CHECKING, Any, Literal
 from urllib import request
 
 import mistune.util
@@ -15,6 +15,7 @@ from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
     import sys
+    from collections.abc import Iterable
 
     if sys.version_info >= (3, 11):
         from typing import TypeAlias

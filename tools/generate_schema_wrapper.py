@@ -8,20 +8,12 @@ import json
 import sys
 import textwrap
 from collections import deque
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Final,
-    Generic,
-    Iterable,
-    Iterator,
-    Literal,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar
 from urllib import request
 
 import vl_convert as vlc
@@ -46,6 +38,8 @@ from tools.schemapi.utils import (
 from tools.vega_expr import write_expr_module
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from tools.schemapi.codegen import ArgInfo, AttrGetter
     from vl_convert import VegaThemes
 
@@ -557,9 +551,10 @@ def copy_schemapi_util() -> None:
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
 
     print(f"Copying\n {source_fp!s}\n  -> {destination_fp!s}")
-    with source_fp.open(encoding="utf8") as source, destination_fp.open(
-        "w", encoding="utf8"
-    ) as dest:
+    with (
+        source_fp.open(encoding="utf8") as source,
+        destination_fp.open("w", encoding="utf8") as dest,
+    ):
         dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":

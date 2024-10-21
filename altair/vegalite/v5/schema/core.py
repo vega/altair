@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import pkgutil
-from typing import TYPE_CHECKING, Any, Iterator, Literal, Sequence
+from typing import TYPE_CHECKING, Any, Literal
 
 from altair.utils.schemapi import (  # noqa: F401
     SchemaBase,
@@ -16,6 +16,8 @@ from altair.utils.schemapi import (  # noqa: F401
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    from collections.abc import Iterator, Sequence
+
     from altair import Parameter
     from altair.typing import Optional
 

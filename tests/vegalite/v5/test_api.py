@@ -31,7 +31,6 @@ if TYPE_CHECKING:
     from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
-ibis.set_backend("polars")
 
 PANDAS_VERSION = Version(importlib_version("pandas"))
 
@@ -1608,11 +1607,6 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 9),
-    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
-    " which doesn't support the dataframe interchange protocol.",
-)
-@pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
@@ -1620,6 +1614,7 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_ibis_with_date_32():
+    ibis.set_backend("polars")
     df = pl.DataFrame(
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
@@ -1633,11 +1628,6 @@ def test_ibis_with_date_32():
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 9),
-    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
-    " which doesn't support the dataframe interchange protocol.",
-)
-@pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
@@ -1645,6 +1635,7 @@ def test_ibis_with_date_32():
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    ibis.set_backend("polars")
     df = pl.DataFrame(
         {
             "a": [1, 2, 3],

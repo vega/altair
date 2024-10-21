@@ -8,9 +8,12 @@ from importlib import import_module as _import_module
 from importlib.util import find_spec as _find_spec
 from inspect import getattr_static, ismodule
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterable, Iterator
+from typing import TYPE_CHECKING
 
 from tools.codemod import ruff
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
 
 _TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAlias,
@@ -18,9 +21,9 @@ _TYPING_CONSTRUCTS: set[t.Any] = {
     t.cast,
     t.overload,
     te.runtime_checkable,
-    t.List,
-    t.Dict,
-    t.Tuple,
+    list,
+    dict,
+    tuple,
     t.Any,
     t.Literal,
     t.Union,
