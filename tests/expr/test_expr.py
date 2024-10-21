@@ -3,7 +3,7 @@ from __future__ import annotations
 import operator
 import sys
 from inspect import classify_class_attrs, getmembers, signature
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Iterator, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Callable, TypeVar, cast
 
 import pytest
 from jsonschema.exceptions import ValidationError
@@ -13,6 +13,7 @@ from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
     from inspect import _IntrospectableCallable
 
 T = TypeVar("T")
