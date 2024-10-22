@@ -1132,3 +1132,32 @@ def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
 
     with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
         alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")  # type: ignore[arg-type]
+
+
+def test_to_dict_datetime_typing() -> None:
+    """
+    Enumerating various places that need updated annotations.
+
+    All work at runtime, just need to give the type checkers the new info.
+
+    Sub-issue of https://github.com/vega/altair/issues/3650
+    """
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+    datetime_seq = [datetime, datetime.replace(2005), datetime.replace(2008)]
+    assert alt.FieldEqualPredicate(datetime, field="column 1")  # type: ignore[arg-type]
+    assert alt.FieldOneOfPredicate(
+        oneOf=datetime_seq,  # type: ignore[arg-type]
+        field="column 1",
+    )  # type: ignore[arg-type]
+
+    assert alt.Legend(values=datetime_seq)  # type: ignore[arg-type]
+
+    assert alt.Scale(domain=datetime_seq)  # type: ignore[arg-type]
+    assert alt.Scale(domainMin=datetime_seq[0], domainMax=datetime_seq[2])  # type: ignore[arg-type]
+
+    # NOTE: `datum` is not annotated?
+    assert alt.XDatum(datum=datetime).to_dict()
+
+    # NOTE: `*args` is not annotated?
+    # - All of these uses *args incorrectly
+    assert alt.Vector2DateTime(datetime_seq[:2])
