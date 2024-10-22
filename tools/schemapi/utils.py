@@ -100,6 +100,7 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
+            "from datetime import date, datetime",
             "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
             "import re",
             import_typing_extensions(
@@ -524,6 +525,8 @@ class SchemaInfo:
             # NOTE: To keep type hints simple, we annotate with `SchemaBase` for all subclasses.
             if title in tp_param:
                 tps.add("Parameter")
+            if self.is_datetime():
+                tps.add("Temporal")
         elif self.is_value():
             value = self.properties["value"]
             t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
@@ -782,6 +785,9 @@ class SchemaInfo:
             and "field" not in self.required
             and not (iskeyword(next(iter(self.required), "")))
         )
+
+    def is_datetime(self) -> bool:
+        return self.refname == "DateTime"
 
 
 def flatten(container: Iterable) -> Iterable:
