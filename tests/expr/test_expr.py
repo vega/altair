@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime as dt
 import operator
 import sys
 from inspect import classify_class_attrs, getmembers, signature
@@ -188,3 +189,22 @@ def test_expression_function_nostring():
 
     with pytest.raises(ValidationError):
         expr(["foo", "bah"])  # pyright: ignore
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (dt.date(2000, 1, 1), "datetime(2000,0,1)"),
+        (dt.datetime(2000, 1, 1), "datetime(2000,0,1,0,0,0,0)"),
+        (dt.datetime(2001, 1, 1, 9, 30, 0, 2999), "datetime(2001,0,1,9,30,0,2)"),
+        (
+            dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.timezone.utc),
+            "utc(2003,4,1,1,30,0,0)",
+        ),
+    ],
+    ids=["date", "datetime (no time)", "datetime (microseconds)", "datetime (UTC)"],
+)
+def test_expr_datetime(value: Any, expected: str) -> None:
+    r_datum = datum.date >= value
+    assert isinstance(r_datum, Expression)
+    assert repr(r_datum) == f"(datum.date >= {expected})"
