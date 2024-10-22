@@ -57,8 +57,16 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
     fn_name: Literal["datetime", "utc"] = "datetime"
     args: tuple[int, ...] = obj.year, obj.month - 1, obj.day
     if isinstance(obj, dt.datetime):
-        if (tz_name := obj.tzname()) and tz_name == "UTC":
-            fn_name = "utc"
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                fn_name = "utc"
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
         us = obj.microsecond
         ms = us if us == 0 else us // 1_000
         args = *args, obj.hour, obj.minute, obj.second, ms
