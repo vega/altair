@@ -1122,6 +1122,8 @@ def test_to_dict_datetime(
         dt.timezone(dt.timedelta(hours=1), "BST"),
         dt.timezone(dt.timedelta(hours=-7), "pdt"),
         dt.timezone(dt.timedelta(hours=-3), "BRT"),
+        dt.timezone(dt.timedelta(hours=9), "UTC"),
+        dt.timezone(dt.timedelta(minutes=60), "utc"),
     ],
 )
 def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
