@@ -1148,7 +1148,7 @@ def test_to_dict_datetime_typing() -> None:
     assert alt.FieldOneOfPredicate(
         oneOf=datetime_seq,  # type: ignore[arg-type]
         field="column 1",
-    )  # type: ignore[arg-type]
+    )
 
     assert alt.Legend(values=datetime_seq)  # type: ignore[arg-type]
 
