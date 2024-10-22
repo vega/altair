@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Union
+import datetime as dt
+from typing import Any, Literal, Union
 from typing_extensions import TypeAlias
 
 from altair.utils import SchemaBase
@@ -38,8 +39,30 @@ def _js_repr(val) -> str:
         return "null"
     elif isinstance(val, OperatorMixin):
         return val._to_expr()
+    elif isinstance(val, dt.date):
+        return _from_date_datetime(val)
     else:
         return repr(val)
+
+
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
+    """
+    Parse native `datetime.(date|datetime)` into a `datetime expression`_ string.
+
+    **Month is 0-based**
+
+    .. _datetime expression:
+        https://vega.github.io/vega/docs/expressions/#datetime
+    """
+    fn_name: Literal["datetime", "utc"] = "datetime"
+    args: tuple[int, ...] = obj.year, obj.month - 1, obj.day
+    if isinstance(obj, dt.datetime):
+        if (tz_name := obj.tzname()) and tz_name == "UTC":
+            fn_name = "utc"
+        us = obj.microsecond
+        ms = us if us == 0 else us // 1_000
+        args = *args, obj.hour, obj.minute, obj.second, ms
+    return FunctionExpression(fn_name, args)._to_expr()
 
 
 # Designed to work with Expression and VariableParameter
@@ -237,4 +260,6 @@ class GetItemExpression(Expression):
         return f"{self.group}[{self.name!r}]"
 
 
-IntoExpression: TypeAlias = Union[bool, None, str, float, OperatorMixin, dict[str, Any]]
+IntoExpression: TypeAlias = Union[
+    bool, str, float, dt.date, dt.datetime, OperatorMixin, dict[str, Any], None
+]
