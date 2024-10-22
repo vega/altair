@@ -1127,11 +1127,11 @@ def test_to_dict_datetime(
 def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
     datetime = dt.datetime(2003, 5, 1, 1, 30)
 
-    result = alt.FieldEqualPredicate(datetime, "column 1")  # type: ignore[arg-type]
+    result = alt.FieldEqualPredicate(datetime, "column 1")
     assert result.to_dict()
 
     with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
-        alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")  # type: ignore[arg-type]
+        alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
 
 
 def test_to_dict_datetime_typing() -> None:
@@ -1144,16 +1144,13 @@ def test_to_dict_datetime_typing() -> None:
     """
     datetime = dt.datetime(2003, 5, 1, 1, 30)
     datetime_seq = [datetime, datetime.replace(2005), datetime.replace(2008)]
-    assert alt.FieldEqualPredicate(datetime, field="column 1")  # type: ignore[arg-type]
-    assert alt.FieldOneOfPredicate(
-        oneOf=datetime_seq,  # type: ignore[arg-type]
-        field="column 1",
-    )
+    assert alt.FieldEqualPredicate(datetime, field="column 1")
+    assert alt.FieldOneOfPredicate(oneOf=datetime_seq, field="column 1")
 
-    assert alt.Legend(values=datetime_seq)  # type: ignore[arg-type]
+    assert alt.Legend(values=datetime_seq)
 
-    assert alt.Scale(domain=datetime_seq)  # type: ignore[arg-type]
-    assert alt.Scale(domainMin=datetime_seq[0], domainMax=datetime_seq[2])  # type: ignore[arg-type]
+    assert alt.Scale(domain=datetime_seq)
+    assert alt.Scale(domainMin=datetime_seq[0], domainMax=datetime_seq[2])
 
     # NOTE: `datum` is not annotated?
     assert alt.XDatum(datum=datetime).to_dict()
