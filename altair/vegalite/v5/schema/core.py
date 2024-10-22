@@ -1725,7 +1725,7 @@ class Axis(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -2302,7 +2302,7 @@ class AxisConfig(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -5647,7 +5647,7 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Optional[
-            Sequence[str | bool | float | SchemaBase | Map]
+            Sequence[str | bool | float | Temporal | SchemaBase | Map]
         ] = Undefined,
         **kwds,
     ):
@@ -6600,7 +6600,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -6826,7 +6826,7 @@ class FacetFieldDef(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -9728,7 +9728,7 @@ class Legend(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -12470,7 +12470,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -12728,7 +12728,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -13120,7 +13120,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -13378,7 +13378,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -13529,7 +13529,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -13787,7 +13787,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -15164,7 +15164,7 @@ class DatumDef(LatLongDef, Position2Def):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -15324,7 +15324,7 @@ class PositionDatumDefBase(PolarDef):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
@@ -15519,7 +15519,7 @@ class PositionDatumDef(PositionDef):
         axis: Optional[None | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         impute: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -15810,7 +15810,7 @@ class PositionFieldDef(PositionDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -16090,7 +16090,7 @@ class PositionFieldDefBase(PolarDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -16229,7 +16229,9 @@ class FieldEqualPredicate(Predicate):
 
     def __init__(
         self,
-        equal: Optional[str | bool | float | Parameter | SchemaBase | Map] = Undefined,
+        equal: Optional[
+            str | bool | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         field: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -16258,7 +16260,9 @@ class FieldGTEPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        gte: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        gte: Optional[
+            str | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16286,7 +16290,7 @@ class FieldGTPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        gt: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        gt: Optional[str | float | Temporal | Parameter | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16314,7 +16318,9 @@ class FieldLTEPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        lte: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        lte: Optional[
+            str | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16342,7 +16348,7 @@ class FieldLTPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        lt: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        lt: Optional[str | float | Temporal | Parameter | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16375,7 +16381,7 @@ class FieldOneOfPredicate(Predicate):
             Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -16408,7 +16414,7 @@ class FieldRangePredicate(Predicate):
         range: Optional[
             Parameter
             | SchemaBase
-            | Sequence[None | float | Parameter | SchemaBase | Map]
+            | Sequence[None | float | Temporal | Parameter | SchemaBase | Map]
             | Map
         ] = Undefined,
         timeUnit: Optional[
@@ -17987,7 +17993,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -18290,12 +18296,18 @@ class Scale(VegaLiteSchema):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -18742,7 +18754,7 @@ class ScaleDatumDef(OffsetDef):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
@@ -18979,7 +18991,7 @@ class ScaleFieldDef(OffsetDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -20072,7 +20084,14 @@ class SelectionParameter(VegaLiteSchema):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | None | float | SchemaBase | Sequence[SchemaBase | Map] | Map
+            str
+            | bool
+            | None
+            | float
+            | Temporal
+            | SchemaBase
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         **kwds,
     ):
@@ -20297,7 +20316,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -20555,7 +20574,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -22766,7 +22785,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -24223,7 +24242,14 @@ class TopLevelSelectionParameter(TopLevelParameter):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | None | float | SchemaBase | Sequence[SchemaBase | Map] | Map
+            str
+            | bool
+            | None
+            | float
+            | Temporal
+            | SchemaBase
+            | Sequence[SchemaBase | Map]
+            | Map
         ] = Undefined,
         views: Optional[Sequence[str]] = Undefined,
         **kwds,

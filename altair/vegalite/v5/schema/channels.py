@@ -651,7 +651,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -673,12 +673,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -845,7 +851,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -1075,7 +1081,7 @@ class AngleValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -1093,7 +1099,7 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -1120,7 +1126,7 @@ class AngleValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -1137,7 +1143,7 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -1577,7 +1583,7 @@ class Color(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -1599,12 +1605,18 @@ class Color(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -1771,7 +1783,7 @@ class Color(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -2004,7 +2016,7 @@ class ColorValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -2022,7 +2034,7 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -2049,7 +2061,7 @@ class ColorValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -2066,7 +2078,7 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -2549,7 +2561,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -3002,7 +3014,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -3020,7 +3032,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -3047,7 +3059,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -3064,7 +3076,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -3931,7 +3943,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -4361,7 +4373,7 @@ class Fill(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -4383,12 +4395,18 @@ class Fill(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -4555,7 +4573,7 @@ class Fill(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -4788,7 +4806,7 @@ class FillValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -4806,7 +4824,7 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -4833,7 +4851,7 @@ class FillValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -4850,7 +4868,7 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -5289,7 +5307,7 @@ class FillOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -5311,12 +5329,18 @@ class FillOpacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -5483,7 +5507,7 @@ class FillOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -5715,7 +5739,7 @@ class FillOpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -5733,7 +5757,7 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -5760,7 +5784,7 @@ class FillOpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -5777,7 +5801,7 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -6242,7 +6266,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -6260,7 +6284,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -6287,7 +6311,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -6304,7 +6328,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -8665,7 +8689,7 @@ class Opacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -8687,12 +8711,18 @@ class Opacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -8859,7 +8889,7 @@ class Opacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -9089,7 +9119,7 @@ class OpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -9107,7 +9137,7 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -9134,7 +9164,7 @@ class OpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -9151,7 +9181,7 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -9869,12 +9899,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -10048,7 +10084,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -10238,12 +10274,18 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -11159,7 +11201,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
         ] = Undefined,
@@ -11587,7 +11629,7 @@ class Shape(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -11609,12 +11651,18 @@ class Shape(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -11781,7 +11829,7 @@ class Shape(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12014,7 +12062,7 @@ class ShapeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12032,7 +12080,7 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -12059,7 +12107,7 @@ class ShapeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12076,7 +12124,7 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -12513,7 +12561,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -12535,12 +12583,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -12707,7 +12761,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12937,7 +12991,7 @@ class SizeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12955,7 +13009,7 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -12982,7 +13036,7 @@ class SizeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -12999,7 +13053,7 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -13439,7 +13493,7 @@ class Stroke(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -13461,12 +13515,18 @@ class Stroke(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -13633,7 +13693,7 @@ class Stroke(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -13866,7 +13926,7 @@ class StrokeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -13884,7 +13944,7 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -13911,7 +13971,7 @@ class StrokeValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -13928,7 +13988,7 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -14367,7 +14427,7 @@ class StrokeDash(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -14389,12 +14449,18 @@ class StrokeDash(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -14561,7 +14627,7 @@ class StrokeDash(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -14793,7 +14859,7 @@ class StrokeDashValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -14811,7 +14877,7 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -14838,7 +14904,7 @@ class StrokeDashValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -14855,7 +14921,7 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -15294,7 +15360,7 @@ class StrokeOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -15316,12 +15382,18 @@ class StrokeOpacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -15488,7 +15560,7 @@ class StrokeOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -15720,7 +15792,7 @@ class StrokeOpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -15738,7 +15810,7 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -15765,7 +15837,7 @@ class StrokeOpacityValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -15782,7 +15854,7 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -16221,7 +16293,7 @@ class StrokeWidth(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -16243,12 +16315,18 @@ class StrokeWidth(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -16415,7 +16493,7 @@ class StrokeWidth(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -16647,7 +16725,7 @@ class StrokeWidthValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -16665,7 +16743,7 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -16692,7 +16770,7 @@ class StrokeWidthValue(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -16709,7 +16787,7 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -17740,12 +17818,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -17919,7 +18003,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -18109,12 +18193,18 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -19012,7 +19102,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -19030,7 +19120,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -19057,7 +19147,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -19074,7 +19164,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -19539,7 +19629,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -19557,7 +19647,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
         scale: Optional[None | SchemaBase | Map] = Undefined,
@@ -19584,7 +19674,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -19601,7 +19691,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
         ] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[None | SchemaBase | Map] = Undefined,
@@ -20022,7 +20112,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -20095,12 +20185,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -20276,7 +20372,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -20581,7 +20677,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -20619,12 +20715,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -21865,12 +21967,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -22035,7 +22143,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -22193,12 +22301,18 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -22662,7 +22776,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -22735,12 +22849,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -22916,7 +23036,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -23221,7 +23341,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -23259,12 +23379,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -24505,12 +24631,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -24675,7 +24807,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
         ] = Undefined,
@@ -24833,12 +24965,18 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
