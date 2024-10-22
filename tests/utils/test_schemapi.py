@@ -1113,3 +1113,22 @@ def test_to_dict_datetime(
 
     assert isinstance(params_value, list)
     assert params_value == expected_dicts
+
+
+@pytest.mark.parametrize(
+    "tzinfo",
+    [
+        dt.timezone(dt.timedelta(hours=2), "UTC+2"),
+        dt.timezone(dt.timedelta(hours=1), "BST"),
+        dt.timezone(dt.timedelta(hours=-7), "pdt"),
+        dt.timezone(dt.timedelta(hours=-3), "BRT"),
+    ],
+)
+def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+
+    result = alt.FieldEqualPredicate(datetime, "column 1")  # type: ignore[arg-type]
+    assert result.to_dict()
+
+    with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
+        alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")  # type: ignore[arg-type]

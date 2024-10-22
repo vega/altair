@@ -518,8 +518,16 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
             result.update(
                 hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
             )
-        if (name := obj.tzname()) and name == "UTC":
-            result["utc"] = True
+        if name := obj.tzname():
+            if name == "UTC":
+                result["utc"] = True
+            else:
+                msg = (
+                    f"Unsupported timezone {name!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
     return result
 
 
