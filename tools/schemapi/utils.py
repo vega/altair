@@ -481,7 +481,7 @@ class SchemaInfo:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             tps.add(tp_str)
         elif FOR_TYPE_HINTS and self.is_union_literal():
-            it = chain.from_iterable(el.literal for el in self.anyOf)
+            it: Iterator[str] = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
         elif self.is_anyOf():
