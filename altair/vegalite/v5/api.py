@@ -30,7 +30,7 @@ from .compiler import vegalite_compilers
 from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
-from .schema._typing import Map
+from .schema._typing import Map, PrimitiveValue_T
 from .theme import themes
 
 if sys.version_info >= (3, 14):
@@ -1440,14 +1440,7 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Param
 def selection_interval(
     name: str | None = None,
     value: Optional[
-        str
-        | bool
-        | None
-        | float
-        | Temporal
-        | SchemaBase
-        | Sequence[SchemaBase | Map]
-        | Map
+        PrimitiveValue_T | Temporal | SchemaBase | Sequence[SchemaBase | Map] | Map
     ] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
@@ -1562,14 +1555,7 @@ def selection_interval(
 def selection_point(
     name: str | None = None,
     value: Optional[
-        str
-        | bool
-        | None
-        | float
-        | Temporal
-        | SchemaBase
-        | Sequence[SchemaBase | Map]
-        | Map
+        PrimitiveValue_T | Temporal | SchemaBase | Sequence[SchemaBase | Map] | Map
     ] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
