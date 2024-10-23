@@ -885,6 +885,17 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     -------
     - https://github.com/vega/altair/pull/3573#discussion_r1747121600
 
+    Examples
+    --------
+    >>> sort_type_reprs(["float", "None", "bool", "Chart", "float", "bool", "Chart", "str"])
+    ['str', 'bool', 'float', 'Chart', 'None']
+
+    >>> sort_type_reprs(("None", "int", "Literal[5]", "int", "float"))
+    ['int', 'float', 'Literal[5]', 'None']
+
+    >>> sort_type_reprs({"date", "int", "str", "datetime", "Date"})
+    ['int', 'str', 'date', 'datetime', 'Date']
+
     .. _set:
         https://docs.python.org/3/tutorial/datastructures.html#sets
     .. _sort-stability:
