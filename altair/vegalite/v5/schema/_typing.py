@@ -68,6 +68,7 @@ __all__ = [
     "Orient_T",
     "Orientation_T",
     "PaddingKwds",
+    "PrimitiveValue_T",
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
@@ -214,6 +215,7 @@ VegaThemes: TypeAlias = Literal[
     "vox",
 ]
 Map: TypeAlias = Mapping[str, Any]
+PrimitiveValue_T: TypeAlias = Union[str, bool, float, None]
 AggregateOp_T: TypeAlias = Literal[
     "argmax",
     "argmin",
