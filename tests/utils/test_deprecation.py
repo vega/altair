@@ -1,9 +1,11 @@
+# ruff: noqa: B018
 import re
 
 import pytest
 
 from altair.utils.deprecation import (
     AltairDeprecationWarning,
+    _warnings_monitor,
     deprecated,
     deprecated_warn,
 )
@@ -38,3 +40,25 @@ def test_deprecation_warn():
         match=re.compile(r"altair=3321.+this code path is a noop", flags=re.DOTALL),
     ):
         deprecated_warn("this code path is a noop", version="3321", stacklevel=1)
+
+
+def test_deprecated_import():
+    import altair as alt
+
+    pattern = re.compile(
+        r"altair=5\.5\.0.+\.theme instead.+user.guide",
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    with pytest.warns(AltairDeprecationWarning, match=pattern):
+        alt.themes
+
+    # NOTE: Tests that second access does not trigger a warning
+    assert alt.themes
+    # Then reset cache
+    _warnings_monitor.clear()
+
+    with pytest.warns(AltairDeprecationWarning, match=pattern):
+        from altair import themes  # noqa: F401
+
+    assert alt.themes == alt.theme._themes
+    _warnings_monitor.clear()
