@@ -12469,9 +12469,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         self,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13119,9 +13117,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         self,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -13528,9 +13524,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         self,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -15163,9 +15157,7 @@ class DatumDef(LatLongDef, Position2Def):
     def __init__(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -15323,9 +15315,7 @@ class PositionDatumDefBase(PolarDef):
     def __init__(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
@@ -15518,9 +15508,7 @@ class PositionDatumDef(PositionDef):
         self,
         axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         impute: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
@@ -18741,9 +18729,7 @@ class ScaleDatumDef(OffsetDef):
     def __init__(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
@@ -20072,7 +20058,7 @@ class SelectionParameter(VegaLiteSchema):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | float | SchemaBase | Sequence[SchemaBase | Map] | Map | None
+            SchemaBase | Sequence[SchemaBase | Map] | Map | PrimitiveValue_T
         ] = Undefined,
         **kwds,
     ):
@@ -20296,9 +20282,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         self,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
@@ -22765,9 +22749,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         self,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
@@ -24223,7 +24205,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | float | SchemaBase | Sequence[SchemaBase | Map] | Map | None
+            SchemaBase | Sequence[SchemaBase | Map] | Map | PrimitiveValue_T
         ] = Undefined,
         views: Optional[Sequence[str]] = Undefined,
         **kwds,

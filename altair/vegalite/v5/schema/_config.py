@@ -7399,7 +7399,7 @@ class TopLevelSelectionParameterKwds(TypedDict, total=False):
         | LegendStreamBindingKwds
         | Literal["legend", "scales"]
     )
-    value: str | bool | float | DateTimeKwds | Sequence[Map] | None
+    value: DateTimeKwds | Sequence[Map] | PrimitiveValue_T
     views: Sequence[str]
 
 

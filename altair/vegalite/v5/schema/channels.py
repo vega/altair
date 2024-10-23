@@ -1092,9 +1092,7 @@ class AngleValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -1136,9 +1134,7 @@ class AngleValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -2021,9 +2017,7 @@ class ColorValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -2065,9 +2059,7 @@ class ColorValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -3019,9 +3011,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -3063,9 +3053,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -4805,9 +4793,7 @@ class FillValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -4849,9 +4835,7 @@ class FillValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -5732,9 +5716,7 @@ class FillOpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -5776,9 +5758,7 @@ class FillOpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -6259,9 +6239,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -6303,9 +6281,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -9106,9 +9082,7 @@ class OpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -9150,9 +9124,7 @@ class OpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -12031,9 +12003,7 @@ class ShapeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -12075,9 +12045,7 @@ class ShapeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -12954,9 +12922,7 @@ class SizeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -12998,9 +12964,7 @@ class SizeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -13883,9 +13847,7 @@ class StrokeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -13927,9 +13889,7 @@ class StrokeValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -14810,9 +14770,7 @@ class StrokeDashValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -14854,9 +14812,7 @@ class StrokeDashValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -15737,9 +15693,7 @@ class StrokeOpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -15781,9 +15735,7 @@ class StrokeOpacityValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -16664,9 +16616,7 @@ class StrokeWidthValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -16708,9 +16658,7 @@ class StrokeWidthValue(
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -19029,9 +18977,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -19073,9 +19019,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
@@ -19556,9 +19500,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
@@ -19600,9 +19542,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         bandPosition: Optional[float] = Undefined,
-        datum: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        datum: Optional[Parameter | SchemaBase | Map | PrimitiveValue_T] = Undefined,
         empty: Optional[bool] = Undefined,
         legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
