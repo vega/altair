@@ -88,6 +88,7 @@ if TYPE_CHECKING:
         SingleDefUnitChannel_T,
         SingleTimeUnit_T,
         StackOffset_T,
+        Temporal,
     )
     from .schema.channels import Column, Facet, Row
     from .schema.core import (
@@ -1438,7 +1439,16 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Param
 
 def selection_interval(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[
+        str
+        | bool
+        | None
+        | float
+        | Temporal
+        | SchemaBase
+        | Sequence[SchemaBase | Map]
+        | Map
+    ] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
@@ -1551,7 +1561,16 @@ def selection_interval(
 
 def selection_point(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[
+        str
+        | bool
+        | None
+        | float
+        | Temporal
+        | SchemaBase
+        | Sequence[SchemaBase | Map]
+        | Map
+    ] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[Expr] = Undefined,
