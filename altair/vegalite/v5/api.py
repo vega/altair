@@ -540,10 +540,8 @@ else:
 ```
 """
 
-_LiteralValue: TypeAlias = Union[str, bool, float, int]
-"""Primitive python value types."""
 
-_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, SchemaBase]
+_FieldEqualType: TypeAlias = Union[PrimitiveValue_T, Map, Parameter, SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -634,7 +632,7 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
     param: Parameter | str
     test: _TestPredicateType
     value: Any
-    __extra_items__: _StatementType | OneOrSeq[_LiteralValue]
+    __extra_items__: _StatementType | OneOrSeq[PrimitiveValue_T]
 
 
 _Condition: TypeAlias = _ConditionExtra
