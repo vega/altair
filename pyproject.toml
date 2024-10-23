@@ -119,7 +119,7 @@ test = [
     "ruff check .",
     "ruff format --diff --check .",
     "mypy altair tests",
-    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
+    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair tools",
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
@@ -130,18 +130,18 @@ update-init-file = [
 ]
 test-fast = [
     "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"not slow\" {args}"
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"not slow\" {args}"
 ]
 test-slow = [
     "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"slow\" {args}"
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
 ]
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
 # https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
-default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair"]
+default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
 parallel = true
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.9", "3.10", "3.11", "3.12"]
