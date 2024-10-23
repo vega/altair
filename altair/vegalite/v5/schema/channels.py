@@ -277,7 +277,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -320,7 +320,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -329,7 +329,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -342,7 +342,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -389,7 +389,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -561,14 +561,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -578,7 +578,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -602,21 +602,21 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -624,14 +624,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -674,7 +674,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -741,7 +741,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -749,7 +749,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -840,25 +840,25 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -897,9 +897,9 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1032,7 +1032,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -1071,25 +1071,25 @@ class AngleValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
@@ -1099,12 +1099,12 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
@@ -1114,26 +1114,26 @@ class AngleValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
@@ -1143,13 +1143,13 @@ class AngleValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
@@ -1209,7 +1209,7 @@ class Color(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -1252,7 +1252,7 @@ class Color(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -1261,7 +1261,7 @@ class Color(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -1274,7 +1274,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -1321,7 +1321,7 @@ class Color(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1454,7 +1454,7 @@ class Color(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1463,7 +1463,7 @@ class Color(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1493,14 +1493,14 @@ class Color(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1510,7 +1510,7 @@ class Color(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1534,21 +1534,21 @@ class Color(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1556,14 +1556,14 @@ class Color(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1606,7 +1606,7 @@ class Color(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -1673,7 +1673,7 @@ class Color(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1681,7 +1681,7 @@ class Color(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -1772,25 +1772,25 @@ class Color(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -1831,9 +1831,9 @@ class ColorDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1931,7 +1931,7 @@ class ColorDatum(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -1940,7 +1940,7 @@ class ColorDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -1966,7 +1966,7 @@ class ColorDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -1992,7 +1992,7 @@ class ColorValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -2006,25 +2006,25 @@ class ColorValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
@@ -2034,12 +2034,12 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
@@ -2049,26 +2049,26 @@ class ColorValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
@@ -2078,13 +2078,13 @@ class ColorValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
@@ -2093,7 +2093,7 @@ class ColorValue(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2102,7 +2102,7 @@ class ColorValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2154,7 +2154,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2195,9 +2195,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -2238,7 +2238,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -2410,7 +2410,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -2456,7 +2456,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Column: ...
 
@@ -2551,25 +2551,25 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         center: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -2612,7 +2612,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2696,7 +2696,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -2953,7 +2953,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -2961,7 +2961,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -2990,7 +2990,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -3004,25 +3004,25 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
@@ -3032,12 +3032,12 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
@@ -3047,26 +3047,26 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
@@ -3076,13 +3076,13 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
@@ -3091,7 +3091,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -3100,7 +3100,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -3141,7 +3141,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3186,7 +3186,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -3412,12 +3412,12 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -3471,7 +3471,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3543,9 +3543,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -3588,7 +3588,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -3782,7 +3782,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -3828,7 +3828,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Facet: ...
 
@@ -3931,27 +3931,27 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -3999,7 +3999,7 @@ class Fill(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4042,7 +4042,7 @@ class Fill(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -4051,7 +4051,7 @@ class Fill(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -4064,7 +4064,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -4111,7 +4111,7 @@ class Fill(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4244,7 +4244,7 @@ class Fill(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4253,7 +4253,7 @@ class Fill(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4283,14 +4283,14 @@ class Fill(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -4300,7 +4300,7 @@ class Fill(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -4324,21 +4324,21 @@ class Fill(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -4346,14 +4346,14 @@ class Fill(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -4396,7 +4396,7 @@ class Fill(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -4463,7 +4463,7 @@ class Fill(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4471,7 +4471,7 @@ class Fill(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -4562,25 +4562,25 @@ class Fill(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -4621,9 +4621,9 @@ class FillDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4721,7 +4721,7 @@ class FillDatum(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -4730,7 +4730,7 @@ class FillDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -4756,7 +4756,7 @@ class FillDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -4782,7 +4782,7 @@ class FillValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4796,25 +4796,25 @@ class FillValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
@@ -4824,12 +4824,12 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
@@ -4839,26 +4839,26 @@ class FillValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
@@ -4868,13 +4868,13 @@ class FillValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
@@ -4883,7 +4883,7 @@ class FillValue(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -4892,7 +4892,7 @@ class FillValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -4933,7 +4933,7 @@ class FillOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4976,7 +4976,7 @@ class FillOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -4985,7 +4985,7 @@ class FillOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -4998,7 +4998,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -5045,7 +5045,7 @@ class FillOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -5217,14 +5217,14 @@ class FillOpacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -5234,7 +5234,7 @@ class FillOpacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -5258,21 +5258,21 @@ class FillOpacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -5280,14 +5280,14 @@ class FillOpacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -5330,7 +5330,7 @@ class FillOpacity(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -5397,7 +5397,7 @@ class FillOpacity(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -5405,7 +5405,7 @@ class FillOpacity(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -5496,25 +5496,25 @@ class FillOpacity(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -5555,9 +5555,9 @@ class FillOpacityDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -5690,7 +5690,7 @@ class FillOpacityDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -5729,25 +5729,25 @@ class FillOpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
@@ -5757,12 +5757,12 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
@@ -5772,26 +5772,26 @@ class FillOpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
@@ -5801,13 +5801,13 @@ class FillOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
@@ -5864,7 +5864,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -5948,7 +5948,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6205,7 +6205,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -6213,7 +6213,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -6242,7 +6242,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -6256,25 +6256,25 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
@@ -6284,12 +6284,12 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
@@ -6299,26 +6299,26 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
@@ -6328,13 +6328,13 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
@@ -6343,7 +6343,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -6352,7 +6352,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -6393,7 +6393,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6438,7 +6438,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6664,12 +6664,12 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -6752,7 +6752,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6961,7 +6961,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
@@ -6989,9 +6989,9 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7101,7 +7101,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7179,7 +7179,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7319,7 +7319,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -7345,9 +7345,9 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7457,7 +7457,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7555,7 +7555,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7764,7 +7764,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
@@ -7792,9 +7792,9 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7904,7 +7904,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7982,7 +7982,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8122,7 +8122,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -8148,9 +8148,9 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8260,7 +8260,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -8315,7 +8315,7 @@ class Opacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8358,7 +8358,7 @@ class Opacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -8367,7 +8367,7 @@ class Opacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -8380,7 +8380,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -8427,7 +8427,7 @@ class Opacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8599,14 +8599,14 @@ class Opacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -8616,7 +8616,7 @@ class Opacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -8640,21 +8640,21 @@ class Opacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -8662,14 +8662,14 @@ class Opacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -8712,7 +8712,7 @@ class Opacity(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -8779,7 +8779,7 @@ class Opacity(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -8787,7 +8787,7 @@ class Opacity(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -8878,25 +8878,25 @@ class Opacity(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -8935,9 +8935,9 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9070,7 +9070,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -9109,25 +9109,25 @@ class OpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
@@ -9137,12 +9137,12 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
@@ -9152,26 +9152,26 @@ class OpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
@@ -9181,13 +9181,13 @@ class OpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
@@ -9244,7 +9244,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9291,7 +9291,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9520,13 +9520,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -9619,7 +9619,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9655,7 +9655,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -9668,7 +9668,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -9706,7 +9706,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -9745,7 +9745,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9900,7 +9900,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -9967,7 +9967,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Radius: ...
 
@@ -9975,7 +9975,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Radius: ...
 
@@ -10075,24 +10075,24 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -10123,9 +10123,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -10138,7 +10138,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -10168,7 +10168,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10275,7 +10275,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -10341,9 +10341,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -10450,7 +10450,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10590,7 +10590,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -10616,9 +10616,9 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10728,7 +10728,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -10794,7 +10794,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10835,9 +10835,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -10878,7 +10878,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -11050,7 +11050,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -11096,7 +11096,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Row: ...
 
@@ -11191,25 +11191,25 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         center: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -11255,7 +11255,7 @@ class Shape(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11298,7 +11298,7 @@ class Shape(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -11307,7 +11307,7 @@ class Shape(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -11320,7 +11320,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -11367,7 +11367,7 @@ class Shape(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -11500,7 +11500,7 @@ class Shape(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11509,7 +11509,7 @@ class Shape(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11539,14 +11539,14 @@ class Shape(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11556,7 +11556,7 @@ class Shape(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -11580,21 +11580,21 @@ class Shape(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -11602,14 +11602,14 @@ class Shape(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11652,7 +11652,7 @@ class Shape(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -11719,7 +11719,7 @@ class Shape(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11727,7 +11727,7 @@ class Shape(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -11818,25 +11818,25 @@ class Shape(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ):
@@ -11877,9 +11877,9 @@ class ShapeDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -11977,7 +11977,7 @@ class ShapeDatum(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -11986,7 +11986,7 @@ class ShapeDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -12012,7 +12012,7 @@ class ShapeDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -12038,7 +12038,7 @@ class ShapeValue(
     ----------
     condition : dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -12052,25 +12052,25 @@ class ShapeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
@@ -12080,12 +12080,12 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
@@ -12095,26 +12095,26 @@ class ShapeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
@@ -12124,13 +12124,13 @@ class ShapeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
@@ -12139,7 +12139,7 @@ class ShapeValue(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -12148,7 +12148,7 @@ class ShapeValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -12187,7 +12187,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12230,7 +12230,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -12239,7 +12239,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -12252,7 +12252,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12299,7 +12299,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12471,14 +12471,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12488,7 +12488,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -12512,21 +12512,21 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -12534,14 +12534,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12584,7 +12584,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -12651,7 +12651,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -12659,7 +12659,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -12750,25 +12750,25 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -12807,9 +12807,9 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12942,7 +12942,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -12981,25 +12981,25 @@ class SizeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
@@ -13009,12 +13009,12 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
@@ -13024,26 +13024,26 @@ class SizeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
@@ -13053,13 +13053,13 @@ class SizeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
@@ -13119,7 +13119,7 @@ class Stroke(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13162,7 +13162,7 @@ class Stroke(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -13171,7 +13171,7 @@ class Stroke(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -13184,7 +13184,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13231,7 +13231,7 @@ class Stroke(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13364,7 +13364,7 @@ class Stroke(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13373,7 +13373,7 @@ class Stroke(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13403,14 +13403,14 @@ class Stroke(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -13420,7 +13420,7 @@ class Stroke(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -13444,21 +13444,21 @@ class Stroke(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -13466,14 +13466,14 @@ class Stroke(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -13516,7 +13516,7 @@ class Stroke(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -13583,7 +13583,7 @@ class Stroke(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13591,7 +13591,7 @@ class Stroke(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -13682,25 +13682,25 @@ class Stroke(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -13741,9 +13741,9 @@ class StrokeDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13841,7 +13841,7 @@ class StrokeDatum(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -13850,7 +13850,7 @@ class StrokeDatum(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -13876,7 +13876,7 @@ class StrokeDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -13902,7 +13902,7 @@ class StrokeValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13916,25 +13916,25 @@ class StrokeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
@@ -13944,12 +13944,12 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
@@ -13959,26 +13959,26 @@ class StrokeValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
@@ -13988,13 +13988,13 @@ class StrokeValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
@@ -14003,7 +14003,7 @@ class StrokeValue(
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -14012,7 +14012,7 @@ class StrokeValue(
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -14053,7 +14053,7 @@ class StrokeDash(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14096,7 +14096,7 @@ class StrokeDash(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -14105,7 +14105,7 @@ class StrokeDash(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -14118,7 +14118,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14165,7 +14165,7 @@ class StrokeDash(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -14337,14 +14337,14 @@ class StrokeDash(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14354,7 +14354,7 @@ class StrokeDash(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -14378,21 +14378,21 @@ class StrokeDash(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -14400,14 +14400,14 @@ class StrokeDash(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14450,7 +14450,7 @@ class StrokeDash(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -14517,7 +14517,7 @@ class StrokeDash(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -14525,7 +14525,7 @@ class StrokeDash(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -14616,25 +14616,25 @@ class StrokeDash(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -14675,9 +14675,9 @@ class StrokeDashDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -14810,7 +14810,7 @@ class StrokeDashDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -14849,25 +14849,25 @@ class StrokeDashValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
@@ -14877,12 +14877,12 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
@@ -14892,26 +14892,26 @@ class StrokeDashValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
@@ -14921,13 +14921,13 @@ class StrokeDashValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
@@ -14986,7 +14986,7 @@ class StrokeOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15029,7 +15029,7 @@ class StrokeOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -15038,7 +15038,7 @@ class StrokeOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15051,7 +15051,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15098,7 +15098,7 @@ class StrokeOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15270,14 +15270,14 @@ class StrokeOpacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15287,7 +15287,7 @@ class StrokeOpacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -15311,21 +15311,21 @@ class StrokeOpacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -15333,14 +15333,14 @@ class StrokeOpacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15383,7 +15383,7 @@ class StrokeOpacity(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -15450,7 +15450,7 @@ class StrokeOpacity(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -15458,7 +15458,7 @@ class StrokeOpacity(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -15549,25 +15549,25 @@ class StrokeOpacity(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -15608,9 +15608,9 @@ class StrokeOpacityDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15743,7 +15743,7 @@ class StrokeOpacityDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -15782,25 +15782,25 @@ class StrokeOpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
@@ -15810,12 +15810,12 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
@@ -15825,26 +15825,26 @@ class StrokeOpacityValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
@@ -15854,13 +15854,13 @@ class StrokeOpacityValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
@@ -15919,7 +15919,7 @@ class StrokeWidth(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15962,7 +15962,7 @@ class StrokeWidth(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -15971,7 +15971,7 @@ class StrokeWidth(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15984,7 +15984,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -16031,7 +16031,7 @@ class StrokeWidth(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16203,14 +16203,14 @@ class StrokeWidth(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -16220,7 +16220,7 @@ class StrokeWidth(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -16244,21 +16244,21 @@ class StrokeWidth(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -16266,14 +16266,14 @@ class StrokeWidth(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -16316,7 +16316,7 @@ class StrokeWidth(
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -16383,7 +16383,7 @@ class StrokeWidth(
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -16391,7 +16391,7 @@ class StrokeWidth(
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -16482,25 +16482,25 @@ class StrokeWidth(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -16541,9 +16541,9 @@ class StrokeWidthDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16676,7 +16676,7 @@ class StrokeWidthDatum(
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -16715,25 +16715,25 @@ class StrokeWidthValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
@@ -16743,12 +16743,12 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
@@ -16758,26 +16758,26 @@ class StrokeWidthValue(
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
@@ -16787,13 +16787,13 @@ class StrokeWidthValue(
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
@@ -16850,7 +16850,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -16934,7 +16934,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17191,7 +17191,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -17199,7 +17199,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -17237,7 +17237,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -17271,7 +17271,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17415,7 +17415,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -17454,7 +17454,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -17462,7 +17462,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TextValue: ...
@@ -17472,7 +17472,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -17481,7 +17481,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TextValue: ...
@@ -17538,7 +17538,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -17574,7 +17574,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -17587,7 +17587,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -17625,7 +17625,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -17664,7 +17664,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17819,7 +17819,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -17886,7 +17886,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Theta: ...
 
@@ -17894,7 +17894,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Theta: ...
 
@@ -17994,24 +17994,24 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -18042,9 +18042,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -18057,7 +18057,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -18087,7 +18087,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18194,7 +18194,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -18260,9 +18260,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -18369,7 +18369,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18509,7 +18509,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -18535,9 +18535,9 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18647,7 +18647,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -18700,7 +18700,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18784,7 +18784,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -19041,7 +19041,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -19049,7 +19049,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -19078,7 +19078,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -19092,25 +19092,25 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
@@ -19120,12 +19120,12 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
@@ -19135,26 +19135,26 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
@@ -19164,13 +19164,13 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
@@ -19179,7 +19179,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -19188,7 +19188,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -19227,7 +19227,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -19311,7 +19311,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -19568,7 +19568,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -19576,7 +19576,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -19605,7 +19605,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -19619,25 +19619,25 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
@@ -19647,12 +19647,12 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
@@ -19662,26 +19662,26 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
@@ -19691,13 +19691,13 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+            str | bool | float | Temporal | Parameter | SchemaBase | Map | None
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
@@ -19706,7 +19706,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -19715,7 +19715,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -19750,7 +19750,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -19763,7 +19763,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -19799,7 +19799,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -19807,7 +19807,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -19820,7 +19820,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -19858,7 +19858,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -19897,7 +19897,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20010,7 +20010,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -20023,7 +20023,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20036,7 +20036,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -20068,7 +20068,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -20083,7 +20083,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20091,7 +20091,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20163,7 +20163,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
@@ -20186,7 +20186,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -20253,7 +20253,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> X: ...
 
@@ -20261,7 +20261,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> X: ...
 
@@ -20360,27 +20360,27 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -20409,7 +20409,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Parameters
     ----------
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -20422,9 +20422,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -20432,7 +20432,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -20445,7 +20445,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -20475,7 +20475,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20575,7 +20575,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -20588,7 +20588,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20601,7 +20601,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -20633,7 +20633,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -20648,7 +20648,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20656,7 +20656,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20693,7 +20693,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
@@ -20716,7 +20716,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -20781,12 +20781,12 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -20895,7 +20895,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21035,7 +21035,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21061,9 +21061,9 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21173,7 +21173,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -21274,7 +21274,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21414,7 +21414,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21521,7 +21521,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21661,7 +21661,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21720,7 +21720,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -21756,7 +21756,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -21769,7 +21769,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -21816,7 +21816,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21968,7 +21968,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -22035,7 +22035,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> XOffset: ...
 
@@ -22043,7 +22043,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> XOffset: ...
 
@@ -22134,23 +22134,23 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -22180,9 +22180,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -22195,7 +22195,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22302,7 +22302,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -22359,8 +22359,8 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -22414,7 +22414,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -22427,7 +22427,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22463,7 +22463,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -22471,7 +22471,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -22484,7 +22484,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -22522,7 +22522,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -22561,7 +22561,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22674,7 +22674,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -22687,7 +22687,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22700,7 +22700,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -22732,7 +22732,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -22747,7 +22747,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22755,7 +22755,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22827,7 +22827,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
@@ -22850,7 +22850,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -22917,7 +22917,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Y: ...
 
@@ -22925,7 +22925,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Y: ...
 
@@ -23024,27 +23024,27 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -23073,7 +23073,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Parameters
     ----------
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -23086,9 +23086,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -23096,7 +23096,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -23109,7 +23109,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -23139,7 +23139,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23239,7 +23239,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -23252,7 +23252,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23265,7 +23265,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -23297,7 +23297,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -23312,7 +23312,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23320,7 +23320,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23357,7 +23357,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
@@ -23380,7 +23380,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -23445,12 +23445,12 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -23559,7 +23559,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23699,7 +23699,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23725,9 +23725,9 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23837,7 +23837,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -23938,7 +23938,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24078,7 +24078,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24185,7 +24185,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24325,7 +24325,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24384,7 +24384,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -24420,7 +24420,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -24433,7 +24433,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -24480,7 +24480,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24632,7 +24632,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -24699,7 +24699,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> YOffset: ...
 
@@ -24707,7 +24707,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def sort(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> YOffset: ...
 
@@ -24798,23 +24798,23 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -24844,9 +24844,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -24859,7 +24859,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24966,7 +24966,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             | SchemaBase
             | Literal["unaggregated"]
             | Sequence[
-                str | bool | None | float | Temporal | Parameter | SchemaBase | Map
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
             ]
             | Map
         ] = Undefined,
@@ -25023,8 +25023,8 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):

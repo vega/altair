@@ -58,6 +58,23 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+_STDLIB_TYPE_NAMES = frozenset(
+    (
+        "int",
+        "float",
+        "str",
+        "None",
+        "bool",
+        "date",
+        "datetime",
+        "time",
+        "tuple",
+        "list",
+        "deque",
+        "dict",
+        "set",
+    )
+)
 
 _VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
 
@@ -865,13 +882,25 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     We use `set`_ for unique elements, but the lack of ordering requires additional sorts:
     - If types have same length names, order would still be non-deterministic
     - Hence, we sort as well by type name as a tie-breaker, see `sort-stability`_.
-    - Using ``str.lower`` gives priority to `builtins`_ over ``None``.
-    - Lowest priority is given to generated aliases from ``TypeAliasTracer``.
+    - Using ``str.lower`` gives priority to `builtins`_.
+    - Lower priority is given to generated aliases from ``TypeAliasTracer``.
         - These are purely to improve autocompletion
+    - ``None`` will always appear last.
 
     Related
     -------
     - https://github.com/vega/altair/pull/3573#discussion_r1747121600
+
+    Examples
+    --------
+    >>> sort_type_reprs(["float", "None", "bool", "Chart", "float", "bool", "Chart", "str"])
+    ['str', 'bool', 'float', 'Chart', 'None']
+
+    >>> sort_type_reprs(("None", "int", "Literal[5]", "int", "float"))
+    ['int', 'float', 'Literal[5]', 'None']
+
+    >>> sort_type_reprs({"date", "int", "str", "datetime", "Date"})
+    ['int', 'str', 'date', 'datetime', 'Date']
 
     .. _set:
         https://docs.python.org/3/tutorial/datastructures.html#sets
@@ -881,9 +910,30 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
         https://docs.python.org/3/library/functions.html
     """
     dedup = tps if isinstance(tps, set) else set(tps)
-    it = sorted(dedup, key=str.lower)  # Tertiary sort
-    it = sorted(it, key=len)  # Secondary sort
-    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
+    it = sorted(dedup, key=str.lower)  # Quinary sort
+    it = sorted(it, key=len)  # Quaternary sort
+    it = sorted(it, key=TypeAliasTracer.is_cached)  # Tertiary sort
+    it = sorted(it, key=is_not_stdlib)  # Secondary sort
+    it = sorted(it, key=is_none)  # Primary sort
+    return it
+
+
+def is_not_stdlib(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Places a subset of stdlib types at the **start** of list.
+    """
+    return s not in _STDLIB_TYPE_NAMES
+
+
+def is_none(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Always places ``None`` at the **end** of list.
+    """
+    return s == "None"
 
 
 def spell_nested_sequence(

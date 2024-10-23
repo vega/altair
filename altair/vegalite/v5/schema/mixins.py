@@ -64,7 +64,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -76,7 +76,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -96,7 +96,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -119,7 +119,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -273,7 +273,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -285,7 +285,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -305,7 +305,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -328,7 +328,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -482,7 +482,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -494,7 +494,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -514,7 +514,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -537,7 +537,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -691,7 +691,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -703,7 +703,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -723,7 +723,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -746,7 +746,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -900,7 +900,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -912,7 +912,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -932,7 +932,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -955,7 +955,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1109,7 +1109,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1121,7 +1121,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1141,7 +1141,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -1164,7 +1164,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1318,7 +1318,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1330,7 +1330,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1350,7 +1350,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -1373,7 +1373,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1527,7 +1527,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1539,7 +1539,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1559,7 +1559,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -1582,7 +1582,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1736,7 +1736,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1748,7 +1748,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1768,7 +1768,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -1791,7 +1791,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1945,7 +1945,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1957,7 +1957,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1977,7 +1977,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2000,7 +2000,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2154,7 +2154,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2166,7 +2166,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -2186,7 +2186,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2209,7 +2209,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2363,7 +2363,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2375,7 +2375,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -2395,7 +2395,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2418,7 +2418,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2572,7 +2572,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2584,7 +2584,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -2604,7 +2604,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2627,7 +2627,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2781,7 +2781,7 @@ class MarkMethodMixin:
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2793,7 +2793,7 @@ class MarkMethodMixin:
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -2813,7 +2813,7 @@ class MarkMethodMixin:
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2836,7 +2836,7 @@ class MarkMethodMixin:
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2961,7 +2961,7 @@ class MarkMethodMixin:
         clip: Optional[bool] = Undefined,
         color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         extent: Optional[float | Literal["min-max"]] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         median: Optional[bool | SchemaBase | Map] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
