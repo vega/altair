@@ -10,7 +10,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Callable
 
 import jsonschema
 import jsonschema.exceptions
@@ -34,6 +34,8 @@ from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
+
     from narwhals.typing import IntoDataFrame
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]

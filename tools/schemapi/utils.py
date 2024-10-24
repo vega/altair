@@ -4,28 +4,16 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
 import sys
 import textwrap
 import urllib.parse
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Iterable,
-    Iterator,
-    Literal,
-    Mapping,
-    MutableSequence,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
 
+from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
@@ -70,6 +58,23 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+_STDLIB_TYPE_NAMES = frozenset(
+    (
+        "int",
+        "float",
+        "str",
+        "None",
+        "bool",
+        "date",
+        "datetime",
+        "time",
+        "tuple",
+        "list",
+        "deque",
+        "dict",
+        "set",
+    )
+)
 
 _VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
 
@@ -91,13 +96,6 @@ class _TypeAliasTracer:
         A format specifier to produce the `TypeAlias` name.
 
         Will be provided a `SchemaInfo.title` as a single positional argument.
-    *ruff_check
-        Optional [ruff rule codes](https://docs.astral.sh/ruff/rules/),
-        each prefixed with `--select ` and follow a `ruff check --fix ` call.
-
-        If not provided, uses `[tool.ruff.lint.select]` from `pyproject.toml`.
-    ruff_format
-        Optional argument list supplied to [ruff format](https://docs.astral.sh/ruff/formatter/#ruff-format)
 
     Attributes
     ----------
@@ -111,12 +109,7 @@ class _TypeAliasTracer:
         Prefined import statements to appear at beginning of module.
     """
 
-    def __init__(
-        self,
-        fmt: str = "{}_T",
-        *ruff_check: str,
-        ruff_format: Sequence[str] | None = None,
-    ) -> None:
+    def __init__(self, fmt: str = "{}_T") -> None:
         self.fmt: str = fmt
         self._literals: dict[str, str] = {}
         self._literals_invert: dict[str, str] = {}
@@ -124,7 +117,7 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -133,12 +126,7 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
-        self._cmd_check: list[str] = ["--fix"]
-        self._cmd_format: Sequence[str] = ruff_format or ()
-        for c in ruff_check:
-            self._cmd_check.extend(("--extend-select", c))
 
     def _update_literals(self, name: str, tp: str, /) -> None:
         """Produces an inverted index, to reuse a `Literal` when `SchemaInfo.title` is empty."""
@@ -174,6 +162,20 @@ class _TypeAliasTracer:
             )
             tp = f"Union[SchemaBase, {', '.join(it)}]"
         return tp
+
+    def add_union(
+        self, info: SchemaInfo, tp_iter: Iterator[str], /, *, replace: bool = False
+    ) -> str:
+        if title := info.title:
+            alias = self.fmt.format(title)
+            if alias not in self._aliases:
+                self.update_aliases(
+                    (alias, f"Union[{', '.join(sort_type_reprs(tp_iter))}]")
+                )
+            return alias if replace else title
+        else:
+            msg = f"Unsupported operation.\nRequires a title.\n\n{info!r}"
+            raise NotImplementedError(msg)
 
     def update_aliases(self, *name_statement: tuple[str, str]) -> None:
         """
@@ -223,13 +225,6 @@ class _TypeAliasTracer:
         extra
             `tools.generate_schema_wrapper.TYPING_EXTRA`.
         """
-        ruff_format: MutableSequence[str | Path] = ["ruff", "format", fp]
-        if self._cmd_format:
-            ruff_format.extend(self._cmd_format)
-        commands: tuple[Sequence[str | Path], ...] = (
-            ["ruff", "check", fp, *self._cmd_check],
-            ruff_format,
-        )
         static = (header, "\n", *self._imports, "\n\n")
         self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
         all_ = [*iter(self._aliases), *extra_all]
@@ -238,10 +233,7 @@ class _TypeAliasTracer:
             [f"__all__ = {all_}", "\n\n", extra],
             self.generate_aliases(),
         )
-        fp.write_text("\n".join(it), encoding="utf-8")
-        for cmd in commands:
-            r = subprocess.run(cmd, check=True)
-            r.check_returncode()
+        ruff.write_lint_format(fp, it)
 
     @property
     def n_entries(self) -> int:
@@ -489,7 +481,7 @@ class SchemaInfo:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             tps.add(tp_str)
         elif FOR_TYPE_HINTS and self.is_union_literal():
-            it = chain.from_iterable(el.literal for el in self.anyOf)
+            it: Iterator[str] = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
         elif self.is_anyOf():
@@ -498,6 +490,14 @@ class SchemaInfo:
                 for s in self.anyOf
             )
             tps.update(maybe_rewrap_literal(chain.from_iterable(it_nest)))
+        elif FOR_TYPE_HINTS and self.is_type_alias_union():
+            it = (
+                SchemaInfo(dict(self.schema, type=tp)).to_type_repr(
+                    target=target, use_concrete=use_concrete
+                )
+                for tp in self.type
+            )
+            tps.add(TypeAliasTracer.add_union(self, it, replace=True))
         elif isinstance(self.type, list):
             # We always use title if possible for nested objects
             tps.update(
@@ -803,6 +803,25 @@ class SchemaInfo:
             and self.type in jsonschema_to_python_types
         )
 
+    def is_type_alias_union(self) -> bool:
+        """
+        Represents a name assigned to a list of literal types.
+
+        Example:
+
+            {"PrimitiveValue": {"type": ["number", "string", "boolean", "null"]}}
+
+        Translating from JSON -> Python, this is the same as an ``"anyOf"`` -> ``Union``.
+
+        The distinction in the schema is purely due to these types being defined in the draft, rather than definitions.
+        """
+        TP = "type"
+        return (
+            self.schema.keys() == {TP}
+            and isinstance(self.type, list)
+            and bool(self.title)
+        )
+
     def is_theme_config_target(self) -> bool:
         """
         Return `True` for candidates  classes in ``ThemeConfig`` hierarchy of ``TypedDict``(s).
@@ -898,13 +917,25 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     We use `set`_ for unique elements, but the lack of ordering requires additional sorts:
     - If types have same length names, order would still be non-deterministic
     - Hence, we sort as well by type name as a tie-breaker, see `sort-stability`_.
-    - Using ``str.lower`` gives priority to `builtins`_ over ``None``.
-    - Lowest priority is given to generated aliases from ``TypeAliasTracer``.
+    - Using ``str.lower`` gives priority to `builtins`_.
+    - Lower priority is given to generated aliases from ``TypeAliasTracer``.
         - These are purely to improve autocompletion
+    - ``None`` will always appear last.
 
     Related
     -------
     - https://github.com/vega/altair/pull/3573#discussion_r1747121600
+
+    Examples
+    --------
+    >>> sort_type_reprs(["float", "None", "bool", "Chart", "float", "bool", "Chart", "str"])
+    ['str', 'bool', 'float', 'Chart', 'None']
+
+    >>> sort_type_reprs(("None", "int", "Literal[5]", "int", "float"))
+    ['int', 'float', 'Literal[5]', 'None']
+
+    >>> sort_type_reprs({"date", "int", "str", "datetime", "Date"})
+    ['int', 'str', 'date', 'datetime', 'Date']
 
     .. _set:
         https://docs.python.org/3/tutorial/datastructures.html#sets
@@ -914,9 +945,30 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
         https://docs.python.org/3/library/functions.html
     """
     dedup = tps if isinstance(tps, set) else set(tps)
-    it = sorted(dedup, key=str.lower)  # Tertiary sort
-    it = sorted(it, key=len)  # Secondary sort
-    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
+    it = sorted(dedup, key=str.lower)  # Quinary sort
+    it = sorted(it, key=len)  # Quaternary sort
+    it = sorted(it, key=TypeAliasTracer.is_cached)  # Tertiary sort
+    it = sorted(it, key=is_not_stdlib)  # Secondary sort
+    it = sorted(it, key=is_none)  # Primary sort
+    return it
+
+
+def is_not_stdlib(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Places a subset of stdlib types at the **start** of list.
+    """
+    return s not in _STDLIB_TYPE_NAMES
+
+
+def is_none(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Always places ``None`` at the **end** of list.
+    """
+    return s == "None"
 
 
 def spell_nested_sequence(
@@ -997,49 +1049,6 @@ def unwrap_literal(tp: str, /) -> str:
     return re.sub(r"Literal\[(.+)\]", r"\g<1>", tp)
 
 
-def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
-    """
-    Format an existing file.
-
-    Running on `win32` after writing lines will ensure "lf" is used before:
-    ```bash
-    ruff format --diff --check .
-    ```
-    """
-    cmd: MutableSequence[str | Path] = ["ruff", "format", fp]
-    if extra_args:
-        cmd.extend(extra_args)
-    r = subprocess.run(cmd, check=True)
-    r.check_returncode()
-
-
-def ruff_write_lint_format_str(
-    fp: Path, code: str | Iterable[str], /, *, encoding: str = "utf-8"
-) -> None:
-    """
-    Combined steps of writing, `ruff check`, `ruff format`.
-
-    Notes
-    -----
-    - `fp` is written to first, as the size before formatting will be the smallest
-        - Better utilizes `ruff` performance, rather than `python` str and io
-    - `code` is no longer bound to `list`
-    - Encoding set as default
-    - `I001/2` are `isort` rules, to sort imports.
-    """
-    commands: Iterable[Sequence[str | Path]] = (
-        ["ruff", "check", fp, "--fix"],
-        ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
-    )
-    if not isinstance(code, str):
-        code = "\n".join(code)
-    fp.write_text(code, encoding=encoding)
-    for cmd in commands:
-        r = subprocess.run(cmd, check=True)
-        r.check_returncode()
-    ruff_format_py(fp)
-
-
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
     imps = "\n".join(f"    {s}" for s in imports)
@@ -1066,7 +1075,7 @@ def import_typing_extensions(
     )
 
 
-TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T")
 """An instance of `_TypeAliasTracer`.
 
 Collects a cache of unique `Literal` types used globally.
