@@ -168,21 +168,37 @@ def test_selection_condition():
 
 
 def test_selection_interval_value_typing() -> None:
+    """Ensure each encoding restricts types independently."""
     import datetime as dt
 
-    window_date = dt.date(2005, 1, 1), dt.date(2009, 1, 1)
-    window_other = (0, 999)
+    w_date = dt.date(2005, 1, 1), dt.date(2009, 1, 1)
+    w_float = (0, 999)
+    w_date_datetime = dt.date(2005, 1, 1), alt.DateTime(year=2009)
+    w_str = ["0", "500"]
 
-    a = alt.selection_interval(encodings=["x"], value={"x": window_date}).to_dict()
-    b = alt.selection_interval(encodings=["y"], value={"y": window_other}).to_dict()
+    a = alt.selection_interval(encodings=["x"], value={"x": w_date}).to_dict()
+    b = alt.selection_interval(encodings=["y"], value={"y": w_float}).to_dict()
+    c = alt.selection_interval(encodings=["x"], value={"x": w_date_datetime}).to_dict()
+    d = alt.selection_interval(encodings=["text"], value={"text": w_str}).to_dict()
+
     a_b = alt.selection_interval(
-        encodings=["x", "y"],
-        value={"x": window_date, "y": window_other},
+        encodings=["x", "y"], value={"x": w_date, "y": w_float}
+    ).to_dict()
+    a_c = alt.selection_interval(
+        encodings=["x", "y"], value={"x": w_date, "y": w_date_datetime}
+    ).to_dict()
+    b_c_d = alt.selection_interval(
+        encodings=["x", "y", "text"],
+        value={"x": w_date_datetime, "y": w_float, "text": w_str},
     ).to_dict()
 
     assert a
     assert b
+    assert c
+    assert d
     assert a_b
+    assert a_c
+    assert b_c_d
 
 
 def test_creation_views_params_layered_repeat_chart():
