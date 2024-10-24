@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal
+from typing import TYPE_CHECKING, Any, Final, Literal
 from urllib import request
 
 import vl_convert as vlc
@@ -20,14 +20,9 @@ import vl_convert as vlc
 sys.path.insert(0, str(Path.cwd()))
 
 
-from tools.schemapi import (  # noqa: F401
-    CodeSnippet,
-    SchemaInfo,
-    arg_invalid_kwds,
-    arg_kwds,
-    arg_required_kwds,
-    codegen,
-)
+from tools.codemod import ruff
+from tools.markup import rst_syntax_for_class
+from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
     SchemaProperties,
     TypeAliasTracer,
@@ -37,14 +32,16 @@ from tools.schemapi.utils import (
     import_typing_extensions,
     indent_docstring,
     resolve_references,
-    rst_syntax_for_class,
-    ruff_format_py,
-    ruff_write_lint_format_str,
     spell_literal,
 )
+from tools.vega_expr import write_expr_module
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from tools.schemapi.codegen import ArgInfo, AttrGetter
+    from vl_convert import VegaThemes
+
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
@@ -59,8 +56,14 @@ from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+VL_PACKAGE_TEMPLATE = (
+    "https://raw.githubusercontent.com/vega/vega-lite/refs/tags/{version}/package.json"
+)
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
+EXPR_FILE: Path = (
+    Path(__file__).parent / ".." / "altair" / "expr" / "__init__.py"
+).resolve()
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -276,10 +279,7 @@ class _EncodingMixin:
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {dict_literal}
         if args:
             kwargs = {{k: v for k, v in kwargs.items() if v is not Undefined}}
 
@@ -482,8 +482,8 @@ def download_schemafile(
 
 
 def _vega_lite_props_only(
-    themes: dict[str, dict[str, Any]], props: SchemaProperties, /
-) -> Iterator[tuple[str, dict[str, Any]]]:
+    themes: dict[VegaThemes, dict[str, Any]], props: SchemaProperties, /
+) -> Iterator[tuple[VegaThemes, dict[str, Any]]]:
     """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
     keep = props.keys()
     for name, theme_spec in themes.items():
@@ -543,13 +543,14 @@ def copy_schemapi_util() -> None:
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
 
     print(f"Copying\n {source_fp!s}\n  -> {destination_fp!s}")
-    with source_fp.open(encoding="utf8") as source, destination_fp.open(
-        "w", encoding="utf8"
-    ) as dest:
+    with (
+        source_fp.open(encoding="utf8") as source,
+        destination_fp.open("w", encoding="utf8") as dest,
+    ):
         dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":
-        ruff_format_py(destination_fp)
+        ruff.format(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -1025,7 +1026,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n",
     ]
-    ruff_write_lint_format_str(outfile, content)
+    ruff.write_lint_format(outfile, content)
 
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
 
@@ -1107,7 +1108,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
-        ruff_write_lint_format_str(fp, contents)
+        ruff.write_lint_format(fp, contents)
 
 
 def generate_encoding_artifacts(
@@ -1179,6 +1180,7 @@ def generate_encoding_artifacts(
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
+        dict_literal="{" + ", ".join(f"{kwd!r}:{kwd}" for kwd in channel_infos) + "}",
     )
     typed_dict = generate_typed_dict(
         facet_encoding,
@@ -1206,6 +1208,11 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
+    write_expr_module(
+        vlc.get_vega_version(),
+        output=EXPR_FILE,
+        header=HEADER_COMMENT,
+    )
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

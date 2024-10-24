@@ -11,8 +11,8 @@ from tests import examples_arguments_syntax, examples_methods_syntax
 
 if TYPE_CHECKING:
     import sys
+    from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
-    from typing import Collection, Iterator, Mapping
 
     if sys.version_info >= (3, 11):
         from typing import TypeAlias
@@ -54,6 +54,18 @@ Applies when `vl-convert`_ import would fail.
 
 .. _vl-convert:
    https://github.com/vega/vl-convert
+"""
+
+skip_requires_vegafusion: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("vegafusion") is None, reason="`vegafusion` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `vegafusion`_ import would fail.
+
+.. _vegafusion:
+    https://github.com/vega/vegafusion
 """
 
 

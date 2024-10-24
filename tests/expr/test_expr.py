@@ -2,14 +2,21 @@ from __future__ import annotations
 
 import operator
 import sys
-from inspect import classify_class_attrs, getmembers
-from typing import Any, Iterator
+from inspect import classify_class_attrs, getmembers, signature
+from typing import TYPE_CHECKING, Any, Callable, TypeVar, cast
 
 import pytest
 from jsonschema.exceptions import ValidationError
 
 from altair import datum, expr, ExprRef
-from altair.expr import _ConstExpressionType
+from altair.expr import _ExprMeta
+from altair.expr.core import Expression, GetAttrExpression
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+    from inspect import _IntrospectableCallable
+
+T = TypeVar("T")
 
 # This maps vega expression function names to the Python name
 VEGA_REMAP = {"if_": "if"}
@@ -19,20 +26,29 @@ def _is_property(obj: Any, /) -> bool:
     return isinstance(obj, property)
 
 
-def _get_classmethod_names(tp: type[Any], /) -> Iterator[str]:
-    for m in classify_class_attrs(tp):
-        if m.kind == "class method" and m.defining_class is tp:
-            yield m.name
-
-
-def _remap_classmethod_names(tp: type[Any], /) -> Iterator[tuple[str, str]]:
-    for name in _get_classmethod_names(tp):
-        yield VEGA_REMAP.get(name, name), name
-
-
 def _get_property_names(tp: type[Any], /) -> Iterator[str]:
     for nm, _ in getmembers(tp, _is_property):
         yield nm
+
+
+def signature_n_params(
+    obj: _IntrospectableCallable,
+    /,
+    *,
+    exclude: Iterable[str] = frozenset(("cls", "self")),
+) -> int:
+    sig = signature(obj)
+    return len(set(sig.parameters).difference(exclude))
+
+
+def _iter_classmethod_specs(
+    tp: type[T], /
+) -> Iterator[tuple[str, Callable[..., Expression], int]]:
+    for m in classify_class_attrs(tp):
+        if m.kind == "class method" and m.defining_class is tp:
+            name = m.name
+            fn = cast("classmethod[T, ..., Expression]", m.object).__func__
+            yield (VEGA_REMAP.get(name, name), fn.__get__(tp), signature_n_params(fn))
 
 
 def test_unary_operations():
@@ -86,15 +102,18 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-@pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
-def test_expr_funcs(veganame: str, methodname: str):
-    """Test all functions defined in expr.funcs."""
-    func = getattr(expr, methodname)
-    z = func(datum.xxx)
-    assert repr(z) == f"{veganame}(datum.xxx)"
+@pytest.mark.parametrize(("veganame", "fn", "n_params"), _iter_classmethod_specs(expr))
+def test_expr_methods(
+    veganame: str, fn: Callable[..., Expression], n_params: int
+) -> None:
+    datum_names = [f"col_{n}" for n in range(n_params)]
+    datum_args = ",".join(f"datum.{nm}" for nm in datum_names)
+
+    fn_call = fn(*(GetAttrExpression("datum", nm) for nm in datum_names))
+    assert repr(fn_call) == f"{veganame}({datum_args})"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts."""
     const = getattr(expr, constname)
@@ -102,7 +121,7 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
+@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):

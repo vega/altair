@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
+from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
 import ibis
@@ -26,16 +27,10 @@ import altair as alt
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
-
 if TYPE_CHECKING:
     from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
-ibis.set_backend("polars")
 
 PANDAS_VERSION = Version(importlib_version("pandas"))
 
@@ -548,7 +543,7 @@ def test_when_labels_position_based_on_condition() -> None:
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
     when = (
-        alt.when(param_width_lt_200)
+        alt.when(param_width_lt_200.expr)
         .then(alt.value("red"))
         .otherwise(alt.value("black"))
     )
@@ -557,10 +552,18 @@ def test_when_labels_position_based_on_condition() -> None:
     # `mypy` will flag structural errors here
     cond = when["condition"][0]
     otherwise = when["value"]
-    param_color_py_when = alt.param(
-        expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
-    )
-    assert param_color_py_expr.expr == param_color_py_when.expr
+
+    # TODO: Open an issue on making `OperatorMixin` generic
+    # Something like this would be used as the return type for all `__dunder__` methods:
+    # R = TypeVar("R", Expression, SelectionPredicateComposition)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    param_color_py_when = alt.param(expr=alt.expr.if_(test, cond["value"], otherwise))
+    lhs_param = param_color_py_expr.param
+    rhs_param = param_color_py_when.param
+    assert isinstance(lhs_param, alt.VariableParameter)
+    assert isinstance(rhs_param, alt.VariableParameter)
+    assert repr(lhs_param.expr) == repr(rhs_param.expr)
 
     chart = (
         alt.Chart(df)
@@ -600,7 +603,9 @@ def test_when_expressions_inside_parameters() -> None:
     cond = when_then_otherwise["condition"][0]
     otherwise = when_then_otherwise["value"]
     expected = alt.expr.if_(alt.datum.b >= 0, 10, -20)
-    actual = alt.expr.if_(cond["test"], cond["value"], otherwise)
+    test = cond["test"]
+    assert not isinstance(test, alt.PredicateComposition)
+    actual = alt.expr.if_(test, cond["value"], otherwise)
     assert expected == actual
 
     text_conditioned = bar.mark_text(
@@ -829,7 +834,7 @@ def test_save(format, engine, basic_chart):
                 basic_chart.save(out, format=format, engine=engine)
             assert f"Unsupported format: '{format}'" in str(err.value)
             return
-        elif vlc is None:
+        elif find_spec("vl_convert") is None:
             with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
             assert "vl-convert-python" in str(err.value)
@@ -1600,11 +1605,6 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 9),
-    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
-    " which doesn't support the dataframe interchange protocol.",
-)
-@pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
@@ -1612,6 +1612,7 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_ibis_with_date_32():
+    ibis.set_backend("polars")
     df = pl.DataFrame(
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
@@ -1625,11 +1626,6 @@ def test_ibis_with_date_32():
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 9),
-    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
-    " which doesn't support the dataframe interchange protocol.",
-)
-@pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
@@ -1637,6 +1633,7 @@ def test_ibis_with_date_32():
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    ibis.set_backend("polars")
     df = pl.DataFrame(
         {
             "a": [1, 2, 3],
