@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import datetime as dt
 import inspect
 import json
 import sys
@@ -502,6 +503,34 @@ def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
         return list(obj)
 
 
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
+    """
+    Parse native `datetime.(date|datetime)` into a `DateTime`_ schema.
+
+    .. _DateTime:
+        https://vega.github.io/vega-lite/docs/datetime.html
+    """
+    result: dict[str, Any] = {"year": obj.year, "month": obj.month, "date": obj.day}
+    if isinstance(obj, dt.datetime):
+        if obj.time() != dt.time.min:
+            us = obj.microsecond
+            ms = us if us == 0 else us // 1_000
+            result.update(
+                hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
+            )
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                result["utc"] = True
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
+    return result
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
@@ -532,6 +561,8 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
         return pd_opt.Timestamp(obj).isoformat()
     elif _is_iterable(obj, exclude=(str, bytes)):
         return _todict(_from_array_like(obj), context, np_opt, pd_opt)
+    elif isinstance(obj, dt.date):
+        return _from_date_datetime(obj)
     else:
         return obj
 

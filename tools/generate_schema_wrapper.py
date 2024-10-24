@@ -255,6 +255,7 @@ ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
 THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
 PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
 ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
+TEMPORAL: Literal["Temporal"] = "Temporal"
 ENCODE_KWDS_SUMMARY: Final = (
     "Encoding channels map properties of the data to visual properties of the chart."
 )
@@ -392,6 +393,8 @@ class PaddingKwds(TypedDict, total=False):
     left: float
     right: float
     top: float
+
+Temporal: TypeAlias = Union[date, datetime]
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
@@ -667,6 +670,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         import_type_checking(
+            "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -792,6 +796,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
         import_type_checking(
+            "from datetime import date, datetime",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             f"from altair.vegalite.v5.api import {INTO_CONDITION}",
@@ -1102,6 +1107,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "is_color_hex",
         ROW_COL_KWDS,
         PADDING_KWDS,
+        TEMPORAL,
         header=HEADER,
         extra=TYPING_EXTRA,
     )

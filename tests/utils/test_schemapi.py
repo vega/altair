@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import datetime as dt
 import inspect
 import io
 import json
@@ -1024,3 +1025,138 @@ def test_to_dict_range(tp) -> None:
     x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
     actual = x_dict["sort"]  # type: ignore
     assert actual == expected
+
+
+@pytest.fixture
+def stocks() -> alt.Chart:
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/sp500.csv"
+    return alt.Chart(source).mark_area().encode(x="date:T", y="price:Q")
+
+
+def DateTime(
+    year: int,
+    month: int,
+    day: int,
+    hour: int = 0,
+    minute: int = 0,
+    second: int = 0,
+    milliseconds: int = 0,
+    *,
+    utc: bool | None = None,
+) -> alt.DateTime:
+    """Factory for positionally aligning `datetime.datetime`/ `alt.DateTime`."""
+    kwds: dict[str, Any] = {}
+    if utc is True:
+        kwds.update(utc=utc)
+    if (hour, minute, second, milliseconds) != (0, 0, 0, 0):
+        kwds.update(
+            hours=hour, minutes=minute, seconds=second, milliseconds=milliseconds
+        )
+    return alt.DateTime(year=year, month=month, date=day, **kwds)
+
+
+@pytest.mark.parametrize(
+    ("window", "expected"),
+    [
+        (
+            (dt.date(2005, 1, 1), dt.date(2009, 1, 1)),
+            (DateTime(2005, 1, 1), DateTime(2009, 1, 1)),
+        ),
+        (
+            (dt.datetime(2005, 1, 1), dt.datetime(2009, 1, 1)),
+            (
+                # NOTE: Keep this to test truncating independently!
+                alt.DateTime(year=2005, month=1, date=1),
+                alt.DateTime(year=2009, month=1, date=1),
+            ),
+        ),
+        (
+            (
+                dt.datetime(2001, 1, 1, 9, 30, 0, 2999),
+                dt.datetime(2002, 1, 1, 17, 0, 0, 5000),
+            ),
+            (
+                DateTime(2001, 1, 1, 9, 30, 0, 2),
+                DateTime(2002, 1, 1, 17, 0, 0, 5),
+            ),
+        ),
+        (
+            (
+                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.timezone.utc),
+                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.timezone.utc),
+            ),
+            (
+                DateTime(2003, 5, 1, 1, 30, 0, 0, utc=True),
+                DateTime(2003, 6, 3, 4, 3, 0, 0, utc=True),
+            ),
+        ),
+    ],
+    ids=["date", "datetime (no time)", "datetime (microseconds)", "datetime (UTC)"],
+)
+def test_to_dict_datetime(
+    stocks, window: tuple[dt.date, dt.date], expected: tuple[alt.DateTime, alt.DateTime]
+) -> None:
+    """
+    Includes `datetime.datetime` with an empty time component.
+
+    This confirms that conversion matches how `alt.DateTime` omits `Undefined`.
+    """
+    expected_dicts = [e.to_dict() for e in expected]
+    brush = alt.selection_interval(encodings=["x"], value={"x": window})
+    base = stocks
+
+    upper = base.encode(alt.X("date:T").scale(domain=brush))
+    lower = base.add_params(brush)
+    chart = upper & lower
+    mapping = chart.to_dict()
+    params_value = mapping["params"][0]["value"]["x"]
+
+    assert isinstance(params_value, list)
+    assert params_value == expected_dicts
+
+
+@pytest.mark.parametrize(
+    "tzinfo",
+    [
+        dt.timezone(dt.timedelta(hours=2), "UTC+2"),
+        dt.timezone(dt.timedelta(hours=1), "BST"),
+        dt.timezone(dt.timedelta(hours=-7), "pdt"),
+        dt.timezone(dt.timedelta(hours=-3), "BRT"),
+        dt.timezone(dt.timedelta(hours=9), "UTC"),
+        dt.timezone(dt.timedelta(minutes=60), "utc"),
+    ],
+)
+def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+
+    result = alt.FieldEqualPredicate(datetime, "column 1")
+    assert result.to_dict()
+
+    with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
+        alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
+
+
+def test_to_dict_datetime_typing() -> None:
+    """
+    Enumerating various places that need updated annotations.
+
+    All work at runtime, just need to give the type checkers the new info.
+
+    Sub-issue of https://github.com/vega/altair/issues/3650
+    """
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+    datetime_seq = [datetime, datetime.replace(2005), datetime.replace(2008)]
+    assert alt.FieldEqualPredicate(datetime, field="column 1")
+    assert alt.FieldOneOfPredicate(oneOf=datetime_seq, field="column 1")
+
+    assert alt.Legend(values=datetime_seq)
+
+    assert alt.Scale(domain=datetime_seq)
+    assert alt.Scale(domainMin=datetime_seq[0], domainMax=datetime_seq[2])
+
+    # NOTE: `datum` is not annotated?
+    assert alt.XDatum(datum=datetime).to_dict()
+
+    # NOTE: `*args` is not annotated?
+    # - All of these uses *args incorrectly
+    assert alt.Vector2DateTime(datetime_seq[:2])
