@@ -1,10 +1,19 @@
 from __future__ import annotations
 
 import datetime as dt
-from typing import Any, Literal, Union
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, Union
 
 from altair.utils import SchemaBase
+
+if TYPE_CHECKING:
+    import sys
+
+    from altair.vegalite.v5.schema._typing import Map, PrimitiveValue_T
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 
 class DatumType:
@@ -269,5 +278,5 @@ class GetItemExpression(Expression):
 
 
 IntoExpression: TypeAlias = Union[
-    bool, str, float, dt.date, dt.datetime, OperatorMixin, dict[str, Any], None
+    "PrimitiveValue_T", dt.date, dt.datetime, OperatorMixin, "Map"
 ]
