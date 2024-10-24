@@ -15,6 +15,7 @@ import tempfile
 import time
 import urllib.request
 import warnings
+from collections.abc import Iterable, Iterator, Sequence
 from functools import cached_property, partial
 from itertools import islice
 from pathlib import Path
@@ -24,11 +25,8 @@ from typing import (
     Any,
     Callable,
     ClassVar,
-    Iterable,
-    Iterator,
     Literal,
     NamedTuple,
-    Sequence,
     cast,
     get_args,
 )
@@ -42,8 +40,9 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
+    from collections.abc import MutableMapping
     from email.message import Message
-    from typing import MutableMapping, TypeVar
+    from typing import TypeVar
     from urllib.request import OpenerDirector, Request
 
     if sys.version_info >= (3, 13):
