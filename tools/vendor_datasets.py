@@ -61,6 +61,7 @@ if TYPE_CHECKING:
 
     _Frame = TypeVar("_Frame", pl.DataFrame, pl.LazyFrame)
     _PathName: TypeAlias = Literal["dir", "tags", "trees"]
+    WorkInProgress: TypeAlias = Any
 
 
 _ItemSlice: TypeAlias = (
@@ -840,7 +841,7 @@ class DataLoader:
         ext: ExtSupported | None = None,
         /,
         tag: LiteralString | Literal["latest"] | None = None,
-    ):
+    ) -> WorkInProgress:
         """
         **WIP** Will be using this *instead of* attribute access.
 
