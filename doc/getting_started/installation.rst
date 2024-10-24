@@ -24,6 +24,12 @@ and non-notebook IDEs, see :ref:`displaying-charts`.
 If you wish to install Altair with only the required dependencies,
 you can omit the ``[all]``/``-all`` suffix.
 
+Altair can also be installed with just the dependencies necessary for saving charts to offline HTML files or PNG/SVG/PDF formats, using:
+
+.. code-block:: bash
+
+    pip install "altair[save]"
+
 Development Installation
 ========================
 
