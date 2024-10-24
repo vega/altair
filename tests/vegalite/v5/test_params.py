@@ -167,6 +167,24 @@ def test_selection_condition():
     assert dct["encoding"]["size"]["value"] == 10
 
 
+def test_selection_interval_value_typing() -> None:
+    import datetime as dt
+
+    window_date = dt.date(2005, 1, 1), dt.date(2009, 1, 1)
+    window_other = (0, 999)
+
+    a = alt.selection_interval(encodings=["x"], value={"x": window_date}).to_dict()
+    b = alt.selection_interval(encodings=["y"], value={"y": window_other}).to_dict()
+    a_b = alt.selection_interval(  # type: ignore[type-var]
+        encodings=["x", "y"],
+        value={"x": window_date, "y": window_other},  # pyright: ignore[reportArgumentType]
+    ).to_dict()
+
+    assert a
+    assert b
+    assert a_b
+
+
 def test_creation_views_params_layered_repeat_chart():
     import altair as alt
     from vega_datasets import data
