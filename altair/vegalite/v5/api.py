@@ -905,13 +905,16 @@ class When(_BaseWhen):
             A spec or value to use when the preceding :func:`.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -982,10 +985,12 @@ class Then(ConditionLike, t.Generic[_C]):
                 Roughly equivalent to an ``else`` clause.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1063,7 +1068,7 @@ class Then(ConditionLike, t.Generic[_C]):
                 When ``predicate`` is a ``Parameter`` that is used more than once,
                 ``alt.when().then().when(..., empty=...)`` provides granular control for each occurrence.
         **constraints
-            Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+            Specify `Field Equal Predicate`_'s.
             Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
         Returns
@@ -1071,6 +1076,8 @@ class Then(ConditionLike, t.Generic[_C]):
         :class:`ChainedWhen`
             A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
 
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
 
         Examples
         --------
@@ -1168,13 +1175,16 @@ class ChainedWhen(_BaseWhen):
             A spec or value to use when the preceding :meth:`Then.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1239,7 +1249,7 @@ def when(
             When ``predicate`` is a ``Parameter`` that is used more than once,
             ``alt.when(..., empty=...)`` provides granular control for each occurrence.
     **constraints
-        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+        Specify `Field Equal Predicate`_'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
     Returns
@@ -1249,11 +1259,12 @@ def when(
 
     Notes
     -----
-    - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
+    - Directly inspired by the ``when-then-otherwise`` syntax used in `polars.when`_.
 
-    References
-    ----------
-    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
+    .. _Field Equal Predicate:
+        https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+    .. _polars.when:
+        https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
 
     Examples
     --------

@@ -14,7 +14,7 @@ brush = alt.selection_interval(resolve='global')
 
 base = alt.Chart(source).mark_point().encode(
     y='Miles_per_Gallon',
-    color=alt.condition(brush, 'Origin', alt.ColorValue('gray')),
+    color=alt.when(brush).then("Origin").otherwise(alt.ColorValue("gray")),
 ).add_params(
     brush
 ).properties(
