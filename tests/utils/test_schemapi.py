@@ -1094,7 +1094,7 @@ def DateTime(
     ids=["date", "datetime (no time)", "datetime (microseconds)", "datetime (UTC)"],
 )
 def test_to_dict_datetime(
-    stocks, window: tuple[Any, Any], expected: tuple[alt.DateTime, alt.DateTime]
+    stocks, window: tuple[dt.date, dt.date], expected: tuple[alt.DateTime, alt.DateTime]
 ) -> None:
     """
     Includes `datetime.datetime` with an empty time component.
