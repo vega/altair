@@ -32,7 +32,7 @@ keywords = [
     "json",
     "vega-lite",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dynamic = ["version"]
 license-files = { paths = ["LICENSE"] }
 classifiers = [
@@ -41,7 +41,6 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -57,7 +56,7 @@ Source = "https://github.com/vega/altair"
 all = [
     "vega_datasets>=0.9.0",
     "vl-convert-python>=1.7.0",
-    "pandas>=0.25.3",
+    "pandas>=1.1.3",
     "numpy",
     "pyarrow>=11",
     "vegafusion[embed]>=1.6.6,<2",
@@ -69,7 +68,7 @@ dev = [
     "ruff>=0.6.0",
     "ibis-framework[polars]",
     "ipython[kernel]",
-    "pandas>=0.25.3",
+    "pandas>=1.1.3",
     "pytest",
     "pytest-cov",
     "pytest-xdist[psutil]~=3.5",
@@ -120,7 +119,7 @@ test = [
     "ruff check .",
     "ruff format --diff --check .",
     "mypy altair tests",
-    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
+    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair tools",
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
@@ -131,21 +130,21 @@ update-init-file = [
 ]
 test-fast = [
     "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"not slow\" {args}"
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"not slow\" {args}"
 ]
 test-slow = [
     "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair -m \"slow\" {args}"
+    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
 ]
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
 # https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
-default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair"]
+default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
 parallel = true
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+python = ["3.9", "3.10", "3.11", "3.12"]
 [tool.hatch.envs.hatch-test.scripts]
 run = [
     "ruff check .", 
@@ -192,7 +191,7 @@ publish-clean-build = [
 ]
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 88
 indent-width = 4
 exclude = [
@@ -444,7 +443,7 @@ ignore_missing_imports = true
 enableExperimentalFeatures=true
 extraPaths=["./tools"]
 pythonPlatform="All"
-pythonVersion="3.8"
+pythonVersion="3.9"
 reportTypedDictNotRequiredAccess="none"
 reportIncompatibleMethodOverride="none"
 reportUnusedExpression="none"

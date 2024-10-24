@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
         jsonschema-version: ["3.0", "latest"]
     name: py ${{ matrix.python-version }} js ${{ matrix.jsonschema-version }}
     steps:
@@ -28,18 +28,18 @@ jobs:
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
-        # Uninstalling for Python 3.8 is an arbitrary choice.
+        # Uninstalling for Python 3.9 is an arbitrary choice.
         # Also see https://github.com/vega/altair/pull/3114
-        if: ${{ matrix.python-version == '3.8' }}
+        if: ${{ matrix.python-version == '3.9' }}
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed vl-convert-python anywidget
       - name: Maybe install lowest supported pandas version
         # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
-        # Python 3.8 wheels, so only run this job for Python 3.8
-        if: ${{ matrix.python-version == '3.8' }}
+        # Python 3.9 wheels, so only run this job for Python 3.9
+        if: ${{ matrix.python-version == '3.9' }}
         run: |
-          pip install pandas==0.25.3 numpy==1.17.5
+          pip install pandas==1.1.3 numpy==1.19.3
       - name: Test that schema generation has no effect
         run: |
           pip install vl-convert-python

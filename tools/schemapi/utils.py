@@ -7,22 +7,11 @@ import re
 import sys
 import textwrap
 import urllib.parse
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Iterable,
-    Iterator,
-    Literal,
-    Mapping,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -69,6 +58,23 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+_STDLIB_TYPE_NAMES = frozenset(
+    (
+        "int",
+        "float",
+        "str",
+        "None",
+        "bool",
+        "date",
+        "datetime",
+        "time",
+        "tuple",
+        "list",
+        "deque",
+        "dict",
+        "set",
+    )
+)
 
 _VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
 
@@ -111,7 +117,7 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -120,7 +126,6 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:
@@ -157,6 +162,20 @@ class _TypeAliasTracer:
             )
             tp = f"Union[SchemaBase, {', '.join(it)}]"
         return tp
+
+    def add_union(
+        self, info: SchemaInfo, tp_iter: Iterator[str], /, *, replace: bool = False
+    ) -> str:
+        if title := info.title:
+            alias = self.fmt.format(title)
+            if alias not in self._aliases:
+                self.update_aliases(
+                    (alias, f"Union[{', '.join(sort_type_reprs(tp_iter))}]")
+                )
+            return alias if replace else title
+        else:
+            msg = f"Unsupported operation.\nRequires a title.\n\n{info!r}"
+            raise NotImplementedError(msg)
 
     def update_aliases(self, *name_statement: tuple[str, str]) -> None:
         """
@@ -462,7 +481,7 @@ class SchemaInfo:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             tps.add(tp_str)
         elif FOR_TYPE_HINTS and self.is_union_literal():
-            it = chain.from_iterable(el.literal for el in self.anyOf)
+            it: Iterator[str] = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
         elif self.is_anyOf():
@@ -471,6 +490,14 @@ class SchemaInfo:
                 for s in self.anyOf
             )
             tps.update(maybe_rewrap_literal(chain.from_iterable(it_nest)))
+        elif FOR_TYPE_HINTS and self.is_type_alias_union():
+            it = (
+                SchemaInfo(dict(self.schema, type=tp)).to_type_repr(
+                    target=target, use_concrete=use_concrete
+                )
+                for tp in self.type
+            )
+            tps.add(TypeAliasTracer.add_union(self, it, replace=True))
         elif isinstance(self.type, list):
             # We always use title if possible for nested objects
             tps.update(
@@ -776,6 +803,25 @@ class SchemaInfo:
             and self.type in jsonschema_to_python_types
         )
 
+    def is_type_alias_union(self) -> bool:
+        """
+        Represents a name assigned to a list of literal types.
+
+        Example:
+
+            {"PrimitiveValue": {"type": ["number", "string", "boolean", "null"]}}
+
+        Translating from JSON -> Python, this is the same as an ``"anyOf"`` -> ``Union``.
+
+        The distinction in the schema is purely due to these types being defined in the draft, rather than definitions.
+        """
+        TP = "type"
+        return (
+            self.schema.keys() == {TP}
+            and isinstance(self.type, list)
+            and bool(self.title)
+        )
+
     def is_theme_config_target(self) -> bool:
         """
         Return `True` for candidates  classes in ``ThemeConfig`` hierarchy of ``TypedDict``(s).
@@ -871,13 +917,25 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     We use `set`_ for unique elements, but the lack of ordering requires additional sorts:
     - If types have same length names, order would still be non-deterministic
     - Hence, we sort as well by type name as a tie-breaker, see `sort-stability`_.
-    - Using ``str.lower`` gives priority to `builtins`_ over ``None``.
-    - Lowest priority is given to generated aliases from ``TypeAliasTracer``.
+    - Using ``str.lower`` gives priority to `builtins`_.
+    - Lower priority is given to generated aliases from ``TypeAliasTracer``.
         - These are purely to improve autocompletion
+    - ``None`` will always appear last.
 
     Related
     -------
     - https://github.com/vega/altair/pull/3573#discussion_r1747121600
+
+    Examples
+    --------
+    >>> sort_type_reprs(["float", "None", "bool", "Chart", "float", "bool", "Chart", "str"])
+    ['str', 'bool', 'float', 'Chart', 'None']
+
+    >>> sort_type_reprs(("None", "int", "Literal[5]", "int", "float"))
+    ['int', 'float', 'Literal[5]', 'None']
+
+    >>> sort_type_reprs({"date", "int", "str", "datetime", "Date"})
+    ['int', 'str', 'date', 'datetime', 'Date']
 
     .. _set:
         https://docs.python.org/3/tutorial/datastructures.html#sets
@@ -887,9 +945,30 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
         https://docs.python.org/3/library/functions.html
     """
     dedup = tps if isinstance(tps, set) else set(tps)
-    it = sorted(dedup, key=str.lower)  # Tertiary sort
-    it = sorted(it, key=len)  # Secondary sort
-    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
+    it = sorted(dedup, key=str.lower)  # Quinary sort
+    it = sorted(it, key=len)  # Quaternary sort
+    it = sorted(it, key=TypeAliasTracer.is_cached)  # Tertiary sort
+    it = sorted(it, key=is_not_stdlib)  # Secondary sort
+    it = sorted(it, key=is_none)  # Primary sort
+    return it
+
+
+def is_not_stdlib(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Places a subset of stdlib types at the **start** of list.
+    """
+    return s not in _STDLIB_TYPE_NAMES
+
+
+def is_none(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Always places ``None`` at the **end** of list.
+    """
+    return s == "None"
 
 
 def spell_nested_sequence(

@@ -11,8 +11,8 @@ from tests import examples_arguments_syntax, examples_methods_syntax
 
 if TYPE_CHECKING:
     import sys
+    from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
-    from typing import Collection, Iterator, Mapping
 
     if sys.version_info >= (3, 11):
         from typing import TypeAlias
