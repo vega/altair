@@ -96,6 +96,7 @@ if TYPE_CHECKING:
         AnyMark,
         BindCheckbox,
         Binding,
+        BindInput,
         BindRadioSelect,
         BindRange,
         BinParams,
@@ -1678,10 +1679,10 @@ def selection_single(**kwargs: Any) -> Parameter:
     return _selection(type="point", **kwargs)
 
 
-@utils.use_signature(core.Binding)
-def binding(input: Any, **kwargs: Any) -> Binding:
+@utils.use_signature(core.BindInput)
+def binding(**kwargs: Any) -> BindInput:
     """A generic binding."""
-    return core.Binding(input=input, **kwargs)
+    return core.BindInput(**kwargs)
 
 
 @utils.use_signature(core.BindCheckbox)
