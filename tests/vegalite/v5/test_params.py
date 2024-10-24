@@ -175,9 +175,9 @@ def test_selection_interval_value_typing() -> None:
 
     a = alt.selection_interval(encodings=["x"], value={"x": window_date}).to_dict()
     b = alt.selection_interval(encodings=["y"], value={"y": window_other}).to_dict()
-    a_b = alt.selection_interval(  # type: ignore[type-var]
+    a_b = alt.selection_interval(
         encodings=["x", "y"],
-        value={"x": window_date, "y": window_other},  # pyright: ignore[reportArgumentType]
+        value={"x": window_date, "y": window_other},
     ).to_dict()
 
     assert a

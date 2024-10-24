@@ -1443,14 +1443,6 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Param
     return _selection(type=type, **kwds)
 
 
-_V2 = TypeVar("_V2", bool, float, str, Temporal, "DateTime")
-"""Vector2 value type.
-
-Constrained to non-`None` primitive values or date/datetime:
-
-    bool, float, str, datetime.date, datetime.datetime, alt.DateTime
-"""
-
 _SelectionPointValue: TypeAlias = "PrimitiveValue_T | Temporal | DateTime | Sequence[Mapping[SingleDefUnitChannel_T | LiteralString, PrimitiveValue_T | Temporal | DateTime]]"
 """
 Point selections can be initialized with a single primitive value:
@@ -1468,11 +1460,19 @@ You can also provide a sequence of mappings between ``encodings`` or ``fields`` 
     )
 """
 
-_SelectionIntervalValueMap = TypeAliasType(
-    "_SelectionIntervalValueMap",
-    Mapping[SingleDefUnitChannel_T, "tuple[_V2, _V2] | Sequence[_V2]"],
-    type_params=(_V2,),
-)
+_SelectionIntervalValueMap: TypeAlias = Mapping[
+    SingleDefUnitChannel_T,
+    Union[
+        tuple[bool, bool],
+        tuple[float, float],
+        tuple[str, str],
+        tuple["Temporal | DateTime", "Temporal | DateTime"],
+        Sequence[bool],
+        Sequence[float],
+        Sequence[str],
+        Sequence["Temporal | DateTime"],
+    ],
+]
 """
 Interval selections are initialized with a mapping between ``encodings`` to **values**:
 
@@ -1489,12 +1489,17 @@ The values specify the **start** and **end** of the interval selection.
 You can use a ``tuple`` for type-checking each sequence has **two** elements:
 
     alt.selection_interval(value={"x": (55, 160), "y": (13, 37)})
+
+
+.. note::
+
+    Unlike :func:`.selection_point()`, the use of ``None`` is not permitted.
 """
 
 
 def selection_interval(
     name: str | None = None,
-    value: Optional[_SelectionIntervalValueMap[_V2]] = Undefined,
+    value: Optional[_SelectionIntervalValueMap] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
