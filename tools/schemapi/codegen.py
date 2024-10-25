@@ -366,15 +366,16 @@ class SchemaGenerator:
             if si.is_array():
                 # Try to get a type hint like "List[str]" which is more specific
                 # then just "list"
-                item_vl_type = si.items.get("type", None)
-                if item_vl_type is not None:
-                    item_type = jsonschema_to_python_types[item_vl_type]
+                if tp_js := si.items.get("type", None):
+                    tp_item = jsonschema_to_python_types[tp_js]
                 else:
-                    item_si = SchemaInfo(si.items, self.rootschema)
-                    assert item_si.is_reference()
-                    altair_class_name = item_si.title
-                    item_type = f"core.{altair_class_name}"
-                py_type = f"List[{item_type}]"
+                    si_item = SchemaInfo(si.items, self.rootschema)
+                    if title := si_item.title:
+                        tp_item = f"core.{title}"
+                    else:
+                        msg = f"Expected an array of types or titles, but got:\n {si_item!r}"
+                        raise NotImplementedError(msg)
+                py_type = f"List[{tp_item}]"
             elif si.is_literal():
                 # If it's an enum, we can type hint it as a Literal which tells
                 # a type checker that only the values in enum are acceptable
