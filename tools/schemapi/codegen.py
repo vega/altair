@@ -363,8 +363,7 @@ class SchemaGenerator:
                 for p, info in si.properties.items()
             )
         elif isinstance(si.type, str):
-            py_type = jsonschema_to_python_types[si.type]
-            if py_type == "list":
+            if si.is_array():
                 # Try to get a type hint like "List[str]" which is more specific
                 # then just "list"
                 item_vl_type = si.items.get("type", None)
@@ -382,6 +381,8 @@ class SchemaGenerator:
                 py_type = TypeAliasTracer.add_literal(
                     si, spell_literal(si.literal), replace=True
                 )
+            else:
+                py_type = jsonschema_to_python_types[si.type]
             contents.append(f"_: {py_type}")
 
         contents.append("**kwds")
