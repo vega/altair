@@ -357,18 +357,10 @@ class SchemaGenerator:
 
     def get_args(self, si: SchemaInfo) -> list[str]:
         contents = ["self"]
-        prop_infos: dict[str, SchemaInfo] = {}
-        if si.is_anyOf():
-            prop_infos = {}
-            for si_sub in si.anyOf:
-                prop_infos.update(si_sub.properties)
-        elif si.properties:
-            prop_infos = dict(si.properties.items())
-
-        if prop_infos:
+        if si.properties:
             contents.extend(
                 f"{p}: {info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-                for p, info in prop_infos.items()
+                for p, info in si.properties.items()
             )
         elif isinstance(si.type, str):
             py_type = jsonschema_to_python_types[si.type]
