@@ -9,6 +9,7 @@ import operator
 import sys
 import typing as t
 import warnings
+from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
 from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
 
@@ -30,7 +31,7 @@ from .compiler import vegalite_compilers
 from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
-from .schema._typing import Map
+from .schema._typing import Map, PrimitiveValue_T, SingleDefUnitChannel_T, Temporal
 from .theme import themes
 
 if sys.version_info >= (3, 14):
@@ -38,16 +39,24 @@ if sys.version_info >= (3, 14):
 else:
     from typing_extensions import TypedDict
 if sys.version_info >= (3, 12):
-    from typing import Protocol, runtime_checkable
+    from typing import Protocol, TypeAliasType, runtime_checkable
 else:
-    from typing_extensions import Protocol, runtime_checkable  # noqa: F401
+    from typing_extensions import (  # noqa: F401
+        Protocol,
+        TypeAliasType,
+        runtime_checkable,
+    )
+if sys.version_info >= (3, 11):
+    from typing import LiteralString
+else:
+    from typing_extensions import LiteralString
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator, Sequence
+    from collections.abc import Iterable, Iterator
     from pathlib import Path
     from typing import IO
 
@@ -85,7 +94,6 @@ if TYPE_CHECKING:
         ResolveMode_T,
         SelectionResolution_T,
         SelectionType_T,
-        SingleDefUnitChannel_T,
         SingleTimeUnit_T,
         StackOffset_T,
     )
@@ -99,6 +107,7 @@ if TYPE_CHECKING:
         BindRadioSelect,
         BindRange,
         BinParams,
+        DateTime,
         Expr,
         ExprRef,
         FacetedEncoding,
@@ -539,10 +548,8 @@ else:
 ```
 """
 
-_LiteralValue: TypeAlias = Union[str, bool, float, int]
-"""Primitive python value types."""
 
-_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, SchemaBase]
+_FieldEqualType: TypeAlias = Union[PrimitiveValue_T, Map, Parameter, SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -633,7 +640,7 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
     param: Parameter | str
     test: _TestPredicateType
     value: Any
-    __extra_items__: _StatementType | OneOrSeq[_LiteralValue]
+    __extra_items__: _StatementType | OneOrSeq[PrimitiveValue_T]
 
 
 _Condition: TypeAlias = _ConditionExtra
@@ -1447,9 +1454,63 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Param
     return _selection(type=type, **kwds)
 
 
+_SelectionPointValue: TypeAlias = "PrimitiveValue_T | Temporal | DateTime | Sequence[Mapping[SingleDefUnitChannel_T | LiteralString, PrimitiveValue_T | Temporal | DateTime]]"
+"""
+Point selections can be initialized with a single primitive value:
+
+    import altair as alt
+
+    alt.selection_point(fields=["year"], value=1980)
+
+
+You can also provide a sequence of mappings between ``encodings`` or ``fields`` to **values**:
+
+    alt.selection_point(
+        fields=["cylinders", "year"],
+        value=[{"cylinders": 4, "year": 1981}, {"cylinders": 8, "year": 1972}],
+    )
+"""
+
+_SelectionIntervalValueMap: TypeAlias = Mapping[
+    SingleDefUnitChannel_T,
+    Union[
+        tuple[bool, bool],
+        tuple[float, float],
+        tuple[str, str],
+        tuple["Temporal | DateTime", "Temporal | DateTime"],
+        Sequence[bool],
+        Sequence[float],
+        Sequence[str],
+        Sequence["Temporal | DateTime"],
+    ],
+]
+"""
+Interval selections are initialized with a mapping between ``encodings`` to **values**:
+
+    import altair as alt
+
+    alt.selection_interval(
+        encodings=["longitude"],
+        empty=False,
+        value={"longitude": [-50, -110]},
+    )
+
+The values specify the **start** and **end** of the interval selection.
+
+You can use a ``tuple`` for type-checking each sequence has **two** elements:
+
+    alt.selection_interval(value={"x": (55, 160), "y": (13, 37)})
+
+
+.. note::
+
+    Unlike :func:`.selection_point()`, the use of ``None`` is not permitted.
+"""
+
+
 def selection_interval(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[_SelectionIntervalValueMap] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
@@ -1562,7 +1623,7 @@ def selection_interval(
 
 def selection_point(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[_SelectionPointValue] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[Expr] = Undefined,
