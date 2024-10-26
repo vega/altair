@@ -256,6 +256,7 @@ THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
 PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
 ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
 TEMPORAL: Literal["Temporal"] = "Temporal"
+DATETIME: Literal["DateTime"] = "DateTime"
 ENCODE_KWDS_SUMMARY: Final = (
     "Encoding channels map properties of the data to visual properties of the chart."
 )
@@ -731,6 +732,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
     channel_infos: dict[str, ChannelInfo] = {}
     class_defs: list[Any] = []
+    SchemaInfo._remap_title.update({DATETIME: (TEMPORAL, DATETIME)})
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
@@ -801,6 +803,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
             "from datetime import date, datetime",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
+            f"from altair.vegalite.v5.schema.core import {DATETIME}",
             f"from altair.vegalite.v5.api import {INTO_CONDITION}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
@@ -811,6 +814,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
             channel_infos, ENCODE_METHOD, facet_encoding=encoding
         ),
     ]
+    SchemaInfo._remap_title.pop(DATETIME)
     return "\n".join(contents)
 
 
