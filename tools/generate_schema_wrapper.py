@@ -427,6 +427,7 @@ class FieldSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class ValueSchemaGenerator(SchemaGenerator):
@@ -443,6 +444,7 @@ class ValueSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class DatumSchemaGenerator(SchemaGenerator):
@@ -459,6 +461,7 @@ class DatumSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 def schema_class(*args, **kwargs) -> str:
@@ -752,7 +755,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
                 "schema": defschema,
                 "rootschema": schema,
                 "encodingname": prop,
-                "haspropsetters": True,
             }
             if encoding_spec == "field":
                 gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)

@@ -9,7 +9,7 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
-from typing import Any, Callable, Final, TypeVar, Union
+from typing import Any, Callable, ClassVar, Final, Literal, TypeVar, Union
 
 from .utils import (
     SchemaInfo,
@@ -208,6 +208,8 @@ class SchemaGenerator:
     """
     ).lstrip()
 
+    haspropsetters: ClassVar[bool] = False
+
     def __init__(
         self,
         classname: str,
@@ -217,7 +219,6 @@ class SchemaGenerator:
         schemarepr: object | None = None,
         rootschemarepr: object | None = None,
         nodefault: list[str] | None = None,
-        haspropsetters: bool = False,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -227,7 +228,6 @@ class SchemaGenerator:
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault or ()
-        self.haspropsetters = haspropsetters
         self.kwargs = kwargs
 
     def subclasses(self) -> Iterator[str]:
