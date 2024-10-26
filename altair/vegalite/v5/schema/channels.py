@@ -28,11 +28,13 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+
     from collections.abc import Sequence
 
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
     from altair.vegalite.v5.api import IntoCondition
+    from altair.vegalite.v5.schema.core import DateTime
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -497,7 +499,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def bandPosition(self, _: float, **kwds) -> Angle: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Angle: ...
+    def bin(self, _: bool | None, **kwds) -> Angle: ...
 
     @overload
     def bin(
@@ -514,9 +516,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Angle: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Angle: ...
 
     @overload
     def condition(
@@ -549,6 +548,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Angle: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Angle: ...
 
     @overload
     def legend(
@@ -659,7 +661,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> Angle: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Angle: ...
+    def scale(self, _: None, **kwds) -> Angle: ...
 
     @overload
     def scale(
@@ -713,28 +715,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> Angle: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Angle: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Angle: ...
 
     @overload
     def sort(
@@ -754,62 +744,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> Angle: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Angle: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Angle: ...
 
     @overload
@@ -824,13 +760,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> Angle: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Angle: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Angle: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Angle: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Angle: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Angle: ...
@@ -1016,13 +946,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     ) -> AngleDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> AngleDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> AngleDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> AngleDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> AngleDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> AngleDatum: ...
@@ -1429,7 +1353,7 @@ class Color(
     def bandPosition(self, _: float, **kwds) -> Color: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Color: ...
+    def bin(self, _: bool | None, **kwds) -> Color: ...
 
     @overload
     def bin(
@@ -1446,9 +1370,6 @@ class Color(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Color: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Color: ...
 
     @overload
     def condition(
@@ -1481,6 +1402,9 @@ class Color(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Color: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Color: ...
 
     @overload
     def legend(
@@ -1591,7 +1515,7 @@ class Color(
     ) -> Color: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Color: ...
+    def scale(self, _: None, **kwds) -> Color: ...
 
     @overload
     def scale(
@@ -1645,28 +1569,16 @@ class Color(
     ) -> Color: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Color: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Color: ...
 
     @overload
     def sort(
@@ -1686,62 +1598,8 @@ class Color(
     ) -> Color: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Color: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Color: ...
 
     @overload
@@ -1756,13 +1614,7 @@ class Color(
     ) -> Color: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Color: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Color: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Color: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Color: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Color: ...
@@ -1950,13 +1802,7 @@ class ColorDatum(
     ) -> ColorDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> ColorDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> ColorDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ColorDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> ColorDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> ColorDatum: ...
@@ -2349,7 +2195,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> Column: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Column: ...
+    def bin(self, _: bool | None, **kwds) -> Column: ...
 
     @overload
     def bin(
@@ -2368,9 +2214,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Column: ...
 
     @overload
-    def bin(self, _: None, **kwds) -> Column: ...
-
-    @overload
     def center(self, _: bool, **kwds) -> Column: ...
 
     @overload
@@ -2382,6 +2225,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Column: ...
+
+    @overload
+    def header(self, _: None, **kwds) -> Column: ...
 
     @overload
     def header(
@@ -2434,22 +2280,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Column: ...
 
     @overload
-    def header(self, _: None, **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Column: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        **kwds,
+    ) -> Column: ...
 
     @overload
     def sort(
@@ -2461,65 +2301,11 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Column: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Column: ...
-
-    @overload
     def spacing(self, _: float, **kwds) -> Column: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Column: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Column: ...
 
     @overload
@@ -2534,13 +2320,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Column: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Column: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Column: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Column: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Column: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Column: ...
@@ -2804,7 +2584,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def bandPosition(self, _: float, **kwds) -> Description: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Description: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Description: ...
 
     @overload
     def bin(
@@ -2821,12 +2601,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Description: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Description: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Description: ...
 
     @overload
     def condition(
@@ -2870,59 +2644,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Description: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Description: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Description: ...
 
     @overload
@@ -2937,13 +2660,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Description: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Description: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Description: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Description: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Description: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Description: ...
@@ -3294,7 +3011,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def bandPosition(self, _: float, **kwds) -> Detail: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Detail: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Detail: ...
 
     @overload
     def bin(
@@ -3313,12 +3030,6 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Detail: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Detail: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Detail: ...
 
     @overload
@@ -3329,59 +3040,8 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Detail: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Detail: ...
 
     @overload
@@ -3396,13 +3056,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Detail: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Detail: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Detail: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Detail: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Detail: ...
@@ -3707,7 +3361,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> Facet: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Facet: ...
+    def bin(self, _: bool | None, **kwds) -> Facet: ...
 
     @overload
     def bin(
@@ -3724,9 +3378,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Facet: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Facet: ...
 
     @overload
     def bounds(self, _: Literal["full", "flush"], **kwds) -> Facet: ...
@@ -3754,6 +3405,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Facet: ...
+
+    @overload
+    def header(self, _: None, **kwds) -> Facet: ...
 
     @overload
     def header(
@@ -3806,22 +3460,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> Facet: ...
 
     @overload
-    def header(self, _: None, **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Facet: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        **kwds,
+    ) -> Facet: ...
 
     @overload
     def sort(
@@ -3831,9 +3479,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Facet: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Facet: ...
 
     @overload
     def spacing(self, _: float, **kwds) -> Facet: ...
@@ -3847,59 +3492,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> Facet: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Facet: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Facet: ...
 
     @overload
@@ -3914,13 +3508,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     ) -> Facet: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Facet: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Facet: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Facet: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Facet: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Facet: ...
@@ -4219,7 +3807,7 @@ class Fill(
     def bandPosition(self, _: float, **kwds) -> Fill: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Fill: ...
+    def bin(self, _: bool | None, **kwds) -> Fill: ...
 
     @overload
     def bin(
@@ -4236,9 +3824,6 @@ class Fill(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Fill: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Fill: ...
 
     @overload
     def condition(
@@ -4271,6 +3856,9 @@ class Fill(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Fill: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Fill: ...
 
     @overload
     def legend(
@@ -4381,7 +3969,7 @@ class Fill(
     ) -> Fill: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Fill: ...
+    def scale(self, _: None, **kwds) -> Fill: ...
 
     @overload
     def scale(
@@ -4435,28 +4023,16 @@ class Fill(
     ) -> Fill: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Fill: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Fill: ...
 
     @overload
     def sort(
@@ -4476,62 +4052,8 @@ class Fill(
     ) -> Fill: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Fill: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Fill: ...
 
     @overload
@@ -4546,13 +4068,7 @@ class Fill(
     ) -> Fill: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Fill: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Fill: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Fill: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Fill: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Fill: ...
@@ -4740,13 +4256,7 @@ class FillDatum(
     ) -> FillDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> FillDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> FillDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> FillDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> FillDatum: ...
@@ -5153,7 +4663,7 @@ class FillOpacity(
     def bandPosition(self, _: float, **kwds) -> FillOpacity: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> FillOpacity: ...
+    def bin(self, _: bool | None, **kwds) -> FillOpacity: ...
 
     @overload
     def bin(
@@ -5170,9 +4680,6 @@ class FillOpacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> FillOpacity: ...
 
     @overload
     def condition(
@@ -5205,6 +4712,9 @@ class FillOpacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> FillOpacity: ...
 
     @overload
     def legend(
@@ -5315,7 +4825,7 @@ class FillOpacity(
     ) -> FillOpacity: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> FillOpacity: ...
+    def scale(self, _: None, **kwds) -> FillOpacity: ...
 
     @overload
     def scale(
@@ -5369,28 +4879,16 @@ class FillOpacity(
     ) -> FillOpacity: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> FillOpacity: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> FillOpacity: ...
 
     @overload
     def sort(
@@ -5410,62 +4908,8 @@ class FillOpacity(
     ) -> FillOpacity: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> FillOpacity: ...
 
     @overload
@@ -5480,13 +4924,7 @@ class FillOpacity(
     ) -> FillOpacity: ...
 
     @overload
-    def title(self, _: str, **kwds) -> FillOpacity: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> FillOpacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillOpacity: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> FillOpacity: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> FillOpacity: ...
@@ -5674,13 +5112,7 @@ class FillOpacityDatum(
     ) -> FillOpacityDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> FillOpacityDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> FillOpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillOpacityDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> FillOpacityDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> FillOpacityDatum: ...
@@ -6056,7 +5488,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def bandPosition(self, _: float, **kwds) -> Href: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Href: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Href: ...
 
     @overload
     def bin(
@@ -6073,12 +5505,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Href: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Href: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Href: ...
 
     @overload
     def condition(
@@ -6122,59 +5548,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Href: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Href: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Href: ...
 
     @overload
@@ -6189,13 +5564,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Href: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Href: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Href: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Href: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Href: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Href: ...
@@ -6546,7 +5915,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def bandPosition(self, _: float, **kwds) -> Key: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Key: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Key: ...
 
     @overload
     def bin(
@@ -6565,12 +5934,6 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Key: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Key: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Key: ...
 
     @overload
@@ -6581,59 +5944,8 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Key: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Key: ...
 
     @overload
@@ -6648,13 +5960,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Key: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Key: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Key: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Key: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Key: ...
@@ -6873,59 +6179,8 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Latitude: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Latitude: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Latitude: ...
 
     @overload
@@ -6940,13 +6195,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Latitude: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Latitude: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Latitude: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude: ...
 
     @overload
     def type(self, _: Literal["quantitative"], **kwds) -> Latitude: ...
@@ -7086,13 +6335,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> LatitudeDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> LatitudeDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> LatitudeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> LatitudeDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> LatitudeDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> LatitudeDatum: ...
@@ -7234,59 +6477,8 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Latitude2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Latitude2: ...
 
     @overload
@@ -7301,13 +6493,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Latitude2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Latitude2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Latitude2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude2: ...
 
     def __init__(
         self,
@@ -7442,13 +6628,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> Latitude2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Latitude2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Latitude2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> Latitude2Datum: ...
@@ -7676,59 +6856,8 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Longitude: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Longitude: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Longitude: ...
 
     @overload
@@ -7743,13 +6872,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Longitude: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Longitude: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Longitude: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude: ...
 
     @overload
     def type(self, _: Literal["quantitative"], **kwds) -> Longitude: ...
@@ -7889,13 +7012,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> LongitudeDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> LongitudeDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> LongitudeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> LongitudeDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> LongitudeDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> LongitudeDatum: ...
@@ -8037,59 +7154,8 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Longitude2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Longitude2: ...
 
     @overload
@@ -8104,13 +7170,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Longitude2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Longitude2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Longitude2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude2: ...
 
     def __init__(
         self,
@@ -8245,13 +7305,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> Longitude2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Longitude2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Longitude2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> Longitude2Datum: ...
@@ -8535,7 +7589,7 @@ class Opacity(
     def bandPosition(self, _: float, **kwds) -> Opacity: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Opacity: ...
+    def bin(self, _: bool | None, **kwds) -> Opacity: ...
 
     @overload
     def bin(
@@ -8552,9 +7606,6 @@ class Opacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Opacity: ...
 
     @overload
     def condition(
@@ -8587,6 +7638,9 @@ class Opacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Opacity: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Opacity: ...
 
     @overload
     def legend(
@@ -8697,7 +7751,7 @@ class Opacity(
     ) -> Opacity: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Opacity: ...
+    def scale(self, _: None, **kwds) -> Opacity: ...
 
     @overload
     def scale(
@@ -8751,28 +7805,16 @@ class Opacity(
     ) -> Opacity: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Opacity: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Opacity: ...
 
     @overload
     def sort(
@@ -8792,62 +7834,8 @@ class Opacity(
     ) -> Opacity: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Opacity: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Opacity: ...
 
     @overload
@@ -8862,13 +7850,7 @@ class Opacity(
     ) -> Opacity: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Opacity: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Opacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Opacity: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Opacity: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Opacity: ...
@@ -9054,13 +8036,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     ) -> OpacityDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> OpacityDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> OpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> OpacityDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> OpacityDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> OpacityDatum: ...
@@ -9399,7 +8375,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def bandPosition(self, _: float, **kwds) -> Order: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Order: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Order: ...
 
     @overload
     def bin(
@@ -9418,12 +8394,6 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> Order: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Order: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Order: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Order: ...
 
     @overload
@@ -9437,59 +8407,8 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def sort(self, _: SortOrder_T, **kwds) -> Order: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Order: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Order: ...
 
     @overload
@@ -9504,13 +8423,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     ) -> Order: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Order: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Order: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Order: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Order: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Order: ...
@@ -9853,7 +8766,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def bandPosition(self, _: float, **kwds) -> Radius: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Radius: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Radius: ...
 
     @overload
     def bin(
@@ -9872,12 +8785,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Radius: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Radius: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Radius: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Radius: ...
 
     @overload
@@ -9886,6 +8793,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Radius: ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> Radius: ...
 
     @overload
     def scale(
@@ -9939,28 +8849,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Radius: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Radius: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Radius: ...
 
     @overload
     def sort(
@@ -9980,71 +8878,11 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Radius: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> Radius: ...
 
     @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Radius: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Radius: ...
 
     @overload
@@ -10059,13 +8897,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Radius: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Radius: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Radius: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Radius: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Radius: ...
@@ -10263,6 +9095,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> RadiusDatum: ...
 
     @overload
+    def scale(self, _: None, **kwds) -> RadiusDatum: ...
+
+    @overload
     def scale(
         self,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -10314,25 +9149,10 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     ) -> RadiusDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> RadiusDatum: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> RadiusDatum: ...
 
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> RadiusDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> RadiusDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> RadiusDatum: ...
@@ -10505,59 +9325,8 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Radius2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Radius2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Radius2: ...
 
     @overload
@@ -10572,13 +9341,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Radius2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Radius2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Radius2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Radius2: ...
 
     def __init__(
         self,
@@ -10713,13 +9476,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> Radius2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Radius2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Radius2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Radius2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> Radius2Datum: ...
@@ -10989,7 +9746,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def bandPosition(self, _: float, **kwds) -> Row: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Row: ...
+    def bin(self, _: bool | None, **kwds) -> Row: ...
 
     @overload
     def bin(
@@ -11008,9 +9765,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Row: ...
 
     @overload
-    def bin(self, _: None, **kwds) -> Row: ...
-
-    @overload
     def center(self, _: bool, **kwds) -> Row: ...
 
     @overload
@@ -11022,6 +9776,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Row: ...
+
+    @overload
+    def header(self, _: None, **kwds) -> Row: ...
 
     @overload
     def header(
@@ -11074,22 +9831,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Row: ...
 
     @overload
-    def header(self, _: None, **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Row: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        **kwds,
+    ) -> Row: ...
 
     @overload
     def sort(
@@ -11101,65 +9852,11 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Row: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Row: ...
-
-    @overload
     def spacing(self, _: float, **kwds) -> Row: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Row: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Row: ...
 
     @overload
@@ -11174,13 +9871,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     ) -> Row: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Row: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Row: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Row: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Row: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Row: ...
@@ -11475,7 +10166,7 @@ class Shape(
     def bandPosition(self, _: float, **kwds) -> Shape: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Shape: ...
+    def bin(self, _: bool | None, **kwds) -> Shape: ...
 
     @overload
     def bin(
@@ -11492,9 +10183,6 @@ class Shape(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Shape: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Shape: ...
 
     @overload
     def condition(
@@ -11527,6 +10215,9 @@ class Shape(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Shape: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Shape: ...
 
     @overload
     def legend(
@@ -11637,7 +10328,7 @@ class Shape(
     ) -> Shape: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Shape: ...
+    def scale(self, _: None, **kwds) -> Shape: ...
 
     @overload
     def scale(
@@ -11691,28 +10382,16 @@ class Shape(
     ) -> Shape: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Shape: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Shape: ...
 
     @overload
     def sort(
@@ -11732,62 +10411,8 @@ class Shape(
     ) -> Shape: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Shape: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Shape: ...
 
     @overload
@@ -11802,13 +10427,7 @@ class Shape(
     ) -> Shape: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Shape: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Shape: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Shape: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Shape: ...
 
     @overload
     def type(self, _: TypeForShape_T, **kwds) -> Shape: ...
@@ -11996,13 +10615,7 @@ class ShapeDatum(
     ) -> ShapeDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> ShapeDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> ShapeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ShapeDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> ShapeDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> ShapeDatum: ...
@@ -12407,7 +11020,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def bandPosition(self, _: float, **kwds) -> Size: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Size: ...
+    def bin(self, _: bool | None, **kwds) -> Size: ...
 
     @overload
     def bin(
@@ -12424,9 +11037,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Size: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Size: ...
 
     @overload
     def condition(
@@ -12459,6 +11069,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Size: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Size: ...
 
     @overload
     def legend(
@@ -12569,7 +11182,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> Size: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Size: ...
+    def scale(self, _: None, **kwds) -> Size: ...
 
     @overload
     def scale(
@@ -12623,28 +11236,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> Size: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Size: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Size: ...
 
     @overload
     def sort(
@@ -12664,62 +11265,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> Size: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Size: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Size: ...
 
     @overload
@@ -12734,13 +11281,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> Size: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Size: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Size: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Size: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Size: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Size: ...
@@ -12926,13 +11467,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     ) -> SizeDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> SizeDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> SizeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> SizeDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> SizeDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> SizeDatum: ...
@@ -13339,7 +11874,7 @@ class Stroke(
     def bandPosition(self, _: float, **kwds) -> Stroke: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Stroke: ...
+    def bin(self, _: bool | None, **kwds) -> Stroke: ...
 
     @overload
     def bin(
@@ -13356,9 +11891,6 @@ class Stroke(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Stroke: ...
 
     @overload
     def condition(
@@ -13391,6 +11923,9 @@ class Stroke(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Stroke: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> Stroke: ...
 
     @overload
     def legend(
@@ -13501,7 +12036,7 @@ class Stroke(
     ) -> Stroke: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> Stroke: ...
+    def scale(self, _: None, **kwds) -> Stroke: ...
 
     @overload
     def scale(
@@ -13555,28 +12090,16 @@ class Stroke(
     ) -> Stroke: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Stroke: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Stroke: ...
 
     @overload
     def sort(
@@ -13596,62 +12119,8 @@ class Stroke(
     ) -> Stroke: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Stroke: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Stroke: ...
 
     @overload
@@ -13666,13 +12135,7 @@ class Stroke(
     ) -> Stroke: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Stroke: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Stroke: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Stroke: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Stroke: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Stroke: ...
@@ -13860,13 +12323,7 @@ class StrokeDatum(
     ) -> StrokeDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeDatum: ...
@@ -14273,7 +12730,7 @@ class StrokeDash(
     def bandPosition(self, _: float, **kwds) -> StrokeDash: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeDash: ...
+    def bin(self, _: bool | None, **kwds) -> StrokeDash: ...
 
     @overload
     def bin(
@@ -14290,9 +12747,6 @@ class StrokeDash(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeDash: ...
 
     @overload
     def condition(
@@ -14325,6 +12779,9 @@ class StrokeDash(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> StrokeDash: ...
 
     @overload
     def legend(
@@ -14435,7 +12892,7 @@ class StrokeDash(
     ) -> StrokeDash: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> StrokeDash: ...
+    def scale(self, _: None, **kwds) -> StrokeDash: ...
 
     @overload
     def scale(
@@ -14489,28 +12946,16 @@ class StrokeDash(
     ) -> StrokeDash: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeDash: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> StrokeDash: ...
 
     @overload
     def sort(
@@ -14530,62 +12975,8 @@ class StrokeDash(
     ) -> StrokeDash: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeDash: ...
 
     @overload
@@ -14600,13 +12991,7 @@ class StrokeDash(
     ) -> StrokeDash: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeDash: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeDash: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDash: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDash: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeDash: ...
@@ -14794,13 +13179,7 @@ class StrokeDashDatum(
     ) -> StrokeDashDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeDashDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeDashDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDashDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDashDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeDashDatum: ...
@@ -15206,7 +13585,7 @@ class StrokeOpacity(
     def bandPosition(self, _: float, **kwds) -> StrokeOpacity: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeOpacity: ...
+    def bin(self, _: bool | None, **kwds) -> StrokeOpacity: ...
 
     @overload
     def bin(
@@ -15223,9 +13602,6 @@ class StrokeOpacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeOpacity: ...
 
     @overload
     def condition(
@@ -15258,6 +13634,9 @@ class StrokeOpacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> StrokeOpacity: ...
 
     @overload
     def legend(
@@ -15368,7 +13747,7 @@ class StrokeOpacity(
     ) -> StrokeOpacity: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> StrokeOpacity: ...
+    def scale(self, _: None, **kwds) -> StrokeOpacity: ...
 
     @overload
     def scale(
@@ -15422,28 +13801,16 @@ class StrokeOpacity(
     ) -> StrokeOpacity: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeOpacity: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> StrokeOpacity: ...
 
     @overload
     def sort(
@@ -15463,62 +13830,8 @@ class StrokeOpacity(
     ) -> StrokeOpacity: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeOpacity: ...
 
     @overload
@@ -15533,13 +13846,7 @@ class StrokeOpacity(
     ) -> StrokeOpacity: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeOpacity: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeOpacity: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeOpacity: ...
@@ -15727,13 +14034,7 @@ class StrokeOpacityDatum(
     ) -> StrokeOpacityDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeOpacityDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeOpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeOpacityDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeOpacityDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeOpacityDatum: ...
@@ -16139,7 +14440,7 @@ class StrokeWidth(
     def bandPosition(self, _: float, **kwds) -> StrokeWidth: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeWidth: ...
+    def bin(self, _: bool | None, **kwds) -> StrokeWidth: ...
 
     @overload
     def bin(
@@ -16156,9 +14457,6 @@ class StrokeWidth(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeWidth: ...
 
     @overload
     def condition(
@@ -16191,6 +14489,9 @@ class StrokeWidth(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
+
+    @overload
+    def legend(self, _: None, **kwds) -> StrokeWidth: ...
 
     @overload
     def legend(
@@ -16301,7 +14602,7 @@ class StrokeWidth(
     ) -> StrokeWidth: ...
 
     @overload
-    def legend(self, _: None, **kwds) -> StrokeWidth: ...
+    def scale(self, _: None, **kwds) -> StrokeWidth: ...
 
     @overload
     def scale(
@@ -16355,28 +14656,16 @@ class StrokeWidth(
     ) -> StrokeWidth: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeWidth: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> StrokeWidth: ...
 
     @overload
     def sort(
@@ -16396,62 +14685,8 @@ class StrokeWidth(
     ) -> StrokeWidth: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeWidth: ...
 
     @overload
@@ -16466,13 +14701,7 @@ class StrokeWidth(
     ) -> StrokeWidth: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeWidth: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeWidth: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeWidth: ...
@@ -16660,13 +14889,7 @@ class StrokeWidthDatum(
     ) -> StrokeWidthDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> StrokeWidthDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> StrokeWidthDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeWidthDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeWidthDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeWidthDatum: ...
@@ -17042,7 +15265,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def bandPosition(self, _: float, **kwds) -> Text: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Text: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Text: ...
 
     @overload
     def bin(
@@ -17059,12 +15282,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Text: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Text: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Text: ...
 
     @overload
     def condition(
@@ -17108,59 +15325,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def formatType(self, _: str, **kwds) -> Text: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Text: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Text: ...
 
     @overload
@@ -17175,13 +15341,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     ) -> Text: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Text: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Text: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Text: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Text: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Text: ...
@@ -17397,13 +15557,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def formatType(self, _: str, **kwds) -> TextDatum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> TextDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> TextDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> TextDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> TextDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> TextDatum: ...
@@ -17772,7 +15926,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def bandPosition(self, _: float, **kwds) -> Theta: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Theta: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Theta: ...
 
     @overload
     def bin(
@@ -17791,12 +15945,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Theta: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Theta: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Theta: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Theta: ...
 
     @overload
@@ -17805,6 +15953,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Theta: ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> Theta: ...
 
     @overload
     def scale(
@@ -17858,28 +16009,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Theta: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Theta: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Theta: ...
 
     @overload
     def sort(
@@ -17899,71 +16038,11 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Theta: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> Theta: ...
 
     @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Theta: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Theta: ...
 
     @overload
@@ -17978,13 +16057,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     ) -> Theta: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Theta: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Theta: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Theta: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Theta: ...
@@ -18182,6 +16255,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def bandPosition(self, _: float, **kwds) -> ThetaDatum: ...
 
     @overload
+    def scale(self, _: None, **kwds) -> ThetaDatum: ...
+
+    @overload
     def scale(
         self,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -18233,25 +16309,10 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     ) -> ThetaDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> ThetaDatum: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> ThetaDatum: ...
 
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ThetaDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> ThetaDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> ThetaDatum: ...
@@ -18424,59 +16485,8 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Theta2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Theta2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Theta2: ...
 
     @overload
@@ -18491,13 +16501,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Theta2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Theta2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Theta2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Theta2: ...
 
     def __init__(
         self,
@@ -18632,13 +16636,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> Theta2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Theta2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Theta2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Theta2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> Theta2Datum: ...
@@ -18892,7 +16890,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def bandPosition(self, _: float, **kwds) -> Tooltip: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Tooltip: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Tooltip: ...
 
     @overload
     def bin(
@@ -18909,12 +16907,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Tooltip: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Tooltip: ...
 
     @overload
     def condition(
@@ -18958,59 +16950,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Tooltip: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Tooltip: ...
 
     @overload
@@ -19025,13 +16966,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Tooltip: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Tooltip: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Tooltip: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Tooltip: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Tooltip: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Tooltip: ...
@@ -19419,7 +17354,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def bandPosition(self, _: float, **kwds) -> Url: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Url: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Url: ...
 
     @overload
     def bin(
@@ -19436,12 +17371,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Url: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Url: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Url: ...
 
     @overload
     def condition(
@@ -19485,59 +17414,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, **kwds) -> Url: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Url: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Url: ...
 
     @overload
@@ -19552,13 +17430,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     ) -> Url: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Url: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Url: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Url: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Url: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Url: ...
@@ -20002,6 +17874,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
+    def axis(self, _: None, **kwds) -> X: ...
+
+    @overload
     def axis(
         self,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
@@ -20120,13 +17995,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def axis(self, _: None, **kwds) -> X: ...
-
-    @overload
     def bandPosition(self, _: float, **kwds) -> X: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> X: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> X: ...
 
     @overload
     def bin(
@@ -20145,12 +18017,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> X: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> X: ...
-
-    @overload
     def field(self, _: str, **kwds) -> X: ...
 
     @overload
@@ -20159,6 +18025,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> X: ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> X: ...
 
     @overload
     def impute(
@@ -20171,7 +18040,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def impute(self, _: None, **kwds) -> X: ...
+    def scale(self, _: None, **kwds) -> X: ...
 
     @overload
     def scale(
@@ -20225,28 +18094,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> X: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> X: ...
 
     @overload
     def sort(
@@ -20266,71 +18123,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> X: ...
 
     @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> X: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> X: ...
 
     @overload
@@ -20345,13 +18142,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     ) -> X: ...
 
     @overload
-    def title(self, _: str, **kwds) -> X: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> X: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> X: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> X: ...
@@ -20567,6 +18358,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "x"
 
     @overload
+    def axis(self, _: None, **kwds) -> XDatum: ...
+
+    @overload
     def axis(
         self,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
@@ -20685,10 +18479,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> XDatum: ...
 
     @overload
-    def axis(self, _: None, **kwds) -> XDatum: ...
+    def bandPosition(self, _: float, **kwds) -> XDatum: ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> XDatum: ...
+    def impute(self, _: None, **kwds) -> XDatum: ...
 
     @overload
     def impute(
@@ -20701,7 +18495,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> XDatum: ...
 
     @overload
-    def impute(self, _: None, **kwds) -> XDatum: ...
+    def scale(self, _: None, **kwds) -> XDatum: ...
 
     @overload
     def scale(
@@ -20755,25 +18549,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> XDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> XDatum: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> XDatum: ...
 
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> XDatum: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> XDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> XDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> XDatum: ...
@@ -20950,59 +18729,8 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> X2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> X2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> X2: ...
 
     @overload
@@ -21017,13 +18745,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> X2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> X2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> X2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> X2: ...
 
     def __init__(
         self,
@@ -21158,13 +18880,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> X2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> X2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> X2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> X2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> X2Datum: ...
@@ -21329,59 +19045,8 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> XError: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XError: ...
 
     @overload
@@ -21396,13 +19061,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError: ...
 
     @overload
-    def title(self, _: str, **kwds) -> XError: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XError: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XError: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> XError: ...
 
     def __init__(
         self,
@@ -21576,59 +19235,8 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> XError2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XError2: ...
 
     @overload
@@ -21643,13 +19251,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> XError2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XError2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XError2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> XError2: ...
 
     def __init__(
         self,
@@ -21924,7 +19526,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def bandPosition(self, _: float, **kwds) -> XOffset: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> XOffset: ...
+    def bin(self, _: bool | None, **kwds) -> XOffset: ...
 
     @overload
     def bin(
@@ -21943,9 +19545,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> XOffset: ...
 
     @overload
-    def bin(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
     def field(self, _: str, **kwds) -> XOffset: ...
 
     @overload
@@ -21954,6 +19553,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> XOffset: ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> XOffset: ...
 
     @overload
     def scale(
@@ -22007,28 +19609,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> XOffset: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> XOffset: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> XOffset: ...
 
     @overload
     def sort(
@@ -22048,62 +19638,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> XOffset: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> XOffset: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XOffset: ...
 
     @overload
@@ -22118,13 +19654,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> XOffset: ...
 
     @overload
-    def title(self, _: str, **kwds) -> XOffset: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XOffset: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XOffset: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> XOffset: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> XOffset: ...
@@ -22290,6 +19820,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> XOffsetDatum: ...
 
     @overload
+    def scale(self, _: None, **kwds) -> XOffsetDatum: ...
+
+    @overload
     def scale(
         self,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22341,16 +19874,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     ) -> XOffsetDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XOffsetDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> XOffsetDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> XOffsetDatum: ...
@@ -22666,6 +20190,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
+    def axis(self, _: None, **kwds) -> Y: ...
+
+    @overload
     def axis(
         self,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
@@ -22784,13 +20311,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def axis(self, _: None, **kwds) -> Y: ...
-
-    @overload
     def bandPosition(self, _: float, **kwds) -> Y: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> Y: ...
+    def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Y: ...
 
     @overload
     def bin(
@@ -22809,12 +20333,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Y: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Y: ...
-
-    @overload
     def field(self, _: str, **kwds) -> Y: ...
 
     @overload
@@ -22823,6 +20341,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Y: ...
+
+    @overload
+    def impute(self, _: None, **kwds) -> Y: ...
 
     @overload
     def impute(
@@ -22835,7 +20356,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def impute(self, _: None, **kwds) -> Y: ...
+    def scale(self, _: None, **kwds) -> Y: ...
 
     @overload
     def scale(
@@ -22889,28 +20410,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Y: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> Y: ...
 
     @overload
     def sort(
@@ -22930,71 +20439,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> Y: ...
 
     @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Y: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Y: ...
 
     @overload
@@ -23009,13 +20458,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     ) -> Y: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Y: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Y: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Y: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> Y: ...
@@ -23231,6 +20674,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "y"
 
     @overload
+    def axis(self, _: None, **kwds) -> YDatum: ...
+
+    @overload
     def axis(
         self,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
@@ -23349,10 +20795,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> YDatum: ...
 
     @overload
-    def axis(self, _: None, **kwds) -> YDatum: ...
+    def bandPosition(self, _: float, **kwds) -> YDatum: ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> YDatum: ...
+    def impute(self, _: None, **kwds) -> YDatum: ...
 
     @overload
     def impute(
@@ -23365,7 +20811,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> YDatum: ...
 
     @overload
-    def impute(self, _: None, **kwds) -> YDatum: ...
+    def scale(self, _: None, **kwds) -> YDatum: ...
 
     @overload
     def scale(
@@ -23419,25 +20865,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     ) -> YDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> YDatum: ...
+    def stack(self, _: bool | StackOffset_T | None, **kwds) -> YDatum: ...
 
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> YDatum: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> YDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> YDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> YDatum: ...
@@ -23614,59 +21045,8 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Y2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> Y2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Y2: ...
 
     @overload
@@ -23681,13 +21061,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Y2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Y2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Y2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Y2: ...
 
     def __init__(
         self,
@@ -23822,13 +21196,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def bandPosition(self, _: float, **kwds) -> Y2Datum: ...
 
     @overload
-    def title(self, _: str, **kwds) -> Y2Datum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Y2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y2Datum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> Y2Datum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> Y2Datum: ...
@@ -23993,59 +21361,8 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> YError: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YError: ...
 
     @overload
@@ -24060,13 +21377,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError: ...
 
     @overload
-    def title(self, _: str, **kwds) -> YError: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YError: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YError: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> YError: ...
 
     def __init__(
         self,
@@ -24240,59 +21551,8 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError2: ...
 
     @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> YError2: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YError2: ...
 
     @overload
@@ -24307,13 +21567,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError2: ...
 
     @overload
-    def title(self, _: str, **kwds) -> YError2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YError2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YError2: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> YError2: ...
 
     def __init__(
         self,
@@ -24588,7 +21842,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def bandPosition(self, _: float, **kwds) -> YOffset: ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> YOffset: ...
+    def bin(self, _: bool | None, **kwds) -> YOffset: ...
 
     @overload
     def bin(
@@ -24607,9 +21861,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> YOffset: ...
 
     @overload
-    def bin(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
     def field(self, _: str, **kwds) -> YOffset: ...
 
     @overload
@@ -24618,6 +21869,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> YOffset: ...
+
+    @overload
+    def scale(self, _: None, **kwds) -> YOffset: ...
 
     @overload
     def scale(
@@ -24671,28 +21925,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> YOffset: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> YOffset: ...
+    def sort(
+        self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        **kwds,
+    ) -> YOffset: ...
 
     @overload
     def sort(
@@ -24712,62 +21954,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> YOffset: ...
 
     @overload
-    def sort(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
     def timeUnit(
-        self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
-    ) -> YOffset: ...
-
-    @overload
-    def timeUnit(
-        self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
+        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YOffset: ...
 
     @overload
@@ -24782,13 +21970,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> YOffset: ...
 
     @overload
-    def title(self, _: str, **kwds) -> YOffset: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YOffset: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YOffset: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> YOffset: ...
 
     @overload
     def type(self, _: StandardType_T, **kwds) -> YOffset: ...
@@ -24954,6 +22136,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def bandPosition(self, _: float, **kwds) -> YOffsetDatum: ...
 
     @overload
+    def scale(self, _: None, **kwds) -> YOffsetDatum: ...
+
+    @overload
     def scale(
         self,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -25005,16 +22190,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     ) -> YOffsetDatum: ...
 
     @overload
-    def scale(self, _: None, **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YOffsetDatum: ...
+    def title(self, _: str | Sequence[str] | None, **kwds) -> YOffsetDatum: ...
 
     @overload
     def type(self, _: Type_T, **kwds) -> YOffsetDatum: ...
