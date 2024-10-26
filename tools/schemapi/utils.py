@@ -7,11 +7,21 @@ import re
 import sys
 import textwrap
 import urllib.parse
+from collections import deque
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Generic,
+    Literal,
+    TypeVar,
+    Union,
+    overload,
+)
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -19,6 +29,7 @@ from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
     from _collections_abc import KeysView
+    from collections.abc import Callable
     from pathlib import Path
     from re import Pattern
 
@@ -911,6 +922,20 @@ class SchemaInfo:
 
     def is_datetime(self) -> bool:
         return self.refname == "DateTime"
+
+
+class Grouped(Generic[T]):
+    def __init__(
+        self, iterable: Iterable[T], /, predicate: Callable[[T], bool]
+    ) -> None:
+        truthy, falsey = deque[T](), deque[T]()
+        for el in iterable:
+            if predicate(el):
+                truthy.append(el)
+            else:
+                falsey.append(el)
+        self.truthy: deque[T] = truthy
+        self.falsey: deque[T] = falsey
 
 
 def flatten(container: Iterable) -> Iterable:
