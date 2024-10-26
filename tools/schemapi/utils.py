@@ -536,6 +536,39 @@ class SchemaInfo:
             else sort_type_reprs(tps)
         )
 
+    @classmethod
+    def to_type_repr_batched(
+        cls,
+        infos: Iterable[SchemaInfo],
+        /,
+        *,
+        target: TargetType = "doc",
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+    ) -> str:
+        """
+        Intended to handle a subset of a union.
+
+        Parameters
+        ----------
+        infos
+            Schemas to collapse into a single representation.
+
+        See Also
+        --------
+        ``SchemaInfo.to_type_repr``
+        """
+        it: Iterator[str] = chain.from_iterable(
+            info.to_type_repr(
+                as_str=False,
+                target=target,
+                use_concrete=use_concrete,
+                use_undefined=False,
+            )
+            for info in infos
+        )
+        return finalize_type_reprs(it, target=target, use_undefined=use_undefined)
+
     def title_to_type_reprs(self, *, use_concrete: bool) -> set[str]:
         """
         Possibly use ``self.title`` as a type, or provide alternative(s).
