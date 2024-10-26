@@ -484,23 +484,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Angle: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Angle: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Angle: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Angle: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Angle: ...
-
     @overload
     def bin(
         self,
@@ -516,7 +511,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def condition(
         self,
@@ -524,7 +518,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def condition(
         self,
@@ -533,25 +526,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> Angle: ...
-
     @overload
     def field(self, _: str, **kwds) -> Angle: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Angle: ...
-
     @overload
     def legend(
         self,
@@ -659,10 +647,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Angle: ...
-
     @overload
     def scale(
         self,
@@ -713,7 +699,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def sort(
         self,
@@ -725,7 +710,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         | None,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def sort(
         self,
@@ -734,7 +718,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def sort(
         self,
@@ -742,12 +725,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Angle: ...
-
     @overload
     def timeUnit(
         self,
@@ -758,10 +739,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Angle: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Angle: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Angle: ...
 
@@ -922,7 +901,6 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
 
     @overload
     def bandPosition(self, _: float, **kwds) -> AngleDatum: ...
-
     @overload
     def condition(
         self,
@@ -930,7 +908,6 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleDatum: ...
-
     @overload
     def condition(
         self,
@@ -939,15 +916,12 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> AngleDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> AngleDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> AngleDatum: ...
 
@@ -1017,7 +991,6 @@ class AngleValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
@@ -1032,7 +1005,6 @@ class AngleValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
@@ -1061,7 +1033,6 @@ class AngleValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
@@ -1077,7 +1048,6 @@ class AngleValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
@@ -1085,7 +1055,6 @@ class AngleValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
@@ -1094,7 +1063,6 @@ class AngleValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -1338,23 +1306,18 @@ class Color(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Color: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Color: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Color: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Color: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Color: ...
-
     @overload
     def bin(
         self,
@@ -1370,7 +1333,6 @@ class Color(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def condition(
         self,
@@ -1378,7 +1340,6 @@ class Color(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def condition(
         self,
@@ -1387,25 +1348,20 @@ class Color(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> Color: ...
-
     @overload
     def field(self, _: str, **kwds) -> Color: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Color: ...
-
     @overload
     def legend(
         self,
@@ -1513,10 +1469,8 @@ class Color(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Color: ...
-
     @overload
     def scale(
         self,
@@ -1567,7 +1521,6 @@ class Color(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def sort(
         self,
@@ -1579,7 +1532,6 @@ class Color(
         | None,
         **kwds,
     ) -> Color: ...
-
     @overload
     def sort(
         self,
@@ -1588,7 +1540,6 @@ class Color(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def sort(
         self,
@@ -1596,12 +1547,10 @@ class Color(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Color: ...
-
     @overload
     def timeUnit(
         self,
@@ -1612,10 +1561,8 @@ class Color(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Color: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Color: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Color: ...
 
@@ -1778,7 +1725,6 @@ class ColorDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> ColorDatum: ...
-
     @overload
     def condition(
         self,
@@ -1786,7 +1732,6 @@ class ColorDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
-
     @overload
     def condition(
         self,
@@ -1795,15 +1740,12 @@ class ColorDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> ColorDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> ColorDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> ColorDatum: ...
 
@@ -1874,7 +1816,6 @@ class ColorValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
@@ -1889,7 +1830,6 @@ class ColorValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
@@ -1918,7 +1858,6 @@ class ColorValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
@@ -1934,7 +1873,6 @@ class ColorValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
@@ -1942,7 +1880,6 @@ class ColorValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
@@ -1951,7 +1888,6 @@ class ColorValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
@@ -2177,26 +2113,20 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Column: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Column: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Column: ...
-
     @overload
     def align(self, _: LayoutAlign_T, **kwds) -> Column: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Column: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Column: ...
-
     @overload
     def bin(
         self,
@@ -2212,23 +2142,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Column: ...
-
     @overload
     def center(self, _: bool, **kwds) -> Column: ...
-
     @overload
     def field(self, _: str, **kwds) -> Column: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Column: ...
-
     @overload
     def header(self, _: None, **kwds) -> Column: ...
-
     @overload
     def header(
         self,
@@ -2278,7 +2203,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Column: ...
-
     @overload
     def sort(
         self,
@@ -2290,7 +2214,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         | None,
         **kwds,
     ) -> Column: ...
-
     @overload
     def sort(
         self,
@@ -2299,15 +2222,12 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Column: ...
-
     @overload
     def spacing(self, _: float, **kwds) -> Column: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Column: ...
-
     @overload
     def timeUnit(
         self,
@@ -2318,10 +2238,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Column: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Column: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Column: ...
 
@@ -2569,23 +2487,18 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Description: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Description: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Description: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Description: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Description: ...
-
     @overload
     def bin(
         self,
@@ -2601,7 +2514,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Description: ...
-
     @overload
     def condition(
         self,
@@ -2609,7 +2521,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Description: ...
-
     @overload
     def condition(
         self,
@@ -2618,36 +2529,28 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Description: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringExprRef], **kwds
     ) -> Description: ...
-
     @overload
     def field(self, _: str, **kwds) -> Description: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Description: ...
-
     @overload
     def format(self, _: str, **kwds) -> Description: ...
-
     @overload
     def format(self, _: Map, **kwds) -> Description: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> Description: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Description: ...
-
     @overload
     def timeUnit(
         self,
@@ -2658,10 +2561,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Description: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Description: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Description: ...
 
@@ -2743,7 +2644,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
@@ -2758,7 +2658,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
@@ -2787,7 +2686,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
@@ -2803,7 +2701,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
@@ -2811,7 +2708,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
@@ -2820,7 +2716,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
@@ -2996,23 +2891,18 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Detail: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Detail: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Detail: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Detail: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Detail: ...
-
     @overload
     def bin(
         self,
@@ -3028,22 +2918,18 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Detail: ...
-
     @overload
     def field(self, _: str, **kwds) -> Detail: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Detail: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Detail: ...
-
     @overload
     def timeUnit(
         self,
@@ -3054,10 +2940,8 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Detail: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Detail: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Detail: ...
 
@@ -3335,20 +3219,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Facet: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Facet: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Facet: ...
-
     @overload
     def align(self, _: LayoutAlign_T, **kwds) -> Facet: ...
-
     @overload
     def align(
         self,
@@ -3356,13 +3236,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         row: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Facet: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Facet: ...
-
     @overload
     def bin(
         self,
@@ -3378,13 +3255,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def bounds(self, _: Literal["full", "flush"], **kwds) -> Facet: ...
-
     @overload
     def center(self, _: bool, **kwds) -> Facet: ...
-
     @overload
     def center(
         self,
@@ -3392,23 +3266,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         row: Optional[bool] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def columns(self, _: float, **kwds) -> Facet: ...
-
     @overload
     def field(self, _: str, **kwds) -> Facet: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def header(self, _: None, **kwds) -> Facet: ...
-
     @overload
     def header(
         self,
@@ -3458,7 +3327,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def sort(
         self,
@@ -3470,7 +3338,6 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         | None,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def sort(
         self,
@@ -3479,10 +3346,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def spacing(self, _: float, **kwds) -> Facet: ...
-
     @overload
     def spacing(
         self,
@@ -3490,12 +3355,10 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         row: Optional[float] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Facet: ...
-
     @overload
     def timeUnit(
         self,
@@ -3506,10 +3369,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Facet: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Facet: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Facet: ...
 
@@ -3792,23 +3653,18 @@ class Fill(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Fill: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Fill: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Fill: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Fill: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Fill: ...
-
     @overload
     def bin(
         self,
@@ -3824,7 +3680,6 @@ class Fill(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def condition(
         self,
@@ -3832,7 +3687,6 @@ class Fill(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def condition(
         self,
@@ -3841,25 +3695,20 @@ class Fill(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> Fill: ...
-
     @overload
     def field(self, _: str, **kwds) -> Fill: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Fill: ...
-
     @overload
     def legend(
         self,
@@ -3967,10 +3816,8 @@ class Fill(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Fill: ...
-
     @overload
     def scale(
         self,
@@ -4021,7 +3868,6 @@ class Fill(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def sort(
         self,
@@ -4033,7 +3879,6 @@ class Fill(
         | None,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def sort(
         self,
@@ -4042,7 +3887,6 @@ class Fill(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def sort(
         self,
@@ -4050,12 +3894,10 @@ class Fill(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Fill: ...
-
     @overload
     def timeUnit(
         self,
@@ -4066,10 +3908,8 @@ class Fill(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Fill: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Fill: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Fill: ...
 
@@ -4232,7 +4072,6 @@ class FillDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> FillDatum: ...
-
     @overload
     def condition(
         self,
@@ -4240,7 +4079,6 @@ class FillDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillDatum: ...
-
     @overload
     def condition(
         self,
@@ -4249,15 +4087,12 @@ class FillDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> FillDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> FillDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> FillDatum: ...
 
@@ -4328,7 +4163,6 @@ class FillValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
@@ -4343,7 +4177,6 @@ class FillValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
@@ -4372,7 +4205,6 @@ class FillValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
@@ -4388,7 +4220,6 @@ class FillValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
@@ -4396,7 +4227,6 @@ class FillValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
@@ -4405,7 +4235,6 @@ class FillValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
@@ -4648,23 +4477,18 @@ class FillOpacity(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> FillOpacity: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> FillOpacity: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> FillOpacity: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> FillOpacity: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> FillOpacity: ...
-
     @overload
     def bin(
         self,
@@ -4680,7 +4504,6 @@ class FillOpacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def condition(
         self,
@@ -4688,7 +4511,6 @@ class FillOpacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def condition(
         self,
@@ -4697,25 +4519,20 @@ class FillOpacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> FillOpacity: ...
-
     @overload
     def field(self, _: str, **kwds) -> FillOpacity: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def legend(self, _: None, **kwds) -> FillOpacity: ...
-
     @overload
     def legend(
         self,
@@ -4823,10 +4640,8 @@ class FillOpacity(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def scale(self, _: None, **kwds) -> FillOpacity: ...
-
     @overload
     def scale(
         self,
@@ -4877,7 +4692,6 @@ class FillOpacity(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def sort(
         self,
@@ -4889,7 +4703,6 @@ class FillOpacity(
         | None,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def sort(
         self,
@@ -4898,7 +4711,6 @@ class FillOpacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def sort(
         self,
@@ -4906,12 +4718,10 @@ class FillOpacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> FillOpacity: ...
-
     @overload
     def timeUnit(
         self,
@@ -4922,10 +4732,8 @@ class FillOpacity(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> FillOpacity: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> FillOpacity: ...
 
@@ -5088,7 +4896,6 @@ class FillOpacityDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> FillOpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -5096,7 +4903,6 @@ class FillOpacityDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -5105,15 +4911,12 @@ class FillOpacityDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> FillOpacityDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> FillOpacityDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> FillOpacityDatum: ...
 
@@ -5183,7 +4986,6 @@ class FillOpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -5198,7 +5000,6 @@ class FillOpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -5227,7 +5028,6 @@ class FillOpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -5243,7 +5043,6 @@ class FillOpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -5251,7 +5050,6 @@ class FillOpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -5260,7 +5058,6 @@ class FillOpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -5473,23 +5270,18 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Href: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Href: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Href: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Href: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Href: ...
-
     @overload
     def bin(
         self,
@@ -5505,7 +5297,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Href: ...
-
     @overload
     def condition(
         self,
@@ -5513,7 +5304,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Href: ...
-
     @overload
     def condition(
         self,
@@ -5522,36 +5312,28 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Href: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringExprRef], **kwds
     ) -> Href: ...
-
     @overload
     def field(self, _: str, **kwds) -> Href: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Href: ...
-
     @overload
     def format(self, _: str, **kwds) -> Href: ...
-
     @overload
     def format(self, _: Map, **kwds) -> Href: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> Href: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Href: ...
-
     @overload
     def timeUnit(
         self,
@@ -5562,10 +5344,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Href: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Href: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Href: ...
 
@@ -5647,7 +5427,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
@@ -5662,7 +5441,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
@@ -5691,7 +5469,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
@@ -5707,7 +5484,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
@@ -5715,7 +5491,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
@@ -5724,7 +5499,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
@@ -5900,23 +5674,18 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Key: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Key: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Key: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Key: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Key: ...
-
     @overload
     def bin(
         self,
@@ -5932,22 +5701,18 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Key: ...
-
     @overload
     def field(self, _: str, **kwds) -> Key: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Key: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Key: ...
-
     @overload
     def timeUnit(
         self,
@@ -5958,10 +5723,8 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Key: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Key: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Key: ...
 
@@ -6151,38 +5914,30 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Latitude: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Latitude: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Latitude: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Latitude: ...
-
     @overload
     def field(self, _: str, **kwds) -> Latitude: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Latitude: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Latitude: ...
-
     @overload
     def timeUnit(
         self,
@@ -6193,10 +5948,8 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Latitude: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude: ...
-
     @overload
     def type(self, _: Literal["quantitative"], **kwds) -> Latitude: ...
 
@@ -6333,10 +6086,8 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> LatitudeDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> LatitudeDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> LatitudeDatum: ...
 
@@ -6449,38 +6200,30 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Latitude2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Latitude2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Latitude2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Latitude2: ...
-
     @overload
     def field(self, _: str, **kwds) -> Latitude2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Latitude2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Latitude2: ...
-
     @overload
     def timeUnit(
         self,
@@ -6491,7 +6234,6 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Latitude2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude2: ...
 
@@ -6626,10 +6368,8 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Latitude2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Latitude2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> Latitude2Datum: ...
 
@@ -6828,38 +6568,30 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Longitude: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Longitude: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Longitude: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Longitude: ...
-
     @overload
     def field(self, _: str, **kwds) -> Longitude: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Longitude: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Longitude: ...
-
     @overload
     def timeUnit(
         self,
@@ -6870,10 +6602,8 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Longitude: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude: ...
-
     @overload
     def type(self, _: Literal["quantitative"], **kwds) -> Longitude: ...
 
@@ -7010,10 +6740,8 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> LongitudeDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> LongitudeDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> LongitudeDatum: ...
 
@@ -7126,38 +6854,30 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Longitude2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Longitude2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Longitude2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Longitude2: ...
-
     @overload
     def field(self, _: str, **kwds) -> Longitude2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Longitude2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Longitude2: ...
-
     @overload
     def timeUnit(
         self,
@@ -7168,7 +6888,6 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Longitude2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude2: ...
 
@@ -7303,10 +7022,8 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Longitude2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Longitude2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> Longitude2Datum: ...
 
@@ -7574,23 +7291,18 @@ class Opacity(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Opacity: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Opacity: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Opacity: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Opacity: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Opacity: ...
-
     @overload
     def bin(
         self,
@@ -7606,7 +7318,6 @@ class Opacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def condition(
         self,
@@ -7614,7 +7325,6 @@ class Opacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def condition(
         self,
@@ -7623,25 +7333,20 @@ class Opacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> Opacity: ...
-
     @overload
     def field(self, _: str, **kwds) -> Opacity: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Opacity: ...
-
     @overload
     def legend(
         self,
@@ -7749,10 +7454,8 @@ class Opacity(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Opacity: ...
-
     @overload
     def scale(
         self,
@@ -7803,7 +7506,6 @@ class Opacity(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def sort(
         self,
@@ -7815,7 +7517,6 @@ class Opacity(
         | None,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def sort(
         self,
@@ -7824,7 +7525,6 @@ class Opacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def sort(
         self,
@@ -7832,12 +7532,10 @@ class Opacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Opacity: ...
-
     @overload
     def timeUnit(
         self,
@@ -7848,10 +7546,8 @@ class Opacity(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Opacity: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Opacity: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Opacity: ...
 
@@ -8012,7 +7708,6 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
 
     @overload
     def bandPosition(self, _: float, **kwds) -> OpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -8020,7 +7715,6 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -8029,15 +7723,12 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> OpacityDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> OpacityDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> OpacityDatum: ...
 
@@ -8107,7 +7798,6 @@ class OpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -8122,7 +7812,6 @@ class OpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -8151,7 +7840,6 @@ class OpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -8167,7 +7855,6 @@ class OpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -8175,7 +7862,6 @@ class OpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -8184,7 +7870,6 @@ class OpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -8360,23 +8045,18 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Order: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Order: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Order: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Order: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Order: ...
-
     @overload
     def bin(
         self,
@@ -8392,25 +8072,20 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Order: ...
-
     @overload
     def field(self, _: str, **kwds) -> Order: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Order: ...
-
     @overload
     def sort(self, _: SortOrder_T, **kwds) -> Order: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Order: ...
-
     @overload
     def timeUnit(
         self,
@@ -8421,10 +8096,8 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Order: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Order: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Order: ...
 
@@ -8487,7 +8160,6 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         value: Optional[float] = Undefined,
         **kwds,
     ) -> OrderValue: ...
-
     @overload
     def condition(
         self,
@@ -8496,7 +8168,6 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         value: Optional[float] = Undefined,
         **kwds,
     ) -> OrderValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumber], **kwds
@@ -8751,23 +8422,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Radius: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Radius: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Radius: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Radius: ...
-
     @overload
     def bin(
         self,
@@ -8783,20 +8449,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def field(self, _: str, **kwds) -> Radius: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Radius: ...
-
     @overload
     def scale(
         self,
@@ -8847,7 +8509,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def sort(
         self,
@@ -8859,7 +8520,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         | None,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def sort(
         self,
@@ -8868,7 +8528,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def sort(
         self,
@@ -8876,15 +8535,12 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> Radius: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Radius: ...
-
     @overload
     def timeUnit(
         self,
@@ -8895,10 +8551,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Radius: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Radius: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Radius: ...
 
@@ -9093,10 +8747,8 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> RadiusDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> RadiusDatum: ...
-
     @overload
     def scale(
         self,
@@ -9147,13 +8799,10 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> RadiusDatum: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> RadiusDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> RadiusDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> RadiusDatum: ...
 
@@ -9297,38 +8946,30 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Radius2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Radius2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Radius2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Radius2: ...
-
     @overload
     def field(self, _: str, **kwds) -> Radius2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Radius2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Radius2: ...
-
     @overload
     def timeUnit(
         self,
@@ -9339,7 +8980,6 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Radius2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Radius2: ...
 
@@ -9474,10 +9114,8 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Radius2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Radius2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> Radius2Datum: ...
 
@@ -9728,26 +9366,20 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Row: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Row: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Row: ...
-
     @overload
     def align(self, _: LayoutAlign_T, **kwds) -> Row: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Row: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Row: ...
-
     @overload
     def bin(
         self,
@@ -9763,23 +9395,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Row: ...
-
     @overload
     def center(self, _: bool, **kwds) -> Row: ...
-
     @overload
     def field(self, _: str, **kwds) -> Row: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Row: ...
-
     @overload
     def header(self, _: None, **kwds) -> Row: ...
-
     @overload
     def header(
         self,
@@ -9829,7 +9456,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Row: ...
-
     @overload
     def sort(
         self,
@@ -9841,7 +9467,6 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         | None,
         **kwds,
     ) -> Row: ...
-
     @overload
     def sort(
         self,
@@ -9850,15 +9475,12 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Row: ...
-
     @overload
     def spacing(self, _: float, **kwds) -> Row: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Row: ...
-
     @overload
     def timeUnit(
         self,
@@ -9869,10 +9491,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Row: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Row: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Row: ...
 
@@ -10151,23 +9771,18 @@ class Shape(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Shape: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Shape: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Shape: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Shape: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Shape: ...
-
     @overload
     def bin(
         self,
@@ -10183,7 +9798,6 @@ class Shape(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def condition(
         self,
@@ -10191,7 +9805,6 @@ class Shape(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def condition(
         self,
@@ -10200,25 +9813,20 @@ class Shape(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> Shape: ...
-
     @overload
     def field(self, _: str, **kwds) -> Shape: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Shape: ...
-
     @overload
     def legend(
         self,
@@ -10326,10 +9934,8 @@ class Shape(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Shape: ...
-
     @overload
     def scale(
         self,
@@ -10380,7 +9986,6 @@ class Shape(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def sort(
         self,
@@ -10392,7 +9997,6 @@ class Shape(
         | None,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def sort(
         self,
@@ -10401,7 +10005,6 @@ class Shape(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def sort(
         self,
@@ -10409,12 +10012,10 @@ class Shape(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Shape: ...
-
     @overload
     def timeUnit(
         self,
@@ -10425,10 +10026,8 @@ class Shape(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Shape: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Shape: ...
-
     @overload
     def type(self, _: TypeForShape_T, **kwds) -> Shape: ...
 
@@ -10591,7 +10190,6 @@ class ShapeDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> ShapeDatum: ...
-
     @overload
     def condition(
         self,
@@ -10599,7 +10197,6 @@ class ShapeDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
-
     @overload
     def condition(
         self,
@@ -10608,15 +10205,12 @@ class ShapeDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
     ) -> ShapeDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> ShapeDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> ShapeDatum: ...
 
@@ -10687,7 +10281,6 @@ class ShapeValue(
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
@@ -10702,7 +10295,6 @@ class ShapeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
@@ -10731,7 +10323,6 @@ class ShapeValue(
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
@@ -10747,7 +10338,6 @@ class ShapeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
@@ -10755,7 +10345,6 @@ class ShapeValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
@@ -10764,7 +10353,6 @@ class ShapeValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
@@ -11005,23 +10593,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Size: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Size: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Size: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Size: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Size: ...
-
     @overload
     def bin(
         self,
@@ -11037,7 +10620,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def condition(
         self,
@@ -11045,7 +10627,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def condition(
         self,
@@ -11054,25 +10635,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> Size: ...
-
     @overload
     def field(self, _: str, **kwds) -> Size: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Size: ...
-
     @overload
     def legend(
         self,
@@ -11180,10 +10756,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Size: ...
-
     @overload
     def scale(
         self,
@@ -11234,7 +10808,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def sort(
         self,
@@ -11246,7 +10819,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         | None,
         **kwds,
     ) -> Size: ...
-
     @overload
     def sort(
         self,
@@ -11255,7 +10827,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def sort(
         self,
@@ -11263,12 +10834,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Size: ...
-
     @overload
     def timeUnit(
         self,
@@ -11279,10 +10848,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Size: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Size: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Size: ...
 
@@ -11443,7 +11010,6 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
 
     @overload
     def bandPosition(self, _: float, **kwds) -> SizeDatum: ...
-
     @overload
     def condition(
         self,
@@ -11451,7 +11017,6 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeDatum: ...
-
     @overload
     def condition(
         self,
@@ -11460,15 +11025,12 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> SizeDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> SizeDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> SizeDatum: ...
 
@@ -11538,7 +11100,6 @@ class SizeValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
@@ -11553,7 +11114,6 @@ class SizeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
@@ -11582,7 +11142,6 @@ class SizeValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
@@ -11598,7 +11157,6 @@ class SizeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
@@ -11606,7 +11164,6 @@ class SizeValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
@@ -11615,7 +11172,6 @@ class SizeValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -11859,23 +11415,18 @@ class Stroke(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Stroke: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Stroke: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Stroke: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Stroke: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> Stroke: ...
-
     @overload
     def bin(
         self,
@@ -11891,7 +11442,6 @@ class Stroke(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def condition(
         self,
@@ -11899,7 +11449,6 @@ class Stroke(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def condition(
         self,
@@ -11908,25 +11457,20 @@ class Stroke(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> Stroke: ...
-
     @overload
     def field(self, _: str, **kwds) -> Stroke: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def legend(self, _: None, **kwds) -> Stroke: ...
-
     @overload
     def legend(
         self,
@@ -12034,10 +11578,8 @@ class Stroke(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Stroke: ...
-
     @overload
     def scale(
         self,
@@ -12088,7 +11630,6 @@ class Stroke(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def sort(
         self,
@@ -12100,7 +11641,6 @@ class Stroke(
         | None,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def sort(
         self,
@@ -12109,7 +11649,6 @@ class Stroke(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def sort(
         self,
@@ -12117,12 +11656,10 @@ class Stroke(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Stroke: ...
-
     @overload
     def timeUnit(
         self,
@@ -12133,10 +11670,8 @@ class Stroke(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Stroke: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Stroke: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Stroke: ...
 
@@ -12299,7 +11834,6 @@ class StrokeDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeDatum: ...
-
     @overload
     def condition(
         self,
@@ -12307,7 +11841,6 @@ class StrokeDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
-
     @overload
     def condition(
         self,
@@ -12316,15 +11849,12 @@ class StrokeDatum(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
     ) -> StrokeDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeDatum: ...
 
@@ -12395,7 +11925,6 @@ class StrokeValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
@@ -12410,7 +11939,6 @@ class StrokeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
@@ -12439,7 +11967,6 @@ class StrokeValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
@@ -12455,7 +11982,6 @@ class StrokeValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
@@ -12463,7 +11989,6 @@ class StrokeValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
@@ -12472,7 +11997,6 @@ class StrokeValue(
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
@@ -12715,23 +12239,18 @@ class StrokeDash(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeDash: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeDash: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeDash: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeDash: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> StrokeDash: ...
-
     @overload
     def bin(
         self,
@@ -12747,7 +12266,6 @@ class StrokeDash(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def condition(
         self,
@@ -12755,7 +12273,6 @@ class StrokeDash(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def condition(
         self,
@@ -12764,25 +12281,20 @@ class StrokeDash(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
     ) -> StrokeDash: ...
-
     @overload
     def field(self, _: str, **kwds) -> StrokeDash: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def legend(self, _: None, **kwds) -> StrokeDash: ...
-
     @overload
     def legend(
         self,
@@ -12890,10 +12402,8 @@ class StrokeDash(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def scale(self, _: None, **kwds) -> StrokeDash: ...
-
     @overload
     def scale(
         self,
@@ -12944,7 +12454,6 @@ class StrokeDash(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def sort(
         self,
@@ -12956,7 +12465,6 @@ class StrokeDash(
         | None,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def sort(
         self,
@@ -12965,7 +12473,6 @@ class StrokeDash(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def sort(
         self,
@@ -12973,12 +12480,10 @@ class StrokeDash(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeDash: ...
-
     @overload
     def timeUnit(
         self,
@@ -12989,10 +12494,8 @@ class StrokeDash(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDash: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeDash: ...
 
@@ -13155,7 +12658,6 @@ class StrokeDashDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeDashDatum: ...
-
     @overload
     def condition(
         self,
@@ -13163,7 +12665,6 @@ class StrokeDashDatum(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashDatum: ...
-
     @overload
     def condition(
         self,
@@ -13172,15 +12673,12 @@ class StrokeDashDatum(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
     ) -> StrokeDashDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeDashDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeDashDatum: ...
 
@@ -13250,7 +12748,6 @@ class StrokeDashValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
@@ -13265,7 +12762,6 @@ class StrokeDashValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
@@ -13294,7 +12790,6 @@ class StrokeDashValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
@@ -13310,7 +12805,6 @@ class StrokeDashValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
@@ -13318,7 +12812,6 @@ class StrokeDashValue(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
@@ -13327,7 +12820,6 @@ class StrokeDashValue(
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
@@ -13570,23 +13062,18 @@ class StrokeOpacity(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeOpacity: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeOpacity: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeOpacity: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeOpacity: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> StrokeOpacity: ...
-
     @overload
     def bin(
         self,
@@ -13602,7 +13089,6 @@ class StrokeOpacity(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def condition(
         self,
@@ -13610,7 +13096,6 @@ class StrokeOpacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def condition(
         self,
@@ -13619,25 +13104,20 @@ class StrokeOpacity(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> StrokeOpacity: ...
-
     @overload
     def field(self, _: str, **kwds) -> StrokeOpacity: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def legend(self, _: None, **kwds) -> StrokeOpacity: ...
-
     @overload
     def legend(
         self,
@@ -13745,10 +13225,8 @@ class StrokeOpacity(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def scale(self, _: None, **kwds) -> StrokeOpacity: ...
-
     @overload
     def scale(
         self,
@@ -13799,7 +13277,6 @@ class StrokeOpacity(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def sort(
         self,
@@ -13811,7 +13288,6 @@ class StrokeOpacity(
         | None,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def sort(
         self,
@@ -13820,7 +13296,6 @@ class StrokeOpacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def sort(
         self,
@@ -13828,12 +13303,10 @@ class StrokeOpacity(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeOpacity: ...
-
     @overload
     def timeUnit(
         self,
@@ -13844,10 +13317,8 @@ class StrokeOpacity(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeOpacity: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeOpacity: ...
 
@@ -14010,7 +13481,6 @@ class StrokeOpacityDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeOpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -14018,7 +13488,6 @@ class StrokeOpacityDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
-
     @overload
     def condition(
         self,
@@ -14027,15 +13496,12 @@ class StrokeOpacityDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> StrokeOpacityDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeOpacityDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeOpacityDatum: ...
 
@@ -14105,7 +13571,6 @@ class StrokeOpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -14120,7 +13585,6 @@ class StrokeOpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -14149,7 +13613,6 @@ class StrokeOpacityValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -14165,7 +13628,6 @@ class StrokeOpacityValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -14173,7 +13635,6 @@ class StrokeOpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
@@ -14182,7 +13643,6 @@ class StrokeOpacityValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -14425,23 +13885,18 @@ class StrokeWidth(
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeWidth: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeWidth: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> StrokeWidth: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeWidth: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> StrokeWidth: ...
-
     @overload
     def bin(
         self,
@@ -14457,7 +13912,6 @@ class StrokeWidth(
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def condition(
         self,
@@ -14465,7 +13919,6 @@ class StrokeWidth(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def condition(
         self,
@@ -14474,25 +13927,20 @@ class StrokeWidth(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> StrokeWidth: ...
-
     @overload
     def field(self, _: str, **kwds) -> StrokeWidth: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def legend(self, _: None, **kwds) -> StrokeWidth: ...
-
     @overload
     def legend(
         self,
@@ -14600,10 +14048,8 @@ class StrokeWidth(
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def scale(self, _: None, **kwds) -> StrokeWidth: ...
-
     @overload
     def scale(
         self,
@@ -14654,7 +14100,6 @@ class StrokeWidth(
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def sort(
         self,
@@ -14666,7 +14111,6 @@ class StrokeWidth(
         | None,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def sort(
         self,
@@ -14675,7 +14119,6 @@ class StrokeWidth(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def sort(
         self,
@@ -14683,12 +14126,10 @@ class StrokeWidth(
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> StrokeWidth: ...
-
     @overload
     def timeUnit(
         self,
@@ -14699,10 +14140,8 @@ class StrokeWidth(
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeWidth: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> StrokeWidth: ...
 
@@ -14865,7 +14304,6 @@ class StrokeWidthDatum(
 
     @overload
     def bandPosition(self, _: float, **kwds) -> StrokeWidthDatum: ...
-
     @overload
     def condition(
         self,
@@ -14873,7 +14311,6 @@ class StrokeWidthDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
-
     @overload
     def condition(
         self,
@@ -14882,15 +14319,12 @@ class StrokeWidthDatum(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
     ) -> StrokeWidthDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> StrokeWidthDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> StrokeWidthDatum: ...
 
@@ -14960,7 +14394,6 @@ class StrokeWidthValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
@@ -14975,7 +14408,6 @@ class StrokeWidthValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
@@ -15004,7 +14436,6 @@ class StrokeWidthValue(
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
@@ -15020,7 +14451,6 @@ class StrokeWidthValue(
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
@@ -15028,7 +14458,6 @@ class StrokeWidthValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
@@ -15037,7 +14466,6 @@ class StrokeWidthValue(
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
@@ -15250,23 +14678,18 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Text: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Text: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Text: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Text: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Text: ...
-
     @overload
     def bin(
         self,
@@ -15282,7 +14705,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Text: ...
-
     @overload
     def condition(
         self,
@@ -15290,7 +14712,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> Text: ...
-
     @overload
     def condition(
         self,
@@ -15299,36 +14720,28 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> Text: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefTextExprRef], **kwds
     ) -> Text: ...
-
     @overload
     def field(self, _: str, **kwds) -> Text: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Text: ...
-
     @overload
     def format(self, _: str, **kwds) -> Text: ...
-
     @overload
     def format(self, _: Map, **kwds) -> Text: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> Text: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Text: ...
-
     @overload
     def timeUnit(
         self,
@@ -15339,10 +14752,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Text: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Text: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Text: ...
 
@@ -15524,7 +14935,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
     @overload
     def bandPosition(self, _: float, **kwds) -> TextDatum: ...
-
     @overload
     def condition(
         self,
@@ -15532,7 +14942,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextDatum: ...
-
     @overload
     def condition(
         self,
@@ -15541,24 +14950,18 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextDatum: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefTextExprRef], **kwds
     ) -> TextDatum: ...
-
     @overload
     def format(self, _: str, **kwds) -> TextDatum: ...
-
     @overload
     def format(self, _: Map, **kwds) -> TextDatum: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> TextDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> TextDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> TextDatum: ...
 
@@ -15620,7 +15023,6 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
@@ -15639,7 +15041,6 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
@@ -15647,7 +15048,6 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
@@ -15656,7 +15056,6 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefTextExprRef], **kwds
@@ -15911,23 +15310,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Theta: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Theta: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Theta: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Theta: ...
-
     @overload
     def bin(
         self,
@@ -15943,20 +15337,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def field(self, _: str, **kwds) -> Theta: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Theta: ...
-
     @overload
     def scale(
         self,
@@ -16007,7 +15397,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def sort(
         self,
@@ -16019,7 +15408,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         | None,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def sort(
         self,
@@ -16028,7 +15416,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def sort(
         self,
@@ -16036,15 +15423,12 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> Theta: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Theta: ...
-
     @overload
     def timeUnit(
         self,
@@ -16055,10 +15439,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Theta: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Theta: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Theta: ...
 
@@ -16253,10 +15635,8 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> ThetaDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> ThetaDatum: ...
-
     @overload
     def scale(
         self,
@@ -16307,13 +15687,10 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> ThetaDatum: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> ThetaDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> ThetaDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> ThetaDatum: ...
 
@@ -16457,38 +15834,30 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Theta2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Theta2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Theta2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Theta2: ...
-
     @overload
     def field(self, _: str, **kwds) -> Theta2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Theta2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Theta2: ...
-
     @overload
     def timeUnit(
         self,
@@ -16499,7 +15868,6 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Theta2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Theta2: ...
 
@@ -16634,10 +16002,8 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Theta2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Theta2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> Theta2Datum: ...
 
@@ -16875,23 +16241,18 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Tooltip: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Tooltip: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Tooltip: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Tooltip: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Tooltip: ...
-
     @overload
     def bin(
         self,
@@ -16907,7 +16268,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
     @overload
     def condition(
         self,
@@ -16915,7 +16275,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
     @overload
     def condition(
         self,
@@ -16924,36 +16283,28 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringExprRef], **kwds
     ) -> Tooltip: ...
-
     @overload
     def field(self, _: str, **kwds) -> Tooltip: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
     @overload
     def format(self, _: str, **kwds) -> Tooltip: ...
-
     @overload
     def format(self, _: Map, **kwds) -> Tooltip: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> Tooltip: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Tooltip: ...
-
     @overload
     def timeUnit(
         self,
@@ -16964,10 +16315,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Tooltip: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Tooltip: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Tooltip: ...
 
@@ -17049,7 +16398,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
@@ -17064,7 +16412,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
@@ -17093,7 +16440,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
@@ -17109,7 +16455,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
@@ -17117,7 +16462,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
@@ -17126,7 +16470,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
@@ -17339,23 +16682,18 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Url: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Url: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Url: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Url: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Url: ...
-
     @overload
     def bin(
         self,
@@ -17371,7 +16709,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Url: ...
-
     @overload
     def condition(
         self,
@@ -17379,7 +16716,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Url: ...
-
     @overload
     def condition(
         self,
@@ -17388,36 +16724,28 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Url: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringExprRef], **kwds
     ) -> Url: ...
-
     @overload
     def field(self, _: str, **kwds) -> Url: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Url: ...
-
     @overload
     def format(self, _: str, **kwds) -> Url: ...
-
     @overload
     def format(self, _: Map, **kwds) -> Url: ...
-
     @overload
     def formatType(self, _: str, **kwds) -> Url: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Url: ...
-
     @overload
     def timeUnit(
         self,
@@ -17428,10 +16756,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Url: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Url: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Url: ...
 
@@ -17513,7 +16839,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
@@ -17528,7 +16853,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
@@ -17557,7 +16881,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
@@ -17573,7 +16896,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
@@ -17581,7 +16903,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
@@ -17590,7 +16911,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
@@ -17862,20 +17182,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> X: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> X: ...
-
     @overload
     def axis(self, _: None, **kwds) -> X: ...
-
     @overload
     def axis(
         self,
@@ -17993,13 +17309,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> X: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> X: ...
-
     @overload
     def bin(
         self,
@@ -18015,20 +17328,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def field(self, _: str, **kwds) -> X: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def impute(self, _: None, **kwds) -> X: ...
-
     @overload
     def impute(
         self,
@@ -18038,10 +17347,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         value: Optional[Any] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def scale(self, _: None, **kwds) -> X: ...
-
     @overload
     def scale(
         self,
@@ -18092,7 +17399,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def sort(
         self,
@@ -18104,7 +17410,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         | None,
         **kwds,
     ) -> X: ...
-
     @overload
     def sort(
         self,
@@ -18113,7 +17418,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def sort(
         self,
@@ -18121,15 +17425,12 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> X: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> X: ...
-
     @overload
     def timeUnit(
         self,
@@ -18140,10 +17441,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> X: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> X: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> X: ...
 
@@ -18359,7 +17658,6 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
     @overload
     def axis(self, _: None, **kwds) -> XDatum: ...
-
     @overload
     def axis(
         self,
@@ -18477,13 +17775,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> XDatum: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> XDatum: ...
-
     @overload
     def impute(self, _: None, **kwds) -> XDatum: ...
-
     @overload
     def impute(
         self,
@@ -18493,10 +17788,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         value: Optional[Any] = Undefined,
         **kwds,
     ) -> XDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> XDatum: ...
-
     @overload
     def scale(
         self,
@@ -18547,13 +17840,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XDatum: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> XDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> XDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> XDatum: ...
 
@@ -18701,38 +17991,30 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> X2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> X2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> X2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> X2: ...
-
     @overload
     def field(self, _: str, **kwds) -> X2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> X2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> X2: ...
-
     @overload
     def timeUnit(
         self,
@@ -18743,7 +18025,6 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> X2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> X2: ...
 
@@ -18878,10 +18159,8 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> X2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> X2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> X2Datum: ...
 
@@ -19017,38 +18296,30 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XError: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XError: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> XError: ...
-
     @overload
     def bin(self, _: None, **kwds) -> XError: ...
-
     @overload
     def field(self, _: str, **kwds) -> XError: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> XError: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XError: ...
-
     @overload
     def timeUnit(
         self,
@@ -19059,7 +18330,6 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XError: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> XError: ...
 
@@ -19207,38 +18477,30 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XError2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XError2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> XError2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> XError2: ...
-
     @overload
     def field(self, _: str, **kwds) -> XError2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> XError2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XError2: ...
-
     @overload
     def timeUnit(
         self,
@@ -19249,7 +18511,6 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XError2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> XError2: ...
 
@@ -19511,23 +18772,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XOffset: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XOffset: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> XOffset: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> XOffset: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> XOffset: ...
-
     @overload
     def bin(
         self,
@@ -19543,20 +18799,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def field(self, _: str, **kwds) -> XOffset: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def scale(self, _: None, **kwds) -> XOffset: ...
-
     @overload
     def scale(
         self,
@@ -19607,7 +18859,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def sort(
         self,
@@ -19619,7 +18870,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         | None,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def sort(
         self,
@@ -19628,7 +18878,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def sort(
         self,
@@ -19636,12 +18885,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> XOffset: ...
-
     @overload
     def timeUnit(
         self,
@@ -19652,10 +18899,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XOffset: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> XOffset: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> XOffset: ...
 
@@ -19818,10 +19063,8 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> XOffsetDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> XOffsetDatum: ...
-
     @overload
     def scale(
         self,
@@ -19872,10 +19115,8 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> XOffsetDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> XOffsetDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> XOffsetDatum: ...
 
@@ -20178,20 +19419,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Y: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Y: ...
-
     @overload
     def axis(self, _: None, **kwds) -> Y: ...
-
     @overload
     def axis(
         self,
@@ -20309,13 +19546,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Y: ...
-
     @overload
     def bin(self, _: bool | Literal["binned"] | None, **kwds) -> Y: ...
-
     @overload
     def bin(
         self,
@@ -20331,20 +19565,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def field(self, _: str, **kwds) -> Y: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def impute(self, _: None, **kwds) -> Y: ...
-
     @overload
     def impute(
         self,
@@ -20354,10 +19584,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         value: Optional[Any] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def scale(self, _: None, **kwds) -> Y: ...
-
     @overload
     def scale(
         self,
@@ -20408,7 +19636,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def sort(
         self,
@@ -20420,7 +19647,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         | None,
         **kwds,
     ) -> Y: ...
-
     @overload
     def sort(
         self,
@@ -20429,7 +19655,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def sort(
         self,
@@ -20437,15 +19662,12 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> Y: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Y: ...
-
     @overload
     def timeUnit(
         self,
@@ -20456,10 +19678,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Y: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Y: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> Y: ...
 
@@ -20675,7 +19895,6 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
     @overload
     def axis(self, _: None, **kwds) -> YDatum: ...
-
     @overload
     def axis(
         self,
@@ -20793,13 +20012,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         zindex: Optional[float] = Undefined,
         **kwds,
     ) -> YDatum: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> YDatum: ...
-
     @overload
     def impute(self, _: None, **kwds) -> YDatum: ...
-
     @overload
     def impute(
         self,
@@ -20809,10 +20025,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         value: Optional[Any] = Undefined,
         **kwds,
     ) -> YDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> YDatum: ...
-
     @overload
     def scale(
         self,
@@ -20863,13 +20077,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YDatum: ...
-
     @overload
     def stack(self, _: bool | StackOffset_T | None, **kwds) -> YDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> YDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> YDatum: ...
 
@@ -21017,38 +20228,30 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Y2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> Y2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> Y2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> Y2: ...
-
     @overload
     def field(self, _: str, **kwds) -> Y2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> Y2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> Y2: ...
-
     @overload
     def timeUnit(
         self,
@@ -21059,7 +20262,6 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Y2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Y2: ...
 
@@ -21194,10 +20396,8 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> Y2Datum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> Y2Datum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> Y2Datum: ...
 
@@ -21333,38 +20533,30 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YError: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YError: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> YError: ...
-
     @overload
     def bin(self, _: None, **kwds) -> YError: ...
-
     @overload
     def field(self, _: str, **kwds) -> YError: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> YError: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YError: ...
-
     @overload
     def timeUnit(
         self,
@@ -21375,7 +20567,6 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YError: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> YError: ...
 
@@ -21523,38 +20714,30 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError2: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YError2: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YError2: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> YError2: ...
-
     @overload
     def bin(self, _: None, **kwds) -> YError2: ...
-
     @overload
     def field(self, _: str, **kwds) -> YError2: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> YError2: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YError2: ...
-
     @overload
     def timeUnit(
         self,
@@ -21565,7 +20748,6 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YError2: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> YError2: ...
 
@@ -21827,23 +21009,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     @overload
     def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YOffset: ...
-
     @overload
     def aggregate(
         self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YOffset: ...
-
     @overload
     def aggregate(
         self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
     ) -> YOffset: ...
-
     @overload
     def bandPosition(self, _: float, **kwds) -> YOffset: ...
-
     @overload
     def bin(self, _: bool | None, **kwds) -> YOffset: ...
-
     @overload
     def bin(
         self,
@@ -21859,20 +21036,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def field(self, _: str, **kwds) -> YOffset: ...
-
     @overload
     def field(
         self,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def scale(self, _: None, **kwds) -> YOffset: ...
-
     @overload
     def scale(
         self,
@@ -21923,7 +21096,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def sort(
         self,
@@ -21935,7 +21107,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         | None,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def sort(
         self,
@@ -21944,7 +21115,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def sort(
         self,
@@ -21952,12 +21122,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def timeUnit(
         self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, **kwds
     ) -> YOffset: ...
-
     @overload
     def timeUnit(
         self,
@@ -21968,10 +21136,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YOffset: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> YOffset: ...
-
     @overload
     def type(self, _: StandardType_T, **kwds) -> YOffset: ...
 
@@ -22134,10 +21300,8 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
     @overload
     def bandPosition(self, _: float, **kwds) -> YOffsetDatum: ...
-
     @overload
     def scale(self, _: None, **kwds) -> YOffsetDatum: ...
-
     @overload
     def scale(
         self,
@@ -22188,10 +21352,8 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
     ) -> YOffsetDatum: ...
-
     @overload
     def title(self, _: str | Sequence[str] | None, **kwds) -> YOffsetDatum: ...
-
     @overload
     def type(self, _: Type_T, **kwds) -> YOffsetDatum: ...
 

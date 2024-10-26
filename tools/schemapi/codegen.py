@@ -369,14 +369,12 @@ class SchemaGenerator:
     def overload_signature(
         self, attr: str, info: SchemaInfo | Iterable[SchemaInfo], /
     ) -> Iterator[str]:
-        TWOTHOUSANDLINES = "\n"
-        # NOTE: linebreak isn't needed syntactically
         if isinstance(info, SchemaInfo):
             args = ", ".join(self.overload_args(info))
         else:
             args = f"{ANON}: {SchemaInfo.to_type_repr_batched(info, target='annotation', use_concrete=True)}"
         yield "@overload"
-        yield f"def {attr}(self, {args}, **kwds) -> {self.classname}: ...{TWOTHOUSANDLINES}"
+        yield f"def {attr}(self, {args}, **kwds) -> {self.classname}: ..."
 
     def _overload_expand(
         self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
