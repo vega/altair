@@ -759,6 +759,38 @@ class SchemaInfo:
         """
         return self.is_union() and all(el.is_literal() for el in self.anyOf)
 
+    def is_primitive(self) -> bool:
+        """Extension to json_schema types, including array element type."""
+        TP = "type"
+        if self.schema.keys() == {TP}:
+            return isinstance(self.type, str) or all(
+                el in jsonschema_to_python_types for el in self.type
+            )
+        elif self.is_array():
+            return self.child(self.items).is_primitive()
+        else:
+            return False
+
+    def is_flattenable(self) -> bool:
+        return self.is_literal() or self.is_primitive() or self.is_union_flattenable()
+
+    def is_union_flattenable(self) -> bool:
+        """
+        Return True when a union type can be collapsed.
+
+        Used to prevent `@overload` explosion in ``channels.py``
+        """
+        if not self.is_union():
+            return False
+        else:
+            fns = (
+                SchemaInfo.is_literal,
+                SchemaInfo.is_array,
+                SchemaInfo.is_primitive,
+                SchemaInfo.is_union_flattenable,
+            )
+            return all(any(fn(el) for fn in fns) for el in self.anyOf)
+
     def is_format(self) -> bool:
         """
         Represents a string format specifier.
