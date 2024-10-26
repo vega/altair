@@ -7,19 +7,16 @@ import sys
 import textwrap
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
-from itertools import chain
+from itertools import chain, starmap
 from operator import attrgetter
 from typing import Any, Callable, ClassVar, Final, Literal, TypeVar, Union
 
 from .utils import (
+    Grouped,
     SchemaInfo,
-    TypeAliasTracer,
-    flatten,
     indent_docstring,
     is_valid_identifier,
-    jsonschema_to_python_types,
     process_description,
-    spell_literal,
 )
 
 if sys.version_info >= (3, 12):
@@ -38,6 +35,8 @@ Intended to model the signature of ``operator.attrgetter``.
 
 Spelled more generically to support future extension.
 """
+
+ANON: Literal["_"] = "_"
 
 
 class CodeSnippet:
@@ -265,7 +264,9 @@ class SchemaGenerator:
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),
             init_code=self.init_code(indent=4),
-            method_code=self.method_code(indent=4),
+            method_code=(
+                self.overload_code(indent=4) if type(self).haspropsetters else None
+            ),
             **self.kwargs,
         )
 
@@ -355,79 +356,59 @@ class SchemaGenerator:
             super_args.append("**kwds")
         return args, super_args
 
-    def get_args(self, si: SchemaInfo) -> list[str]:
-        contents = ["self"]
-        if si.properties:
-            contents.extend(
-                f"{p}: {info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-                for p, info in si.properties.items()
-            )
-        elif isinstance(si.type, str):
-            if si.is_array():
-                # Try to get a type hint like "List[str]" which is more specific
-                # then just "list"
-                if tp_js := si.items.get("type", None):
-                    tp_item = jsonschema_to_python_types[tp_js]
-                else:
-                    si_item = SchemaInfo(si.items, self.rootschema)
-                    if title := si_item.title:
-                        tp_item = f"core.{title}"
-                    else:
-                        msg = f"Expected an array of types or titles, but got:\n {si_item!r}"
-                        raise NotImplementedError(msg)
-                py_type = f"List[{tp_item}]"
-            elif si.is_literal():
-                # If it's an enum, we can type hint it as a Literal which tells
-                # a type checker that only the values in enum are acceptable
-                py_type = TypeAliasTracer.add_literal(
-                    si, spell_literal(si.literal), replace=True
-                )
+    def overload_args(self, info: SchemaInfo) -> Iterator[str]:
+        if info.properties:
+            for p, p_info in info.properties.items():
+                yield f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
+        elif isinstance(info.type, str):
+            if info.is_array() and (title := info.child(info.items).title):
+                yield f"{ANON}: list[core.{title}]"
             else:
-                py_type = jsonschema_to_python_types[si.type]
-            contents.append(f"_: {py_type}")
+                yield f"{ANON}: {info.to_type_repr(target='annotation', use_concrete=True)}"
 
-        contents.append("**kwds")
-
-        return contents
-
-    def get_signature(
-        self, attr: str, sub_si: SchemaInfo, indent: int, has_overload: bool = False
-    ) -> list[str]:
-        lines = []
-        if has_overload:
-            lines.append("@overload")
-        args = ", ".join(self.get_args(sub_si))
-        lines.extend(
-            (f"def {attr}({args}) -> '{self.classname}':", indent * " " + "...\n")
-        )
-        return lines
-
-    def setter_hint(self, attr: str, indent: int) -> list[str]:
-        si = SchemaInfo(self.schema, self.rootschema).properties[attr]
-        if si.is_anyOf():
-            return self._get_signature_any_of(si, attr, indent)
+    def overload_signature(
+        self, attr: str, info: SchemaInfo | Iterable[SchemaInfo], /
+    ) -> Iterator[str]:
+        TWOTHOUSANDLINES = "\n"
+        # NOTE: linebreak isn't needed syntactically
+        if isinstance(info, SchemaInfo):
+            args = ", ".join(self.overload_args(info))
         else:
-            return self.get_signature(attr, si, indent, has_overload=True)
+            args = f"{ANON}: {SchemaInfo.to_type_repr_batched(info, target='annotation', use_concrete=True)}"
+        yield "@overload"
+        yield f"def {attr}(self, {args}, **kwds) -> {self.classname}: ...{TWOTHOUSANDLINES}"
 
-    def _get_signature_any_of(
-        self, si: SchemaInfo, attr: str, indent: int
-    ) -> list[str]:
-        signatures = []
-        for sub_si in si.anyOf:
-            if sub_si.is_anyOf():
-                # Recursively call method again to go a level deeper
-                signatures.extend(self._get_signature_any_of(sub_si, attr, indent))
+    def _overload_expand(
+        self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
+    ) -> Iterator[str]:
+        if not isinstance(info, SchemaInfo):
+            children = info
+        elif info.is_anyOf():
+            children = info.anyOf
+        else:
+            yield from self.overload_signature(prop, info)
+            return
+        for child in children:
+            if child.is_anyOf() and not child.is_union_flattenable():
+                yield from self._overload_expand(prop, child)
             else:
-                signatures.extend(
-                    self.get_signature(attr, sub_si, indent, has_overload=True)
-                )
-        return list(flatten(signatures))
+                yield from self.overload_signature(prop, child)
 
-    def method_code(self, indent: int = 0) -> str | None:
+    def overload_dispatch(self, prop: str, info: SchemaInfo, /) -> Iterator[str]:
+        if info.is_anyOf():
+            grouped = Grouped(info.anyOf, SchemaInfo.is_flattenable)
+            if flatten := grouped.truthy:
+                yield from self.overload_signature(prop, flatten)
+            if expand := grouped.falsey:
+                yield from self._overload_expand(prop, expand)
+        else:
+            yield from self.overload_signature(prop, info)
+
+    def overload_code(self, indent: int = 0) -> str:
         """Return code to assist setter methods."""
-        if not self.haspropsetters:
-            return None
-        args = self.init_kwds
-        type_hints = (hint for a in args for hint in self.setter_hint(a, indent))
-
-        return ("\n" + indent * " ").join(type_hints)
+        indented = "\n" + indent * " "
+        it = starmap(
+            self.overload_dispatch,
+            self.arg_info.iter_args(arg_kwds, exclude=self.nodefault),
+        )
+        return indented.join(chain.from_iterable(it))
