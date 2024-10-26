@@ -24,6 +24,7 @@ from tools.codemod import ruff
 from tools.markup import rst_syntax_for_class
 from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
+    RemapContext,
     SchemaProperties,
     TypeAliasTracer,
     finalize_type_reprs,
@@ -732,7 +733,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
     channel_infos: dict[str, ChannelInfo] = {}
     class_defs: list[Any] = []
-    SchemaInfo._remap_title.update({DATETIME: (TEMPORAL, DATETIME)})
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
@@ -814,7 +814,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
             channel_infos, ENCODE_METHOD, facet_encoding=encoding
         ),
     ]
-    SchemaInfo._remap_title.pop(DATETIME)
     return "\n".join(contents)
 
 
@@ -1051,7 +1050,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
+    with RemapContext(**{DATETIME: (TEMPORAL, DATETIME)}):
+        files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
 
     # generate the mark mixin
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}

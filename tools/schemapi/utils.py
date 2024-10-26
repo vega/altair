@@ -8,30 +8,25 @@ import sys
 import textwrap
 import urllib.parse
 from collections import deque
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Sequence
+from contextlib import AbstractContextManager
+from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Generic,
-    Literal,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from _collections_abc import KeysView
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterable, Iterator, KeysView, Mapping
     from pathlib import Path
     from re import Pattern
+    from typing import Any, ClassVar
+
+    from _typeshed import SupportsKeysAndGetItem
 
 
 if sys.version_info >= (3, 12):
@@ -936,6 +931,33 @@ class Grouped(Generic[T]):
                 falsey.append(el)
         self.truthy: deque[T] = truthy
         self.falsey: deque[T] = falsey
+
+
+class RemapContext(AbstractContextManager):
+    """
+    Temporarily apply some substitution rules for ``SchemaInfo``.
+
+    Upon exiting, the original rules will be in effect.
+    """
+
+    def __init__(
+        self,
+        m: SupportsKeysAndGetItem[str, Sequence[str]]
+        | Iterable[tuple[str, Sequence[str]]] = (),
+        /,
+        **kwds: Sequence[str],
+    ) -> None:
+        self._mapping: Mapping[str, Sequence[str]] = dict(m, **kwds)
+        self._orig: Mapping[str, Sequence[str]]
+
+    def __enter__(self) -> Any:
+        self._orig = deepcopy(SchemaInfo._remap_title)
+        SchemaInfo._remap_title.update(self._mapping)
+        return self
+
+    def __exit__(self, *args) -> None:
+        SchemaInfo._remap_title = dict(**self._orig)
+        del self._orig
 
 
 def flatten(container: Iterable) -> Iterable:
