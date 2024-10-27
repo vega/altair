@@ -362,7 +362,7 @@ class SchemaGenerator:
     def overload_signature(
         self, attr: str, info: SchemaInfo | Iterable[SchemaInfo], /
     ) -> Iterator[str]:
-        TARGET = "annotation"
+        TARGET: Literal["annotation"] = "annotation"
         yield "@overload"
         signature = "def {0}(self, {1}) -> {2}: ..."
         if isinstance(info, SchemaInfo):
