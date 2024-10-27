@@ -20,9 +20,15 @@ def test_channels_typing() -> None:
     """
     Ensuring static typing aligns with `SchemaValidationError`(s).
 
-    **Non-exhaustive**, focusing on several repeated patterns.
+    Important
+    ---------
+    Unless a comment says otherwise, **every** ``# (type|pyright): ignore`` **is intentional**.
 
-    This **should not** be generated from the schema.
+    Notes
+    -----
+    - *Non-exhaustive*, focusing on several repeated patterns.
+    - Not generated from the schema
+        - To avoid leaking logic defined during generation
     """
     nums: list[int] = [1, 2, 3, 4, 5]
     range_nums: range = range(5)
@@ -37,8 +43,6 @@ def test_channels_typing() -> None:
     angle = alt.Angle("field:Q")
     assert angle.to_dict()
 
-    # NOTE: The `_` overloads should be changed to:
-    #       def fn(self, _: tp, /) -> R
     assert angle.sort("ascending").to_dict()
     assert angle.sort("-fillOpacity").to_dict()
     assert angle.sort(None)
@@ -48,22 +52,27 @@ def test_channels_typing() -> None:
     assert angle.sort(dates).to_dict()
     assert angle.sort(dates_mixed).to_dict()
 
-    # NOTE: Triggering the type error is intentional
-    # DO NOT REMOVE IGNORE COMMENTS
-    seq_invariant = angle.sort([*nums, *dates])  # type: ignore[arg-type] # pyright: ignore[reportCallIssue]
+    # NOTE: Triggering static and runtime errors
+    invariant_sequence = angle.sort([*nums, *dates])  # type: ignore[arg-type] # pyright: ignore[reportCallIssue]
     with pytest.raises(SchemaValidationError):
-        seq_invariant.to_dict()
+        invariant_sequence.to_dict()
 
-    # FIXME: Any overloads that provide parameter names are incorrect (1)
-    # - They need to specify they are keyword-only
+    positional_as_keyword = angle.sort(_="ascending")  # type: ignore[call-overload]
+    with pytest.raises(
+        SchemaValidationError,
+        match=r"'{'_': 'ascending'}' is an invalid value for `sort`",
+    ):
+        positional_as_keyword.to_dict()
+
+    keyword_as_positional = angle.sort("field:Q", "min", "descending")  # type: ignore[call-overload]
     with pytest.raises(SchemaValidationError):
-        angle.sort("field:Q", "min", "descending").to_dict()
+        keyword_as_positional.to_dict()
     angle.sort(field="field:Q", op="min", order="descending")
 
-    # FIXME: Any overloads that provide parameter names are incorrect (2)
-    # - Doesn't raise `SchemaValidationError`
+    # NOTE: Doesn't raise `SchemaValidationError`
     # - `"ascending"` is silently ignored when positional
-    bad = angle.sort("x", "ascending").to_dict()
+    # - Caught as invalid statically, but not at runtime
+    bad = angle.sort("x", "ascending").to_dict()  # type: ignore[call-overload]
     good = angle.sort(encoding="x", order="ascending").to_dict()
     assert isinstance(bad, dict)
     assert isinstance(good, dict)
