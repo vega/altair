@@ -53,7 +53,7 @@ hists = base.mark_bar(opacity=0.5, thickness=100).encode(
     alt.Y('count()')
         .stack(None)
         .scale(domain=[0,350]),
-    alt.Color('gender:N').scale(color_scale)
+    alt.Color('gender:N').scale(color_scale)  # type: ignore[call-overload]
 ).transform_filter(
     selector
 )

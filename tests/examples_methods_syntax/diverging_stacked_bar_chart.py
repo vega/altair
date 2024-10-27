@@ -262,9 +262,9 @@ color_scale = alt.Scale(
 
 y_axis = alt.Axis(title="Question", offset=5, ticks=False, minExtent=60, domain=False)
 
-alt.Chart(source).mark_bar().encode(
+alt.Chart(source).mark_bar().encode( # pyright: ignore[reportArgumentType]
     x="percentage_start:Q",
     x2="percentage_end:Q",
-    y=alt.Y("question:N").axis(y_axis),
-    color=alt.Color("type:N").title("Response").scale(color_scale),
+    y=alt.Y("question:N").axis(y_axis), # type: ignore[call-overload]
+    color=alt.Color("type:N").title("Response").scale(color_scale), # type: ignore[call-overload]
 )

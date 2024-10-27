@@ -37,7 +37,7 @@ left = base.transform_filter(
         .title('population')
         .sort('descending'),
     alt.Color('gender:N')
-        .scale(color_scale)
+        .scale(color_scale) # type: ignore[call-overload]
         .legend(None)
 ).mark_bar().properties(title='Female')
 
@@ -51,7 +51,7 @@ right = base.transform_filter(
 ).encode(
     alt.Y('age:O').axis(None),
     alt.X('sum(people):Q').title('population'),
-    alt.Color('gender:N').scale(color_scale).legend(None)
+    alt.Color('gender:N').scale(color_scale).legend(None) # type: ignore[call-overload]
 ).mark_bar().properties(title='Male')
 
 alt.concat(left, middle, right, spacing=5)
