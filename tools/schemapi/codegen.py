@@ -37,6 +37,9 @@ Spelled more generically to support future extension.
 """
 
 ANON: Literal["_"] = "_"
+DOUBLESTAR_ARGS: Literal["**kwds"] = "**kwds"
+POS_ONLY: Literal["/"] = "/"
+KWD_ONLY: Literal["*"] = "*"
 
 
 class CodeSnippet:
@@ -352,29 +355,36 @@ class SchemaGenerator:
         )
 
         if arg_info.additional:
-            args.append("**kwds")
-            super_args.append("**kwds")
+            args.append(DOUBLESTAR_ARGS)
+            super_args.append(DOUBLESTAR_ARGS)
         return args, super_args
-
-    def overload_args(self, info: SchemaInfo) -> Iterator[str]:
-        if info.properties:
-            for p, p_info in info.properties.items():
-                yield f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-        elif isinstance(info.type, str):
-            if info.is_array() and (title := info.child(info.items).title):
-                yield f"{ANON}: list[core.{title}]"
-            else:
-                yield f"{ANON}: {info.to_type_repr(target='annotation', use_concrete=True)}"
 
     def overload_signature(
         self, attr: str, info: SchemaInfo | Iterable[SchemaInfo], /
     ) -> Iterator[str]:
-        if isinstance(info, SchemaInfo):
-            args = ", ".join(self.overload_args(info))
-        else:
-            args = f"{ANON}: {SchemaInfo.to_type_repr_batched(info, target='annotation', use_concrete=True)}"
+        TARGET = "annotation"
         yield "@overload"
-        yield f"def {attr}(self, {args}, **kwds) -> {self.classname}: ..."
+        signature = "def {0}(self, {1}) -> {2}: ..."
+        if isinstance(info, SchemaInfo):
+            if info.properties:
+                it = (
+                    f"{name}: {p_info.to_type_repr(target=TARGET, use_undefined=True)} = Undefined"
+                    for name, p_info in info.properties.items()
+                )
+                content = f"{KWD_ONLY}, {', '.join(it)}"
+            elif isinstance(info.type, str):
+                if info.is_array() and (title := info.child(info.items).title):
+                    tp = f"list[core.{title}]"
+                else:
+                    tp = info.to_type_repr(target=TARGET, use_concrete=True)
+                content = f"{ANON}: {tp}, {POS_ONLY}"
+            else:
+                msg = f"Assumed unreachable\n{info!r}"
+                raise NotImplementedError(msg)
+        else:
+            tp = SchemaInfo.to_type_repr_batched(info, target=TARGET, use_concrete=True)
+            content = f"{ANON}: {tp}, {POS_ONLY}"
+        yield signature.format(attr, content, self.classname)
 
     def _overload_expand(
         self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
