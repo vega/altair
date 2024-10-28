@@ -553,16 +553,24 @@ class SchemaInfo:
         use_undefined: bool = False,
     ) -> str:
         """
-        Intended to handle a subset of a union.
+        Return the python type representation of multiple ``SchemaInfo``.
+
+        Intended to handle a subset of a ``Union``.
 
         Parameters
         ----------
         infos
             Schemas to collapse into a single representation.
+        target: {"annotation", "doc"}
+            Where the representation will be used.
+        use_concrete
+            Avoid base classes/wrappers that don't provide type info.
+        use_undefined
+            Wrap the result in ``altair.typing.Optional``.
 
         See Also
         --------
-        ``SchemaInfo.to_type_repr``
+        - ``SchemaInfo.to_type_repr``
         """
         it: Iterator[str] = chain.from_iterable(
             info.to_type_repr(
