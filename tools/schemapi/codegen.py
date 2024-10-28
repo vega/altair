@@ -359,9 +359,11 @@ class SchemaGenerator:
             super_args.append(DOUBLESTAR_ARGS)
         return args, super_args
 
+    # TODO: Resolve 45x ``list[core.ConditionalValueDef...] annotations
     def overload_signature(
-        self, attr: str, info: SchemaInfo | Iterable[SchemaInfo], /
+        self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
     ) -> Iterator[str]:
+        """Yields a single, fully annotated ``@overload``, signature."""
         TARGET: Literal["annotation"] = "annotation"
         yield "@overload"
         signature = "def {0}(self, {1}) -> {2}: ..."
@@ -384,7 +386,7 @@ class SchemaGenerator:
         else:
             tp = SchemaInfo.to_type_repr_batched(info, target=TARGET, use_concrete=True)
             content = f"{ANON}: {tp}, {POS_ONLY}"
-        yield signature.format(attr, content, self.classname)
+        yield signature.format(prop, content, self.classname)
 
     def _overload_expand(
         self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
@@ -403,6 +405,16 @@ class SchemaGenerator:
                 yield from self.overload_signature(prop, child)
 
     def overload_dispatch(self, prop: str, info: SchemaInfo, /) -> Iterator[str]:
+        """
+        For a given property ``prop``, decide how to represent all valid signatures.
+
+        In this context, dispatching between **3** kinds of ``@overload``:
+        - ``Union``
+            1. The subset of basic types form a single signature
+            2. More complex types are recursed into, possibly expanding to multiple signatures
+        - Others
+            3. Only one signature is required
+        """
         if info.is_anyOf():
             grouped = Grouped(info.anyOf, SchemaInfo.is_flattenable)
             if flatten := grouped.truthy:
@@ -413,7 +425,7 @@ class SchemaGenerator:
             yield from self.overload_signature(prop, info)
 
     def overload_code(self, indent: int = 0) -> str:
-        """Return code to assist setter methods."""
+        """Return all ``@overload`` for property setter methods and as an indented code block."""
         indented = "\n" + indent * " "
         it = starmap(
             self.overload_dispatch,
