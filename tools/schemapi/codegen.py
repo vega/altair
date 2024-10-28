@@ -391,13 +391,11 @@ class SchemaGenerator:
     def _overload_expand(
         self, prop: str, info: SchemaInfo | Iterable[SchemaInfo], /
     ) -> Iterator[str]:
-        if not isinstance(info, SchemaInfo):
-            children = info
-        elif info.is_anyOf():
-            children = info.anyOf
+        children: Iterable[SchemaInfo]
+        if isinstance(info, SchemaInfo):
+            children = info.anyOf if info.is_anyOf() else (info,)
         else:
-            yield from self.overload_signature(prop, info)
-            return
+            children = info
         for child in children:
             if child.is_anyOf() and not child.is_union_flattenable():
                 yield from self._overload_expand(prop, child)
