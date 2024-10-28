@@ -799,16 +799,16 @@ class SchemaInfo:
         return self.is_union() and all(el.is_literal() for el in self.anyOf)
 
     def is_primitive(self) -> bool:
-        """Extension to json_schema types, including array element type."""
+        """
+        A basic JSON Schema `type`_ or an array of **only** basic types.
+
+        .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+        """
         TP = "type"
-        if self.schema.keys() == {TP}:
-            return isinstance(self.type, str) or all(
-                el in jsonschema_to_python_types for el in self.type
-            )
-        elif self.is_array():
-            return self.child(self.items).is_primitive()
-        else:
-            return False
+        return (self.schema.keys() == {TP}) or (
+            self.is_array() and self.child(self.items).is_primitive()
+        )
 
     def is_flattenable(self) -> bool:
         return self.is_literal() or self.is_primitive() or self.is_union_flattenable()
