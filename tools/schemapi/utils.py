@@ -1006,9 +1006,13 @@ class Grouped(Generic[T]):
 
 class RemapContext(AbstractContextManager):
     """
-    Temporarily apply some substitution rules for ``SchemaInfo``.
+    Context Manager to temporarily apply substitution rules for ``SchemaInfo``.
 
     Upon exiting, the original rules will be in effect.
+
+    Notes
+    -----
+    The constructor accepts arguments exactly the same way as ``dict``.
     """
 
     def __init__(
