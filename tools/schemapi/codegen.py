@@ -407,7 +407,7 @@ class SchemaGenerator:
             grouped = Grouped(info.anyOf, SchemaInfo.is_flattenable)
             if flatten := grouped.truthy:
                 yield from self.overload_signature(prop, flatten)
-            if expand := grouped.falsey:
+            if expand := grouped.falsy:
                 yield from self._overload_expand(prop, expand)
         else:
             yield from self.overload_signature(prop, info)

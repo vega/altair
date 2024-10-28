@@ -920,17 +920,37 @@ class SchemaInfo:
 
 
 class Grouped(Generic[T]):
+    """
+    Simple group-by like utility.
+
+    Intended for consuming an iterator in full, splitting into true/false cases.
+
+    Parameters
+    ----------
+    iterable
+        Elements to divide into two groups.
+    predicate
+        Function to classify each element.
+
+    Attributes
+    ----------
+    truthy: deque[T]
+        Elements which pass ``predicate``.
+    falsy: deque[T]
+        Elements which fail ``predicate``.
+    """
+
     def __init__(
         self, iterable: Iterable[T], /, predicate: Callable[[T], bool]
     ) -> None:
-        truthy, falsey = deque[T](), deque[T]()
+        truthy, falsy = deque[T](), deque[T]()
         for el in iterable:
             if predicate(el):
                 truthy.append(el)
             else:
-                falsey.append(el)
+                falsy.append(el)
         self.truthy: deque[T] = truthy
-        self.falsey: deque[T] = falsey
+        self.falsy: deque[T] = falsy
 
 
 class RemapContext(AbstractContextManager):
