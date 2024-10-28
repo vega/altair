@@ -12,46 +12,35 @@ from vega_datasets import data
 source = data.population.url
 
 slider = alt.binding_range(min=1850, max=2000, step=10)
-select_year = alt.selection_point(name='year', fields=['year'],
-                                   bind=slider, value=2000)
+select_year = alt.selection_point(name="year", fields=["year"], bind=slider, value=2000)
 
-base = alt.Chart(source).add_params(
-    select_year
-).transform_filter(
-    select_year
-).transform_calculate(
-    gender=alt.expr.if_(alt.datum.sex == 1, 'Male', 'Female')
-).properties(
-    width=250
+sex = alt.datum.sex
+male = sex == 1
+female = sex == 2
+
+x = alt.X("sum(people):Q").title("population")
+color = (
+    alt.Color("Sex:N")
+    .scale(domain=["Male", "Female"], range=["#1f77b4", "#e377c2"])
+    .legend(None)
 )
 
+base = (
+    alt.Chart(source)
+    .encode(y=alt.Y("age:O").axis(None))
+    .add_params(select_year)
+    .transform_filter(select_year)
+    .transform_calculate(Sex=alt.expr.if_(male, "Male", "Female"))
+    .properties(width=250)
+)
+bar = base.encode(color=color).mark_bar()
 
-color_scale = alt.Scale(domain=['Male', 'Female'],
-                        range=['#1f77b4', '#e377c2'])
-
-left = base.transform_filter(
-    alt.datum.gender == 'Female'
-).encode(
-    alt.Y('age:O').axis(None),
-    alt.X('sum(people):Q')
-        .title('population')
-        .sort('descending'),
-    alt.Color('gender:N')
-        .scale(color_scale) # type: ignore[call-overload]
-        .legend(None)
-).mark_bar().properties(title='Female')
-
-middle = base.encode(
-    alt.Y('age:O').axis(None),
-    alt.Text('age:Q'),
-).mark_text().properties(width=20)
-
-right = base.transform_filter(
-    alt.datum.gender == 'Male'
-).encode(
-    alt.Y('age:O').axis(None),
-    alt.X('sum(people):Q').title('population'),
-    alt.Color('gender:N').scale(color_scale).legend(None) # type: ignore[call-overload]
-).mark_bar().properties(title='Male')
+left = (
+    bar.transform_filter(female)
+    .encode(x=x.sort("descending"))
+    .properties(title="Female")
+)
+middle = base.encode(text=alt.Text("age:Q")).mark_text().properties(width=20)
+right = bar.transform_filter(male).encode(x=x).properties(title="Male")
 
 alt.concat(left, middle, right, spacing=5)

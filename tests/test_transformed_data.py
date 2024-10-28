@@ -125,7 +125,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("simple_scatter_with_errorbars.py", [5, 5], [["x"], ["upper_ymin"]]),
     ("stacked_bar_chart_with_text.py", [60, 60], [["site"], ["site"]]),
     ("us_employment.py", [120, 1, 2], [["month"], ["president"], ["president"]]),
-    ("us_population_pyramid_over_time.py", [19, 38, 19], [["gender"], ["year"], ["gender"]]),
+    ("us_population_pyramid_over_time.py", [19, 38, 19], [["Sex"], ["year"], ["Sex"]]),
 ])
 # fmt: on
 @pytest.mark.parametrize("to_reconstruct", [True, False])
