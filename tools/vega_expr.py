@@ -318,14 +318,14 @@ class ReplaceMany:
     --------
     Providing a mapping during construction:
 
-        string = "The dog chased the cat, chasing the mouse. Poor mouse"
-        animal_replacer = ReplaceMany({"dog": "cat"})
+        >>> string = "The dog chased the cat, chasing the mouse. Poor mouse"
+        >>> animal_replacer = ReplaceMany({"dog": "cat"})
         >>> animal_replacer(string)
         'The cat chased the cat, chasing the mouse. Poor mouse'
 
     Updating with new replacements:
 
-        animal_replacer.update({"cat": "mouse", "mouse": "dog"}, duck="rabbit")
+        >>> animal_replacer.update({"cat": "mouse", "mouse": "dog"}, duck="rabbit")
         >>> animal_replacer(string, refresh=True)
         'The cat chased the mouse, chasing the dog. Poor dog'
 
@@ -911,7 +911,7 @@ def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
     ...     "some text and *name* and more text but also *other* text",
     ...     ("name", "other"),
     ... )
-    "some text and ``name`` and more text but also ``other`` text"
+    'some text and ``name`` and more text but also ``other`` text'
     """
     pattern = rf"(?P<not_link_start>[^`_])\*(?P<name>{'|'.join(names)})\*(?P<not_link_end>[^`])"
     return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)

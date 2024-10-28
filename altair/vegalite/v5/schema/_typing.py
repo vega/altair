@@ -6,6 +6,7 @@ from __future__ import annotations
 import re
 import sys
 from collections.abc import Mapping, Sequence
+from datetime import date, datetime
 from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args
 
 if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
@@ -68,6 +69,7 @@ __all__ = [
     "Orient_T",
     "Orientation_T",
     "PaddingKwds",
+    "PrimitiveValue_T",
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
@@ -86,6 +88,7 @@ __all__ = [
     "StepFor_T",
     "StrokeCap_T",
     "StrokeJoin_T",
+    "Temporal",
     "TextBaseline_T",
     "TextDirection_T",
     "TimeInterval_T",
@@ -197,6 +200,8 @@ class PaddingKwds(TypedDict, total=False):
     top: float
 
 
+Temporal: TypeAlias = Union[date, datetime]
+
 VegaThemes: TypeAlias = Literal[
     "carbong10",
     "carbong100",
@@ -214,6 +219,7 @@ VegaThemes: TypeAlias = Literal[
     "vox",
 ]
 Map: TypeAlias = Mapping[str, Any]
+PrimitiveValue_T: TypeAlias = Union[str, bool, float, None]
 AggregateOp_T: TypeAlias = Literal[
     "argmax",
     "argmin",
