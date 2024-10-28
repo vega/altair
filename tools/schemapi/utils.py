@@ -732,6 +732,21 @@ class SchemaInfo:
         return "const" in self.schema
 
     def is_literal(self) -> bool:
+        """
+        Return True for `const`_ or `enum`_ values.
+
+        JSON Schema distinguishes between singular/multiple values.
+
+        But we annotate them both the same way:
+
+            ConstInfo = Literal["single value"]
+            EnumInfo = Literal["value 1", "value 2", "value 3"]
+
+        .. _const:
+            https://json-schema.org/understanding-json-schema/reference/const
+        .. _enum:
+            https://json-schema.org/understanding-json-schema/reference/enum
+        """
         return not ({"enum", "const"}.isdisjoint(self.schema))
 
     def is_empty(self) -> bool:
@@ -811,13 +826,41 @@ class SchemaInfo:
         )
 
     def is_flattenable(self) -> bool:
+        """
+        Represents a range of cases we want to annotate in ``@overload``(s).
+
+        Examples
+        --------
+        The following are non-exhaustive examples, using ``python`` types.
+
+        Base cases look like:
+
+            Literal["left", "center", "right"]
+            float
+            Sequence[str]
+
+        We also include compound cases, but only when **every** member meets these criteria:
+
+            Literal["pad", "none", "fit"] | None
+            float | Sequence[float]
+            Sequence[str] | str | bool | float | None
+        """
         return self.is_literal() or self.is_primitive() or self.is_union_flattenable()
 
     def is_union_flattenable(self) -> bool:
         """
-        Return True when a union type can be collapsed.
+        Represents a fully flattenable ``Union``.
 
-        Used to prevent `@overload` explosion in ``channels.py``
+        Used to prevent ``@overload`` explosion in ``channels.py``
+
+        Requires **every** member of the ``Union`` satisfies *at least* **one** the criteria.
+
+        See Also
+        --------
+        - ``SchemaInfo.is_literal``
+        - ``SchemaInfo.is_array``
+        - ``SchemaInfo.is_primitive``
+        - ``SchemaInfo.is_flattenable``
         """
         if not self.is_union():
             return False
