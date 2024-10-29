@@ -17,8 +17,8 @@ xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))
 
 points = base.mark_circle().encode(
-    alt.X("sepalLength").scale(xscale),  # type: ignore[call-overload]
-    alt.Y("sepalWidth").scale(yscale), # type: ignore[call-overload]
+    alt.X("sepalLength").scale(xscale),
+    alt.Y("sepalWidth").scale(yscale),
     color="species",
 )
 

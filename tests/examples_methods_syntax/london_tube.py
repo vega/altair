@@ -45,7 +45,7 @@ lines = alt.Chart(tubelines).mark_geoshape(
     alt.Color('id:N')
         .title(None)
         .legend(orient='bottom-right', offset=0)
-        .scale(line_scale) # type: ignore[call-overload]
+        .scale(line_scale)
 )
 
 background + labels + lines
