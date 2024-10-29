@@ -409,9 +409,13 @@ class SchemaGenerator:
         In this context, dispatching between **3** kinds of ``@overload``:
         - ``Union``
             1. The subset of basic types form a single signature
+                - See `thread`_ for special case handling mixed ``@overload``.
             2. More complex types are recursed into, possibly expanding to multiple signatures
         - Others
             3. Only one signature is required
+
+        .. _thread:
+            https://github.com/vega/altair/pull/3659#discussion_r1818164457
         """
         if info.is_anyOf():
             grouped = Grouped(info.anyOf, SchemaInfo.is_flattenable)
