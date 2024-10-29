@@ -1077,7 +1077,9 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    with RemapContext(**{DATETIME: (TEMPORAL, DATETIME)}):
+    with RemapContext(
+        {DATETIME: (TEMPORAL, DATETIME), BIN_PARAMS: (BIN,), IMPUTE_PARAMS: (IMPUTE,)}
+    ):
         files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
 
     # generate the mark mixin
