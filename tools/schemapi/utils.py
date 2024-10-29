@@ -7,20 +7,26 @@ import re
 import sys
 import textwrap
 import urllib.parse
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections import deque
+from collections.abc import Sequence
+from contextlib import AbstractContextManager
+from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from _collections_abc import KeysView
+    from collections.abc import Callable, Iterable, Iterator, KeysView, Mapping
     from pathlib import Path
     from re import Pattern
+    from typing import Any, ClassVar
+
+    from _typeshed import SupportsKeysAndGetItem
 
 
 if sys.version_info >= (3, 12):
@@ -536,6 +542,47 @@ class SchemaInfo:
             else sort_type_reprs(tps)
         )
 
+    @classmethod
+    def to_type_repr_batched(
+        cls,
+        infos: Iterable[SchemaInfo],
+        /,
+        *,
+        target: TargetType = "doc",
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+    ) -> str:
+        """
+        Return the python type representation of multiple ``SchemaInfo``.
+
+        Intended to handle a subset of a ``Union``.
+
+        Parameters
+        ----------
+        infos
+            Schemas to collapse into a single representation.
+        target: {"annotation", "doc"}
+            Where the representation will be used.
+        use_concrete
+            Avoid base classes/wrappers that don't provide type info.
+        use_undefined
+            Wrap the result in ``altair.typing.Optional``.
+
+        See Also
+        --------
+        - ``SchemaInfo.to_type_repr``
+        """
+        it: Iterator[str] = chain.from_iterable(
+            info.to_type_repr(
+                as_str=False,
+                target=target,
+                use_concrete=use_concrete,
+                use_undefined=False,
+            )
+            for info in infos
+        )
+        return finalize_type_reprs(it, target=target, use_undefined=use_undefined)
+
     def title_to_type_reprs(self, *, use_concrete: bool) -> set[str]:
         """
         Possibly use ``self.title`` as a type, or provide alternative(s).
@@ -693,6 +740,21 @@ class SchemaInfo:
         return "const" in self.schema
 
     def is_literal(self) -> bool:
+        """
+        Return True for `const`_ or `enum`_ values.
+
+        JSON Schema distinguishes between singular/multiple values.
+
+        But we annotate them both the same way:
+
+            ConstInfo = Literal["single value"]
+            EnumInfo = Literal["value 1", "value 2", "value 3"]
+
+        .. _const:
+            https://json-schema.org/understanding-json-schema/reference/const
+        .. _enum:
+            https://json-schema.org/understanding-json-schema/reference/enum
+        """
         return not ({"enum", "const"}.isdisjoint(self.schema))
 
     def is_empty(self) -> bool:
@@ -758,6 +820,66 @@ class SchemaInfo:
         E.g. `BinnedTimeUnit`
         """
         return self.is_union() and all(el.is_literal() for el in self.anyOf)
+
+    def is_primitive(self) -> bool:
+        """
+        A basic JSON Schema `type`_ or an array of **only** basic types.
+
+        .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+        """
+        TP = "type"
+        return (self.schema.keys() == {TP}) or (
+            self.is_array() and self.child(self.items).is_primitive()
+        )
+
+    def is_flattenable(self) -> bool:
+        """
+        Represents a range of cases we want to annotate in ``@overload``(s).
+
+        Examples
+        --------
+        The following are non-exhaustive examples, using ``python`` types.
+
+        Base cases look like:
+
+            Literal["left", "center", "right"]
+            float
+            Sequence[str]
+
+        We also include compound cases, but only when **every** member meets these criteria:
+
+            Literal["pad", "none", "fit"] | None
+            float | Sequence[float]
+            Sequence[str] | str | bool | float | None
+        """
+        return self.is_literal() or self.is_primitive() or self.is_union_flattenable()
+
+    def is_union_flattenable(self) -> bool:
+        """
+        Represents a fully flattenable ``Union``.
+
+        Used to prevent ``@overload`` explosion in ``channels.py``
+
+        Requires **every** member of the ``Union`` satisfies *at least* **one** the criteria.
+
+        See Also
+        --------
+        - ``SchemaInfo.is_literal``
+        - ``SchemaInfo.is_array``
+        - ``SchemaInfo.is_primitive``
+        - ``SchemaInfo.is_flattenable``
+        """
+        if not self.is_union():
+            return False
+        else:
+            fns = (
+                SchemaInfo.is_literal,
+                SchemaInfo.is_array,
+                SchemaInfo.is_primitive,
+                SchemaInfo.is_union_flattenable,
+            )
+            return all(any(fn(el) for fn in fns) for el in self.anyOf)
 
     def is_format(self) -> bool:
         """
@@ -846,6 +968,71 @@ class SchemaInfo:
 
     def is_datetime(self) -> bool:
         return self.refname == "DateTime"
+
+
+class Grouped(Generic[T]):
+    """
+    Simple group-by like utility.
+
+    Intended for consuming an iterator in full, splitting into true/false cases.
+
+    Parameters
+    ----------
+    iterable
+        Elements to divide into two groups.
+    predicate
+        Function to classify each element.
+
+    Attributes
+    ----------
+    truthy: deque[T]
+        Elements which pass ``predicate``.
+    falsy: deque[T]
+        Elements which fail ``predicate``.
+    """
+
+    def __init__(
+        self, iterable: Iterable[T], /, predicate: Callable[[T], bool]
+    ) -> None:
+        truthy, falsy = deque[T](), deque[T]()
+        for el in iterable:
+            if predicate(el):
+                truthy.append(el)
+            else:
+                falsy.append(el)
+        self.truthy: deque[T] = truthy
+        self.falsy: deque[T] = falsy
+
+
+class RemapContext(AbstractContextManager):
+    """
+    Context Manager to temporarily apply substitution rules for ``SchemaInfo``.
+
+    Upon exiting, the original rules will be in effect.
+
+    Notes
+    -----
+    The constructor accepts arguments exactly the same way as ``dict``.
+    """
+
+    def __init__(
+        self,
+        m: SupportsKeysAndGetItem[str, Sequence[str]]
+        | Iterable[tuple[str, Sequence[str]]] = (),
+        /,
+        **kwds: Sequence[str],
+    ) -> None:
+        self._mapping: Mapping[str, Sequence[str]] = dict(m, **kwds)
+        self._orig: Mapping[str, Sequence[str]]
+
+    def __enter__(self) -> Any:
+        self._orig = deepcopy(SchemaInfo._remap_title)
+        SchemaInfo._remap_title.update(self._mapping)
+        return self
+
+    def __exit__(self, *args) -> None:
+        SchemaInfo._remap_title = dict(**self._orig)
+        del self._orig
 
 
 def flatten(container: Iterable) -> Iterable:

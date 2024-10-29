@@ -25,6 +25,7 @@ from tools.codemod import ruff
 from tools.markup import rst_syntax_for_class
 from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
+    RemapContext,
     SchemaProperties,
     TypeAliasTracer,
     finalize_type_reprs,
@@ -258,6 +259,24 @@ THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
 PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
 ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
 TEMPORAL: Literal["Temporal"] = "Temporal"
+
+# NOTE: `api.py` typing imports
+BIN: Literal["Bin"] = "Bin"
+IMPUTE: Literal["Impute"] = "Impute"
+INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+
+# NOTE: `core.py` typing imports
+DATETIME: Literal["DateTime"] = "DateTime"
+BIN_PARAMS: Literal["BinParams"] = "BinParams"
+IMPUTE_PARAMS: Literal["ImputeParams"] = "ImputeParams"
+TIME_UNIT_PARAMS: Literal["TimeUnitParams"] = "TimeUnitParams"
+SCALE: Literal["Scale"] = "Scale"
+AXIS: Literal["Axis"] = "Axis"
+LEGEND: Literal["Legend"] = "Legend"
+REPEAT_REF: Literal["RepeatRef"] = "RepeatRef"
+HEADER_COLUMN: Literal["Header"] = "Header"
+ENCODING_SORT_FIELD: Literal["EncodingSortField"] = "EncodingSortField"
+
 ENCODE_KWDS_SUMMARY: Final = (
     "Encoding channels map properties of the data to visual properties of the chart."
 )
@@ -400,7 +419,6 @@ Temporal: TypeAlias = Union[date, datetime]
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
-INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
 
 
 class SchemaGenerator(codegen.SchemaGenerator):
@@ -429,6 +447,7 @@ class FieldSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class ValueSchemaGenerator(SchemaGenerator):
@@ -445,6 +464,7 @@ class ValueSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class DatumSchemaGenerator(SchemaGenerator):
@@ -461,6 +481,7 @@ class DatumSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class ModuleDef(Generic[T]):
@@ -760,7 +781,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
                 "schema": defschema,
                 "rootschema": schema,
                 "encodingname": prop,
-                "haspropsetters": True,
             }
             if encoding_spec == "field":
                 gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)
@@ -799,6 +819,17 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
         "from . import core",
         "from ._typing import * # noqa: F403",
     ]
+    TYPING_CORE = (
+        DATETIME,
+        TIME_UNIT_PARAMS,
+        SCALE,
+        AXIS,
+        LEGEND,
+        REPEAT_REF,
+        HEADER_COLUMN,
+        ENCODING_SORT_FIELD,
+    )
+    TYPING_API = INTO_CONDITION, BIN, IMPUTE
     contents: list[str] = [
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
@@ -807,7 +838,8 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             "from datetime import date, datetime",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.api import {INTO_CONDITION}",
+            f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
+            f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         "\n" f"__all__ = {all_}\n",
@@ -1118,7 +1150,10 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    modules[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
+    with RemapContext(
+        {DATETIME: (TEMPORAL, DATETIME), BIN_PARAMS: (BIN,), IMPUTE_PARAMS: (IMPUTE,)}
+    ):
+        modules[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
     files[fp_channels] = modules[fp_channels].contents
 
     # Expand `schema.__init__.__all__` with new classes
