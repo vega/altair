@@ -28,13 +28,21 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
-
     from collections.abc import Sequence
 
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
-    from altair.vegalite.v5.api import IntoCondition
-    from altair.vegalite.v5.schema.core import DateTime
+    from altair.vegalite.v5.api import Bin, Impute, IntoCondition
+    from altair.vegalite.v5.schema.core import (
+        Axis,
+        DateTime,
+        EncodingSortField,
+        Header,
+        Legend,
+        RepeatRef,
+        Scale,
+        TimeUnitParams,
+    )
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -491,7 +499,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def bandPosition(self, _: float, /) -> Angle: ...
     @overload
-    def bin(self, _: bool | None, /) -> Angle: ...
+    def bin(self, _: bool | Bin | None, /) -> Angle: ...
     @overload
     def bin(
         self,
@@ -525,7 +533,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def condition(self, _: list[core.ConditionalValueDefnumberExprRef], /) -> Angle: ...
     @overload
-    def field(self, _: str, /) -> Angle: ...
+    def field(self, _: str | RepeatRef, /) -> Angle: ...
     @overload
     def field(
         self,
@@ -533,7 +541,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Angle: ...
     @overload
-    def legend(self, _: None, /) -> Angle: ...
+    def legend(self, _: Legend | None, /) -> Angle: ...
     @overload
     def legend(
         self,
@@ -642,7 +650,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         zindex: Optional[float] = Undefined,
     ) -> Angle: ...
     @overload
-    def scale(self, _: None, /) -> Angle: ...
+    def scale(self, _: Scale | None, /) -> Angle: ...
     @overload
     def scale(
         self,
@@ -721,7 +729,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     ) -> Angle: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Angle: ...
     @overload
     def timeUnit(
@@ -1307,7 +1317,7 @@ class Color(
     @overload
     def bandPosition(self, _: float, /) -> Color: ...
     @overload
-    def bin(self, _: bool | None, /) -> Color: ...
+    def bin(self, _: bool | Bin | None, /) -> Color: ...
     @overload
     def bin(
         self,
@@ -1343,7 +1353,7 @@ class Color(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Color: ...
     @overload
-    def field(self, _: str, /) -> Color: ...
+    def field(self, _: str | RepeatRef, /) -> Color: ...
     @overload
     def field(
         self,
@@ -1351,7 +1361,7 @@ class Color(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Color: ...
     @overload
-    def legend(self, _: None, /) -> Color: ...
+    def legend(self, _: Legend | None, /) -> Color: ...
     @overload
     def legend(
         self,
@@ -1460,7 +1470,7 @@ class Color(
         zindex: Optional[float] = Undefined,
     ) -> Color: ...
     @overload
-    def scale(self, _: None, /) -> Color: ...
+    def scale(self, _: Scale | None, /) -> Color: ...
     @overload
     def scale(
         self,
@@ -1539,7 +1549,9 @@ class Color(
     ) -> Color: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Color: ...
     @overload
     def timeUnit(
@@ -2116,7 +2128,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> Column: ...
     @overload
-    def bin(self, _: bool | None, /) -> Column: ...
+    def bin(self, _: bool | Bin | None, /) -> Column: ...
     @overload
     def bin(
         self,
@@ -2135,7 +2147,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def center(self, _: bool, /) -> Column: ...
     @overload
-    def field(self, _: str, /) -> Column: ...
+    def field(self, _: str | RepeatRef, /) -> Column: ...
     @overload
     def field(
         self,
@@ -2143,7 +2155,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Column: ...
     @overload
-    def header(self, _: None, /) -> Column: ...
+    def header(self, _: Header | None, /) -> Column: ...
     @overload
     def header(
         self,
@@ -2199,6 +2211,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         _: Sequence[str]
         | Sequence[bool]
         | Sequence[float]
+        | EncodingSortField
         | Sequence[DateTime | Temporal]
         | SortOrder_T
         | None,
@@ -2216,7 +2229,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def spacing(self, _: float, /) -> Column: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Column: ...
     @overload
     def timeUnit(
@@ -2488,7 +2503,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def bandPosition(self, _: float, /) -> Description: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Description: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Description: ...
     @overload
     def bin(
         self,
@@ -2524,7 +2539,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         self, _: list[core.ConditionalValueDefstringExprRef], /
     ) -> Description: ...
     @overload
-    def field(self, _: str, /) -> Description: ...
+    def field(self, _: str | RepeatRef, /) -> Description: ...
     @overload
     def field(
         self,
@@ -2539,7 +2554,9 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, /) -> Description: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Description: ...
     @overload
     def timeUnit(
@@ -2892,7 +2909,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload
     def bandPosition(self, _: float, /) -> Detail: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Detail: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Detail: ...
     @overload
     def bin(
         self,
@@ -2909,7 +2926,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Detail: ...
     @overload
-    def field(self, _: str, /) -> Detail: ...
+    def field(self, _: str | RepeatRef, /) -> Detail: ...
     @overload
     def field(
         self,
@@ -2918,7 +2935,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Detail: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Detail: ...
     @overload
     def timeUnit(
@@ -3214,7 +3233,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Facet: ...
     @overload
-    def align(self, _: LayoutAlign_T, /) -> Facet: ...
+    def align(self, _: RowColKwds[LayoutAlign_T] | LayoutAlign_T, /) -> Facet: ...
     @overload
     def align(
         self,
@@ -3225,7 +3244,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> Facet: ...
     @overload
-    def bin(self, _: bool | None, /) -> Facet: ...
+    def bin(self, _: bool | Bin | None, /) -> Facet: ...
     @overload
     def bin(
         self,
@@ -3244,7 +3263,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def bounds(self, _: Literal["full", "flush"], /) -> Facet: ...
     @overload
-    def center(self, _: bool, /) -> Facet: ...
+    def center(self, _: bool | RowColKwds[bool], /) -> Facet: ...
     @overload
     def center(
         self, *, column: Optional[bool] = Undefined, row: Optional[bool] = Undefined
@@ -3252,7 +3271,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def columns(self, _: float, /) -> Facet: ...
     @overload
-    def field(self, _: str, /) -> Facet: ...
+    def field(self, _: str | RepeatRef, /) -> Facet: ...
     @overload
     def field(
         self,
@@ -3260,7 +3279,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Facet: ...
     @overload
-    def header(self, _: None, /) -> Facet: ...
+    def header(self, _: Header | None, /) -> Facet: ...
     @overload
     def header(
         self,
@@ -3316,6 +3335,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         _: Sequence[str]
         | Sequence[bool]
         | Sequence[float]
+        | EncodingSortField
         | Sequence[DateTime | Temporal]
         | SortOrder_T
         | None,
@@ -3330,14 +3350,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Facet: ...
     @overload
-    def spacing(self, _: float, /) -> Facet: ...
+    def spacing(self, _: float | RowColKwds[float], /) -> Facet: ...
     @overload
     def spacing(
         self, *, column: Optional[float] = Undefined, row: Optional[float] = Undefined
     ) -> Facet: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Facet: ...
     @overload
     def timeUnit(
@@ -3640,7 +3662,7 @@ class Fill(
     @overload
     def bandPosition(self, _: float, /) -> Fill: ...
     @overload
-    def bin(self, _: bool | None, /) -> Fill: ...
+    def bin(self, _: bool | Bin | None, /) -> Fill: ...
     @overload
     def bin(
         self,
@@ -3676,7 +3698,7 @@ class Fill(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Fill: ...
     @overload
-    def field(self, _: str, /) -> Fill: ...
+    def field(self, _: str | RepeatRef, /) -> Fill: ...
     @overload
     def field(
         self,
@@ -3684,7 +3706,7 @@ class Fill(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Fill: ...
     @overload
-    def legend(self, _: None, /) -> Fill: ...
+    def legend(self, _: Legend | None, /) -> Fill: ...
     @overload
     def legend(
         self,
@@ -3793,7 +3815,7 @@ class Fill(
         zindex: Optional[float] = Undefined,
     ) -> Fill: ...
     @overload
-    def scale(self, _: None, /) -> Fill: ...
+    def scale(self, _: Scale | None, /) -> Fill: ...
     @overload
     def scale(
         self,
@@ -3872,7 +3894,9 @@ class Fill(
     ) -> Fill: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Fill: ...
     @overload
     def timeUnit(
@@ -4464,7 +4488,7 @@ class FillOpacity(
     @overload
     def bandPosition(self, _: float, /) -> FillOpacity: ...
     @overload
-    def bin(self, _: bool | None, /) -> FillOpacity: ...
+    def bin(self, _: bool | Bin | None, /) -> FillOpacity: ...
     @overload
     def bin(
         self,
@@ -4500,7 +4524,7 @@ class FillOpacity(
         self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> FillOpacity: ...
     @overload
-    def field(self, _: str, /) -> FillOpacity: ...
+    def field(self, _: str | RepeatRef, /) -> FillOpacity: ...
     @overload
     def field(
         self,
@@ -4508,7 +4532,7 @@ class FillOpacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> FillOpacity: ...
     @overload
-    def legend(self, _: None, /) -> FillOpacity: ...
+    def legend(self, _: Legend | None, /) -> FillOpacity: ...
     @overload
     def legend(
         self,
@@ -4617,7 +4641,7 @@ class FillOpacity(
         zindex: Optional[float] = Undefined,
     ) -> FillOpacity: ...
     @overload
-    def scale(self, _: None, /) -> FillOpacity: ...
+    def scale(self, _: Scale | None, /) -> FillOpacity: ...
     @overload
     def scale(
         self,
@@ -4696,7 +4720,9 @@ class FillOpacity(
     ) -> FillOpacity: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> FillOpacity: ...
     @overload
     def timeUnit(
@@ -5253,7 +5279,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def bandPosition(self, _: float, /) -> Href: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Href: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Href: ...
     @overload
     def bin(
         self,
@@ -5287,7 +5313,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(self, _: list[core.ConditionalValueDefstringExprRef], /) -> Href: ...
     @overload
-    def field(self, _: str, /) -> Href: ...
+    def field(self, _: str | RepeatRef, /) -> Href: ...
     @overload
     def field(
         self,
@@ -5302,7 +5328,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, /) -> Href: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Href: ...
     @overload
     def timeUnit(
@@ -5651,7 +5679,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload
     def bandPosition(self, _: float, /) -> Key: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Key: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Key: ...
     @overload
     def bin(
         self,
@@ -5668,7 +5696,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Key: ...
     @overload
-    def field(self, _: str, /) -> Key: ...
+    def field(self, _: str | RepeatRef, /) -> Key: ...
     @overload
     def field(
         self,
@@ -5677,7 +5705,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     ) -> Key: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Key: ...
     @overload
     def timeUnit(
@@ -5893,7 +5923,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     @overload
     def bin(self, _: None, /) -> Latitude: ...
     @overload
-    def field(self, _: str, /) -> Latitude: ...
+    def field(self, _: str | RepeatRef, /) -> Latitude: ...
     @overload
     def field(
         self,
@@ -5902,7 +5932,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Latitude: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Latitude: ...
     @overload
     def timeUnit(
@@ -6179,7 +6211,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> Latitude2: ...
     @overload
-    def field(self, _: str, /) -> Latitude2: ...
+    def field(self, _: str | RepeatRef, /) -> Latitude2: ...
     @overload
     def field(
         self,
@@ -6188,7 +6220,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Latitude2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Latitude2: ...
     @overload
     def timeUnit(
@@ -6547,7 +6581,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     @overload
     def bin(self, _: None, /) -> Longitude: ...
     @overload
-    def field(self, _: str, /) -> Longitude: ...
+    def field(self, _: str | RepeatRef, /) -> Longitude: ...
     @overload
     def field(
         self,
@@ -6556,7 +6590,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     ) -> Longitude: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Longitude: ...
     @overload
     def timeUnit(
@@ -6833,7 +6869,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> Longitude2: ...
     @overload
-    def field(self, _: str, /) -> Longitude2: ...
+    def field(self, _: str | RepeatRef, /) -> Longitude2: ...
     @overload
     def field(
         self,
@@ -6842,7 +6878,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Longitude2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Longitude2: ...
     @overload
     def timeUnit(
@@ -7268,7 +7306,7 @@ class Opacity(
     @overload
     def bandPosition(self, _: float, /) -> Opacity: ...
     @overload
-    def bin(self, _: bool | None, /) -> Opacity: ...
+    def bin(self, _: bool | Bin | None, /) -> Opacity: ...
     @overload
     def bin(
         self,
@@ -7304,7 +7342,7 @@ class Opacity(
         self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> Opacity: ...
     @overload
-    def field(self, _: str, /) -> Opacity: ...
+    def field(self, _: str | RepeatRef, /) -> Opacity: ...
     @overload
     def field(
         self,
@@ -7312,7 +7350,7 @@ class Opacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Opacity: ...
     @overload
-    def legend(self, _: None, /) -> Opacity: ...
+    def legend(self, _: Legend | None, /) -> Opacity: ...
     @overload
     def legend(
         self,
@@ -7421,7 +7459,7 @@ class Opacity(
         zindex: Optional[float] = Undefined,
     ) -> Opacity: ...
     @overload
-    def scale(self, _: None, /) -> Opacity: ...
+    def scale(self, _: Scale | None, /) -> Opacity: ...
     @overload
     def scale(
         self,
@@ -7500,7 +7538,9 @@ class Opacity(
     ) -> Opacity: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Opacity: ...
     @overload
     def timeUnit(
@@ -8018,7 +8058,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> Order: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Order: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Order: ...
     @overload
     def bin(
         self,
@@ -8035,7 +8075,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Order: ...
     @overload
-    def field(self, _: str, /) -> Order: ...
+    def field(self, _: str | RepeatRef, /) -> Order: ...
     @overload
     def field(
         self,
@@ -8046,7 +8086,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def sort(self, _: SortOrder_T, /) -> Order: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Order: ...
     @overload
     def timeUnit(
@@ -8393,7 +8435,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def bandPosition(self, _: float, /) -> Radius: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Radius: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Radius: ...
     @overload
     def bin(
         self,
@@ -8410,7 +8452,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Radius: ...
     @overload
-    def field(self, _: str, /) -> Radius: ...
+    def field(self, _: str | RepeatRef, /) -> Radius: ...
     @overload
     def field(
         self,
@@ -8418,7 +8460,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Radius: ...
     @overload
-    def scale(self, _: None, /) -> Radius: ...
+    def scale(self, _: Scale | None, /) -> Radius: ...
     @overload
     def scale(
         self,
@@ -8499,7 +8541,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def stack(self, _: bool | StackOffset_T | None, /) -> Radius: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Radius: ...
     @overload
     def timeUnit(
@@ -8708,7 +8752,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def bandPosition(self, _: float, /) -> RadiusDatum: ...
     @overload
-    def scale(self, _: None, /) -> RadiusDatum: ...
+    def scale(self, _: Scale | None, /) -> RadiusDatum: ...
     @overload
     def scale(
         self,
@@ -8919,7 +8963,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> Radius2: ...
     @overload
-    def field(self, _: str, /) -> Radius2: ...
+    def field(self, _: str | RepeatRef, /) -> Radius2: ...
     @overload
     def field(
         self,
@@ -8928,7 +8972,9 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Radius2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Radius2: ...
     @overload
     def timeUnit(
@@ -9335,7 +9381,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> Row: ...
     @overload
-    def bin(self, _: bool | None, /) -> Row: ...
+    def bin(self, _: bool | Bin | None, /) -> Row: ...
     @overload
     def bin(
         self,
@@ -9354,7 +9400,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def center(self, _: bool, /) -> Row: ...
     @overload
-    def field(self, _: str, /) -> Row: ...
+    def field(self, _: str | RepeatRef, /) -> Row: ...
     @overload
     def field(
         self,
@@ -9362,7 +9408,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Row: ...
     @overload
-    def header(self, _: None, /) -> Row: ...
+    def header(self, _: Header | None, /) -> Row: ...
     @overload
     def header(
         self,
@@ -9418,6 +9464,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         _: Sequence[str]
         | Sequence[bool]
         | Sequence[float]
+        | EncodingSortField
         | Sequence[DateTime | Temporal]
         | SortOrder_T
         | None,
@@ -9435,7 +9482,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def spacing(self, _: float, /) -> Row: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Row: ...
     @overload
     def timeUnit(
@@ -9734,7 +9783,7 @@ class Shape(
     @overload
     def bandPosition(self, _: float, /) -> Shape: ...
     @overload
-    def bin(self, _: bool | None, /) -> Shape: ...
+    def bin(self, _: bool | Bin | None, /) -> Shape: ...
     @overload
     def bin(
         self,
@@ -9770,7 +9819,7 @@ class Shape(
         self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> Shape: ...
     @overload
-    def field(self, _: str, /) -> Shape: ...
+    def field(self, _: str | RepeatRef, /) -> Shape: ...
     @overload
     def field(
         self,
@@ -9778,7 +9827,7 @@ class Shape(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Shape: ...
     @overload
-    def legend(self, _: None, /) -> Shape: ...
+    def legend(self, _: Legend | None, /) -> Shape: ...
     @overload
     def legend(
         self,
@@ -9887,7 +9936,7 @@ class Shape(
         zindex: Optional[float] = Undefined,
     ) -> Shape: ...
     @overload
-    def scale(self, _: None, /) -> Shape: ...
+    def scale(self, _: Scale | None, /) -> Shape: ...
     @overload
     def scale(
         self,
@@ -9966,7 +10015,9 @@ class Shape(
     ) -> Shape: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Shape: ...
     @overload
     def timeUnit(
@@ -10552,7 +10603,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def bandPosition(self, _: float, /) -> Size: ...
     @overload
-    def bin(self, _: bool | None, /) -> Size: ...
+    def bin(self, _: bool | Bin | None, /) -> Size: ...
     @overload
     def bin(
         self,
@@ -10586,7 +10637,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def condition(self, _: list[core.ConditionalValueDefnumberExprRef], /) -> Size: ...
     @overload
-    def field(self, _: str, /) -> Size: ...
+    def field(self, _: str | RepeatRef, /) -> Size: ...
     @overload
     def field(
         self,
@@ -10594,7 +10645,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Size: ...
     @overload
-    def legend(self, _: None, /) -> Size: ...
+    def legend(self, _: Legend | None, /) -> Size: ...
     @overload
     def legend(
         self,
@@ -10703,7 +10754,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         zindex: Optional[float] = Undefined,
     ) -> Size: ...
     @overload
-    def scale(self, _: None, /) -> Size: ...
+    def scale(self, _: Scale | None, /) -> Size: ...
     @overload
     def scale(
         self,
@@ -10782,7 +10833,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     ) -> Size: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Size: ...
     @overload
     def timeUnit(
@@ -11372,7 +11425,7 @@ class Stroke(
     @overload
     def bandPosition(self, _: float, /) -> Stroke: ...
     @overload
-    def bin(self, _: bool | None, /) -> Stroke: ...
+    def bin(self, _: bool | Bin | None, /) -> Stroke: ...
     @overload
     def bin(
         self,
@@ -11408,7 +11461,7 @@ class Stroke(
         self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Stroke: ...
     @overload
-    def field(self, _: str, /) -> Stroke: ...
+    def field(self, _: str | RepeatRef, /) -> Stroke: ...
     @overload
     def field(
         self,
@@ -11416,7 +11469,7 @@ class Stroke(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Stroke: ...
     @overload
-    def legend(self, _: None, /) -> Stroke: ...
+    def legend(self, _: Legend | None, /) -> Stroke: ...
     @overload
     def legend(
         self,
@@ -11525,7 +11578,7 @@ class Stroke(
         zindex: Optional[float] = Undefined,
     ) -> Stroke: ...
     @overload
-    def scale(self, _: None, /) -> Stroke: ...
+    def scale(self, _: Scale | None, /) -> Stroke: ...
     @overload
     def scale(
         self,
@@ -11604,7 +11657,9 @@ class Stroke(
     ) -> Stroke: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Stroke: ...
     @overload
     def timeUnit(
@@ -12196,7 +12251,7 @@ class StrokeDash(
     @overload
     def bandPosition(self, _: float, /) -> StrokeDash: ...
     @overload
-    def bin(self, _: bool | None, /) -> StrokeDash: ...
+    def bin(self, _: bool | Bin | None, /) -> StrokeDash: ...
     @overload
     def bin(
         self,
@@ -12232,7 +12287,7 @@ class StrokeDash(
         self, _: list[core.ConditionalValueDefnumberArrayExprRef], /
     ) -> StrokeDash: ...
     @overload
-    def field(self, _: str, /) -> StrokeDash: ...
+    def field(self, _: str | RepeatRef, /) -> StrokeDash: ...
     @overload
     def field(
         self,
@@ -12240,7 +12295,7 @@ class StrokeDash(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> StrokeDash: ...
     @overload
-    def legend(self, _: None, /) -> StrokeDash: ...
+    def legend(self, _: Legend | None, /) -> StrokeDash: ...
     @overload
     def legend(
         self,
@@ -12349,7 +12404,7 @@ class StrokeDash(
         zindex: Optional[float] = Undefined,
     ) -> StrokeDash: ...
     @overload
-    def scale(self, _: None, /) -> StrokeDash: ...
+    def scale(self, _: Scale | None, /) -> StrokeDash: ...
     @overload
     def scale(
         self,
@@ -12428,7 +12483,9 @@ class StrokeDash(
     ) -> StrokeDash: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeDash: ...
     @overload
     def timeUnit(
@@ -13019,7 +13076,7 @@ class StrokeOpacity(
     @overload
     def bandPosition(self, _: float, /) -> StrokeOpacity: ...
     @overload
-    def bin(self, _: bool | None, /) -> StrokeOpacity: ...
+    def bin(self, _: bool | Bin | None, /) -> StrokeOpacity: ...
     @overload
     def bin(
         self,
@@ -13055,7 +13112,7 @@ class StrokeOpacity(
         self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeOpacity: ...
     @overload
-    def field(self, _: str, /) -> StrokeOpacity: ...
+    def field(self, _: str | RepeatRef, /) -> StrokeOpacity: ...
     @overload
     def field(
         self,
@@ -13063,7 +13120,7 @@ class StrokeOpacity(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> StrokeOpacity: ...
     @overload
-    def legend(self, _: None, /) -> StrokeOpacity: ...
+    def legend(self, _: Legend | None, /) -> StrokeOpacity: ...
     @overload
     def legend(
         self,
@@ -13172,7 +13229,7 @@ class StrokeOpacity(
         zindex: Optional[float] = Undefined,
     ) -> StrokeOpacity: ...
     @overload
-    def scale(self, _: None, /) -> StrokeOpacity: ...
+    def scale(self, _: Scale | None, /) -> StrokeOpacity: ...
     @overload
     def scale(
         self,
@@ -13251,7 +13308,9 @@ class StrokeOpacity(
     ) -> StrokeOpacity: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeOpacity: ...
     @overload
     def timeUnit(
@@ -13842,7 +13901,7 @@ class StrokeWidth(
     @overload
     def bandPosition(self, _: float, /) -> StrokeWidth: ...
     @overload
-    def bin(self, _: bool | None, /) -> StrokeWidth: ...
+    def bin(self, _: bool | Bin | None, /) -> StrokeWidth: ...
     @overload
     def bin(
         self,
@@ -13878,7 +13937,7 @@ class StrokeWidth(
         self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeWidth: ...
     @overload
-    def field(self, _: str, /) -> StrokeWidth: ...
+    def field(self, _: str | RepeatRef, /) -> StrokeWidth: ...
     @overload
     def field(
         self,
@@ -13886,7 +13945,7 @@ class StrokeWidth(
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> StrokeWidth: ...
     @overload
-    def legend(self, _: None, /) -> StrokeWidth: ...
+    def legend(self, _: Legend | None, /) -> StrokeWidth: ...
     @overload
     def legend(
         self,
@@ -13995,7 +14054,7 @@ class StrokeWidth(
         zindex: Optional[float] = Undefined,
     ) -> StrokeWidth: ...
     @overload
-    def scale(self, _: None, /) -> StrokeWidth: ...
+    def scale(self, _: Scale | None, /) -> StrokeWidth: ...
     @overload
     def scale(
         self,
@@ -14074,7 +14133,9 @@ class StrokeWidth(
     ) -> StrokeWidth: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeWidth: ...
     @overload
     def timeUnit(
@@ -14631,7 +14692,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload
     def bandPosition(self, _: float, /) -> Text: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Text: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Text: ...
     @overload
     def bin(
         self,
@@ -14665,7 +14726,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload
     def condition(self, _: list[core.ConditionalValueDefTextExprRef], /) -> Text: ...
     @overload
-    def field(self, _: str, /) -> Text: ...
+    def field(self, _: str | RepeatRef, /) -> Text: ...
     @overload
     def field(
         self,
@@ -14680,7 +14741,9 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def formatType(self, _: str, /) -> Text: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Text: ...
     @overload
     def timeUnit(
@@ -15257,7 +15320,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def bandPosition(self, _: float, /) -> Theta: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Theta: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Theta: ...
     @overload
     def bin(
         self,
@@ -15274,7 +15337,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Theta: ...
     @overload
-    def field(self, _: str, /) -> Theta: ...
+    def field(self, _: str | RepeatRef, /) -> Theta: ...
     @overload
     def field(
         self,
@@ -15282,7 +15345,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Theta: ...
     @overload
-    def scale(self, _: None, /) -> Theta: ...
+    def scale(self, _: Scale | None, /) -> Theta: ...
     @overload
     def scale(
         self,
@@ -15363,7 +15426,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def stack(self, _: bool | StackOffset_T | None, /) -> Theta: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Theta: ...
     @overload
     def timeUnit(
@@ -15572,7 +15637,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def bandPosition(self, _: float, /) -> ThetaDatum: ...
     @overload
-    def scale(self, _: None, /) -> ThetaDatum: ...
+    def scale(self, _: Scale | None, /) -> ThetaDatum: ...
     @overload
     def scale(
         self,
@@ -15783,7 +15848,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> Theta2: ...
     @overload
-    def field(self, _: str, /) -> Theta2: ...
+    def field(self, _: str | RepeatRef, /) -> Theta2: ...
     @overload
     def field(
         self,
@@ -15792,7 +15857,9 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Theta2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Theta2: ...
     @overload
     def timeUnit(
@@ -16188,7 +16255,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def bandPosition(self, _: float, /) -> Tooltip: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Tooltip: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Tooltip: ...
     @overload
     def bin(
         self,
@@ -16224,7 +16291,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         self, _: list[core.ConditionalValueDefstringExprRef], /
     ) -> Tooltip: ...
     @overload
-    def field(self, _: str, /) -> Tooltip: ...
+    def field(self, _: str | RepeatRef, /) -> Tooltip: ...
     @overload
     def field(
         self,
@@ -16239,7 +16306,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, /) -> Tooltip: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Tooltip: ...
     @overload
     def timeUnit(
@@ -16625,7 +16694,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def bandPosition(self, _: float, /) -> Url: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Url: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Url: ...
     @overload
     def bin(
         self,
@@ -16659,7 +16728,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(self, _: list[core.ConditionalValueDefstringExprRef], /) -> Url: ...
     @overload
-    def field(self, _: str, /) -> Url: ...
+    def field(self, _: str | RepeatRef, /) -> Url: ...
     @overload
     def field(
         self,
@@ -16674,7 +16743,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def formatType(self, _: str, /) -> Url: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Url: ...
     @overload
     def timeUnit(
@@ -17117,7 +17188,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> X: ...
     @overload
-    def axis(self, _: None, /) -> X: ...
+    def axis(self, _: Axis | None, /) -> X: ...
     @overload
     def axis(
         self,
@@ -17238,7 +17309,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> X: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> X: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> X: ...
     @overload
     def bin(
         self,
@@ -17255,7 +17326,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> X: ...
     @overload
-    def field(self, _: str, /) -> X: ...
+    def field(self, _: str | RepeatRef, /) -> X: ...
     @overload
     def field(
         self,
@@ -17263,7 +17334,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> X: ...
     @overload
-    def impute(self, _: None, /) -> X: ...
+    def impute(self, _: Impute | None, /) -> X: ...
     @overload
     def impute(
         self,
@@ -17274,7 +17345,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         value: Optional[Any] = Undefined,
     ) -> X: ...
     @overload
-    def scale(self, _: None, /) -> X: ...
+    def scale(self, _: Scale | None, /) -> X: ...
     @overload
     def scale(
         self,
@@ -17355,7 +17426,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def stack(self, _: bool | StackOffset_T | None, /) -> X: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> X: ...
     @overload
     def timeUnit(
@@ -17583,7 +17656,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "x"
 
     @overload
-    def axis(self, _: None, /) -> XDatum: ...
+    def axis(self, _: Axis | None, /) -> XDatum: ...
     @overload
     def axis(
         self,
@@ -17704,7 +17777,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def bandPosition(self, _: float, /) -> XDatum: ...
     @overload
-    def impute(self, _: None, /) -> XDatum: ...
+    def impute(self, _: Impute | None, /) -> XDatum: ...
     @overload
     def impute(
         self,
@@ -17715,7 +17788,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         value: Optional[Any] = Undefined,
     ) -> XDatum: ...
     @overload
-    def scale(self, _: None, /) -> XDatum: ...
+    def scale(self, _: Scale | None, /) -> XDatum: ...
     @overload
     def scale(
         self,
@@ -17926,7 +17999,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> X2: ...
     @overload
-    def field(self, _: str, /) -> X2: ...
+    def field(self, _: str | RepeatRef, /) -> X2: ...
     @overload
     def field(
         self,
@@ -17935,7 +18008,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> X2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> X2: ...
     @overload
     def timeUnit(
@@ -18231,7 +18306,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> XError: ...
     @overload
-    def field(self, _: str, /) -> XError: ...
+    def field(self, _: str | RepeatRef, /) -> XError: ...
     @overload
     def field(
         self,
@@ -18240,7 +18315,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XError: ...
     @overload
     def timeUnit(
@@ -18412,7 +18489,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> XError2: ...
     @overload
-    def field(self, _: str, /) -> XError2: ...
+    def field(self, _: str | RepeatRef, /) -> XError2: ...
     @overload
     def field(
         self,
@@ -18421,7 +18498,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> XError2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XError2: ...
     @overload
     def timeUnit(
@@ -18705,7 +18784,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> XOffset: ...
     @overload
-    def bin(self, _: bool | None, /) -> XOffset: ...
+    def bin(self, _: bool | Bin | None, /) -> XOffset: ...
     @overload
     def bin(
         self,
@@ -18722,7 +18801,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> XOffset: ...
     @overload
-    def field(self, _: str, /) -> XOffset: ...
+    def field(self, _: str | RepeatRef, /) -> XOffset: ...
     @overload
     def field(
         self,
@@ -18730,7 +18809,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> XOffset: ...
     @overload
-    def scale(self, _: None, /) -> XOffset: ...
+    def scale(self, _: Scale | None, /) -> XOffset: ...
     @overload
     def scale(
         self,
@@ -18809,7 +18888,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> XOffset: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XOffset: ...
     @overload
     def timeUnit(
@@ -18986,7 +19067,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def bandPosition(self, _: float, /) -> XOffsetDatum: ...
     @overload
-    def scale(self, _: None, /) -> XOffsetDatum: ...
+    def scale(self, _: Scale | None, /) -> XOffsetDatum: ...
     @overload
     def scale(
         self,
@@ -19346,7 +19427,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Y: ...
     @overload
-    def axis(self, _: None, /) -> Y: ...
+    def axis(self, _: Axis | None, /) -> Y: ...
     @overload
     def axis(
         self,
@@ -19467,7 +19548,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> Y: ...
     @overload
-    def bin(self, _: bool | Literal["binned"] | None, /) -> Y: ...
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Y: ...
     @overload
     def bin(
         self,
@@ -19484,7 +19565,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> Y: ...
     @overload
-    def field(self, _: str, /) -> Y: ...
+    def field(self, _: str | RepeatRef, /) -> Y: ...
     @overload
     def field(
         self,
@@ -19492,7 +19573,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> Y: ...
     @overload
-    def impute(self, _: None, /) -> Y: ...
+    def impute(self, _: Impute | None, /) -> Y: ...
     @overload
     def impute(
         self,
@@ -19503,7 +19584,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         value: Optional[Any] = Undefined,
     ) -> Y: ...
     @overload
-    def scale(self, _: None, /) -> Y: ...
+    def scale(self, _: Scale | None, /) -> Y: ...
     @overload
     def scale(
         self,
@@ -19584,7 +19665,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def stack(self, _: bool | StackOffset_T | None, /) -> Y: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Y: ...
     @overload
     def timeUnit(
@@ -19812,7 +19895,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "y"
 
     @overload
-    def axis(self, _: None, /) -> YDatum: ...
+    def axis(self, _: Axis | None, /) -> YDatum: ...
     @overload
     def axis(
         self,
@@ -19933,7 +20016,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def bandPosition(self, _: float, /) -> YDatum: ...
     @overload
-    def impute(self, _: None, /) -> YDatum: ...
+    def impute(self, _: Impute | None, /) -> YDatum: ...
     @overload
     def impute(
         self,
@@ -19944,7 +20027,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         value: Optional[Any] = Undefined,
     ) -> YDatum: ...
     @overload
-    def scale(self, _: None, /) -> YDatum: ...
+    def scale(self, _: Scale | None, /) -> YDatum: ...
     @overload
     def scale(
         self,
@@ -20155,7 +20238,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> Y2: ...
     @overload
-    def field(self, _: str, /) -> Y2: ...
+    def field(self, _: str | RepeatRef, /) -> Y2: ...
     @overload
     def field(
         self,
@@ -20164,7 +20247,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> Y2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Y2: ...
     @overload
     def timeUnit(
@@ -20460,7 +20545,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> YError: ...
     @overload
-    def field(self, _: str, /) -> YError: ...
+    def field(self, _: str | RepeatRef, /) -> YError: ...
     @overload
     def field(
         self,
@@ -20469,7 +20554,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YError: ...
     @overload
     def timeUnit(
@@ -20641,7 +20728,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload
     def bin(self, _: None, /) -> YError2: ...
     @overload
-    def field(self, _: str, /) -> YError2: ...
+    def field(self, _: str | RepeatRef, /) -> YError2: ...
     @overload
     def field(
         self,
@@ -20650,7 +20737,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     ) -> YError2: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YError2: ...
     @overload
     def timeUnit(
@@ -20934,7 +21023,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def bandPosition(self, _: float, /) -> YOffset: ...
     @overload
-    def bin(self, _: bool | None, /) -> YOffset: ...
+    def bin(self, _: bool | Bin | None, /) -> YOffset: ...
     @overload
     def bin(
         self,
@@ -20951,7 +21040,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         steps: Optional[Sequence[float]] = Undefined,
     ) -> YOffset: ...
     @overload
-    def field(self, _: str, /) -> YOffset: ...
+    def field(self, _: str | RepeatRef, /) -> YOffset: ...
     @overload
     def field(
         self,
@@ -20959,7 +21048,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
     ) -> YOffset: ...
     @overload
-    def scale(self, _: None, /) -> YOffset: ...
+    def scale(self, _: Scale | None, /) -> YOffset: ...
     @overload
     def scale(
         self,
@@ -21038,7 +21127,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     ) -> YOffset: ...
     @overload
     def timeUnit(
-        self, _: MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T, /
+        self,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YOffset: ...
     @overload
     def timeUnit(
@@ -21215,7 +21306,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def bandPosition(self, _: float, /) -> YOffsetDatum: ...
     @overload
-    def scale(self, _: None, /) -> YOffsetDatum: ...
+    def scale(self, _: Scale | None, /) -> YOffsetDatum: ...
     @overload
     def scale(
         self,
