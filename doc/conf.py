@@ -39,6 +39,7 @@ extensions = [
     "sphinxext_altair.altairplot",
     "sphinxext.altairgallery",
     "sphinxext.schematable",
+    "sphinxext.code_ref",
     "sphinx_copybutton",
     "sphinx_design",
 ]

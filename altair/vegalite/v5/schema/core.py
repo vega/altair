@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import pkgutil
-from typing import TYPE_CHECKING, Any, Iterator, Literal, Sequence
+from typing import TYPE_CHECKING, Any, Literal
 
 from altair.utils.schemapi import (  # noqa: F401
     SchemaBase,
@@ -16,6 +16,8 @@ from altair.utils.schemapi import (  # noqa: F401
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    from collections.abc import Iterator, Sequence
+
     from altair import Parameter
     from altair.typing import Optional
 
@@ -687,7 +689,7 @@ class AreaConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -748,7 +750,7 @@ class AreaConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -887,7 +889,7 @@ class AreaConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -939,7 +941,7 @@ class AreaConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -1013,7 +1015,7 @@ class AreaConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1025,7 +1027,7 @@ class AreaConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1043,7 +1045,7 @@ class AreaConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -1062,7 +1064,7 @@ class AreaConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1274,7 +1276,7 @@ class Axis(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    domainColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    domainColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
@@ -1331,7 +1333,7 @@ class Axis(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    gridColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    gridColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
@@ -1368,7 +1370,7 @@ class Axis(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    labelColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the tick label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -1483,7 +1485,7 @@ class Axis(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    tickColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    tickColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the axis's tick.
 
         **Default value:** ``"gray"``
@@ -1536,7 +1538,7 @@ class Axis(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1568,7 +1570,7 @@ class Axis(VegaLiteSchema):
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
         alone.
-    titleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    titleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of the title, can be in hex color code or regular color name.
     titleFont : str, dict, :class:`ExprRef`
         Font of the title. (e.g., ``"Helvetica Neue"``).
@@ -1621,7 +1623,7 @@ class Axis(VegaLiteSchema):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -1634,7 +1636,7 @@ class Axis(VegaLiteSchema):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1647,7 +1649,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -1679,7 +1681,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -1694,7 +1696,7 @@ class Axis(VegaLiteSchema):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1702,7 +1704,7 @@ class Axis(VegaLiteSchema):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1723,7 +1725,7 @@ class Axis(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -1850,7 +1852,7 @@ class AxisConfig(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    domainColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    domainColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
@@ -1907,7 +1909,7 @@ class AxisConfig(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    gridColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    gridColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of gridlines.
 
         **Default value:** ``"lightGray"``.
@@ -1944,7 +1946,7 @@ class AxisConfig(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    labelColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the tick label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -2059,7 +2061,7 @@ class AxisConfig(VegaLiteSchema):
         ``"square"``.
 
         **Default value:** ``"butt"``
-    tickColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    tickColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, :class:`ConditionalAxisColor`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the axis's tick.
 
         **Default value:** ``"gray"``
@@ -2112,7 +2114,7 @@ class AxisConfig(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -2144,7 +2146,7 @@ class AxisConfig(VegaLiteSchema):
         ``"line-top"`` and ``"line-bottom"`` values operate similarly to ``"top"`` and
         ``"bottom"``, but are calculated relative to the *lineHeight* rather than *fontSize*
         alone.
-    titleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    titleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Color of the title, can be in hex color code or regular color name.
     titleFont : str, dict, :class:`ExprRef`
         Font of the title. (e.g., ``"Helvetica Neue"``).
@@ -2198,7 +2200,7 @@ class AxisConfig(VegaLiteSchema):
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -2211,7 +2213,7 @@ class AxisConfig(VegaLiteSchema):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2224,7 +2226,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -2256,7 +2258,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -2271,7 +2273,7 @@ class AxisConfig(VegaLiteSchema):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2279,7 +2281,7 @@ class AxisConfig(VegaLiteSchema):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2300,7 +2302,7 @@ class AxisConfig(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -2558,7 +2560,7 @@ class BarConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -2619,7 +2621,7 @@ class BarConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -2736,7 +2738,7 @@ class BarConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -2788,7 +2790,7 @@ class BarConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -2866,7 +2868,7 @@ class BarConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2878,7 +2880,7 @@ class BarConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -2895,7 +2897,7 @@ class BarConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -2914,7 +2916,7 @@ class BarConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -3039,7 +3041,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for title text.
     dx : dict, float, :class:`ExprRef`
         Delta offset for title and subtitle text x-coordinate.
@@ -3069,7 +3071,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         position along the edge of the chart.
     orient : dict, :class:`ExprRef`, :class:`TitleOrient`, Literal['none', 'left', 'right', 'top', 'bottom']
         Default title orientation (``"top"``, ``"bottom"``, ``"left"``, or ``"right"``)
-    subtitleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    subtitleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for subtitle text.
     subtitleFont : str, dict, :class:`ExprRef`
         Font name for subtitle text.
@@ -3102,7 +3104,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -3116,7 +3118,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[Parameter | SchemaBase | Map | TitleOrient_T] = Undefined,
         subtitleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         subtitleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         subtitleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -3721,7 +3723,7 @@ class BoxPlotDef(CompositeMarkDef):
           range (*Q3-Q1*).
 
         **Default value:** ``1.5``.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -3781,7 +3783,7 @@ class BoxPlotDef(CompositeMarkDef):
         clip: Optional[bool] = Undefined,
         color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         extent: Optional[float | Literal["min-max"]] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         median: Optional[bool | SchemaBase | Map] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
@@ -4161,7 +4163,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4241,7 +4243,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4336,7 +4338,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         param: Optional[str | SchemaBase] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -4344,7 +4346,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -4384,7 +4386,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4461,7 +4463,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4556,14 +4558,14 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         test: Optional[str | SchemaBase | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -4603,7 +4605,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
     ----------
     param : str, :class:`ParameterName`
         Filter using a parameter name.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4619,7 +4621,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
     def __init__(
         self,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         **kwds,
     ):
@@ -4636,7 +4638,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
     ----------
     test : str, dict, :class:`Predicate`, :class:`FieldGTPredicate`, :class:`FieldLTPredicate`, :class:`FieldGTEPredicate`, :class:`FieldLTEPredicate`, :class:`LogicalOrPredicate`, :class:`ParameterPredicate`, :class:`FieldEqualPredicate`, :class:`FieldOneOfPredicate`, :class:`FieldRangePredicate`, :class:`FieldValidPredicate`, :class:`LogicalAndPredicate`, :class:`LogicalNotPredicate`, :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4649,7 +4651,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
     def __init__(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -4997,7 +4999,7 @@ class ConditionalParameterValueDefstringnullExprRef(
     ----------
     param : str, :class:`ParameterName`
         Filter using a parameter name.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5013,7 +5015,7 @@ class ConditionalParameterValueDefstringnullExprRef(
     def __init__(
         self,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         **kwds,
     ):
@@ -5030,7 +5032,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
     ----------
     test : str, dict, :class:`Predicate`, :class:`FieldGTPredicate`, :class:`FieldLTPredicate`, :class:`FieldGTEPredicate`, :class:`FieldLTEPredicate`, :class:`LogicalOrPredicate`, :class:`ParameterPredicate`, :class:`FieldEqualPredicate`, :class:`FieldOneOfPredicate`, :class:`FieldRangePredicate`, :class:`FieldValidPredicate`, :class:`LogicalAndPredicate`, :class:`LogicalNotPredicate`, :class:`PredicateComposition`
         Predicate for triggering the condition
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -5043,7 +5045,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
     def __init__(
         self,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -5523,7 +5525,7 @@ class CsvDataFormat(DataFormat):
 
     Parameters
     ----------
-    parse : dict, None, :class:`Parse`
+    parse : dict, :class:`Parse`, None
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -5550,7 +5552,7 @@ class CsvDataFormat(DataFormat):
 
     def __init__(
         self,
-        parse: Optional[None | SchemaBase | Map] = Undefined,
+        parse: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["csv", "tsv"]] = Undefined,
         **kwds,
     ):
@@ -5645,7 +5647,7 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Optional[
-            Sequence[str | bool | float | SchemaBase | Map]
+            Sequence[str | bool | float | Temporal | SchemaBase | Map]
         ] = Undefined,
         **kwds,
     ):
@@ -5662,7 +5664,7 @@ class DsvDataFormat(DataFormat):
         The delimiter between records. The delimiter must be a single character (i.e., a
         single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are
         not.
-    parse : dict, None, :class:`Parse`
+    parse : dict, :class:`Parse`, None
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -5690,7 +5692,7 @@ class DsvDataFormat(DataFormat):
     def __init__(
         self,
         delimiter: Optional[str] = Undefined,
-        parse: Optional[None | SchemaBase | Map] = Undefined,
+        parse: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["dsv"]] = Undefined,
         **kwds,
     ):
@@ -5851,7 +5853,7 @@ class Encoding(VegaLiteSchema):
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : dict, None, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`]
+    tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -5928,7 +5930,7 @@ class Encoding(VegaLiteSchema):
         theta: Optional[SchemaBase | Map] = Undefined,
         theta2: Optional[SchemaBase | Map] = Undefined,
         tooltip: Optional[
-            None | SchemaBase | Sequence[SchemaBase | Map] | Map
+            SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
         url: Optional[SchemaBase | Map] = Undefined,
         x: Optional[SchemaBase | Map] = Undefined,
@@ -6373,7 +6375,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6445,9 +6447,9 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -6490,7 +6492,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6586,27 +6588,27 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -6648,7 +6650,7 @@ class FacetFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6684,9 +6686,9 @@ class FacetFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -6721,7 +6723,7 @@ class FacetFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6815,23 +6817,23 @@ class FacetFieldDef(VegaLiteSchema):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -7025,7 +7027,7 @@ class FacetedEncoding(VegaLiteSchema):
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : dict, None, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`]
+    tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -7105,7 +7107,7 @@ class FacetedEncoding(VegaLiteSchema):
         theta: Optional[SchemaBase | Map] = Undefined,
         theta2: Optional[SchemaBase | Map] = Undefined,
         tooltip: Optional[
-            None | SchemaBase | Sequence[SchemaBase | Map] | Map
+            SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
         url: Optional[SchemaBase | Map] = Undefined,
         x: Optional[SchemaBase | Map] = Undefined,
@@ -7176,7 +7178,7 @@ class Feature(VegaLiteSchema):
     ----------
     geometry : dict, :class:`Point`, :class:`Polygon`, :class:`Geometry`, :class:`LineString`, :class:`MultiPoint`, :class:`MultiPolygon`, :class:`MultiLineString`, :class:`GeometryCollection`
         The feature's geometry
-    properties : dict, None, :class:`GeoJsonProperties`
+    properties : dict, :class:`GeoJsonProperties`, None
         Properties associated with this feature.
     type : Literal['Feature']
         Specifies the type of GeoJSON object.
@@ -7193,7 +7195,7 @@ class Feature(VegaLiteSchema):
     def __init__(
         self,
         geometry: Optional[SchemaBase | Map] = Undefined,
-        properties: Optional[None | SchemaBase | Map] = Undefined,
+        properties: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
@@ -7249,7 +7251,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
     ----------
     geometry : dict, :class:`Point`, :class:`Polygon`, :class:`Geometry`, :class:`LineString`, :class:`MultiPoint`, :class:`MultiPolygon`, :class:`MultiLineString`, :class:`GeometryCollection`
         The feature's geometry
-    properties : dict, None, :class:`GeoJsonProperties`
+    properties : dict, :class:`GeoJsonProperties`, None
         Properties associated with this feature.
     type : Literal['Feature']
         Specifies the type of GeoJSON object.
@@ -7266,7 +7268,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
     def __init__(
         self,
         geometry: Optional[SchemaBase | Map] = Undefined,
-        properties: Optional[None | SchemaBase | Map] = Undefined,
+        properties: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
@@ -7313,7 +7315,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7358,7 +7360,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7453,12 +7455,12 @@ class FieldDefWithoutScale(VegaLiteSchema):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -7502,7 +7504,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -7586,7 +7588,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7682,7 +7684,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -7690,7 +7692,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -7858,7 +7860,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -7885,7 +7887,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         name: Optional[str] = Undefined,
@@ -7920,7 +7922,7 @@ class GeoJsonFeature(Fit):
     ----------
     geometry : dict, :class:`Point`, :class:`Polygon`, :class:`Geometry`, :class:`LineString`, :class:`MultiPoint`, :class:`MultiPolygon`, :class:`MultiLineString`, :class:`GeometryCollection`
         The feature's geometry
-    properties : dict, None, :class:`GeoJsonProperties`
+    properties : dict, :class:`GeoJsonProperties`, None
         Properties associated with this feature.
     type : Literal['Feature']
         Specifies the type of GeoJSON object.
@@ -7937,7 +7939,7 @@ class GeoJsonFeature(Fit):
     def __init__(
         self,
         geometry: Optional[SchemaBase | Map] = Undefined,
-        properties: Optional[None | SchemaBase | Map] = Undefined,
+        properties: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["Feature"]] = Undefined,
         bbox: Optional[SchemaBase | Sequence[float]] = Undefined,
         id: Optional[str | float] = Undefined,
@@ -8241,7 +8243,7 @@ class Header(VegaLiteSchema):
         **Default value:** ``true``.
     orient : :class:`Orient`, Literal['left', 'right', 'top', 'bottom']
         Shortcut for setting both labelOrient and titleOrient.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8336,7 +8338,7 @@ class Header(VegaLiteSchema):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -8647,7 +8649,7 @@ class ImputeParams(VegaLiteSchema):
 
     Parameters
     ----------
-    frame : Sequence[None, float]
+    frame : Sequence[float, None]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -8681,7 +8683,7 @@ class ImputeParams(VegaLiteSchema):
 
     def __init__(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
@@ -9054,7 +9056,7 @@ class JsonDataFormat(DataFormat):
 
     Parameters
     ----------
-    parse : dict, None, :class:`Parse`
+    parse : dict, :class:`Parse`, None
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -9086,7 +9088,7 @@ class JsonDataFormat(DataFormat):
 
     def __init__(
         self,
-        parse: Optional[None | SchemaBase | Map] = Undefined,
+        parse: Optional[SchemaBase | Map | None] = Undefined,
         property: Optional[str] = Undefined,
         type: Optional[Literal["json"]] = Undefined,
         **kwds,
@@ -9177,7 +9179,7 @@ class LatLongFieldDef(LatLongDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9277,7 +9279,7 @@ class LatLongFieldDef(LatLongDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
@@ -9371,7 +9373,7 @@ class Legend(VegaLiteSchema):
         * For left-/right-``orient``ed legends, ``"vertical"``
         * For top/bottom-left/right-``orient``ed legends, ``"horizontal"`` for gradient
           legends and ``"vertical"`` for symbol legends.
-    fillColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Background fill color for the full legend.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -9412,7 +9414,7 @@ class Legend(VegaLiteSchema):
         **Default value:** ``200``.
     gradientOpacity : dict, float, :class:`ExprRef`
         Opacity of the color gradient.
-    gradientStrokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    gradientStrokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the gradient stroke, can be in hex color code or regular color name.
 
         **Default value:** ``"lightGray"``.
@@ -9438,7 +9440,7 @@ class Legend(VegaLiteSchema):
         ``"bottom"``, or ``"alphabetic"``.
 
         **Default value:** ``"middle"``.
-    labelColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    labelColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend label, can be in hex color code or regular color name.
     labelExpr : str
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -9503,13 +9505,13 @@ class Legend(VegaLiteSchema):
         The vertical padding in pixels between symbol legend entries.
 
         **Default value:** ``2``.
-    strokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    strokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Border stroke color for the full legend.
     symbolDash : dict, Sequence[float], :class:`ExprRef`
         An array of alternating [stroke, space] lengths for dashed symbol strokes.
     symbolDashOffset : dict, float, :class:`ExprRef`
         The pixel offset at which to start drawing with the symbol stroke dash array.
-    symbolFillColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolFillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend symbol,
     symbolLimit : dict, float, :class:`ExprRef`
         The maximum number of allowed entries for a symbol legend. Additional entries will
@@ -9524,7 +9526,7 @@ class Legend(VegaLiteSchema):
         The size of the legend symbol, in pixels.
 
         **Default value:** ``100``.
-    symbolStrokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolStrokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Stroke color for legend symbols.
     symbolStrokeWidth : dict, float, :class:`ExprRef`
         The width of the symbol's stroke.
@@ -9550,7 +9552,7 @@ class Legend(VegaLiteSchema):
         necessary, to enforce the minimum step value.
 
         **Default value**: ``undefined``
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9584,7 +9586,7 @@ class Legend(VegaLiteSchema):
         alone.
 
         **Default value:** ``"top"``.
-    titleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    titleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend title, can be in hex color code or regular color name.
     titleFont : str, dict, :class:`ExprRef`
         The font of the legend title.
@@ -9636,14 +9638,14 @@ class Legend(VegaLiteSchema):
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -9653,7 +9655,7 @@ class Legend(VegaLiteSchema):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -9677,21 +9679,21 @@ class Legend(VegaLiteSchema):
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -9699,14 +9701,14 @@ class Legend(VegaLiteSchema):
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -9726,7 +9728,7 @@ class Legend(VegaLiteSchema):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
@@ -9854,7 +9856,7 @@ class LegendConfig(VegaLiteSchema):
           legends and ``"vertical"`` for symbol legends.
     disable : bool
         Disable legend by default
-    fillColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Background fill color for the full legend.
     gradientDirection : dict, :class:`ExprRef`, :class:`Orientation`, Literal['horizontal', 'vertical']
         The default direction (``"horizontal"`` or ``"vertical"``) for gradient legends.
@@ -9883,7 +9885,7 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``200``.
     gradientOpacity : dict, float, :class:`ExprRef`
         Opacity of the color gradient.
-    gradientStrokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    gradientStrokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the gradient stroke, can be in hex color code or regular color name.
 
         **Default value:** ``"lightGray"``.
@@ -9919,7 +9921,7 @@ class LegendConfig(VegaLiteSchema):
         ``"bottom"``, or ``"alphabetic"``.
 
         **Default value:** ``"middle"``.
-    labelColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    labelColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend label, can be in hex color code or regular color name.
     labelFont : str, dict, :class:`ExprRef`
         The font of the legend label.
@@ -9980,18 +9982,18 @@ class LegendConfig(VegaLiteSchema):
         The vertical padding in pixels between symbol legend entries.
 
         **Default value:** ``2``.
-    strokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    strokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Border stroke color for the full legend.
     strokeDash : dict, Sequence[float], :class:`ExprRef`
         Border stroke dash pattern for the full legend.
     strokeWidth : dict, float, :class:`ExprRef`
         Border stroke width for the full legend.
-    symbolBaseFillColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolBaseFillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color for legend symbols. Only applied if there is no ``"fill"`` scale
         color encoding for the legend.
 
         **Default value:** ``"transparent"``.
-    symbolBaseStrokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolBaseStrokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color for legend symbols. Only applied if there is no ``"fill"``
         scale color encoding for the legend.
 
@@ -10004,7 +10006,7 @@ class LegendConfig(VegaLiteSchema):
         The default direction (``"horizontal"`` or ``"vertical"``) for symbol legends.
 
         **Default value:** ``"vertical"``.
-    symbolFillColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolFillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend symbol,
     symbolLimit : dict, float, :class:`ExprRef`
         The maximum number of allowed entries for a symbol legend. Additional entries will
@@ -10019,7 +10021,7 @@ class LegendConfig(VegaLiteSchema):
         The size of the legend symbol, in pixels.
 
         **Default value:** ``100``.
-    symbolStrokeColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    symbolStrokeColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Stroke color for legend symbols.
     symbolStrokeWidth : dict, float, :class:`ExprRef`
         The width of the symbol's stroke.
@@ -10054,7 +10056,7 @@ class LegendConfig(VegaLiteSchema):
         alone.
 
         **Default value:** ``"top"``.
-    titleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    titleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The color of the legend title, can be in hex color code or regular color name.
     titleFont : str, dict, :class:`ExprRef`
         The font of the legend title.
@@ -10103,7 +10105,7 @@ class LegendConfig(VegaLiteSchema):
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         disable: Optional[bool] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientDirection: Optional[
             Parameter | SchemaBase | Map | Orientation_T
@@ -10115,7 +10117,7 @@ class LegendConfig(VegaLiteSchema):
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -10127,7 +10129,7 @@ class LegendConfig(VegaLiteSchema):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         labelFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -10151,17 +10153,17 @@ class LegendConfig(VegaLiteSchema):
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         strokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolBaseFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolBaseStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -10171,14 +10173,14 @@ class LegendConfig(VegaLiteSchema):
             Parameter | SchemaBase | Map | Orientation_T
         ] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -10192,7 +10194,7 @@ class LegendConfig(VegaLiteSchema):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -10484,7 +10486,7 @@ class LineConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -10545,7 +10547,7 @@ class LineConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -10674,7 +10676,7 @@ class LineConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -10726,7 +10728,7 @@ class LineConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -10800,7 +10802,7 @@ class LineConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -10812,7 +10814,7 @@ class LineConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -10829,7 +10831,7 @@ class LineConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -10848,7 +10850,7 @@ class LineConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11215,7 +11217,7 @@ class MarkConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -11276,7 +11278,7 @@ class MarkConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -11391,7 +11393,7 @@ class MarkConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -11443,7 +11445,7 @@ class MarkConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -11517,7 +11519,7 @@ class MarkConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -11529,7 +11531,7 @@ class MarkConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11545,7 +11547,7 @@ class MarkConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -11564,7 +11566,7 @@ class MarkConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11788,7 +11790,7 @@ class MarkDef(AnyMark):
         The ellipsis string for text truncated in response to the limit parameter.
 
         **Default value:** ``"…"``
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -11854,7 +11856,7 @@ class MarkDef(AnyMark):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -11996,7 +11998,7 @@ class MarkDef(AnyMark):
         resized. If false, individual pixels should be scaled directly rather than
         interpolated with smoothing. For SVG rendering, this option may not work in some
         browsers due to lack of standardization.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -12070,7 +12072,7 @@ class MarkDef(AnyMark):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -12163,7 +12165,7 @@ class MarkDef(AnyMark):
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -12175,7 +12177,7 @@ class MarkDef(AnyMark):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         line: Optional[bool | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -12195,7 +12197,7 @@ class MarkDef(AnyMark):
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -12218,7 +12220,7 @@ class MarkDef(AnyMark):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12369,9 +12371,9 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12468,9 +12470,9 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -12506,7 +12508,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12549,7 +12551,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -12558,7 +12560,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -12571,7 +12573,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12618,7 +12620,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12715,25 +12717,25 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -13021,9 +13023,9 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13118,9 +13120,9 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -13156,7 +13158,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13199,7 +13201,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -13208,7 +13210,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -13221,7 +13223,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13268,7 +13270,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13365,25 +13367,25 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -13430,9 +13432,9 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13527,9 +13529,9 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -13565,7 +13567,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13608,7 +13610,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -13617,7 +13619,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -13630,7 +13632,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13677,7 +13679,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13774,25 +13776,25 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -13842,7 +13844,7 @@ class OrderFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13889,7 +13891,7 @@ class OrderFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13984,13 +13986,13 @@ class OrderFieldDef(VegaLiteSchema):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -14181,7 +14183,7 @@ class OverlayMarkDef(VegaLiteSchema):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -14242,7 +14244,7 @@ class OverlayMarkDef(VegaLiteSchema):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -14361,7 +14363,7 @@ class OverlayMarkDef(VegaLiteSchema):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -14431,7 +14433,7 @@ class OverlayMarkDef(VegaLiteSchema):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -14514,7 +14516,7 @@ class OverlayMarkDef(VegaLiteSchema):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -14526,7 +14528,7 @@ class OverlayMarkDef(VegaLiteSchema):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14544,7 +14546,7 @@ class OverlayMarkDef(VegaLiteSchema):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -14566,7 +14568,7 @@ class OverlayMarkDef(VegaLiteSchema):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15066,9 +15068,9 @@ class DatumDef(LatLongDef, Position2Def):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15162,9 +15164,9 @@ class DatumDef(LatLongDef, Position2Def):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -15183,9 +15185,9 @@ class PositionDatumDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15198,7 +15200,7 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -15228,7 +15230,7 @@ class PositionDatumDefBase(PolarDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15322,11 +15324,11 @@ class PositionDatumDefBase(PolarDef):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -15356,7 +15358,7 @@ class PositionDatumDef(PositionDef):
 
     Parameters
     ----------
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -15369,9 +15371,9 @@ class PositionDatumDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -15379,7 +15381,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15392,7 +15394,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -15422,7 +15424,7 @@ class PositionDatumDef(PositionDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15514,15 +15516,15 @@ class PositionDatumDef(PositionDef):
 
     def __init__(
         self,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -15555,7 +15557,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -15568,7 +15570,7 @@ class PositionFieldDef(PositionDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15604,7 +15606,7 @@ class PositionFieldDef(PositionDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -15612,7 +15614,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15625,7 +15627,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15663,7 +15665,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -15702,7 +15704,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15796,27 +15798,27 @@ class PositionFieldDef(PositionDef):
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -15858,7 +15860,7 @@ class PositionFieldDefBase(PolarDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15894,7 +15896,7 @@ class PositionFieldDefBase(PolarDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15907,7 +15909,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15945,7 +15947,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -15984,7 +15986,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16079,24 +16081,24 @@ class PositionFieldDefBase(PolarDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -16227,7 +16229,9 @@ class FieldEqualPredicate(Predicate):
 
     def __init__(
         self,
-        equal: Optional[str | bool | float | Parameter | SchemaBase | Map] = Undefined,
+        equal: Optional[
+            str | bool | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         field: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -16256,7 +16260,9 @@ class FieldGTEPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        gte: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        gte: Optional[
+            str | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16284,7 +16290,7 @@ class FieldGTPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        gt: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        gt: Optional[str | float | Temporal | Parameter | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16312,7 +16318,9 @@ class FieldLTEPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        lte: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        lte: Optional[
+            str | float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16340,7 +16348,7 @@ class FieldLTPredicate(Predicate):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        lt: Optional[str | float | Parameter | SchemaBase | Map] = Undefined,
+        lt: Optional[str | float | Temporal | Parameter | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
@@ -16373,7 +16381,7 @@ class FieldOneOfPredicate(Predicate):
             Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
@@ -16391,7 +16399,7 @@ class FieldRangePredicate(Predicate):
     ----------
     field : str, :class:`FieldName`
         Field to be tested.
-    range : dict, :class:`ExprRef`, Sequence[dict, None, float, :class:`ExprRef`, :class:`DateTime`]
+    range : dict, :class:`ExprRef`, Sequence[dict, float, :class:`ExprRef`, :class:`DateTime`, None]
         An array of inclusive minimum and maximum values for a field value of a data item to
         be included in the filtered data.
     timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
@@ -16406,7 +16414,7 @@ class FieldRangePredicate(Predicate):
         range: Optional[
             Parameter
             | SchemaBase
-            | Sequence[None | float | Parameter | SchemaBase | Map]
+            | Sequence[float | Temporal | Parameter | SchemaBase | Map | None]
             | Map
         ] = Undefined,
         timeUnit: Optional[
@@ -16913,19 +16921,19 @@ class RangeConfig(VegaLiteSchema):
 
     Parameters
     ----------
-    category : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, None, float, Sequence[float], :class:`RangeRawArray`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
+    category : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, float, Sequence[float], :class:`RangeRawArray`, None], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for categorical
         data.
-    diverging : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, None, float, Sequence[float], :class:`RangeRawArray`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
+    diverging : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, float, Sequence[float], :class:`RangeRawArray`, None], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for diverging
         quantitative ramps.
-    heatmap : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, None, float, Sequence[float], :class:`RangeRawArray`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
+    heatmap : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, float, Sequence[float], :class:`RangeRawArray`, None], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
         quantitative heatmaps.
-    ordinal : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, None, float, Sequence[float], :class:`RangeRawArray`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
+    ordinal : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, float, Sequence[float], :class:`RangeRawArray`, None], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
         rank-ordered data.
-    ramp : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, None, float, Sequence[float], :class:`RangeRawArray`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
+    ramp : dict, :class:`RangeRaw`, :class:`RangeEnum`, :class:`RangeScheme`, Sequence[str, bool, float, Sequence[float], :class:`RangeRawArray`, None], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap'], Sequence[str, :class:`Color`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']]
         Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for sequential
         quantitative ramps.
     symbol : Sequence[str, :class:`SymbolShape`]
@@ -16940,35 +16948,35 @@ class RangeConfig(VegaLiteSchema):
         category: Optional[
             SchemaBase
             | Sequence[str | SchemaBase | ColorName_T]
-            | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | Sequence[str | bool | float | SchemaBase | Sequence[float] | None]
             | Map
             | RangeEnum_T
         ] = Undefined,
         diverging: Optional[
             SchemaBase
             | Sequence[str | SchemaBase | ColorName_T]
-            | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | Sequence[str | bool | float | SchemaBase | Sequence[float] | None]
             | Map
             | RangeEnum_T
         ] = Undefined,
         heatmap: Optional[
             SchemaBase
             | Sequence[str | SchemaBase | ColorName_T]
-            | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | Sequence[str | bool | float | SchemaBase | Sequence[float] | None]
             | Map
             | RangeEnum_T
         ] = Undefined,
         ordinal: Optional[
             SchemaBase
             | Sequence[str | SchemaBase | ColorName_T]
-            | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | Sequence[str | bool | float | SchemaBase | Sequence[float] | None]
             | Map
             | RangeEnum_T
         ] = Undefined,
         ramp: Optional[
             SchemaBase
             | Sequence[str | SchemaBase | ColorName_T]
-            | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | Sequence[str | bool | float | SchemaBase | Sequence[float] | None]
             | Map
             | RangeEnum_T
         ] = Undefined,
@@ -17141,7 +17149,7 @@ class RectConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -17202,7 +17210,7 @@ class RectConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -17319,7 +17327,7 @@ class RectConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -17371,7 +17379,7 @@ class RectConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -17448,7 +17456,7 @@ class RectConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -17460,7 +17468,7 @@ class RectConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -17477,7 +17485,7 @@ class RectConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -17496,7 +17504,7 @@ class RectConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -17795,7 +17803,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -17836,9 +17844,9 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -17879,7 +17887,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17975,25 +17983,25 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         center: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -18057,7 +18065,7 @@ class Scale(VegaLiteSchema):
         ``symlog`` scales.
 
         **Default value:** ``1``
-    domain : dict, :class:`ExprRef`, Literal['unaggregated'], :class:`DomainUnionWith`, :class:`ParameterExtent`, Sequence[str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`]
+    domain : dict, :class:`ExprRef`, Literal['unaggregated'], :class:`DomainUnionWith`, :class:`ParameterExtent`, Sequence[str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, None]
         Customized domain values in the form of constant values or dynamic values driven by
         a parameter.
 
@@ -18288,12 +18296,18 @@ class Scale(VegaLiteSchema):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -18631,9 +18645,9 @@ class ScaleDatumDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -18646,7 +18660,7 @@ class ScaleDatumDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18740,10 +18754,10 @@ class ScaleDatumDef(OffsetDef):
         self,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -18777,7 +18791,7 @@ class ScaleFieldDef(OffsetDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18813,7 +18827,7 @@ class ScaleFieldDef(OffsetDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -18826,7 +18840,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18873,7 +18887,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18968,23 +18982,23 @@ class ScaleFieldDef(OffsetDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -19199,7 +19213,7 @@ class ScaleInvalidDataShowAsValuefill(ScaleInvalidDataShowAsfill):
 
     Parameters
     ----------
-    value : str, dict, None, :class:`Color`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    value : str, dict, :class:`Color`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -19210,7 +19224,7 @@ class ScaleInvalidDataShowAsValuefill(ScaleInvalidDataShowAsfill):
 
     def __init__(
         self,
-        value: Optional[str | None | SchemaBase | Map | ColorName_T] = Undefined,
+        value: Optional[str | SchemaBase | Map | ColorName_T | None] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -19391,7 +19405,7 @@ class ScaleInvalidDataShowAsValuestroke(ScaleInvalidDataShowAsstroke):
 
     Parameters
     ----------
-    value : str, dict, None, :class:`Color`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    value : str, dict, :class:`Color`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -19402,7 +19416,7 @@ class ScaleInvalidDataShowAsValuestroke(ScaleInvalidDataShowAsstroke):
 
     def __init__(
         self,
-        value: Optional[str | None | SchemaBase | Map | ColorName_T] = Undefined,
+        value: Optional[str | SchemaBase | Map | ColorName_T | None] = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -19819,7 +19833,7 @@ class SecondaryFieldDef(Position2Def):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -19853,7 +19867,7 @@ class SecondaryFieldDef(Position2Def):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -20053,7 +20067,7 @@ class SelectionParameter(VegaLiteSchema):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : str, bool, dict, None, float, :class:`DateTime`, :class:`SelectionInit`, :class:`PrimitiveValue`, :class:`SelectionInitIntervalMapping`, Sequence[dict, :class:`SelectionInitMapping`]
+    value : str, bool, dict, float, :class:`DateTime`, :class:`SelectionInit`, :class:`PrimitiveValue`, :class:`SelectionInitIntervalMapping`, Sequence[dict, :class:`SelectionInitMapping`], None
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -20070,7 +20084,7 @@ class SelectionParameter(VegaLiteSchema):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | None | float | SchemaBase | Sequence[SchemaBase | Map] | Map
+            Temporal | SchemaBase | Sequence[SchemaBase | Map] | Map | PrimitiveValue_T
         ] = Undefined,
         **kwds,
     ):
@@ -20196,9 +20210,9 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20295,9 +20309,9 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -20333,7 +20347,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -20376,7 +20390,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -20385,7 +20399,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -20398,7 +20412,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -20445,7 +20459,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20542,25 +20556,25 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ):
@@ -20650,7 +20664,7 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : dict
 
-    tooltip : dict, None, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`]
+    tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -20711,7 +20725,7 @@ class SharedEncoding(VegaLiteSchema):
         theta: Optional[Map] = Undefined,
         theta2: Optional[Map] = Undefined,
         tooltip: Optional[
-            None | SchemaBase | Sequence[SchemaBase | Map] | Map
+            SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
         url: Optional[Map] = Undefined,
         x: Optional[Map] = Undefined,
@@ -20820,7 +20834,7 @@ class EncodingSortField(Sort):
         <https://vega.github.io/vega-lite/docs/aggregate.html#ops>`__.
 
         **Default value:** ``"sum"`` for stacked plots. Otherwise, ``"min"``.
-    order : None, :class:`SortOrder`, Literal['ascending', 'descending']
+    order : :class:`SortOrder`, Literal['ascending', 'descending'], None
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
@@ -20831,7 +20845,7 @@ class EncodingSortField(Sort):
         self,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ):
         super().__init__(field=field, op=op, order=order, **kwds)
@@ -20874,7 +20888,7 @@ class SortByEncoding(Sort):
         The `encoding channel
         <https://vega.github.io/vega-lite/docs/encoding.html#channels>`__ to sort by (e.g.,
         ``"x"``, ``"y"``)
-    order : None, :class:`SortOrder`, Literal['ascending', 'descending']
+    order : :class:`SortOrder`, Literal['ascending', 'descending'], None
         The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
         not sort).
     """
@@ -20884,7 +20898,7 @@ class SortByEncoding(Sort):
     def __init__(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ):
         super().__init__(encoding=encoding, order=order, **kwds)
@@ -20900,7 +20914,7 @@ class SortField(VegaLiteSchema):
     ----------
     field : str, :class:`FieldName`
         The name of the field to sort.
-    order : None, :class:`SortOrder`, Literal['ascending', 'descending']
+    order : :class:`SortOrder`, Literal['ascending', 'descending'], None
         Whether to sort the field in ascending or descending order. One of ``"ascending"``
         (default), ``"descending"``, or ``null`` (no not sort).
     """
@@ -20910,7 +20924,7 @@ class SortField(VegaLiteSchema):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
         **kwds,
     ):
         super().__init__(field=field, order=order, **kwds)
@@ -21000,7 +21014,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat``)
         and to using the ``row`` channel (for ``facet`` and ``repeat``).
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21032,7 +21046,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21126,7 +21140,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat``)
         and to using the ``row`` channel (for ``facet`` and ``repeat``).
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21159,7 +21173,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21235,7 +21249,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         supply different centering values for rows and columns.
 
         **Default value:** ``false``
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21317,7 +21331,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -21380,7 +21394,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         rows or columns.
 
         **Default value:** ``false``
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21406,7 +21420,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         hconcat: Optional[Sequence[SchemaBase | Map]] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21446,7 +21460,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         as layering facet specifications is not allowed. Instead, use the `facet operator
         <https://vega.github.io/vega-lite/docs/facet.html>`__ and place a layer inside a
         facet.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21514,7 +21528,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         layer: Optional[Sequence[SchemaBase | Map]] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -21621,7 +21635,7 @@ class LayerRepeatSpec(RepeatSpec):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat``)
         and to using the ``row`` channel (for ``facet`` and ``repeat``).
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21654,7 +21668,7 @@ class LayerRepeatSpec(RepeatSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21751,7 +21765,7 @@ class NonLayerRepeatSpec(RepeatSpec):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat``)
         and to using the ``row`` channel (for ``facet`` and ``repeat``).
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -21784,7 +21798,7 @@ class NonLayerRepeatSpec(RepeatSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -22018,7 +22032,7 @@ class StringFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22095,7 +22109,7 @@ class StringFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22189,14 +22203,14 @@ class StringFieldDef(VegaLiteSchema):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -22234,7 +22248,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22318,7 +22332,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22413,7 +22427,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -22421,7 +22435,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -22449,7 +22463,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -22460,7 +22474,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
     def __init__(
         self,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -22633,7 +22647,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -22667,7 +22681,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22764,11 +22778,11 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -22804,7 +22818,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22888,7 +22902,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22985,7 +22999,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -22993,7 +23007,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -23134,7 +23148,7 @@ class TickConfig(AnyMarkConfig):
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
 
@@ -23195,7 +23209,7 @@ class TickConfig(AnyMarkConfig):
         * ``"bundle"``: equivalent to basis, except the tension parameter is used to
           straighten the spline.
         * ``"monotone"``: cubic interpolation that preserves monotonicity in y.
-    invalid : None, :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show']
+    invalid : :class:`MarkInvalidDataMode`, Literal['filter', 'break-paths-filter-domains', 'break-paths-show-domains', 'break-paths-show-path-domains', 'show'], None
         Invalid data mode, which defines how the marks and corresponding scales should
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
@@ -23310,7 +23324,7 @@ class TickConfig(AnyMarkConfig):
     startAngle : dict, float, :class:`ExprRef`
         The start angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default stroke color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove stroke.
 
@@ -23366,7 +23380,7 @@ class TickConfig(AnyMarkConfig):
         Default relative band size for a time unit. If set to ``1``, the bandwidth of the
         marks will be equal to the time unit band step. If set to ``0.5``, bandwidth of the
         marks will be half of the time unit band step.
-    tooltip : str, bool, dict, None, float, :class:`ExprRef`, :class:`TooltipContent`
+    tooltip : str, bool, dict, float, :class:`ExprRef`, :class:`TooltipContent`, None
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -23441,7 +23455,7 @@ class TickConfig(AnyMarkConfig):
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         endAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -23453,7 +23467,7 @@ class TickConfig(AnyMarkConfig):
         href: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         innerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[Parameter | SchemaBase | Map | Interpolate_T] = Undefined,
-        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
+        invalid: Optional[SchemaBase | MarkInvalidDataMode_T | None] = Undefined,
         limit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         lineBreak: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         lineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23469,7 +23483,7 @@ class TickConfig(AnyMarkConfig):
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         startAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -23489,7 +23503,7 @@ class TickConfig(AnyMarkConfig):
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            str | bool | float | Parameter | SchemaBase | Map | None
         ] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23827,7 +23841,7 @@ class TitleConfig(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for title text.
     dx : dict, float, :class:`ExprRef`
         Delta offset for title and subtitle text x-coordinate.
@@ -23857,7 +23871,7 @@ class TitleConfig(VegaLiteSchema):
         position along the edge of the chart.
     orient : dict, :class:`ExprRef`, :class:`TitleOrient`, Literal['none', 'left', 'right', 'top', 'bottom']
         Default title orientation (``"top"``, ``"bottom"``, ``"left"``, or ``"right"``)
-    subtitleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    subtitleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for subtitle text.
     subtitleFont : str, dict, :class:`ExprRef`
         Font name for subtitle text.
@@ -23890,7 +23904,7 @@ class TitleConfig(VegaLiteSchema):
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23904,7 +23918,7 @@ class TitleConfig(VegaLiteSchema):
         offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         orient: Optional[Parameter | SchemaBase | Map | TitleOrient_T] = Undefined,
         subtitleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         subtitleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         subtitleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -24006,7 +24020,7 @@ class TitleParams(VegaLiteSchema):
         ``"line-bottom"``. The ``"line-top"`` and ``"line-bottom"`` values operate similarly
         to ``"top"`` and ``"bottom"``, but are calculated relative to the *lineHeight*
         rather than *fontSize* alone.
-    color : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for title text.
     dx : dict, float, :class:`ExprRef`
         Delta offset for title and subtitle text x-coordinate.
@@ -24043,7 +24057,7 @@ class TitleParams(VegaLiteSchema):
         **Default value:** ``"group-title"``.
     subtitle : str, :class:`Text`, Sequence[str]
         The subtitle Text.
-    subtitleColor : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    subtitleColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Text color for subtitle text.
     subtitleFont : str, dict, :class:`ExprRef`
         Font name for subtitle text.
@@ -24077,7 +24091,7 @@ class TitleParams(VegaLiteSchema):
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         baseline: Optional[SchemaBase | TextBaseline_T] = Undefined,
         color: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -24093,7 +24107,7 @@ class TitleParams(VegaLiteSchema):
         style: Optional[str | Sequence[str]] = Undefined,
         subtitle: Optional[str | SchemaBase | Sequence[str]] = Undefined,
         subtitleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         subtitleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         subtitleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -24200,7 +24214,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
         **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation.
-    value : str, bool, dict, None, float, :class:`DateTime`, :class:`SelectionInit`, :class:`PrimitiveValue`, :class:`SelectionInitIntervalMapping`, Sequence[dict, :class:`SelectionInitMapping`]
+    value : str, bool, dict, float, :class:`DateTime`, :class:`SelectionInit`, :class:`PrimitiveValue`, :class:`SelectionInitIntervalMapping`, Sequence[dict, :class:`SelectionInitMapping`], None
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ and initial
         values.
@@ -24221,7 +24235,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         select: Optional[SchemaBase | Map | SelectionType_T] = Undefined,
         bind: Optional[SchemaBase | Literal["legend", "scales"] | Map] = Undefined,
         value: Optional[
-            str | bool | None | float | SchemaBase | Sequence[SchemaBase | Map] | Map
+            Temporal | SchemaBase | Sequence[SchemaBase | Map] | Map | PrimitiveValue_T
         ] = Undefined,
         views: Optional[Sequence[str]] = Undefined,
         **kwds,
@@ -24318,7 +24332,7 @@ class TopLevelConcatSpec(TopLevelSpec):
     config : dict, :class:`Config`
         Vega-Lite configuration object. This property can only be defined at the top-level
         of a specification.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     datasets : dict, :class:`Datasets`
@@ -24377,7 +24391,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -24420,7 +24434,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     Parameters
     ----------
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     facet : dict, :class:`FacetMapping`, :class:`FacetFieldDef`
@@ -24542,7 +24556,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         facet: Optional[SchemaBase | Map] = Undefined,
         spec: Optional[SchemaBase | Map] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
@@ -24628,7 +24642,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
     config : dict, :class:`Config`
         Vega-Lite configuration object. This property can only be defined at the top-level
         of a specification.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     datasets : dict, :class:`Datasets`
@@ -24681,7 +24695,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -24742,7 +24756,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     config : dict, :class:`Config`
         Vega-Lite configuration object. This property can only be defined at the top-level
         of a specification.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     datasets : dict, :class:`Datasets`
@@ -24837,7 +24851,7 @@ class TopLevelLayerSpec(TopLevelSpec):
             str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
@@ -24893,7 +24907,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     Parameters
     ----------
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     mark : dict, :class:`Mark`, :class:`AnyMark`, :class:`BoxPlot`, :class:`MarkDef`, :class:`ErrorBar`, :class:`ErrorBand`, :class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`, :class:`CompositeMark`, :class:`CompositeMarkDef`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape', 'boxplot', 'errorband', 'errorbar']
@@ -25044,7 +25058,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         autosize: Optional[SchemaBase | Map | AutosizeType_T] = Undefined,
@@ -25136,7 +25150,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
     config : dict, :class:`Config`
         Vega-Lite configuration object. This property can only be defined at the top-level
         of a specification.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     datasets : dict, :class:`Datasets`
@@ -25189,7 +25203,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -25242,7 +25256,7 @@ class TopoDataFormat(DataFormat):
         not as individual GeoJSON features. Extracting a mesh is useful for more efficiently
         drawing borders or other geographic elements that you do not need to associate with
         specific regions such as individual countries, states or counties.
-    parse : dict, None, :class:`Parse`
+    parse : dict, :class:`Parse`, None
         If set to ``null``, disable type inference based on the spec and only use type
         inference based on the data. Alternatively, a parsing directive object can be
         provided for explicit data types. Each property of the object corresponds to a field
@@ -25271,7 +25285,7 @@ class TopoDataFormat(DataFormat):
         self,
         feature: Optional[str] = Undefined,
         mesh: Optional[str] = Undefined,
-        parse: Optional[None | SchemaBase | Map] = Undefined,
+        parse: Optional[SchemaBase | Map | None] = Undefined,
         type: Optional[Literal["topojson"]] = Undefined,
         **kwds,
     ):
@@ -25567,7 +25581,7 @@ class ImputeTransform(Transform):
     key : str, :class:`FieldName`
         A key field that uniquely identifies data objects within a group. Missing key values
         (those occurring in the data but not in the current group) will be imputed.
-    frame : Sequence[None, float]
+    frame : Sequence[float, None]
         A frame specification as a two-element array used to control the window over which
         the specified method is applied. The array entries should either be a number
         indicating the offset from the current data object, or null to indicate unbounded
@@ -25606,7 +25620,7 @@ class ImputeTransform(Transform):
         self,
         impute: Optional[str | SchemaBase] = Undefined,
         key: Optional[str | SchemaBase] = Undefined,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         groupby: Optional[Sequence[str | SchemaBase]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
@@ -25997,7 +26011,7 @@ class TypedFieldDef(VegaLiteSchema):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -26042,7 +26056,7 @@ class TypedFieldDef(VegaLiteSchema):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -26136,12 +26150,12 @@ class TypedFieldDef(VegaLiteSchema):
         self,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -26179,7 +26193,7 @@ class UnitSpec(VegaLiteSchema):
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -26206,7 +26220,7 @@ class UnitSpec(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         name: Optional[str] = Undefined,
@@ -26241,7 +26255,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         ``"tick"``, ``"line"``, ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and
         ``"text"``) or a `mark definition object
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -26310,7 +26324,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -26411,7 +26425,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         rows or columns.
 
         **Default value:** ``false``
-    data : dict, None, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`
+    data : dict, :class:`Data`, :class:`UrlData`, :class:`Generator`, :class:`NamedData`, :class:`DataSource`, :class:`InlineData`, :class:`SphereGenerator`, :class:`SequenceGenerator`, :class:`GraticuleGenerator`, None
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
     description : str
@@ -26437,7 +26451,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         vconcat: Optional[Sequence[SchemaBase | Map]] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
-        data: Optional[None | SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -26471,7 +26485,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -26484,7 +26498,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
     def __init__(
         self,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -26500,7 +26514,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
     ----------
     condition : dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -26513,7 +26527,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
     def __init__(
         self,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -26585,7 +26599,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -26598,7 +26612,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     def __init__(
         self,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -26819,7 +26833,7 @@ class ViewBackground(VegaLiteSchema):
     cursor : :class:`Cursor`, Literal['auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing']
         The mouse cursor used over the view. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The fill color.
 
         **Default value:** ``undefined``
@@ -26832,7 +26846,7 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The stroke color.
 
         **Default value:** ``"#ddd"``
@@ -26875,12 +26889,12 @@ class ViewBackground(VegaLiteSchema):
         cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cursor: Optional[SchemaBase | Cursor_T] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -26950,7 +26964,7 @@ class ViewConfig(VegaLiteSchema):
         in the form of ``{step: number}`` defining the width per discrete step.
 
         **Default value:** a step size based on ``config.view.step``.
-    fill : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The fill color.
 
         **Default value:** ``undefined``
@@ -26965,7 +26979,7 @@ class ViewConfig(VegaLiteSchema):
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     step : float
         Default step size for x-/y- discrete fields.
-    stroke : str, dict, None, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
+    stroke : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         The stroke color.
 
         **Default value:** ``"#ddd"``
@@ -27004,13 +27018,13 @@ class ViewConfig(VegaLiteSchema):
         discreteHeight: Optional[float | Map] = Undefined,
         discreteWidth: Optional[float | Map] = Undefined,
         fill: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         opacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         step: Optional[float] = Undefined,
         stroke: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         strokeDash: Optional[
@@ -27118,7 +27132,7 @@ class WindowTransform(Transform):
     ----------
     window : Sequence[dict, :class:`WindowFieldDef`]
         The definition of the fields in the window, and what calculations to use.
-    frame : Sequence[None, float]
+    frame : Sequence[float, None]
         A frame specification as a two-element array indicating how the sliding window
         should proceed. The array entries should either be a number indicating the offset
         from the current data object, or null to indicate unbounded rows preceding or
@@ -27160,7 +27174,7 @@ class WindowTransform(Transform):
     def __init__(
         self,
         window: Optional[Sequence[SchemaBase | Map]] = Undefined,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        frame: Optional[Sequence[float | None]] = Undefined,
         groupby: Optional[Sequence[str | SchemaBase]] = Undefined,
         ignorePeers: Optional[bool] = Undefined,
         sort: Optional[Sequence[SchemaBase | Map]] = Undefined,

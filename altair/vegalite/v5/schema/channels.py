@@ -11,7 +11,7 @@ from __future__ import annotations
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
 import sys
-from typing import TYPE_CHECKING, Any, Literal, Sequence, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
@@ -28,9 +28,21 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    from collections.abc import Sequence
+
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
-    from altair.vegalite.v5.api import IntoCondition
+    from altair.vegalite.v5.api import Bin, Impute, IntoCondition
+    from altair.vegalite.v5.schema.core import (
+        Axis,
+        DateTime,
+        EncodingSortField,
+        Header,
+        Legend,
+        RepeatRef,
+        Scale,
+        TimeUnitParams,
+    )
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -275,7 +287,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -318,7 +330,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -327,7 +339,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -340,7 +352,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -387,7 +399,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -479,27 +491,19 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     _encoding_name = "angle"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Angle: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Angle: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Angle: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Angle: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Angle: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Angle: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Angle: ...
-
+    def bandPosition(self, _: float, /) -> Angle: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Angle: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Angle: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -510,47 +514,38 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Angle: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> Angle: ...
-
+    def condition(self, _: list[core.ConditionalValueDefnumberExprRef], /) -> Angle: ...
     @overload
-    def field(self, _: str, **kwds) -> Angle: ...
-
+    def field(self, _: str | RepeatRef, /) -> Angle: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Angle: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -559,14 +554,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -576,7 +571,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -600,21 +595,21 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -622,14 +617,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -649,19 +644,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Angle: ...
-
+    def scale(self, _: Scale | None, /) -> Angle: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -671,12 +664,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -701,156 +700,78 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Angle: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Angle: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Angle: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Angle: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Angle: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Angle: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Angle: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Angle: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Angle: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Angle: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Angle: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Angle: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Angle: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Angle: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Angle: ...
+    def type(self, _: StandardType_T, /) -> Angle: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -889,9 +810,9 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -983,48 +904,37 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     _encoding_name = "angle"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> AngleDatum: ...
-
+    def bandPosition(self, _: float, /) -> AngleDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> AngleDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> AngleDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> AngleDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> AngleDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> AngleDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> AngleDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> AngleDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> AngleDatum: ...
+    def type(self, _: Type_T, /) -> AngleDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -1061,111 +971,105 @@ class AngleValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> AngleValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> AngleValue: ...
 
     def __init__(
@@ -1201,7 +1105,7 @@ class Color(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -1244,7 +1148,7 @@ class Color(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -1253,7 +1157,7 @@ class Color(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -1266,7 +1170,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -1313,7 +1217,7 @@ class Color(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1405,27 +1309,19 @@ class Color(
     _encoding_name = "color"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Color: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Color: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Color: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Color: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Color: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Color: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Color: ...
-
+    def bandPosition(self, _: float, /) -> Color: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Color: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Color: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -1436,47 +1332,40 @@ class Color(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Color: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Color: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Color: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Color: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Color: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Color: ...
-
+    def field(self, _: str | RepeatRef, /) -> Color: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Color: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Color: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1485,14 +1374,14 @@ class Color(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1502,7 +1391,7 @@ class Color(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1526,21 +1415,21 @@ class Color(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -1548,14 +1437,14 @@ class Color(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -1575,19 +1464,17 @@ class Color(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Color: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Color: ...
-
+    def scale(self, _: Scale | None, /) -> Color: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -1597,12 +1484,18 @@ class Color(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -1627,156 +1520,78 @@ class Color(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Color: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Color: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Color: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Color: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Color: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Color: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Color: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Color: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Color: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Color: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Color: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Color: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Color: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Color: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Color: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Color: ...
+    def type(self, _: StandardType_T, /) -> Color: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -1817,9 +1632,9 @@ class ColorDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -1911,48 +1726,37 @@ class ColorDatum(
     _encoding_name = "color"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> ColorDatum: ...
-
+    def bandPosition(self, _: float, /) -> ColorDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ColorDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ColorDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> ColorDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> ColorDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> ColorDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> ColorDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ColorDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> ColorDatum: ...
+    def type(self, _: Type_T, /) -> ColorDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -1978,7 +1782,7 @@ class ColorValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -1990,111 +1794,105 @@ class ColorValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ColorValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ColorValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> ColorValue: ...
 
     def __init__(
@@ -2140,7 +1938,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2181,9 +1979,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -2224,7 +2022,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -2316,30 +2114,25 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "column"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Column: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Column: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Column: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Column: ...
-
     @overload
-    def align(self, _: LayoutAlign_T, **kwds) -> Column: ...
-
+    def align(self, _: LayoutAlign_T, /) -> Column: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Column: ...
-
+    def bandPosition(self, _: float, /) -> Column: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Column: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Column: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -2350,28 +2143,23 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Column: ...
-
     @overload
-    def bin(self, _: None, **kwds) -> Column: ...
-
+    def center(self, _: bool, /) -> Column: ...
     @overload
-    def center(self, _: bool, **kwds) -> Column: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Column: ...
-
+    def field(self, _: str | RepeatRef, /) -> Column: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Column: ...
-
+    @overload
+    def header(self, _: Header | None, /) -> Column: ...
     @overload
     def header(
         self,
+        *,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
@@ -2396,7 +2184,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -2416,120 +2204,49 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Column: ...
-
-    @overload
-    def header(self, _: None, **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Column: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Column: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | EncodingSortField
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        /,
+    ) -> Column: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Column: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Column: ...
-
-    @overload
-    def spacing(self, _: float, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Column: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Column: ...
-
+    def spacing(self, _: float, /) -> Column: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Column: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Column: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Column: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Column: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Column: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Column: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Column: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Column: ...
+    def type(self, _: StandardType_T, /) -> Column: ...
 
     def __init__(
         self,
@@ -2537,25 +2254,25 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         center: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -2598,7 +2315,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -2682,7 +2399,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -2774,27 +2491,23 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "description"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Description: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Description: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Description: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Description: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Description: ...
-
+    def bandPosition(self, _: float, /) -> Description: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Description: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Description: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -2805,141 +2518,67 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Description: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Description: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Description: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Description: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Description: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringExprRef], /
     ) -> Description: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Description: ...
-
+    def field(self, _: str | RepeatRef, /) -> Description: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Description: ...
-
     @overload
-    def format(self, _: str, **kwds) -> Description: ...
-
+    def format(self, _: str, /) -> Description: ...
     @overload
-    def format(self, _: Map, **kwds) -> Description: ...
-
+    def format(self, _: Map, /) -> Description: ...
     @overload
-    def formatType(self, _: str, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Description: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Description: ...
-
+    def formatType(self, _: str, /) -> Description: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Description: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Description: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Description: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Description: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Description: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Description: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Description: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Description: ...
+    def type(self, _: StandardType_T, /) -> Description: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -2947,7 +2586,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -2976,7 +2615,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -2988,111 +2627,105 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> DescriptionValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> DescriptionValue: ...
 
     def __init__(
@@ -3127,7 +2760,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3172,7 +2805,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -3264,27 +2897,23 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "detail"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Detail: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Detail: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Detail: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Detail: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Detail: ...
-
+    def bandPosition(self, _: float, /) -> Detail: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Detail: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Detail: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -3295,115 +2924,47 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Detail: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Detail: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Detail: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Detail: ...
-
+    def field(self, _: str | RepeatRef, /) -> Detail: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Detail: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Detail: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Detail: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Detail: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Detail: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Detail: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Detail: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Detail: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Detail: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Detail: ...
+    def type(self, _: StandardType_T, /) -> Detail: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -3457,7 +3018,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -3529,9 +3090,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -3574,7 +3135,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -3666,38 +3227,28 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     _encoding_name = "facet"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Facet: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Facet: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Facet: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Facet: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Facet: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Facet: ...
     @overload
-    def align(self, _: LayoutAlign_T, **kwds) -> Facet: ...
-
+    def align(self, _: RowColKwds[LayoutAlign_T] | LayoutAlign_T, /) -> Facet: ...
     @overload
     def align(
         self,
+        *,
         column: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         row: Optional[SchemaBase | LayoutAlign_T] = Undefined,
-        **kwds,
     ) -> Facet: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Facet: ...
-
+    def bandPosition(self, _: float, /) -> Facet: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Facet: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Facet: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -3708,42 +3259,31 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Facet: ...
-
     @overload
-    def bin(self, _: None, **kwds) -> Facet: ...
-
+    def bounds(self, _: Literal["full", "flush"], /) -> Facet: ...
     @overload
-    def bounds(self, _: Literal["full", "flush"], **kwds) -> Facet: ...
-
-    @overload
-    def center(self, _: bool, **kwds) -> Facet: ...
-
+    def center(self, _: bool | RowColKwds[bool], /) -> Facet: ...
     @overload
     def center(
-        self,
-        column: Optional[bool] = Undefined,
-        row: Optional[bool] = Undefined,
-        **kwds,
+        self, *, column: Optional[bool] = Undefined, row: Optional[bool] = Undefined
     ) -> Facet: ...
-
     @overload
-    def columns(self, _: float, **kwds) -> Facet: ...
-
+    def columns(self, _: float, /) -> Facet: ...
     @overload
-    def field(self, _: str, **kwds) -> Facet: ...
-
+    def field(self, _: str | RepeatRef, /) -> Facet: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Facet: ...
-
+    @overload
+    def header(self, _: Header | None, /) -> Facet: ...
     @overload
     def header(
         self,
+        *,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
@@ -3768,7 +3308,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -3788,128 +3328,53 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Facet: ...
-
-    @overload
-    def header(self, _: None, **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Facet: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Facet: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | EncodingSortField
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        /,
+    ) -> Facet: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Facet: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Facet: ...
-
-    @overload
-    def spacing(self, _: float, **kwds) -> Facet: ...
-
+    def spacing(self, _: float | RowColKwds[float], /) -> Facet: ...
     @overload
     def spacing(
-        self,
-        column: Optional[float] = Undefined,
-        row: Optional[float] = Undefined,
-        **kwds,
+        self, *, column: Optional[float] = Undefined, row: Optional[float] = Undefined
     ) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Facet: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Facet: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Facet: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Facet: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Facet: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Facet: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Facet: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Facet: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Facet: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Facet: ...
+    def type(self, _: StandardType_T, /) -> Facet: ...
 
     def __init__(
         self,
@@ -3917,27 +3382,27 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -3985,7 +3450,7 @@ class Fill(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4028,7 +3493,7 @@ class Fill(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -4037,7 +3502,7 @@ class Fill(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -4050,7 +3515,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -4097,7 +3562,7 @@ class Fill(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4189,27 +3654,19 @@ class Fill(
     _encoding_name = "fill"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Fill: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Fill: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Fill: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Fill: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Fill: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Fill: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Fill: ...
-
+    def bandPosition(self, _: float, /) -> Fill: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Fill: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Fill: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -4220,47 +3677,40 @@ class Fill(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Fill: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Fill: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Fill: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Fill: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Fill: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Fill: ...
-
+    def field(self, _: str | RepeatRef, /) -> Fill: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Fill: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Fill: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -4269,14 +3719,14 @@ class Fill(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -4286,7 +3736,7 @@ class Fill(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -4310,21 +3760,21 @@ class Fill(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -4332,14 +3782,14 @@ class Fill(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -4359,19 +3809,17 @@ class Fill(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Fill: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Fill: ...
-
+    def scale(self, _: Scale | None, /) -> Fill: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -4381,12 +3829,18 @@ class Fill(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -4411,156 +3865,78 @@ class Fill(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Fill: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Fill: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Fill: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Fill: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Fill: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Fill: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Fill: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Fill: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Fill: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Fill: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Fill: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Fill: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Fill: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Fill: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Fill: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Fill: ...
+    def type(self, _: StandardType_T, /) -> Fill: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -4601,9 +3977,9 @@ class FillDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -4695,48 +4071,37 @@ class FillDatum(
     _encoding_name = "fill"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> FillDatum: ...
-
+    def bandPosition(self, _: float, /) -> FillDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> FillDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> FillDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> FillDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> FillDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> FillDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> FillDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> FillDatum: ...
+    def type(self, _: Type_T, /) -> FillDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -4762,7 +4127,7 @@ class FillValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4774,111 +4139,105 @@ class FillValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> FillValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> FillValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> FillValue: ...
 
     def __init__(
@@ -4913,7 +4272,7 @@ class FillOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4956,7 +4315,7 @@ class FillOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -4965,7 +4324,7 @@ class FillOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -4978,7 +4337,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -5025,7 +4384,7 @@ class FillOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -5117,27 +4476,23 @@ class FillOpacity(
     _encoding_name = "fillOpacity"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> FillOpacity: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> FillOpacity: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> FillOpacity: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> FillOpacity: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> FillOpacity: ...
-
+    def bandPosition(self, _: float, /) -> FillOpacity: ...
     @overload
-    def bin(self, _: bool, **kwds) -> FillOpacity: ...
-
+    def bin(self, _: bool | Bin | None, /) -> FillOpacity: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -5148,47 +4503,40 @@ class FillOpacity(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> FillOpacity: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> FillOpacity: ...
-
     @overload
-    def field(self, _: str, **kwds) -> FillOpacity: ...
-
+    def field(self, _: str | RepeatRef, /) -> FillOpacity: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> FillOpacity: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -5197,14 +4545,14 @@ class FillOpacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -5214,7 +4562,7 @@ class FillOpacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -5238,21 +4586,21 @@ class FillOpacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -5260,14 +4608,14 @@ class FillOpacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -5287,19 +4635,17 @@ class FillOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> FillOpacity: ...
-
+    def scale(self, _: Scale | None, /) -> FillOpacity: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -5309,12 +4655,18 @@ class FillOpacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -5339,156 +4691,78 @@ class FillOpacity(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> FillOpacity: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> FillOpacity: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> FillOpacity: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> FillOpacity: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> FillOpacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> FillOpacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> FillOpacity: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> FillOpacity: ...
-
     @overload
-    def title(self, _: str, **kwds) -> FillOpacity: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> FillOpacity: ...
     @overload
-    def title(self, _: list[str], **kwds) -> FillOpacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillOpacity: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> FillOpacity: ...
+    def type(self, _: StandardType_T, /) -> FillOpacity: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -5529,9 +4803,9 @@ class FillOpacityDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -5623,48 +4897,37 @@ class FillOpacityDatum(
     _encoding_name = "fillOpacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> FillOpacityDatum: ...
-
+    def bandPosition(self, _: float, /) -> FillOpacityDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacityDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacityDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> FillOpacityDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> FillOpacityDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> FillOpacityDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> FillOpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> FillOpacityDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> FillOpacityDatum: ...
+    def type(self, _: Type_T, /) -> FillOpacityDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -5701,111 +4964,105 @@ class FillOpacityValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> FillOpacityValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> FillOpacityValue: ...
 
     def __init__(
@@ -5838,7 +5095,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -5922,7 +5179,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6014,27 +5271,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "href"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Href: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Href: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Href: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Href: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Href: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Href: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Href: ...
-
+    def bandPosition(self, _: float, /) -> Href: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Href: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Href: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -6045,141 +5294,65 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Href: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Href: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Href: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Href: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Href: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> Href: ...
-
+    def condition(self, _: list[core.ConditionalValueDefstringExprRef], /) -> Href: ...
     @overload
-    def field(self, _: str, **kwds) -> Href: ...
-
+    def field(self, _: str | RepeatRef, /) -> Href: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Href: ...
-
     @overload
-    def format(self, _: str, **kwds) -> Href: ...
-
+    def format(self, _: str, /) -> Href: ...
     @overload
-    def format(self, _: Map, **kwds) -> Href: ...
-
+    def format(self, _: Map, /) -> Href: ...
     @overload
-    def formatType(self, _: str, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Href: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Href: ...
-
+    def formatType(self, _: str, /) -> Href: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Href: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Href: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Href: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Href: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Href: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Href: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Href: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Href: ...
+    def type(self, _: StandardType_T, /) -> Href: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -6187,7 +5360,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -6216,7 +5389,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -6228,111 +5401,105 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> HrefValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> HrefValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> HrefValue: ...
 
     def __init__(
@@ -6367,7 +5534,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -6412,7 +5579,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6504,27 +5671,19 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     _encoding_name = "key"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Key: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Key: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Key: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Key: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Key: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Key: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Key: ...
-
+    def bandPosition(self, _: float, /) -> Key: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Key: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Key: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -6535,115 +5694,47 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Key: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Key: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Key: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Key: ...
-
+    def field(self, _: str | RepeatRef, /) -> Key: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Key: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Key: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Key: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Key: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Key: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Key: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Key: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Key: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Key: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Key: ...
+    def type(self, _: StandardType_T, /) -> Key: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -6726,7 +5817,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -6818,112 +5909,47 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "latitude"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Latitude: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Latitude: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Latitude: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Latitude: ...
-
+    def bandPosition(self, _: float, /) -> Latitude: ...
     @overload
-    def bin(self, _: None, **kwds) -> Latitude: ...
-
+    def bin(self, _: None, /) -> Latitude: ...
     @overload
-    def field(self, _: str, **kwds) -> Latitude: ...
-
+    def field(self, _: str | RepeatRef, /) -> Latitude: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Latitude: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Latitude: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Latitude: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Latitude: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Latitude: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Latitude: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude: ...
-
-    @overload
-    def type(self, _: Literal["quantitative"], **kwds) -> Latitude: ...
+    def type(self, _: Literal["quantitative"], /) -> Latitude: ...
 
     def __init__(
         self,
@@ -6935,7 +5961,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
@@ -6963,9 +5989,9 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7057,25 +6083,17 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "latitude"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> LatitudeDatum: ...
-
+    def bandPosition(self, _: float, /) -> LatitudeDatum: ...
     @overload
-    def title(self, _: str, **kwds) -> LatitudeDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> LatitudeDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> LatitudeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> LatitudeDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> LatitudeDatum: ...
+    def type(self, _: Type_T, /) -> LatitudeDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7153,7 +6171,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7179,109 +6197,45 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "latitude2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Latitude2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Latitude2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Latitude2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Latitude2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Latitude2: ...
-
+    def bandPosition(self, _: float, /) -> Latitude2: ...
     @overload
-    def bin(self, _: None, **kwds) -> Latitude2: ...
-
+    def bin(self, _: None, /) -> Latitude2: ...
     @overload
-    def field(self, _: str, **kwds) -> Latitude2: ...
-
+    def field(self, _: str | RepeatRef, /) -> Latitude2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Latitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Latitude2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Latitude2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Latitude2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Latitude2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Latitude2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Latitude2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> Latitude2: ...
 
     def __init__(
         self,
@@ -7293,7 +6247,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -7319,9 +6273,9 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7413,25 +6367,17 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "latitude2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> Latitude2Datum: ...
-
+    def bandPosition(self, _: float, /) -> Latitude2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> Latitude2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Latitude2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Latitude2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Latitude2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> Latitude2Datum: ...
+    def type(self, _: Type_T, /) -> Latitude2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7529,7 +6475,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7621,112 +6567,47 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     _encoding_name = "longitude"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Longitude: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Longitude: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Longitude: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Longitude: ...
-
+    def bandPosition(self, _: float, /) -> Longitude: ...
     @overload
-    def bin(self, _: None, **kwds) -> Longitude: ...
-
+    def bin(self, _: None, /) -> Longitude: ...
     @overload
-    def field(self, _: str, **kwds) -> Longitude: ...
-
+    def field(self, _: str | RepeatRef, /) -> Longitude: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Longitude: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Longitude: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Longitude: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Longitude: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Longitude: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Longitude: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude: ...
-
-    @overload
-    def type(self, _: Literal["quantitative"], **kwds) -> Longitude: ...
+    def type(self, _: Literal["quantitative"], /) -> Longitude: ...
 
     def __init__(
         self,
@@ -7738,7 +6619,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[Literal["quantitative"]] = Undefined,
         **kwds,
     ):
@@ -7766,9 +6647,9 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7860,25 +6741,17 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "longitude"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> LongitudeDatum: ...
-
+    def bandPosition(self, _: float, /) -> LongitudeDatum: ...
     @overload
-    def title(self, _: str, **kwds) -> LongitudeDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> LongitudeDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> LongitudeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> LongitudeDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> LongitudeDatum: ...
+    def type(self, _: Type_T, /) -> LongitudeDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -7956,7 +6829,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -7982,109 +6855,45 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "longitude2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Longitude2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Longitude2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Longitude2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Longitude2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Longitude2: ...
-
+    def bandPosition(self, _: float, /) -> Longitude2: ...
     @overload
-    def bin(self, _: None, **kwds) -> Longitude2: ...
-
+    def bin(self, _: None, /) -> Longitude2: ...
     @overload
-    def field(self, _: str, **kwds) -> Longitude2: ...
-
+    def field(self, _: str | RepeatRef, /) -> Longitude2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Longitude2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Longitude2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Longitude2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Longitude2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Longitude2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Longitude2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Longitude2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> Longitude2: ...
 
     def __init__(
         self,
@@ -8096,7 +6905,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -8122,9 +6931,9 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8216,25 +7025,17 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "longitude2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> Longitude2Datum: ...
-
+    def bandPosition(self, _: float, /) -> Longitude2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> Longitude2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Longitude2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Longitude2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Longitude2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> Longitude2Datum: ...
+    def type(self, _: Type_T, /) -> Longitude2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -8289,7 +7090,7 @@ class Opacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8332,7 +7133,7 @@ class Opacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -8341,7 +7142,7 @@ class Opacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -8354,7 +7155,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -8401,7 +7202,7 @@ class Opacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8493,27 +7294,23 @@ class Opacity(
     _encoding_name = "opacity"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Opacity: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Opacity: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Opacity: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Opacity: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Opacity: ...
-
+    def bandPosition(self, _: float, /) -> Opacity: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Opacity: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Opacity: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -8524,47 +7321,40 @@ class Opacity(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Opacity: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> Opacity: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Opacity: ...
-
+    def field(self, _: str | RepeatRef, /) -> Opacity: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Opacity: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -8573,14 +7363,14 @@ class Opacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -8590,7 +7380,7 @@ class Opacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -8614,21 +7404,21 @@ class Opacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -8636,14 +7426,14 @@ class Opacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -8663,19 +7453,17 @@ class Opacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Opacity: ...
-
+    def scale(self, _: Scale | None, /) -> Opacity: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -8685,12 +7473,18 @@ class Opacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -8715,156 +7509,78 @@ class Opacity(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Opacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Opacity: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Opacity: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Opacity: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Opacity: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Opacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Opacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Opacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Opacity: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Opacity: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Opacity: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Opacity: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Opacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Opacity: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Opacity: ...
+    def type(self, _: StandardType_T, /) -> Opacity: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -8903,9 +7619,9 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -8997,48 +7713,37 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     _encoding_name = "opacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> OpacityDatum: ...
-
+    def bandPosition(self, _: float, /) -> OpacityDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> OpacityDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> OpacityDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> OpacityDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> OpacityDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> OpacityDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> OpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> OpacityDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> OpacityDatum: ...
+    def type(self, _: Type_T, /) -> OpacityDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -9075,111 +7780,105 @@ class OpacityValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> OpacityValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> OpacityValue: ...
 
     def __init__(
@@ -9212,7 +7911,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9259,7 +7958,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9351,27 +8050,19 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     _encoding_name = "order"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Order: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Order: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Order: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Order: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Order: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Order: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Order: ...
-
+    def bandPosition(self, _: float, /) -> Order: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Order: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Order: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -9382,119 +8073,50 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Order: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Order: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Order: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Order: ...
-
+    def field(self, _: str | RepeatRef, /) -> Order: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Order: ...
-
     @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Order: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Order: ...
-
+    def sort(self, _: SortOrder_T, /) -> Order: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Order: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Order: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Order: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Order: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Order: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Order: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Order: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Order: ...
+    def type(self, _: StandardType_T, /) -> Order: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -9538,24 +8160,20 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float] = Undefined,
-        **kwds,
     ) -> OrderValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float] = Undefined,
-        **kwds,
     ) -> OrderValue: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefnumber], **kwds
-    ) -> OrderValue: ...
+    def condition(self, _: list[core.ConditionalValueDefnumber], /) -> OrderValue: ...
 
     def __init__(
         self,
@@ -9587,7 +8205,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -9623,7 +8241,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -9636,7 +8254,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -9674,7 +8292,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -9713,7 +8331,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -9805,27 +8423,23 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "radius"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Radius: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Radius: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Radius: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Radius: ...
-
+    def bandPosition(self, _: float, /) -> Radius: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Radius: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Radius: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -9836,28 +8450,21 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Radius: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Radius: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Radius: ...
-
+    def field(self, _: str | RepeatRef, /) -> Radius: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Radius: ...
-
+    @overload
+    def scale(self, _: Scale | None, /) -> Radius: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -9867,12 +8474,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -9897,164 +8510,79 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Radius: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Radius: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Radius: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Radius: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Radius: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Radius: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> Radius: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Radius: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Radius: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Radius: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Radius: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Radius: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Radius: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Radius: ...
+    def type(self, _: StandardType_T, /) -> Radius: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -10085,9 +8613,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -10100,7 +8628,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -10130,7 +8658,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10222,11 +8750,13 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _encoding_name = "radius"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> RadiusDatum: ...
-
+    def bandPosition(self, _: float, /) -> RadiusDatum: ...
+    @overload
+    def scale(self, _: Scale | None, /) -> RadiusDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -10236,12 +8766,18 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -10266,40 +8802,21 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> RadiusDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> RadiusDatum: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> RadiusDatum: ...
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> RadiusDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> RadiusDatum: ...
     @overload
-    def stack(self, _: None, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> RadiusDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> RadiusDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> RadiusDatum: ...
+    def type(self, _: Type_T, /) -> RadiusDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -10406,7 +8923,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10432,109 +8949,45 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "radius2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Radius2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Radius2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Radius2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Radius2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Radius2: ...
-
+    def bandPosition(self, _: float, /) -> Radius2: ...
     @overload
-    def bin(self, _: None, **kwds) -> Radius2: ...
-
+    def bin(self, _: None, /) -> Radius2: ...
     @overload
-    def field(self, _: str, **kwds) -> Radius2: ...
-
+    def field(self, _: str | RepeatRef, /) -> Radius2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Radius2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Radius2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Radius2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Radius2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Radius2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Radius2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Radius2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> Radius2: ...
 
     def __init__(
         self,
@@ -10546,7 +8999,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -10572,9 +9025,9 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10666,25 +9119,17 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "radius2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> Radius2Datum: ...
-
+    def bandPosition(self, _: float, /) -> Radius2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> Radius2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Radius2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Radius2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Radius2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> Radius2Datum: ...
+    def type(self, _: Type_T, /) -> Radius2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -10750,7 +9195,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10791,9 +9236,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : dict, None, :class:`Header`
+    header : dict, :class:`Header`, None
         An object defining properties of a facet's header.
-    sort : dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending']
+    sort : dict, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -10834,7 +9279,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -10926,30 +9371,21 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     _encoding_name = "row"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Row: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Row: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Row: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Row: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Row: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Row: ...
     @overload
-    def align(self, _: LayoutAlign_T, **kwds) -> Row: ...
-
+    def align(self, _: LayoutAlign_T, /) -> Row: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Row: ...
-
+    def bandPosition(self, _: float, /) -> Row: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Row: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Row: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -10960,28 +9396,23 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Row: ...
-
     @overload
-    def bin(self, _: None, **kwds) -> Row: ...
-
+    def center(self, _: bool, /) -> Row: ...
     @overload
-    def center(self, _: bool, **kwds) -> Row: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Row: ...
-
+    def field(self, _: str | RepeatRef, /) -> Row: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Row: ...
-
+    @overload
+    def header(self, _: Header | None, /) -> Row: ...
     @overload
     def header(
         self,
+        *,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         labelAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
@@ -11006,7 +9437,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         labels: Optional[bool] = Undefined,
         orient: Optional[SchemaBase | Orient_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
@@ -11026,120 +9457,49 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleLineHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Row: ...
-
-    @overload
-    def header(self, _: None, **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Row: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Row: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | EncodingSortField
+        | Sequence[DateTime | Temporal]
+        | SortOrder_T
+        | None,
+        /,
+    ) -> Row: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Row: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Row: ...
-
-    @overload
-    def spacing(self, _: float, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Row: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Row: ...
-
+    def spacing(self, _: float, /) -> Row: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Row: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Row: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Row: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Row: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Row: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Row: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Row: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Row: ...
+    def type(self, _: StandardType_T, /) -> Row: ...
 
     def __init__(
         self,
@@ -11147,25 +9507,25 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         align: Optional[SchemaBase | LayoutAlign_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         center: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        header: Optional[None | SchemaBase | Map] = Undefined,
+        header: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | SortOrder_T
+            | None
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -11211,7 +9571,7 @@ class Shape(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11254,7 +9614,7 @@ class Shape(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -11263,7 +9623,7 @@ class Shape(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -11276,7 +9636,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -11323,7 +9683,7 @@ class Shape(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -11415,27 +9775,19 @@ class Shape(
     _encoding_name = "shape"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Shape: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Shape: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Shape: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Shape: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Shape: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Shape: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Shape: ...
-
+    def bandPosition(self, _: float, /) -> Shape: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Shape: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Shape: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -11446,47 +9798,40 @@ class Shape(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Shape: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Shape: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Shape: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Shape: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> Shape: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Shape: ...
-
+    def field(self, _: str | RepeatRef, /) -> Shape: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Shape: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Shape: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11495,14 +9840,14 @@ class Shape(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11512,7 +9857,7 @@ class Shape(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -11536,21 +9881,21 @@ class Shape(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -11558,14 +9903,14 @@ class Shape(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -11585,19 +9930,17 @@ class Shape(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Shape: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Shape: ...
-
+    def scale(self, _: Scale | None, /) -> Shape: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -11607,12 +9950,18 @@ class Shape(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -11637,156 +9986,78 @@ class Shape(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Shape: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Shape: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Shape: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Shape: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Shape: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Shape: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Shape: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Shape: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Shape: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Shape: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Shape: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Shape: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Shape: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Shape: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Shape: ...
-
-    @overload
-    def type(self, _: TypeForShape_T, **kwds) -> Shape: ...
+    def type(self, _: TypeForShape_T, /) -> Shape: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
         **kwds,
     ):
@@ -11827,9 +10098,9 @@ class ShapeDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -11921,48 +10192,37 @@ class ShapeDatum(
     _encoding_name = "shape"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> ShapeDatum: ...
-
+    def bandPosition(self, _: float, /) -> ShapeDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ShapeDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ShapeDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> ShapeDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> ShapeDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> ShapeDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> ShapeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ShapeDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> ShapeDatum: ...
+    def type(self, _: Type_T, /) -> ShapeDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -11988,7 +10248,7 @@ class ShapeValue(
     ----------
     condition : dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -12000,111 +10260,105 @@ class ShapeValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
-        **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
-        **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> ShapeValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> ShapeValue: ...
 
     def __init__(
@@ -12137,7 +10391,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12180,7 +10434,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -12189,7 +10443,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -12202,7 +10456,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12249,7 +10503,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12341,27 +10595,19 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     _encoding_name = "size"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Size: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Size: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Size: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Size: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Size: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Size: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Size: ...
-
+    def bandPosition(self, _: float, /) -> Size: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Size: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Size: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -12372,47 +10618,38 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Size: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Size: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Size: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Size: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> Size: ...
-
+    def condition(self, _: list[core.ConditionalValueDefnumberExprRef], /) -> Size: ...
     @overload
-    def field(self, _: str, **kwds) -> Size: ...
-
+    def field(self, _: str | RepeatRef, /) -> Size: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Size: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Size: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12421,14 +10658,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12438,7 +10675,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -12462,21 +10699,21 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -12484,14 +10721,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -12511,19 +10748,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Size: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Size: ...
-
+    def scale(self, _: Scale | None, /) -> Size: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -12533,12 +10768,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -12563,156 +10804,78 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Size: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Size: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Size: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Size: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Size: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Size: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Size: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Size: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Size: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Size: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Size: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Size: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Size: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Size: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Size: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Size: ...
+    def type(self, _: StandardType_T, /) -> Size: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -12751,9 +10914,9 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -12845,48 +11008,37 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     _encoding_name = "size"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> SizeDatum: ...
-
+    def bandPosition(self, _: float, /) -> SizeDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> SizeDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> SizeDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> SizeDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> SizeDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> SizeDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> SizeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> SizeDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> SizeDatum: ...
+    def type(self, _: Type_T, /) -> SizeDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -12923,111 +11075,105 @@ class SizeValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> SizeValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> SizeValue: ...
 
     def __init__(
@@ -13063,7 +11209,7 @@ class Stroke(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -13106,7 +11252,7 @@ class Stroke(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -13115,7 +11261,7 @@ class Stroke(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -13128,7 +11274,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13175,7 +11321,7 @@ class Stroke(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13267,27 +11413,23 @@ class Stroke(
     _encoding_name = "stroke"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Stroke: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Stroke: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Stroke: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Stroke: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Stroke: ...
-
+    def bandPosition(self, _: float, /) -> Stroke: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Stroke: ...
-
+    def bin(self, _: bool | Bin | None, /) -> Stroke: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -13298,47 +11440,40 @@ class Stroke(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Stroke: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Stroke: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Stroke: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> Stroke: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> Stroke: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Stroke: ...
-
+    def field(self, _: str | RepeatRef, /) -> Stroke: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Stroke: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> Stroke: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -13347,14 +11482,14 @@ class Stroke(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -13364,7 +11499,7 @@ class Stroke(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -13388,21 +11523,21 @@ class Stroke(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -13410,14 +11545,14 @@ class Stroke(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -13437,19 +11572,17 @@ class Stroke(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Stroke: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> Stroke: ...
-
+    def scale(self, _: Scale | None, /) -> Stroke: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -13459,12 +11592,18 @@ class Stroke(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -13489,156 +11628,78 @@ class Stroke(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Stroke: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Stroke: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Stroke: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Stroke: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Stroke: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Stroke: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Stroke: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Stroke: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Stroke: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Stroke: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Stroke: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Stroke: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Stroke: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Stroke: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Stroke: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Stroke: ...
+    def type(self, _: StandardType_T, /) -> Stroke: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -13679,9 +11740,9 @@ class StrokeDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -13773,48 +11834,37 @@ class StrokeDatum(
     _encoding_name = "stroke"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeDatum: ...
-
+    def bandPosition(self, _: float, /) -> StrokeDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> StrokeDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> StrokeDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> StrokeDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> StrokeDatum: ...
+    def type(self, _: Type_T, /) -> StrokeDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -13840,7 +11890,7 @@ class StrokeValue(
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
+    value : str, dict, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -13852,111 +11902,105 @@ class StrokeValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> StrokeValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefGradientstringnullExprRef], /
     ) -> StrokeValue: ...
 
     def __init__(
@@ -13991,7 +12035,7 @@ class StrokeDash(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14034,7 +12078,7 @@ class StrokeDash(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -14043,7 +12087,7 @@ class StrokeDash(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -14056,7 +12100,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14103,7 +12147,7 @@ class StrokeDash(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -14195,27 +12239,23 @@ class StrokeDash(
     _encoding_name = "strokeDash"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeDash: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> StrokeDash: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> StrokeDash: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> StrokeDash: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeDash: ...
-
+    def bandPosition(self, _: float, /) -> StrokeDash: ...
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeDash: ...
-
+    def bin(self, _: bool | Bin | None, /) -> StrokeDash: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -14226,47 +12266,40 @@ class StrokeDash(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeDash: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberArrayExprRef], /
     ) -> StrokeDash: ...
-
     @overload
-    def field(self, _: str, **kwds) -> StrokeDash: ...
-
+    def field(self, _: str | RepeatRef, /) -> StrokeDash: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> StrokeDash: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14275,14 +12308,14 @@ class StrokeDash(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14292,7 +12325,7 @@ class StrokeDash(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -14316,21 +12349,21 @@ class StrokeDash(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -14338,14 +12371,14 @@ class StrokeDash(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -14365,19 +12398,17 @@ class StrokeDash(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> StrokeDash: ...
-
+    def scale(self, _: Scale | None, /) -> StrokeDash: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -14387,12 +12418,18 @@ class StrokeDash(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -14417,156 +12454,78 @@ class StrokeDash(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeDash: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> StrokeDash: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeDash: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeDash: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeDash: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeDash: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeDash: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> StrokeDash: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeDash: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeDash: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeDash: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDash: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> StrokeDash: ...
+    def type(self, _: StandardType_T, /) -> StrokeDash: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -14607,9 +12566,9 @@ class StrokeDashDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -14701,48 +12660,37 @@ class StrokeDashDatum(
     _encoding_name = "strokeDash"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeDashDatum: ...
-
+    def bandPosition(self, _: float, /) -> StrokeDashDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDashDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDashDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberArrayExprRef], /
     ) -> StrokeDashDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeDashDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeDashDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeDashDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeDashDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> StrokeDashDatum: ...
+    def type(self, _: Type_T, /) -> StrokeDashDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -14779,111 +12727,105 @@ class StrokeDashValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
-        **kwds,
     ) -> StrokeDashValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberArrayExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberArrayExprRef], /
     ) -> StrokeDashValue: ...
 
     def __init__(
@@ -14918,7 +12860,7 @@ class StrokeOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14961,7 +12903,7 @@ class StrokeOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -14970,7 +12912,7 @@ class StrokeOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -14983,7 +12925,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15030,7 +12972,7 @@ class StrokeOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15122,27 +13064,23 @@ class StrokeOpacity(
     _encoding_name = "strokeOpacity"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeOpacity: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> StrokeOpacity: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> StrokeOpacity: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> StrokeOpacity: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeOpacity: ...
-
+    def bandPosition(self, _: float, /) -> StrokeOpacity: ...
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeOpacity: ...
-
+    def bin(self, _: bool | Bin | None, /) -> StrokeOpacity: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -15153,47 +13091,40 @@ class StrokeOpacity(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeOpacity: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeOpacity: ...
-
     @overload
-    def field(self, _: str, **kwds) -> StrokeOpacity: ...
-
+    def field(self, _: str | RepeatRef, /) -> StrokeOpacity: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> StrokeOpacity: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15202,14 +13133,14 @@ class StrokeOpacity(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15219,7 +13150,7 @@ class StrokeOpacity(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -15243,21 +13174,21 @@ class StrokeOpacity(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -15265,14 +13196,14 @@ class StrokeOpacity(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -15292,19 +13223,17 @@ class StrokeOpacity(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> StrokeOpacity: ...
-
+    def scale(self, _: Scale | None, /) -> StrokeOpacity: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -15314,12 +13243,18 @@ class StrokeOpacity(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -15344,156 +13279,78 @@ class StrokeOpacity(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeOpacity: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> StrokeOpacity: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeOpacity: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeOpacity: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeOpacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeOpacity: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeOpacity: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> StrokeOpacity: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeOpacity: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeOpacity: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeOpacity: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> StrokeOpacity: ...
+    def type(self, _: StandardType_T, /) -> StrokeOpacity: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -15534,9 +13391,9 @@ class StrokeOpacityDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -15628,48 +13485,37 @@ class StrokeOpacityDatum(
     _encoding_name = "strokeOpacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeOpacityDatum: ...
-
+    def bandPosition(self, _: float, /) -> StrokeOpacityDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacityDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacityDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeOpacityDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeOpacityDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeOpacityDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeOpacityDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeOpacityDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> StrokeOpacityDatum: ...
+    def type(self, _: Type_T, /) -> StrokeOpacityDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -15706,111 +13552,105 @@ class StrokeOpacityValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeOpacityValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeOpacityValue: ...
 
     def __init__(
@@ -15845,7 +13685,7 @@ class StrokeWidth(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -15888,7 +13728,7 @@ class StrokeWidth(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : dict, None, :class:`Legend`
+    legend : dict, :class:`Legend`, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -15897,7 +13737,7 @@ class StrokeWidth(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -15910,7 +13750,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15957,7 +13797,7 @@ class StrokeWidth(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16049,27 +13889,23 @@ class StrokeWidth(
     _encoding_name = "strokeWidth"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> StrokeWidth: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> StrokeWidth: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> StrokeWidth: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> StrokeWidth: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeWidth: ...
-
+    def bandPosition(self, _: float, /) -> StrokeWidth: ...
     @overload
-    def bin(self, _: bool, **kwds) -> StrokeWidth: ...
-
+    def bin(self, _: bool | Bin | None, /) -> StrokeWidth: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -16080,47 +13916,40 @@ class StrokeWidth(
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> StrokeWidth: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeWidth: ...
-
     @overload
-    def field(self, _: str, **kwds) -> StrokeWidth: ...
-
+    def field(self, _: str | RepeatRef, /) -> StrokeWidth: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
+    @overload
+    def legend(self, _: Legend | None, /) -> StrokeWidth: ...
     @overload
     def legend(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         clipHeight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         columnPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -16129,14 +13958,14 @@ class StrokeWidth(
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gradientStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         gradientThickness: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -16146,7 +13975,7 @@ class StrokeWidth(
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -16170,21 +13999,21 @@ class StrokeWidth(
         padding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         rowPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
         ] = Undefined,
         symbolDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolFillColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolStrokeColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         symbolStrokeWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         symbolType: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -16192,14 +14021,14 @@ class StrokeWidth(
             float | Parameter | SchemaBase | Map | TimeInterval_T
         ] = Undefined,
         tickMinStep: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleBaseline: Optional[
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -16219,19 +14048,17 @@ class StrokeWidth(
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
     @overload
-    def legend(self, _: None, **kwds) -> StrokeWidth: ...
-
+    def scale(self, _: Scale | None, /) -> StrokeWidth: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -16241,12 +14068,18 @@ class StrokeWidth(
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -16271,156 +14104,78 @@ class StrokeWidth(
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> StrokeWidth: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> StrokeWidth: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeWidth: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> StrokeWidth: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> StrokeWidth: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> StrokeWidth: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> StrokeWidth: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> StrokeWidth: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeWidth: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeWidth: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeWidth: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeWidth: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> StrokeWidth: ...
+    def type(self, _: StandardType_T, /) -> StrokeWidth: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -16461,9 +14216,9 @@ class StrokeWidthDatum(
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16555,48 +14310,37 @@ class StrokeWidthDatum(
     _encoding_name = "strokeWidth"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> StrokeWidthDatum: ...
-
+    def bandPosition(self, _: float, /) -> StrokeWidthDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidthDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidthDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeWidthDatum: ...
-
     @overload
-    def title(self, _: str, **kwds) -> StrokeWidthDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> StrokeWidthDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> StrokeWidthDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> StrokeWidthDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> StrokeWidthDatum: ...
+    def type(self, _: Type_T, /) -> StrokeWidthDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -16633,111 +14377,105 @@ class StrokeWidthValue(
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> StrokeWidthValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefnumberExprRef], **kwds
+        self, _: list[core.ConditionalValueDefnumberExprRef], /
     ) -> StrokeWidthValue: ...
 
     def __init__(
@@ -16770,7 +14508,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -16854,7 +14592,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -16946,27 +14684,19 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     _encoding_name = "text"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Text: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Text: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Text: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Text: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Text: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Text: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Text: ...
-
+    def bandPosition(self, _: float, /) -> Text: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Text: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Text: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -16977,141 +14707,65 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Text: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Text: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Text: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> Text: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> Text: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefTextExprRef], **kwds
-    ) -> Text: ...
-
+    def condition(self, _: list[core.ConditionalValueDefTextExprRef], /) -> Text: ...
     @overload
-    def field(self, _: str, **kwds) -> Text: ...
-
+    def field(self, _: str | RepeatRef, /) -> Text: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Text: ...
-
     @overload
-    def format(self, _: str, **kwds) -> Text: ...
-
+    def format(self, _: str, /) -> Text: ...
     @overload
-    def format(self, _: Map, **kwds) -> Text: ...
-
+    def format(self, _: Map, /) -> Text: ...
     @overload
-    def formatType(self, _: str, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Text: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Text: ...
-
+    def formatType(self, _: str, /) -> Text: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Text: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Text: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Text: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Text: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Text: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Text: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Text: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Text: ...
+    def type(self, _: StandardType_T, /) -> Text: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -17119,7 +14773,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -17157,7 +14811,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
     format : str, dict, :class:`Dict`
         When used with the default ``"number"`` and ``"time"`` format type, the text
@@ -17191,7 +14845,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17283,50 +14937,36 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     _encoding_name = "text"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> TextDatum: ...
-
+    def bandPosition(self, _: float, /) -> TextDatum: ...
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> TextDatum: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> TextDatum: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefTextExprRef], **kwds
+        self, _: list[core.ConditionalValueDefTextExprRef], /
     ) -> TextDatum: ...
-
     @overload
-    def format(self, _: str, **kwds) -> TextDatum: ...
-
+    def format(self, _: str, /) -> TextDatum: ...
     @overload
-    def format(self, _: Map, **kwds) -> TextDatum: ...
-
+    def format(self, _: Map, /) -> TextDatum: ...
     @overload
-    def formatType(self, _: str, **kwds) -> TextDatum: ...
-
+    def formatType(self, _: str, /) -> TextDatum: ...
     @overload
-    def title(self, _: str, **kwds) -> TextDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> TextDatum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> TextDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> TextDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> TextDatum: ...
+    def type(self, _: Type_T, /) -> TextDatum: ...
 
     def __init__(
         self,
@@ -17335,7 +14975,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -17372,9 +15012,10 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
         formatType: Optional[str] = Undefined,
@@ -17382,17 +15023,16 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -17401,31 +15041,27 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
-        **kwds,
     ) -> TextValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefTextExprRef], **kwds
+        self, _: list[core.ConditionalValueDefTextExprRef], /
     ) -> TextValue: ...
 
     def __init__(
@@ -17458,7 +15094,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -17494,7 +15130,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -17507,7 +15143,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -17545,7 +15181,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -17584,7 +15220,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -17676,27 +15312,19 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     _encoding_name = "theta"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Theta: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Theta: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Theta: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Theta: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Theta: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Theta: ...
-
+    def bandPosition(self, _: float, /) -> Theta: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Theta: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Theta: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -17707,28 +15335,21 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Theta: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Theta: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Theta: ...
-
+    def field(self, _: str | RepeatRef, /) -> Theta: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Theta: ...
-
+    @overload
+    def scale(self, _: Scale | None, /) -> Theta: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -17738,12 +15359,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -17768,164 +15395,79 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Theta: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Theta: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Theta: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Theta: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Theta: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Theta: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> Theta: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Theta: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Theta: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Theta: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Theta: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Theta: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Theta: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Theta: ...
+    def type(self, _: StandardType_T, /) -> Theta: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -17956,9 +15498,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -17971,7 +15513,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -18001,7 +15543,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18093,11 +15635,13 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _encoding_name = "theta"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> ThetaDatum: ...
-
+    def bandPosition(self, _: float, /) -> ThetaDatum: ...
+    @overload
+    def scale(self, _: Scale | None, /) -> ThetaDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -18107,12 +15651,18 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -18137,40 +15687,21 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> ThetaDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> ThetaDatum: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> ThetaDatum: ...
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> ThetaDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> ThetaDatum: ...
     @overload
-    def stack(self, _: None, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> ThetaDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> ThetaDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> ThetaDatum: ...
+    def type(self, _: Type_T, /) -> ThetaDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -18277,7 +15808,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18303,109 +15834,45 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "theta2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Theta2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Theta2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Theta2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Theta2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Theta2: ...
-
+    def bandPosition(self, _: float, /) -> Theta2: ...
     @overload
-    def bin(self, _: None, **kwds) -> Theta2: ...
-
+    def bin(self, _: None, /) -> Theta2: ...
     @overload
-    def field(self, _: str, **kwds) -> Theta2: ...
-
+    def field(self, _: str | RepeatRef, /) -> Theta2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Theta2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Theta2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Theta2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Theta2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Theta2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Theta2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Theta2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> Theta2: ...
 
     def __init__(
         self,
@@ -18417,7 +15884,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -18443,9 +15910,9 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18537,25 +16004,17 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "theta2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> Theta2Datum: ...
-
+    def bandPosition(self, _: float, /) -> Theta2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> Theta2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Theta2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Theta2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Theta2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> Theta2Datum: ...
+    def type(self, _: Type_T, /) -> Theta2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -18608,7 +16067,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18692,7 +16151,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -18784,27 +16243,23 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "tooltip"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Tooltip: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Tooltip: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> Tooltip: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> Tooltip: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> Tooltip: ...
-
+    def bandPosition(self, _: float, /) -> Tooltip: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Tooltip: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Tooltip: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -18815,141 +16270,67 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Tooltip: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Tooltip: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Tooltip: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Tooltip: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Tooltip: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringExprRef], /
     ) -> Tooltip: ...
-
     @overload
-    def field(self, _: str, **kwds) -> Tooltip: ...
-
+    def field(self, _: str | RepeatRef, /) -> Tooltip: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Tooltip: ...
-
     @overload
-    def format(self, _: str, **kwds) -> Tooltip: ...
-
+    def format(self, _: str, /) -> Tooltip: ...
     @overload
-    def format(self, _: Map, **kwds) -> Tooltip: ...
-
+    def format(self, _: Map, /) -> Tooltip: ...
     @overload
-    def formatType(self, _: str, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Tooltip: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Tooltip: ...
-
+    def formatType(self, _: str, /) -> Tooltip: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Tooltip: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Tooltip: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Tooltip: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Tooltip: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Tooltip: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Tooltip: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Tooltip: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Tooltip: ...
+    def type(self, _: StandardType_T, /) -> Tooltip: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -18957,7 +16338,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -18986,7 +16367,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -18998,111 +16379,105 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> TooltipValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> TooltipValue: ...
 
     def __init__(
@@ -19135,7 +16510,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -19219,7 +16594,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -19311,27 +16686,19 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     _encoding_name = "url"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Url: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Url: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Url: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Url: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Url: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Url: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Url: ...
-
+    def bandPosition(self, _: float, /) -> Url: ...
     @overload
-    def bin(self, _: bool, **kwds) -> Url: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Url: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -19342,141 +16709,65 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Url: ...
-
-    @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Url: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Url: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Url: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         value: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Url: ...
-
     @overload
-    def condition(
-        self, _: list[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> Url: ...
-
+    def condition(self, _: list[core.ConditionalValueDefstringExprRef], /) -> Url: ...
     @overload
-    def field(self, _: str, **kwds) -> Url: ...
-
+    def field(self, _: str | RepeatRef, /) -> Url: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Url: ...
-
     @overload
-    def format(self, _: str, **kwds) -> Url: ...
-
+    def format(self, _: str, /) -> Url: ...
     @overload
-    def format(self, _: Map, **kwds) -> Url: ...
-
+    def format(self, _: Map, /) -> Url: ...
     @overload
-    def formatType(self, _: str, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Url: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Url: ...
-
+    def formatType(self, _: str, /) -> Url: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Url: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Url: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Url: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Url: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Url: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Url: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Url: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Url: ...
+    def type(self, _: StandardType_T, /) -> Url: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         condition: Optional[SchemaBase | Sequence[SchemaBase | Map] | Map] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
         format: Optional[str | SchemaBase | Map] = Undefined,
@@ -19484,7 +16775,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -19513,7 +16804,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     ----------
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : str, dict, None, :class:`ExprRef`
+    value : str, dict, :class:`ExprRef`, None
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -19525,111 +16816,105 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
+        *,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         empty: Optional[bool] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
-        **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
+        *,
         bandPosition: Optional[float] = Undefined,
         datum: Optional[
-            str | bool | None | float | Parameter | SchemaBase | Map
+            Temporal | Parameter | SchemaBase | Map | PrimitiveValue_T
         ] = Undefined,
         empty: Optional[bool] = Undefined,
-        legend: Optional[None | SchemaBase | Map] = Undefined,
+        legend: Optional[SchemaBase | Map | None] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
-        **kwds,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
+        *,
         test: Optional[str | SchemaBase | Map] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> UrlValue: ...
-
     @overload
     def condition(
         self,
+        *,
         empty: Optional[bool] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
-        value: Optional[str | None | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        value: Optional[str | Parameter | SchemaBase | Map | None] = Undefined,
     ) -> UrlValue: ...
-
     @overload
     def condition(
-        self, _: list[core.ConditionalValueDefstringnullExprRef], **kwds
+        self, _: list[core.ConditionalValueDefstringnullExprRef], /
     ) -> UrlValue: ...
 
     def __init__(
@@ -19658,7 +16943,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -19671,7 +16956,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -19707,7 +16992,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -19715,7 +17000,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -19728,7 +17013,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -19766,7 +17051,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -19805,7 +17090,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -19897,28 +17182,24 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "x"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> X: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> X: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> X: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> X: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> X: ...
+    @overload
+    def axis(self, _: Axis | None, /) -> X: ...
     @overload
     def axis(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -19931,7 +17212,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -19944,7 +17225,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -19976,7 +17257,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -19991,7 +17272,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -19999,7 +17280,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20020,25 +17301,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> X: ...
-
     @overload
-    def axis(self, _: None, **kwds) -> X: ...
-
+    def bandPosition(self, _: float, /) -> X: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> X: ...
-
-    @overload
-    def bin(self, _: bool, **kwds) -> X: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> X: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -20049,41 +17324,32 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> X: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> X: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> X: ...
-
+    def field(self, _: str | RepeatRef, /) -> X: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> X: ...
-
+    @overload
+    def impute(self, _: Impute | None, /) -> X: ...
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        *,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
-        **kwds,
     ) -> X: ...
-
     @overload
-    def impute(self, _: None, **kwds) -> X: ...
-
+    def scale(self, _: Scale | None, /) -> X: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -20093,12 +17359,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -20123,166 +17395,81 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> X: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> X: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> X: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> X: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> X: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> X: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> X: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> X: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> X: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> X: ...
-
     @overload
-    def title(self, _: str, **kwds) -> X: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> X: ...
     @overload
-    def title(self, _: list[str], **kwds) -> X: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> X: ...
+    def type(self, _: StandardType_T, /) -> X: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -20311,7 +17498,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Parameters
     ----------
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -20324,9 +17511,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -20334,7 +17521,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -20347,7 +17534,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -20377,7 +17564,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20469,15 +17656,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "x"
 
     @overload
+    def axis(self, _: Axis | None, /) -> XDatum: ...
+    @overload
     def axis(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -20490,7 +17680,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20503,7 +17693,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -20535,7 +17725,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -20550,7 +17740,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20558,7 +17748,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -20579,35 +17769,30 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> XDatum: ...
-
     @overload
-    def axis(self, _: None, **kwds) -> XDatum: ...
-
+    def bandPosition(self, _: float, /) -> XDatum: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> XDatum: ...
-
+    def impute(self, _: Impute | None, /) -> XDatum: ...
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        *,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
-        **kwds,
     ) -> XDatum: ...
-
     @overload
-    def impute(self, _: None, **kwds) -> XDatum: ...
-
+    def scale(self, _: Scale | None, /) -> XDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -20617,12 +17802,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -20647,42 +17838,23 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> XDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> XDatum: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> XDatum: ...
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> XDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> XDatum: ...
     @overload
-    def stack(self, _: None, **kwds) -> XDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> XDatum: ...
+    def type(self, _: Type_T, /) -> XDatum: ...
 
     def __init__(
         self,
         datum,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -20791,7 +17963,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -20817,109 +17989,41 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "x2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> X2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> X2: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> X2: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> X2: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> X2: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> X2: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> X2: ...
-
+    def bandPosition(self, _: float, /) -> X2: ...
     @overload
-    def bin(self, _: None, **kwds) -> X2: ...
-
+    def bin(self, _: None, /) -> X2: ...
     @overload
-    def field(self, _: str, **kwds) -> X2: ...
-
+    def field(self, _: str | RepeatRef, /) -> X2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> X2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> X2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> X2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> X2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> X2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> X2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> X2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> X2: ...
 
     def __init__(
         self,
@@ -20931,7 +18035,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -20957,9 +18061,9 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21051,25 +18155,17 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "x2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> X2Datum: ...
-
+    def bandPosition(self, _: float, /) -> X2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> X2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> X2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> X2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> X2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> X2Datum: ...
+    def type(self, _: Type_T, /) -> X2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -21170,7 +18266,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21196,109 +18292,45 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> XError: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> XError: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> XError: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> XError: ...
-
+    def bandPosition(self, _: float, /) -> XError: ...
     @overload
-    def bin(self, _: None, **kwds) -> XError: ...
-
+    def bin(self, _: None, /) -> XError: ...
     @overload
-    def field(self, _: str, **kwds) -> XError: ...
-
+    def field(self, _: str | RepeatRef, /) -> XError: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XError: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> XError: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> XError: ...
-
     @overload
-    def title(self, _: str, **kwds) -> XError: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XError: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XError: ...
+    def title(self, _: str | Sequence[str] | None, /) -> XError: ...
 
     def __init__(
         self,
@@ -21310,7 +18342,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21417,7 +18449,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21443,109 +18475,45 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "xError2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XError2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> XError2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> XError2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> XError2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> XError2: ...
-
+    def bandPosition(self, _: float, /) -> XError2: ...
     @overload
-    def bin(self, _: None, **kwds) -> XError2: ...
-
+    def bin(self, _: None, /) -> XError2: ...
     @overload
-    def field(self, _: str, **kwds) -> XError2: ...
-
+    def field(self, _: str | RepeatRef, /) -> XError2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XError2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XError2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> XError2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> XError2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> XError2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XError2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XError2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> XError2: ...
 
     def __init__(
         self,
@@ -21557,7 +18525,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21616,7 +18584,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -21652,7 +18620,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -21665,7 +18633,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -21712,7 +18680,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -21804,27 +18772,23 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "xOffset"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> XOffset: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> XOffset: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> XOffset: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> XOffset: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> XOffset: ...
-
+    def bandPosition(self, _: float, /) -> XOffset: ...
     @overload
-    def bin(self, _: bool, **kwds) -> XOffset: ...
-
+    def bin(self, _: bool | Bin | None, /) -> XOffset: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -21835,25 +18799,21 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> XOffset: ...
-
     @overload
-    def bin(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> XOffset: ...
-
+    def field(self, _: str | RepeatRef, /) -> XOffset: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> XOffset: ...
-
+    @overload
+    def scale(self, _: Scale | None, /) -> XOffset: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -21863,12 +18823,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -21893,154 +18859,76 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> XOffset: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> XOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> XOffset: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> XOffset: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> XOffset: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> XOffset: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> XOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> XOffset: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> XOffset: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> XOffset: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> XOffset: ...
-
     @overload
-    def title(self, _: str, **kwds) -> XOffset: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> XOffset: ...
     @overload
-    def title(self, _: list[str], **kwds) -> XOffset: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XOffset: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> XOffset: ...
+    def type(self, _: StandardType_T, /) -> XOffset: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -22070,9 +18958,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -22085,7 +18973,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22177,11 +19065,13 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _encoding_name = "xOffset"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> XOffsetDatum: ...
-
+    def bandPosition(self, _: float, /) -> XOffsetDatum: ...
+    @overload
+    def scale(self, _: Scale | None, /) -> XOffsetDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -22191,12 +19081,18 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -22221,30 +19117,18 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> XOffsetDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> XOffsetDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> XOffsetDatum: ...
     @overload
-    def title(self, _: str, **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> XOffsetDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> XOffsetDatum: ...
+    def type(self, _: Type_T, /) -> XOffsetDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -22298,7 +19182,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -22311,7 +19195,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, Literal['binned'], :class:`BinParams`
+    bin : bool, dict, Literal['binned'], :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22347,7 +19231,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -22355,7 +19239,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -22368,7 +19252,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -22406,7 +19290,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -22445,7 +19329,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -22537,28 +19421,24 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     _encoding_name = "y"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Y: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Y: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Y: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Y: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Y: ...
+    @overload
+    def axis(self, _: Axis | None, /) -> Y: ...
     @overload
     def axis(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -22571,7 +19451,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22584,7 +19464,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -22616,7 +19496,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -22631,7 +19511,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22639,7 +19519,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -22660,25 +19540,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> Y: ...
-
     @overload
-    def axis(self, _: None, **kwds) -> Y: ...
-
+    def bandPosition(self, _: float, /) -> Y: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Y: ...
-
-    @overload
-    def bin(self, _: bool, **kwds) -> Y: ...
-
+    def bin(self, _: bool | Bin | Literal["binned"] | None, /) -> Y: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -22689,41 +19563,32 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> Y: ...
-
     @overload
-    def bin(self, _: Literal["binned"], **kwds) -> Y: ...
-
-    @overload
-    def bin(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> Y: ...
-
+    def field(self, _: str | RepeatRef, /) -> Y: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Y: ...
-
+    @overload
+    def impute(self, _: Impute | None, /) -> Y: ...
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        *,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
-        **kwds,
     ) -> Y: ...
-
     @overload
-    def impute(self, _: None, **kwds) -> Y: ...
-
+    def scale(self, _: Scale | None, /) -> Y: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -22733,12 +19598,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -22763,166 +19634,81 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> Y: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> Y: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> Y: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> Y: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Y: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> Y: ...
-
     @overload
-    def sort(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: StackOffset_T, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> Y: ...
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Y: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Y: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Y: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Y: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Y: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Y: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> Y: ...
+    def type(self, _: StandardType_T, /) -> Y: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Literal["binned"] | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Literal["binned"] | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -22951,7 +19737,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
     Parameters
     ----------
-    axis : dict, None, :class:`Axis`
+    axis : dict, :class:`Axis`, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -22964,9 +19750,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    impute : dict, None, :class:`ImputeParams`
+    impute : dict, :class:`ImputeParams`, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -22974,7 +19760,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -22987,7 +19773,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : bool, None, :class:`StackOffset`, Literal['zero', 'center', 'normalize']
+    stack : bool, :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -23017,7 +19803,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23109,15 +19895,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     _encoding_name = "y"
 
     @overload
+    def axis(self, _: Axis | None, /) -> YDatum: ...
+    @overload
     def axis(
         self,
+        *,
         aria: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         bandPosition: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         domain: Optional[bool] = Undefined,
         domainCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         domainDash: Optional[
             Parameter | SchemaBase | Sequence[float] | Map
@@ -23130,7 +19919,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         grid: Optional[bool] = Undefined,
         gridCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         gridDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         gridDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23143,7 +19932,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         labelBound: Optional[bool | float | Parameter | SchemaBase | Map] = Undefined,
         labelColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -23175,7 +19964,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         tickCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         tickCount: Optional[
             float | Parameter | SchemaBase | Map | TimeInterval_T
@@ -23190,7 +19979,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         tickWidth: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ticks: Optional[bool] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         titleAlign: Optional[Parameter | SchemaBase | Map | Align_T] = Undefined,
         titleAnchor: Optional[Parameter | SchemaBase | Map | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23198,7 +19987,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter | SchemaBase | Map | TextBaseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | None | Parameter | SchemaBase | Map | ColorName_T
+            str | Parameter | SchemaBase | Map | ColorName_T | None
         ] = Undefined,
         titleFont: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         titleFontSize: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -23219,35 +20008,30 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
         ] = Undefined,
         zindex: Optional[float] = Undefined,
-        **kwds,
     ) -> YDatum: ...
-
     @overload
-    def axis(self, _: None, **kwds) -> YDatum: ...
-
+    def bandPosition(self, _: float, /) -> YDatum: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> YDatum: ...
-
+    def impute(self, _: Impute | None, /) -> YDatum: ...
     @overload
     def impute(
         self,
-        frame: Optional[Sequence[None | float]] = Undefined,
+        *,
+        frame: Optional[Sequence[float | None]] = Undefined,
         keyvals: Optional[SchemaBase | Sequence[Any] | Map] = Undefined,
         method: Optional[SchemaBase | ImputeMethod_T] = Undefined,
         value: Optional[Any] = Undefined,
-        **kwds,
     ) -> YDatum: ...
-
     @overload
-    def impute(self, _: None, **kwds) -> YDatum: ...
-
+    def scale(self, _: Scale | None, /) -> YDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -23257,12 +20041,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -23287,42 +20077,23 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> YDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> YDatum: ...
-
+    def stack(self, _: bool | StackOffset_T | None, /) -> YDatum: ...
     @overload
-    def stack(self, _: StackOffset_T, **kwds) -> YDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> YDatum: ...
     @overload
-    def stack(self, _: None, **kwds) -> YDatum: ...
-
-    @overload
-    def stack(self, _: bool, **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: str, **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> YDatum: ...
+    def type(self, _: Type_T, /) -> YDatum: ...
 
     def __init__(
         self,
         datum,
-        axis: Optional[None | SchemaBase | Map] = Undefined,
+        axis: Optional[SchemaBase | Map | None] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        impute: Optional[None | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        impute: Optional[SchemaBase | Map | None] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        stack: Optional[bool | SchemaBase | StackOffset_T | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -23431,7 +20202,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23457,109 +20228,41 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "y2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> Y2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> Y2: ...
     @overload
-    def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Y2: ...
-
+    def aggregate(self, *, argmax: Optional[str | SchemaBase] = Undefined) -> Y2: ...
     @overload
-    def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
-    ) -> Y2: ...
-
+    def aggregate(self, *, argmin: Optional[str | SchemaBase] = Undefined) -> Y2: ...
     @overload
-    def bandPosition(self, _: float, **kwds) -> Y2: ...
-
+    def bandPosition(self, _: float, /) -> Y2: ...
     @overload
-    def bin(self, _: None, **kwds) -> Y2: ...
-
+    def bin(self, _: None, /) -> Y2: ...
     @overload
-    def field(self, _: str, **kwds) -> Y2: ...
-
+    def field(self, _: str | RepeatRef, /) -> Y2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> Y2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> Y2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> Y2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> Y2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> Y2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> Y2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> Y2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> Y2: ...
 
     def __init__(
         self,
@@ -23571,7 +20274,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23597,9 +20300,9 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23691,25 +20394,17 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "y2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> Y2Datum: ...
-
+    def bandPosition(self, _: float, /) -> Y2Datum: ...
     @overload
-    def title(self, _: str, **kwds) -> Y2Datum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> Y2Datum: ...
     @overload
-    def title(self, _: list[str], **kwds) -> Y2Datum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> Y2Datum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> Y2Datum: ...
+    def type(self, _: Type_T, /) -> Y2Datum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -23810,7 +20505,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -23836,109 +20531,45 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> YError: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> YError: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> YError: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> YError: ...
-
+    def bandPosition(self, _: float, /) -> YError: ...
     @overload
-    def bin(self, _: None, **kwds) -> YError: ...
-
+    def bin(self, _: None, /) -> YError: ...
     @overload
-    def field(self, _: str, **kwds) -> YError: ...
-
+    def field(self, _: str | RepeatRef, /) -> YError: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YError: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> YError: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> YError: ...
-
     @overload
-    def title(self, _: str, **kwds) -> YError: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YError: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YError: ...
+    def title(self, _: str | Sequence[str] | None, /) -> YError: ...
 
     def __init__(
         self,
@@ -23950,7 +20581,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24057,7 +20688,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24083,109 +20714,45 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     _encoding_name = "yError2"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YError2: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> YError2: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> YError2: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> YError2: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> YError2: ...
-
+    def bandPosition(self, _: float, /) -> YError2: ...
     @overload
-    def bin(self, _: None, **kwds) -> YError2: ...
-
+    def bin(self, _: None, /) -> YError2: ...
     @overload
-    def field(self, _: str, **kwds) -> YError2: ...
-
+    def field(self, _: str | RepeatRef, /) -> YError2: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YError2: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YError2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YError2: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> YError2: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> YError2: ...
-
     @overload
-    def title(self, _: str, **kwds) -> YError2: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YError2: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YError2: ...
+    def title(self, _: str | Sequence[str] | None, /) -> YError2: ...
 
     def __init__(
         self,
@@ -24197,7 +20764,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24256,7 +20823,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : bool, dict, None, :class:`BinParams`
+    bin : bool, dict, :class:`BinParams`, None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -24292,7 +20859,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -24305,7 +20872,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -24352,7 +20919,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24444,27 +21011,23 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     _encoding_name = "yOffset"
 
     @overload
-    def aggregate(self, _: NonArgAggregateOp_T, **kwds) -> YOffset: ...
-
+    def aggregate(self, _: NonArgAggregateOp_T, /) -> YOffset: ...
     @overload
     def aggregate(
-        self, argmax: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmax: Optional[str | SchemaBase] = Undefined
     ) -> YOffset: ...
-
     @overload
     def aggregate(
-        self, argmin: Optional[str | SchemaBase] = Undefined, **kwds
+        self, *, argmin: Optional[str | SchemaBase] = Undefined
     ) -> YOffset: ...
-
     @overload
-    def bandPosition(self, _: float, **kwds) -> YOffset: ...
-
+    def bandPosition(self, _: float, /) -> YOffset: ...
     @overload
-    def bin(self, _: bool, **kwds) -> YOffset: ...
-
+    def bin(self, _: bool | Bin | None, /) -> YOffset: ...
     @overload
     def bin(
         self,
+        *,
         anchor: Optional[float] = Undefined,
         base: Optional[float] = Undefined,
         binned: Optional[bool] = Undefined,
@@ -24475,25 +21038,21 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: Optional[bool] = Undefined,
         step: Optional[float] = Undefined,
         steps: Optional[Sequence[float]] = Undefined,
-        **kwds,
     ) -> YOffset: ...
-
     @overload
-    def bin(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def field(self, _: str, **kwds) -> YOffset: ...
-
+    def field(self, _: str | RepeatRef, /) -> YOffset: ...
     @overload
     def field(
         self,
+        *,
         repeat: Optional[Literal["row", "column", "repeat", "layer"]] = Undefined,
-        **kwds,
     ) -> YOffset: ...
-
+    @overload
+    def scale(self, _: Scale | None, /) -> YOffset: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -24503,12 +21062,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -24533,154 +21098,76 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> YOffset: ...
-
-    @overload
-    def scale(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[float], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[str], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[bool], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: list[core.DateTime], **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortOrder_T, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannel_T, **kwds) -> YOffset: ...
-
-    @overload
-    def sort(self, _: SortByChannelDesc_T, **kwds) -> YOffset: ...
-
     @overload
     def sort(
         self,
+        _: Sequence[str]
+        | Sequence[bool]
+        | Sequence[float]
+        | Sequence[DateTime | Temporal]
+        | AllSortString_T
+        | None,
+        /,
+    ) -> YOffset: ...
+    @overload
+    def sort(
+        self,
+        *,
         field: Optional[str | SchemaBase | Map] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> YOffset: ...
-
     @overload
     def sort(
         self,
+        *,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
-        **kwds,
+        order: Optional[SchemaBase | SortOrder_T | None] = Undefined,
     ) -> YOffset: ...
-
-    @overload
-    def sort(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalSingleTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcSingleTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: LocalMultiTimeUnit_T, **kwds) -> YOffset: ...
-
-    @overload
-    def timeUnit(self, _: UtcMultiTimeUnit_T, **kwds) -> YOffset: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedyear",
-            "binnedyearquarter",
-            "binnedyearquartermonth",
-            "binnedyearmonth",
-            "binnedyearmonthdate",
-            "binnedyearmonthdatehours",
-            "binnedyearmonthdatehoursminutes",
-            "binnedyearmonthdatehoursminutesseconds",
-            "binnedyearweek",
-            "binnedyearweekday",
-            "binnedyearweekdayhours",
-            "binnedyearweekdayhoursminutes",
-            "binnedyearweekdayhoursminutesseconds",
-            "binnedyeardayofyear",
-        ],
-        **kwds,
+        _: TimeUnitParams | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T,
+        /,
     ) -> YOffset: ...
-
     @overload
     def timeUnit(
         self,
-        _: Literal[
-            "binnedutcyear",
-            "binnedutcyearquarter",
-            "binnedutcyearquartermonth",
-            "binnedutcyearmonth",
-            "binnedutcyearmonthdate",
-            "binnedutcyearmonthdatehours",
-            "binnedutcyearmonthdatehoursminutes",
-            "binnedutcyearmonthdatehoursminutesseconds",
-            "binnedutcyearweek",
-            "binnedutcyearweekday",
-            "binnedutcyearweekdayhours",
-            "binnedutcyearweekdayhoursminutes",
-            "binnedutcyearweekdayhoursminutesseconds",
-            "binnedutcyeardayofyear",
-        ],
-        **kwds,
-    ) -> YOffset: ...
-
-    @overload
-    def timeUnit(
-        self,
+        *,
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
         unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
-        **kwds,
     ) -> YOffset: ...
-
     @overload
-    def title(self, _: str, **kwds) -> YOffset: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> YOffset: ...
     @overload
-    def title(self, _: list[str], **kwds) -> YOffset: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YOffset: ...
-
-    @overload
-    def type(self, _: StandardType_T, **kwds) -> YOffset: ...
+    def type(self, _: StandardType_T, /) -> YOffset: ...
 
     def __init__(
         self,
         shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
         aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
         bandPosition: Optional[float] = Undefined,
-        bin: Optional[bool | None | SchemaBase | Map] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
         field: Optional[str | SchemaBase | Map] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
         sort: Optional[
-            None
-            | SchemaBase
+            SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | Sequence[SchemaBase | Map]
+            | Sequence[Temporal | SchemaBase | Map]
             | Map
             | AllSortString_T
+            | None
         ] = Undefined,
         timeUnit: Optional[
             SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
         **kwds,
     ):
@@ -24710,9 +21197,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : str, bool, dict, None, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`
+    datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    scale : dict, None, :class:`Scale`
+    scale : dict, :class:`Scale`, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -24725,7 +21212,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : str, None, :class:`Text`, Sequence[str]
+    title : str, :class:`Text`, Sequence[str], None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function
@@ -24817,11 +21304,13 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _encoding_name = "yOffset"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> YOffsetDatum: ...
-
+    def bandPosition(self, _: float, /) -> YOffsetDatum: ...
+    @overload
+    def scale(self, _: Scale | None, /) -> YOffsetDatum: ...
     @overload
     def scale(
         self,
+        *,
         align: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         base: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bins: Optional[SchemaBase | Sequence[float] | Map] = Undefined,
@@ -24831,12 +21320,18 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Parameter
             | SchemaBase
             | Literal["unaggregated"]
-            | Sequence[str | bool | None | float | Parameter | SchemaBase | Map]
+            | Sequence[
+                str | bool | float | Temporal | Parameter | SchemaBase | Map | None
+            ]
             | Map
         ] = Undefined,
-        domainMax: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMax: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainMid: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        domainMin: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        domainMin: Optional[
+            float | Temporal | Parameter | SchemaBase | Map
+        ] = Undefined,
         domainRaw: Optional[Parameter | SchemaBase | Map] = Undefined,
         exponent: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         interpolate: Optional[
@@ -24861,30 +21356,18 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         scheme: Optional[Parameter | SchemaBase | Map | ColorScheme_T] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
     ) -> YOffsetDatum: ...
-
     @overload
-    def scale(self, _: None, **kwds) -> YOffsetDatum: ...
-
+    def title(self, _: str | Sequence[str] | None, /) -> YOffsetDatum: ...
     @overload
-    def title(self, _: str, **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def title(self, _: list[str], **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def title(self, _: None, **kwds) -> YOffsetDatum: ...
-
-    @overload
-    def type(self, _: Type_T, **kwds) -> YOffsetDatum: ...
+    def type(self, _: Type_T, /) -> YOffsetDatum: ...
 
     def __init__(
         self,
         datum,
         bandPosition: Optional[float] = Undefined,
-        scale: Optional[None | SchemaBase | Map] = Undefined,
-        title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
         type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
@@ -25256,10 +21739,48 @@ class _EncodingMixin:
         yOffset : str, :class:`YOffset`, Dict, :class:`YOffsetDatum`, :class:`YOffsetValue`
             Offset of y-position of the marks
         """
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {
+            "angle": angle,
+            "color": color,
+            "column": column,
+            "description": description,
+            "detail": detail,
+            "facet": facet,
+            "fill": fill,
+            "fillOpacity": fillOpacity,
+            "href": href,
+            "key": key,
+            "latitude": latitude,
+            "latitude2": latitude2,
+            "longitude": longitude,
+            "longitude2": longitude2,
+            "opacity": opacity,
+            "order": order,
+            "radius": radius,
+            "radius2": radius2,
+            "row": row,
+            "shape": shape,
+            "size": size,
+            "stroke": stroke,
+            "strokeDash": strokeDash,
+            "strokeOpacity": strokeOpacity,
+            "strokeWidth": strokeWidth,
+            "text": text,
+            "theta": theta,
+            "theta2": theta2,
+            "tooltip": tooltip,
+            "url": url,
+            "x": x,
+            "x2": x2,
+            "xError": xError,
+            "xError2": xError2,
+            "xOffset": xOffset,
+            "y": y,
+            "y2": y2,
+            "yError": yError,
+            "yError2": yError2,
+            "yOffset": yOffset,
+        }
         if args:
             kwargs = {k: v for k, v in kwargs.items() if v is not Undefined}
 
