@@ -2960,6 +2960,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_filter(
         self,
         filter: _OrigFilterType,
+        *,
+        empty: Optional[bool] = Undefined,
         **kwargs: Any,
     ) -> Self:
         """
@@ -2982,8 +2984,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if isinstance(filter, Parameter):
             new_filter: dict[str, Any] = {"param": filter.name}
-            if "empty" in kwargs:
-                new_filter["empty"] = kwargs.pop("empty")
+            if not utils.is_undefined(empty):
+                new_filter["empty"] = empty
             elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
             filter = new_filter
