@@ -562,7 +562,7 @@ else:
 """
 
 
-_FieldEqualType: TypeAlias = Union[PrimitiveValue_T, Map, Parameter, SchemaBase]
+_FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
