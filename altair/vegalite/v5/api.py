@@ -2962,7 +2962,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         filter: _OrigFilterType,
         *,
         empty: Optional[bool] = Undefined,
-        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
@@ -2989,7 +2988,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
             filter = new_filter
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        return self._add_transform(core.FilterTransform(filter=filter))
 
     def transform_flatten(
         self,
