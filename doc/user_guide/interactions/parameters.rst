@@ -435,34 +435,71 @@ Parameter Composition
 Altair also supports combining multiple parameters using the ``&``, ``|``
 and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
 operands.
+These parameter compositions can be used with both filters and conditions in Altair.
+In the following example,
+only the points that fall within the interval selections of both the scatter plots
+will be counted in the bar chart
+(so you will need to make a selection in both charts
+before the bars shows up).
 
-Returning to our heatmap examples,
-we can construct a scenario where there are two people who can make an interval
+.. altair-plot::
+
+    # empty=False ensure that no points are selected before a selection is drawn
+    brush = alt.selection_interval(empty=False)
+    brush2 = alt.selection_interval(empty=False)
+
+    points = alt.Chart(cars).mark_point(size=10).encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    )
+
+    points2 = points.encode(
+        x='Acceleration:Q',
+        y='Miles_per_Gallon:Q',
+    )
+
+    bars = alt.Chart(cars).mark_bar().encode(
+        x='count()',
+        y='Origin:N',
+        color='Origin:N'
+    ).transform_filter(
+        brush & brush2
+    )
+
+    (points.add_params(brush) | points2.add_params(brush2)) & bars
+
+To illustrate how a more complex parameter composition
+can be applied to a conditional encoding,
+we can return to our heatmap example.
+Let's construct a scenario where there are two people who can make an interval
 selection in the same chart. The person Alex makes a selection box when the
 alt-key (macOS: option-key) is selected and Morgan can make a selection
 box when the shift-key is selected.
-We use :class:`BrushConfig` to give the selection box of Morgan a different
-style.
-Now, we color the rectangles when they fall within Alex's or Morgan's
-selection
+Now, we color the chart marks when they fall within Alex's or Morgan's
+selection, but not both's
 (note that you need to create both selections before seeing the effect).
+Here, we also use We use :class:`BrushConfig` to give the selection box of Morgan a different
+style to be able to tell them apart.
 
 .. altair-plot::
 
     alex = alt.selection_interval(
         on="[pointerdown[event.altKey], pointerup] > pointermove",
-        name='alex'
+        empty=False,
     )
     morgan = alt.selection_interval(
         on="[pointerdown[event.shiftKey], pointerup] > pointermove",
         mark=alt.BrushConfig(fill="#fdbb84", fillOpacity=0.5, stroke="#e34a33"),
-        name='morgan'
+        empty=False,
     )
+
+    exlusive_or = (alex | morgan) & ~(alex & morgan)
 
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
+        color=alt.when(exlusive_or).then("count()").otherwise(alt.value("grey")),
     ).add_params(
         alex, morgan
     ).properties(
@@ -472,9 +509,10 @@ selection
 
 With these operators, selections can be combined in arbitrary ways:
 
+- ``alex | morgan``: to select the rectangles that fall inside either
+  Alex's or Morgans' selection.
 - ``~(alex & morgan)``: to select the rectangles that fall outside
   Alex's and Morgan's selections.
-
 - ``alex | ~morgan``: to select the rectangles that fall within Alex's
   selection or outside the selection of Morgan
 
