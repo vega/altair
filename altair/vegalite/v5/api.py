@@ -538,6 +538,8 @@ Notes
 -----
 - Quite similar to ``_PredicateType``
 - Probably some redundant typing, that can be reduced
+    - ``Predicate`` derives ``PredicateComposition``
+        - Includes all ``(Logical|Field|Parameter)...Predicate``
 """
 
 _ComposablePredicateType: TypeAlias = Union[
