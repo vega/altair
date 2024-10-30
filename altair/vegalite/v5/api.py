@@ -609,19 +609,6 @@ def _predicate_to_condition(
     return condition
 
 
-def _transform_filter_impl(
-    self: _TChart, filter: _PredicateType, *, empty: Optional[bool] = Undefined
-) -> _TChart:
-    """
-    Dummy implementation for ``TopLevelMixin.transform_filter``.
-
-    **Not tested**, using to plan out how much of the ``(condition|when)`` logic can be reused.
-    """
-    cond = _predicate_to_condition(filter, empty=empty)
-    pred = cond.get("test", cond)
-    return self._add_transform(core.FilterTransform(filter=pred))
-
-
 def _condition_to_selection(
     condition: _Condition,
     if_true: _StatementType,
@@ -2974,9 +2961,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: _OrigFilterType,
-        *,
+        predicate: Optional[_PredicateType] = Undefined,
+        *more_predicates: _ComposablePredicateType,
         empty: Optional[bool] = Undefined,
+        **constraints: _FieldEqualType,
     ) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
@@ -2996,14 +2984,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self : Chart object
             returns chart to allow for chaining
         """
-        if isinstance(filter, Parameter):
-            new_filter: dict[str, Any] = {"param": filter.name}
-            if not utils.is_undefined(empty):
-                new_filter["empty"] = empty
-            elif isinstance(filter.empty, bool):
-                new_filter["empty"] = filter.empty
-            filter = new_filter
-        return self._add_transform(core.FilterTransform(filter=filter))
+        if depr_filter := constraints.pop("filter", None):
+            utils.deprecated_warn(
+                "Passing `filter` as a keyword is ambiguous.\n\n"
+                "Use a positional argument for `<5.5.0` behavior.\n"
+                "Or, `alt.datum['filter'] == ...` if referring to a column named 'filter'.",
+                version="5.5.0",
+            )
+            more_predicates = *more_predicates, t.cast(Any, depr_filter)
+        cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+        pred = cond.get("test", cond)
+        return self._add_transform(core.FilterTransform(filter=pred))
 
     def transform_flatten(
         self,
@@ -5086,17 +5077,6 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-# NOTE: Copied directly from https://github.com/vega/altair/pull/3394#discussion_r1712993394
-_TChart = TypeVar(
-    "_TChart",
-    Chart,
-    RepeatChart,
-    ConcatChart,
-    HConcatChart,
-    VConcatChart,
-    FacetChart,
-    LayerChart,
-)
 ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
