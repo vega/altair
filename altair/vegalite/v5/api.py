@@ -530,6 +530,16 @@ _PredicateType: TypeAlias = Union[
 ]
 """Permitted types for `predicate`."""
 
+# FIXME: Remove before merging
+_OrigFilterType: TypeAlias = "str | Expr | Expression | Predicate | Parameter | PredicateComposition | dict[str, Predicate | str | list | bool]"
+"""**Temporary** alias for ``transform_filter``'s original annotation.
+
+Notes
+-----
+- Quite similar to ``_PredicateType``
+- Probably some redundant typing, that can be reduced
+"""
+
 _ComposablePredicateType: TypeAlias = Union[
     _expr_core.OperatorMixin, SelectionPredicateComposition
 ]
@@ -2949,13 +2959,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: str
-        | Expr
-        | Expression
-        | Predicate
-        | Parameter
-        | PredicateComposition
-        | dict[str, Predicate | str | list | bool],
+        filter: _OrigFilterType,
         **kwargs: Any,
     ) -> Self:
         """
