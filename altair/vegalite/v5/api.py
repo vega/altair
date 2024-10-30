@@ -80,6 +80,7 @@ if TYPE_CHECKING:
     )
     from altair.utils.display import MimeBundleType
 
+    from .schema._config import BrushConfigKwds, DerivedStreamKwds, MergedStreamKwds
     from .schema._typing import (
         AggregateOp_T,
         AutosizeType_T,
@@ -107,6 +108,7 @@ if TYPE_CHECKING:
         BindRadioSelect,
         BindRange,
         BinParams,
+        BrushConfig,
         DateTime,
         Expr,
         ExprRef,
@@ -122,7 +124,6 @@ if TYPE_CHECKING:
         JoinAggregateFieldDef,
         LayerRepeatMapping,
         LookupSelection,
-        Mark,
         NamedData,
         ParameterName,
         PointSelectionConfig,
@@ -1514,11 +1515,11 @@ def selection_interval(
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
-    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
-    on: Optional[str] = Undefined,
-    clear: Optional[str | bool] = Undefined,
+    encodings: Optional[Sequence[SingleDefUnitChannel_T]] = Undefined,
+    on: Optional[str | MergedStreamKwds | DerivedStreamKwds] = Undefined,
+    clear: Optional[str | bool | MergedStreamKwds | DerivedStreamKwds] = Undefined,
     resolve: Optional[SelectionResolution_T] = Undefined,
-    mark: Optional[Mark] = Undefined,
+    mark: Optional[BrushConfig | BrushConfigKwds] = Undefined,
     translate: Optional[str | bool] = Undefined,
     zoom: Optional[str | bool] = Undefined,
     **kwds: Any,
@@ -1528,16 +1529,16 @@ def selection_interval(
 
     Parameters
     ----------
-    name : string (optional)
+    name : str (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    value : any (optional)
+    value : Any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
     bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
-    empty : boolean (optional)
+    empty : bool (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
         'empty=False'.
@@ -1545,16 +1546,16 @@ def selection_interval(
         An expression for the value of the parameter. This expression may
         include other parameters, in which case the parameter will
         automatically update in response to upstream parameter changes.
-    encodings : List[str] (optional)
+    encodings : Sequence[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    on : string (optional)
+    on : str (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
-    clear : string or boolean (optional)
+    clear : str, bool (optional)
         Clears the selection, emptying it of all values. This property can
         be an Event Stream or False to disable clear.  Default is 'dblclick'.
-    resolve : enum('global', 'union', 'intersect') (optional)
+    resolve : Literal['global', 'union', 'intersect'] (optional)
         With layered and multi-view displays, a strategy that determines
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
@@ -1570,11 +1571,11 @@ def selection_interval(
           brushes.
 
         The default is 'global'.
-    mark : :class:`Mark` (optional)
+    mark : :class:`BrushConfig` (optional)
         An interval selection also adds a rectangle mark to depict the
-        extents of the interval. The mark property can be used to
+        extents of the interval. The ``mark`` property can be used to
         customize the appearance of the mark.
-    translate : string or boolean (optional)
+    translate : str, bool (optional)
         When truthy, allows a user to interactively move an interval
         selection back-and-forth. Can be True, False (to disable panning),
         or a Vega event stream definition which must include a start and
@@ -1585,7 +1586,7 @@ def selection_interval(
         [pointerdown, window:pointerup] > window:pointermove!
         This default allows users to click and drag within an interval
         selection to reposition it.
-    zoom : string or boolean (optional)
+    zoom : str, bool (optional)
         When truthy, allows a user to interactively resize an interval
         selection. Can be True, False (to disable zooming), or a Vega
         event stream definition. Currently, only wheel events are supported,
@@ -1595,7 +1596,7 @@ def selection_interval(
         The default value is True, which corresponds to wheel!. This
         default allows users to use the mouse wheel to resize an interval
         selection.
-    **kwds :
+    **kwds : Any
         Additional keywords to control the selection.
 
     Returns
@@ -1626,11 +1627,11 @@ def selection_point(
     value: Optional[_SelectionPointValue] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
-    expr: Optional[Expr] = Undefined,
-    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
-    fields: Optional[list[str]] = Undefined,
-    on: Optional[str] = Undefined,
-    clear: Optional[str | bool] = Undefined,
+    expr: Optional[str | Expr | Expression] = Undefined,
+    encodings: Optional[Sequence[SingleDefUnitChannel_T]] = Undefined,
+    fields: Optional[Sequence[str]] = Undefined,
+    on: Optional[str | MergedStreamKwds | DerivedStreamKwds] = Undefined,
+    clear: Optional[str | bool | MergedStreamKwds | DerivedStreamKwds] = Undefined,
     resolve: Optional[SelectionResolution_T] = Undefined,
     toggle: Optional[str | bool] = Undefined,
     nearest: Optional[bool] = Undefined,
@@ -1641,16 +1642,16 @@ def selection_point(
 
     Parameters
     ----------
-    name : string (optional)
+    name : str (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    value : any (optional)
+    value : Any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
     bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
-    empty : boolean (optional)
+    empty : bool (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
         'empty=False'.
@@ -1658,19 +1659,19 @@ def selection_point(
         An expression for the value of the parameter. This expression may
         include other parameters, in which case the parameter will
         automatically update in response to upstream parameter changes.
-    encodings : List[str] (optional)
+    encodings : Sequence[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
+    fields : Sequence[str] (optional)
         A list of field names whose values must match for a data tuple to
         fall within the selection.
-    on : string (optional)
+    on : str (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
-    clear : string or boolean (optional)
+    clear : str, bool (optional)
         Clears the selection, emptying it of all values. This property can
         be an Event Stream or False to disable clear.  Default is 'dblclick'.
-    resolve : enum('global', 'union', 'intersect') (optional)
+    resolve : Literal['global', 'union', 'intersect'] (optional)
         With layered and multi-view displays, a strategy that determines
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
@@ -1686,7 +1687,7 @@ def selection_point(
           brushes.
 
         The default is 'global'.
-    toggle : string or boolean (optional)
+    toggle : str, bool (optional)
         Controls whether data values should be toggled (inserted or
         removed from a point selection) or only ever inserted into
         point selections.
@@ -1706,13 +1707,13 @@ def selection_point(
           value to the Vega expression True will toggle data values
           without the user pressing the shift-key.
 
-    nearest : boolean (optional)
+    nearest : bool (optional)
         When true, an invisible voronoi diagram is computed to accelerate
         discrete selection. The data value nearest the mouse cursor is
         added to the selection.  The default is False, which means that
         data values must be interacted with directly (e.g., clicked on)
         to be added to the selection.
-    **kwds :
+    **kwds : Any
         Additional keywords to control the selection.
 
     Returns
