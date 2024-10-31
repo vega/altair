@@ -1,6 +1,6 @@
 """
-Interval Selection
-==================
+Interval Selection with Initial Selection
+=========================================
 
 This is an example of creating a stacked chart for which the domain of the
 top chart can be selected by interacting with the bottom chart. The initial
