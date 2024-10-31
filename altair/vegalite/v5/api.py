@@ -2991,7 +2991,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "Or, `alt.datum['filter'] == ...` if referring to a column named 'filter'.",
                 version="5.5.0",
             )
-            more_predicates = *more_predicates, t.cast(Any, depr_filter)
+            if utils.is_undefined(predicate):
+                predicate = t.cast(Any, depr_filter)
+            else:
+                more_predicates = *more_predicates, t.cast(Any, depr_filter)
         cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         pred = cond.get("test", cond)
         return self._add_transform(core.FilterTransform(filter=pred))
