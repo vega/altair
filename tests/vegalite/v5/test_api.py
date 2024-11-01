@@ -10,6 +10,7 @@ import pathlib
 import re
 import sys
 import tempfile
+from collections.abc import Mapping
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
 from importlib.util import find_spec
@@ -1187,6 +1188,60 @@ def test_filter_transform_selection_predicates():
     assert chart.to_dict()["transform"] == [
         {"filter": {"not": {"and": [{"param": "s1"}, {"param": "s2"}]}}}
     ]
+
+
+def test_predicate_composition() -> None:
+    columns = ["Drought", "Epidemic", "Earthquake", "Flood"]
+    field_one_of = alt.FieldOneOfPredicate(field="Entity", oneOf=columns)
+    field_range = alt.FieldRangePredicate(field="Year", range=[1900, 2000])
+    fields_and = field_one_of & field_range
+    expected_and = {
+        "and": [
+            {"field": "Entity", "oneOf": columns},
+            {"field": "Year", "range": [1900, 2000]},
+        ]
+    }
+    assert isinstance(fields_and, alt.PredicateComposition)
+    actual_and = fields_and.to_dict()
+
+    # NOTE: Extra guarantee that something hasn't overloaded `__eq__` or `to_dict`
+    assert isinstance(actual_and, Mapping)
+    assert isinstance(actual_and == expected_and, bool)
+
+    assert actual_and == expected_and
+
+    actual_when = (
+        alt.when(field_one_of, field_range).then(alt.value(0)).otherwise(alt.value(1))
+    )
+    expected_when = {"condition": [{"test": fields_and, "value": 0}], "value": 1}
+    assert actual_when == expected_when
+
+    field_range = alt.FieldRangePredicate(field="year", range=[1950, 1960])
+    field_range_not = ~field_range
+    expected_not = {"not": {"field": "year", "range": [1950, 1960]}}
+    assert isinstance(field_range_not, alt.PredicateComposition)
+    actual_not = field_range_not.to_dict()
+    assert actual_not == expected_not
+
+    expected_or = alt.LogicalOrPredicate(
+        **{"or": [field_range, field_one_of]}
+    ).to_dict()
+    actual_or = (field_range | field_one_of).to_dict()
+    assert actual_or == expected_or
+
+    param_pred = alt.ParameterPredicate(param="dummy_1", empty=True)
+    field_eq = alt.FieldEqualPredicate(equal=999, field="measure")
+    field_gt = alt.FieldGTPredicate(gt=4, field="measure 2")
+    expected_multi = alt.LogicalOrPredicate(
+        **{
+            "or": [
+                alt.LogicalNotPredicate(**{"not": param_pred}),
+                alt.LogicalAndPredicate(**{"and": [field_eq, field_gt]}),
+            ]
+        }
+    ).to_dict()
+    actual_multi = (~param_pred | (field_eq & field_gt)).to_dict()
+    assert actual_multi == expected_multi
 
 
 def test_resolve_methods():
