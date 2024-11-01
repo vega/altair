@@ -15,6 +15,11 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypedDict, TypeVar
 from urllib import request
 
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
 import vl_convert as vlc
 
 sys.path.insert(0, str(Path.cwd()))
