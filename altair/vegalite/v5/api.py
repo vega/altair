@@ -457,15 +457,7 @@ class Parameter(_expr_core.OperatorMixin):
 
 
 # Enables use of ~, &, | with compositions of selection objects.
-class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"not": self.to_dict()})
-
-    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
-
-    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+SelectionPredicateComposition = core.PredicateComposition
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
