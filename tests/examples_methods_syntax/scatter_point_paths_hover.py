@@ -53,14 +53,15 @@ base = alt.Chart(source).encode(
     "datum.country !== 'North Korea' && datum.country !== 'South Korea'"
 )
 
+search_matches = alt.expr.test(alt.expr.regexp(search_box, "i"), alt.datum.country)
+opacity = (
+    alt.when(hover_point_opacity, search_matches)
+    .then(alt.value(0.8))
+    .otherwise(alt.value(0.1))
+)
 # Points that are always visible (filtered by slider and search)
 visible_points = base.mark_circle(size=100).encode(
-    opacity=alt.condition(
-        hover_point_opacity 
-        & alt.expr.test(alt.expr.regexp(search_box, 'i'), alt.datum.country),
-        alt.value(0.8),
-        alt.value(0.1)
-        )
+    opacity=opacity
     ).transform_filter(
         x_select
     ).add_params(
@@ -69,17 +70,18 @@ visible_points = base.mark_circle(size=100).encode(
         x_select
 )
 
+when_hover = alt.when(hover)
 hover_line = alt.layer(
     # Line layer
     base.mark_trail().encode(
         alt.Order('year:Q').sort('ascending'),
         alt.Size('year:Q').scale(domain=[1955, 2005], range=[1, 12]).legend(None),
-        opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+        opacity=when_hover.then(alt.value(0.3)).otherwise(alt.value(0)),
         color=alt.value('#222222')
     ),
     # Point layer
     base.mark_point(size=50).encode(
-        opacity=alt.condition(hover, alt.value(0.8), alt.value(0)),
+        opacity=when_hover.then(alt.value(0.8)).otherwise(alt.value(0)),
     )
 )
 
@@ -101,7 +103,7 @@ country_labels = alt.Chart(source).mark_text(
     y='life_expect:Q',
     text='country:N',
     color=alt.value('black'),
-    opacity=alt.condition(hover, alt.value(1), alt.value(0))
+    opacity=when_hover.then(alt.value(1)).otherwise(alt.value(0))
 ).transform_window(
     rank='rank(life_expect)',
     sort=[alt.SortField('life_expect', order='descending')], 

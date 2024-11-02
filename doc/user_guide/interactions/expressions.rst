@@ -169,19 +169,14 @@ To try this out, you can type ``mazda|ford`` in the search input box below.
             name='Search ',
         )
     )
+    search_matches = alt.expr.test(alt.expr.regexp(search_input, "i"), alt.datum.Name)
+
     alt.Chart(cars).mark_point(size=60).encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         tooltip='Name:N',
-        opacity=alt.condition(
-            alt.expr.test(alt.expr.regexp(search_input, 'i'), alt.datum.Name),
-            # f"test(regexp({search_input.name}, 'i'), datum.Name)",  # Equivalent js alternative
-            alt.value(1),
-            alt.value(0.05)
-        )
-    ).add_params(
-        search_input
-    )
+        opacity=alt.when(search_matches).then(alt.value(1)).otherwise(alt.value(0.05)),
+    ).add_params(search_input)
 
 And remember, all this interactivity is client side.
 You can save this chart as an HTML file or put it on a static site generator such as GitHub/GitLab pages

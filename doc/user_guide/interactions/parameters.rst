@@ -3,7 +3,10 @@
 .. _parameters:
 
 Parameters, Conditions, & Filters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================
+
+Parameters
+~~~~~~~~~~
 
 Parameters are the building blocks of interaction in Altair.
 There are two types of parameters: *variables* and *selections*. We introduce these concepts through a series of examples.
@@ -146,25 +149,29 @@ we created a selection parameter using ``brush = alt.selection_interval()``,
 and we attached that parameter to the chart using ``add_params``.
 One difference is that here we have not defined how the chart should respond to the selection; you will learn this in the next section.
 
-Conditions & Filters
-~~~~~~~~~~~~~~~~~~~~
+.. _conditions:
 
-Conditional Encodings
-^^^^^^^^^^^^^^^^^^^^^
+Conditions
+~~~~~~~~~~
+
+.. note::
+
+   This material was changed considerably with the release of Altair ``5.5.0``.
+   :func:`when` was introduced in ``5.4.0`` and should be preferred over :func:`condition`.
 
 The example above is neat, but the selection interval doesn't actually *do* anything yet.
-To make the chart respond to this selection, we need to reference the selection in within
-the chart specification. Here, we will use the :func:`condition` function to create
-a conditional color encoding: we'll tie the color to the ``"Origin"``
-column for points in the selection, and set the color to ``"lightgray"``
-for points outside the selection:
+To make the chart respond to this selection, we need to reference ``brush`` within
+the chart specification. Here, we will use the :func:`when` function to create
+a conditional color encoding:
 
 .. altair-plot::
 
+    conditional = alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
+
     alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        x="Horsepower:Q",
+        y="Miles_per_Gallon:Q",
+        color=conditional,
     ).add_params(
         brush
     )
@@ -172,16 +179,68 @@ for points outside the selection:
 As you can see, the color of the points now changes depending on whether they are inside or outside the selection.
 Above we are using the selection parameter ``brush`` as a *predicate*
 (something that evaluates as `True` or `False`).
-This is controlled by the line ``color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))``.
+
+This is controlled by our definition ``conditional``::
+
+    conditional = alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
+
 Data points which fall within the selection evaluate as ``True``,
 and data points which fall outside the selection evaluate to ``False``.
-The ``'Origin:N'`` specifies how to color the points which fall within the selection,
-and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value;
-you can remember this as ``alt.condition(<condition>, <if_true>, <if_false>)``.
+The ``"Origin:N"`` specifies how to color the points which fall within the selection,
+and the ``alt.value('lightgray')`` specifies that the outside points should be given a constant color value.
 
-This approach becomes even more powerful when the selection behavior is
+Understanding :func:`when`
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``when-then-otherwise`` syntax was directly inspired by `polars.when`_,
+and is similar to an ``if-else`` statement written in Python::
+
+    # alt.when(brush)
+    if brush:
+        # .then("Origin:N")
+        color = "Origin:N"
+    else:
+        # .otherwise(alt.value("lightgray"))
+        color = alt.value("lightgray")
+
+Omitting the ``.otherwise()`` clause will use the channel default instead:
+
+.. altair-plot::
+
+    source = data.cars()
+    brush = alt.selection_interval()
+
+    points = alt.Chart(source).mark_point().encode(
+        x="Horsepower",
+        y="Miles_per_Gallon",
+        color=alt.when(brush).then(alt.value("goldenrod"))
+    ).add_params(
+        brush
+    )
+
+    points
+
+Multiple conditional branches (``if, elif, ..., elif`` in Python)
+are expressed via chained calls to :func:`when`.
+You will see an example with working code in :ref:`conditional-branches`
+when you have learned about different selection types.
+
+More advanced use of conditions can be found
+in the :func:`when` API reference
+and in these gallery examples:
+
+- :ref:`gallery_dot_dash_plot`
+- :ref:`gallery_interactive_bar_select_highlight`
+- :ref:`gallery_multiline_tooltip_standard`
+- :ref:`gallery_scatter_point_paths_hover`
+- :ref:`gallery_waterfall_chart`
+
+Linking Conditions Across Charts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Conditional encodings become even more powerful when the selection behavior is
 tied across multiple views of the data within a compound chart.
-For example, here we create a ``chart`` object using the same code as
+For example, here we create a :class:`Chart` using the same code as
 above, and horizontally concatenate two versions of this chart: one
 with the x-encoding tied to ``"Horsepower"``, and one with the x-encoding
 tied to ``"Acceleration"``
@@ -191,7 +250,7 @@ tied to ``"Acceleration"``
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray")),
     ).properties(
         width=250,
         height=250
@@ -218,7 +277,7 @@ We can modify the brush definition, and leave the rest of the code unchanged:
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
-        color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
+        color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray")),
     ).properties(
         width=250,
         height=250
@@ -231,15 +290,18 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 As you might have noticed,
 the selected points are sometimes obscured by some of the unselected points.
 To bring the selected points to the foreground,
-we can change the order in which they are laid out via the following
-encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
-You can see an example of this in the :ref:`gallery_selection_zorder` gallery example.
+we can change the order in which they are laid out via the following encoding::
 
-Filtering Data
-^^^^^^^^^^^^^^
+    hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
+    order = alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
+
+
+
+Filters
+~~~~~~~
 
 Using a selection parameter to filter data works in much the same way
-as using it within ``condition``.
+as using it within :func:`when`.
 For example, in ``transform_filter(brush)``,
 we are again using the selection parameter ``brush`` as a predicate.
 Data points which evaluate to ``True`` (i.e., data points which lie within the selection) are kept,
@@ -296,7 +358,7 @@ selection:
         return alt.Chart(cars).mark_rect().encode(
             x="Cylinders:O",
             y="Origin:N",
-            color=alt.condition(selector, 'count()', alt.value('lightgray'))
+            color=alt.when(selector).then("count()").otherwise(alt.value("lightgray")),
         ).properties(
             width=300,
             height=180
@@ -327,6 +389,16 @@ empty selection contains none of the points:
 
    interval_x = alt.selection_interval(encodings=['x'], empty=False)
    make_example(interval_x)
+
+The ``empty=False`` argument could instead be set inside :func:`when`,
+to change the behavior of each condition when an empty selection is passed,
+rather than having to define separate selection objects::
+
+    brush = alt.selection_interval()
+    ...
+    color=alt.when(brush).then(...)
+    size=alt.when(brush, empty=False).then(...)
+    ...
 
 Point Selections
 ^^^^^^^^^^^^^^^^
@@ -367,10 +439,10 @@ with a matching ``Origin``.
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin'])
-    color = alt.condition(
-        selection,
-        alt.Color('Origin:N').legend(None),
-        alt.value('lightgray')
+    color = (
+        alt.when(selection)
+        .then(alt.Color("Origin:N").legend(None))
+        .otherwise(alt.value("lightgray"))
     )
 
     scatter = alt.Chart(cars).mark_point().encode(
@@ -402,10 +474,10 @@ cylinders:
 .. altair-plot::
 
     selection = alt.selection_point(fields=['Origin', 'Cylinders'])
-    color = alt.condition(
-        selection,
-        alt.Color('Origin:N').legend(None),
-        alt.value('lightgray')
+    color = (
+        alt.when(selection)
+        .then(alt.Color("Origin:N").legend(None))
+        .otherwise(alt.value("lightgray"))
     )
 
     scatter = alt.Chart(cars).mark_point().encode(
@@ -428,9 +500,85 @@ cylinders:
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
 
+Combining Parameters
+~~~~~~~~~~~~~~~~~~~~
+
+Multiple parameters can be combined in a single chart,
+either via multiple separate response conditions,
+different conditional branches in :func:`when`,
+or parameter composition.
+
+Multiple conditions
+^^^^^^^^^^^^^^^^^^^
+
+In this example,
+points that are hovered with the pointer
+will increase in size
+and those that are clicked
+will be filled in with red.
+The ``empty=False`` is to ensure that no points are selected to start.
+Try holding shift to select multiple points on either hover or click.
+
+.. altair-plot::
+
+    click = alt.selection_point(empty=False)
+    hover = alt.selection_point(on='pointerover', empty=False)
+
+    points = alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        fill=alt.when(click).then(alt.value('red')),
+        size=alt.when(hover).then(alt.value(1000))
+    ).add_params(
+        click, hover
+    )
+
+    points
+
+.. _conditional-branches:
+
+Conditional branches
+^^^^^^^^^^^^^^^^^^^^
+
+:func:`when` allows the use of multiple ``then`` (``elif``) branches
+which can change the behavior of a single encoding
+in response to multiple different parameters.
+Here,
+we fill hovered points in yellow,
+before changing the fill to red
+when a point is clicked.
+Since the mouse is hovering over points
+while clicking them,
+both conditions will be active
+and the earlier branch takes precedence
+(you can try by changing the order of the two ``when.then`` clauses
+and observing that the points will not change to red when clicked).
+
+.. altair-plot::
+
+    click = alt.selection_point(empty=False)
+    hover = alt.selection_point(on='pointerover', empty=False)
+
+    points = alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        fill=(
+            alt.when(click)
+            .then(alt.value('red'))
+            .when(hover)
+            .then(alt.value('gold'))
+        ),
+        size=alt.when(hover).then(alt.value(1000))
+    ).add_params(
+        click, hover
+    )
+
+    points
+
+.. _parameter-composition:
 
 Parameter Composition
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 Altair also supports combining multiple parameters using the ``&``, ``|``
 and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
@@ -462,7 +610,7 @@ selection
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
+        color=alt.when(alex | morgan).then("count()").otherwise(alt.value("grey")),
     ).add_params(
         alex, morgan
     ).properties(
@@ -482,3 +630,5 @@ For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
 
+.. _polars.when:
+    https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
