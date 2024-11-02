@@ -21,7 +21,7 @@ minimap = (
     .encode(
         x="date:T",
         y="temp_max:Q",
-        color=alt.condition(zoom, "weather", alt.value("lightgray")),
+        color=alt.when(zoom).then("weather").otherwise(alt.value("lightgray")),
     )
     .properties(
         width=200,
