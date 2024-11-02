@@ -172,7 +172,9 @@ a conditional color encoding:
         x="Horsepower:Q",
         y="Miles_per_Gallon:Q",
         color=conditional,
-    ).add_params(brush)
+    ).add_params(
+        brush
+    )
 
 As you can see, the color of the points now changes depending on whether they are inside or outside the selection.
 Above we are using the selection parameter ``brush`` as a *predicate*
@@ -207,14 +209,15 @@ Omitting the ``.otherwise()`` clause will use the channel default instead:
 
     source = data.cars()
     brush = alt.selection_interval()
-    color = alt.when(brush).then(alt.value('goldenrod'))
 
-    points = (
-        alt.Chart(source)
-        .mark_point()
-        .encode(x="Horsepower", y="Miles_per_Gallon", color=color)
-        .add_params(brush)
+    points = alt.Chart(source).mark_point().encode(
+        x="Horsepower",
+        y="Miles_per_Gallon",
+        color=alt.when(brush).then(alt.value("goldenrod"))
+    ).add_params(
+        brush
     )
+
     points
 
 Multiple conditional branches (``if, elif, ..., elif`` in Python)

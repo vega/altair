@@ -366,21 +366,22 @@ layered chart with a hover selection:
     hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
     when_hover = alt.when(hover)
 
-    base = (
-        alt.Chart(iris)
-        .encode(
-            x="petalLength:Q",
-            y="petalWidth:Q",
-            color=when_hover.then("species:N").otherwise(alt.value("lightgray")),
-        )
-        .properties(width=180, height=180)
+    base = alt.Chart(iris).encode(
+        x='petalLength:Q',
+        y='petalWidth:Q',
+        color=when_hover.then("species:N").otherwise(alt.value("lightgray"))
+    ).properties(
+        width=180,
+        height=180,
     )
+
     points = base.mark_point().add_params(hover)
+
     text = base.mark_text(dy=-5).encode(
         text="species:N", 
         opacity=when_hover.then(alt.value(1)).otherwise(alt.value(0)),
     )
-    
+
     (points + text).facet("species:N")
 
 Though each of the above examples have faceted the data across columns,

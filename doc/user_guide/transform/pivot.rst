@@ -56,15 +56,13 @@ values on multiple lines:
     lines = base.mark_line().encode(y='price:Q', color='symbol:N')
     points = lines.mark_point().transform_filter(selection)
 
-    rule = (
-        base.transform_pivot("symbol", value="price", groupby=["date"])
-        .mark_rule()
-        .encode(
-            opacity=alt.when(selection).then(alt.value(0.3)).otherwise(alt.value(0)),
-            tooltip=[alt.Tooltip(c, type="quantitative") for c in columns],
-        )
-        .add_params(selection)
-    )
+   rule = base.transform_pivot(
+       'symbol', value='price', groupby=['date']
+   ).mark_rule().encode(
+       opacity=alt.when(selection).then(alt.value(0.3)).otherwise(alt.value(0)),
+       tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
+   ).add_params(selection)
+
     lines + points + rule
 
 
