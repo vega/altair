@@ -14,10 +14,8 @@ source = data.wheat()
 # otherwise, use `"steelblue"`
 color = alt.when(year=1810).then(alt.value("orange")).otherwise(alt.value("steelblue"))
 
-chart = (
-    alt.Chart(source)
-    .mark_bar()
-    .encode(x="year:O", y="wheat:Q", color=color)
-    .properties(width=600)
-)
-chart
+alt.Chart(source).mark_bar().encode(
+    x="year:O",
+    y="wheat:Q",
+    color=color
+).properties(width=600)

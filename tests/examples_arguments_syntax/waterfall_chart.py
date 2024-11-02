@@ -42,23 +42,19 @@ calc_text_amount = (
 )
 
 # The "base_chart" defines the transform_window, transform_calculate, and X axis
-base_chart = (
-    alt.Chart(source)
-    .transform_window(window_sum_amount="sum(amount)", window_lead_label="lead(label)")
-    .transform_calculate(
-        calc_lead=alt.expr.if_((window_lead_label == None), label, window_lead_label),
-        calc_prev_sum=calc_prev_sum,
-        calc_amount=calc_amount,
-        calc_text_amount=calc_text_amount,
-        calc_center=(window_sum_amount + calc_prev_sum) / 2,
-        calc_sum_dec=alt.expr.if_(
-            window_sum_amount < calc_prev_sum, window_sum_amount, ""
-        ),
-        calc_sum_inc=alt.expr.if_(
-            window_sum_amount > calc_prev_sum, window_sum_amount, ""
-        ),
-    )
-    .encode(x=alt.X("label:O", axis=alt.Axis(title="Months", labelAngle=0), sort=None))
+base_chart = alt.Chart(source).transform_window(
+    window_sum_amount="sum(amount)",
+    window_lead_label="lead(label)",
+).transform_calculate(
+    calc_lead=alt.expr.if_((window_lead_label == None), label, window_lead_label),
+    calc_prev_sum=calc_prev_sum,
+    calc_amount=calc_amount,
+    calc_text_amount=calc_text_amount,
+    calc_center=(window_sum_amount + calc_prev_sum) / 2,
+    calc_sum_dec=alt.expr.if_(window_sum_amount < calc_prev_sum, window_sum_amount, ""),
+    calc_sum_inc=alt.expr.if_(window_sum_amount > calc_prev_sum, window_sum_amount, ""),
+).encode(
+    x=alt.X("label:O", axis=alt.Axis(title="Months", labelAngle=0), sort=None)
 )
 
 color_coding = (
@@ -96,12 +92,13 @@ text_bar_values_mid_of_bar = base_chart.mark_text(baseline="middle").encode(
     color=alt.value("white"),
 )
 
-waterfall = (
-    bar
-    + rule
-    + text_pos_values_top_of_bar
-    + text_neg_values_bot_of_bar
-    + text_bar_values_mid_of_bar
-).properties(width=800, height=450)
-
-waterfall
+alt.layer(
+    bar,
+    rule,
+    text_pos_values_top_of_bar,
+    text_neg_values_bot_of_bar,
+    text_bar_values_mid_of_bar
+).properties(
+    width=800,
+    height=450
+)

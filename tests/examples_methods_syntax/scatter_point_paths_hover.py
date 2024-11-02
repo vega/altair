@@ -60,11 +60,14 @@ opacity = (
     .otherwise(alt.value(0.1))
 )
 # Points that are always visible (filtered by slider and search)
-visible_points = (
-    base.mark_circle(size=100)
-    .encode(opacity=opacity)
-    .transform_filter(x_select)
-    .add_params(hover, hover_point_opacity, x_select)
+visible_points = base.mark_circle(size=100).encode(
+    opacity=opacity
+    ).transform_filter(
+        x_select
+    ).add_params(
+        hover,
+        hover_point_opacity,
+        x_select
 )
 
 when_hover = alt.when(hover)

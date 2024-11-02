@@ -12,10 +12,8 @@ source = data.us_employment()
 predicate = alt.datum.nonfarm_change > 0
 color = alt.when(predicate).then(alt.value("steelblue")).otherwise(alt.value("orange"))
 
-chart = (
-    alt.Chart(source)
-    .mark_bar()
-    .encode(x="month:T", y="nonfarm_change:Q", color=color)
-    .properties(width=600)
-)
-chart
+alt.Chart(source).mark_bar().encode(
+    x="month:T",
+    y="nonfarm_change:Q",
+    color=color
+).properties(width=600)
