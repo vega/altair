@@ -25,7 +25,7 @@ alt.Chart(source).mark_bar().transform_calculate(
     y='variety:N',
     color='site:N',
     order='site_order:N',
-    opacity=alt.condition(selection, alt.value(0.9), alt.value(0.2))
+    opacity=alt.when(selection).then(alt.value(0.9)).otherwise(alt.value(0.2))
 ).add_params(
     selection
 )
