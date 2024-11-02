@@ -135,30 +135,24 @@ to select the data to be shown in the top chart:
 
     selection = alt.selection_point(fields=['year'])
 
-    top = alt.Chart().mark_line().encode(
-        x='age:O',
-        y='sum(people):Q',
-        color='year:O'
-    ).properties(
-        width=600, height=200
+    top = alt.Chart(width=600, height=200).mark_line().encode(
+        x="age:O",
+        y="sum(people):Q",
+        color="year:O"
     ).transform_filter(
         selection
     )
 
-    bottom = alt.Chart().mark_bar().encode(
-        x='year:O',
-        y='sum(people):Q',
-        color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
-    ).properties(
-        width=600, height=100
+    color = alt.when(selection).then(alt.value("steelblue")).otherwise(alt.value("lightgray"))
+    bottom = alt.Chart(width=600, height=100).mark_bar().encode(
+        x="year:O",
+        y="sum(people):Q",
+        color=color
     ).add_params(
         selection
     )
 
-    alt.vconcat(
-        top, bottom,
-        data=pop
-    )
+    alt.vconcat(top, bottom, data=pop)
 
 Logical Operands
 ^^^^^^^^^^^^^^^^

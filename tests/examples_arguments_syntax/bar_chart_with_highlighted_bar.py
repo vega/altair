@@ -9,13 +9,13 @@ from vega_datasets import data
 
 source = data.wheat()
 
+# If the `year` column equals `1810`
+# then, set the bar color to `"orange"`
+# otherwise, use `"steelblue"`
+color = alt.when(year=1810).then(alt.value("orange")).otherwise(alt.value("steelblue"))
+
 alt.Chart(source).mark_bar().encode(
-    x='year:O',
+    x="year:O",
     y="wheat:Q",
-    # The highlight will be set on the result of a conditional statement
-    color=alt.condition(
-        alt.datum.year == 1810,  # If the year is 1810 this test returns True,
-        alt.value('orange'),     # which sets the bar orange.
-        alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
-    )
+    color=color
 ).properties(width=600)
