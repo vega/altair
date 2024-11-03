@@ -409,25 +409,25 @@ class Parameter(_expr_core.OperatorMixin):
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
 
-    def __invert__(self) -> SelectionPredicateComposition | Any:
+    def __invert__(self) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            return SelectionPredicateComposition({"not": {"param": self.name}})
+            return core.PredicateComposition({"not": {"param": self.name}})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
-    def __and__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __and__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
+            return core.PredicateComposition({"and": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
-    def __or__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __or__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
+            return core.PredicateComposition({"or": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__or__(self, other)
 
@@ -457,15 +457,7 @@ class Parameter(_expr_core.OperatorMixin):
 
 
 # Enables use of ~, &, | with compositions of selection objects.
-class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"not": self.to_dict()})
-
-    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
-
-    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+SelectionPredicateComposition = core.PredicateComposition
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
@@ -531,7 +523,7 @@ _PredicateType: TypeAlias = Union[
 """Permitted types for `predicate`."""
 
 _ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, SelectionPredicateComposition
+    _expr_core.OperatorMixin, core.PredicateComposition
 ]
 """Permitted types for `&` reduced predicates."""
 
@@ -763,7 +755,7 @@ def _validate_composables(
     predicates: Iterable[Any], /
 ) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
-        if isinstance(p, (_expr_core.OperatorMixin, SelectionPredicateComposition)):
+        if isinstance(p, (_expr_core.OperatorMixin, core.PredicateComposition)):
             yield p
         else:
             msg = (
