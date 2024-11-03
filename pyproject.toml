@@ -70,7 +70,7 @@ all = [
 dev = [
     "hatch>=1.13.0",
     "ruff>=0.6.0",
-    "ibis-framework[polars]",
+    "duckdb>=1.0",
     "ipython[kernel]",
     "pandas>=1.1.3",
     "pytest",

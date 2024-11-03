@@ -65,8 +65,9 @@ SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return _is_pandas_dataframe(obj) or isinstance(
-        obj, (dict, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    return isinstance(obj, (dict, SupportsGeoInterface)) or isinstance(
+        nw.from_native(obj, eager_or_interchange_only=True, strict=False),
+        nw.DataFrame,
     )
 
 

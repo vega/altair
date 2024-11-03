@@ -16,18 +16,19 @@ from vega_datasets import data
 cars = data.cars.url
 
 hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
+when_hover = alt.when(hover)
 
 chart = alt.Chart(cars, title='Selection obscured by other points').mark_circle(opacity=1).encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
-    color=alt.condition(hover, alt.value('coral'), alt.value('lightgray')),
-    size=alt.condition(hover, alt.value(300), alt.value(30))
+    color=when_hover.then(alt.value("coral")).otherwise(alt.value("lightgray")),
+    size=when_hover.then(alt.value(300)).otherwise(alt.value(30))
 ).add_params(
     hover
 )
 
 chart | chart.encode(
-    order=alt.condition(hover, alt.value(1), alt.value(0))
+    order=when_hover.then(alt.value(1)).otherwise(alt.value(0))
 ).properties(
     title='Selection brought to front'
 )

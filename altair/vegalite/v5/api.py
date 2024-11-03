@@ -105,6 +105,7 @@ if TYPE_CHECKING:
         AnyMark,
         BindCheckbox,
         Binding,
+        BindInput,
         BindRadioSelect,
         BindRange,
         BinParams,
@@ -913,13 +914,16 @@ class When(_BaseWhen):
             A spec or value to use when the preceding :func:`.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -990,10 +994,12 @@ class Then(ConditionLike, t.Generic[_C]):
                 Roughly equivalent to an ``else`` clause.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1071,7 +1077,7 @@ class Then(ConditionLike, t.Generic[_C]):
                 When ``predicate`` is a ``Parameter`` that is used more than once,
                 ``alt.when().then().when(..., empty=...)`` provides granular control for each occurrence.
         **constraints
-            Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+            Specify `Field Equal Predicate`_'s.
             Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
         Returns
@@ -1079,6 +1085,8 @@ class Then(ConditionLike, t.Generic[_C]):
         :class:`ChainedWhen`
             A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
 
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
 
         Examples
         --------
@@ -1176,13 +1184,16 @@ class ChainedWhen(_BaseWhen):
             A spec or value to use when the preceding :meth:`Then.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1247,7 +1258,7 @@ def when(
             When ``predicate`` is a ``Parameter`` that is used more than once,
             ``alt.when(..., empty=...)`` provides granular control for each occurrence.
     **constraints
-        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+        Specify `Field Equal Predicate`_'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
     Returns
@@ -1257,11 +1268,12 @@ def when(
 
     Notes
     -----
-    - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
+    - Directly inspired by the ``when-then-otherwise`` syntax used in `polars.when`_.
 
-    References
-    ----------
-    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
+    .. _Field Equal Predicate:
+        https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+    .. _polars.when:
+        https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
 
     Examples
     --------
@@ -1740,10 +1752,49 @@ def selection_single(**kwargs: Any) -> Parameter:
     return _selection(type="point", **kwargs)
 
 
-@utils.use_signature(core.Binding)
-def binding(input: Any, **kwargs: Any) -> Binding:
-    """A generic binding."""
-    return core.Binding(input=input, **kwargs)
+def binding(
+    input: str,
+    *,
+    autocomplete: Optional[str] = Undefined,
+    debounce: Optional[float] = Undefined,
+    element: Optional[str] = Undefined,
+    name: Optional[str] = Undefined,
+    placeholder: Optional[str] = Undefined,
+) -> BindInput:
+    """
+    A generic binding.
+
+    Parameters
+    ----------
+    input : str
+        The type of input element to use. The valid values are ``"checkbox"``, ``"radio"``,
+        ``"range"``, ``"select"``, and any other legal `HTML form input type
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`__.
+    autocomplete : str
+        A hint for form autofill. See the `HTML autocomplete attribute
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete>`__ for
+        additional information.
+    debounce : float
+        If defined, delays event handling until the specified milliseconds have elapsed
+        since the last event was fired.
+    element : str
+        An optional CSS selector string indicating the parent element to which the input
+        element should be added. By default, all input elements are added within the parent
+        container of the Vega view.
+    name : str
+        By default, the signal name is used to label input elements. This ``name`` property
+        can be used instead to specify a custom label for the bound signal.
+    placeholder : str
+        Text that appears in the form control when it has no value set.
+    """
+    return core.BindInput(
+        autocomplete=autocomplete,
+        debounce=debounce,
+        element=element,
+        input=input,
+        name=name,
+        placeholder=placeholder,
+    )
 
 
 @utils.use_signature(core.BindCheckbox)
