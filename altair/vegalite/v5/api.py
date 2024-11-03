@@ -105,6 +105,7 @@ if TYPE_CHECKING:
         AnyMark,
         BindCheckbox,
         Binding,
+        BindInput,
         BindRadioSelect,
         BindRange,
         BinParams,
@@ -409,25 +410,25 @@ class Parameter(_expr_core.OperatorMixin):
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
 
-    def __invert__(self) -> SelectionPredicateComposition | Any:
+    def __invert__(self) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            return SelectionPredicateComposition({"not": {"param": self.name}})
+            return core.PredicateComposition({"not": {"param": self.name}})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
-    def __and__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __and__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
+            return core.PredicateComposition({"and": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
-    def __or__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __or__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
+            return core.PredicateComposition({"or": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__or__(self, other)
 
@@ -457,15 +458,7 @@ class Parameter(_expr_core.OperatorMixin):
 
 
 # Enables use of ~, &, | with compositions of selection objects.
-class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"not": self.to_dict()})
-
-    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
-
-    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+SelectionPredicateComposition = core.PredicateComposition
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
@@ -543,7 +536,7 @@ Notes
 """
 
 _ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, SelectionPredicateComposition
+    _expr_core.OperatorMixin, core.PredicateComposition
 ]
 """Permitted types for `&` reduced predicates."""
 
@@ -775,7 +768,7 @@ def _validate_composables(
     predicates: Iterable[Any], /
 ) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
-        if isinstance(p, (_expr_core.OperatorMixin, SelectionPredicateComposition)):
+        if isinstance(p, (_expr_core.OperatorMixin, core.PredicateComposition)):
             yield p
         else:
             msg = (
@@ -1763,10 +1756,49 @@ def selection_single(**kwargs: Any) -> Parameter:
     return _selection(type="point", **kwargs)
 
 
-@utils.use_signature(core.Binding)
-def binding(input: Any, **kwargs: Any) -> Binding:
-    """A generic binding."""
-    return core.Binding(input=input, **kwargs)
+def binding(
+    input: str,
+    *,
+    autocomplete: Optional[str] = Undefined,
+    debounce: Optional[float] = Undefined,
+    element: Optional[str] = Undefined,
+    name: Optional[str] = Undefined,
+    placeholder: Optional[str] = Undefined,
+) -> BindInput:
+    """
+    A generic binding.
+
+    Parameters
+    ----------
+    input : str
+        The type of input element to use. The valid values are ``"checkbox"``, ``"radio"``,
+        ``"range"``, ``"select"``, and any other legal `HTML form input type
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`__.
+    autocomplete : str
+        A hint for form autofill. See the `HTML autocomplete attribute
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete>`__ for
+        additional information.
+    debounce : float
+        If defined, delays event handling until the specified milliseconds have elapsed
+        since the last event was fired.
+    element : str
+        An optional CSS selector string indicating the parent element to which the input
+        element should be added. By default, all input elements are added within the parent
+        container of the Vega view.
+    name : str
+        By default, the signal name is used to label input elements. This ``name`` property
+        can be used instead to specify a custom label for the bound signal.
+    placeholder : str
+        Text that appears in the form control when it has no value set.
+    """
+    return core.BindInput(
+        autocomplete=autocomplete,
+        debounce=debounce,
+        element=element,
+        input=input,
+        name=name,
+        placeholder=placeholder,
+    )
 
 
 @utils.use_signature(core.BindCheckbox)
