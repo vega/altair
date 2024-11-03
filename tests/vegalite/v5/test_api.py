@@ -15,7 +15,7 @@ from importlib.metadata import version as importlib_version
 from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
-import ibis
+import duckdb
 import jsonschema
 import narwhals.stable.v1 as nw
 import pandas as pd
@@ -24,10 +24,13 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair.utils.core import use_signature
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
-from tests import skip_requires_vl_convert, slow
+from tests import skip_requires_pyarrow, skip_requires_vl_convert, slow
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
@@ -1604,20 +1607,15 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "numpy" not in sys.modules
 
 
-@pytest.mark.skipif(
-    Version("1.5") > PANDAS_VERSION,
-    reason="A warning is thrown on old pandas versions",
-)
-@pytest.mark.xfail(
-    sys.platform == "win32", reason="Timezone database is not installed on Windows"
-)
-def test_ibis_with_date_32():
-    ibis.set_backend("polars")
-    df = pl.DataFrame(
+@skip_requires_pyarrow(requires_tzdata=True)
+def test_interchange_with_date_32():
+    # Test that objects which Narwhals only supports at the interchange
+    # level can be plotted when they contain date32 columns.
+    df = pl.DataFrame(  # noqa: F841
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
-    tbl = ibis.memtable(df)
-    result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
+    rel = duckdb.sql("select * from df")
+    result = alt.Chart(rel).mark_line().encode(x="a", y="b").to_dict()
     assert next(iter(result["datasets"].values())) == [
         {"a": 1, "b": "2020-01-01T00:00:00"},
         {"a": 2, "b": "2020-01-02T00:00:00"},
@@ -1625,32 +1623,92 @@ def test_ibis_with_date_32():
     ]
 
 
-@pytest.mark.skipif(
-    Version("1.5") > PANDAS_VERSION,
-    reason="A warning is thrown on old pandas versions",
-)
-@pytest.mark.xfail(
-    sys.platform == "win32", reason="Timezone database is not installed on Windows"
-)
-def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
-    ibis.set_backend("polars")
-    df = pl.DataFrame(
+@skip_requires_pyarrow(requires_tzdata=True)
+def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
+    # Test that objects which Narwhals only supports at the interchange
+    # level don't get converted to PyArrow unnecessarily when plotted
+    # with the vegafusion transformer.
+    # TODO: this test can be drastically simplified when some level of
+    # DuckDB support in VegaFusion, as it can then just be `alt.Chart(rel_df)`
+    # without DuckDBWithInterchangeSupport.
+    df = pl.DataFrame(  # noqa: F841
         {
             "a": [1, 2, 3],
             "b": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
         }
     )
-    tbl = ibis.memtable(df)
+    rel = duckdb.sql("select * from df")
+
+    class DuckDBWithInterchangeSupport:
+        """
+        DuckDB doesn't (yet?) support the interchange protocol.
+
+        So, we create duckdb wrapper which defers to PyArrow's
+        implementation of the protocol.
+        """
+
+        def __init__(self, rel: duckdb.DuckDBPyRelation) -> None:
+            self._rel = rel
+
+        def __dataframe__(self, allow_copy: bool = True) -> object:
+            return self._rel.to_arrow_table().__dataframe__()
+
+    rel_df = DuckDBWithInterchangeSupport(rel)
     # "poison" `arrow_table_from_dfi_dataframe` to check that it does not get called
     # if we use the vegafusion transformer
     monkeypatch.setattr(
         "altair.utils.data.arrow_table_from_dfi_dataframe", lambda x: 1 / 0
     )
-    tbl = ibis.memtable(df)
+
+    # Narwhals doesn't fully support our custom DuckDBWithInterchangeSupport,
+    # so we need to overwrite `to_native`
+    def to_native(df, strict):
+        if isinstance(df, nw.DataFrame):
+            return rel_df
+        return df
+
+    monkeypatch.setattr("narwhals.stable.v1.to_native", to_native)
+
     with alt.data_transformers.enable("vegafusion"):
-        result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict(format="vega")
+        result = (
+            alt.Chart(rel_df).mark_line().encode(x="a", y="b").to_dict(format="vega")
+        )
     assert next(iter(result["data"]))["values"] == [
         {"a": 1, "b": "2020-01-01T00:00:00.000"},
         {"a": 2, "b": "2020-01-02T00:00:00.000"},
         {"a": 3, "b": "2020-01-03T00:00:00.000"},
     ]
+
+
+def test_binding() -> None:
+    @use_signature(alt.Binding)
+    def old_binding(input: Any, **kwargs: Any) -> alt.Binding:
+        """A generic binding."""
+        return alt.Binding(input=input, **kwargs)
+
+    # NOTE: `mypy` doesn't complain, but `pyright` does
+    old = old_binding(input="search", placeholder="Country", name="Search")  # pyright: ignore[reportCallIssue]
+    old_positional = old_binding("search", placeholder="Country", name="Search")
+
+    new = alt.binding(input="search", placeholder="Country", name="Search")
+    new_positional = alt.binding("search", placeholder="Country", name="Search")
+
+    assert (
+        old.to_dict()
+        == old_positional.to_dict()
+        == new.to_dict()
+        == new_positional.to_dict()
+    )
+    assert all(
+        isinstance(x, alt.Binding) for x in (old, old_positional, new, new_positional)
+    )
+
+    MISSING_INPUT = r"missing 1 required positional argument: 'input"
+
+    # NOTE: `mypy` doesn't complain, but `pyright` does (Again)
+    with pytest.raises(TypeError, match=MISSING_INPUT):
+        old_binding(placeholder="Country", name="Search")  # pyright: ignore[reportCallIssue]
+
+    # NOTE: Both type checkers can detect the issue on the new signature
+    with pytest.raises(TypeError, match=MISSING_INPUT):
+        alt.binding(placeholder="Country", name="Search")  # type: ignore[call-arg]
