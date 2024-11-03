@@ -1607,7 +1607,7 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "numpy" not in sys.modules
 
 
-@skip_requires_pyarrow
+@skip_requires_pyarrow(requires_tzdata=True)
 def test_interchange_with_date_32():
     # Test that objects which Narwhals only supports at the interchange
     # level can be plotted when they contain date32 columns.
@@ -1623,7 +1623,7 @@ def test_interchange_with_date_32():
     ]
 
 
-@skip_requires_pyarrow
+@skip_requires_pyarrow(requires_tzdata=True)
 def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
     # Test that objects which Narwhals only supports at the interchange
     # level don't get converted to PyArrow unnecessarily when plotted
