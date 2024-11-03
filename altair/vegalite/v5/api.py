@@ -1740,10 +1740,49 @@ def selection_single(**kwargs: Any) -> Parameter:
     return _selection(type="point", **kwargs)
 
 
-@utils.use_signature(core.BindInput)
-def binding(**kwargs: Any) -> BindInput:
-    """A generic binding."""
-    return core.BindInput(**kwargs)
+def binding(
+    input: str,
+    *,
+    autocomplete: Optional[str] = Undefined,
+    debounce: Optional[float] = Undefined,
+    element: Optional[str] = Undefined,
+    name: Optional[str] = Undefined,
+    placeholder: Optional[str] = Undefined,
+) -> BindInput:
+    """
+    A generic binding.
+
+    Parameters
+    ----------
+    input : str
+        The type of input element to use. The valid values are ``"checkbox"``, ``"radio"``,
+        ``"range"``, ``"select"``, and any other legal `HTML form input type
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`__.
+    autocomplete : str
+        A hint for form autofill. See the `HTML autocomplete attribute
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete>`__ for
+        additional information.
+    debounce : float
+        If defined, delays event handling until the specified milliseconds have elapsed
+        since the last event was fired.
+    element : str
+        An optional CSS selector string indicating the parent element to which the input
+        element should be added. By default, all input elements are added within the parent
+        container of the Vega view.
+    name : str
+        By default, the signal name is used to label input elements. This ``name`` property
+        can be used instead to specify a custom label for the bound signal.
+    placeholder : str
+        Text that appears in the form control when it has no value set.
+    """
+    return core.BindInput(
+        autocomplete=autocomplete,
+        debounce=debounce,
+        element=element,
+        input=input,
+        name=name,
+        placeholder=placeholder,
+    )
 
 
 @utils.use_signature(core.BindCheckbox)
