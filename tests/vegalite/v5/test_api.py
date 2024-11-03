@@ -25,10 +25,13 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair.utils.core import use_signature
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import skip_requires_vl_convert, slow
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from altair.vegalite.v5.api import _Conditional, _Conditions
     from altair.vegalite.v5.schema._typing import Map
 
@@ -1709,3 +1712,37 @@ def test_ibis_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
         {"a": 2, "b": "2020-01-02T00:00:00.000"},
         {"a": 3, "b": "2020-01-03T00:00:00.000"},
     ]
+
+
+def test_binding() -> None:
+    @use_signature(alt.Binding)
+    def old_binding(input: Any, **kwargs: Any) -> alt.Binding:
+        """A generic binding."""
+        return alt.Binding(input=input, **kwargs)
+
+    # NOTE: `mypy` doesn't complain, but `pyright` does
+    old = old_binding(input="search", placeholder="Country", name="Search")  # pyright: ignore[reportCallIssue]
+    old_positional = old_binding("search", placeholder="Country", name="Search")
+
+    new = alt.binding(input="search", placeholder="Country", name="Search")
+    new_positional = alt.binding("search", placeholder="Country", name="Search")
+
+    assert (
+        old.to_dict()
+        == old_positional.to_dict()
+        == new.to_dict()
+        == new_positional.to_dict()
+    )
+    assert all(
+        isinstance(x, alt.Binding) for x in (old, old_positional, new, new_positional)
+    )
+
+    MISSING_INPUT = r"missing 1 required positional argument: 'input"
+
+    # NOTE: `mypy` doesn't complain, but `pyright` does (Again)
+    with pytest.raises(TypeError, match=MISSING_INPUT):
+        old_binding(placeholder="Country", name="Search")  # pyright: ignore[reportCallIssue]
+
+    # NOTE: Both type checkers can detect the issue on the new signature
+    with pytest.raises(TypeError, match=MISSING_INPUT):
+        alt.binding(placeholder="Country", name="Search")  # type: ignore[call-arg]
