@@ -1,6 +1,5 @@
 import io
 import json
-import sys
 
 import narwhals.stable.v1 as nw
 import numpy as np
@@ -121,9 +120,6 @@ def test_sanitize_dataframe_arrow_columns():
 
 
 @skip_requires_pyarrow
-@pytest.mark.xfail(
-    sys.platform == "win32", reason="Timezone database is not installed on Windows"
-)
 def test_sanitize_pyarrow_table_columns() -> None:
     import pyarrow as pa
 
