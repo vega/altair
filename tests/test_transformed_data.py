@@ -7,7 +7,7 @@ from vega_datasets import data
 import altair as alt
 from altair.utils.execeval import eval_block
 from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
-import narwhals as nw
+import narwhals.stable.v1 as nw
 
 try:
     import vegafusion as vf
