@@ -6,7 +6,7 @@ This is an example of creating a stacked chart for which the domain of the
 top chart can be selected by interacting with the bottom chart. The initial
 selection range is set using Python's native datetime objects.
 """
-# category: area charts
+# category: interactive charts
 import altair as alt
 from vega_datasets import data
 import datetime as dt
