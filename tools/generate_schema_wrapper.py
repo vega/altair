@@ -12,8 +12,13 @@ from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Final, Literal
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypedDict, TypeVar
 from urllib import request
+
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 import vl_convert as vlc
 
@@ -317,6 +322,18 @@ class _EncodingMixin:
         return copy
 '''
 
+# Enables use of ~, &, | with compositions of selection objects.
+DUNDER_PREDICATE_COMPOSITION = """
+    def __invert__(self) -> PredicateComposition:
+        return PredicateComposition({"not": self.to_dict()})
+
+    def __and__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"and": [self.to_dict(), other.to_dict()]})
+
+    def __or__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+"""
+
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
 # Revisit if this starts to become more common
@@ -429,6 +446,37 @@ class SchemaGenerator(codegen.SchemaGenerator):
         {init_code}
     '''
     )
+
+
+class MethodSchemaGenerator(SchemaGenerator):
+    """Base template w/ an extra slot `{method_code}` after `{init_code}`."""
+
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+        _schema = {schema!r}
+
+        {init_code}
+
+        {method_code}
+    '''
+    )
+
+
+SchGen = TypeVar("SchGen", bound=SchemaGenerator)
+
+
+class OverridesItem(TypedDict, Generic[SchGen]):
+    tp: type[SchGen]
+    kwds: dict[str, Any]
+
+
+CORE_OVERRIDES: dict[str, OverridesItem[SchemaGenerator]] = {
+    "PredicateComposition": OverridesItem(
+        tp=MethodSchemaGenerator, kwds={"method_code": DUNDER_PREDICATE_COMPOSITION}
+    )
+}
 
 
 class FieldSchemaGenerator(SchemaGenerator):
@@ -656,13 +704,20 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         defschema = {"$ref": "#/definitions/" + name}
         defschema_repr = {"$ref": "#/definitions/" + name}
         name = get_valid_identifier(name)
-        definitions[name] = SchemaGenerator(
+        if overrides := CORE_OVERRIDES.get(name):
+            tp = overrides["tp"]
+            kwds = overrides["kwds"]
+        else:
+            tp = SchemaGenerator
+            kwds = {}
+        definitions[name] = tp(
             name,
             schema=defschema,
             schemarepr=defschema_repr,
             rootschema=rootschema,
             basename=basename,
             rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
+            **kwds,
         )
     for name, schema in definitions.items():
         graph[name] = []
