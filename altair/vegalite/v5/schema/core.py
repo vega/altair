@@ -16153,6 +16153,15 @@ class PredicateComposition(VegaLiteSchema):
     def __init__(self, *args, **kwds):
         super().__init__(*args, **kwds)
 
+    def __invert__(self) -> PredicateComposition:
+        return PredicateComposition({"not": self.to_dict()})
+
+    def __and__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"and": [self.to_dict(), other.to_dict()]})
+
+    def __or__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+
 
 class LogicalAndPredicate(PredicateComposition):
     """

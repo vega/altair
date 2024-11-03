@@ -260,16 +260,20 @@ class SchemaGenerator:
             basename = self.basename
         else:
             basename = ", ".join(self.basename)
+        docstring = self.docstring(indent=4)
+        init_code = self.init_code(indent=4)
+        if type(self).haspropsetters:
+            method_code = self.overload_code(indent=4)
+        else:
+            method_code = self.kwargs.pop("method_code", None)
         return self.schema_class_template.format(
             classname=self.classname,
             basename=basename,
             schema=schemarepr,
             rootschema=rootschemarepr,
-            docstring=self.docstring(indent=4),
-            init_code=self.init_code(indent=4),
-            method_code=(
-                self.overload_code(indent=4) if type(self).haspropsetters else None
-            ),
+            docstring=docstring,
+            init_code=init_code,
+            method_code=method_code,
             **self.kwargs,
         )
 
