@@ -42,7 +42,7 @@ points = alt.Chart().mark_point(filled=True, color="black").encode(
 mag = alt.Chart().mark_bar().encode(
     x='mbin:N',
     y="count()",
-    color=alt.condition(pts, alt.value("black"), alt.value("lightgray"))
+    color=alt.when(pts).then(alt.value("black")).otherwise(alt.value("lightgray"))
 ).properties(
     width=300,
     height=300

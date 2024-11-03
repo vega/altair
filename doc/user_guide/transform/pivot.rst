@@ -43,27 +43,27 @@ values on multiple lines:
 
 .. altair-plot::
 
-   import altair as alt
-   from vega_datasets import data
+    import altair as alt
+    from vega_datasets import data
 
-   source = data.stocks()
-   base = alt.Chart(source).encode(x='date:T')
-   columns = sorted(source.symbol.unique())
-   selection = alt.selection_point(
-       fields=['date'], nearest=True, on='pointerover', empty=False, clear='pointerout'
-   )
+    source = data.stocks()
+    base = alt.Chart(source).encode(x='date:T')
+    columns = sorted(source.symbol.unique())
+    selection = alt.selection_point(
+        fields=['date'], nearest=True, on='pointerover', empty=False, clear='pointerout'
+    )
 
-   lines = base.mark_line().encode(y='price:Q', color='symbol:N')
-   points = lines.mark_point().transform_filter(selection)
+    lines = base.mark_line().encode(y='price:Q', color='symbol:N')
+    points = lines.mark_point().transform_filter(selection)
 
    rule = base.transform_pivot(
        'symbol', value='price', groupby=['date']
    ).mark_rule().encode(
-       opacity=alt.condition(selection, alt.value(0.3), alt.value(0)),
+       opacity=alt.when(selection).then(alt.value(0.3)).otherwise(alt.value(0)),
        tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
    ).add_params(selection)
 
-   lines + points + rule
+    lines + points + rule
 
 
 Transform Options
