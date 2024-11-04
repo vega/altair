@@ -4,18 +4,15 @@ import hashlib
 import json
 import random
 import sys
+from collections.abc import MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
-    List,
     Literal,
-    MutableMapping,
     Protocol,
-    Sequence,
     TypedDict,
     TypeVar,
     Union,
@@ -54,22 +51,23 @@ class SupportsGeoInterface(Protocol):
 
 
 DataType: TypeAlias = Union[
-    Dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
+    dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
 ]
 
 TDataType = TypeVar("TDataType", bound=DataType)
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
-VegaLiteDataDict: TypeAlias = Dict[
-    str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
+VegaLiteDataDict: TypeAlias = dict[
+    str, Union[str, dict[Any, Any], list[dict[Any, Any]]]
 ]
-ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
-SampleReturnType = Union[IntoDataFrame, Dict[str, Sequence], None]
+ToValuesReturnType: TypeAlias = dict[str, Union[dict[Any, Any], list[dict[Any, Any]]]]
+SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return _is_pandas_dataframe(obj) or isinstance(
-        obj, (dict, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    return isinstance(obj, (dict, SupportsGeoInterface)) or isinstance(
+        nw.from_native(obj, eager_or_interchange_only=True, strict=False),
+        nw.DataFrame,
     )
 
 

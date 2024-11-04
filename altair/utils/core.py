@@ -8,20 +8,11 @@ import re
 import sys
 import traceback
 import warnings
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterator,
-    Literal,
-    TypeVar,
-    cast,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -718,11 +709,14 @@ def infer_vegalite_type_for_narwhals(
         and not (categories := column.cat.get_categories()).is_empty()
     ):
         return "ordinal", categories.to_list()
-    if dtype in {nw.String, nw.Categorical, nw.Boolean}:
+    if dtype == nw.String or dtype == nw.Categorical or dtype == nw.Boolean:  # noqa: PLR1714
         return "nominal"
     elif dtype.is_numeric():
         return "quantitative"
-    elif dtype in {nw.Datetime, nw.Date}:
+    elif dtype == nw.Datetime or dtype == nw.Date:  # noqa: PLR1714
+        # We use `== nw.Datetime` to check for any kind of Datetime, regardless of time
+        # unit and time zone. Prefer this over `dtype in {nw.Datetime, nw.Date}`,
+        # see https://narwhals-dev.github.io/narwhals/backcompat.
         return "temporal"
     else:
         msg = f"Unexpected DtypeKind: {dtype}"

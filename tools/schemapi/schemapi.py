@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import datetime as dt
 import inspect
 import json
 import sys
 import textwrap
 from collections import defaultdict
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
@@ -14,15 +16,9 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     Final,
     Generic,
-    Iterable,
-    Iterator,
-    List,
     Literal,
-    Mapping,
-    Sequence,
     TypeVar,
     Union,
     cast,
@@ -65,8 +61,8 @@ if TYPE_CHECKING:
         from typing_extensions import Never, Self
     _OptionalModule: TypeAlias = "ModuleType | None"
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
+ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -505,6 +501,34 @@ def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
         return list(obj)
 
 
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
+    """
+    Parse native `datetime.(date|datetime)` into a `DateTime`_ schema.
+
+    .. _DateTime:
+        https://vega.github.io/vega-lite/docs/datetime.html
+    """
+    result: dict[str, Any] = {"year": obj.year, "month": obj.month, "date": obj.day}
+    if isinstance(obj, dt.datetime):
+        if obj.time() != dt.time.min:
+            us = obj.microsecond
+            ms = us if us == 0 else us // 1_000
+            result.update(
+                hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
+            )
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                result["utc"] = True
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
+    return result
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
@@ -535,6 +559,8 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
         return pd_opt.Timestamp(obj).isoformat()
     elif _is_iterable(obj, exclude=(str, bytes)):
         return _todict(_from_array_like(obj), context, np_opt, pd_opt)
+    elif isinstance(obj, dt.date):
+        return _from_date_datetime(obj)
     else:
         return obj
 
@@ -1349,7 +1375,7 @@ def _replace_parsed_shorthand(
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
 
-_CopyImpl = TypeVar("_CopyImpl", SchemaBase, Dict[Any, Any], List[Any])
+_CopyImpl = TypeVar("_CopyImpl", SchemaBase, dict[Any, Any], list[Any])
 """
 Types which have an implementation in ``SchemaBase.copy()``.
 

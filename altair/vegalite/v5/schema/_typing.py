@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import re
 import sys
-from typing import Any, Generic, Literal, Mapping, Sequence, TypeVar, Union
+from collections.abc import Mapping, Sequence
+from datetime import date, datetime
+from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args
 
 if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
     from typing import TypedDict
@@ -32,11 +34,6 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import TypeAlias
 
-if sys.version_info >= (3, 9):
-    from typing import Annotated, get_args
-else:
-    from typing_extensions import Annotated, get_args
-
 
 __all__ = [
     "AggregateOp_T",
@@ -60,8 +57,6 @@ __all__ = [
     "Interpolate_T",
     "LayoutAlign_T",
     "LegendOrient_T",
-    "LocalMultiTimeUnit_T",
-    "LocalSingleTimeUnit_T",
     "Map",
     "MarkInvalidDataMode_T",
     "MarkType_T",
@@ -72,6 +67,7 @@ __all__ = [
     "Orient_T",
     "Orientation_T",
     "PaddingKwds",
+    "PrimitiveValue_T",
     "ProjectionType_T",
     "RangeEnum_T",
     "ResolveMode_T",
@@ -82,7 +78,6 @@ __all__ = [
     "SelectionType_T",
     "SingleDefUnitChannel_T",
     "SingleTimeUnit_T",
-    "SortByChannelDesc_T",
     "SortByChannel_T",
     "SortOrder_T",
     "StackOffset_T",
@@ -90,6 +85,7 @@ __all__ = [
     "StepFor_T",
     "StrokeCap_T",
     "StrokeJoin_T",
+    "Temporal",
     "TextBaseline_T",
     "TextDirection_T",
     "TimeInterval_T",
@@ -98,8 +94,6 @@ __all__ = [
     "TitleOrient_T",
     "TypeForShape_T",
     "Type_T",
-    "UtcMultiTimeUnit_T",
-    "UtcSingleTimeUnit_T",
     "Value",
     "VegaThemes",
     "WindowOnlyOp_T",
@@ -201,6 +195,8 @@ class PaddingKwds(TypedDict, total=False):
     top: float
 
 
+Temporal: TypeAlias = Union[date, datetime]
+
 VegaThemes: TypeAlias = Literal[
     "carbong10",
     "carbong100",
@@ -218,6 +214,7 @@ VegaThemes: TypeAlias = Literal[
     "vox",
 ]
 Map: TypeAlias = Mapping[str, Any]
+PrimitiveValue_T: TypeAlias = Union[str, bool, float, None]
 AggregateOp_T: TypeAlias = Literal[
     "argmax",
     "argmin",
@@ -884,50 +881,6 @@ LegendOrient_T: TypeAlias = Literal[
     "bottom-left",
     "bottom-right",
 ]
-LocalMultiTimeUnit_T: TypeAlias = Literal[
-    "yearquarter",
-    "yearquartermonth",
-    "yearmonth",
-    "yearmonthdate",
-    "yearmonthdatehours",
-    "yearmonthdatehoursminutes",
-    "yearmonthdatehoursminutesseconds",
-    "yearweek",
-    "yearweekday",
-    "yearweekdayhours",
-    "yearweekdayhoursminutes",
-    "yearweekdayhoursminutesseconds",
-    "yeardayofyear",
-    "quartermonth",
-    "monthdate",
-    "monthdatehours",
-    "monthdatehoursminutes",
-    "monthdatehoursminutesseconds",
-    "weekday",
-    "weekdayhours",
-    "weekdayhoursminutes",
-    "weekdayhoursminutesseconds",
-    "dayhours",
-    "dayhoursminutes",
-    "dayhoursminutesseconds",
-    "hoursminutes",
-    "hoursminutesseconds",
-    "minutesseconds",
-    "secondsmilliseconds",
-]
-LocalSingleTimeUnit_T: TypeAlias = Literal[
-    "year",
-    "quarter",
-    "month",
-    "week",
-    "day",
-    "dayofyear",
-    "date",
-    "hours",
-    "minutes",
-    "seconds",
-    "milliseconds",
-]
 MarkInvalidDataMode_T: TypeAlias = Literal[
     "filter",
     "break-paths-filter-domains",
@@ -1153,20 +1106,6 @@ SingleTimeUnit_T: TypeAlias = Literal[
     "utcseconds",
     "utcmilliseconds",
 ]
-SortByChannelDesc_T: TypeAlias = Literal[
-    "-x",
-    "-y",
-    "-color",
-    "-fill",
-    "-stroke",
-    "-strokeWidth",
-    "-size",
-    "-shape",
-    "-fillOpacity",
-    "-strokeOpacity",
-    "-opacity",
-    "-text",
-]
 SortByChannel_T: TypeAlias = Literal[
     "x",
     "y",
@@ -1199,50 +1138,6 @@ TitleFrame_T: TypeAlias = Literal["bounds", "group"]
 TitleOrient_T: TypeAlias = Literal["none", "left", "right", "top", "bottom"]
 TypeForShape_T: TypeAlias = Literal["nominal", "ordinal", "geojson"]
 Type_T: TypeAlias = Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
-UtcMultiTimeUnit_T: TypeAlias = Literal[
-    "utcyearquarter",
-    "utcyearquartermonth",
-    "utcyearmonth",
-    "utcyearmonthdate",
-    "utcyearmonthdatehours",
-    "utcyearmonthdatehoursminutes",
-    "utcyearmonthdatehoursminutesseconds",
-    "utcyearweek",
-    "utcyearweekday",
-    "utcyearweekdayhours",
-    "utcyearweekdayhoursminutes",
-    "utcyearweekdayhoursminutesseconds",
-    "utcyeardayofyear",
-    "utcquartermonth",
-    "utcmonthdate",
-    "utcmonthdatehours",
-    "utcmonthdatehoursminutes",
-    "utcmonthdatehoursminutesseconds",
-    "utcweekday",
-    "utcweekdayhours",
-    "utcweekdayhoursminutes",
-    "utcweekdayhoursminutesseconds",
-    "utcdayhours",
-    "utcdayhoursminutes",
-    "utcdayhoursminutesseconds",
-    "utchoursminutes",
-    "utchoursminutesseconds",
-    "utcminutesseconds",
-    "utcsecondsmilliseconds",
-]
-UtcSingleTimeUnit_T: TypeAlias = Literal[
-    "utcyear",
-    "utcquarter",
-    "utcmonth",
-    "utcweek",
-    "utcday",
-    "utcdayofyear",
-    "utcdate",
-    "utchours",
-    "utcminutes",
-    "utcseconds",
-    "utcmilliseconds",
-]
 WindowOnlyOp_T: TypeAlias = Literal[
     "row_number",
     "rank",

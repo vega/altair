@@ -12,23 +12,24 @@ from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Final, Iterable, Iterator, Literal
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypedDict, TypeVar
 from urllib import request
+
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 import vl_convert as vlc
 
 sys.path.insert(0, str(Path.cwd()))
 
 
-from tools.schemapi import (  # noqa: F401
-    CodeSnippet,
-    SchemaInfo,
-    arg_invalid_kwds,
-    arg_kwds,
-    arg_required_kwds,
-    codegen,
-)
+from tools.codemod import ruff
+from tools.markup import rst_syntax_for_class
+from tools.schemapi import CodeSnippet, SchemaInfo, arg_kwds, arg_required_kwds, codegen
 from tools.schemapi.utils import (
+    RemapContext,
     SchemaProperties,
     TypeAliasTracer,
     finalize_type_reprs,
@@ -37,14 +38,16 @@ from tools.schemapi.utils import (
     import_typing_extensions,
     indent_docstring,
     resolve_references,
-    rst_syntax_for_class,
-    ruff_format_py,
-    ruff_write_lint_format_str,
     spell_literal,
 )
+from tools.vega_expr import write_expr_module
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from tools.schemapi.codegen import ArgInfo, AttrGetter
+    from vl_convert import VegaThemes
+
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
@@ -59,8 +62,14 @@ from __future__ import annotations\n
 """
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
+VL_PACKAGE_TEMPLATE = (
+    "https://raw.githubusercontent.com/vega/vega-lite/refs/tags/{version}/package.json"
+)
 SCHEMA_FILE = "vega-lite-schema.json"
 THEMES_FILE = "vega-themes.json"
+EXPR_FILE: Path = (
+    Path(__file__).parent / ".." / "altair" / "expr" / "__init__.py"
+).resolve()
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -252,6 +261,25 @@ ENCODE_KWDS: Literal["EncodeKwds"] = "EncodeKwds"
 THEME_CONFIG: Literal["ThemeConfig"] = "ThemeConfig"
 PADDING_KWDS: Literal["PaddingKwds"] = "PaddingKwds"
 ROW_COL_KWDS: Literal["RowColKwds"] = "RowColKwds"
+TEMPORAL: Literal["Temporal"] = "Temporal"
+
+# NOTE: `api.py` typing imports
+BIN: Literal["Bin"] = "Bin"
+IMPUTE: Literal["Impute"] = "Impute"
+INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+
+# NOTE: `core.py` typing imports
+DATETIME: Literal["DateTime"] = "DateTime"
+BIN_PARAMS: Literal["BinParams"] = "BinParams"
+IMPUTE_PARAMS: Literal["ImputeParams"] = "ImputeParams"
+TIME_UNIT_PARAMS: Literal["TimeUnitParams"] = "TimeUnitParams"
+SCALE: Literal["Scale"] = "Scale"
+AXIS: Literal["Axis"] = "Axis"
+LEGEND: Literal["Legend"] = "Legend"
+REPEAT_REF: Literal["RepeatRef"] = "RepeatRef"
+HEADER_COLUMN: Literal["Header"] = "Header"
+ENCODING_SORT_FIELD: Literal["EncodingSortField"] = "EncodingSortField"
+
 ENCODE_KWDS_SUMMARY: Final = (
     "Encoding channels map properties of the data to visual properties of the chart."
 )
@@ -276,10 +304,7 @@ class _EncodingMixin:
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
-        # Compat prep for `infer_encoding_types` signature
-        kwargs = locals()
-        kwargs.pop("self")
-        args = kwargs.pop("args")
+        kwargs = {dict_literal}
         if args:
             kwargs = {{k: v for k, v in kwargs.items() if v is not Undefined}}
 
@@ -296,6 +321,18 @@ class _EncodingMixin:
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
 '''
+
+# Enables use of ~, &, | with compositions of selection objects.
+DUNDER_PREDICATE_COMPOSITION = """
+    def __invert__(self) -> PredicateComposition:
+        return PredicateComposition({"not": self.to_dict()})
+
+    def __and__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"and": [self.to_dict(), other.to_dict()]})
+
+    def __or__(self, other: SchemaBase) -> PredicateComposition:
+        return PredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+"""
 
 
 # NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
@@ -392,10 +429,11 @@ class PaddingKwds(TypedDict, total=False):
     left: float
     right: float
     top: float
+
+Temporal: TypeAlias = Union[date, datetime]
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
-INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
 
 
 class SchemaGenerator(codegen.SchemaGenerator):
@@ -408,6 +446,37 @@ class SchemaGenerator(codegen.SchemaGenerator):
         {init_code}
     '''
     )
+
+
+class MethodSchemaGenerator(SchemaGenerator):
+    """Base template w/ an extra slot `{method_code}` after `{init_code}`."""
+
+    schema_class_template = textwrap.dedent(
+        '''
+    class {classname}({basename}):
+        """{docstring}"""
+        _schema = {schema!r}
+
+        {init_code}
+
+        {method_code}
+    '''
+    )
+
+
+SchGen = TypeVar("SchGen", bound=SchemaGenerator)
+
+
+class OverridesItem(TypedDict, Generic[SchGen]):
+    tp: type[SchGen]
+    kwds: dict[str, Any]
+
+
+CORE_OVERRIDES: dict[str, OverridesItem[SchemaGenerator]] = {
+    "PredicateComposition": OverridesItem(
+        tp=MethodSchemaGenerator, kwds={"method_code": DUNDER_PREDICATE_COMPOSITION}
+    )
+}
 
 
 class FieldSchemaGenerator(SchemaGenerator):
@@ -424,6 +493,7 @@ class FieldSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class ValueSchemaGenerator(SchemaGenerator):
@@ -440,6 +510,7 @@ class ValueSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 class DatumSchemaGenerator(SchemaGenerator):
@@ -456,6 +527,7 @@ class DatumSchemaGenerator(SchemaGenerator):
         {init_code}
     '''
     )
+    haspropsetters = True
 
 
 def schema_class(*args, **kwargs) -> str:
@@ -482,8 +554,8 @@ def download_schemafile(
 
 
 def _vega_lite_props_only(
-    themes: dict[str, dict[str, Any]], props: SchemaProperties, /
-) -> Iterator[tuple[str, dict[str, Any]]]:
+    themes: dict[VegaThemes, dict[str, Any]], props: SchemaProperties, /
+) -> Iterator[tuple[VegaThemes, dict[str, Any]]]:
     """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
     keep = props.keys()
     for name, theme_spec in themes.items():
@@ -543,13 +615,14 @@ def copy_schemapi_util() -> None:
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
 
     print(f"Copying\n {source_fp!s}\n  -> {destination_fp!s}")
-    with source_fp.open(encoding="utf8") as source, destination_fp.open(
-        "w", encoding="utf8"
-    ) as dest:
+    with (
+        source_fp.open(encoding="utf8") as source,
+        destination_fp.open("w", encoding="utf8") as dest,
+    ):
         dest.write(HEADER_COMMENT)
         dest.writelines(source.readlines())
     if sys.platform == "win32":
-        ruff_format_py(destination_fp)
+        ruff.format(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -631,13 +704,20 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         defschema = {"$ref": "#/definitions/" + name}
         defschema_repr = {"$ref": "#/definitions/" + name}
         name = get_valid_identifier(name)
-        definitions[name] = SchemaGenerator(
+        if overrides := CORE_OVERRIDES.get(name):
+            tp = overrides["tp"]
+            kwds = overrides["kwds"]
+        else:
+            tp = SchemaGenerator
+            kwds = {}
+        definitions[name] = tp(
             name,
             schema=defschema,
             schemarepr=defschema_repr,
             rootschema=rootschema,
             basename=basename,
             rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
+            **kwds,
         )
     for name, schema in definitions.items():
         graph[name] = []
@@ -666,6 +746,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         import_type_checking(
+            "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -747,7 +828,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
                 "schema": defschema,
                 "rootschema": schema,
                 "encodingname": prop,
-                "haspropsetters": True,
             }
             if encoding_spec == "field":
                 gen = FieldSchemaGenerator(classname, nodefault=[], **kwds)
@@ -786,14 +866,27 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
         "from . import core",
         "from ._typing import * # noqa: F403",
     ]
+    TYPING_CORE = (
+        DATETIME,
+        TIME_UNIT_PARAMS,
+        SCALE,
+        AXIS,
+        LEGEND,
+        REPEAT_REF,
+        HEADER_COLUMN,
+        ENCODING_SORT_FIELD,
+    )
+    TYPING_API = INTO_CONDITION, BIN, IMPUTE
     contents = [
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
         import_type_checking(
+            "from datetime import date, datetime",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.api import {INTO_CONDITION}",
+            f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
+            f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         "\n" f"__all__ = {sorted(all_)}\n",
@@ -1025,7 +1118,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n",
     ]
-    ruff_write_lint_format_str(outfile, content)
+    ruff.write_lint_format(outfile, content)
 
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
 
@@ -1039,7 +1132,10 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
-    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
+    with RemapContext(
+        {DATETIME: (TEMPORAL, DATETIME), BIN_PARAMS: (BIN,), IMPUTE_PARAMS: (IMPUTE,)}
+    ):
+        files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
 
     # generate the mark mixin
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
@@ -1101,13 +1197,14 @@ def vegalite_main(skip_download: bool = False) -> None:
         "is_color_hex",
         ROW_COL_KWDS,
         PADDING_KWDS,
+        TEMPORAL,
         header=HEADER,
         extra=TYPING_EXTRA,
     )
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
-        ruff_write_lint_format_str(fp, contents)
+        ruff.write_lint_format(fp, contents)
 
 
 def generate_encoding_artifacts(
@@ -1179,6 +1276,7 @@ def generate_encoding_artifacts(
     method: str = fmt_method.format(
         method_args=", ".join(signature_args),
         docstring=indent_docstring(signature_doc_params, indent_level=8, lstrip=False),
+        dict_literal="{" + ", ".join(f"{kwd!r}:{kwd}" for kwd in channel_infos) + "}",
     )
     typed_dict = generate_typed_dict(
         facet_encoding,
@@ -1206,6 +1304,11 @@ def main() -> None:
     args = parser.parse_args()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
+    write_expr_module(
+        vlc.get_vega_version(),
+        output=EXPR_FILE,
+        header=HEADER_COMMENT,
+    )
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

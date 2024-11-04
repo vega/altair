@@ -7,11 +7,7 @@ import pytest
 from packaging.version import Version
 
 import altair.vegalite.v5 as alt
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
+from tests import skip_requires_vl_convert
 
 try:
     import anywidget
@@ -92,10 +88,8 @@ def test_json_renderer_embed_options(chart, renderer="json"):
             assert metadata == {mimetype: {"option": "foo"}}
 
 
+@skip_requires_vl_convert
 def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run this test")
-
     # Check that setting embed_options to None doesn't crash
     from altair.utils.mimebundle import spec_to_mimebundle
 

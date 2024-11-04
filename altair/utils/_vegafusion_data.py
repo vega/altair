@@ -1,16 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Final,
-    MutableMapping,
-    TypedDict,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
 
 from altair.utils._importers import import_vegafusion
@@ -24,9 +15,11 @@ from altair.utils.data import (
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
+    from collections.abc import MutableMapping
+
     from narwhals.typing import IntoDataFrame
 
-    from vegafusion.runtime import ChartState  # type: ignore
+    from vegafusion.runtime import ChartState
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary

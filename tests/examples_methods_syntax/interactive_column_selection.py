@@ -37,7 +37,7 @@ heatmap = alt.Chart(
     alt.X('level_0').title(None),
     alt.Y('level_1').title(None),
     alt.Color('correlation').scale(domain=[-1, 1], scheme='blueorange'),
-    opacity=alt.condition(select_x & select_y, alt.value(1), alt.value(0.4))
+    opacity=alt.when(select_x, select_y).then(alt.value(1)).otherwise(alt.value(0.4)),
 ).add_params(
     select_x, select_y
 )

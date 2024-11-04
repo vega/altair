@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 import re
 import warnings
-from typing import Any, Iterator, Sequence
+from typing import TYPE_CHECKING, Any
 
 from docutils import frontend, nodes, utils
 from docutils.parsers.rst import Directive
@@ -12,6 +12,9 @@ from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
 from tools.schemapi.utils import SchemaInfo, fix_docstring_issues
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator, Sequence
 
 
 def type_description(schema: dict[str, Any]) -> str:
