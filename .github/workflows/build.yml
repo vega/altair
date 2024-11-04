@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         jsonschema-version: ["3.0", "latest"]
     name: py ${{ matrix.python-version }} js ${{ matrix.jsonschema-version }}
     steps:
