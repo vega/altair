@@ -45,6 +45,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Typing :: Typed",
 ]
 
@@ -67,7 +68,7 @@ all = [
     "altair_tiles>=0.3.0"
 ]
 dev = [
-    "hatch",
+    "hatch>=1.13.0",
     "ruff>=0.6.0",
     "duckdb>=1.0",
     "ipython[kernel]",
@@ -147,7 +148,7 @@ features = ["all", "dev", "doc"]
 default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
 parallel = true
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12"]
+python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 [tool.hatch.envs.hatch-test.scripts]
 run = [
     "ruff check .", 
