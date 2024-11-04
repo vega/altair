@@ -119,7 +119,7 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
-@skip_requires_pyarrow
+@skip_requires_pyarrow(requires_tzdata=True)
 def test_sanitize_pyarrow_table_columns() -> None:
     import pyarrow as pa
 
