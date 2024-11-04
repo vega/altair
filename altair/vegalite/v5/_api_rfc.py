@@ -314,8 +314,7 @@ class field:
         cls, field: str, value: _FieldEqualType, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         if value is None:
-            # NOTE: Unclear why this is allowed for `datum` but not in `FieldEqualPredicate`
-            raise TypeError(value)
+            return cls.valid(field, False, timeUnit=timeUnit)
         return FieldEqualPredicate(field=field, equal=value, timeUnit=timeUnit)
 
     @classmethod
