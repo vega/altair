@@ -3058,12 +3058,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             chart.transform_filter(datum.year <= 1980)
 
-        We can also use parameter selections directly::
+        We can also use selection parameters directly::
 
             selection = alt.selection_point(encodings=["color"], bind="legend")
             chart.transform_filter(selection).add_params(selection)
 
-        Or using field predicates::
+        Or a field predicate::
 
             between_1950_60 = alt.FieldRangePredicate(field="year", range=[1950, 1960])
             chart.transform_filter(between_1950_60) | chart.transform_filter(~between_1950_60)
