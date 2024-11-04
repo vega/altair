@@ -543,11 +543,18 @@ else:
 
 
 _FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
-"""Permitted types for equality checks on field values:
+"""
+Permitted types for equality checks on field values.
 
-- `datum.field == ...`
-- `FieldEqualPredicate(equal=...)`
-- `when(**constraints=...)`
+Applies to the following context(s):
+
+    import altair as alt
+
+    alt.datum.field == ...
+    alt.FieldEqualPredicate(field="field", equal=...)
+    alt.when(field=...)
+    alt.when().then().when(field=...)
+    alt.Chart.transform_filter(field=...)
 """
 
 
