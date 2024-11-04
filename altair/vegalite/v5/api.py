@@ -128,7 +128,6 @@ if TYPE_CHECKING:
         NamedData,
         ParameterName,
         PointSelectionConfig,
-        Predicate,
         PredicateComposition,
         ProjectionType,
         RepeatMapping,
@@ -522,18 +521,6 @@ _PredicateType: TypeAlias = Union[
     _expr_core.OperatorMixin,
 ]
 """Permitted types for `predicate`."""
-
-# FIXME: Remove before merging
-_OrigFilterType: TypeAlias = "str | Expr | Expression | Predicate | Parameter | PredicateComposition | dict[str, Predicate | str | list | bool]"
-"""**Temporary** alias for ``transform_filter``'s original annotation.
-
-Notes
------
-- Quite similar to ``_PredicateType``
-- Probably some redundant typing, that can be reduced
-    - ``Predicate`` derives ``PredicateComposition``
-        - Includes all ``(Logical|Field|Parameter)...Predicate``
-"""
 
 _ComposablePredicateType: TypeAlias = Union[
     _expr_core.OperatorMixin, core.PredicateComposition
