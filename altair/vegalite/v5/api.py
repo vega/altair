@@ -3081,7 +3081,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             verbose_composition = chart.transform_filter((datum.year == 2000) & (datum.sex == 1))
             chart.transform_filter(year=2000, sex=1)
         """
-        if depr_filter := constraints.pop("filter", None):
+        if depr_filter := t.cast(Any, constraints.pop("filter", None)):
             utils.deprecated_warn(
                 "Passing `filter` as a keyword is ambiguous.\n\n"
                 "Use a positional argument for `<5.5.0` behavior.\n"
@@ -3089,9 +3089,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 version="5.5.0",
             )
             if utils.is_undefined(predicate):
-                predicate = t.cast(Any, depr_filter)
+                predicate = depr_filter
             else:
-                more_predicates = *more_predicates, t.cast(Any, depr_filter)
+                more_predicates = *more_predicates, depr_filter
         cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         pred = cond.get("test", cond)
         return self._add_transform(core.FilterTransform(filter=pred))
