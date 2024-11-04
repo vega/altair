@@ -13,7 +13,8 @@ The rest are to define aliases only.
 # mypy: ignore-errors
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, Literal, Mapping, Sequence, Union
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING, Any, Literal, Union
 from typing_extensions import TypeAlias
 
 from altair.utils.core import TYPECODE_MAP as _TYPE_CODE
@@ -49,15 +50,15 @@ __all__ = ["agg", "field"]
 
 EncodeType: TypeAlias = Union[Type_T, Literal["O", "N", "Q", "T", "G"], None]
 AnyTimeUnit: TypeAlias = Union[MultiTimeUnit_T, BinnedTimeUnit_T, SingleTimeUnit_T]
-TimeUnitType: TypeAlias = Optional[Union[Dict[str, Any], SchemaBase, AnyTimeUnit]]
+TimeUnitType: TypeAlias = Optional[Union[dict[str, Any], SchemaBase, AnyTimeUnit]]
 RangeType: TypeAlias = Union[
-    Dict[str, Any],
+    dict[str, Any],
     Parameter,
     SchemaBase,
-    Sequence[Union[Dict[str, Any], None, float, Parameter, SchemaBase]],
+    Sequence[Union[dict[str, Any], None, float, Parameter, SchemaBase]],
 ]
-ValueType: TypeAlias = Union[str, bool, float, Dict[str, Any], Parameter, SchemaBase]
-OneOfType: TypeAlias = Union[str, bool, float, Dict[str, Any], SchemaBase]
+ValueType: TypeAlias = Union[str, bool, float, dict[str, Any], Parameter, SchemaBase]
+OneOfType: TypeAlias = Union[str, bool, float, dict[str, Any], SchemaBase]
 
 
 _ENCODINGS = frozenset(
