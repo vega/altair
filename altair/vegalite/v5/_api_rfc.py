@@ -13,22 +13,14 @@ The rest are to define aliases only.
 # mypy: ignore-errors
 from __future__ import annotations
 
+import datetime as dt
 from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING, Any, Literal, Union
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING
 
 from altair.utils.core import TYPECODE_MAP as _TYPE_CODE
 from altair.utils.core import parse_shorthand as _parse
-from altair.utils.schemapi import Optional, SchemaBase, Undefined
-from altair.vegalite.v5.api import Parameter
+from altair.utils.schemapi import SchemaBase, Undefined
 from altair.vegalite.v5.schema import channels
-from altair.vegalite.v5.schema._typing import (
-    BinnedTimeUnit_T,
-    Map,
-    MultiTimeUnit_T,
-    SingleTimeUnit_T,
-    Type_T,
-)
 from altair.vegalite.v5.schema.core import (
     FieldEqualPredicate,
     FieldGTEPredicate,
@@ -41,24 +33,37 @@ from altair.vegalite.v5.schema.core import (
 )
 
 if TYPE_CHECKING:
-    from altair.utils.core import DataFrameLike
-    from altair.vegalite.v5.schema._typing import AggregateOp_T
-    from altair.vegalite.v5.schema.core import Predicate
+    import sys
+    from typing import Any, Literal
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    from narwhals.typing import IntoDataFrame
+
+    from altair.utils.schemapi import Optional
+    from altair.vegalite.v5.api import Parameter, _FieldEqualType
+    from altair.vegalite.v5.schema._typing import (
+        AggregateOp_T,
+        BinnedTimeUnit_T,
+        Map,
+        MultiTimeUnit_T,
+        OneOrSeq,
+        SingleTimeUnit_T,
+        Temporal,
+        Type_T,
+    )
+    from altair.vegalite.v5.schema.core import Predicate, TimeUnitParams
 
 
 __all__ = ["agg", "field"]
 
-EncodeType: TypeAlias = Union[Type_T, Literal["O", "N", "Q", "T", "G"], None]
-AnyTimeUnit: TypeAlias = Union[MultiTimeUnit_T, BinnedTimeUnit_T, SingleTimeUnit_T]
-TimeUnitType: TypeAlias = Optional[Union[dict[str, Any], SchemaBase, AnyTimeUnit]]
-RangeType: TypeAlias = Union[
-    dict[str, Any],
-    Parameter,
-    SchemaBase,
-    Sequence[Union[dict[str, Any], None, float, Parameter, SchemaBase]],
-]
-ValueType: TypeAlias = Union[str, bool, float, dict[str, Any], Parameter, SchemaBase]
-OneOfType: TypeAlias = Union[str, bool, float, dict[str, Any], SchemaBase]
+_Type: TypeAlias = 'Type_T | Literal["O", "N", "Q", "T", "G"] | None'
+_TimeUnit: TypeAlias = "Optional[TimeUnitParams | SingleTimeUnit_T | MultiTimeUnit_T | BinnedTimeUnit_T | Map]"
+_Range: TypeAlias = "Parameter | SchemaBase | Sequence[float | Temporal | Parameter | SchemaBase | Map | None] | Map"
+_Value: TypeAlias = "str | float | Temporal | Parameter | SchemaBase | Map"
+_OneOf: TypeAlias = "str | bool | float | Temporal | SchemaBase | Map"
 
 
 _ENCODINGS = frozenset(
@@ -79,7 +84,7 @@ _ENCODINGS = frozenset(
 
 
 def _parse_aggregate(
-    aggregate: AggregateOp_T, name: str | None, encode_type: EncodeType, /
+    aggregate: AggregateOp_T, name: str | None, encode_type: _Type, /
 ) -> dict[str, Any]:
     if encode_type in _ENCODINGS:
         enc = f":{_TYPE_CODE.get(s, s)}" if (s := encode_type) else ""
@@ -94,11 +99,13 @@ def _parse_aggregate(
 
 
 def _one_of_flatten(
-    values: tuple[OneOfType, ...] | tuple[Sequence[OneOfType]] | tuple[Any, ...], /
-) -> Sequence[OneOfType]:
+    values: tuple[_OneOf, ...] | tuple[Sequence[_OneOf]] | tuple[Any, ...], /
+) -> Sequence[_OneOf]:
     if (
         len(values) == 1
-        and not isinstance(values[0], (str, bool, float, int, Mapping, SchemaBase))
+        and not isinstance(
+            values[0], (str, bool, float, int, dt.date, Mapping, SchemaBase)
+        )
         and isinstance(values[0], Sequence)
     ):
         return values[0]
@@ -112,7 +119,7 @@ def _one_of_flatten(
         raise TypeError(msg)
 
 
-def _one_of_variance(val_1: Any, *rest: OneOfType) -> Sequence[Any]:
+def _one_of_variance(val_1: Any, *rest: _OneOf) -> Sequence[Any]:
     # Required that all elements are the same type
     tp = type(val_1)
     if all(isinstance(v, tp) for v in rest):
@@ -133,157 +140,139 @@ class agg:
     """
 
     def __new__(  # type: ignore[misc]
-        cls, shorthand: dict[str, Any] | str, /, data: DataFrameLike | None = None
+        cls, shorthand: dict[str, Any] | str, /, data: IntoDataFrame | None = None
     ) -> dict[str, Any]:
         return _parse(shorthand=shorthand, data=data)
 
     @classmethod
     def argmin(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("argmin", col_name, type)
 
     @classmethod
     def argmax(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("argmax", col_name, type)
 
     @classmethod
     def average(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("average", col_name, type)
 
     @classmethod
-    def count(
-        cls, col_name: str | None = None, /, type: EncodeType = "Q"
-    ) -> dict[str, Any]:
+    def count(cls, col_name: str | None = None, /, type: _Type = "Q") -> dict[str, Any]:
         return _parse_aggregate("count", col_name, type)
 
     @classmethod
     def distinct(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("distinct", col_name, type)
 
     @classmethod
-    def max(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def max(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("max", col_name, type)
 
     @classmethod
-    def mean(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def mean(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("mean", col_name, type)
 
     @classmethod
     def median(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("median", col_name, type)
 
     @classmethod
-    def min(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def min(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("min", col_name, type)
 
     @classmethod
     def missing(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("missing", col_name, type)
 
     @classmethod
     def product(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("product", col_name, type)
 
     @classmethod
-    def q1(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def q1(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("q1", col_name, type)
 
     @classmethod
-    def q3(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def q3(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("q3", col_name, type)
 
     @classmethod
-    def ci0(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def ci0(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("ci0", col_name, type)
 
     @classmethod
-    def ci1(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def ci1(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("ci1", col_name, type)
 
     @classmethod
     def stderr(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("stderr", col_name, type)
 
     @classmethod
     def stdev(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("stdev", col_name, type)
 
     @classmethod
     def stdevp(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("stdevp", col_name, type)
 
     @classmethod
-    def sum(
-        cls, col_name: str | None = None, /, type: EncodeType = None
-    ) -> dict[str, Any]:
+    def sum(cls, col_name: str | None = None, /, type: _Type = None) -> dict[str, Any]:
         return _parse_aggregate("sum", col_name, type)
 
     @classmethod
     def valid(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("valid", col_name, type)
 
     @classmethod
     def values(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("values", col_name, type)
 
     @classmethod
     def variance(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("variance", col_name, type)
 
     @classmethod
     def variancep(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("variancep", col_name, type)
 
     @classmethod
     def exponential(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("exponential", col_name, type)
 
     @classmethod
     def exponentialb(
-        cls, col_name: str | None = None, /, type: EncodeType = None
+        cls, col_name: str | None = None, /, type: _Type = None
     ) -> dict[str, Any]:
         return _parse_aggregate("exponentialb", col_name, type)
 
@@ -308,17 +297,13 @@ class field:
     """
 
     def __new__(  # type: ignore[misc]
-        cls, shorthand: dict[str, Any] | str, /, data: DataFrameLike | None = None
+        cls, shorthand: dict[str, Any] | str, /, data: IntoDataFrame | None = None
     ) -> dict[str, Any]:
         return _parse(shorthand=shorthand, data=data)
 
     @classmethod
     def one_of(
-        cls,
-        field: str,
-        /,
-        *values: OneOfType | Sequence[OneOfType],
-        timeUnit: TimeUnitType = Undefined,
+        cls, field: str, /, *values: OneOrSeq[_OneOf], timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         seq = _one_of_flatten(values)
         one_of = _one_of_variance(*seq)
@@ -326,43 +311,46 @@ class field:
 
     @classmethod
     def eq(
-        cls, field: str, value: ValueType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _FieldEqualType, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
+        if value is None:
+            # NOTE: Unclear why this is allowed for `datum` but not in `FieldEqualPredicate`
+            raise TypeError(value)
         return FieldEqualPredicate(field=field, equal=value, timeUnit=timeUnit)
 
     @classmethod
     def lt(
-        cls, field: str, value: ValueType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _Value, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldLTPredicate(field=field, lt=value, timeUnit=timeUnit)
 
     @classmethod
     def lte(
-        cls, field: str, value: ValueType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _Value, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldLTEPredicate(field=field, lte=value, timeUnit=timeUnit)
 
     @classmethod
     def gt(
-        cls, field: str, value: ValueType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _Value, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldGTPredicate(field=field, gt=value, timeUnit=timeUnit)
 
     @classmethod
     def gte(
-        cls, field: str, value: ValueType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _Value, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldGTEPredicate(field=field, gte=value, timeUnit=timeUnit)
 
     @classmethod
     def valid(
-        cls, field: str, value: bool, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: bool, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldValidPredicate(field=field, valid=value, timeUnit=timeUnit)
 
     @classmethod
     def range(
-        cls, field: str, value: RangeType, /, *, timeUnit: TimeUnitType = Undefined
+        cls, field: str, value: _Range, /, *, timeUnit: _TimeUnit = Undefined
     ) -> Predicate:
         return FieldRangePredicate(field=field, range=value, timeUnit=timeUnit)
 

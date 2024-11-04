@@ -8,7 +8,7 @@ import pytest
 
 import altair as alt
 from altair.utils.core import INV_TYPECODE_MAP, TYPECODE_MAP
-from altair.vegalite.v5._api_rfc import EncodeType, agg, field
+from altair.vegalite.v5._api_rfc import _Type, agg, field
 
 if TYPE_CHECKING:
     from altair.vegalite.v5.schema._typing import AggregateOp_T
@@ -68,9 +68,7 @@ def test_agg_type_invalid() -> None:
         "exponentialb",
     ],
 )
-def test_agg_methods(
-    method_name: AggregateOp_T, col_name: str | None, enc_type: EncodeType
-):
+def test_agg_methods(method_name: AggregateOp_T, col_name: str | None, enc_type: _Type):
     actual = getattr(agg, method_name)(col_name, enc_type)
     assert isinstance(actual, dict)
     assert actual["aggregate"] == method_name
