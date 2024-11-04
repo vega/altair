@@ -3093,8 +3093,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             else:
                 more_predicates = *more_predicates, depr_filter
         cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
-        pred = cond.get("test", cond)
-        return self._add_transform(core.FilterTransform(filter=pred))
+        return self._add_transform(core.FilterTransform(filter=cond.get("test", cond)))
 
     def transform_flatten(
         self,
