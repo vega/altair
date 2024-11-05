@@ -469,6 +469,5 @@ ignore=[
     "./tests/test_jupyter_chart.py",
     "./tests/utils/",
     "./tests/test_magics.py",
-    "./tests/vegalite/v5/test_geo_interface.py",
     "../../../**/Lib", # stdlib
 ]
