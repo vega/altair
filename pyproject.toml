@@ -457,18 +457,12 @@ include=[
     "./doc/*.py",
 	"./tests/**/*.py",
 	"./tools/**/*.py",
+    "./sphinxext/**/*.py",
 ]
 ignore=[
-    "./altair/vegalite/v5/display.py",
-    "./altair/vegalite/v5/schema/",
-    "./altair/utils/core.py",
-    "./altair/utils/_dfi_types.py",
-    "./altair/_magics.py",
-    "./altair/jupyter/",
-    "./sphinxext/",
-    "./tests/test_jupyter_chart.py",
-    "./tests/utils/",
-    "./tests/test_magics.py",
-    "./tests/vegalite/v5/test_geo_interface.py",
-    "../../../**/Lib", # stdlib
+    "./altair/vegalite/v5/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
+    "./altair/jupyter/",                        # Mostly untyped
+    "./tests/test_jupyter_chart.py",            # Based on untyped module
+    "../../../**/Lib",                          # stdlib
 ]
