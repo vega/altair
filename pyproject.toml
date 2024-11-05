@@ -459,7 +459,6 @@ include=[
 	"./tools/**/*.py",
 ]
 ignore=[
-    "./altair/vegalite/v5/display.py",
     "./altair/vegalite/v5/schema/channels.py",  # 716 warns
     "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
     "./altair/utils/core.py",
