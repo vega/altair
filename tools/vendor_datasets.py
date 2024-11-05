@@ -70,10 +70,12 @@ _ItemSlice: TypeAlias = (
 """Query result scalar selection."""
 
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
+_NPM_METADATA_URL = "https://data.jsdelivr.com/v1/packages/npm/vega-datasets"
 _SUB_DIR = "data"
 _SEM_VER_FIELDS: tuple[
     Literal["major"], Literal["minor"], Literal["patch"], Literal["pre_release"]
 ] = "major", "minor", "patch", "pre_release"
+_CANARY: Literal["--canary"] = "--canary"
 
 
 def _is_str(obj: Any) -> TypeIs[str]:
@@ -140,6 +142,30 @@ class GitHubTreesResponse(TypedDict):
     url: str
     tree: list[GitHubTree]
     truncated: bool
+
+
+class NpmVersion(TypedDict):
+    version: str
+    links: dict[Literal["self", "entrypoints", "stats"], str]
+
+
+class NpmPackageMetadataResponse(TypedDict):
+    """
+    Response from `Get package metadata`_.
+
+    Using:
+
+        headers={"Accept": "application/json"}
+
+    .. _Get package metadata:
+        https://data.jsdelivr.com/v1/packages/npm/vega-datasets
+    """
+
+    type: str
+    name: str
+    tags: dict[Literal["canary", "next", "latest"], str]
+    versions: list[NpmVersion]
+    links: dict[Literal["stats"], str]
 
 
 class ParsedTree(TypedDict):
@@ -589,6 +615,31 @@ GitHub = _GitHub(
 #######################################################################################
 
 
+def _npm_metadata(*args: WorkInProgress) -> pl.DataFrame:
+    """
+    Request, parse npm tags metadata.
+
+    Notes
+    -----
+    - Ignores canary releases
+    - Github tag is stored as `"v_tag"`
+        - npm tag is `"tag"`
+    """
+    req = urllib.request.Request(
+        _NPM_METADATA_URL, headers={"Accept": "application/json"}
+    )
+    with urllib.request.urlopen(req) as response:
+        content: NpmPackageMetadataResponse = json.load(response)
+    versions = [
+        v["version"] for v in content["versions"] if _CANARY not in v["version"]
+    ]
+    return (
+        pl.DataFrame({"tag": versions})
+        .pipe(_with_sem_ver)
+        .with_columns(v_tag=pl.concat_str(pl.lit("v"), pl.col("tag")))
+    )
+
+
 def _tag_from(s: str, /) -> str:
     # - Actual tag
     # - Trees url (using ref name)
@@ -614,10 +665,10 @@ def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
     """
     fields = pl.col(_SEM_VER_FIELDS)
     pattern = r"""(?x)
-        v(?<major>[[:digit:]]*)\.
+        v?(?<major>[[:digit:]]*)\.
         (?<minor>[[:digit:]]*)\.
         (?<patch>[[:digit:]]*)
-        (\-next\.)?
+        (\-(next)?(beta)?\.)?
         (?<pre_release>[[:digit:]]*)?
     """
     sem_ver = pl.col(col_tag).str.extract_groups(pattern).struct.field(*_SEM_VER_FIELDS)
@@ -835,6 +886,7 @@ class DataLoader:
         return self.list_datasets()
 
     # BUG: # 1.6.0 exists on GH but not npm?
+    # https://www.jsdelivr.com/docs/data.jsdelivr.com#overview
     def __call__(
         self,
         name: str,
