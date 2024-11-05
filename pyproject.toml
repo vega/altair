@@ -462,7 +462,6 @@ ignore=[
     "./altair/vegalite/v5/display.py",
     "./altair/vegalite/v5/schema/",
     "./altair/utils/core.py",
-    "./altair/utils/_dfi_types.py",
     "./altair/jupyter/",
     "./sphinxext/",
     "./tests/test_jupyter_chart.py",
