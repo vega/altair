@@ -45,6 +45,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Typing :: Typed",
 ]
 
@@ -67,9 +68,9 @@ all = [
     "altair_tiles>=0.3.0"
 ]
 dev = [
-    "hatch",
+    "hatch>=1.13.0",
     "ruff>=0.6.0",
-    "ibis-framework[polars]",
+    "duckdb>=1.0",
     "ipython[kernel]",
     "pandas>=1.1.3",
     "pytest",
@@ -147,7 +148,7 @@ features = ["all", "dev", "doc"]
 default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
 parallel = true
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12"]
+python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 [tool.hatch.envs.hatch-test.scripts]
 run = [
     "ruff check .", 
@@ -456,18 +457,12 @@ include=[
     "./doc/*.py",
 	"./tests/**/*.py",
 	"./tools/**/*.py",
+    "./sphinxext/**/*.py",
 ]
 ignore=[
-    "./altair/vegalite/v5/display.py",
-    "./altair/vegalite/v5/schema/",
-    "./altair/utils/core.py",
-    "./altair/utils/_dfi_types.py",
-    "./altair/_magics.py",
-    "./altair/jupyter/",
-    "./sphinxext/",
-    "./tests/test_jupyter_chart.py",
-    "./tests/utils/",
-    "./tests/test_magics.py",
-    "./tests/vegalite/v5/test_geo_interface.py",
-    "../../../**/Lib", # stdlib
+    "./altair/vegalite/v5/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
+    "./altair/jupyter/",                        # Mostly untyped
+    "./tests/test_jupyter_chart.py",            # Based on untyped module
+    "../../../**/Lib",                          # stdlib
 ]

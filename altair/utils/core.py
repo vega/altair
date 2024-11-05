@@ -222,7 +222,7 @@ SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
 
 
 def infer_vegalite_type_for_pandas(
-    data: object,
+    data: Any,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode.
@@ -231,7 +231,7 @@ def infer_vegalite_type_for_pandas(
 
     Parameters
     ----------
-    data: object
+    data: Any
     """
     # This is safe to import here, as this function is only called on pandas input.
     from pandas.api.types import infer_dtype
@@ -709,11 +709,14 @@ def infer_vegalite_type_for_narwhals(
         and not (categories := column.cat.get_categories()).is_empty()
     ):
         return "ordinal", categories.to_list()
-    if dtype in {nw.String, nw.Categorical, nw.Boolean}:
+    if dtype == nw.String or dtype == nw.Categorical or dtype == nw.Boolean:  # noqa: PLR1714
         return "nominal"
     elif dtype.is_numeric():
         return "quantitative"
-    elif dtype in {nw.Datetime, nw.Date}:
+    elif dtype == nw.Datetime or dtype == nw.Date:  # noqa: PLR1714
+        # We use `== nw.Datetime` to check for any kind of Datetime, regardless of time
+        # unit and time zone. Prefer this over `dtype in {nw.Datetime, nw.Date}`,
+        # see https://narwhals-dev.github.io/narwhals/backcompat.
         return "temporal"
     else:
         msg = f"Unexpected DtypeKind: {dtype}"
@@ -735,10 +738,10 @@ def use_signature(tp: Callable[P, Any], /):
     """
 
     @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
+    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
         """
@@ -854,7 +857,7 @@ class _ChannelCache:
             cached = _CHANNEL_CACHE
         except NameError:
             cached = cls.__new__(cls)
-            cached.channel_to_name = _init_channel_to_name()
+            cached.channel_to_name = _init_channel_to_name()  # pyright: ignore[reportAttributeAccessIssue]
             cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
             _CHANNEL_CACHE = cached
         return _CHANNEL_CACHE

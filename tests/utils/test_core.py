@@ -279,7 +279,7 @@ def channels_cached(channels) -> core._ChannelCache:
     """Previously ``_ChannelCache.from_channels``."""
     cached = core._ChannelCache.__new__(core._ChannelCache)
     cached.channel_to_name = {
-        c: c._encoding_name
+        c: c._encoding_name  # pyright: ignore[reportAttributeAccessIssue]
         for c in channels.__dict__.values()
         if isinstance(c, type)
         and issubclass(c, alt.SchemaBase)
