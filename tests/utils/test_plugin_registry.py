@@ -38,7 +38,9 @@ def test_plugin_registry():
     plugins.enable("new_plugin")
     assert plugins.names() == ["new_plugin"]
     assert plugins.active == "new_plugin"
-    assert plugins.get()(3) == 9
+    fn = plugins.get()
+    assert fn is not None
+    assert fn(3) == 9
     assert repr(plugins) == (
         "TypedCallableRegistry(active='new_plugin', " "registered=['new_plugin'])"
     )
@@ -49,16 +51,22 @@ def test_plugin_registry_extra_options():
 
     plugins.register("metadata_plugin", lambda x, p=2: x**p)
     plugins.enable("metadata_plugin")
-    assert plugins.get()(3) == 9
+    fn = plugins.get()
+    assert fn is not None
+    assert fn(3) == 9
 
     plugins.enable("metadata_plugin", p=3)
     assert plugins.active == "metadata_plugin"
-    assert plugins.get()(3) == 27
+    fn = plugins.get()
+    assert fn is not None
+    assert fn(3) == 27
 
     # enabling without changing name
     plugins.enable(p=2)
     assert plugins.active == "metadata_plugin"
-    assert plugins.get()(3) == 9
+    fn = plugins.get()
+    assert fn is not None
+    assert fn(3) == 9
 
 
 def test_plugin_registry_global_settings():

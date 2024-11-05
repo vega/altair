@@ -75,7 +75,7 @@ def test_sanitize_dataframe():
         if str(df[col].dtype).startswith("datetime"):
             # astype(datetime) introduces time-zone issues:
             # to_datetime() does not.
-            utc = isinstance(df[col].dtype, pd.core.dtypes.dtypes.DatetimeTZDtype)
+            utc = isinstance(df[col].dtype, pd.DatetimeTZDtype)
             df2[col] = pd.to_datetime(df2[col], utc=utc)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
