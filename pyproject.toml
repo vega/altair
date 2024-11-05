@@ -464,6 +464,5 @@ ignore=[
     "./altair/jupyter/",
     "./sphinxext/",
     "./tests/test_jupyter_chart.py",
-    "./tests/utils/",
     "../../../**/Lib", # stdlib
 ]
