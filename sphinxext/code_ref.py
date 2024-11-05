@@ -108,7 +108,7 @@ def maybe_details(
 
 
 def theme_names() -> tuple[Sequence[str], Sequence[str]]:
-    names: set[VegaThemes] = set(get_args(VegaThemes))
+    names: set[str] = set(get_args(VegaThemes))
     carbon = {nm for nm in names if nm.startswith("carbon")}
     return ["default", *sorted(names - carbon)], sorted(carbon)
 
@@ -180,8 +180,8 @@ class ThemeDirective(SphinxDirective):
         https://pyscript.net/
     """
 
-    has_content: ClassVar[Literal[False]] = False
-    required_arguments: ClassVar[Literal[1]] = 1
+    has_content: ClassVar[bool] = False
+    required_arguments: ClassVar[int] = 1
     option_spec = {
         "packages": validate_packages,
         "dropdown-label": directives.unchanged,
@@ -226,14 +226,16 @@ class ThemeDirective(SphinxDirective):
         )
         results.append(raw_html("</div></p>\n"))
         return maybe_details(
-            results, self.options, default_summary="Show Vega-Altair Theme Test"
+            results,
+            self.options,  # pyright: ignore[reportArgumentType]
+            default_summary="Show Vega-Altair Theme Test",
         )
 
 
 class PyScriptDirective(SphinxDirective):
     """Placeholder for non-theme related directive."""
 
-    has_content: ClassVar[Literal[False]] = False
+    has_content: ClassVar[bool] = False
     option_spec = {"packages": directives.unchanged}
 
     def run(self) -> Sequence[nodes.Node]:
@@ -282,9 +284,9 @@ class CodeRefDirective(SphinxDirective):
         https://github.com/vega/sphinxext-altair
     """
 
-    has_content: ClassVar[Literal[False]] = False
-    required_arguments: ClassVar[Literal[1]] = 1
-    option_spec: ClassVar[dict[_Option, Callable[[str], Any]]] = {
+    has_content: ClassVar[bool] = False
+    required_arguments: ClassVar[int] = 1
+    option_spec: ClassVar[dict[_Option, Callable[[str], Any]]] = {  # pyright: ignore[reportIncompatibleVariableOverride]
         "output": validate_output,
         "fold": directives.flag,
         "summary": directives.unchanged_required,
@@ -302,8 +304,8 @@ class CodeRefDirective(SphinxDirective):
         state: RSTState,
         state_machine: RSTStateMachine,
     ) -> None:
-        super().__init__(name, arguments, options, content, lineno, content_offset, block_text, state, state_machine)  # fmt: skip
-        self.options: dict[_Option, Any]
+        super().__init__(name, arguments, options, content, lineno, content_offset, block_text, state, state_machine)  # fmt: skip # pyright: ignore[reportArgumentType]
+        self.options: dict[_Option, Any]  # pyright: ignore[reportIncompatibleVariableOverride]
 
     def run(self) -> Sequence[nodes.Node]:
         qual_name = self.arguments[0]

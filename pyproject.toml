@@ -457,12 +457,12 @@ include=[
     "./doc/*.py",
 	"./tests/**/*.py",
 	"./tools/**/*.py",
+    "./sphinxext/**/*.py",
 ]
 ignore=[
     "./altair/vegalite/v5/schema/channels.py",  # 716 warns
     "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
-    "./altair/jupyter/",
-    "./sphinxext/",
-    "./tests/test_jupyter_chart.py",
-    "../../../**/Lib", # stdlib
+    "./altair/jupyter/",                        # Mostly untyped
+    "./tests/test_jupyter_chart.py",            # Based on untyped module
+    "../../../**/Lib",                          # stdlib
 ]
