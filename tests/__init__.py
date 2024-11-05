@@ -59,6 +59,17 @@ Either script can accept ``pytest`` args::
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
 """
 
+skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("IPython") is None, reason="`IPython` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `IPython`_ import would fail.
+
+.. _IPython:
+   https://github.com/ipython/ipython
+"""
 
 skip_requires_vl_convert: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("vl_convert") is None, reason="`vl_convert` not installed."
