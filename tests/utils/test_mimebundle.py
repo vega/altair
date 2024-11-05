@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Any
+
 import pytest
 
 import altair as alt
@@ -7,7 +11,7 @@ from tests import skip_requires_vegafusion, skip_requires_vl_convert
 
 
 @pytest.fixture
-def vegalite_spec():
+def vegalite_spec() -> dict[str, Any]:
     return {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "description": "A simple bar chart with embedded data.",
@@ -187,15 +191,15 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 def test_spec_to_vega_mimebundle(vega_spec):
     # ValueError: mode must be 'vega-lite'
     with pytest.raises(ValueError):  # noqa: PT011
-        spec_to_mimebundle(
+        spec_to_mimebundle(  # pyright: ignore[reportCallIssue]
             spec=vega_spec,
-            mode="vega",
+            mode="vega",  # pyright: ignore[reportArgumentType]
             format="vega",
             vega_version=alt.VEGA_VERSION,
         )
 
 
-def test_spec_to_json_mimebundle():
+def test_spec_to_json_mimebundle(vegalite_spec):
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         mode="vega-lite",
@@ -240,5 +244,6 @@ def test_vegafusion_chart_to_vega_mime_bundle(vegalite_spec):
     chart = alt.Chart.from_dict(vegalite_spec)
     with alt.data_transformers.enable("vegafusion"), alt.renderers.enable("json"):
         bundle = chart._repr_mimebundle_()
+        assert isinstance(bundle, tuple)
         vega_spec = bundle[0]["application/json"]
         check_pre_transformed_vega_spec(vega_spec)
