@@ -222,7 +222,7 @@ SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
 
 
 def infer_vegalite_type_for_pandas(
-    data: object,
+    data: Any,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode.
@@ -231,7 +231,7 @@ def infer_vegalite_type_for_pandas(
 
     Parameters
     ----------
-    data: object
+    data: Any
     """
     # This is safe to import here, as this function is only called on pandas input.
     from pandas.api.types import infer_dtype
@@ -738,10 +738,10 @@ def use_signature(tp: Callable[P, Any], /):
     """
 
     @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
+    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
         """
@@ -857,7 +857,7 @@ class _ChannelCache:
             cached = _CHANNEL_CACHE
         except NameError:
             cached = cls.__new__(cls)
-            cached.channel_to_name = _init_channel_to_name()
+            cached.channel_to_name = _init_channel_to_name()  # pyright: ignore[reportAttributeAccessIssue]
             cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
             _CHANNEL_CACHE = cached
         return _CHANNEL_CACHE

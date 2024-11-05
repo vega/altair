@@ -125,10 +125,6 @@ def browser_renderer(
         vegalite_version=VEGALITE_VERSION,
         **metadata,
     )
-
-    if isinstance(mimebundle, tuple):
-        mimebundle = mimebundle[0]
-
     html = mimebundle["text/html"]
     open_html_in_browser(html, using=using, port=port)
     return {}
@@ -162,7 +158,9 @@ renderers.register("nteract", mimetype_renderer)
 renderers.register("json", json_renderer)
 renderers.register("png", png_renderer)
 renderers.register("svg", svg_renderer)
-renderers.register("jupyter", jupyter_renderer)
+# FIXME: Caused by upstream # type: ignore[unreachable]
+# https://github.com/manzt/anywidget/blob/b7961305a7304f4d3def1fafef0df65db56cf41e/anywidget/widget.py#L80-L81
+renderers.register("jupyter", jupyter_renderer)  # pyright: ignore[reportArgumentType]
 renderers.register("browser", browser_renderer)
 renderers.register("olli", olli_renderer)
 renderers.enable("default")
