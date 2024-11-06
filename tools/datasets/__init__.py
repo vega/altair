@@ -11,7 +11,7 @@ import json
 import tempfile
 from functools import cached_property, partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, get_args
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal
 from urllib.request import urlopen
 
 import polars as pl
@@ -38,6 +38,7 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
+    from tools.datasets._typing import DatasetName, Extension, VersionTag
 
     _PathAlias: TypeAlias = Literal["npm_tags", "gh_tags", "gh_trees"]
 
@@ -144,11 +145,6 @@ app = Application(Path(__file__).parent / "_metadata", write_schema=True)
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
 
-ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow"]
-"""
-- `'flights-200k.(arrow|json)'` key collison using stem
-"""
-
 
 def generate_datasets_typing(application: Application, output: Path, /) -> None:
     app = application
@@ -180,7 +176,7 @@ def generate_datasets_typing(application: Application, output: Path, /) -> None:
     ruff.write_lint_format(output, contents)
 
 
-def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
+def is_ext_supported(suffix: str) -> TypeIs[Extension]:
     return suffix in {".csv", ".json", ".tsv", ".arrow"}
 
 
@@ -193,7 +189,7 @@ def _js_to_py(s: str, /):
 
 
 class Dataset:
-    read_fn: ClassVar[dict[ExtSupported, Callable[..., pl.DataFrame]]] = {
+    read_fn: ClassVar[dict[Extension, Callable[..., pl.DataFrame]]] = {
         ".csv": pl.read_csv,
         ".json": pl.read_json,
         ".tsv": partial(pl.read_csv, separator="\t"),
@@ -205,7 +201,7 @@ class Dataset:
         file_name = DATASETS_JSON[_py_to_js(name)]["filename"]
         suffix = Path(file_name).suffix
         if is_ext_supported(suffix):
-            self.extension: ExtSupported = suffix
+            self.extension: Extension = suffix
         else:
             raise NotImplementedError(suffix, file_name)
 
@@ -348,17 +344,17 @@ class DataLoader:
 
     def url(
         self,
-        name: str,
-        ext: ExtSupported | None = None,
+        name: DatasetName | LiteralString,
+        ext: Extension | None = None,
         /,
-        tag: LiteralString | Literal["latest"] | None = None,
+        tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
         constraints: dict[Literal["tag", "suffix"], str] = {}
         if tag == "latest":
             raise NotImplementedError(tag)
         elif tag is not None:
             constraints["tag"] = tag
-        if name.endswith(get_args(ExtSupported)):
+        if name.endswith((".csv", ".json", ".tsv", ".arrow")):
             name, suffix = name.rsplit(".", maxsplit=1)
             suffix = "." + suffix
             if not is_ext_supported(suffix):
@@ -375,10 +371,10 @@ class DataLoader:
 
     def __call__(
         self,
-        name: str,
-        ext: ExtSupported | None = None,
+        name: DatasetName | LiteralString,
+        ext: Extension | None = None,
         /,
-        tag: LiteralString | Literal["latest"] | None = None,
+        tag: VersionTag | Literal["latest"] | None = None,
     ) -> WorkInProgress:
         """
         **WIP** Will be using this *instead of* attribute access.

@@ -31,7 +31,7 @@ if TYPE_CHECKING:
     from email.message import Message
     from urllib.request import OpenerDirector, Request
 
-    from tools.datasets import ExtSupported
+    from tools.datasets._typing import Extension
     from tools.datasets.models import ReParsedTag
     from tools.schemapi.utils import OneOrSeq
 
@@ -62,7 +62,7 @@ _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
 _SUB_DIR = "data"
 
 
-def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
+def is_ext_supported(suffix: str) -> TypeIs[Extension]:
     return suffix in {".csv", ".json", ".tsv", ".arrow"}
 
 
