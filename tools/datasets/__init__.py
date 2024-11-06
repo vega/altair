@@ -10,7 +10,6 @@ from __future__ import annotations
 import json
 import os
 import random
-import sys
 import tempfile
 import time
 import urllib.request
@@ -19,27 +18,28 @@ from collections.abc import Iterable, Iterator, Sequence
 from functools import cached_property, partial
 from itertools import islice
 from pathlib import Path
-from typing import (
-    IO,
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    ClassVar,
-    Literal,
-    NamedTuple,
-    cast,
-    get_args,
-)
+from typing import IO, TYPE_CHECKING, Any, Callable, ClassVar, Literal, cast, get_args
 from urllib.request import urlopen
 
 import polars as pl
 
-if sys.version_info >= (3, 14):
-    from typing import TypedDict
-else:
-    from typing_extensions import TypedDict
+from tools.datasets.models import (
+    GitHubRateLimitResources,
+    GitHubTag,
+    GitHubTree,
+    GitHubTreesResponse,
+    GitHubUrl,
+    NpmPackageMetadataResponse,
+    NpmUrl,
+    ParsedRateLimit,
+    ParsedTag,
+    ParsedTree,
+    QueryTree,
+    ReParsedTag,
+)
 
 if TYPE_CHECKING:
+    import sys
     from collections.abc import Mapping, MutableMapping
     from email.message import Message
     from typing import TypeVar
@@ -50,9 +50,9 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeIs
     if sys.version_info >= (3, 11):
-        from typing import LiteralString, Required
+        from typing import LiteralString
     else:
-        from typing_extensions import LiteralString, Required
+        from typing_extensions import LiteralString
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
@@ -79,153 +79,6 @@ _CANARY: Literal["--canary"] = "--canary"
 
 def _is_str(obj: Any) -> TypeIs[str]:
     return isinstance(obj, str)
-
-
-class GitHubUrl(NamedTuple):
-    BASE: LiteralString
-    RATE: LiteralString
-    REPO: LiteralString
-    TAGS: LiteralString
-    TREES: LiteralString
-
-
-class NpmUrl(NamedTuple):
-    CDN: LiteralString
-    TAGS: LiteralString
-
-
-class GitHubTag(TypedDict):
-    name: str
-    node_id: str
-    commit: dict[Literal["sha", "url"], str]
-    zipball_url: str
-    tarball_url: str
-
-
-class ParsedTag(TypedDict):
-    tag: str
-    sha: str
-    trees_url: str
-
-
-class ReParsedTag(ParsedTag):
-    major: int
-    minor: int
-    patch: int
-    pre_release: int | None
-    is_pre_release: bool
-
-
-class GitHubTree(TypedDict):
-    """
-    A single file's metadata within the response of `Get a tree`_.
-
-    .. _Get a tree:
-        https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
-    """
-
-    path: str
-    mode: str
-    type: str
-    sha: str
-    size: int
-    url: str
-
-
-class GitHubTreesResponse(TypedDict):
-    """
-    Response from `Get a tree`_.
-
-    Describes directory metadata, with files stored in ``"tree"``.
-
-    .. _Get a tree:
-        https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
-    """
-
-    sha: str
-    url: str
-    tree: list[GitHubTree]
-    truncated: bool
-
-
-class NpmVersion(TypedDict):
-    version: str
-    links: dict[Literal["self", "entrypoints", "stats"], str]
-
-
-class NpmPackageMetadataResponse(TypedDict):
-    """
-    Response from `Get package metadata`_.
-
-    Using:
-
-        headers={"Accept": "application/json"}
-
-    .. _Get package metadata:
-        https://data.jsdelivr.com/v1/packages/npm/vega-datasets
-    """
-
-    type: str
-    name: str
-    tags: dict[Literal["canary", "next", "latest"], str]
-    versions: list[NpmVersion]
-    links: dict[Literal["stats"], str]
-
-
-class ParsedTree(TypedDict):
-    file_name: str
-    name_js: str
-    name_py: str
-    suffix: str
-    size: int
-    url: str
-    ext_supported: bool
-    tag: str
-
-
-class QueryTree(TypedDict, total=False):
-    file_name: str
-    name_js: Required[str]
-    name_py: str
-    suffix: str
-    size: int
-    url: str
-    ext_supported: bool
-    tag: str
-
-
-class ParsedTreesResponse(TypedDict):
-    tag: str
-    url: str
-    tree: list[ParsedTree]
-
-
-class GitHubRateLimit(TypedDict):
-    limit: int
-    used: int
-    remaining: int
-    reset: int
-
-
-class ParsedRateLimit(GitHubRateLimit):
-    reset_time: time.struct_time
-    is_limited: bool
-    is_auth: bool
-
-
-class GitHubRateLimitResources(TypedDict, total=False):
-    """
-    A subset of response from `Get rate limit status for the authenticated user`_.
-
-    .. _Get rate limit status for the authenticated user:
-        https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user
-    """
-
-    core: Required[GitHubRateLimit]
-    search: Required[GitHubRateLimit]
-    graphql: GitHubRateLimit
-    integration_manifest: GitHubRateLimit
-    code_search: GitHubRateLimit
 
 
 class _ErrorHandler(urllib.request.BaseHandler):
@@ -608,6 +461,8 @@ class _GitHub:
 
 
 class _Npm:
+    """https://www.jsdelivr.com/docs/data.jsdelivr.com#overview."""
+
     def __init__(
         self,
         output_dir: Path,
@@ -958,8 +813,6 @@ class DataLoader:
     def __dir__(self) -> list[str]:
         return self.list_datasets()
 
-    # BUG: # 1.6.0 exists on GH but not npm?
-    # https://www.jsdelivr.com/docs/data.jsdelivr.com#overview
     def __call__(
         self,
         name: str,
