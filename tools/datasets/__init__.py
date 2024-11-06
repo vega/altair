@@ -16,9 +16,11 @@ from urllib.request import urlopen
 
 import polars as pl
 
+from tools.codemod import ruff
 from tools.datasets.github import GitHub
 from tools.datasets.models import QueryTree
 from tools.datasets.npm import Npm
+from tools.schemapi import utils
 
 if TYPE_CHECKING:
     import sys
@@ -37,9 +39,16 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
+    _PathAlias: TypeAlias = Literal["npm_tags", "gh_tags", "gh_trees"]
+
     WorkInProgress: TypeAlias = Any
 
 __all__ = ["app", "data"]
+
+HEADER_COMMENT = """\
+# The contents of this file are automatically written by
+# tools/datasets.__init__.py. Do not modify directly.
+"""
 
 
 class Application:
@@ -78,6 +87,14 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
+    @property
+    def _aliases(self) -> dict[_PathAlias, Path]:
+        return {
+            "npm_tags": self.npm._paths["tags"],
+            "gh_tags": self.github._paths["tags"],
+            "gh_trees": self.github._paths["trees"],
+        }
+
     def refresh(self) -> pl.DataFrame:
         npm_tags = self.npm.tags()
         self.write_parquet(npm_tags, self.npm._paths["tags"])
@@ -88,6 +105,21 @@ class Application:
         gh_trees = self.github.refresh_trees(gh_tags)
         self.write_parquet(gh_trees, self.github._paths["trees"])
         return gh_trees
+
+    def read(self, name: _PathAlias, /) -> pl.DataFrame:
+        """Read existing metadata from file."""
+        return pl.read_parquet(self._from_alias(name))
+
+    def scan(self, name: _PathAlias, /) -> pl.LazyFrame:
+        """Scan existing metadata from file."""
+        return pl.scan_parquet(self._from_alias(name))
+
+    def _from_alias(self, name: _PathAlias, /) -> Path:
+        if name not in {"npm_tags", "gh_tags", "gh_trees"}:
+            msg = f'Expected one of {["npm_tags", "gh_tags", "gh_trees"]!r}, but got: {name!r}'
+            raise TypeError(msg)
+        else:
+            return self._aliases[name]
 
     def write_parquet(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
         """Write ``frame`` to ``fp``, with some extra safety."""
@@ -116,6 +148,36 @@ ExtSupported: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow"]
 """
 - `'flights-200k.(arrow|json)'` key collison using stem
 """
+
+
+def generate_datasets_typing(application: Application, output: Path, /) -> None:
+    app = application
+    tags = app.scan("gh_tags").select("tag").collect().to_series()
+    names = (
+        app.scan("gh_trees")
+        .filter("ext_supported")
+        .unique("name_js")
+        .select("name_js")
+        .sort("name_js")
+        .collect()
+        .to_series()
+    )
+    NAME = "DatasetName"
+    TAG = "VersionTag"
+    EXT = "Extension"
+    contents = (
+        f"{HEADER_COMMENT}",
+        "from __future__ import annotations\n",
+        "import sys",
+        "from typing import Literal, TYPE_CHECKING",
+        utils.import_typing_extensions((3, 10), "TypeAlias"),
+        "\n",
+        f"__all__ = {[NAME, TAG, EXT]}\n\n"
+        f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
+        f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
+        f'{EXT}: TypeAlias = {utils.spell_literal([".csv", ".json", ".tsv", ".arrow"])}',
+    )
+    ruff.write_lint_format(output, contents)
 
 
 def is_ext_supported(suffix: str) -> TypeIs[ExtSupported]:
