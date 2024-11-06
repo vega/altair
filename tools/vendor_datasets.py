@@ -70,7 +70,6 @@ _ItemSlice: TypeAlias = (
 """Query result scalar selection."""
 
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
-_NPM_METADATA_URL = "https://data.jsdelivr.com/v1/packages/npm/vega-datasets"
 _SUB_DIR = "data"
 _SEM_VER_FIELDS: tuple[
     Literal["major"], Literal["minor"], Literal["patch"], Literal["pre_release"]
@@ -595,6 +594,7 @@ class _GitHub:
             print("Checking for new tags")
             prev = pl.scan_parquet(fp)
             curr_latest = self.tags(1)
+            # TODO: Needs a hook for `_npm_metadata()`
             if curr_latest.equals(prev.pipe(_sort_sem_ver).head(1).collect()):
                 print(f"Already up-to-date {fp!s}")
                 return prev.collect()
