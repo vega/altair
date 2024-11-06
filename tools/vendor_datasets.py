@@ -622,8 +622,10 @@ def _npm_metadata(*args: WorkInProgress) -> pl.DataFrame:
     Notes
     -----
     - Ignores canary releases
-    - Github tag is stored as `"v_tag"`
-        - npm tag is `"tag"`
+    - ``npm`` can accept either, but this endpoint returns without "v":
+
+        {tag}
+        v{tag}
     """
     req = urllib.request.Request(
         _NPM_METADATA_URL, headers={"Accept": "application/json"}
@@ -631,13 +633,11 @@ def _npm_metadata(*args: WorkInProgress) -> pl.DataFrame:
     with urllib.request.urlopen(req) as response:
         content: NpmPackageMetadataResponse = json.load(response)
     versions = [
-        v["version"] for v in content["versions"] if _CANARY not in v["version"]
+        f"v{version}"
+        for v in content["versions"]
+        if (version := v["version"]) and _CANARY not in version
     ]
-    return (
-        pl.DataFrame({"tag": versions})
-        .pipe(_with_sem_ver)
-        .with_columns(v_tag=pl.concat_str(pl.lit("v"), pl.col("tag")))
-    )
+    return pl.DataFrame({"tag": versions}).pipe(_with_sem_ver)
 
 
 def _tag_from(s: str, /) -> str:

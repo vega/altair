@@ -4,6 +4,5 @@
   "minor": "int",
   "patch": "int",
   "pre_release": "int",
-  "is_pre_release": "bool",
-  "v_tag": "str"
+  "is_pre_release": "bool"
 }
