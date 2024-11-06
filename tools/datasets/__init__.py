@@ -23,6 +23,7 @@ from urllib.request import urlopen
 
 import polars as pl
 
+from tools.datasets import semver
 from tools.datasets.models import (
     GitHubRateLimitResources,
     GitHubTag,
@@ -42,7 +43,6 @@ if TYPE_CHECKING:
     import sys
     from collections.abc import Mapping, MutableMapping
     from email.message import Message
-    from typing import TypeVar
     from urllib.request import OpenerDirector, Request
 
     if sys.version_info >= (3, 13):
@@ -59,7 +59,6 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     from tools.schemapi.utils import OneOrSeq
 
-    _Frame = TypeVar("_Frame", pl.DataFrame, pl.LazyFrame)
     _PathName: TypeAlias = Literal["dir", "tags", "trees"]
     WorkInProgress: TypeAlias = Any
 
@@ -71,10 +70,6 @@ _ItemSlice: TypeAlias = (
 
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
 _SUB_DIR = "data"
-_SEM_VER_FIELDS: tuple[
-    Literal["major"], Literal["minor"], Literal["patch"], Literal["pre_release"]
-] = "major", "minor", "patch", "pre_release"
-_CANARY: Literal["--canary"] = "--canary"
 
 
 def _is_str(obj: Any) -> TypeIs[str]:
@@ -350,7 +345,7 @@ class _GitHub:
         self, n_head: int | None = None, *, warn_lower: bool = False
     ) -> pl.DataFrame:
         tags = self.req.tags(n_head or self.req._TAGS_MAX_PAGE, warn_lower=warn_lower)
-        return pl.DataFrame(self.parse.tags(tags)).pipe(_with_sem_ver)
+        return pl.DataFrame(self.parse.tags(tags)).pipe(semver.with_columns)
 
     def trees(self, tag: str | ParsedTag, /) -> pl.DataFrame:
         """Retrieve directory info for a given version ``tag``."""
@@ -398,7 +393,7 @@ class _GitHub:
                 f"Finished collection.\n"
                 f"Writing {fresh_rows.height} new rows to {fp!s}"
             )
-            return pl.concat((trees, fresh_rows)).pipe(_sort_sem_ver)
+            return pl.concat((trees, fresh_rows)).pipe(semver.sort)
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)
@@ -421,7 +416,7 @@ class _GitHub:
             latest = (
                 self.tags(1).lazy().join(npm_tag_only, on="tag", how="inner").collect()
             )
-            if latest.equals(prev.pipe(_sort_sem_ver).head(1).collect()):
+            if latest.equals(prev.pipe(semver.sort).head(1).collect()):
                 print(f"Already up-to-date {fp!s}")
                 return prev.collect()
             print(f"Refreshing {fp!s}")
@@ -429,16 +424,14 @@ class _GitHub:
             tags = (
                 pl.concat((self.tags(), prev_eager), how="vertical")
                 .unique("sha")
-                .pipe(_sort_sem_ver)
+                .pipe(semver.sort)
             )
             print(f"Collected {tags.height - prev_eager.height} new tags")
             return tags
 
     def _trees_batched(self, tags: Iterable[str | ParsedTag], /) -> pl.DataFrame:
-        rate_limit = self.rate_limit()
-        if rate_limit["is_limited"]:
-            raise NotImplementedError(rate_limit)
-        elif not isinstance(tags, Sequence):
+        rate_limit = self.rate_limit(strict=True)
+        if not isinstance(tags, Sequence):
             tags = tuple(tags)
         req = self.req
         n = len(tags)
@@ -511,9 +504,9 @@ class _Npm:
         versions = [
             f"v{tag}"
             for v in content["versions"]
-            if (tag := v["version"]) and _CANARY not in tag
+            if (tag := v["version"]) and semver.CANARY not in tag
         ]
-        return pl.DataFrame({"tag": versions}).pipe(_with_sem_ver)
+        return pl.DataFrame({"tag": versions}).pipe(semver.with_columns)
 
 
 class Application:
@@ -604,36 +597,6 @@ def _tag_from(s: str, /) -> str:
         return s if s.startswith("v") else f"v{s}"
     else:
         raise TypeError(s)
-
-
-def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
-    """
-    Extracts components of a `SemVer`_ string into sortable columns.
-
-    .. _SemVer:
-        https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
-    """
-    fields = pl.col(_SEM_VER_FIELDS)
-    pattern = r"""(?x)
-        v?(?<major>[[:digit:]]*)\.
-        (?<minor>[[:digit:]]*)\.
-        (?<patch>[[:digit:]]*)
-        (\-(next)?(beta)?\.)?
-        (?<pre_release>[[:digit:]]*)?
-    """
-    sem_ver = pl.col(col_tag).str.extract_groups(pattern).struct.field(*_SEM_VER_FIELDS)
-    return (
-        df.lazy()
-        .with_columns(sem_ver)
-        .with_columns(pl.when(fields.str.len_chars() > 0).then(fields).cast(pl.Int64))
-        .with_columns(is_pre_release=pl.col("pre_release").is_not_null())
-        .collect()
-    )
-
-
-def _sort_sem_ver(frame: _Frame, /) -> _Frame:
-    """Sort ``frame``, displaying in descending release order."""
-    return frame.sort(_SEM_VER_FIELDS, descending=True)
 
 
 # This is the tag in http://github.com/vega/vega-datasets from
