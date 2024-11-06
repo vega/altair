@@ -7,7 +7,6 @@ import copy
 import json
 import sys
 import textwrap
-from collections import deque
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain
@@ -220,9 +219,10 @@ class MarkMethodMixin:
 '''
 
 MARK_METHOD: Final = '''
-def mark_{mark}(self, {method_args}, **kwds) -> Self:
+@use_signature({decorator})
+def mark_{mark}(self, **kwds: Any) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
-    kwds = dict({dict_args}, **kwds)
+
     copy = self.copy(deep=False)  # type: ignore[attr-defined]
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
@@ -911,32 +911,30 @@ def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
     schema = load_schema(fp)
     code: list[str] = []
 
+    it_dummy = (
+        SchemaGenerator(
+            classname=f"_{mark_def}",
+            schema={"$ref": "#/definitions/" + mark_def},
+            rootschema=schema,
+            schemarepr={"$ref": "#/definitions/" + mark_def},
+            exclude_properties={"type"},
+            summary=f"{mark_def} schema wrapper.",
+        ).schema_class()
+        for mark_def in markdefs.values()
+    )
+
     for mark_enum, mark_def in markdefs.items():
         _def = schema["definitions"][mark_enum]
         marks: list[Any] = _def["enum"] if "enum" in _def else [_def["const"]]
-        info = SchemaInfo.from_refname(mark_def, rootschema=schema)
-        mark_args = generate_mark_args(info)
 
         for mark in marks:
             # TODO: only include args relevant to given type?
-            mark_method = MARK_METHOD.format(mark=mark, mark_def=mark_def, **mark_args)
+            mark_method = MARK_METHOD.format(
+                decorator=f"_{mark_def}", mark=mark, mark_def=mark_def
+            )
             code.append("\n    ".join(mark_method.splitlines()))
 
-    return MARK_MIXIN.format(methods="\n".join(code))
-
-
-def generate_mark_args(
-    info: SchemaInfo, /
-) -> dict[Literal["method_args", "dict_args"], str]:
-    args = codegen.get_args(info)
-    method_args: deque[str] = deque()
-    dict_args: deque[str] = deque()
-    for p, p_info in args.iter_args(arg_required_kwds, exclude="type"):
-        dict_args.append(f"{p}={p}")
-        method_args.append(
-            f"{p}: {p_info.to_type_repr(target='annotation', use_undefined=True)} = Undefined"
-        )
-    return {"method_args": ", ".join(method_args), "dict_args": ", ".join(dict_args)}
+    return "\n".join(chain(it_dummy, [MARK_MIXIN.format(methods="\n".join(code))]))
 
 
 def generate_typed_dict(
@@ -1223,7 +1221,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
     mixins_imports = (
         "from typing import Any, Sequence, List, Literal, Union",
-        "from altair.utils import use_signature, Undefined",
+        "from altair.utils import use_signature, Undefined, SchemaBase",
         "from . import core",
     )
 
@@ -1239,7 +1237,7 @@ def vegalite_main(skip_download: bool = False) -> None:
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
-            "from altair import Parameter, SchemaBase",
+            "from altair import Parameter",
         ),
         "\n\n\n",
         mark_mixin,

@@ -221,6 +221,9 @@ class SchemaGenerator:
         schemarepr: object | None = None,
         rootschemarepr: object | None = None,
         nodefault: list[str] | None = None,
+        *,
+        exclude_properties: Iterable[str] = (),
+        summary: str | None = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -230,6 +233,8 @@ class SchemaGenerator:
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault or ()
+        self.exclude_properties: set[str] = set(exclude_properties)
+        self.summary: str = summary or f"{self.classname} schema wrapper"
         self.kwargs = kwargs
 
     def subclasses(self) -> Iterator[str]:
@@ -288,7 +293,7 @@ class SchemaGenerator:
     def docstring(self, indent: int = 0) -> str:
         info = self.info
         # https://numpydoc.readthedocs.io/en/latest/format.html#short-summary
-        doc = [f"{self.classname} schema wrapper"]
+        doc = [self.summary]
         if info.description:
             # https://numpydoc.readthedocs.io/en/latest/format.html#extended-summary
             # Remove condition from description
@@ -309,7 +314,10 @@ class SchemaGenerator:
             it = chain.from_iterable(
                 (f"{p} : {p_info.to_type_repr()}", f"    {p_info.deep_description}")
                 for p, p_info in arg_info.iter_args(
-                    arg_info.required, arg_kwds, arg_invalid_kwds
+                    arg_info.required,
+                    arg_kwds,
+                    arg_invalid_kwds,
+                    exclude=self.exclude_properties,
                 )
             )
             doc.extend(chain(["", "Parameters", "----------", ""], it))
@@ -331,10 +339,11 @@ class SchemaGenerator:
     def init_args(self) -> tuple[list[str], list[str]]:
         info = self.info
         arg_info = self.arg_info
+        exclude = self.exclude_properties
 
         nodefault = set(self.nodefault)
-        arg_info.required -= nodefault
-        arg_info.kwds -= nodefault
+        arg_info.required.difference_update(nodefault, exclude)
+        arg_info.kwds.difference_update(nodefault, exclude)
 
         args: list[str] = ["self"]
         super_args: list[str] = []
