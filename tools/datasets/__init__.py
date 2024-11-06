@@ -284,20 +284,13 @@ class DataLoader:
     def __dir__(self) -> list[str]:
         return self.list_datasets()
 
-    def __call__(
+    def url(
         self,
         name: str,
         ext: ExtSupported | None = None,
         /,
         tag: LiteralString | Literal["latest"] | None = None,
-    ) -> WorkInProgress:
-        """
-        **WIP** Will be using this *instead of* attribute access.
-
-        - Original supports this as well
-        - Will only be using the actual (js_name)
-        - Some have hyphens, others underscores
-        """
+    ) -> str:
         constraints: dict[Literal["tag", "suffix"], str] = {}
         if tag == "latest":
             raise NotImplementedError(tag)
@@ -317,6 +310,22 @@ class DataLoader:
                 constraints["suffix"] = ext
         q = QueryTree(name_js=name, **constraints)  # type: ignore[typeddict-item]
         return app.github.query.url_from(**q)
+
+    def __call__(
+        self,
+        name: str,
+        ext: ExtSupported | None = None,
+        /,
+        tag: LiteralString | Literal["latest"] | None = None,
+    ) -> WorkInProgress:
+        """
+        **WIP** Will be using this *instead of* attribute access.
+
+        - Original supports this as well
+        - Will only be using the actual (js_name)
+        - Some have hyphens, others underscores
+        """
+        return self.url(name, ext, tag=tag)
 
 
 data = DataLoader()
