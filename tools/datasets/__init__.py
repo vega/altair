@@ -296,14 +296,10 @@ class _GitHub:
         name_tags: str,
         name_trees: str,
         *,
-        write_schema: bool,
         base_url: LiteralString = "https://api.github.com/",
         org: LiteralString = "vega",
         package: LiteralString = "vega-datasets",
     ) -> None:
-        # When ``write_schema``, addtional ``...-schema.json`` file(s) are produced
-        # that describes column types - in a non-binary format.
-        self._write_schema: bool = write_schema
         output_dir.mkdir(exist_ok=True)
         self._paths: dict[_PathName, Path] = {
             "dir": output_dir,
@@ -461,13 +457,11 @@ class _Npm:
         output_dir: Path,
         name_tags: str,
         *,
-        write_schema: bool,
         jsdelivr: Literal["jsdelivr"] = "jsdelivr",
         npm: Literal["npm"] = "npm",
         package: LiteralString = "vega-datasets",
         jsdelivr_version: LiteralString = "v1",
     ) -> None:
-        self._write_schema: bool = write_schema
         output_dir.mkdir(exist_ok=True)
         self._paths: dict[Literal["tags"], Path] = {
             "tags": output_dir / f"{name_tags}.parquet"
@@ -533,18 +527,9 @@ class Application:
         kwds_npm = kwds_npm or {}
         self._write_schema: bool = write_schema
         self._github: _GitHub = _GitHub(
-            output_dir,
-            name_tags=tags_gh,
-            name_trees=trees_gh,
-            write_schema=write_schema,
-            **kwds_gh,
+            output_dir, name_tags=tags_gh, name_trees=trees_gh, **kwds_gh
         )
-        self._npm: _Npm = _Npm(
-            output_dir,
-            name_tags=tags_npm,
-            write_schema=write_schema,
-            **kwds_npm,
-        )
+        self._npm: _Npm = _Npm(output_dir, name_tags=tags_npm, **kwds_npm)
 
     @property
     def github(self) -> _GitHub:
