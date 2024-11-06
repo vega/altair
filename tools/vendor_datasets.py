@@ -674,7 +674,7 @@ class Application:
         output_dir: Path,
         *,
         write_schema: bool,
-        trees_gh: str = "metadata_full",
+        trees_gh: str = "metadata",
         tags_gh: str = "tags",
         tags_npm: str = "tags_npm",
         kwds_gh: Mapping[str, Any] | None = None,
