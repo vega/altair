@@ -40,7 +40,7 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    from collections.abc import MutableMapping
+    from collections.abc import Mapping, MutableMapping
     from email.message import Message
     from typing import TypeVar
     from urllib.request import OpenerDirector, Request
@@ -487,10 +487,15 @@ class _GitHub:
     def url(self) -> GitHubUrl:
         return self._url
 
-    def rate_limit(self) -> ParsedRateLimit:
-        return self.parse.rate_limit(self.req.rate_limit())
+    def rate_limit(self, *, strict: bool = False) -> ParsedRateLimit:
+        limit = self.parse.rate_limit(self.req.rate_limit())
+        if strict and limit["is_limited"]:
+            raise NotImplementedError(limit)
+        return limit
 
-    def tags(self, n_head: int | None, *, warn_lower: bool = False) -> pl.DataFrame:
+    def tags(
+        self, n_head: int | None = None, *, warn_lower: bool = False
+    ) -> pl.DataFrame:
         tags = self.req.tags(n_head or self.req._TAGS_MAX_PAGE, warn_lower=warn_lower)
         return pl.DataFrame(self.parse.tags(tags)).pipe(_with_sem_ver)
 
@@ -516,48 +521,65 @@ class _GitHub:
         )
         return df.select(*sorted(df.columns))
 
-    def refresh(
-        self, fp_tags: Path | None = None, fp_trees: Path | None = None
-    ) -> pl.DataFrame:
+    def refresh_trees(self, gh_tags: pl.DataFrame, /) -> pl.DataFrame:
         """
         Use known tags to discover and update missing trees metadata.
 
         Aims to stay well-within API rate limits, both for authenticated ad unauthenticated users.
         """
-        rate_limit = self.rate_limit()
-        if rate_limit["is_limited"]:
-            raise NotImplementedError(rate_limit)
-        fp_tags = fp_tags or self._paths["tags"]
-        fp_trees = fp_trees or self._paths["trees"]
-        IS_AUTH = rate_limit["is_auth"]
-        UNAUTH_LIMIT = self.req._UNAUTH_TREES_LIMIT
-
-        tags = (
-            self._refresh_tags(fp_tags)
-            if IS_AUTH or rate_limit["remaining"] > UNAUTH_LIMIT
-            else pl.read_parquet(fp_tags)
-        )
-        trees = pl.read_parquet(fp_trees)
-
-        missing_trees = tags.join(
+        rate_limit = self.rate_limit(strict=True)
+        fp = self._paths["trees"]
+        trees = pl.read_parquet(fp)
+        missing_trees = gh_tags.join(
             trees.select(pl.col("tag").unique()), on="tag", how="anti"
         )
         if missing_trees.is_empty():
-            print(f"Already up-to-date {fp_trees!s}")
+            print(f"Already up-to-date {fp!s}")
             return trees
         else:
-            it = islice(
-                missing_trees.iter_rows(named=True), None if IS_AUTH else UNAUTH_LIMIT
-            )
+            stop = None if rate_limit["is_auth"] else self.req._UNAUTH_TREES_LIMIT
+            it = islice(missing_trees.iter_rows(named=True), stop)
             missing = cast("Iterator[ReParsedTag]", it)
             fresh_rows = self._trees_batched(missing)
             print(
                 f"Finished collection.\n"
-                f"Writing {fresh_rows.height} new rows to {fp_trees!s}"
+                f"Writing {fresh_rows.height} new rows to {fp!s}"
             )
-            refreshed = pl.concat((trees, fresh_rows)).pipe(_sort_sem_ver)
-            _write_parquet(refreshed, fp_trees, write_schema=self._write_schema)
-            return refreshed
+            return pl.concat((trees, fresh_rows)).pipe(_sort_sem_ver)
+
+    def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
+        limit = self.rate_limit(strict=True)
+        npm_tag_only = npm_tags.lazy().select("tag")
+        fp = self._paths["tags"]
+        if not limit["is_auth"] and limit["remaining"] <= self.req._TAGS_COST:
+            return (
+                pl.scan_parquet(fp).join(npm_tag_only, on="tag", how="inner").collect()
+            )
+        elif not fp.exists():
+            print(f"Initializing {fp!s}")
+            tags = (
+                self.tags().lazy().join(npm_tag_only, on="tag", how="inner").collect()
+            )
+            print(f"Collected {tags.height} new tags")
+            return tags
+        else:
+            print("Checking for new tags")
+            prev = pl.scan_parquet(fp)
+            latest = (
+                self.tags(1).lazy().join(npm_tag_only, on="tag", how="inner").collect()
+            )
+            if latest.equals(prev.pipe(_sort_sem_ver).head(1).collect()):
+                print(f"Already up-to-date {fp!s}")
+                return prev.collect()
+            print(f"Refreshing {fp!s}")
+            prev_eager = prev.collect()
+            tags = (
+                pl.concat((self.tags(), prev_eager), how="vertical")
+                .unique("sha")
+                .pipe(_sort_sem_ver)
+            )
+            print(f"Collected {tags.height - prev_eager.height} new tags")
+            return tags
 
     def _trees_batched(self, tags: Iterable[str | ParsedTag], /) -> pl.DataFrame:
         rate_limit = self.rate_limit()
@@ -581,45 +603,6 @@ class _GitHub:
             dfs.append(self.trees(tag))
         return pl.concat(dfs)
 
-    def _refresh_tags(
-        self, fp: Path | None = None, *, limit_new: int | None = None
-    ) -> pl.DataFrame:
-        n_new_tags: int = 0
-        fp = fp or self._paths["tags"]
-        if not fp.exists():
-            print(f"Initializing {fp!s}")
-            tags = self.tags(limit_new)
-            n_new_tags = tags.height
-        else:
-            print("Checking for new tags")
-            prev = pl.scan_parquet(fp)
-            curr_latest = self.tags(1)
-            # TODO: Needs a hook for `_npm_metadata()`
-            if curr_latest.equals(prev.pipe(_sort_sem_ver).head(1).collect()):
-                print(f"Already up-to-date {fp!s}")
-                return prev.collect()
-            else:
-                print(f"Refreshing {fp!s}")
-                prev_eager = prev.collect()
-                tags = (
-                    pl.concat((self.tags(limit_new), prev_eager), how="vertical")
-                    .unique("sha")
-                    .pipe(_sort_sem_ver)
-                )
-                n_new_tags = tags.height - prev_eager.height
-        print(f"Collected {n_new_tags} new tags")
-        _write_parquet(tags, fp, write_schema=self._write_schema)
-        return tags
-
-
-_root_dir: Path = Path(__file__).parent
-
-GitHub = _GitHub(
-    _root_dir / "_vega_datasets_data",
-    name_trees="metadata_full",
-    name_tags="tags",
-    write_schema=True,
-)
 
 #######################################################################################
 
@@ -678,14 +661,85 @@ class _Npm:
         return pl.DataFrame({"tag": versions}).pipe(_with_sem_ver)
 
 
-Npm = _Npm(_root_dir / "_vega_datasets_data", name_tags="tags_npm", write_schema=True)
+class Application:
+    """
+    Top-level context.
+
+    When ``write_schema``, addtional ``...-schema.json`` files are produced
+    that describes the metadata columns.
+    """
+
+    def __init__(
+        self,
+        output_dir: Path,
+        *,
+        write_schema: bool,
+        trees_gh: str = "metadata_full",
+        tags_gh: str = "tags",
+        tags_npm: str = "tags_npm",
+        kwds_gh: Mapping[str, Any] | None = None,
+        kwds_npm: Mapping[str, Any] | None = None,
+    ) -> None:
+        output_dir.mkdir(exist_ok=True)
+        kwds_gh = kwds_gh or {}
+        kwds_npm = kwds_npm or {}
+        self._write_schema: bool = write_schema
+        self._github: _GitHub = _GitHub(
+            output_dir,
+            name_tags=tags_gh,
+            name_trees=trees_gh,
+            write_schema=write_schema,
+            **kwds_gh,
+        )
+        self._npm: _Npm = _Npm(
+            output_dir,
+            name_tags=tags_npm,
+            write_schema=write_schema,
+            **kwds_npm,
+        )
+
+    @property
+    def github(self) -> _GitHub:
+        return self._github
+
+    @property
+    def npm(self) -> _Npm:
+        return self._npm
+
+    def refresh(self) -> pl.DataFrame:
+        npm_tags = self.npm.tags()
+        self.write_parquet(npm_tags, self.npm._paths["tags"])
+
+        gh_tags = self.github.refresh_tags(npm_tags)
+        self.write_parquet(gh_tags, self.github._paths["tags"])
+
+        gh_trees = self.github.refresh_trees(gh_tags)
+        self.write_parquet(gh_trees, self.github._paths["trees"])
+        return gh_trees
+
+    def write_parquet(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
+        """Write ``frame`` to ``fp``, with some extra safety."""
+        if not fp.exists():
+            fp.touch()
+        df = frame.lazy().collect()
+        df.write_parquet(fp, compression="zstd", compression_level=17)
+        if self._write_schema:
+            schema = {name: tp.__name__ for name, tp in df.schema.to_python().items()}
+            fp_schema = fp.with_name(f"{fp.stem}-schema.json")
+            if not fp_schema.exists():
+                fp_schema.touch()
+            with fp_schema.open("w") as f:
+                json.dump(schema, f, indent=2)
+
+
+app = Application(Path(__file__).parent / "_vega_datasets_data", write_schema=True)
 
 
 def _tag_from(s: str, /) -> str:
     # - Actual tag
     # - Trees url (using ref name)
     # - npm url (works w/o the `v` prefix)
-    trees_url = GitHub.url.TREES
+    trees_url = app.github.url.TREES
     if s.startswith("v"):
         return s
     elif s.startswith(trees_url):
@@ -725,28 +779,6 @@ def _with_sem_ver(df: pl.DataFrame, *, col_tag: str = "tag") -> pl.DataFrame:
 def _sort_sem_ver(frame: _Frame, /) -> _Frame:
     """Sort ``frame``, displaying in descending release order."""
     return frame.sort(_SEM_VER_FIELDS, descending=True)
-
-
-def _write_parquet(
-    frame: pl.DataFrame | pl.LazyFrame, fp: Path, /, *, write_schema: bool
-) -> None:
-    """
-    Write ``frame`` to ``fp``, with some extra safety.
-
-    When ``write_schema``, an addtional ``...-schema.json`` file is produced
-    that describes the metadata columns.
-    """
-    if not fp.exists():
-        fp.touch()
-    df = frame.lazy().collect()
-    df.write_parquet(fp, compression="zstd", compression_level=17)
-    if write_schema:
-        schema = {name: tp.__name__ for name, tp in df.schema.to_python().items()}
-        fp_schema = fp.with_name(f"{fp.stem}-schema.json")
-        if not fp_schema.exists():
-            fp_schema.touch()
-        with fp_schema.open("w") as f:
-            json.dump(schema, f, indent=2)
 
 
 # This is the tag in http://github.com/vega/vega-datasets from
@@ -960,7 +992,7 @@ class DataLoader:
             else:
                 constraints["suffix"] = ext
         q = QueryTree(name_js=name, **constraints)  # type: ignore[typeddict-item]
-        return GitHub.query.url_from(**q)
+        return app.github.query.url_from(**q)
 
 
 data = DataLoader()
