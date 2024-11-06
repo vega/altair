@@ -375,7 +375,8 @@ class DataLoader:
         ext: Extension | None = None,
         /,
         tag: VersionTag | Literal["latest"] | None = None,
-    ) -> WorkInProgress:
+        **kwds: Any,
+    ) -> pl.DataFrame:
         """
         **WIP** Will be using this *instead of* attribute access.
 
@@ -383,7 +384,7 @@ class DataLoader:
         - Will only be using the actual (js_name)
         - Some have hyphens, others underscores
         """
-        return self.url(name, ext, tag=tag)
+        return app.npm.dataset(self.url(name, ext, tag=tag), **kwds)
 
 
 data = DataLoader()
