@@ -732,7 +732,7 @@ class Application:
                 json.dump(schema, f, indent=2)
 
 
-app = Application(Path(__file__).parent / "_vega_datasets_data", write_schema=True)
+app = Application(Path(__file__).parent / "_metadata", write_schema=True)
 
 
 def _tag_from(s: str, /) -> str:
