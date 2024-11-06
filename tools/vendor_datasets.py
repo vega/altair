@@ -90,6 +90,11 @@ class GitHubUrl(NamedTuple):
     TREES: LiteralString
 
 
+class NpmUrl(NamedTuple):
+    CDN: LiteralString
+    TAGS: LiteralString
+
+
 class GitHubTag(TypedDict):
     name: str
     node_id: str
@@ -446,6 +451,8 @@ class _GitHub:
         *,
         write_schema: bool,
         base_url: LiteralString = "https://api.github.com/",
+        org: LiteralString = "vega",
+        package: LiteralString = "vega-datasets",
     ) -> None:
         # When ``write_schema``, addtional ``...-schema.json`` file(s) are produced
         # that describes column types - in a non-binary format.
@@ -456,7 +463,7 @@ class _GitHub:
             "tags": output_dir / f"{name_tags}.parquet",
             "trees": output_dir / f"{name_trees}.parquet",
         }
-        repo = f"{base_url}repos/vega/vega-datasets/"
+        repo = f"{base_url}repos/{org}/{package}/"
         self._url = GitHubUrl(
             BASE=base_url,
             RATE=f"{base_url}rate_limit",
@@ -605,8 +612,10 @@ class _GitHub:
         return tags
 
 
+_root_dir: Path = Path(__file__).parent
+
 GitHub = _GitHub(
-    Path(__file__).parent / "_vega_datasets_data",
+    _root_dir / "_vega_datasets_data",
     name_trees="metadata_full",
     name_tags="tags",
     write_schema=True,
@@ -615,29 +624,61 @@ GitHub = _GitHub(
 #######################################################################################
 
 
-def _npm_metadata(*args: WorkInProgress) -> pl.DataFrame:
-    """
-    Request, parse npm tags metadata.
+class _Npm:
+    def __init__(
+        self,
+        output_dir: Path,
+        name_tags: str,
+        *,
+        write_schema: bool,
+        jsdelivr: Literal["jsdelivr"] = "jsdelivr",
+        npm: Literal["npm"] = "npm",
+        package: LiteralString = "vega-datasets",
+        jsdelivr_version: LiteralString = "v1",
+    ) -> None:
+        self._write_schema: bool = write_schema
+        output_dir.mkdir(exist_ok=True)
+        self._paths: dict[Literal["tags"], Path] = {
+            "tags": output_dir / f"{name_tags}.parquet"
+        }
+        self._url: NpmUrl = NpmUrl(
+            CDN=f"https://cdn.{jsdelivr}.net/{npm}/{package}@",
+            TAGS=f"https://data.{jsdelivr}.com/{jsdelivr_version}/packages/{npm}/{package}",
+        )
 
-    Notes
-    -----
-    - Ignores canary releases
-    - ``npm`` can accept either, but this endpoint returns without "v":
+    @property
+    def url(self) -> NpmUrl:
+        return self._url
 
-        {tag}
-        v{tag}
-    """
-    req = urllib.request.Request(
-        _NPM_METADATA_URL, headers={"Accept": "application/json"}
-    )
-    with urllib.request.urlopen(req) as response:
-        content: NpmPackageMetadataResponse = json.load(response)
-    versions = [
-        f"v{version}"
-        for v in content["versions"]
-        if (version := v["version"]) and _CANARY not in version
-    ]
-    return pl.DataFrame({"tag": versions}).pipe(_with_sem_ver)
+    def tags(self) -> pl.DataFrame:
+        """
+        Request, parse tags from `Get package metadata`_.
+
+        Notes
+        -----
+        - Ignores canary releases
+        - ``npm`` can accept either, but this endpoint returns without "v":
+
+            {tag}
+            v{tag}
+
+        .. _Get package metadata:
+            https://www.jsdelivr.com/docs/data.jsdelivr.com#get-/v1/packages/npm/-package-
+        """
+        req = urllib.request.Request(
+            self.url.TAGS, headers={"Accept": "application/json"}
+        )
+        with urllib.request.urlopen(req) as response:
+            content: NpmPackageMetadataResponse = json.load(response)
+        versions = [
+            f"v{tag}"
+            for v in content["versions"]
+            if (tag := v["version"]) and _CANARY not in tag
+        ]
+        return pl.DataFrame({"tag": versions}).pipe(_with_sem_ver)
+
+
+Npm = _Npm(_root_dir / "_vega_datasets_data", name_tags="tags_npm", write_schema=True)
 
 
 def _tag_from(s: str, /) -> str:
