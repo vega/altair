@@ -28,14 +28,13 @@ if TYPE_CHECKING:
     from _typeshed import StrPath
 
     if sys.version_info >= (3, 13):
-        from typing import TypeIs
+        from typing import TypeIs, Unpack
     else:
-        from typing_extensions import TypeIs
+        from typing_extensions import TypeIs, Unpack
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
@@ -43,6 +42,7 @@ if TYPE_CHECKING:
     from narwhals import typing as nw_typing  # noqa: F401
 
     from tools.datasets._typing import DatasetName, Extension, VersionTag
+    from tools.datasets.models import Metadata
     from tools.schemapi.utils import OneOrSeq
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
@@ -56,7 +56,12 @@ __all__ = ["Reader"]
 _ItemSlice: TypeAlias = (
     "tuple[int | None, int | Literal['url_npm', 'url_github'] | None]"
 )
-"""Query result scalar selection."""
+"""
+Scalar selection args for `pl.DataFrame.item`_.
+
+.. _pl.DataFrame.item:
+            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.item.html
+"""
 
 
 class Reader:
@@ -89,57 +94,34 @@ class Reader:
         /,
         tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
-        constraints: dict[str, str] = {}
-        if tag == "latest":
-            raise NotImplementedError(tag)
-        elif tag is not None:
-            constraints["tag"] = tag
-        # NOTE: Probably need to remove/move this
-        if name.endswith((".csv", ".json", ".tsv", ".arrow")):
-            name, suffix = name.rsplit(".", maxsplit=1)
-            suffix = "." + suffix
-            if not is_ext_supported(suffix):
-                raise TypeError(suffix)
-            else:
-                constraints["suffix"] = suffix
-        elif ext is not None:
-            if not is_ext_supported(ext):
-                raise TypeError(ext)
-            else:
-                constraints["suffix"] = ext
-        return self._url_from(item=(0, "url_npm"), dataset_name=name, **constraints)
+        df = self._query(**validate_constraints(name, ext, tag))
+        item: _ItemSlice = (0, "url_npm")
+        url = df.item(*item)
+        if isinstance(url, str):
+            return url
+        else:
+            msg = f"Expected 'str' but got {type(url).__name__!r} from {url!r}."
+            raise TypeError(msg)
 
-    def _url_from(
-        self,
-        *predicates: OneOrSeq[str | pl.Expr],
-        item: _ItemSlice = (0, "url_npm"),
-        **constraints: Any,
-    ) -> str:
+    def _query(
+        self, *predicates: OneOrSeq[str | pl.Expr], **constraints: Unpack[Metadata]
+    ) -> pl.DataFrame:
         r"""
-        Querying multi-version trees metadata for `npm` url to fetch.
+        Query multi-version trees metadata.
 
         Parameters
         ----------
         \*predicates, \*\*constraints
             Passed directly to `pl.LazyFrame.filter`_.
-        item
-            Scalar selection args for `pl.DataFrame.item`_.
 
         .. _pl.LazyFrame.filter:
             https://docs.pola.rs/api/python/stable/reference/lazyframe/api/polars.LazyFrame.filter.html
-        .. _pl.DataFrame.item:
-            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.item.html
         """
         source = self._fp_trees
         fn = self.scanner_from(self._fp_trees)
         results = fn(source).filter(*predicates, **constraints).collect()
         if not results.is_empty():
-            url = results.item(*item)
-            if isinstance(url, str):
-                return url
-            else:
-                msg = f"Expected 'str' but got {type(url).__name__!r} from {url!r}."
-                raise TypeError(msg)
+            return results
         else:
             terms = "\n".join(f"{t!r}" for t in (predicates, constraints) if t)
             msg = f"Found no results for:\n{terms}"
@@ -159,6 +141,31 @@ class Reader:
         fn = self.reader_from(url)
         with self._opener.open(url) as f:
             return fn(f.read(), **kwds)
+
+
+def validate_constraints(
+    name: DatasetName | LiteralString,
+    ext: Extension | None,
+    tag: VersionTag | Literal["latest"] | None,
+    /,
+) -> Metadata:
+    constraints: Metadata = {}
+    if tag == "latest":
+        raise NotImplementedError(tag)
+    elif tag is not None:
+        constraints["tag"] = tag
+    if name.endswith((".csv", ".json", ".tsv", ".arrow")):
+        fp = Path(name)
+        constraints["dataset_name"] = fp.stem
+        constraints["suffix"] = fp.suffix
+        return constraints
+    elif ext is not None:
+        if not is_ext_supported(ext):
+            raise TypeError(ext)
+        else:
+            constraints["suffix"] = ext
+    constraints["dataset_name"] = name
+    return constraints
 
 
 def validate_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
