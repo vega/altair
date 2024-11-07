@@ -21,6 +21,7 @@ if TYPE_CHECKING:
 
 class GitHubUrl(NamedTuple):
     BASE: LiteralString
+    BLOBS: LiteralString
     RATE: LiteralString
     REPO: LiteralString
     TAGS: LiteralString

@@ -287,6 +287,7 @@ class GitHub:
         repo = f"{base_url}repos/{org}/{package}/"
         self._url = GitHubUrl(
             BASE=base_url,
+            BLOBS=f"{repo}git/blobs/",
             RATE=f"{base_url}rate_limit",
             REPO=repo,
             TAGS=f"{repo}tags",
