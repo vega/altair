@@ -397,7 +397,7 @@ class GitHub:
                 f"Finished collection.\n"
                 f"Writing {fresh_rows.height} new rows to {fp!s}"
             )
-            return pl.concat((trees, fresh_rows)).pipe(semver.sort)
+            return pl.concat((trees, fresh_rows))
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)
