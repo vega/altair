@@ -14,10 +14,11 @@ Note
 
 from __future__ import annotations
 
+import os
 import urllib.request
 from functools import partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, TypeVar, cast
 
 import polars as pl
 
@@ -63,9 +64,24 @@ class Reader:
     }
     _scan_fn: ClassVar[dict[_ExtensionScan, ScanFn]] = {".parquet": pl.scan_parquet}
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
+    _ENV_VAR: LiteralString = "ALTAIR_DATASETS_DIR"
 
     def __init__(self, fp_trees: Path, /) -> None:
         self._fp_trees: Path = fp_trees
+
+    @property
+    def _datasets_dir(self) -> Path | None:  # type: ignore[return]
+        """
+        Returns path to datasets cache, if possible.
+
+        Requires opt-in via environment variable::
+
+            Reader._ENV_VAR
+        """
+        if _dir := os.environ.get(self._ENV_VAR):
+            datasets_dir = Path(_dir)
+            datasets_dir.mkdir(exist_ok=True)
+            return datasets_dir
 
     @classmethod
     def reader_from(cls, source: StrPath, /) -> ReadFn:
@@ -116,20 +132,41 @@ class Reader:
             msg = f"Found no results for:\n{terms}"
             raise NotImplementedError(msg)
 
-    def dataset(self, url: str, /, **kwds: Any) -> pl.DataFrame:
+    def dataset(
+        self,
+        name: DatasetName | LiteralString,
+        ext: Extension | None = None,
+        /,
+        tag: VersionTag | Literal["latest"] | None = None,
+        **kwds: Any,
+    ) -> pl.DataFrame:
         """
-        Fetch a remote dataset.
+        Fetch a remote dataset, attempt caching if possible.
 
         Parameters
         ----------
-        url
-            Full path to a known dataset.
+        name, ext, tag
+            TODO
         **kwds
             Arguments passed to the underlying read function.
         """
+        df = self._query(**validate_constraints(name, ext, tag))
+        result = cast("Metadata", df.row(0, named=True))
+        url = result["url_npm"]
         fn = self.reader_from(url)
-        with self._opener.open(url) as f:
-            return fn(f.read(), **kwds)
+
+        if cache := self._datasets_dir:
+            fp = cache / (result["sha"] + result["suffix"])
+            if fp.exists():
+                return fn(fp, **kwds)
+            else:
+                fp.touch()
+                with self._opener.open(url) as f:
+                    fp.write_bytes(f.read())
+                return fn(fp, **kwds)
+        else:
+            with self._opener.open(url) as f:
+                return fn(f.read(), **kwds)
 
 
 def validate_constraints(

@@ -193,7 +193,7 @@ class DataLoader:
         **kwds: Any,
     ) -> pl.DataFrame:
         """Get a remote dataset and load as tabular data."""
-        return self._reader.dataset(self.url(name, ext, tag=tag), **kwds)
+        return self._reader.dataset(name, ext, tag=tag, **kwds)
 
 
 data = DataLoader(app._from_alias("gh_trees"))
