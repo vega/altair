@@ -223,7 +223,7 @@ class _GitHubParseNamespace:
             dataset_name=path.stem,
             suffix=path.suffix,
             size=tree["size"],
-            url=tree["url"],
+            sha=tree["sha"],
             ext_supported=is_ext_supported(path.suffix),
             tag=tag,
         )
@@ -326,7 +326,6 @@ class GitHub:
         df = (
             pl.DataFrame(parsed)
             .lazy()
-            .rename({"url": "url_github"})
             .with_columns(name_collision=pl.col("dataset_name").is_duplicated())
             .with_columns(
                 url_npm=pl.concat_str(

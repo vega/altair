@@ -3,9 +3,9 @@
   "ext_supported": "bool",
   "file_name": "str",
   "name_collision": "bool",
+  "sha": "str",
   "size": "int",
   "suffix": "str",
   "tag": "str",
-  "url_github": "str",
   "url_npm": "str"
 }

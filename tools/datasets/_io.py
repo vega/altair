@@ -53,16 +53,6 @@ if TYPE_CHECKING:
 
 __all__ = ["Reader"]
 
-_ItemSlice: TypeAlias = (
-    "tuple[int | None, int | Literal['url_npm', 'url_github'] | None]"
-)
-"""
-Scalar selection args for `pl.DataFrame.item`_.
-
-.. _pl.DataFrame.item:
-            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.item.html
-"""
-
 
 class Reader:
     _read_fn: ClassVar[dict[Extension, ReadFn]] = {
@@ -95,8 +85,7 @@ class Reader:
         tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
         df = self._query(**validate_constraints(name, ext, tag))
-        item: _ItemSlice = (0, "url_npm")
-        url = df.item(*item)
+        url = df.item(0, "url_npm")
         if isinstance(url, str):
             return url
         else:

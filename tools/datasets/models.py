@@ -116,7 +116,7 @@ class ParsedTree(TypedDict):
     dataset_name: str
     suffix: str
     size: int
-    url: str
+    sha: str
     ext_supported: bool
     tag: str
 
@@ -134,10 +134,10 @@ class Metadata(TypedDict, total=False):
     ext_supported: bool
     file_name: str
     name_collision: bool
+    sha: str
     size: int
     suffix: str
     tag: str
-    url_github: str
     url_npm: str
 
 
