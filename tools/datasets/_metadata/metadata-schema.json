@@ -1,9 +1,8 @@
 {
+  "dataset_name": "str",
   "ext_supported": "bool",
   "file_name": "str",
   "name_collision": "bool",
-  "name_js": "str",
-  "name_py": "str",
   "size": "int",
   "suffix": "str",
   "tag": "str",

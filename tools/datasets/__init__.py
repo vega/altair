@@ -146,12 +146,13 @@ _CURRENT_SOURCE_TAG = "v2.9.0"
 def generate_datasets_typing(application: Application, output: Path, /) -> None:
     app = application
     tags = app.scan("gh_tags").select("tag").collect().to_series()
+    DATASET_NAME = "dataset_name"
     names = (
         app.scan("gh_trees")
         .filter("ext_supported")
-        .unique("name_js")
-        .select("name_js")
-        .sort("name_js")
+        .unique(DATASET_NAME)
+        .select(DATASET_NAME)
+        .sort(DATASET_NAME)
         .collect()
         .to_series()
     )
@@ -205,7 +206,7 @@ class DataLoader:
                 raise TypeError(ext)
             else:
                 constraints["suffix"] = ext
-        q = QueryTree(name_js=name, **constraints)  # type: ignore[typeddict-item]
+        q = QueryTree(dataset_name=name, **constraints)  # type: ignore[typeddict-item]
         return self._app.github.query.url_from(**q)
 
     def __call__(

@@ -112,8 +112,7 @@ class NpmPackageMetadataResponse(TypedDict):
 
 class ParsedTree(TypedDict):
     file_name: str
-    name_js: str
-    name_py: str
+    dataset_name: str
     suffix: str
     size: int
     url: str
@@ -123,8 +122,7 @@ class ParsedTree(TypedDict):
 
 class QueryTree(TypedDict, total=False):
     file_name: str
-    name_js: Required[str]
-    name_py: str
+    dataset_name: Required[str]
     suffix: str
     size: int
     url: str
