@@ -3,13 +3,14 @@ from __future__ import annotations
 import json
 import os
 import random
+import sys
 import time
 import urllib.request
 import warnings
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from itertools import islice
 from pathlib import Path
-from typing import IO, TYPE_CHECKING, Any, ClassVar, Literal, cast
+from typing import IO, TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, cast
 
 import polars as pl
 
@@ -23,16 +24,20 @@ from tools.datasets.models import (
     ParsedRateLimit,
     ParsedTag,
     ParsedTree,
+    ReParsedTag,
 )
 
+if sys.version_info >= (3, 13):
+    from typing import is_typeddict
+else:
+    from typing_extensions import is_typeddict
+
 if TYPE_CHECKING:
-    import sys
     from collections.abc import MutableMapping
     from email.message import Message
     from urllib.request import OpenerDirector, Request
 
     from tools.datasets._typing import Extension
-    from tools.datasets.models import ReParsedTag
     from tools.schemapi.utils import OneOrSeq
 
     if sys.version_info >= (3, 13):
@@ -50,7 +55,10 @@ if TYPE_CHECKING:
 
     _PathName: TypeAlias = Literal["dir", "tags", "trees"]
 
+
 __all__ = ["GitHub"]
+
+_TD = TypeVar("_TD", bound=Mapping[str, Any])
 
 _ItemSlice: TypeAlias = (
     "tuple[int | None, int | Literal['url_npm', 'url_github'] | None]"
@@ -379,25 +387,27 @@ class GitHub:
 
         Aims to stay well-within API rate limits, both for authenticated ad unauthenticated users.
         """
+        if gh_tags.is_empty():
+            msg = f"Expected rows present in `gh_tags`, but got:\n{gh_tags!r}"
+            raise NotImplementedError(msg)
         rate_limit = self.rate_limit(strict=True)
+        stop = None if rate_limit["is_auth"] else self.req._UNAUTH_TREES_LIMIT
         fp = self._paths["trees"]
-        trees = pl.read_parquet(fp)
-        missing_trees = gh_tags.join(
-            trees.select(pl.col("tag").unique()), on="tag", how="anti"
-        )
-        if missing_trees.is_empty():
-            print(f"Already up-to-date {fp!s}")
-            return trees
+        TP = ReParsedTag
+        if not fp.exists():
+            print(f"Initializing {fp!s}")
+            return self._trees_batched(_iter_rows(gh_tags, stop, TP))
         else:
-            stop = None if rate_limit["is_auth"] else self.req._UNAUTH_TREES_LIMIT
-            it = islice(missing_trees.iter_rows(named=True), stop)
-            missing = cast("Iterator[ReParsedTag]", it)
-            fresh_rows = self._trees_batched(missing)
-            print(
-                f"Finished collection.\n"
-                f"Writing {fresh_rows.height} new rows to {fp!s}"
+            trees = pl.read_parquet(fp)
+            missing_trees = gh_tags.join(
+                trees.select(pl.col("tag").unique()), on="tag", how="anti"
             )
-            return pl.concat((trees, fresh_rows))
+            if missing_trees.is_empty():
+                print(f"Already up-to-date {fp!s}")
+                return trees
+            else:
+                fresh = self._trees_batched(_iter_rows(missing_trees, stop, TP))
+                return pl.concat((trees, fresh))
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)
@@ -451,4 +461,35 @@ class GitHub:
         for tag in tags:
             time.sleep(delay_secs + random.triangular())
             dfs.append(self.trees(tag))
-        return pl.concat(dfs)
+        df = pl.concat(dfs)
+        print(f"Finished collection.\n" f"Found {df.height} new rows")
+        return df
+
+
+def _iter_rows(df: pl.DataFrame, stop: int | None, /, tp: type[_TD]) -> Iterator[_TD]:
+    """
+    Wraps `pl.DataFrame.iter_rows`_ with typing to preserve key completions.
+
+    Parameters
+    ----------
+    df
+        Target dataframe.
+    stop
+        Passed to `itertools.islice`_.
+    tp
+        Static type representing a row/record.
+
+        .. note::
+            Performs a **very basic** runtime check on the type of ``tp`` (*not* ``df``).
+
+            Primarily used to override ``dict[str, Any]`` when a *narrower* type is known.
+
+    .. _itertools.islice:
+        https://docs.python.org/3/library/itertools.html#itertools.islice
+    .. _pl.DataFrame.iter_rows:
+        https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.iter_rows.html
+    """
+    if not TYPE_CHECKING:
+        assert is_typeddict(tp) or issubclass(tp, Mapping)
+
+    return cast(Iterator[_TD], islice(df.iter_rows(named=True), stop))
