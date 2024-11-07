@@ -8,6 +8,7 @@ Adapted from `altair-viz/vega_datasets`_.
 from __future__ import annotations
 
 import json
+import types
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
@@ -72,6 +73,13 @@ class Application:
             output_dir, name_tags=tags_gh, name_trees=trees_gh, **kwds_gh
         )
         self._npm: Npm = Npm(output_dir, name_tags=tags_npm, **kwds_npm)
+        self._paths = types.MappingProxyType["_PathAlias", Path](
+            {
+                "npm_tags": self.npm._paths["tags"],
+                "gh_tags": self.github._paths["tags"],
+                "gh_trees": self.github._paths["trees"],
+            }
+        )
 
     @property
     def github(self) -> GitHub:
@@ -81,23 +89,15 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
-    @property
-    def _aliases(self) -> dict[_PathAlias, Path]:
-        return {
-            "npm_tags": self.npm._paths["tags"],
-            "gh_tags": self.github._paths["tags"],
-            "gh_trees": self.github._paths["trees"],
-        }
-
     def refresh(self) -> pl.DataFrame:
         npm_tags = self.npm.tags()
-        self.write_parquet(npm_tags, self.npm._paths["tags"])
+        self.write_parquet(npm_tags, self._paths["npm_tags"])
 
         gh_tags = self.github.refresh_tags(npm_tags)
-        self.write_parquet(gh_tags, self.github._paths["tags"])
+        self.write_parquet(gh_tags, self._paths["gh_tags"])
 
         gh_trees = self.github.refresh_trees(gh_tags)
-        self.write_parquet(gh_trees, self.github._paths["trees"])
+        self.write_parquet(gh_trees, self._paths["gh_trees"])
         return gh_trees
 
     def read(self, name: _PathAlias, /) -> pl.DataFrame:
@@ -113,7 +113,7 @@ class Application:
             msg = f'Expected one of {["npm_tags", "gh_tags", "gh_trees"]!r}, but got: {name!r}'
             raise TypeError(msg)
         else:
-            return self._aliases[name]
+            return self._paths[name]
 
     def write_parquet(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
         """Write ``frame`` to ``fp``, with some extra safety."""
