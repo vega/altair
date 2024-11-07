@@ -38,7 +38,6 @@ if TYPE_CHECKING:
     from urllib.request import OpenerDirector, Request
 
     from tools.datasets._typing import Extension
-    from tools.schemapi.utils import OneOrSeq
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -60,10 +59,6 @@ __all__ = ["GitHub"]
 
 _TD = TypeVar("_TD", bound=Mapping[str, Any])
 
-_ItemSlice: TypeAlias = (
-    "tuple[int | None, int | Literal['url_npm', 'url_github'] | None]"
-)
-"""Query result scalar selection."""
 
 # TODO: Work on where these should live/be accessed
 _NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
@@ -253,38 +248,6 @@ class _GitHubParseNamespace:
             raise TypeError(s)
 
 
-class _GitHubQueryNamespace:
-    """**WIP** Interfacing with the cached metadata."""
-
-    def __init__(self, gh: GitHub, /) -> None:
-        self._gh = gh
-
-    @property
-    def paths(self) -> dict[_PathName, Path]:
-        return self._gh._paths
-
-    def url_from(
-        self,
-        *predicates: OneOrSeq[str | pl.Expr],
-        item: _ItemSlice = (0, "url_npm"),
-        **constraints: Any,
-    ) -> str:
-        """Querying multi-version trees metadata for `npm` url to fetch."""
-        fp = self.paths["trees"]
-        if fp.suffix != ".parquet":
-            raise NotImplementedError(fp.suffix)
-        items = pl.scan_parquet(fp).filter(*predicates, **constraints).collect()
-        if items.is_empty():
-            msg = f"Found no results for:\n" f"{predicates!r}\n{constraints!r}"
-            raise NotImplementedError(msg)
-        r = items.item(*item)
-        if _is_str(r):
-            return r
-        else:
-            msg = f"Expected 'str' but got {type(r).__name__!r} from {r!r}."
-            raise TypeError(msg)
-
-
 class GitHub:
     """
     Primary interface with the GitHub API.
@@ -293,7 +256,6 @@ class GitHub:
 
     - Uses `tags`_, `trees`_, `rate_limit`_ endpoints.
     - Organizes distinct groups of operations into property accessor namespaces.
-
 
     .. _tags:
         https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags
@@ -338,10 +300,6 @@ class GitHub:
     @property
     def parse(self) -> _GitHubParseNamespace:
         return _GitHubParseNamespace(self)
-
-    @property
-    def query(self) -> _GitHubQueryNamespace:
-        return _GitHubQueryNamespace(self)
 
     @property
     def url(self) -> GitHubUrl:

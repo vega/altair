@@ -14,8 +14,8 @@ from typing import TYPE_CHECKING, Any, Literal
 import polars as pl
 
 from tools.codemod import ruff
+from tools.datasets._io import Reader
 from tools.datasets.github import GitHub
-from tools.datasets.models import QueryTree
 from tools.datasets.npm import Npm
 from tools.schemapi import utils
 
@@ -23,10 +23,6 @@ if TYPE_CHECKING:
     import sys
     from collections.abc import Mapping
 
-    if sys.version_info >= (3, 13):
-        from typing import TypeIs
-    else:
-        from typing_extensions import TypeIs
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
@@ -174,13 +170,9 @@ def generate_datasets_typing(application: Application, output: Path, /) -> None:
     ruff.write_lint_format(output, contents)
 
 
-def is_ext_supported(suffix: str) -> TypeIs[Extension]:
-    return suffix in {".csv", ".json", ".tsv", ".arrow"}
-
-
 class DataLoader:
-    def __init__(self, application: Application, /) -> None:
-        self._app: Application = application
+    def __init__(self, metadata: Path, /) -> None:
+        self._reader = Reader(metadata)
 
     def url(
         self,
@@ -189,25 +181,8 @@ class DataLoader:
         /,
         tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
-        constraints: dict[Literal["tag", "suffix"], str] = {}
-        if tag == "latest":
-            raise NotImplementedError(tag)
-        elif tag is not None:
-            constraints["tag"] = tag
-        if name.endswith((".csv", ".json", ".tsv", ".arrow")):
-            name, suffix = name.rsplit(".", maxsplit=1)
-            suffix = "." + suffix
-            if not is_ext_supported(suffix):
-                raise TypeError(suffix)
-            else:
-                constraints["suffix"] = suffix
-        elif ext is not None:
-            if not is_ext_supported(ext):
-                raise TypeError(ext)
-            else:
-                constraints["suffix"] = ext
-        q = QueryTree(dataset_name=name, **constraints)  # type: ignore[typeddict-item]
-        return self._app.github.query.url_from(**q)
+        """Return the address of a remote dataset."""
+        return self._reader.url(name, ext, tag=tag)
 
     def __call__(
         self,
@@ -217,14 +192,8 @@ class DataLoader:
         tag: VersionTag | Literal["latest"] | None = None,
         **kwds: Any,
     ) -> pl.DataFrame:
-        """
-        **WIP** Will be using this *instead of* attribute access.
-
-        - Original supports this as well
-        - Will only be using the actual (js_name)
-        - Some have hyphens, others underscores
-        """
-        return self._app.npm.dataset(self.url(name, ext, tag=tag), **kwds)
+        """Get a remote dataset and load as tabular data."""
+        return self._reader.dataset(self.url(name, ext, tag=tag), **kwds)
 
 
-data = DataLoader(app)
+data = DataLoader(app._from_alias("gh_trees"))

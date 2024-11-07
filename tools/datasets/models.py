@@ -120,16 +120,6 @@ class ParsedTree(TypedDict):
     tag: str
 
 
-class QueryTree(TypedDict, total=False):
-    file_name: str
-    dataset_name: Required[str]
-    suffix: str
-    size: int
-    url: str
-    ext_supported: bool
-    tag: str
-
-
 class ParsedTreesResponse(TypedDict):
     tag: str
     url: str
