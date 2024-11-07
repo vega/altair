@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any, Literal
 import polars as pl
 
 from tools.codemod import ruff
-from tools.datasets._io import Reader
+from tools.datasets._io import get_backend
 from tools.datasets.github import GitHub
 from tools.datasets.npm import Npm
 from tools.schemapi import utils
@@ -172,7 +172,7 @@ def generate_datasets_typing(application: Application, output: Path, /) -> None:
 
 class DataLoader:
     def __init__(self, metadata: Path, /) -> None:
-        self._reader = Reader(metadata)
+        self._reader = get_backend("polars")(metadata)
 
     def url(
         self,
