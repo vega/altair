@@ -32,7 +32,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         name: DatasetName | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | Literal["latest"] | None = None,
+        tag: VersionTag | None = None,
     ) -> str:
         """Return the address of a remote dataset."""
         return self._reader.url(name, suffix, tag=tag)
@@ -42,7 +42,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         name: DatasetName | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | Literal["latest"] | None = None,
+        tag: VersionTag | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         """Get a remote dataset and load as tabular data."""

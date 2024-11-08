@@ -111,7 +111,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         name: DatasetName | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | Literal["latest"] | None = None,
+        tag: VersionTag | None = None,
     ) -> str:
         df = self._query(**validate_constraints(name, suffix, tag))
         url = df.item(0, "url_npm")
@@ -126,7 +126,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         name: DatasetName | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | Literal["latest"] | None = None,
+        tag: VersionTag | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         """
@@ -315,13 +315,11 @@ def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.
 def validate_constraints(
     name: DatasetName | LiteralString,
     suffix: Extension | None,
-    tag: VersionTag | Literal["latest"] | None,
+    tag: VersionTag | None,
     /,
 ) -> Metadata:
     constraints: Metadata = {}
-    if tag == "latest":
-        raise NotImplementedError(tag)
-    elif tag is not None:
+    if tag is not None:
         constraints["tag"] = tag
     if name.endswith((".csv", ".json", ".tsv", ".arrow")):
         fp = Path(name)
