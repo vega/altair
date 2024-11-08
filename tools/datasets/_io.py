@@ -386,9 +386,6 @@ def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
         return _PandasReader("pandas")
     elif backend == "pyarrow":
         return _PyArrowReader("pyarrow")
-    elif backend == "duckdb":
-        msg = "Included in ``dev``, not investigated yet"
-        raise NotImplementedError(msg)
     elif backend in {"ibis", "cudf", "dask", "modin"}:
         msg = "Supported by ``narwhals``, not investigated yet"
         raise NotImplementedError(msg)
