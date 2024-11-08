@@ -134,6 +134,80 @@ class Application:
             with fp_schema.open("w") as f:
                 json.dump(schema, f, indent=2)
 
+    def generate_typing(self, output: Path, /) -> None:
+        from tools.generate_schema_wrapper import UNIVERSAL_TYPED_DICT
+
+        tags = self.scan("gh_tags").select("tag").collect().to_series()
+        metadata_schema = self.scan("gh_trees").collect_schema().to_python()
+
+        DATASET_NAME = "dataset_name"
+        names = (
+            self.scan("gh_trees")
+            .filter("ext_supported")
+            .unique(DATASET_NAME)
+            .select(DATASET_NAME)
+            .sort(DATASET_NAME)
+            .collect()
+            .to_series()
+        )
+        indent = " " * 4
+        NAME = "DatasetName"
+        TAG = "VersionTag"
+        EXT = "Extension"
+        METADATA_TD = "Metadata"
+        DESCRIPTION_DEFAULT = "_description_"
+        NOTE_SEP = f"\n\n{indent * 2}" f".. note::\n{indent * 3}"
+
+        name_collision = (
+            f"Dataset is available via multiple ``suffix``(s).{NOTE_SEP}"
+            "Requires specifying a preference in calls to ``data(ext=...)``."
+        )
+        sha = (
+            f"Unique hash for the dataset.{NOTE_SEP}"
+            f"If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;\n\n{indent * 3}"
+            f"then all ``tag``(s) in this range would **share** this value."
+        )
+        descriptions: dict[str, str] = {
+            "dataset_name": "Equivalent to ``Pathlib.Path.stem``.",
+            "ext_supported": "Dataset can be read as tabular data.",
+            "file_name": "Equivalent to ``Pathlib.Path.name``.",
+            "name_collision": name_collision,
+            "sha": sha,
+            "size": "File size (*bytes*).",
+            "suffix": f"File extension.{NOTE_SEP}Equivalent to ``Pathlib.Path.suffix``",
+            "tag": "``vega-datasets`` release version.",
+            "url_npm": "Remote url used to access dataset.",
+        }
+        metadata_doc = f"\n{indent}".join(
+            f"{param}\n{indent * 2}{descriptions.get(param, DESCRIPTION_DEFAULT)}"
+            for param in metadata_schema
+        )
+
+        contents = (
+            f"{HEADER_COMMENT}",
+            "from __future__ import annotations\n",
+            "import sys",
+            "from typing import Literal, TYPE_CHECKING",
+            utils.import_typing_extensions((3, 14), "TypedDict"),
+            utils.import_typing_extensions((3, 10), "TypeAlias"),
+            "\n",
+            f"__all__ = {[NAME, TAG, EXT, METADATA_TD]}\n\n"
+            f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
+            f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
+            f'{EXT}: TypeAlias = {utils.spell_literal([".csv", ".json", ".tsv", ".arrow"])}',
+            UNIVERSAL_TYPED_DICT.format(
+                name=METADATA_TD,
+                metaclass_kwds=", total=False",
+                td_args=f"\n{indent}".join(
+                    f"{param}: {tp.__name__}" for param, tp in metadata_schema.items()
+                ),
+                summary="Full schema for ``metadata.parquet``.",
+                doc=metadata_doc,
+                comment="",
+            ),
+        )
+        ruff.write_lint_format(output, contents)
+
 
 app = Application(Path(__file__).parent / "_metadata", write_schema=True)
 
@@ -142,82 +216,6 @@ app = Application(Path(__file__).parent / "_metadata", write_schema=True)
 # which the datasets in this repository are sourced.
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
-
-
-def generate_datasets_typing(application: Application, output: Path, /) -> None:
-    from tools.generate_schema_wrapper import UNIVERSAL_TYPED_DICT
-
-    app = application
-    tags = app.scan("gh_tags").select("tag").collect().to_series()
-    metadata_schema = app.scan("gh_trees").collect_schema().to_python()
-
-    DATASET_NAME = "dataset_name"
-    names = (
-        app.scan("gh_trees")
-        .filter("ext_supported")
-        .unique(DATASET_NAME)
-        .select(DATASET_NAME)
-        .sort(DATASET_NAME)
-        .collect()
-        .to_series()
-    )
-    indent = " " * 4
-    NAME = "DatasetName"
-    TAG = "VersionTag"
-    EXT = "Extension"
-    METADATA_TD = "Metadata"
-    DESCRIPTION_DEFAULT = "_description_"
-    NOTE_SEP = f"\n\n{indent * 2}" f".. note::\n{indent * 3}"
-
-    name_collision = (
-        f"Dataset is available via multiple ``suffix``(s).{NOTE_SEP}"
-        "Requires specifying a preference in calls to ``data(ext=...)``."
-    )
-    sha = (
-        f"Unique hash for the dataset.{NOTE_SEP}"
-        f"If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;\n\n{indent * 3}"
-        f"then all ``tag``(s) in this range would **share** this value."
-    )
-    descriptions: dict[str, str] = {
-        "dataset_name": "Equivalent to ``Pathlib.Path.stem``.",
-        "ext_supported": "Dataset can be read as tabular data.",
-        "file_name": "Equivalent to ``Pathlib.Path.name``.",
-        "name_collision": name_collision,
-        "sha": sha,
-        "size": "File size (*bytes*).",
-        "suffix": f"File extension.{NOTE_SEP}Equivalent to ``Pathlib.Path.suffix``",
-        "tag": "``vega-datasets`` release version.",
-        "url_npm": "Remote url used to access dataset.",
-    }
-    metadata_doc = f"\n{indent}".join(
-        f"{param}\n{indent * 2}{descriptions.get(param, DESCRIPTION_DEFAULT)}"
-        for param in metadata_schema
-    )
-
-    contents = (
-        f"{HEADER_COMMENT}",
-        "from __future__ import annotations\n",
-        "import sys",
-        "from typing import Literal, TYPE_CHECKING",
-        utils.import_typing_extensions((3, 14), "TypedDict"),
-        utils.import_typing_extensions((3, 10), "TypeAlias"),
-        "\n",
-        f"__all__ = {[NAME, TAG, EXT, METADATA_TD]}\n\n"
-        f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
-        f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
-        f'{EXT}: TypeAlias = {utils.spell_literal([".csv", ".json", ".tsv", ".arrow"])}',
-        UNIVERSAL_TYPED_DICT.format(
-            name=METADATA_TD,
-            metaclass_kwds=", total=False",
-            td_args=f"\n{indent}".join(
-                f"{param}: {tp.__name__}" for param, tp in metadata_schema.items()
-            ),
-            summary="Full schema for ``metadata.parquet``.",
-            doc=metadata_doc,
-            comment="",
-        ),
-    )
-    ruff.write_lint_format(output, contents)
 
 
 class DataLoader(Generic[IntoDataFrameT, IntoFrameT]):
