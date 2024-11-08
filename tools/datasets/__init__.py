@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from collections.abc import Mapping
 
     import pandas as pd
+    import pyarrow as pa
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -254,6 +255,12 @@ class DataLoader(Generic[IntoDataFrameT, IntoFrameT]):
     def with_backend(
         cls, backend: Literal["pandas", "pandas[pyarrow]"], /
     ) -> DataLoader[pd.DataFrame, pd.DataFrame]: ...
+
+    @overload
+    @classmethod
+    def with_backend(
+        cls, backend: Literal["pyarrow"], /
+    ) -> DataLoader[pa.Table, pa.Table]: ...
 
     @classmethod
     def with_backend(cls, backend: _Backend, /) -> DataLoader[Any, Any]:

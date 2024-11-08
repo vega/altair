@@ -43,8 +43,12 @@ if TYPE_CHECKING:
 
     import pandas as pd
     import polars as pl
-    import pyarrow as pa  # noqa: F401
+    import pyarrow as pa
     from _typeshed import StrPath
+    from pyarrow.csv import read_csv as pa_read_csv  # noqa: F401
+    from pyarrow.feather import read_table as pa_read_feather  # noqa: F401
+    from pyarrow.json import read_json as pa_read_json  # noqa: F401
+    from pyarrow.parquet import read_table as pa_read_parquet  # noqa: F401
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs, Unpack
@@ -65,7 +69,7 @@ if TYPE_CHECKING:
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
     _Backend: TypeAlias = Literal[
-        "polars", "pandas", "pandas[pyarrow]", "polars[pyarrow]"
+        "polars", "pandas", "pandas[pyarrow]", "polars[pyarrow]", "pyarrow"
     ]
 
 
@@ -259,6 +263,49 @@ class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
         self._scan_fn = {".parquet": pl.scan_parquet}
 
 
+class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
+    """
+    Reader backed by `pyarrow.Table`_.
+
+    Warning
+    -------
+    **JSON**: Only supports `line-delimited`_ JSON.
+    Likely to raise the following error:
+
+        ArrowInvalid: JSON parse error: Column() changed from object to array in row 0
+
+    .. _pyarrow.Table:
+        https://arrow.apache.org/docs/python/generated/pyarrow.Table.html
+    .. _line-delimited:
+        https://arrow.apache.org/docs/python/json.html#reading-json-files
+    """
+
+    def __init__(self, _pa: str, /) -> None:
+        if not TYPE_CHECKING:
+            pa = self._import(_pa)  # noqa: F841
+            pa_csv = self._import(f"{_pa}.csv")
+            pa_feather = self._import(f"{_pa}.feather")
+            pa_json = self._import(f"{_pa}.json")
+            pa_parquet = self._import(f"{_pa}.parquet")
+
+            pa_read_csv = pa_csv.read_csv
+            pa_read_feather = pa_feather.read_table
+            pa_read_json = pa_json.read_json
+            pa_read_parquet = pa_parquet.read_table
+
+        # opt1 = ParseOptions(delimiter="\t")  # type: ignore
+        # Stubs suggest using a dataclass, but no way to construct it
+        opt2: Any = {"delimiter": "\t"}
+
+        self._read_fn = {
+            ".csv": pa_read_csv,
+            ".json": pa_read_json,
+            ".tsv": partial(pa_read_csv, parse_options=opt2),
+            ".arrow": pa_read_feather,
+        }
+        self._scan_fn = {".parquet": pa_read_parquet}
+
+
 def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.Expr:
     """
     ``narwhals`` only accepts ``filter(*predicates)`.
@@ -324,6 +371,10 @@ def get_backend(
 ) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
 
 
+@overload
+def get_backend(backend: Literal["pyarrow"], /) -> _Reader[pa.Table, pa.Table]: ...
+
+
 def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
     if backend == "polars":
         return _PolarsReader("polars")
@@ -333,7 +384,9 @@ def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
         return _PandasPyArrowReader("pandas", "pyarrow")
     elif backend == "pandas":
         return _PandasReader("pandas")
-    elif backend in {"pyarrow", "duckdb"}:
+    elif backend == "pyarrow":
+        return _PyArrowReader("pyarrow")
+    elif backend == "duckdb":
         msg = "Included in ``dev``, not investigated yet"
         raise NotImplementedError(msg)
     elif backend in {"ibis", "cudf", "dask", "modin"}:
