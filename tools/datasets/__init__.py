@@ -10,13 +10,11 @@ from __future__ import annotations
 import json
 import types
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Generic, Literal, overload
+from typing import TYPE_CHECKING, Any, Literal
 
 import polars as pl
-from narwhals.typing import IntoDataFrameT, IntoFrameT
 
 from tools.codemod import ruff
-from tools.datasets._io import get_backend
 from tools.datasets.github import GitHub
 from tools.datasets.npm import Npm
 from tools.schemapi import utils
@@ -25,25 +23,14 @@ if TYPE_CHECKING:
     import sys
     from collections.abc import Mapping
 
-    import pandas as pd
-    import pyarrow as pa
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from tools.datasets._io import _Backend, _Reader
-    from tools.datasets._typing import DatasetName, Extension, VersionTag
 
     _PathAlias: TypeAlias = Literal["npm_tags", "gh_tags", "gh_trees"]
 
-    WorkInProgress: TypeAlias = Any
-
-__all__ = ["app", "data"]
+__all__ = ["app"]
 
 HEADER_COMMENT = """\
 # The contents of this file are automatically written by
@@ -61,7 +48,8 @@ class Application:
 
     def __init__(
         self,
-        output_dir: Path,
+        out_dir_tools: Path,
+        out_dir_altair: Path,
         *,
         write_schema: bool,
         trees_gh: str = "metadata",
@@ -70,14 +58,18 @@ class Application:
         kwds_gh: Mapping[str, Any] | None = None,
         kwds_npm: Mapping[str, Any] | None = None,
     ) -> None:
-        output_dir.mkdir(exist_ok=True)
+        out_dir_tools.mkdir(exist_ok=True)
         kwds_gh = kwds_gh or {}
         kwds_npm = kwds_npm or {}
         self._write_schema: bool = write_schema
         self._github: GitHub = GitHub(
-            output_dir, name_tags=tags_gh, name_trees=trees_gh, **kwds_gh
+            out_dir_tools,
+            out_dir_altair,
+            name_tags=tags_gh,
+            name_trees=trees_gh,
+            **kwds_gh,
         )
-        self._npm: Npm = Npm(output_dir, name_tags=tags_npm, **kwds_npm)
+        self._npm: Npm = Npm(out_dir_tools, name_tags=tags_npm, **kwds_npm)
         self._paths = types.MappingProxyType["_PathAlias", Path](
             {
                 "npm_tags": self.npm._paths["tags"],
@@ -209,86 +201,14 @@ class Application:
         ruff.write_lint_format(output, contents)
 
 
-app = Application(Path(__file__).parent / "_metadata", write_schema=True)
+app = Application(
+    Path(__file__).parent / "_metadata",
+    Path(__file__).parent.parent.parent / "altair" / "datasets" / "_metadata",
+    write_schema=False,
+)
 
 
 # This is the tag in http://github.com/vega/vega-datasets from
 # which the datasets in this repository are sourced.
 _OLD_SOURCE_TAG = "v1.29.0"  # 5 years ago
 _CURRENT_SOURCE_TAG = "v2.9.0"
-
-
-class DataLoader(Generic[IntoDataFrameT, IntoFrameT]):
-    _reader: _Reader[IntoDataFrameT, IntoFrameT]
-
-    def url(
-        self,
-        name: DatasetName | LiteralString,
-        ext: Extension | None = None,
-        /,
-        tag: VersionTag | Literal["latest"] | None = None,
-    ) -> str:
-        """Return the address of a remote dataset."""
-        return self._reader.url(name, ext, tag=tag)
-
-    def __call__(
-        self,
-        name: DatasetName | LiteralString,
-        ext: Extension | None = None,
-        /,
-        tag: VersionTag | Literal["latest"] | None = None,
-        **kwds: Any,
-    ) -> IntoDataFrameT:
-        """Get a remote dataset and load as tabular data."""
-        return self._reader.dataset(name, ext, tag=tag, **kwds)
-
-    @overload
-    @classmethod
-    def with_backend(
-        cls, backend: Literal["polars", "polars[pyarrow]"], /
-    ) -> DataLoader[pl.DataFrame, pl.LazyFrame]: ...
-
-    @overload
-    @classmethod
-    def with_backend(
-        cls, backend: Literal["pandas", "pandas[pyarrow]"], /
-    ) -> DataLoader[pd.DataFrame, pd.DataFrame]: ...
-
-    @overload
-    @classmethod
-    def with_backend(
-        cls, backend: Literal["pyarrow"], /
-    ) -> DataLoader[pa.Table, pa.Table]: ...
-
-    @classmethod
-    def with_backend(cls, backend: _Backend, /) -> DataLoader[Any, Any]:
-        """
-        Initialize a new loader, using the specified backend.
-
-        Parameters
-        ----------
-        backend
-            DataFrame package/config used to return data.
-
-            * *polars*: Using `polars defaults`_
-            * *polars[pyarrow]*: Using ``use_pyarrow=True``
-            * *pandas*: Using `pandas defaults`_.
-            * *pandas[pyarrow]*: Using ``dtype_backend="pyarrow"``
-            * *pyarrow*: (*Experimental*)
-
-            .. warning::
-                Most datasets use a `JSON format not supported`_ by ``pyarrow``
-
-        .. _polars defaults:
-            https://docs.pola.rs/api/python/stable/reference/io.html
-        .. _pandas defaults:
-            https://pandas.pydata.org/docs/reference/io.html
-        .. _JSON format not supported:
-            https://arrow.apache.org/docs/python/json.html#reading-json-files
-        """
-        obj = DataLoader.__new__(DataLoader)
-        obj._reader = get_backend(backend)
-        return obj
-
-
-data = DataLoader.with_backend("polars")

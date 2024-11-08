@@ -1,15 +1,10 @@
 """
-Will be part of the public ``alt.datasets`` subpackage.
+Backends for ``alt.datasets.Loader``.
 
 - Interfacing with the cached metadata.
     - But not updating it
 - Performing requests from those urls
 - Dispatching read function on file extension
-
-Note
-----
-- Building with ``polars`` first, then will work backwards with ``narwhals``.
-    - Since ``narwhals`` is a subset of ``polars``
 """
 
 from __future__ import annotations
@@ -63,8 +58,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    from tools.datasets._typing import DatasetName, Extension, Metadata, VersionTag
-    from tools.schemapi.utils import OneOrSeq
+    from altair.datasets._typing import DatasetName, Extension, Metadata, VersionTag
+    from altair.vegalite.v5.schema._typing import OneOrSeq
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")

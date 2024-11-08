@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     from email.message import Message
     from urllib.request import OpenerDirector, Request
 
-    from tools.datasets._typing import Extension
+    from altair.datasets._typing import Extension
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -270,7 +270,8 @@ class GitHub:
 
     def __init__(
         self,
-        output_dir: Path,
+        out_dir_tools: Path,
+        out_dir_altair: Path,
         name_tags: str,
         name_trees: str,
         *,
@@ -278,11 +279,12 @@ class GitHub:
         org: LiteralString = "vega",
         package: LiteralString = "vega-datasets",
     ) -> None:
-        output_dir.mkdir(exist_ok=True)
+        out_dir_tools.mkdir(exist_ok=True)
+        out_dir_altair.mkdir(exist_ok=True)
         self._paths: dict[_PathName, Path] = {
-            "dir": output_dir,
-            "tags": output_dir / f"{name_tags}.parquet",
-            "trees": output_dir / f"{name_trees}.parquet",
+            "dir": out_dir_tools,
+            "tags": out_dir_tools / f"{name_tags}.parquet",
+            "trees": out_dir_altair / f"{name_trees}.parquet",
         }
         repo = f"{base_url}repos/{org}/{package}/"
         self._url = GitHubUrl(

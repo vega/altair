@@ -603,6 +603,7 @@ __all__ = [
     "core",
     "data",
     "data_transformers",
+    "datasets",
     "datum",
     "default_data_transformer",
     "display",
@@ -653,7 +654,7 @@ from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
-from altair import typing
+from altair import typing, datasets
 
 
 def load_ipython_extension(ipython):
