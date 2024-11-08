@@ -272,10 +272,21 @@ class DataLoader(Generic[IntoDataFrameT, IntoFrameT]):
         backend
             DataFrame package/config used to return data.
 
-            * *polars*: _
+            * *polars*: Using `polars defaults`_
             * *polars[pyarrow]*: Using ``use_pyarrow=True``
-            * *pandas*: _
+            * *pandas*: Using `pandas defaults`_.
             * *pandas[pyarrow]*: Using ``dtype_backend="pyarrow"``
+            * *pyarrow*: (*Experimental*)
+
+            .. warning::
+                Most datasets use a `JSON format not supported`_ by ``pyarrow``
+
+        .. _polars defaults:
+            https://docs.pola.rs/api/python/stable/reference/io.html
+        .. _pandas defaults:
+            https://pandas.pydata.org/docs/reference/io.html
+        .. _JSON format not supported:
+            https://arrow.apache.org/docs/python/json.html#reading-json-files
         """
         obj = DataLoader.__new__(DataLoader)
         obj._reader = get_backend(backend)
