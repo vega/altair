@@ -62,14 +62,15 @@ class Application:
         kwds_gh = kwds_gh or {}
         kwds_npm = kwds_npm or {}
         self._write_schema: bool = write_schema
+        self._npm: Npm = Npm(out_dir_tools, name_tags=tags_npm, **kwds_npm)
         self._github: GitHub = GitHub(
             out_dir_tools,
             out_dir_altair,
             name_tags=tags_gh,
             name_trees=trees_gh,
+            npm_cdn_url=self._npm.url.CDN,
             **kwds_gh,
         )
-        self._npm: Npm = Npm(out_dir_tools, name_tags=tags_npm, **kwds_npm)
         self._paths = types.MappingProxyType["_PathAlias", Path](
             {
                 "npm_tags": self.npm._paths["tags"],

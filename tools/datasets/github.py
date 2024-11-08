@@ -59,10 +59,7 @@ __all__ = ["GitHub"]
 
 _TD = TypeVar("_TD", bound=Mapping[str, Any])
 
-
-# TODO: Work on where these should live/be accessed
-_NPM_BASE_URL = "https://cdn.jsdelivr.net/npm/vega-datasets@"
-_SUB_DIR = "data"
+_DATA = "data"
 
 
 def is_ext_supported(suffix: str) -> TypeIs[Extension]:
@@ -152,7 +149,7 @@ class _GitHubRequestNamespace:
             url = tag["trees_url"]
         with self._gh._opener.open(self._request(url)) as response:
             content: GitHubTreesResponse = json.load(response)
-        query = (tree["url"] for tree in content["tree"] if tree["path"] == _SUB_DIR)
+        query = (tree["url"] for tree in content["tree"] if tree["path"] == _DATA)
         if data_url := next(query, None):
             with self._gh._opener.open(self._request(data_url)) as response:
                 data_dir: GitHubTreesResponse = json.load(response)
@@ -237,12 +234,13 @@ class _GitHubParseNamespace:
         # - Trees url (using ref name)
         # - npm url (works w/o the `v` prefix)
         trees_url = self.url.TREES
+        npm_url = self._gh._npm_cdn_url
         if s.startswith("v"):
             return s
         elif s.startswith(trees_url):
             return s.replace(trees_url, "")
-        elif s.startswith(_NPM_BASE_URL):
-            s, _ = s.replace(_NPM_BASE_URL, "").split("/")
+        elif s.startswith(npm_url):
+            s, _ = s.replace(npm_url, "").split("/")
             return s if s.startswith("v") else f"v{s}"
         else:
             raise TypeError(s)
@@ -275,6 +273,7 @@ class GitHub:
         name_tags: str,
         name_trees: str,
         *,
+        npm_cdn_url: LiteralString,
         base_url: LiteralString = "https://api.github.com/",
         org: LiteralString = "vega",
         package: LiteralString = "vega-datasets",
@@ -295,6 +294,7 @@ class GitHub:
             TAGS=f"{repo}tags",
             TREES=f"{repo}git/trees/",
         )
+        self._npm_cdn_url: LiteralString = npm_cdn_url
 
     @property
     def req(self) -> _GitHubRequestNamespace:
@@ -331,9 +331,9 @@ class GitHub:
             .with_columns(name_collision=pl.col("dataset_name").is_duplicated())
             .with_columns(
                 url_npm=pl.concat_str(
-                    pl.lit(_NPM_BASE_URL),
+                    pl.lit(self._npm_cdn_url),
                     pl.col("tag"),
-                    pl.lit(f"/{_SUB_DIR}/"),
+                    pl.lit(f"/{_DATA}/"),
                     pl.col("file_name"),
                 )
             )
@@ -345,7 +345,7 @@ class GitHub:
         """
         Use known tags to discover and update missing trees metadata.
 
-        Aims to stay well-within API rate limits, both for authenticated ad unauthenticated users.
+        Aims to stay well-within API rate limits, both for authenticated and unauthenticated users.
         """
         if gh_tags.is_empty():
             msg = f"Expected rows present in `gh_tags`, but got:\n{gh_tags!r}"
