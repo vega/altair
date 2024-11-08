@@ -30,23 +30,23 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     def url(
         self,
         name: DatasetName | LiteralString,
-        ext: Extension | None = None,
+        suffix: Extension | None = None,
         /,
         tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
         """Return the address of a remote dataset."""
-        return self._reader.url(name, ext, tag=tag)
+        return self._reader.url(name, suffix, tag=tag)
 
     def __call__(
         self,
         name: DatasetName | LiteralString,
-        ext: Extension | None = None,
+        suffix: Extension | None = None,
         /,
         tag: VersionTag | Literal["latest"] | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         """Get a remote dataset and load as tabular data."""
-        return self._reader.dataset(name, ext, tag=tag, **kwds)
+        return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}[{type(self._reader).__name__}]"

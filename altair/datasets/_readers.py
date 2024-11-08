@@ -109,11 +109,11 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     def url(
         self,
         name: DatasetName | LiteralString,
-        ext: Extension | None = None,
+        suffix: Extension | None = None,
         /,
         tag: VersionTag | Literal["latest"] | None = None,
     ) -> str:
-        df = self._query(**validate_constraints(name, ext, tag))
+        df = self._query(**validate_constraints(name, suffix, tag))
         url = df.item(0, "url_npm")
         if isinstance(url, str):
             return url
@@ -124,7 +124,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     def dataset(
         self,
         name: DatasetName | LiteralString,
-        ext: Extension | None = None,
+        suffix: Extension | None = None,
         /,
         tag: VersionTag | Literal["latest"] | None = None,
         **kwds: Any,
@@ -134,12 +134,12 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
 
         Parameters
         ----------
-        name, ext, tag
+        name, suffix, tag
             TODO
         **kwds
             Arguments passed to the underlying read function.
         """
-        df = self._query(**validate_constraints(name, ext, tag))
+        df = self._query(**validate_constraints(name, suffix, tag))
         it = islice(df.iter_rows(named=True), 1)
         result = cast("Metadata", next(it))
         url = result["url_npm"]
@@ -314,7 +314,7 @@ def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.
 
 def validate_constraints(
     name: DatasetName | LiteralString,
-    ext: Extension | None,
+    suffix: Extension | None,
     tag: VersionTag | Literal["latest"] | None,
     /,
 ) -> Metadata:
@@ -328,11 +328,11 @@ def validate_constraints(
         constraints["dataset_name"] = fp.stem
         constraints["suffix"] = fp.suffix
         return constraints
-    elif ext is not None:
-        if not is_ext_supported(ext):
-            raise TypeError(ext)
+    elif suffix is not None:
+        if not is_ext_supported(suffix):
+            raise TypeError(suffix)
         else:
-            constraints["suffix"] = ext
+            constraints["suffix"] = suffix
     constraints["dataset_name"] = name
     return constraints
 
