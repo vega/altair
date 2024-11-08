@@ -6,13 +6,18 @@ from __future__ import annotations
 import sys
 from typing import Literal
 
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     from typing_extensions import TypeAlias
 
 
-__all__ = ["DatasetName", "Extension", "VersionTag"]
+__all__ = ["DatasetName", "Extension", "Metadata", "VersionTag"]
 
 DatasetName: TypeAlias = Literal[
     "airports",
@@ -135,3 +140,51 @@ VersionTag: TypeAlias = Literal[
     "v1.5.0",
 ]
 Extension: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow"]
+
+
+class Metadata(TypedDict, total=False):
+    """
+    Full schema for ``metadata.parquet``.
+
+    Parameters
+    ----------
+    dataset_name
+        Equivalent to ``Pathlib.Path.stem``.
+    ext_supported
+        Dataset can be read as tabular data.
+    file_name
+        Equivalent to ``Pathlib.Path.name``.
+    name_collision
+        Dataset is available via multiple ``suffix``(s).
+
+        .. note::
+            Requires specifying a preference in calls to ``data(ext=...)``.
+    sha
+        Unique hash for the dataset.
+
+        .. note::
+            If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;
+
+            then all ``tag``(s) in this range would **share** this value.
+    size
+        File size (*bytes*).
+    suffix
+        File extension.
+
+        .. note::
+            Equivalent to ``Pathlib.Path.suffix``
+    tag
+        ``vega-datasets`` release version.
+    url_npm
+        Remote url used to access dataset.
+    """
+
+    dataset_name: str
+    ext_supported: bool
+    file_name: str
+    name_collision: bool
+    sha: str
+    size: int
+    suffix: str
+    tag: str
+    url_npm: str

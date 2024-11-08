@@ -127,20 +127,6 @@ class ParsedTreesResponse(TypedDict):
     tree: list[ParsedTree]
 
 
-class Metadata(TypedDict, total=False):
-    """Full schema for `metadata.parquet`."""
-
-    dataset_name: str
-    ext_supported: bool
-    file_name: str
-    name_collision: bool
-    sha: str
-    size: int
-    suffix: str
-    tag: str
-    url_npm: str
-
-
 class GitHubRateLimit(TypedDict):
     limit: int
     used: int

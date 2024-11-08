@@ -56,8 +56,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    from tools.datasets._typing import DatasetName, Extension, VersionTag
-    from tools.datasets.models import Metadata
+    from tools.datasets._typing import DatasetName, Extension, Metadata, VersionTag
     from tools.schemapi.utils import OneOrSeq
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
