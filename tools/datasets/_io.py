@@ -17,6 +17,8 @@ from __future__ import annotations
 import os
 import urllib.request
 from functools import partial
+from importlib import import_module
+from importlib.util import find_spec
 from itertools import chain, islice
 from pathlib import Path
 from typing import (
@@ -33,14 +35,15 @@ from typing import (
 )
 
 import narwhals.stable.v1 as nw
-import pandas as pd
-import polars as pl
 from narwhals.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
 if TYPE_CHECKING:
     import sys
     from urllib.request import OpenerDirector
 
+    import pandas as pd
+    import polars as pl
+    import pyarrow as pa  # noqa: F401
     from _typeshed import StrPath
 
     if sys.version_info >= (3, 13):
@@ -61,6 +64,9 @@ if TYPE_CHECKING:
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
+    _Backend: TypeAlias = Literal[
+        "polars", "pandas", "pandas[pyarrow]", "polars[pyarrow]"
+    ]
 
 
 __all__ = ["get_backend"]
@@ -77,7 +83,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     _scan_fn: dict[_ExtensionScan, Callable[..., IntoFrameT]]
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
-    _metadata: Path
+    _metadata: Path = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
     @property
     def _datasets_dir(self) -> Path | None:  # type: ignore[return]
@@ -181,51 +187,76 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             msg = f"Found no results for:\n{terms}"
             raise NotImplementedError(msg)
 
+    def _import(self, name: str, /) -> Any:
+        if spec := find_spec(name):
+            return import_module(spec.name)
+        else:
+            msg = f"{type(self).__name__!r} requires missing dependency {name!r}."
+            raise ModuleNotFoundError(msg, name=name)
+
+    def __init__(self, *specs: str) -> None: ...
+
 
 class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
-    _read_fn = {
-        ".csv": cast(
-            partial["pd.DataFrame"], partial(pd.read_csv, dtype_backend="pyarrow")
-        ),
-        ".json": cast(
-            partial["pd.DataFrame"], partial(pd.read_json, dtype_backend="pyarrow")
-        ),
-        ".tsv": cast(
-            partial["pd.DataFrame"],
-            partial(pd.read_csv, sep="\t", dtype_backend="pyarrow"),
-        ),
-        ".arrow": partial(pd.read_feather, dtype_backend="pyarrow"),
-    }
-    _scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend="pyarrow")}
+    def __init__(self, _pd: str, _pa: str, /) -> None:
+        if not TYPE_CHECKING:
+            pd = self._import(_pd)
+            pa = self._import(_pa)  # noqa: F841
 
-    def __init__(self, metadata: Path, /) -> None:
-        self._metadata = metadata
+        self._read_fn = {
+            ".csv": cast(
+                partial["pd.DataFrame"], partial(pd.read_csv, dtype_backend="pyarrow")
+            ),
+            ".json": cast(
+                partial["pd.DataFrame"], partial(pd.read_json, dtype_backend="pyarrow")
+            ),
+            ".tsv": cast(
+                partial["pd.DataFrame"],
+                partial(pd.read_csv, sep="\t", dtype_backend="pyarrow"),
+            ),
+            ".arrow": partial(pd.read_feather, dtype_backend="pyarrow"),
+        }
+        self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend="pyarrow")}
 
 
 class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
-    _read_fn = {
-        ".csv": pd.read_csv,
-        ".json": pd.read_json,
-        ".tsv": cast(partial["pd.DataFrame"], partial(pd.read_csv, sep="\t")),
-        ".arrow": pd.read_feather,
-    }
-    _scan_fn = {".parquet": pd.read_parquet}
-
-    def __init__(self, metadata: Path, /) -> None:
-        self._metadata = metadata
+    def __init__(self, _pd: str, /) -> None:
+        if not TYPE_CHECKING:
+            pd = self._import(_pd)
+        self._read_fn = {
+            ".csv": pd.read_csv,
+            ".json": pd.read_json,
+            ".tsv": cast(partial["pd.DataFrame"], partial(pd.read_csv, sep="\t")),
+            ".arrow": pd.read_feather,
+        }
+        self._scan_fn = {".parquet": pd.read_parquet}
 
 
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    _read_fn = {
-        ".csv": pl.read_csv,
-        ".json": pl.read_json,
-        ".tsv": partial(pl.read_csv, separator="\t"),
-        ".arrow": partial(pl.read_ipc, use_pyarrow=True),
-    }
-    _scan_fn = {".parquet": pl.scan_parquet}
+    def __init__(self, _pl: str, /) -> None:
+        if not TYPE_CHECKING:
+            pl = self._import(_pl)
+        self._read_fn = {
+            ".csv": pl.read_csv,
+            ".json": pl.read_json,
+            ".tsv": partial(pl.read_csv, separator="\t"),
+            ".arrow": pl.read_ipc,
+        }
+        self._scan_fn = {".parquet": pl.scan_parquet}
 
-    def __init__(self, metadata: Path, /) -> None:
-        self._metadata = metadata
+
+class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
+    def __init__(self, _pl: str, _pa: str, /) -> None:
+        if not TYPE_CHECKING:
+            pl = self._import(_pl)
+            pa = self._import(_pa)  # noqa: F841
+        self._read_fn = {
+            ".csv": partial(pl.read_csv, use_pyarrow=True),
+            ".json": pl.read_json,
+            ".tsv": partial(pl.read_csv, separator="\t", use_pyarrow=True),
+            ".arrow": partial(pl.read_ipc, use_pyarrow=True),
+        }
+        self._scan_fn = {".parquet": pl.scan_parquet}
 
 
 def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.Expr:
@@ -282,22 +313,26 @@ def is_ext_supported(suffix: Any) -> TypeIs[Extension]:
 
 
 @overload
-def get_backend(backend: Literal["polars"], /) -> type[_PolarsReader]: ...
-@overload
-def get_backend(backend: Literal["pandas"], /) -> type[_PandasReader]: ...
+def get_backend(
+    backend: Literal["polars", "polars[pyarrow]"], /
+) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
+
+
 @overload
 def get_backend(
-    backend: Literal["pandas[pyarrow]"], /
-) -> type[_PandasPyArrowReader]: ...
-def get_backend(
-    backend: Literal["polars", "pandas", "pandas[pyarrow]"], /
-) -> type[_PolarsReader] | type[_PandasPyArrowReader] | type[_PandasReader]:
+    backend: Literal["pandas", "pandas[pyarrow]"], /
+) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
+
+
+def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
     if backend == "polars":
-        return _PolarsReader
+        return _PolarsReader("polars")
+    elif backend == "polars[pyarrow]":
+        return _PolarsPyArrowReader("polars", "pyarrow")
     elif backend == "pandas[pyarrow]":
-        return _PandasPyArrowReader
+        return _PandasPyArrowReader("pandas", "pyarrow")
     elif backend == "pandas":
-        return _PandasReader
+        return _PandasReader("pandas")
     elif backend in {"pyarrow", "duckdb"}:
         msg = "Included in ``dev``, not investigated yet"
         raise NotImplementedError(msg)

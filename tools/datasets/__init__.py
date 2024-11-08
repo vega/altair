@@ -10,9 +10,10 @@ from __future__ import annotations
 import json
 import types
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Any, Generic, Literal, overload
 
 import polars as pl
+from narwhals.typing import IntoDataFrameT, IntoFrameT
 
 from tools.codemod import ruff
 from tools.datasets._io import get_backend
@@ -24,6 +25,8 @@ if TYPE_CHECKING:
     import sys
     from collections.abc import Mapping
 
+    import pandas as pd
+
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
@@ -32,6 +35,7 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
+    from tools.datasets._io import _Backend, _Reader
     from tools.datasets._typing import DatasetName, Extension, VersionTag
 
     _PathAlias: TypeAlias = Literal["npm_tags", "gh_tags", "gh_trees"]
@@ -215,9 +219,8 @@ def generate_datasets_typing(application: Application, output: Path, /) -> None:
     ruff.write_lint_format(output, contents)
 
 
-class DataLoader:
-    def __init__(self, metadata: Path, /) -> None:
-        self._reader = get_backend("polars")(metadata)
+class DataLoader(Generic[IntoDataFrameT, IntoFrameT]):
+    _reader: _Reader[IntoDataFrameT, IntoFrameT]
 
     def url(
         self,
@@ -236,9 +239,40 @@ class DataLoader:
         /,
         tag: VersionTag | Literal["latest"] | None = None,
         **kwds: Any,
-    ) -> pl.DataFrame:
+    ) -> IntoDataFrameT:
         """Get a remote dataset and load as tabular data."""
         return self._reader.dataset(name, ext, tag=tag, **kwds)
 
+    @overload
+    @classmethod
+    def with_backend(
+        cls, backend: Literal["polars", "polars[pyarrow]"], /
+    ) -> DataLoader[pl.DataFrame, pl.LazyFrame]: ...
 
-data = DataLoader(app._from_alias("gh_trees"))
+    @overload
+    @classmethod
+    def with_backend(
+        cls, backend: Literal["pandas", "pandas[pyarrow]"], /
+    ) -> DataLoader[pd.DataFrame, pd.DataFrame]: ...
+
+    @classmethod
+    def with_backend(cls, backend: _Backend, /) -> DataLoader[Any, Any]:
+        """
+        Initialize a new loader, using the specified backend.
+
+        Parameters
+        ----------
+        backend
+            DataFrame package/config used to return data.
+
+            * *polars*: _
+            * *polars[pyarrow]*: Using ``use_pyarrow=True``
+            * *pandas*: _
+            * *pandas[pyarrow]*: Using ``dtype_backend="pyarrow"``
+        """
+        obj = DataLoader.__new__(DataLoader)
+        obj._reader = get_backend(backend)
+        return obj
+
+
+data = DataLoader.with_backend("polars")
