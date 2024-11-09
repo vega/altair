@@ -90,11 +90,11 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _metadata: Path = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
-    def reader_from(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
-        suffix = validate_suffix(source, is_ext_supported)
+    def read_fn(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
+        suffix = validate_suffix(source, is_ext_read)
         return self._read_fn[suffix]
 
-    def scanner_from(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
+    def scan_fn(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
         suffix = validate_suffix(source, is_ext_scan)
         return self._scan_fn[suffix]
 
@@ -120,7 +120,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         it = islice(df.iter_rows(named=True), 1)
         result = cast("Metadata", next(it))
         url = result["url_npm"]
-        fn = self.reader_from(url)
+        fn = self.read_fn(url)
 
         if cache := self._cache:
             fp = cache / (result["sha"] + result["suffix"])
@@ -165,7 +165,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             https://docs.pola.rs/api/python/stable/reference/lazyframe/api/polars.LazyFrame.filter.html
         """
         source = self._metadata
-        fn = self.scanner_from(source)
+        fn = self.scan_fn(source)
         frame = nw.from_native(fn(source))
         result = frame.filter(_filter_reduce(predicates, constraints))
         df: nw.DataFrame[Any] = (
@@ -184,7 +184,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
 
         Effectively an eager read, no filters.
         """
-        fn = self.scanner_from(self._metadata)
+        fn = self.scan_fn(self._metadata)
         frame = nw.from_native(fn(self._metadata))
         df: nw.DataFrame[Any] = (
             frame.collect() if isinstance(frame, nw.LazyFrame) else frame
@@ -356,7 +356,7 @@ def validate_constraints(
         constraints["suffix"] = fp.suffix
         return constraints
     elif suffix is not None:
-        if not is_ext_supported(suffix):
+        if not is_ext_read(suffix):
             raise TypeError(suffix)
         else:
             constraints["suffix"] = suffix
@@ -377,7 +377,7 @@ def is_ext_scan(suffix: Any) -> TypeIs[_ExtensionScan]:
     return suffix == ".parquet"
 
 
-def is_ext_supported(suffix: Any) -> TypeIs[Extension]:
+def is_ext_read(suffix: Any) -> TypeIs[Extension]:
     return suffix in {".csv", ".json", ".tsv", ".arrow"}
 
 
