@@ -226,7 +226,7 @@ class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
         self._read_fn = {
             ".csv": pd.read_csv,
             ".json": pd.read_json,
-            ".tsv": cast(partial["pd.DataFrame"], partial(pd.read_csv, sep="\t")),
+            ".tsv": partial["pd.DataFrame"](pd.read_csv, sep="\t"),
             ".arrow": pd.read_feather,
         }
         self._scan_fn = {".parquet": pd.read_parquet}
@@ -241,19 +241,12 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
             pa = self._import(_pa)  # noqa: F841
 
         self._read_fn = {
-            ".csv": cast(
-                partial["pd.DataFrame"], partial(pd.read_csv, dtype_backend="pyarrow")
-            ),
-            ".json": cast(
-                partial["pd.DataFrame"], partial(pd.read_json, dtype_backend="pyarrow")
-            ),
-            ".tsv": cast(
-                partial["pd.DataFrame"],
-                partial(pd.read_csv, sep="\t", dtype_backend="pyarrow"),
-            ),
-            ".arrow": partial(pd.read_feather, dtype_backend="pyarrow"),
+            ".csv": partial["pd.DataFrame"](pd.read_csv, dtype_backend=_pa),
+            ".json": partial["pd.DataFrame"](pd.read_json, dtype_backend=_pa),
+            ".tsv": partial["pd.DataFrame"](pd.read_csv, sep="\t", dtype_backend=_pa),
+            ".arrow": partial(pd.read_feather, dtype_backend=_pa),
         }
-        self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend="pyarrow")}
+        self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend=_pa)}
 
 
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
