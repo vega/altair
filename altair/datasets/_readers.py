@@ -63,9 +63,14 @@ if TYPE_CHECKING:
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
-    _Backend: TypeAlias = Literal[
-        "polars", "pandas", "pandas[pyarrow]", "polars[pyarrow]", "pyarrow"
-    ]
+
+    _Polars: TypeAlias = Literal["polars"]
+    _Pandas: TypeAlias = Literal["pandas"]
+    _PyArrow: TypeAlias = Literal["pyarrow"]
+    _ConcreteT = TypeVar("_ConcreteT", _Polars, _Pandas, _PyArrow)
+    _PolarsAny: TypeAlias = Literal[_Polars, "polars[pyarrow]"]
+    _PandasAny: TypeAlias = Literal[_Pandas, "pandas[pyarrow]"]
+    _Backend: TypeAlias = Literal[_PolarsAny, _PandasAny, _PyArrow]
 
 
 __all__ = ["get_backend"]
@@ -80,6 +85,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
 
     _read_fn: dict[Extension, Callable[..., IntoDataFrameT]]
     _scan_fn: dict[_ExtensionScan, Callable[..., IntoFrameT]]
+    _name: LiteralString
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
     _metadata: Path = Path(__file__).parent / "_metadata" / "metadata.parquet"
@@ -193,11 +199,16 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             msg = f"{type(self).__name__!r} requires missing dependency {name!r}."
             raise ModuleNotFoundError(msg, name=name)
 
-    def __init__(self, *specs: str) -> None: ...
+    def __repr__(self) -> str:
+        return f"Reader[{self._name}]"
+
+    def __init__(self, name: LiteralString, /) -> None: ...
 
 
 class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
-    def __init__(self, _pd: str, _pa: str, /) -> None:
+    def __init__(self, name: Literal["pandas[pyarrow]"], /) -> None:
+        _pd, _pa = _requirements(name)
+        self._name = name
         if not TYPE_CHECKING:
             pd = self._import(_pd)
             pa = self._import(_pa)  # noqa: F841
@@ -219,9 +230,10 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
 
 
 class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
-    def __init__(self, _pd: str, /) -> None:
+    def __init__(self, name: _Pandas, /) -> None:
+        self._name = _requirements(name)
         if not TYPE_CHECKING:
-            pd = self._import(_pd)
+            pd = self._import(self._name)
         self._read_fn = {
             ".csv": pd.read_csv,
             ".json": pd.read_json,
@@ -232,9 +244,10 @@ class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
 
 
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    def __init__(self, _pl: str, /) -> None:
+    def __init__(self, name: _Polars, /) -> None:
+        self._name = _requirements(name)
         if not TYPE_CHECKING:
-            pl = self._import(_pl)
+            pl = self._import(self._name)
         self._read_fn = {
             ".csv": pl.read_csv,
             ".json": pl.read_json,
@@ -245,7 +258,9 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
 
 
 class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    def __init__(self, _pl: str, _pa: str, /) -> None:
+    def __init__(self, name: Literal["polars[pyarrow]"], /) -> None:
+        _pl, _pa = _requirements(name)
+        self._name = name
         if not TYPE_CHECKING:
             pl = self._import(_pl)
             pa = self._import(_pa)  # noqa: F841
@@ -275,13 +290,14 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
         https://arrow.apache.org/docs/python/json.html#reading-json-files
     """
 
-    def __init__(self, _pa: str, /) -> None:
+    def __init__(self, name: _PyArrow, /) -> None:
+        self._name = _requirements(name)
         if not TYPE_CHECKING:
-            pa = self._import(_pa)  # noqa: F841
-            pa_csv = self._import(f"{_pa}.csv")
-            pa_feather = self._import(f"{_pa}.feather")
-            pa_json = self._import(f"{_pa}.json")
-            pa_parquet = self._import(f"{_pa}.parquet")
+            pa = self._import(self._name)  # noqa: F841
+            pa_csv = self._import(f"{self._name}.csv")
+            pa_feather = self._import(f"{self._name}.feather")
+            pa_json = self._import(f"{self._name}.json")
+            pa_parquet = self._import(f"{self._name}.parquet")
 
             pa_read_csv = pa_csv.read_csv
             pa_read_feather = pa_feather.read_table
@@ -353,34 +369,62 @@ def is_ext_supported(suffix: Any) -> TypeIs[Extension]:
 
 
 @overload
-def get_backend(
-    backend: Literal["polars", "polars[pyarrow]"], /
-) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
+def get_backend(backend: _PolarsAny, /) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
 
 
 @overload
-def get_backend(
-    backend: Literal["pandas", "pandas[pyarrow]"], /
-) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
+def get_backend(backend: _PandasAny, /) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
 
 
 @overload
-def get_backend(backend: Literal["pyarrow"], /) -> _Reader[pa.Table, pa.Table]: ...
+def get_backend(backend: _PyArrow, /) -> _Reader[pa.Table, pa.Table]: ...
 
 
 def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
     if backend == "polars":
-        return _PolarsReader("polars")
+        return _PolarsReader(backend)
     elif backend == "polars[pyarrow]":
-        return _PolarsPyArrowReader("polars", "pyarrow")
+        return _PolarsPyArrowReader(backend)
     elif backend == "pandas[pyarrow]":
-        return _PandasPyArrowReader("pandas", "pyarrow")
+        return _PandasPyArrowReader(backend)
     elif backend == "pandas":
-        return _PandasReader("pandas")
+        return _PandasReader(backend)
     elif backend == "pyarrow":
-        return _PyArrowReader("pyarrow")
+        return _PyArrowReader(backend)
     elif backend in {"ibis", "cudf", "dask", "modin"}:
         msg = "Supported by ``narwhals``, not investigated yet"
         raise NotImplementedError(msg)
     else:
         raise TypeError(backend)
+
+
+@overload
+def _requirements(s: _ConcreteT, /) -> _ConcreteT: ...
+
+
+@overload
+def _requirements(s: Literal["pandas[pyarrow]"], /) -> tuple[_Pandas, _PyArrow]: ...
+
+
+@overload
+def _requirements(s: Literal["polars[pyarrow]"], /) -> tuple[_Polars, _PyArrow]: ...
+
+
+def _requirements(s: _Backend, /):
+    concrete: set[Literal[_Polars, _Pandas, _PyArrow]] = {"polars", "pandas", "pyarrow"}
+    if s in concrete:
+        return s
+    else:
+        from packaging.requirements import Requirement
+
+        req = Requirement(s)
+        supports_extras: set[Literal[_Polars, _Pandas]] = {"polars", "pandas"}
+        if req.name in supports_extras:
+            name = req.name
+            if (extras := req.extras) and extras == {"pyarrow"}:
+                extra = "pyarrow"
+                return name, extra
+            else:
+                raise NotImplementedError(s)
+        else:
+            raise NotImplementedError(s)
