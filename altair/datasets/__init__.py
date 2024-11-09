@@ -30,12 +30,20 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     """
     Load examples **remotely** from `vega-datasets`_, with *optional* caching.
 
+    A new ``Loader`` must be initialized by specifying a backend:
+
+        from altair.datasets import Loader
+
+        data = Loader.with_backend("polars")
+        Loader[polars]
+
     .. _vega-datasets:
         https://github.com/vega/vega-datasets
     """
 
     _reader: _Reader[IntoDataFrameT, IntoFrameT]
 
+    # TODO: docs (parameters, examples)
     def url(
         self,
         name: DatasetName | LiteralString,
@@ -46,6 +54,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         """Return the address of a remote dataset."""
         return self._reader.url(name, suffix, tag=tag)
 
+    # TODO: docs (parameters, examples)
     def __call__(
         self,
         name: DatasetName | LiteralString,
@@ -58,7 +67,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}[{type(self._reader).__name__}]"
+        return f"{type(self).__name__}[{self._reader._name}]"
 
     @overload
     @classmethod
