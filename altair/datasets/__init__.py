@@ -27,6 +27,13 @@ __all__ = ["Loader", "data"]
 
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
+    """
+    Load examples **remotely** from `vega-datasets`_, with *optional* caching.
+
+    .. _vega-datasets:
+        https://github.com/vega/vega-datasets
+    """
+
     _reader: _Reader[IntoDataFrameT, IntoFrameT]
 
     def url(
@@ -74,7 +81,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @classmethod
     def with_backend(cls, backend: _Backend, /) -> Loader[Any, Any]:
         """
-        Initialize a new loader, using the specified backend.
+        Initialize a new loader, with the specified backend.
 
         Parameters
         ----------
@@ -96,6 +103,46 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             https://pandas.pydata.org/docs/reference/io.html
         .. _JSON format not supported:
             https://arrow.apache.org/docs/python/json.html#reading-json-files
+
+        Examples
+        --------
+        Using ``polars``:
+
+            from altair.datasets import Loader
+
+            data = Loader.with_backend("polars")
+            cars = data("cars")
+
+            type(cars)
+            polars.dataframe.frame.DataFrame
+
+        Using ``pandas``:
+
+            data = Loader.with_backend("pandas")
+            cars = data("cars")
+
+            type(cars)
+            pandas.core.frame.DataFrame
+
+        Using ``pandas``, backed by ``pyarrow`` dtypes:
+
+            data = Loader.with_backend("pandas[pyarrow]")
+            cars = data("cars", tag="v1.29.0")
+
+            type(cars)
+            pandas.core.frame.DataFrame
+
+            cars.dtypes
+            Name                string[pyarrow]
+            Miles_per_Gallon    double[pyarrow]
+            Cylinders            int64[pyarrow]
+            Displacement        double[pyarrow]
+            Horsepower           int64[pyarrow]
+            Weight_in_lbs        int64[pyarrow]
+            Acceleration        double[pyarrow]
+            Year                string[pyarrow]
+            Origin              string[pyarrow]
+            dtype: object
         """
         obj = Loader.__new__(Loader)
         obj._reader = get_backend(backend)
