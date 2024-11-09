@@ -143,7 +143,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         """Get a remote dataset and load as tabular data."""
         return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
-    # TODO: docs (parameters, examples)
     def url(
         self,
         name: DatasetName | LiteralString,
@@ -151,7 +150,44 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         /,
         tag: VersionTag | None = None,
     ) -> str:
-        """Return the address of a remote dataset."""
+        """
+        Return the address of a remote dataset.
+
+        Parameters
+        ----------
+        name
+            Name of the dataset/`stem`_ of filename.
+        suffix
+            File extension/`Path.suffix`_.
+
+            .. note::
+                Only needed if ``name`` is available in multiple formats.
+        tag
+            `vega-datasets release`_ version.
+
+        .. _stem:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
+        .. _Path.suffix:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
+        .. _vega-datasets release:
+            https://github.com/vega/vega-datasets/releases
+
+        Examples
+        --------
+        The returned url will always point to an accessible dataset:
+
+            import altair as alt
+            from altair.datasets import Loader
+
+            data = Loader.with_backend("polars")
+            data.url("cars", tag="v2.9.0")
+            'https://cdn.jsdelivr.net/npm/vega-datasets@v2.9.0/data/cars.json'
+
+        We can pass the result directly to a chart:
+
+            url = data.url("cars", tag="v2.9.0")
+            alt.Chart(url).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+        """
         return self._reader.url(name, suffix, tag=tag)
 
     @property
