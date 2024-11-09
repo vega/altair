@@ -166,7 +166,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         """
         source = self._metadata
         fn = self.scanner_from(source)
-        frame = nw.from_native(fn(source), pass_through=False)
+        frame = nw.from_native(fn(source))
         result = frame.filter(_filter_reduce(predicates, constraints))
         df: nw.DataFrame[Any] = (
             result.collect() if isinstance(result, nw.LazyFrame) else result
@@ -177,6 +177,19 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             terms = "\n".join(f"{t!r}" for t in (predicates, constraints) if t)
             msg = f"Found no results for:\n{terms}"
             raise NotImplementedError(msg)
+
+    def _read_metadata(self) -> IntoDataFrameT:
+        """
+        Return the full contents of ``metadata.parquet``.
+
+        Effectively an eager read, no filters.
+        """
+        fn = self.scanner_from(self._metadata)
+        frame = nw.from_native(fn(self._metadata))
+        df: nw.DataFrame[Any] = (
+            frame.collect() if isinstance(frame, nw.LazyFrame) else frame
+        )
+        return df.to_native()
 
     @property
     def _cache(self) -> Path | None:  # type: ignore[return]
