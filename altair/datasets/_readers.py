@@ -85,7 +85,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     _metadata: Path = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
     @property
-    def _datasets_dir(self) -> Path | None:  # type: ignore[return]
+    def _cache(self) -> Path | None:  # type: ignore[return]
         """
         Returns path to datasets cache, if possible.
 
@@ -94,9 +94,9 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             Reader._ENV_VAR
         """
         if _dir := os.environ.get(self._ENV_VAR):
-            datasets_dir = Path(_dir)
-            datasets_dir.mkdir(exist_ok=True)
-            return datasets_dir
+            cache_dir = Path(_dir)
+            cache_dir.mkdir(exist_ok=True)
+            return cache_dir
 
     def reader_from(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
         suffix = validate_suffix(source, is_ext_supported)
@@ -145,7 +145,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         url = result["url_npm"]
         fn = self.reader_from(url)
 
-        if cache := self._datasets_dir:
+        if cache := self._cache:
             fp = cache / (result["sha"] + result["suffix"])
             if fp.exists():
                 return fn(fp, **kwds)

@@ -8,11 +8,13 @@ from altair.datasets._readers import _Reader, get_backend
 
 if TYPE_CHECKING:
     import sys
+    from pathlib import Path
     from typing import Any, Literal
 
     import pandas as pd
     import polars as pl
     import pyarrow as pa
+    from _typeshed import StrPath
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -98,6 +100,35 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         obj = Loader.__new__(Loader)
         obj._reader = get_backend(backend)
         return obj
+
+    @property
+    def cache_dir(self) -> Path | None:
+        """
+        Returns path to datasets cache.
+
+        By default, this can be configured using the environment variable:
+
+            "ALTAIR_DATASETS_DIR"
+
+        You *may* also set this directly, but the value will **not** persist between sessions:
+
+            from pathlib import Path
+
+            from altair.datasets import Loader
+
+            data = Loader.with_backend("polars")
+            data.cache_dir = Path.home() / ".altair_cache"
+
+            data.cache_dir.relative_to(Path.home()).as_posix()
+            '.altair_cache'
+        """
+        return self._reader._cache
+
+    @cache_dir.setter
+    def cache_dir(self, source: StrPath, /) -> None:
+        import os
+
+        os.environ[self._reader._ENV_VAR] = str(source)
 
 
 def __getattr__(name):
