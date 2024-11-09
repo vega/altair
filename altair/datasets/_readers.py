@@ -86,23 +86,9 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     _read_fn: dict[Extension, Callable[..., IntoDataFrameT]]
     _scan_fn: dict[_ExtensionScan, Callable[..., IntoFrameT]]
     _name: LiteralString
-    _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
+    _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _metadata: Path = Path(__file__).parent / "_metadata" / "metadata.parquet"
-
-    @property
-    def _cache(self) -> Path | None:  # type: ignore[return]
-        """
-        Returns path to datasets cache, if possible.
-
-        Requires opt-in via environment variable::
-
-            Reader._ENV_VAR
-        """
-        if _dir := os.environ.get(self._ENV_VAR):
-            cache_dir = Path(_dir)
-            cache_dir.mkdir(exist_ok=True)
-            return cache_dir
 
     def reader_from(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
         suffix = validate_suffix(source, is_ext_supported)
@@ -111,21 +97,6 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     def scanner_from(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
         suffix = validate_suffix(source, is_ext_scan)
         return self._scan_fn[suffix]
-
-    def url(
-        self,
-        name: DatasetName | LiteralString,
-        suffix: Extension | None = None,
-        /,
-        tag: VersionTag | None = None,
-    ) -> str:
-        df = self._query(**validate_constraints(name, suffix, tag))
-        url = df.item(0, "url_npm")
-        if isinstance(url, str):
-            return url
-        else:
-            msg = f"Expected 'str' but got {type(url).__name__!r} from {url!r}."
-            raise TypeError(msg)
 
     def dataset(
         self,
@@ -145,7 +116,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         **kwds
             Arguments passed to the underlying read function.
         """
-        df = self._query(**validate_constraints(name, suffix, tag))
+        df = self.query(**validate_constraints(name, suffix, tag))
         it = islice(df.iter_rows(named=True), 1)
         result = cast("Metadata", next(it))
         url = result["url_npm"]
@@ -164,7 +135,22 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             with self._opener.open(url) as f:
                 return fn(f.read(), **kwds)
 
-    def _query(
+    def url(
+        self,
+        name: DatasetName | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: VersionTag | None = None,
+    ) -> str:
+        df = self.query(**validate_constraints(name, suffix, tag))
+        url = df.item(0, "url_npm")
+        if isinstance(url, str):
+            return url
+        else:
+            msg = f"Expected 'str' but got {type(url).__name__!r} from {url!r}."
+            raise TypeError(msg)
+
+    def query(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.DataFrame[IntoDataFrameT]:
         r"""
@@ -192,6 +178,20 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             msg = f"Found no results for:\n{terms}"
             raise NotImplementedError(msg)
 
+    @property
+    def _cache(self) -> Path | None:  # type: ignore[return]
+        """
+        Returns path to datasets cache, if possible.
+
+        Requires opt-in via environment variable::
+
+            Reader._ENV_VAR
+        """
+        if _dir := os.environ.get(self._ENV_VAR):
+            cache_dir = Path(_dir)
+            cache_dir.mkdir(exist_ok=True)
+            return cache_dir
+
     def _import(self, name: str, /) -> Any:
         if spec := find_spec(name):
             return import_module(spec.name)
@@ -203,6 +203,20 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         return f"Reader[{self._name}]"
 
     def __init__(self, name: LiteralString, /) -> None: ...
+
+
+class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
+    def __init__(self, name: _Pandas, /) -> None:
+        self._name = _requirements(name)
+        if not TYPE_CHECKING:
+            pd = self._import(self._name)
+        self._read_fn = {
+            ".csv": pd.read_csv,
+            ".json": pd.read_json,
+            ".tsv": cast(partial["pd.DataFrame"], partial(pd.read_csv, sep="\t")),
+            ".arrow": pd.read_feather,
+        }
+        self._scan_fn = {".parquet": pd.read_parquet}
 
 
 class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
@@ -227,20 +241,6 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
             ".arrow": partial(pd.read_feather, dtype_backend="pyarrow"),
         }
         self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend="pyarrow")}
-
-
-class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
-    def __init__(self, name: _Pandas, /) -> None:
-        self._name = _requirements(name)
-        if not TYPE_CHECKING:
-            pd = self._import(self._name)
-        self._read_fn = {
-            ".csv": pd.read_csv,
-            ".json": pd.read_json,
-            ".tsv": cast(partial["pd.DataFrame"], partial(pd.read_csv, sep="\t")),
-            ".arrow": pd.read_feather,
-        }
-        self._scan_fn = {".parquet": pd.read_parquet}
 
 
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):

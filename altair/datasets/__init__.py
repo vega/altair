@@ -43,32 +43,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
     _reader: _Reader[IntoDataFrameT, IntoFrameT]
 
-    # TODO: docs (parameters, examples)
-    def url(
-        self,
-        name: DatasetName | LiteralString,
-        suffix: Extension | None = None,
-        /,
-        tag: VersionTag | None = None,
-    ) -> str:
-        """Return the address of a remote dataset."""
-        return self._reader.url(name, suffix, tag=tag)
-
-    # TODO: docs (parameters, examples)
-    def __call__(
-        self,
-        name: DatasetName | LiteralString,
-        suffix: Extension | None = None,
-        /,
-        tag: VersionTag | None = None,
-        **kwds: Any,
-    ) -> IntoDataFrameT:
-        """Get a remote dataset and load as tabular data."""
-        return self._reader.dataset(name, suffix, tag=tag, **kwds)
-
-    def __repr__(self) -> str:
-        return f"{type(self).__name__}[{self._reader._name}]"
-
     @overload
     @classmethod
     def with_backend(
@@ -157,6 +131,29 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         obj._reader = get_backend(backend)
         return obj
 
+    # TODO: docs (parameters, examples)
+    def __call__(
+        self,
+        name: DatasetName | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: VersionTag | None = None,
+        **kwds: Any,
+    ) -> IntoDataFrameT:
+        """Get a remote dataset and load as tabular data."""
+        return self._reader.dataset(name, suffix, tag=tag, **kwds)
+
+    # TODO: docs (parameters, examples)
+    def url(
+        self,
+        name: DatasetName | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: VersionTag | None = None,
+    ) -> str:
+        """Return the address of a remote dataset."""
+        return self._reader.url(name, suffix, tag=tag)
+
     @property
     def cache_dir(self) -> Path | None:
         """
@@ -185,6 +182,9 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         import os
 
         os.environ[self._reader._ENV_VAR] = str(source)
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}[{self._reader._name}]"
 
 
 def __getattr__(name):
