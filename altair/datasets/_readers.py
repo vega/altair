@@ -99,8 +99,8 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         return self._scan_fn[suffix]
 
     def _response_hook(self, f):
-        # HACK: pyarrow wants the file obj
-        return f.read()
+        # HACK: `pyarrow` + `pandas` wants the file obj
+        return f
 
     def dataset(
         self,
@@ -273,6 +273,9 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
         }
         self._scan_fn = {".parquet": pl.scan_parquet}
 
+    def _response_hook(self, f):
+        return f.read()
+
 
 class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
     def __init__(self, name: Literal["polars[pyarrow]"], /) -> None:
@@ -288,6 +291,9 @@ class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             ".arrow": partial(pl.read_ipc, use_pyarrow=True),
         }
         self._scan_fn = {".parquet": pl.scan_parquet}
+
+    def _response_hook(self, f):
+        return f.read()
 
 
 class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
@@ -332,9 +338,6 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             ".arrow": pa_read_feather,
         }
         self._scan_fn = {".parquet": pa_read_parquet}
-
-    def _response_hook(self, f):
-        return f
 
 
 def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.Expr:

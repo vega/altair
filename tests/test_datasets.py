@@ -39,6 +39,7 @@ def test_loader_url(backend: _Backend) -> None:
 @backends
 def test_loader_call(backend: _Backend) -> None:
     data = Loader.with_backend(backend)
+    data.cache_dir = ""
     frame = data("stocks", ".csv")
     assert is_into_dataframe(frame)
     nw_frame = nw.from_native(frame)
