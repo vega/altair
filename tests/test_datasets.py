@@ -9,12 +9,15 @@ from narwhals.stable import v1 as nw
 
 import altair as alt  # noqa: F401
 from altair.datasets import Loader
+from tests import skip_requires_pyarrow
 
 if TYPE_CHECKING:
     from altair.datasets._readers import _Backend
 
-backends = pytest.mark.parametrize(
-    "backend", ["polars", "polars[pyarrow]", "pandas", "pandas[pyarrow]", "pyarrow"]
+backends = skip_requires_pyarrow(
+    pytest.mark.parametrize(
+        "backend", ["polars", "polars[pyarrow]", "pandas", "pandas[pyarrow]", "pyarrow"]
+    )
 )
 
 
@@ -39,7 +42,7 @@ def test_loader_url(backend: _Backend) -> None:
 @backends
 def test_loader_call(backend: _Backend) -> None:
     data = Loader.with_backend(backend)
-    data.cache_dir = ""
+    data.cache_dir = ""  # type: ignore[assignment]
     frame = data("stocks", ".csv")
     assert is_into_dataframe(frame)
     nw_frame = nw.from_native(frame)
