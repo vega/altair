@@ -147,8 +147,15 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         if isinstance(url, str):
             return url
         else:
-            msg = f"Expected 'str' but got {type(url).__name__!r} from {url!r}."
-            raise TypeError(msg)
+            converted = nw.to_py_scalar(url)
+            if isinstance(converted, str):
+                return converted
+            else:
+                msg = (
+                    f"Expected 'str' but got {type(converted).__name__!r}\n"
+                    f"from {converted!r}."
+                )
+                raise TypeError(msg)
 
     def query(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
