@@ -106,8 +106,10 @@ class _GitHubRequestNamespace:
     _UNAUTH_RATE_LIMIT: Literal[60] = 60
     _TAGS_COST: Literal[1] = 1
     _TREES_COST: Literal[2] = 2
-    _UNAUTH_DELAY: Literal[5] = 5
-    _AUTH_DELAY: Literal[1] = 1
+    _UNAUTH_DELAY: Literal[5_000] = 5_000
+    """**ms** delay added between **unauthenticated** ``trees`` requests."""
+    _AUTH_DELAY: Literal[500] = 500
+    """**ms** delay added between **authenticated** ``trees`` requests."""
     _UNAUTH_TREES_LIMIT: Literal[10] = 10
 
     def __init__(self, gh: GitHub, /) -> None:
@@ -122,6 +124,10 @@ class _GitHubRequestNamespace:
         with self._gh._opener.open(self._request(self.url.RATE)) as response:
             content: GitHubRateLimitResources = json.load(response)["resources"]
         return content
+
+    def delay(self, *, is_auth: bool) -> float:
+        ms = self._AUTH_DELAY if is_auth else self._UNAUTH_DELAY
+        return (ms + random.triangular()) / 1_000
 
     def tags(self, n: int, *, warn_lower: bool) -> list[GitHubTag]:
         """https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags."""
@@ -314,6 +320,11 @@ class GitHub:
             raise NotImplementedError(limit)
         return limit
 
+    def delay(self, rate_limit: ParsedRateLimit | None = None, /) -> float:
+        """Return a delay time in seconds, corresponding with authentication status."""
+        limit = rate_limit or self.rate_limit(strict=True)
+        return self.req.delay(is_auth=limit["is_auth"])
+
     def tags(
         self, n_head: int | None = None, *, warn_lower: bool = False
     ) -> pl.DataFrame:
@@ -412,14 +423,13 @@ class GitHub:
         cost = req._TREES_COST * n
         if rate_limit["remaining"] < cost:
             raise NotImplementedError(rate_limit, cost)
-        delay_secs = req._AUTH_DELAY if rate_limit["is_auth"] else req._UNAUTH_DELAY
         print(
             f"Collecting metadata for {n} missing releases.\n"
-            f"Using {delay_secs=} between requests ..."
+            f"Using {self.delay(rate_limit)}[ms] between requests ..."
         )
         dfs: list[pl.DataFrame] = []
         for tag in tags:
-            time.sleep(delay_secs + random.triangular())
+            time.sleep(self.delay(rate_limit))
             dfs.append(self.trees(tag))
         df = pl.concat(dfs)
         print(f"Finished collection.\n" f"Found {df.height} new rows")
