@@ -98,6 +98,10 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         suffix = validate_suffix(source, is_ext_scan)
         return self._scan_fn[suffix]
 
+    def _response_hook(self, f):
+        # HACK: pyarrow wants the file obj
+        return f.read()
+
     def dataset(
         self,
         name: DatasetName | LiteralString,
@@ -133,7 +137,7 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
                 return fn(fp, **kwds)
         else:
             with self._opener.open(url) as f:
-                return fn(f.read(), **kwds)
+                return fn(self._response_hook(f), **kwds)
 
     def url(
         self,
@@ -328,6 +332,9 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             ".arrow": pa_read_feather,
         }
         self._scan_fn = {".parquet": pa_read_parquet}
+
+    def _response_hook(self, f):
+        return f
 
 
 def _filter_reduce(predicates: tuple[Any, ...], constraints: Metadata, /) -> nw.Expr:
