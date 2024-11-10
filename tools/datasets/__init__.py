@@ -88,6 +88,7 @@ class Application:
         return self._npm
 
     def refresh(self) -> pl.DataFrame:
+        """Update and sync all metadata files."""
         npm_tags = self.npm.tags()
         self.write_parquet(npm_tags, self._paths["npm_tags"])
 
@@ -97,6 +98,11 @@ class Application:
         gh_trees = self.github.refresh_trees(gh_tags)
         self.write_parquet(gh_trees, self._paths["gh_trees"])
         return gh_trees
+
+    def reset(self) -> None:
+        """Remove all metadata files."""
+        for fp in self._paths.values():
+            fp.unlink(missing_ok=True)
 
     def read(self, name: _PathAlias, /) -> pl.DataFrame:
         """Read existing metadata from file."""

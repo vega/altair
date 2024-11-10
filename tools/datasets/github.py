@@ -357,6 +357,10 @@ class GitHub:
         Use known tags to discover and update missing trees metadata.
 
         Aims to stay well-within API rate limits, both for authenticated and unauthenticated users.
+
+        Notes
+        -----
+        Internally handles regenerating the ``tag`` enum.
         """
         if gh_tags.is_empty():
             msg = f"Expected rows present in `gh_tags`, but got:\n{gh_tags!r}"
@@ -367,18 +371,23 @@ class GitHub:
         TP = ReParsedTag
         if not fp.exists():
             print(f"Initializing {fp!s}")
-            return self._trees_batched(_iter_rows(gh_tags, stop, TP))
+            result = self._trees_batched(_iter_rows(gh_tags, stop, TP))
         else:
-            trees = pl.read_parquet(fp)
+            trees = (
+                pl.scan_parquet(fp)
+                .with_columns(pl.col("tag").cast(pl.String))
+                .collect()
+            )
             missing_trees = gh_tags.join(
                 trees.select(pl.col("tag").unique()), on="tag", how="anti"
             )
             if missing_trees.is_empty():
                 print(f"Already up-to-date {fp!s}")
-                return trees
+                result = trees
             else:
                 fresh = self._trees_batched(_iter_rows(missing_trees, stop, TP))
-                return pl.concat((trees, fresh))
+                result = pl.concat((trees, fresh))
+        return result.with_columns(pl.col("tag").cast(semver.tag_enum(gh_tags)))
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)

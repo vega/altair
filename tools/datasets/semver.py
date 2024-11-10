@@ -52,6 +52,28 @@ def with_columns(frame: _Frame, /, *, col_tag: str = "tag") -> _Frame:
         return ldf
 
 
-def sort(frame: _Frame, /) -> _Frame:
-    """Sort ``frame``, displaying in descending release order."""
-    return frame.sort(_SEM_VER_FIELDS, descending=True)
+def tag_enum(frame: _Frame, /, *, col_tag: str = "tag") -> pl.Enum:
+    """Extract an **ascending** order ``pl.Enum`` from ``col_tag``."""
+    return pl.Enum(
+        frame.lazy()
+        .pipe(sort, descending=False)
+        .select(col_tag)
+        .collect()
+        .get_column(col_tag)
+    )
+
+
+def sort(frame: _Frame, /, descending: bool = True) -> _Frame:
+    """
+    Sort ``frame``, displaying in release order.
+
+    Parameters
+    ----------
+    descending
+        By default, **most recent** is first.
+
+    Notes
+    -----
+    Ensures pre release versions maintain order, always appearing before actual releases.
+    """
+    return frame.sort(_SEM_VER_FIELDS, descending=descending, nulls_last=not descending)
