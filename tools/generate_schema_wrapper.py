@@ -7,11 +7,12 @@ import copy
 import json
 import sys
 import textwrap
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain
 from operator import attrgetter
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypedDict, TypeVar
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar
 from urllib import request
 
 if sys.version_info >= (3, 14):
@@ -47,6 +48,7 @@ if TYPE_CHECKING:
     from tools.schemapi.codegen import ArgInfo, AttrGetter
     from vl_convert import VegaThemes
 
+T = TypeVar("T", bound="str | Iterable[str]")
 
 SCHEMA_VERSION: Final = "v5.20.1"
 
@@ -530,6 +532,12 @@ class DatumSchemaGenerator(SchemaGenerator):
     haspropsetters = True
 
 
+class ModuleDef(Generic[T]):
+    def __init__(self, contents: T, all: Iterable[str], /) -> None:
+        self.contents: T = contents
+        self.all: list[str] = list(all)
+
+
 def schema_class(*args, **kwargs) -> str:
     return SchemaGenerator(*args, **kwargs).schema_class()
 
@@ -692,7 +700,7 @@ def toposort(graph: dict[str, list[str]]) -> list[str]:
     return stack
 
 
-def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
+def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
@@ -766,7 +774,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> str:
         contents.append(definitions[name].schema_class())
 
     contents.append("")  # end with newline
-    return "\n".join(contents)
+    return ModuleDef("\n".join(contents), all_)
 
 
 @dataclass
@@ -798,7 +806,7 @@ class ChannelInfo:
                 yield self.value_class_name
 
 
-def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
+def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     schema = load_schema_with_shorthand_properties(fp)
     encoding_def = "FacetedEncoding"
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
@@ -854,7 +862,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
         "with_property_setters",
     )
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
-    all_ = list(chain(it, COMPAT_EXPORTS))
+    all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
         "import sys",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
@@ -877,7 +885,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
         ENCODING_SORT_FIELD,
     )
     TYPING_API = INTO_CONDITION, BIN, IMPUTE
-    contents = [
+    contents: list[str] = [
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
@@ -889,14 +897,14 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> str:
             f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
-        "\n" f"__all__ = {sorted(all_)}\n",
+        "\n" f"__all__ = {all_}\n",
         CHANNEL_MIXINS,
         *class_defs,
         *generate_encoding_artifacts(
             channel_infos, ENCODE_METHOD, facet_encoding=encoding
         ),
     ]
-    return "\n".join(contents)
+    return ModuleDef(contents, all_)
 
 
 def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
@@ -1008,7 +1016,7 @@ def generate_typed_dict(
         name=name,
         metaclass_kwds=metaclass_kwds,
         comment=comment,
-        summary=summary or f"{rst_syntax_for_class(info.title)} ``TypedDict`` wrapper.",
+        summary=(summary or f":class:`altair.{info.title}` ``TypedDict`` wrapper."),
         doc=doc,
         td_args=args,
     )
@@ -1092,6 +1100,72 @@ def generate_vegalite_config_mixin(fp: Path, /) -> str:
     return "\n".join(code)
 
 
+def generate_schema__init__(
+    *modules: str,
+    package: str,
+    expand: dict[Path, ModuleDef[Any]] | None = None,
+) -> Iterator[str]:
+    """
+    Generate schema subpackage init contents.
+
+    Parameters
+    ----------
+    *modules
+        Module names to expose, in addition to their members::
+
+            ...schema.__init__.__all__ = [
+                ...,
+                module_1.__name__,
+                module_1.__all__,
+                module_2.__name__,
+                module_2.__all__,
+                ...,
+            ]
+    package
+        Absolute, dotted path for `schema`, e.g::
+
+            "altair.vegalite.v5.schema"
+    expand
+        Required for 2nd-pass, which explicitly defines the new ``__all__``, using newly generated names.
+
+        .. note::
+            The default `import idiom`_ works at runtime, and for ``pyright`` - but not ``mypy``.
+            See `issue`_.
+
+    .. _import idiom:
+        https://typing.readthedocs.io/en/latest/spec/distributing.html#library-interface-public-and-private-symbols
+    .. _issue:
+        https://github.com/python/mypy/issues/15300
+    """
+    yield f"# ruff: noqa: F403, F405\n{HEADER_COMMENT}"
+    yield f"from {package} import {', '.join(modules)}"
+    yield from (f"from {package}.{mod} import *" for mod in modules)
+    yield f"SCHEMA_VERSION = {SCHEMA_VERSION!r}\n"
+    yield f"SCHEMA_URL = {schema_url()!r}\n"
+    base_all: list[str] = ["SCHEMA_URL", "SCHEMA_VERSION", *modules]
+    if expand:
+        base_all.extend(
+            chain.from_iterable(v.all for k, v in expand.items() if k.stem in modules)
+        )
+        yield f"__all__ = {base_all}"
+    else:
+        yield f"__all__ = {base_all}"
+        yield from (f"__all__ += {mod}.__all__" for mod in modules)
+
+
+def path_to_module_str(
+    fp: Path,
+    /,
+    root: Literal["altair", "doc", "sphinxext", "tests", "tools"] = "altair",
+) -> str:
+    # NOTE: GH runner has 3x altair, local is 2x
+    # - Needs to be the last occurence
+    idx = fp.parts.index(root)
+    start = idx + fp.parts.count(root) - 1 if root == "altair" else idx
+    parents = fp.parts[start:-1]
+    return ".".join(parents if fp.stem == "__init__" else (*parents, fp.stem))
+
+
 def vegalite_main(skip_download: bool = False) -> None:
     version = SCHEMA_VERSION
     vn = version.split(".")[0]
@@ -1109,23 +1183,22 @@ def vegalite_main(skip_download: bool = False) -> None:
 
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"
+    pkg_schema = path_to_module_str(outfile)
     print(f"Writing {outfile!s}")
-    content = [
-        "# ruff: noqa\n",
-        "from .core import *\nfrom .channels import *\n",
-        f"SCHEMA_VERSION = '{version}'\n",
-        f"SCHEMA_URL = {schema_url(version)!r}\n",
-    ]
-    ruff.write_lint_format(outfile, content)
+    ruff.write_lint_format(
+        outfile, generate_schema__init__("channels", "core", package=pkg_schema)
+    )
 
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
 
     files: dict[Path, str | Iterable[str]] = {}
+    modules: dict[Path, ModuleDef[Any]] = {}
 
     # Generate the core schema wrappers
     fp_core = schemapath / "core.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_core!s}")
-    files[fp_core] = generate_vegalite_schema_wrapper(schemafile)
+    modules[fp_core] = generate_vegalite_schema_wrapper(schemafile)
+    files[fp_core] = modules[fp_core].contents
 
     # Generate the channel wrappers
     fp_channels = schemapath / "channels.py"
@@ -1133,7 +1206,14 @@ def vegalite_main(skip_download: bool = False) -> None:
     with RemapContext(
         {DATETIME: (TEMPORAL, DATETIME), BIN_PARAMS: (BIN,), IMPUTE_PARAMS: (IMPUTE,)}
     ):
-        files[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
+        modules[fp_channels] = generate_vegalite_channel_wrappers(schemafile)
+    files[fp_channels] = modules[fp_channels].contents
+
+    # Expand `schema.__init__.__all__` with new classes
+    ruff.write_lint_format(
+        outfile,
+        generate_schema__init__("channels", "core", package=pkg_schema, expand=modules),
+    )
 
     # generate the mark mixin
     markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}

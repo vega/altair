@@ -1347,20 +1347,22 @@ def test_LookupData():
 
 
 def test_themes():
+    from altair import theme
+
     chart = alt.Chart("foo.txt").mark_point()
 
-    with alt.themes.enable("default"):
+    with theme.enable("default"):
         assert chart.to_dict()["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
-    with alt.themes.enable("opaque"):
+    with theme.enable("opaque"):
         assert chart.to_dict()["config"] == {
             "background": "white",
             "view": {"continuousWidth": 300, "continuousHeight": 300},
         }
 
-    with alt.themes.enable("none"):
+    with theme.enable("none"):
         assert "config" not in chart.to_dict()
 
 
