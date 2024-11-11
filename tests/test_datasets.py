@@ -3,10 +3,10 @@ from __future__ import annotations
 import re
 import sys
 from importlib.util import find_spec
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pytest
-from narwhals.dependencies import is_into_dataframe
+from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
 from narwhals.stable import v1 as nw
 
 import altair as alt  # noqa: F401
@@ -14,6 +14,7 @@ from altair.datasets import Loader
 from tests import skip_requires_pyarrow
 
 if TYPE_CHECKING:
+    from pathlib import Path
     from typing import Literal
 
     from altair.datasets._readers import _Backend
@@ -204,3 +205,72 @@ def test_dataset_not_found(backend: _Backend) -> None:
         ),
     ):
         data.url(real_name, tag=incorrect_tag)
+
+
+@backends
+def test_reader_cache(
+    backend: _Backend, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """
+    Using a sample of the smallest datasets, make *"requests"* that are all caught by prior hits.
+
+    Note
+    ----
+    `tmp_path`_ is a built-in fixture.
+
+    .. _tmp_path:
+        https://docs.pytest.org/en/stable/getting-started.html#request-a-unique-temporary-directory-for-functional-tests
+    """
+    import polars as pl
+    from polars.testing import assert_frame_equal
+
+    monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
+
+    data = Loader.with_backend(backend)
+    cache_dir = data.cache_dir
+    assert cache_dir is not None
+    assert cache_dir == tmp_path
+
+    assert tuple(cache_dir.iterdir()) == ()
+
+    # smallest csvs
+    lookup_groups = data("lookup_groups", tag="v2.5.3")
+    data("lookup_people", tag="v2.4.0")
+    data("iowa-electricity", tag="v2.3.1")
+    data("global-temp", tag="v2.9.0")
+
+    cached_paths = tuple(cache_dir.iterdir())
+    assert len(cached_paths) == 4
+
+    if is_polars_dataframe(lookup_groups):
+        left, right = (
+            lookup_groups,
+            cast(pl.DataFrame, data("lookup_groups", tag="v2.5.3")),
+        )
+    else:
+        left, right = (
+            pl.DataFrame(lookup_groups),
+            pl.DataFrame(data("lookup_groups", tag="v2.5.3")),
+        )
+
+    assert_frame_equal(left, right)
+    assert len(tuple(cache_dir.iterdir())) == 4
+    assert cached_paths == tuple(cache_dir.iterdir())
+
+    data("iowa-electricity", tag="v1.30.2")
+    data("global-temp", tag="v2.8.1")
+    data("global-temp", tag="v2.8.0")
+
+    assert len(tuple(cache_dir.iterdir())) == 4
+    assert cached_paths == tuple(cache_dir.iterdir())
+
+    data("lookup_people", tag="v1.10.0")
+    data("lookup_people", tag="v1.11.0")
+    data("lookup_people", tag="v1.20.0")
+    data("lookup_people", tag="v1.21.0")
+    data("lookup_people", tag="v2.1.0")
+    data("lookup_people", tag="v2.3.0")
+    data("lookup_people", tag="v2.5.0-next.0")
+
+    assert len(tuple(cache_dir.iterdir())) == 4
+    assert cached_paths == tuple(cache_dir.iterdir())
