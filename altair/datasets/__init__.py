@@ -131,7 +131,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         obj._reader = get_backend(backend)
         return obj
 
-    # TODO: docs (parameters, examples)
+    # TODO: docs (examples)
     def __call__(
         self,
         name: DatasetName | LiteralString,
@@ -140,7 +140,30 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         tag: VersionTag | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
-        """Get a remote dataset and load as tabular data."""
+        """
+        Get a remote dataset and load as tabular data.
+
+        Parameters
+        ----------
+        name
+            Name of the dataset/`stem`_ of file name.
+        suffix
+            File extension/`Path.suffix`_.
+
+            .. note::
+                Only needed if ``name`` is available in multiple formats.
+        tag
+            Version identifier for a `vega-datasets release`_.
+        **kwds
+            Arguments passed to the underlying read function.
+
+        .. _stem:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
+        .. _Path.suffix:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
+        .. _vega-datasets release:
+            https://github.com/vega/vega-datasets/releases
+        """
         return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
     def url(
@@ -156,14 +179,14 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Parameters
         ----------
         name
-            Name of the dataset/`stem`_ of filename.
+            Name of the dataset/`stem`_ of file name.
         suffix
             File extension/`Path.suffix`_.
 
             .. note::
                 Only needed if ``name`` is available in multiple formats.
         tag
-            `vega-datasets release`_ version.
+            Version identifier for a `vega-datasets release`_.
 
         .. _stem:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem

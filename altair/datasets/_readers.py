@@ -23,7 +23,6 @@ from typing import (
     Callable,
     ClassVar,
     Final,
-    Generic,
     Literal,
     Protocol,
     TypeVar,
@@ -84,16 +83,42 @@ def _identity(_: _T, /) -> _T:
     return _
 
 
-class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
+class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     """
-    Common functionality between backends.
+    Describes basic IO for remote & local tabular resources.
 
-    Trying to use ``narwhals`` as much as possible
+    Subclassing this protocol directly will provide a *mostly* complete implementation.
+
+    Each of the following must be explicitly assigned:
+
+        _Reader._read_fn
+        _Reader._scan_fn
+        _Reader._name
     """
 
     _read_fn: dict[Extension, Callable[..., IntoDataFrameT]]
+    """
+    Eager file read functions.
+
+    Each corresponds to a known file extension within ``vega-datasets``.
+    """
+
     _scan_fn: dict[_ExtensionScan, Callable[..., IntoFrameT]]
+    """
+    *Optionally*-lazy file read/scan functions.
+
+    Used exclusively for ``metadata.parquet``.
+
+    Currently ``polars`` backends are the only lazy options.
+    """
+
     _name: LiteralString
+    """
+    Used in error messages, repr and matching ``@overload``(s).
+
+    Otherwise, has no concrete meaning.
+    """
+
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
     _response: ClassVar[staticmethod[[HTTPResponse], Any]] = staticmethod(_identity)
@@ -124,16 +149,6 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         tag: VersionTag | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
-        """
-        Fetch a remote dataset, attempt caching if possible.
-
-        Parameters
-        ----------
-        name, suffix, tag
-            TODO
-        **kwds
-            Arguments passed to the underlying read function.
-        """
         df = self.query(**validate_constraints(name, suffix, tag))
         it = islice(df.iter_rows(named=True), 1)
         result = cast("Metadata", next(it))
@@ -171,13 +186,12 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
     def query(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.DataFrame[IntoDataFrameT]:
-        r"""
+        """
         Query multi-version trees metadata.
 
-        Parameters
-        ----------
-        \*predicates, \*\*constraints
-            Passed directly to `pl.LazyFrame.filter`_.
+        Notes
+        -----
+        Arguments correspond to those seen in `pl.LazyFrame.filter`_.
 
         .. _pl.LazyFrame.filter:
             https://docs.pola.rs/api/python/stable/reference/lazyframe/api/polars.LazyFrame.filter.html
