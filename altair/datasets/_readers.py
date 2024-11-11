@@ -226,7 +226,19 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
         if spec := find_spec(name):
             return import_module(spec.name)
         else:
-            msg = f"{type(self).__name__!r} requires missing dependency {name!r}."
+            reqs = _requirements(self._name)  # type: ignore[call-overload]
+            if isinstance(reqs, tuple):
+                depends = ", ".join(f"{req!r}" for req in reqs) + " packages"
+            else:
+                depends = f"{reqs!r} package"
+
+            msg = (
+                f"Backend {self._name!r} requires the {depends}, but {name!r} could not be found.\n"
+                f"This can be installed with pip using:\n"
+                f"    pip install {name}\n"
+                f"Or with conda using:\n"
+                f"    conda install -c conda-forge {name}"
+            )
             raise ModuleNotFoundError(msg, name=name)
 
     def __repr__(self) -> str:

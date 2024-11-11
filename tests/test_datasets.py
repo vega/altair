@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sys
 from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
@@ -13,7 +14,11 @@ from altair.datasets import Loader
 from tests import skip_requires_pyarrow
 
 if TYPE_CHECKING:
+    from typing import Literal
+
     from altair.datasets._readers import _Backend
+
+CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
 
 requires_pyarrow = skip_requires_pyarrow()
@@ -58,10 +63,49 @@ def test_loader_url(backend: _Backend) -> None:
 
 
 @backends
-def test_loader_call(backend: _Backend) -> None:
+def test_loader_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv(CACHE_ENV_VAR, raising=False)
+
     data = Loader.with_backend(backend)
-    data.cache_dir = ""  # type: ignore[assignment]
     frame = data("stocks", ".csv")
     assert is_into_dataframe(frame)
     nw_frame = nw.from_native(frame)
     assert set(nw_frame.columns) == {"symbol", "date", "price"}
+
+
+@backends
+def test_missing_dependency_single(
+    backend: _Backend, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    if backend in {"polars[pyarrow]", "pandas[pyarrow]"}:
+        pytest.skip("Testing single dependency backends only")
+
+    monkeypatch.setitem(sys.modules, backend, None)
+
+    with pytest.raises(
+        ModuleNotFoundError,
+        match=re.compile(
+            rf"{backend}.+requires.+{backend}.+but.+{backend}.+not.+found.+pip install {backend}",
+            flags=re.DOTALL,
+        ),
+    ):
+        Loader.with_backend(backend)
+
+
+@pytest.mark.parametrize("backend", ["polars[pyarrow]", "pandas[pyarrow]"])
+@skip_requires_pyarrow
+def test_missing_dependency_multi(
+    backend: _Backend, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    secondary = "pyarrow"
+    primary = backend.removesuffix(f"[{secondary}]")
+    monkeypatch.setitem(sys.modules, secondary, None)
+
+    with pytest.raises(
+        ModuleNotFoundError,
+        match=re.compile(
+            rf"{re.escape(backend)}.+requires.+'{primary}', '{secondary}'.+but.+{secondary}.+not.+found.+pip install {secondary}",
+            flags=re.DOTALL,
+        ),
+    ):
+        Loader.with_backend(backend)
