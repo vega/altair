@@ -74,7 +74,7 @@ if TYPE_CHECKING:
     _Backend: TypeAlias = Literal[_PolarsAny, _PandasAny, _PyArrow]
 
 
-__all__ = ["get_backend"]
+__all__ = ["backend"]
 
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
@@ -428,33 +428,35 @@ def is_ext_read(suffix: Any) -> TypeIs[Extension]:
 
 
 @overload
-def get_backend(backend: _PolarsAny, /) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
+def backend(name: _PolarsAny, /) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
 
 
 @overload
-def get_backend(backend: _PandasAny, /) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
+def backend(name: _PandasAny, /) -> _Reader[pd.DataFrame, pd.DataFrame]: ...
 
 
 @overload
-def get_backend(backend: _PyArrow, /) -> _Reader[pa.Table, pa.Table]: ...
+def backend(name: _PyArrow, /) -> _Reader[pa.Table, pa.Table]: ...
 
 
-def get_backend(backend: _Backend, /) -> _Reader[Any, Any]:
-    if backend == "polars":
-        return _PolarsReader(backend)
-    elif backend == "polars[pyarrow]":
-        return _PolarsPyArrowReader(backend)
-    elif backend == "pandas[pyarrow]":
-        return _PandasPyArrowReader(backend)
-    elif backend == "pandas":
-        return _PandasReader(backend)
-    elif backend == "pyarrow":
-        return _PyArrowReader(backend)
-    elif backend in {"ibis", "cudf", "dask", "modin"}:
+def backend(name: _Backend, /) -> _Reader[Any, Any]:
+    """Reader initialization dispatcher."""
+    if name == "polars":
+        return _PolarsReader(name)
+    elif name == "polars[pyarrow]":
+        return _PolarsPyArrowReader(name)
+    elif name == "pandas[pyarrow]":
+        return _PandasPyArrowReader(name)
+    elif name == "pandas":
+        return _PandasReader(name)
+    elif name == "pyarrow":
+        return _PyArrowReader(name)
+    elif name in {"ibis", "cudf", "dask", "modin"}:
         msg = "Supported by ``narwhals``, not investigated yet"
         raise NotImplementedError(msg)
     else:
-        raise TypeError(backend)
+        msg = f"Unknown backend {name!r}"
+        raise TypeError(msg)
 
 
 @overload

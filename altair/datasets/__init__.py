@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Generic, overload
 
 from narwhals.typing import IntoDataFrameT, IntoFrameT
 
-from altair.datasets._readers import _Reader, get_backend
+from altair.datasets._readers import _Reader, backend
 
 if TYPE_CHECKING:
     import sys
@@ -46,29 +46,29 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @overload
     @classmethod
     def with_backend(
-        cls, backend: Literal["polars", "polars[pyarrow]"], /
+        cls, backend_name: Literal["polars", "polars[pyarrow]"], /
     ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...
 
     @overload
     @classmethod
     def with_backend(
-        cls, backend: Literal["pandas", "pandas[pyarrow]"], /
+        cls, backend_name: Literal["pandas", "pandas[pyarrow]"], /
     ) -> Loader[pd.DataFrame, pd.DataFrame]: ...
 
     @overload
     @classmethod
     def with_backend(
-        cls, backend: Literal["pyarrow"], /
+        cls, backend_name: Literal["pyarrow"], /
     ) -> Loader[pa.Table, pa.Table]: ...
 
     @classmethod
-    def with_backend(cls, backend: _Backend, /) -> Loader[Any, Any]:
+    def with_backend(cls, backend_name: _Backend, /) -> Loader[Any, Any]:
         """
         Initialize a new loader, with the specified backend.
 
         Parameters
         ----------
-        backend
+        backend_name
             DataFrame package/config used to return data.
 
             * *polars*: Using `polars defaults`_
@@ -128,7 +128,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             dtype: object
         """
         obj = Loader.__new__(Loader)
-        obj._reader = get_backend(backend)
+        obj._reader = backend(backend_name)
         return obj
 
     # TODO: docs (examples)
