@@ -39,7 +39,7 @@ class NoSuchEntryPoint(Exception):
         return f"No {self.name!r} entry point found in group {self.group!r}"
 
 
-class PluginEnabler:
+class PluginEnabler(Generic[PluginT, R]):
     """
     Context manager for enabling plugins.
 
@@ -51,21 +51,23 @@ class PluginEnabler:
         # plugins back to original state
     """
 
-    def __init__(self, registry: PluginRegistry, name: str, **options):
-        self.registry: PluginRegistry = registry
+    def __init__(
+        self, registry: PluginRegistry[PluginT, R], name: str, **options: Any
+    ) -> None:
+        self.registry: PluginRegistry[PluginT, R] = registry
         self.name: str = name
         self.options: dict[str, Any] = options
         self.original_state: dict[str, Any] = registry._get_state()
         self.registry._enable(name, **options)
 
-    def __enter__(self) -> PluginEnabler:
+    def __enter__(self) -> PluginEnabler[PluginT, R]:
         return self
 
     def __exit__(self, typ: type, value: Exception, traceback: TracebackType) -> None:
         self.registry._set_state(self.original_state)
 
     def __repr__(self) -> str:
-        return f"{self.registry.__class__.__name__}.enable({self.name!r})"
+        return f"{type(self.registry).__name__}.enable({self.name!r})"
 
 
 class PluginRegistry(Generic[PluginT, R]):
@@ -211,7 +213,9 @@ class PluginRegistry(Generic[PluginT, R]):
             self._global_settings[key] = options.pop(key)
         self._options = options
 
-    def enable(self, name: str | None = None, **options) -> PluginEnabler:
+    def enable(
+        self, name: str | None = None, **options: Any
+    ) -> PluginEnabler[PluginT, R]:
         """
         Enable a plugin by name.
 

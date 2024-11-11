@@ -5,10 +5,11 @@ from typing import TYPE_CHECKING, Any, Callable, cast
 import pytest
 
 import altair.vegalite.v5 as alt
-from altair.typing import ThemeConfig
-from altair.vegalite.v5.schema._config import ConfigKwds
+from altair import theme
+from altair.theme import ConfigKwds, ThemeConfig
 from altair.vegalite.v5.schema._typing import is_color_hex
-from altair.vegalite.v5.theme import VEGA_THEMES, register_theme, themes
+from altair.vegalite.v5.theme import VEGA_THEMES
+from tests import slow
 
 if TYPE_CHECKING:
     import sys
@@ -25,24 +26,81 @@ def chart() -> alt.Chart:
 
 
 def test_vega_themes(chart) -> None:
-    for theme in VEGA_THEMES:
-        with alt.themes.enable(theme):
+    for theme_name in VEGA_THEMES:
+        with theme.enable(theme_name):
             dct = chart.to_dict()
-        assert dct["usermeta"] == {"embedOptions": {"theme": theme}}
+        assert dct["usermeta"] == {"embedOptions": {"theme": theme_name}}
         assert dct["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
 
-def test_register_theme_decorator() -> None:
-    @register_theme("unique name", enable=True)
+@slow
+def test_theme_remote_lambda() -> None:
+    """
+    Compatibility test for ``lambda`` usage in `dash-vega-components`_.
+
+    A ``lambda`` here is to fetch the remote resource **once**, wrapping the result in a function.
+
+    .. _dash-vega-components:
+        https://github.com/vega/dash-vega-components/blob/c3e8cae873580bc7a52bc01daea1f27a7df02b8b/example_app.py#L13-L17
+    """
+    import altair as alt  # noqa: I001
+    from urllib.request import urlopen
+    import json
+
+    URL = "https://gist.githubusercontent.com/binste/b4042fa76a89d72d45cbbb9355ec6906/raw/e36f79d722bcd9dd954389b1753a2d4a18113227/altair_theme.json"
+    with urlopen(URL) as response:
+        custom_theme = json.load(response)
+
+    alt.theme.register("remote_binste", enable=True)(lambda: custom_theme)
+    assert alt.theme.active == "remote_binste"
+
+    # NOTE: A decorator-compatible way to define an "anonymous" function
+    @alt.theme.register("remote_binste_2", enable=True)
+    def _():
+        return custom_theme
+
+    assert alt.theme.active == "remote_binste_2"
+
+    decorated_theme = alt.theme.get()
+    alt.theme.enable("remote_binste")
+    assert alt.theme.active == "remote_binste"
+    lambda_theme = alt.theme.get()
+
+    assert decorated_theme
+    assert lambda_theme
+    assert decorated_theme() == lambda_theme()
+
+
+def test_theme_register_decorator() -> None:
+    @theme.register("unique name", enable=True)
     def custom_theme() -> ThemeConfig:
         return {"height": 400, "width": 700}
 
-    assert themes.active == "unique name"
-    registered = themes.get()
+    assert theme._themes.active == "unique name" == theme.active
+    registered = theme._themes.get()
     assert registered is not None
+    assert registered == theme.get()
     assert registered() == {"height": 400, "width": 700} == custom_theme()
+
+
+def test_theme_unregister() -> None:
+    @theme.register("big square", enable=True)
+    def custom_theme() -> ThemeConfig:
+        return {"height": 1000, "width": 1000}
+
+    assert theme.active == "big square"
+    fn = theme.unregister("big square")
+    assert fn() == custom_theme()
+    assert theme.active == theme._themes.active
+    # BUG: https://github.com/vega/altair/issues/3619
+    # assert theme.active != "big square"
+
+    with pytest.raises(
+        TypeError, match=r"Found no theme named 'big square' in registry."
+    ):
+        theme.unregister("big square")
 
 
 @pytest.mark.parametrize(
@@ -982,5 +1040,6 @@ def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
     See ``(test_vega_themes|test_register_theme_decorator)`` for comprehensive suite.
     """
     name = cast("LiteralString", theme_func.__qualname__)
-    register_theme(name, enable=True)
+    theme.register(name, enable=True)(theme_func)
     assert chart.to_dict(validate=True)
+    assert theme.get() == theme_func

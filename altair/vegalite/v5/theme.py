@@ -2,22 +2,16 @@
 
 from __future__ import annotations
 
-import sys
-from functools import wraps
-from typing import TYPE_CHECKING, Callable, Final, Literal, get_args
+from typing import TYPE_CHECKING, Any, Final, Literal, get_args
 
-from altair.utils.theme import ThemeRegistry
+from altair.utils.deprecation import deprecated_static_only
+from altair.utils.plugin_registry import Plugin, PluginRegistry
 from altair.vegalite.v5.schema._config import ThemeConfig
 from altair.vegalite.v5.schema._typing import VegaThemes
 
-if sys.version_info >= (3, 10):
-    from typing import ParamSpec
-else:
-    from typing_extensions import ParamSpec
-
-
 if TYPE_CHECKING:
-    from altair.utils.plugin_registry import Plugin
+    import sys
+    from functools import partial
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -28,9 +22,62 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-P = ParamSpec("P")
+    from altair.utils.plugin_registry import PluginEnabler
+
+
 AltairThemes: TypeAlias = Literal["default", "opaque"]
 VEGA_THEMES: list[LiteralString] = list(get_args(VegaThemes))
+
+
+# HACK: See for `LiteralString` requirement in `name`
+# https://github.com/vega/altair/pull/3526#discussion_r1743350127
+class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
+    def enable(
+        self,
+        name: LiteralString | AltairThemes | VegaThemes | None = None,
+        **options: Any,
+    ) -> PluginEnabler[Plugin[ThemeConfig], ThemeConfig]:
+        """
+        Enable a theme by name.
+
+        This can be either called directly, or used as a context manager.
+
+        Parameters
+        ----------
+        name : string (optional)
+            The name of the theme to enable. If not specified, then use the
+            current active name.
+        **options :
+            Any additional parameters will be passed to the theme as keyword
+            arguments
+
+        Returns
+        -------
+        PluginEnabler:
+            An object that allows enable() to be used as a context manager
+
+        Notes
+        -----
+        Default `vega` themes can be previewed at https://vega.github.io/vega-themes/
+        """
+        return super().enable(name, **options)
+
+    def get(self) -> partial[ThemeConfig] | Plugin[ThemeConfig] | None:
+        """Return the currently active theme."""
+        return super().get()
+
+    def names(self) -> list[str]:
+        """Return the names of the registered and entry points themes."""
+        return super().names()
+
+    @deprecated_static_only(
+        "Deprecated since `altair=5.5.0`. Use @altair.theme.register instead.",
+        category=None,
+    )
+    def register(
+        self, name: str, value: Plugin[ThemeConfig] | None
+    ) -> Plugin[ThemeConfig] | None:
+        return super().register(name, value)
 
 
 class VegaTheme:
@@ -53,6 +100,8 @@ class VegaTheme:
 # themes that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistry API.
 ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.theme"
+
+# NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 themes.register(
@@ -74,75 +123,3 @@ for theme in VEGA_THEMES:
     themes.register(theme, VegaTheme(theme))
 
 themes.enable("default")
-
-
-# HACK: See for `LiteralString` requirement in `name`
-# https://github.com/vega/altair/pull/3526#discussion_r1743350127
-def register_theme(
-    name: LiteralString, *, enable: bool
-) -> Callable[[Plugin[ThemeConfig]], Plugin[ThemeConfig]]:
-    """
-    Decorator for registering a theme function.
-
-    Parameters
-    ----------
-    name
-        Unique name assigned in ``alt.themes``.
-    enable
-        Auto-enable the wrapped theme.
-
-    Examples
-    --------
-    Register and enable a theme::
-
-        import altair as alt
-        from altair.typing import ThemeConfig
-
-
-        @alt.register_theme("param_font_size", enable=True)
-        def custom_theme() -> ThemeConfig:
-            sizes = 12, 14, 16, 18, 20
-            return {
-                "autosize": {"contains": "content", "resize": True},
-                "background": "#F3F2F1",
-                "config": {
-                    "axisX": {"labelFontSize": sizes[1], "titleFontSize": sizes[1]},
-                    "axisY": {"labelFontSize": sizes[1], "titleFontSize": sizes[1]},
-                    "font": "'Lato', 'Segoe UI', Tahoma, Verdana, sans-serif",
-                    "headerColumn": {"labelFontSize": sizes[1]},
-                    "headerFacet": {"labelFontSize": sizes[1]},
-                    "headerRow": {"labelFontSize": sizes[1]},
-                    "legend": {"labelFontSize": sizes[0], "titleFontSize": sizes[1]},
-                    "text": {"fontSize": sizes[0]},
-                    "title": {"fontSize": sizes[-1]},
-                },
-                "height": {"step": 28},
-                "width": 350,
-            }
-
-    Until another theme has been enabled, all charts will use defaults set in ``custom_theme``::
-
-        from vega_datasets import data
-
-        source = data.stocks()
-        lines = (
-            alt.Chart(source, title=alt.Title("Stocks"))
-            .mark_line()
-            .encode(x="date:T", y="price:Q", color="symbol:N")
-        )
-        lines.interactive(bind_y=False)
-
-    """
-
-    def decorate(func: Plugin[ThemeConfig], /) -> Plugin[ThemeConfig]:
-        themes.register(name, func)
-        if enable:
-            themes.enable(name)
-
-        @wraps(func)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> ThemeConfig:
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorate
