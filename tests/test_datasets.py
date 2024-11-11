@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
 import pytest
@@ -14,10 +15,27 @@ from tests import skip_requires_pyarrow
 if TYPE_CHECKING:
     from altair.datasets._readers import _Backend
 
-backends = skip_requires_pyarrow(
-    pytest.mark.parametrize(
-        "backend", ["polars", "polars[pyarrow]", "pandas", "pandas[pyarrow]", "pyarrow"]
-    )
+
+requires_pyarrow = skip_requires_pyarrow()
+
+backends = pytest.mark.parametrize(
+    "backend",
+    [
+        "polars",
+        pytest.param(
+            "pandas",
+            marks=pytest.mark.xfail(
+                find_spec("pyarrow") is None,
+                reason=(
+                    "`pandas` supports backends other than `pyarrow` for `.parquet`.\n"
+                    "However, none of these are currently an `altair` dependency."
+                ),
+            ),
+        ),
+        pytest.param("polars[pyarrow]", marks=requires_pyarrow),
+        pytest.param("pandas[pyarrow]", marks=requires_pyarrow),
+        pytest.param("pyarrow", marks=requires_pyarrow),
+    ],
 )
 
 
