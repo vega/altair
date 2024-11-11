@@ -192,8 +192,8 @@ class _Reader(Generic[IntoDataFrameT, IntoFrameT], Protocol):
             return frame
         else:
             terms = "\n".join(f"{t!r}" for t in (predicates, constraints) if t)
-            msg = f"Found no results for:\n{terms}"
-            raise NotImplementedError(msg)
+            msg = f"Found no results for:\n    {terms}"
+            raise ValueError(msg)
 
     def _read_metadata(self) -> IntoDataFrameT:
         """
@@ -378,16 +378,18 @@ def validate_constraints(
     /,
 ) -> Metadata:
     constraints: Metadata = {}
+    suffixes = ".csv", ".json", ".tsv", ".arrow"
     if tag is not None:
         constraints["tag"] = tag
-    if name.endswith((".csv", ".json", ".tsv", ".arrow")):
+    if name.endswith(suffixes):
         fp = Path(name)
         constraints["dataset_name"] = fp.stem
         constraints["suffix"] = fp.suffix
         return constraints
     elif suffix is not None:
         if not is_ext_read(suffix):
-            raise TypeError(suffix)
+            msg = f"Expected 'suffix' to be one of {suffixes!r},\nbut got: {suffix!r}"
+            raise TypeError(msg)
         else:
             constraints["suffix"] = suffix
     constraints["dataset_name"] = name

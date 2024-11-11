@@ -109,3 +109,98 @@ def test_missing_dependency_multi(
         ),
     ):
         Loader.with_backend(backend)
+
+
+@backends
+def test_dataset_not_found(backend: _Backend) -> None:
+    """
+    Various queries that should **always raise** due to non-existent dataset.
+
+    ``Loader.url`` is used since it doesn't require a remote connection.
+    """
+    import polars as pl
+
+    data = Loader.with_backend(backend)
+    real_name: Literal["disasters"] = "disasters"
+    real_suffix: Literal[".csv"] = ".csv"
+    real_tag: Literal["v1.14.0"] = "v1.14.0"
+
+    invalid_name: Literal["fake name"] = "fake name"
+    invalid_suffix: Literal["fake suffix"] = "fake suffix"
+    invalid_tag: Literal["fake tag"] = "fake tag"
+
+    incorrect_suffix: Literal[".json"] = ".json"
+    incorrect_tag: Literal["v1.5.0"] = "v1.5.0"
+
+    ERR_NO_RESULT = ValueError
+    # NOTE: ``polars`` enforces enums stricter than other packages.
+    # Rather than returning an empty dataframe, filtering on a value
+    # *outside* of the enum range raises an internal error.
+    ERR_NO_RESULT_OR_ENUM = (ERR_NO_RESULT, pl.exceptions.InvalidOperationError)
+
+    MSG_NO_RESULT = "Found no results for"
+    NAME = "dataset_name"
+    SUFFIX = "suffix"
+    TAG = "tag"
+
+    with pytest.raises(
+        ERR_NO_RESULT,
+        match=re.compile(rf"{MSG_NO_RESULT}.+{NAME}.+{invalid_name}", re.DOTALL),
+    ):
+        data.url(invalid_name)
+
+    with pytest.raises(
+        TypeError,
+        match=re.compile(
+            rf"Expected '{SUFFIX}' to be one of.+\(.+\).+but got.+{invalid_suffix}",
+            re.DOTALL,
+        ),
+    ):
+        data.url(real_name, invalid_suffix)  # type: ignore[arg-type]
+
+    with pytest.raises(
+        ERR_NO_RESULT_OR_ENUM,
+        match=re.compile(rf"{invalid_tag}", re.DOTALL),
+    ):
+        data.url(real_name, tag=invalid_tag)  # type: ignore[arg-type]
+
+    with pytest.raises(
+        ERR_NO_RESULT_OR_ENUM,
+        match=re.compile(rf"{invalid_tag}", re.DOTALL),
+    ):
+        data.url(real_name, real_suffix, tag=invalid_tag)  # type: ignore[arg-type]
+
+    with pytest.raises(
+        ERR_NO_RESULT,
+        match=re.compile(
+            rf"{MSG_NO_RESULT}.+{TAG}.+{incorrect_tag}.+{SUFFIX}.+{real_suffix}.+{NAME}.+{real_name}",
+            re.DOTALL,
+        ),
+    ):
+        data.url(real_name, real_suffix, tag=incorrect_tag)
+
+    with pytest.raises(
+        ERR_NO_RESULT,
+        match=re.compile(
+            rf"{MSG_NO_RESULT}.+{SUFFIX}.+{incorrect_suffix}.+{NAME}.+{real_name}",
+            re.DOTALL,
+        ),
+    ):
+        data.url(real_name, incorrect_suffix)
+
+    with pytest.raises(
+        ERR_NO_RESULT,
+        match=re.compile(
+            rf"{MSG_NO_RESULT}.+{TAG}.+{real_tag}.+{SUFFIX}.+{incorrect_suffix}.+{NAME}.+{real_name}",
+            re.DOTALL,
+        ),
+    ):
+        data.url(real_name, incorrect_suffix, tag=real_tag)
+
+    with pytest.raises(
+        ERR_NO_RESULT,
+        match=re.compile(
+            rf"{MSG_NO_RESULT}.+{TAG}.+{incorrect_tag}.+{NAME}.+{real_name}", re.DOTALL
+        ),
+    ):
+        data.url(real_name, tag=incorrect_tag)
