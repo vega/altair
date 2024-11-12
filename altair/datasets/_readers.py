@@ -143,11 +143,11 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
         if cache := self._cache:
             fp = cache / (result["sha"] + result["suffix"])
-            if fp.exists():
+            if fp.exists() and fp.stat().st_size:
                 return fn(fp, **kwds)
             else:
-                fp.touch()
                 with self._opener.open(url) as f:
+                    fp.touch()
                     fp.write_bytes(f.read())
                 return fn(fp, **kwds)
         else:

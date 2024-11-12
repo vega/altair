@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import re
 import sys
+from functools import partial
 from importlib.util import find_spec
-from typing import TYPE_CHECKING, cast, get_args
+from typing import TYPE_CHECKING, Any, cast, get_args
+from urllib.error import URLError
 
 import pytest
 from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
@@ -353,3 +355,46 @@ def test_all_datasets(
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
     frame = polars_loader(name)
     assert is_polars_dataframe(frame)
+
+
+def _raise_exception(e: type[Exception], *args: Any, **kwds: Any):
+    raise e(*args, **kwds)
+
+
+def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    from polars.testing import assert_frame_equal
+
+    data = Loader.with_backend("polars")
+    data.cache_dir = tmp_path
+
+    data("londonCentroids")
+    data("stocks")
+    data("driving")
+
+    cached_paths = tuple(tmp_path.iterdir())
+    assert len(cached_paths) == 3
+
+    raiser = partial(_raise_exception, URLError)
+    with monkeypatch.context() as mp:
+        mp.setattr(data._reader._opener, "open", raiser)
+        # Existing cache entries don't trigger an error
+        data("londonCentroids")
+        data("stocks")
+        data("driving")
+        # Mocking cache-miss without remote conn
+        with pytest.raises(URLError):
+            data("birdstrikes")
+        assert len(tuple(tmp_path.iterdir())) == 3
+
+    # Now we can get a cache-hit
+    frame = data("birdstrikes")
+    assert is_polars_dataframe(frame)
+    assert len(tuple(tmp_path.iterdir())) == 4
+
+    with monkeypatch.context() as mp:
+        mp.setattr(data._reader._opener, "open", raiser)
+        # Here, the remote conn isn't considered - we already have the file
+        frame_from_cache = data("birdstrikes")
+        assert len(tuple(tmp_path.iterdir())) == 4
+
+    assert_frame_equal(frame, frame_from_cache)
