@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import IO, TYPE_CHECKING, Any, ClassVar, Literal, TypeVar, cast
 
 import polars as pl
+from polars import col
 
 from tools.datasets import semver
 from tools.datasets.models import (
@@ -171,9 +172,9 @@ class _GitHubRequestNamespace:
         See `Media types`_.
 
         .. _personal access token:
-        https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+            https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
         .. _Media types:
-        https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28#media-types
+            https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28#media-types
         """
         headers: MutableMapping[str, str] = {"X-GitHub-Api-Version": self._VERSION}
         if tok := os.environ.get(self._ENV_VAR):
@@ -267,7 +268,6 @@ class GitHub:
         https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
     .. _rate_limit:
         https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user
-
     """
 
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener(_ErrorHandler)
@@ -359,17 +359,16 @@ class GitHub:
         trees = self.req.trees(tag)
         tag_v = self.parse.tag_from_str(tag) if _is_str(tag) else tag["tag"]
         parsed = self.parse.trees(trees, tag=tag_v)
+        url = pl.concat_str(
+            pl.lit(self._npm_cdn_url),
+            col("tag"),
+            pl.lit(f"/{_DATA}/"),
+            col("file_name"),
+        )
         df = (
-            pl.DataFrame(parsed)
-            .lazy()
-            .with_columns(name_collision=pl.col("dataset_name").is_duplicated())
+            pl.LazyFrame(parsed)
             .with_columns(
-                url_npm=pl.concat_str(
-                    pl.lit(self._npm_cdn_url),
-                    pl.col("tag"),
-                    pl.lit(f"/{_DATA}/"),
-                    pl.col("file_name"),
-                )
+                name_collision=col("dataset_name").is_duplicated(), url_npm=url
             )
             .collect()
         )
@@ -397,12 +396,10 @@ class GitHub:
             result = self._trees_batched(_iter_rows(gh_tags, stop, TP))
         else:
             trees = (
-                pl.scan_parquet(fp)
-                .with_columns(pl.col("tag").cast(pl.String))
-                .collect()
+                pl.scan_parquet(fp).with_columns(col("tag").cast(pl.String)).collect()
             )
             missing_trees = gh_tags.join(
-                trees.select(pl.col("tag").unique()), on="tag", how="anti"
+                trees.select(col("tag").unique()), on="tag", how="anti"
             )
             if missing_trees.is_empty():
                 print(f"Already up-to-date {fp!s}")
@@ -410,7 +407,7 @@ class GitHub:
             else:
                 fresh = self._trees_batched(_iter_rows(missing_trees, stop, TP))
                 result = pl.concat((trees, fresh))
-        return result.with_columns(pl.col("tag").cast(semver.tag_enum(gh_tags)))
+        return result.with_columns(col("tag").cast(semver.tag_enum(gh_tags)))
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)
