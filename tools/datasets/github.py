@@ -326,10 +326,33 @@ class GitHub:
         return self.req.delay(is_auth=limit["is_auth"])
 
     def tags(
-        self, n_head: int | None = None, *, warn_lower: bool = False
+        self,
+        n_head: int | None = None,
+        *,
+        npm_tags: pl.DataFrame | pl.LazyFrame | None = None,
+        warn_lower: bool = False,
     ) -> pl.DataFrame:
+        """
+        Get release info, enhance with `SemVer`_ context.
+
+        Parameters
+        ----------
+        n_head
+            Limit to most recent releases.
+        npm_tags
+            Used to remove any github-only releases.
+        warn_lower
+            Emit a warning if fewer than ``n_head`` tags were returned.
+
+        .. _SemVer:
+            https://semver.org/#semantic-versioning-200
+        """
         tags = self.req.tags(n_head or self.req._TAGS_MAX_PAGE, warn_lower=warn_lower)
-        return pl.DataFrame(self.parse.tags(tags)).pipe(semver.with_columns)
+        frame = pl.DataFrame(self.parse.tags(tags)).pipe(semver.with_columns)
+        if npm_tags is not None:
+            return frame.lazy().join(npm_tags.lazy().select("tag"), on="tag").collect()
+        else:
+            return frame
 
     def trees(self, tag: str | ParsedTag, /) -> pl.DataFrame:
         """Retrieve directory info for a given version ``tag``."""
@@ -394,29 +417,23 @@ class GitHub:
         npm_tag_only = npm_tags.lazy().select("tag")
         fp = self._paths["tags"]
         if not limit["is_auth"] and limit["remaining"] <= self.req._TAGS_COST:
-            return (
-                pl.scan_parquet(fp).join(npm_tag_only, on="tag", how="inner").collect()
-            )
+            return pl.scan_parquet(fp).join(npm_tag_only, on="tag").collect()
         elif not fp.exists():
             print(f"Initializing {fp!s}")
-            tags = (
-                self.tags().lazy().join(npm_tag_only, on="tag", how="inner").collect()
-            )
+            tags = self.tags(npm_tags=npm_tag_only)
             print(f"Collected {tags.height} new tags")
             return tags
         else:
             print("Checking for new tags")
             prev = pl.scan_parquet(fp)
-            latest = (
-                self.tags(1).lazy().join(npm_tag_only, on="tag", how="inner").collect()
-            )
+            latest = self.tags(1, npm_tags=npm_tag_only)
             if latest.equals(prev.pipe(semver.sort).head(1).collect()):
                 print(f"Already up-to-date {fp!s}")
                 return prev.collect()
             print(f"Refreshing {fp!s}")
             prev_eager = prev.collect()
             tags = (
-                pl.concat((self.tags(), prev_eager), how="vertical")
+                pl.concat((self.tags(npm_tags=npm_tag_only), prev_eager))
                 .unique("sha")
                 .pipe(semver.sort)
             )
@@ -434,7 +451,7 @@ class GitHub:
             raise NotImplementedError(rate_limit, cost)
         print(
             f"Collecting metadata for {n} missing releases.\n"
-            f"Using {self.delay(rate_limit)}[ms] between requests ..."
+            f"Using {self.delay(rate_limit):.2f}[ms] between requests ..."
         )
         dfs: list[pl.DataFrame] = []
         for tag in tags:

@@ -96,6 +96,7 @@ DatasetName: TypeAlias = Literal[
     "zipcodes",
 ]
 VersionTag: TypeAlias = Literal[
+    "v2.10.0",
     "v2.9.0",
     "v2.8.1",
     "v2.8.0",
