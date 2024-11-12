@@ -366,45 +366,29 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
                     return pl.read_json(source).to_arrow()
 
             else:
+                # NOTE: Convert inline from stdlib json (2)
                 import json
 
-                def stdlib_read_json(source: Any, /, **kwds) -> pa.Table:
-                    if not isinstance(source, (Path)):
+                pa_json = self._import(f"{self._name}.json")
+
+                def pa_read_json(source: Any, /, **kwds) -> pa.Table:
+                    if not isinstance(source, Path):
                         obj = json.load(source)
                     else:
                         with Path(source).open(encoding="utf-8") as f:
                             obj = json.load(f)
-                    # Very naive check, but still less likely to fail
+                    # NOTE: Common case of {"values": [{...}]}, missing the `"values"` keys
                     if isinstance(obj, Sequence) and isinstance(obj[0], Mapping):
                         return pa.Table.from_pylist(obj)
+                    elif isinstance(obj, Mapping) and "type" in obj:
+                        msg = (
+                            "Inferred file as geojson, unsupported by pyarrow.\n"
+                            "Try installing `polars` or using `Loader.url(...)` instead."
+                        )
+                        raise NotImplementedError(msg)
                     else:
                         # NOTE: Almost certainly will fail on read as of `v2.9.0`
-                        pa_json = self._import(f"{self._name}.json")
                         return pa_json.read_json(source)
-
-                # NOTE: Use `pandas` as a slower fallback (2)
-                if find_spec("pandas") is not None:
-                    import pandas as pd
-
-                    def pa_read_json(source: StrPath, /, **kwds) -> pa.Table:
-                        try:
-                            table = (
-                                nw.from_native(
-                                    pd.read_json(
-                                        source, dtype_backend="pyarrow"
-                                    ).convert_dtypes(dtype_backend="pyarrow")
-                                )
-                                .with_columns(
-                                    nw.selectors.by_dtype(nw.Object).cast(nw.String)
-                                )
-                                .to_arrow()
-                            )
-                        except ValueError:
-                            table = stdlib_read_json(source)
-                        return table
-                else:
-                    # NOTE: Convert inline from stdlib json (3)
-                    pa_read_json = stdlib_read_json
 
         # Stubs suggest using a dataclass, but no way to construct it
         tab_sep: Any = {"delimiter": "\t"}

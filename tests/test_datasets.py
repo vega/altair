@@ -11,21 +11,23 @@ from narwhals.stable import v1 as nw
 
 import altair as alt  # noqa: F401
 from altair.datasets import Loader
-from tests import skip_requires_pyarrow
+from altair.datasets._typing import DatasetName
 
 if TYPE_CHECKING:
     from pathlib import Path
     from typing import Literal
 
-    from altair.datasets._readers import _Backend, _Pandas, _Polars
-    from altair.datasets._typing import DatasetName
+    import polars as pl
+    from _pytest.mark.structures import ParameterSet
+
+    from altair.datasets._readers import _Backend, _Polars
 
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
 
-requires_pyarrow = skip_requires_pyarrow()
+requires_pyarrow: pytest.MarkDecorator = skip_requires_pyarrow()
 
-backends = pytest.mark.parametrize(
+backends: pytest.MarkDecorator = pytest.mark.parametrize(
     "backend",
     [
         "polars",
@@ -277,36 +279,44 @@ def test_reader_cache(
     assert cached_paths == tuple(cache_dir.iterdir())
 
 
+movies_fail: ParameterSet = pytest.param(
+    "movies",
+    marks=pytest.mark.xfail(
+        reason="Only working for `polars`.\n"
+        "`pyarrow` isn't happy with the mixed `int`/`str` column."
+    ),
+)
+earthquakes_fail: ParameterSet = pytest.param(
+    "earthquakes",
+    marks=pytest.mark.xfail(
+        reason="Only working for `polars`.\n" "GeoJSON fails on native `pyarrow`"
+    ),
+)
+
+
 @pytest.mark.parametrize(
     "dataset",
     [
         "cars",
-        "movies",
+        movies_fail,
         "wheat",
         "barley",
         "gapminder",
         "income",
         "burtin",
-        pytest.param(
-            "earthquakes",
-            marks=pytest.mark.xfail(
-                reason="GeoJSON seems to not work with pandas -> pyarrow"
-            ),
-        ),
+        earthquakes_fail,
     ],
 )
-@pytest.mark.parametrize("fallback", ["polars", "pandas", None])
+@pytest.mark.parametrize("fallback", ["polars", None])
 @skip_requires_pyarrow
 def test_pyarrow_read_json(
-    fallback: _Polars | _Pandas | None,
+    fallback: _Polars | None,
     dataset: DatasetName,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setenv(CACHE_ENV_VAR, "")
-
-    if fallback == "polars" or fallback is None:
-        monkeypatch.delitem(sys.modules, "pandas", raising=False)
-    elif fallback == "pandas" or fallback is None:
+    monkeypatch.delitem(sys.modules, "pandas", raising=False)
+    if fallback is None:
         monkeypatch.setitem(sys.modules, "polars", None)
 
     data = Loader.with_backend("pyarrow")
