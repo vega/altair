@@ -42,8 +42,27 @@ class Application:
     """
     Top-level context.
 
-    When ``write_schema``, addtional ``...-schema.json`` files are produced
-    that describes the metadata columns.
+    Parameters
+    ----------
+    out_dir_tools, out_dir_altair
+        Directories to store ``.parquet`` metadata files.
+    out_fp_typing
+        Path to write metadata-derived typing module.
+    write_schema
+        Produce addtional ``...-schema.json`` files that describe table columns.
+    trees_gh
+        ``GitHub.trees`` metadata file name.
+    tags_gh
+        ``GitHub.tags`` metadata file name.
+    tags_npm
+        ``Npm.tags`` metadata file name.
+    kwds_gh, kwds_npm
+        Arguments passed to corresponding constructor.
+
+    See Also
+    --------
+    - tools.datasets.github.GitHub
+    - tools.datasets.npm.Npm
     """
 
     def __init__(
