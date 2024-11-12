@@ -17,7 +17,8 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import Literal
 
-    from altair.datasets._readers import _Backend
+    from altair.datasets._readers import _Backend, _Pandas, _Polars
+    from altair.datasets._typing import DatasetName
 
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
@@ -274,3 +275,40 @@ def test_reader_cache(
 
     assert len(tuple(cache_dir.iterdir())) == 4
     assert cached_paths == tuple(cache_dir.iterdir())
+
+
+@pytest.mark.parametrize(
+    "dataset",
+    [
+        "cars",
+        "movies",
+        "wheat",
+        "barley",
+        "gapminder",
+        "income",
+        "burtin",
+        pytest.param(
+            "earthquakes",
+            marks=pytest.mark.xfail(
+                reason="GeoJSON seems to not work with pandas -> pyarrow"
+            ),
+        ),
+    ],
+)
+@pytest.mark.parametrize("fallback", ["polars", "pandas", None])
+@skip_requires_pyarrow
+def test_pyarrow_read_json(
+    fallback: _Polars | _Pandas | None,
+    dataset: DatasetName,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(CACHE_ENV_VAR, "")
+
+    if fallback == "polars" or fallback is None:
+        monkeypatch.delitem(sys.modules, "pandas", raising=False)
+    elif fallback == "pandas" or fallback is None:
+        monkeypatch.setitem(sys.modules, "polars", None)
+
+    data = Loader.with_backend("pyarrow")
+
+    data(dataset, ".json")
