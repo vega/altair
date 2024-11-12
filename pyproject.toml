@@ -73,6 +73,7 @@ dev = [
     "duckdb>=1.0",
     "ipython[kernel]",
     "pandas>=1.1.3",
+    "pyarrow-stubs",
     "pytest",
     "pytest-cov",
     "pytest-xdist[psutil]~=3.5",
