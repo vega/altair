@@ -140,7 +140,7 @@ def test_sanitize_pyarrow_table_columns() -> None:
     pa_table = pa.Table.from_pandas(
         df,
         pa.schema(
-            [
+            (
                 pa.field("s", pa.string()),
                 pa.field("f", pa.float64()),
                 pa.field("i", pa.int64()),
@@ -148,7 +148,7 @@ def test_sanitize_pyarrow_table_columns() -> None:
                 pa.field("d", pa.date32()),
                 pa.field("c", pa.dictionary(pa.int8(), pa.string())),
                 pa.field("p", pa.timestamp("ns", tz="UTC")),
-            ]
+            )
         ),
     )
     sanitized = sanitize_narwhals_dataframe(nw.from_native(pa_table, eager_only=True))
