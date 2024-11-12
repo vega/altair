@@ -146,7 +146,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Parameters
         ----------
         name
-            Name of the dataset/`stem`_ of file name.
+            Name of the dataset/`Path.stem`_.
         suffix
             File extension/`Path.suffix`_.
 
@@ -157,7 +157,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         **kwds
             Arguments passed to the underlying read function.
 
-        .. _stem:
+        .. _Path.stem:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
         .. _Path.suffix:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
@@ -179,7 +179,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Parameters
         ----------
         name
-            Name of the dataset/`stem`_ of file name.
+            Name of the dataset/`Path.stem`_.
         suffix
             File extension/`Path.suffix`_.
 
@@ -188,7 +188,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         tag
             Version identifier for a `vega-datasets release`_.
 
-        .. _stem:
+        .. _Path.stem:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
         .. _Path.suffix:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix

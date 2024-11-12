@@ -149,16 +149,16 @@ class Metadata(TypedDict, total=False):
     Parameters
     ----------
     dataset_name
-        Equivalent to ``Pathlib.Path.stem``.
+        Name of the dataset/`Path.stem`_.
     ext_supported
         Dataset can be read as tabular data.
     file_name
-        Equivalent to ``Pathlib.Path.name``.
+        Equivalent to `Path.name`_.
     name_collision
-        Dataset is available via multiple ``suffix``(s).
+        Dataset is available via multiple formats.
 
         .. note::
-            Requires specifying a preference in calls to ``data(ext=...)``.
+            Requires specifying a preference in calls to ``data(name, suffix=...)``
     sha
         Unique hash for the dataset.
 
@@ -169,14 +169,20 @@ class Metadata(TypedDict, total=False):
     size
         File size (*bytes*).
     suffix
-        File extension.
-
-        .. note::
-            Equivalent to ``Pathlib.Path.suffix``
+        File extension/`Path.suffix`_.
     tag
-        ``vega-datasets`` release version.
+        Version identifier for a `vega-datasets release`_.
     url_npm
         Remote url used to access dataset.
+
+    .. _Path.stem:
+        https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
+    .. _Path.name:
+        https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name
+    .. _Path.suffix:
+        https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
+    .. _vega-datasets release:
+        https://github.com/vega/vega-datasets/releases
     """
 
     dataset_name: str

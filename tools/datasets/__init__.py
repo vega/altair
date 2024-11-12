@@ -158,28 +158,38 @@ class Application:
         NOTE_SEP = f"\n\n{indent * 2}" f".. note::\n{indent * 3}"
 
         name_collision = (
-            f"Dataset is available via multiple ``suffix``(s).{NOTE_SEP}"
-            "Requires specifying a preference in calls to ``data(ext=...)``."
+            f"Dataset is available via multiple formats.{NOTE_SEP}"
+            "Requires specifying a preference in calls to ``data(name, suffix=...)``"
         )
         sha = (
             f"Unique hash for the dataset.{NOTE_SEP}"
             f"If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;\n\n{indent * 3}"
             f"then all ``tag``(s) in this range would **share** this value."
         )
+        links = (
+            f".. _Path.stem:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem\n"
+            f".. _Path.name:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name\n"
+            f".. _Path.suffix:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix\n"
+            f".. _vega-datasets release:\n{indent * 2}https://github.com/vega/vega-datasets/releases"
+        )
+
         descriptions: dict[str, str] = {
-            "dataset_name": "Equivalent to ``Pathlib.Path.stem``.",
+            "dataset_name": "Name of the dataset/`Path.stem`_.",
             "ext_supported": "Dataset can be read as tabular data.",
-            "file_name": "Equivalent to ``Pathlib.Path.name``.",
+            "file_name": "Equivalent to `Path.name`_.",
             "name_collision": name_collision,
             "sha": sha,
             "size": "File size (*bytes*).",
-            "suffix": f"File extension.{NOTE_SEP}Equivalent to ``Pathlib.Path.suffix``",
-            "tag": "``vega-datasets`` release version.",
+            "suffix": "File extension/`Path.suffix`_.",
+            "tag": "Version identifier for a `vega-datasets release`_.",
             "url_npm": "Remote url used to access dataset.",
         }
-        metadata_doc = f"\n{indent}".join(
-            f"{param}\n{indent * 2}{descriptions.get(param, DESCRIPTION_DEFAULT)}"
-            for param in metadata_schema
+        metadata_doc = (
+            f"\n{indent}".join(
+                f"{param}\n{indent * 2}{descriptions.get(param, DESCRIPTION_DEFAULT)}"
+                for param in metadata_schema
+            )
+            + f"\n\n{links}"
         )
 
         contents = (
