@@ -1,8 +1,0 @@
-{
-  "tag": "str",
-  "major": "int",
-  "minor": "int",
-  "patch": "int",
-  "pre_release": "int",
-  "is_pre_release": "bool"
-}
