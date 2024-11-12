@@ -137,7 +137,6 @@ def test_sanitize_pyarrow_table_columns() -> None:
     )
 
     # Create pyarrow table with explicit schema so that date32 type is preserved
-    # error: Argument 1 to "schema" has incompatible type "list[object]"; expected "Iterable[Field[Any]] | Iterable[tuple[str, DataType]] | Mapping[str, DataType]"  [arg-type]
     pa_table = pa.Table.from_pandas(
         df,
         pa.schema(
