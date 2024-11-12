@@ -3,15 +3,15 @@ from __future__ import annotations
 import re
 import sys
 from importlib.util import find_spec
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, cast, get_args
 
 import pytest
 from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
 from narwhals.stable import v1 as nw
 
-import altair as alt  # noqa: F401
 from altair.datasets import Loader
 from altair.datasets._typing import DatasetName
+from tests import skip_requires_pyarrow, slow
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -46,6 +46,27 @@ backends: pytest.MarkDecorator = pytest.mark.parametrize(
         pytest.param("pyarrow", marks=requires_pyarrow),
     ],
 )
+
+datasets_debug: pytest.MarkDecorator = slow(pytest.mark.datasets_debug)
+"""
+Custom ``pytest.mark`` decorator.
+
+Use for more exhaustive tests that require many requests.
+
+**Disabled** by default in ``pyproject.toml``:
+
+    [tool.pytest.ini_options]
+    addopts = ...
+"""
+
+
+@pytest.fixture(scope="session")
+def polars_loader(
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Loader[pl.DataFrame, pl.LazyFrame]:
+    data = Loader.with_backend("polars")
+    data.cache_dir = tmp_path_factory.mktemp("loader-cache-polars")
+    return data
 
 
 @backends
@@ -322,3 +343,13 @@ def test_pyarrow_read_json(
     data = Loader.with_backend("pyarrow")
 
     data(dataset, ".json")
+
+
+@datasets_debug
+@pytest.mark.parametrize("name", get_args(DatasetName))
+def test_all_datasets(
+    name: DatasetName, polars_loader: Loader[pl.DataFrame, pl.LazyFrame]
+) -> None:
+    """Ensure all annotated datasets can be loaded with the most reliable backend."""
+    frame = polars_loader(name)
+    assert is_polars_dataframe(frame)
