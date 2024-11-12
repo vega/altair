@@ -50,6 +50,7 @@ class Application:
         self,
         out_dir_tools: Path,
         out_dir_altair: Path,
+        out_fp_typing: Path,
         *,
         write_schema: bool,
         trees_gh: str = "metadata",
@@ -78,6 +79,7 @@ class Application:
                 "gh_trees": self.github._paths["trees"],
             }
         )
+        self._fp_typing: Path = out_fp_typing
 
     @property
     def github(self) -> GitHub:
@@ -87,8 +89,16 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
-    def refresh(self) -> pl.DataFrame:
-        """Update and sync all metadata files."""
+    def refresh(self, *, include_typing: bool = False) -> pl.DataFrame:
+        """
+        Update and sync all dataset metadata files.
+
+        Parameters
+        ----------
+        include_typing
+            Regenerate ``altair.datasets._typing``.
+        """
+        print("Syncing datasets ...")
         npm_tags = self.npm.tags()
         self.write_parquet(npm_tags, self._paths["npm_tags"])
 
@@ -97,6 +107,9 @@ class Application:
 
         gh_trees = self.github.refresh_trees(gh_tags)
         self.write_parquet(gh_trees, self._paths["gh_trees"])
+
+        if include_typing:
+            self.generate_typing(self._fp_typing)
         return gh_trees
 
     def reset(self) -> None:
@@ -218,9 +231,11 @@ class Application:
         ruff.write_lint_format(output, contents)
 
 
+_alt_datasets = Path(__file__).parent.parent.parent / "altair" / "datasets"
 app = Application(
     Path(__file__).parent / "_metadata",
-    Path(__file__).parent.parent.parent / "altair" / "datasets" / "_metadata",
+    _alt_datasets / "_metadata",
+    _alt_datasets / "_typing.py",
     write_schema=False,
 )
 
