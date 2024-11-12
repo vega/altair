@@ -13,7 +13,6 @@ import os
 import urllib.request
 from collections.abc import Mapping, Sequence
 from functools import partial
-from http.client import HTTPResponse
 from importlib import import_module
 from importlib.util import find_spec
 from itertools import chain, islice
@@ -81,10 +80,6 @@ __all__ = ["backend"]
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
 
-def _identity(_: _T, /) -> _T:
-    return _
-
-
 class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     """
     Describes basic IO for remote & local tabular resources.
@@ -123,17 +118,6 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
-    _response: ClassVar[staticmethod[[HTTPResponse], Any]] = staticmethod(_identity)
-    """
-    Backends that do not support `file-like objects`_, must override with conversion.
-
-    Used only for **remote** files, as *cached* files use a `pathlib.Path`_.
-
-    .. _file-like objects:
-        https://docs.python.org/3/glossary.html#term-file-object
-    .. _pathlib.Path:
-        https://docs.python.org/3/library/pathlib.html#pathlib.Path
-    """
 
     def read_fn(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
         suffix = validate_suffix(source, is_ext_read)
@@ -168,7 +152,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
                 return fn(fp, **kwds)
         else:
             with self._opener.open(url) as f:
-                return fn(self._response(f), **kwds)
+                return fn(f, **kwds)
 
     def url(
         self,
@@ -295,8 +279,6 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
 
 
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    _response = staticmethod(HTTPResponse.read)
-
     def __init__(self, name: _Polars, /) -> None:
         self._name = _requirements(name)
         if not TYPE_CHECKING:
@@ -311,8 +293,6 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
 
 
 class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    _response = staticmethod(HTTPResponse.read)
-
     def __init__(self, name: Literal["polars[pyarrow]"], /) -> None:
         _pl, _pa = _requirements(name)
         self._name = name
