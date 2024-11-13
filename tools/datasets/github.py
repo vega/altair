@@ -311,7 +311,11 @@ class GitHub:
     def rate_limit(self, *, strict: bool = False) -> ParsedRateLimit:
         limit = self.parse.rate_limit(self.req.rate_limit())
         if strict and limit["is_limited"]:
-            raise NotImplementedError(limit)
+            warnings.warn(
+                f"Reached rate limit:\n{limit!r}\n\n"
+                f"Try setting environment variable {self.req._ENV_VAR!r}",
+                stacklevel=2,
+            )
         return limit
 
     def delay(self, rate_limit: ParsedRateLimit | None = None, /) -> float:
