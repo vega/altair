@@ -4,7 +4,7 @@ import re
 import sys
 from functools import partial
 from importlib.util import find_spec
-from typing import TYPE_CHECKING, Any, cast, get_args
+from typing import TYPE_CHECKING, Any, TypedDict, cast, get_args
 from urllib.error import URLError
 
 import pytest
@@ -12,10 +12,11 @@ from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
 from narwhals.stable import v1 as nw
 
 from altair.datasets import Loader
-from altair.datasets._typing import Dataset
+from altair.datasets._typing import Dataset, Extension, Version
 from tests import skip_requires_pyarrow, slow
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator, Mapping
     from pathlib import Path
     from typing import Literal
 
@@ -23,6 +24,7 @@ if TYPE_CHECKING:
     from _pytest.mark.structures import ParameterSet
 
     from altair.datasets._readers import _Backend, _Polars
+    from tests import MarksType
 
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
@@ -345,14 +347,43 @@ def test_pyarrow_read_json(
     data(dataset, ".json")
 
 
+class DatasetSpec(TypedDict, total=False):
+    """Exceptional cases which cannot rely on defaults."""
+
+    suffix: Extension
+    tag: Version
+    marks: MarksType
+
+
+def _dataset_params(overrides: Mapping[Dataset, DatasetSpec]) -> Iterator[ParameterSet]:
+    """https://github.com/vega/vega-datasets/issues/627."""
+    names: tuple[Dataset, ...] = get_args(Dataset)
+    args: tuple[Dataset, Extension | None, Version | None]
+    for name in names:
+        marks: MarksType = ()
+        if name in overrides:
+            el = overrides[name]
+            args = name, el.get("suffix"), el.get("tag")
+            marks = el.get("marks", ())
+        else:
+            args = name, None, None
+        yield pytest.param(*args, marks=marks)
+
+
 @slow
 @datasets_debug
-@pytest.mark.parametrize("name", get_args(Dataset))
+@pytest.mark.parametrize(
+    ("name", "suffix", "tag"),
+    list(_dataset_params({"flights-3m": DatasetSpec(tag="v2.9.0")})),
+)
 def test_all_datasets(
-    name: Dataset, polars_loader: Loader[pl.DataFrame, pl.LazyFrame]
+    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
+    name: Dataset,
+    suffix: Extension,
+    tag: Version,
 ) -> None:
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
-    frame = polars_loader(name)
+    frame = polars_loader(name, suffix, tag=tag)
     assert is_polars_dataframe(frame)
 
 
