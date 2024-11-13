@@ -20,6 +20,8 @@ expressions and objects:
 
 We'll show a brief example of each of these in the following sections
 
+.. _filter-expression:
+
 Filter Expression
 ^^^^^^^^^^^^^^^^^
 A filter expression uses the `Vega expression`_ language, either specified
@@ -189,12 +191,26 @@ Then, we can *invert* this selection using ``~``:
     chart.transform_filter(~between_1950_60)
 
 We can further refine our filter by *composing* multiple predicates together.
-In this case, using ``alt.datum``:
+In this case, using ``datum``:
 
 .. altair-plot::
 
-    chart.transform_filter(~between_1950_60 & (alt.datum.age <= 70))
+    chart.transform_filter(~between_1950_60 & (datum.age <= 70))
 
+When passing multiple predicates they will be reduced with ``&``:
+
+.. altair-plot::
+
+    chart.transform_filter(datum.year > 1980, datum.age != 90)
+
+Using keyword-argument ``constraints`` can simplify our first example in :ref:`filter-expression`:
+
+.. altair-plot::
+
+    alt.Chart(source).mark_area().encode(
+        x="age:O",
+        y="people:Q",
+    ).transform_filter(year=2000, sex=1)
 
 Transform Options
 ^^^^^^^^^^^^^^^^^

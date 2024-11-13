@@ -10,6 +10,7 @@ import pathlib
 import re
 import sys
 import tempfile
+import warnings
 from collections.abc import Mapping
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
@@ -85,7 +86,7 @@ def _make_chart_type(chart_type):
 
 
 @pytest.fixture
-def basic_chart():
+def basic_chart() -> alt.Chart:
     data = pd.DataFrame(
         {
             "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
@@ -1245,6 +1246,64 @@ def test_predicate_composition() -> None:
     ).to_dict()
     actual_multi = (~param_pred | (field_eq & field_gt)).to_dict()
     assert actual_multi == expected_multi
+
+
+def test_filter_transform_predicates(basic_chart) -> None:
+    lhs, rhs = alt.datum["b"] >= 30, alt.datum["b"] < 60
+    expected = [{"filter": lhs & rhs}]
+    actual = basic_chart.transform_filter(lhs, rhs).to_dict()["transform"]
+    assert actual == expected
+
+
+def test_filter_transform_constraints(basic_chart) -> None:
+    lhs, rhs = alt.datum["a"] == "A", alt.datum["b"] == 30
+    expected = [{"filter": lhs & rhs}]
+    actual = basic_chart.transform_filter(a="A", b=30).to_dict()["transform"]
+    assert actual == expected
+
+
+def test_filter_transform_predicates_constraints(basic_chart) -> None:
+    from functools import reduce
+    from operator import and_
+
+    predicates = (
+        alt.datum["a"] != "A",
+        alt.datum["a"] != "B",
+        alt.datum["a"] != "C",
+        alt.datum["b"] > 1,
+        alt.datum["b"] < 99,
+    )
+    constraints = {"b": 30, "a": "D"}
+    pred_constraints = *predicates, alt.datum["b"] == 30, alt.datum["a"] != "D"
+    expected = [{"filter": reduce(and_, pred_constraints)}]
+    actual = basic_chart.transform_filter(*predicates, **constraints).to_dict()[
+        "transform"
+    ]
+    assert actual == expected
+
+
+def test_filter_transform_errors(basic_chart) -> None:
+    NO_ARGS = r"At least one.+Undefined"
+    FILTER_KWARGS = r"ambiguous"
+
+    depr_filter = {"field": "year", "oneOf": [1955, 2000]}
+    expected = [{"filter": depr_filter}]
+
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter()
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter(empty=True)
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter(empty=False)
+
+    with pytest.warns(alt.AltairDeprecationWarning, match=FILTER_KWARGS):
+        basic_chart.transform_filter(filter=depr_filter)
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=alt.AltairDeprecationWarning)
+        actual = basic_chart.transform_filter(filter=depr_filter).to_dict()["transform"]
+
+    assert actual == expected
 
 
 def test_resolve_methods():
