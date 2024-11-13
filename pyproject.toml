@@ -63,7 +63,7 @@ all = [
     "pandas>=1.1.3",
     "numpy",
     "pyarrow>=11",
-    "vegafusion[embed]>=1.6.6,<2",
+    "vegafusion[embed]>=1.6.6",
     "anywidget>=0.9.0",
     "altair_tiles>=0.3.0"
 ]
