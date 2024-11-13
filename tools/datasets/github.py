@@ -407,7 +407,12 @@ class GitHub:
             else:
                 fresh = self._trees_batched(_iter_rows(missing_trees, stop, TP))
                 result = pl.concat((trees, fresh))
-        return result.with_columns(col("tag").cast(semver.tag_enum(gh_tags)))
+        return (
+            result.lazy()
+            .with_columns(col("tag").cast(semver.tag_enum(gh_tags)))
+            .sort("tag", descending=True)
+            .collect()
+        )
 
     def refresh_tags(self, npm_tags: pl.DataFrame, /) -> pl.DataFrame:
         limit = self.rate_limit(strict=True)
