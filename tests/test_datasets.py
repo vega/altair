@@ -49,7 +49,7 @@ backends: pytest.MarkDecorator = pytest.mark.parametrize(
     ],
 )
 
-datasets_debug: pytest.MarkDecorator = slow(pytest.mark.datasets_debug)
+datasets_debug: pytest.MarkDecorator = pytest.mark.datasets_debug()
 """
 Custom ``pytest.mark`` decorator.
 
@@ -345,6 +345,7 @@ def test_pyarrow_read_json(
     data(dataset, ".json")
 
 
+@slow
 @datasets_debug
 @pytest.mark.parametrize("name", get_args(Dataset))
 def test_all_datasets(

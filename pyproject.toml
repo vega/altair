@@ -141,6 +141,10 @@ test-slow = [
     "ruff check .", "ruff format .",
     "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
 ]
+test-datasets = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical tests -k test_datasets -m \"\" {args}"
+]
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
