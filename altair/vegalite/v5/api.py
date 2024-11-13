@@ -127,7 +127,6 @@ if TYPE_CHECKING:
         NamedData,
         ParameterName,
         PointSelectionConfig,
-        Predicate,
         PredicateComposition,
         ProjectionType,
         RepeatMapping,
@@ -542,12 +541,19 @@ else:
 """
 
 
-_FieldEqualType: TypeAlias = Union[PrimitiveValue_T, Map, Parameter, SchemaBase]
-"""Permitted types for equality checks on field values:
+_FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
+"""
+Permitted types for equality checks on field values.
 
-- `datum.field == ...`
-- `FieldEqualPredicate(equal=...)`
-- `when(**constraints=...)`
+Applies to the following context(s):
+
+    import altair as alt
+
+    alt.datum.field == ...
+    alt.FieldEqualPredicate(field="field", equal=...)
+    alt.when(field=...)
+    alt.when().then().when(field=...)
+    alt.Chart.transform_filter(field=...)
 """
 
 
@@ -2986,45 +2992,113 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
-    # TODO: Update docstring
-    # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: str
-        | Expr
-        | Expression
-        | Predicate
-        | Parameter
-        | PredicateComposition
-        | dict[str, Predicate | str | list | bool],
-        **kwargs: Any,
+        predicate: Optional[_PredicateType] = Undefined,
+        *more_predicates: _ComposablePredicateType,
+        empty: Optional[bool] = Undefined,
+        **constraints: _FieldEqualType,
     ) -> Self:
         """
-        Add a :class:`FilterTransform` to the schema.
+        Add a :class:`FilterTransform` to the spec.
+
+        The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
         Parameters
         ----------
-        filter : a filter expression or :class:`PredicateComposition`
-            The `filter` property must be one of the predicate definitions:
-            (1) a string or alt.expr expression
-            (2) a range predicate
-            (3) a selection predicate
-            (4) a logical operand combining (1)-(3)
-            (5) a Selection object
+        predicate
+            A selection or test predicate. ``str`` input will be treated as a test operand.
+        *more_predicates
+            Additional predicates, restricted to types supporting ``&``.
+        empty
+            For selection parameters, the predicate of empty selections returns ``True`` by default.
+            Override this behavior, with ``empty=False``.
 
-        Returns
-        -------
-        self : Chart object
-            returns chart to allow for chaining
+            .. note::
+                When ``predicate`` is a ``Parameter`` that is used more than once,
+                ``self.transform_filter(..., empty=...)`` provides granular control for each occurrence.
+        **constraints
+            Specify `Field Equal Predicate`_'s.
+            Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+        Warns
+        -----
+        AltairDeprecationWarning
+            If called using ``filter`` as a keyword argument.
+
+        See Also
+        --------
+        alt.when : Uses a similar syntax for defining conditional values.
+
+        Notes
+        -----
+        - Directly inspired by the syntax used in `polars.DataFrame.filter`_.
+
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+        .. _polars.DataFrame.filter:
+            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.filter.html
+
+        Examples
+        --------
+        Setting up a common chart::
+
+            import altair as alt
+            from altair import datum
+            from vega_datasets import data
+
+            source = data.population.url
+            chart = (
+                alt.Chart(source)
+                .mark_line()
+                .encode(
+                    x="age:O",
+                    y="sum(people):Q",
+                    color=alt.Color("year:O").legend(symbolType="square"),
+                )
+            )
+            chart
+
+        Singular predicates can be expressed via ``datum``::
+
+            chart.transform_filter(datum.year <= 1980)
+
+        We can also use selection parameters directly::
+
+            selection = alt.selection_point(encodings=["color"], bind="legend")
+            chart.transform_filter(selection).add_params(selection)
+
+        Or a field predicate::
+
+            between_1950_60 = alt.FieldRangePredicate(field="year", range=[1950, 1960])
+            chart.transform_filter(between_1950_60) | chart.transform_filter(~between_1950_60)
+
+        Predicates can be composed together using logical operands::
+
+            chart.transform_filter(between_1950_60 | (datum.year == 1850))
+
+        Predicates passed as positional arguments will be reduced with ``&``::
+
+            chart.transform_filter(datum.year > 1980, datum.age != 90)
+
+        Using keyword-argument ``constraints`` can simplify compositions like::
+
+            verbose_composition = chart.transform_filter((datum.year == 2000) & (datum.sex == 1))
+            chart.transform_filter(year=2000, sex=1)
         """
-        if isinstance(filter, Parameter):
-            new_filter: dict[str, Any] = {"param": filter.name}
-            if "empty" in kwargs:
-                new_filter["empty"] = kwargs.pop("empty")
-            elif isinstance(filter.empty, bool):
-                new_filter["empty"] = filter.empty
-            filter = new_filter
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        if depr_filter := t.cast(Any, constraints.pop("filter", None)):
+            utils.deprecated_warn(
+                "Passing `filter` as a keyword is ambiguous.\n\n"
+                "Use a positional argument for `<5.5.0` behavior.\n"
+                "Or, `alt.datum['filter'] == ...` if referring to a column named 'filter'.",
+                version="5.5.0",
+            )
+            if utils.is_undefined(predicate):
+                predicate = depr_filter
+            else:
+                more_predicates = *more_predicates, depr_filter
+        cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+        return self._add_transform(core.FilterTransform(filter=cond.get("test", cond)))
 
     def transform_flatten(
         self,
