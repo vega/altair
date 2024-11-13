@@ -34,6 +34,13 @@ class NpmUrl(NamedTuple):
 
 
 class GitHubTag(TypedDict):
+    """
+    A single release's metadata within the response of `List repository tags`_.
+
+    .. _List repository tags:
+        https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags.
+    """
+
     name: str
     node_id: str
     commit: dict[Literal["sha", "url"], str]
@@ -47,7 +54,22 @@ class ParsedTag(TypedDict):
     trees_url: str
 
 
-class ReParsedTag(ParsedTag):
+class SemVerTag(ParsedTag):
+    """
+    Extends ``ParsedTag`` with `semantic versioning`_.
+
+    These values are extracted via:
+
+        tools.datasets.with_columns
+
+    Describes a row in the dataframe returned by:
+
+        tools.datasets.GitHub.tags
+
+    .. _semantic versioning:
+        https://semver.org/
+    """
+
     major: int
     minor: int
     patch: int
@@ -121,13 +143,16 @@ class ParsedTree(TypedDict):
     tag: str
 
 
-class ParsedTreesResponse(TypedDict):
-    tag: str
-    url: str
-    tree: list[ParsedTree]
-
-
 class GitHubRateLimit(TypedDict):
+    """
+    An individual item in `Get rate limit status for the authenticated user`_.
+
+    All categories share this schema.
+
+    .. _Get rate limit status for the authenticated user:
+        https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user
+    """
+
     limit: int
     used: int
     remaining: int

@@ -1,5 +1,5 @@
 """
-Parsing/transforming semantic versioning strings.
+Parsing/transforming `semantic versioning`_ strings.
 
 .. _semantic versioning:
     https://semver.org/

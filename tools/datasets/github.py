@@ -25,7 +25,7 @@ from tools.datasets.models import (
     ParsedRateLimit,
     ParsedTag,
     ParsedTree,
-    ReParsedTag,
+    SemVerTag,
 )
 
 if sys.version_info >= (3, 13):
@@ -121,7 +121,6 @@ class _GitHubRequestNamespace:
         return self._gh.url
 
     def rate_limit(self) -> GitHubRateLimitResources:
-        """https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28#get-rate-limit-status-for-the-authenticated-user."""
         with self._gh._opener.open(self._request(self.url.RATE)) as response:
             content: GitHubRateLimitResources = json.load(response)["resources"]
         return content
@@ -131,7 +130,6 @@ class _GitHubRequestNamespace:
         return (ms + random.triangular()) / 1_000
 
     def tags(self, n: int, *, warn_lower: bool) -> list[GitHubTag]:
-        """https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repository-tags."""
         if n < 1 or n > self._TAGS_MAX_PAGE:
             raise ValueError(n)
         req = self._request(f"{self.url.TAGS}?per_page={n}")
@@ -145,11 +143,7 @@ class _GitHubRequestNamespace:
         return content
 
     def trees(self, tag: str | ParsedTag, /) -> GitHubTreesResponse:
-        """
-        For a given ``tag``, perform **2x requests** to get directory metadata.
-
-        Returns response unchanged - but with annotations.
-        """
+        """For a given ``tag``, perform **2x requests** to get directory metadata."""
         if _is_str(tag):
             url = tag if tag.startswith(self.url.TREES) else f"{self.url.TREES}{tag}"
         else:
@@ -390,10 +384,9 @@ class GitHub:
         rate_limit = self.rate_limit(strict=True)
         stop = None if rate_limit["is_auth"] else self.req._UNAUTH_TREES_LIMIT
         fp = self._paths["trees"]
-        TP = ReParsedTag
         if not fp.exists():
             print(f"Initializing {fp!s}")
-            result = self._trees_batched(_iter_rows(gh_tags, stop, TP))
+            result = self._trees_batched(_iter_rows(gh_tags, stop, SemVerTag))
         else:
             trees = (
                 pl.scan_parquet(fp).with_columns(col("tag").cast(pl.String)).collect()
@@ -405,7 +398,7 @@ class GitHub:
                 print(f"Already up-to-date {fp!s}")
                 result = trees
             else:
-                fresh = self._trees_batched(_iter_rows(missing_trees, stop, TP))
+                fresh = self._trees_batched(_iter_rows(missing_trees, stop, SemVerTag))
                 result = pl.concat((trees, fresh))
         return (
             result.lazy()
