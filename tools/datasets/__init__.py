@@ -204,6 +204,45 @@ class Application:
             f".. _Path.suffix:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix\n"
             f".. _vega-datasets release:\n{indent * 2}https://github.com/vega/vega-datasets/releases"
         )
+        import textwrap
+
+        examples = f"""\
+        Examples
+        --------
+        ``{METADATA_TD}`` keywords form constraints to filter a table like the below sample:
+
+        ```
+        shape: (2_879, 9)
+        ┌───────────┬──────────┬──────────┬──────────┬───┬────────┬─────────┬──────────┐
+        │ dataset_n ┆ ext_supp ┆ file_nam ┆ name_col ┆ … ┆ suffix ┆ tag     ┆ url_npm  │
+        │ a…        ┆ or…      ┆ e        ┆ li…      ┆   ┆ ---    ┆ ---     ┆ ---      │
+        │ ---       ┆ ---      ┆ ---      ┆ ---      ┆   ┆ str    ┆ enum    ┆ str      │
+        │ str       ┆ bool     ┆ str      ┆ bool     ┆   ┆        ┆         ┆          │
+        ╞═══════════╪══════════╪══════════╪══════════╪═══╪════════╪═════════╪══════════╡
+        │ cars      ┆ true     ┆ cars.jso ┆ false    ┆ … ┆ .json  ┆ v1.21.0 ┆ https:// │
+        │           ┆          ┆ n        ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ flights-2 ┆ true     ┆ flights- ┆ true     ┆ … ┆ .arrow ┆ v1.31.1 ┆ https:// │
+        │ 0…        ┆          ┆ 20…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ flights-2 ┆ true     ┆ flights- ┆ false    ┆ … ┆ .json  ┆ v2.9.0  ┆ https:// │
+        │ 0…        ┆          ┆ 20…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ unemploym ┆ true     ┆ unemploy ┆ false    ┆ … ┆ .json  ┆ v2.7.0  ┆ https:// │
+        │ e…        ┆          ┆ me…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ ffox      ┆ false    ┆ ffox.png ┆ false    ┆ … ┆ .png   ┆ v2.5.2  ┆ https:// │
+        │           ┆          ┆          ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ …         ┆ …        ┆ …        ┆ …        ┆ … ┆ …      ┆ …       ┆ …        │
+        │ flights-a ┆ true     ┆ flights- ┆ false    ┆ … ┆ .csv   ┆ v1.18.0 ┆ https:// │
+        │ i…        ┆          ┆ ai…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ income    ┆ true     ┆ income.j ┆ false    ┆ … ┆ .json  ┆ v1.21.0 ┆ https:// │
+        │           ┆          ┆ so…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ burtin    ┆ true     ┆ burtin.j ┆ false    ┆ … ┆ .json  ┆ v2.8.0  ┆ https:// │
+        │           ┆          ┆ so…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ flights-5 ┆ true     ┆ flights- ┆ false    ┆ … ┆ .json  ┆ v1.8.0  ┆ https:// │
+        │ k         ┆          ┆ 5k…      ┆          ┆   ┆        ┆         ┆ cd…      │
+        │ wheat     ┆ true     ┆ wheat.js ┆ false    ┆ … ┆ .json  ┆ v1.18.0 ┆ https:// │
+        │           ┆          ┆ on       ┆          ┆   ┆        ┆         ┆ cd…      │
+        └───────────┴──────────┴──────────┴──────────┴───┴────────┴─────────┴──────────┘
+        ```
+        """
 
         descriptions: dict[str, str] = {
             "dataset_name": "Name of the dataset/`Path.stem`_.",
@@ -221,7 +260,8 @@ class Application:
                 f"{param}\n{indent * 2}{descriptions.get(param, DESCRIPTION_DEFAULT)}"
                 for param in metadata_schema
             )
-            + f"\n\n{links}"
+            + f"\n\n{links}\n\n"
+            f"{textwrap.indent(textwrap.dedent(examples), indent)}"
         )
 
         contents = (
