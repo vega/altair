@@ -4,7 +4,7 @@ import re
 import sys
 from functools import partial
 from importlib.util import find_spec
-from typing import TYPE_CHECKING, Any, TypedDict, cast, get_args
+from typing import TYPE_CHECKING, Any, cast, get_args
 from urllib.error import URLError
 
 import pytest
@@ -12,8 +12,14 @@ from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
 from narwhals.stable import v1 as nw
 
 from altair.datasets import Loader
-from altair.datasets._typing import Dataset, Extension, Version
+from altair.datasets._readers import _METADATA
+from altair.datasets._typing import Dataset, Extension, Metadata, Version
 from tests import skip_requires_pyarrow, slow
+
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping
@@ -71,6 +77,26 @@ def polars_loader(
     data = Loader.with_backend("polars")
     data.cache_dir = tmp_path_factory.mktemp("loader-cache-polars")
     return data
+
+
+@pytest.fixture
+def metadata_columns() -> frozenset[str]:
+    """
+    Returns all defined keys ``Metadata`` (``TypedDict``).
+
+    Note
+    ----
+    - ``# type: ignore``(s) are to fix a false positive.
+    - Should be recognised by this stub `typing_extensions.pyi`_
+
+    .. _typing_extensions.pyi:
+        https://github.com/python/typeshed/blob/51d0f0194c27347ab7d0083bd7b11210a09fef75/stdlib/typing_extensions.pyi#L222-L229
+    """
+    return Metadata.__required_keys__.union(
+        Metadata.__optional_keys__,
+        Metadata.__readonly_keys__,  # type: ignore[attr-defined]
+        Metadata.__mutable_keys__,  # type: ignore[attr-defined]
+    )
 
 
 @backends
@@ -428,3 +454,13 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         assert len(tuple(tmp_path.iterdir())) == 4
 
     assert_frame_equal(frame, frame_from_cache)
+
+
+@backends
+def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -> None:
+    """Ensure all backends will query the same column names."""
+    data = Loader.with_backend(backend)
+    fn = data._reader.scan_fn(_METADATA)
+    native = fn(_METADATA)
+    schema_columns = nw.from_native(native).lazy().collect().columns
+    assert set(schema_columns) == metadata_columns
