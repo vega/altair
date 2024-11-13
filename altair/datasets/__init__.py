@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
     from altair.datasets._readers import _Backend
-    from altair.datasets._typing import DatasetName, Extension, VersionTag
+    from altair.datasets._typing import Dataset, Extension, Version
 
 __all__ = ["Loader", "data"]
 
@@ -134,10 +134,10 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
     def __call__(
         self,
-        name: DatasetName | LiteralString,
+        name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | None = None,
+        tag: Version | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         """
@@ -242,10 +242,10 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
     def url(
         self,
-        name: DatasetName | LiteralString,
+        name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | None = None,
+        tag: Version | None = None,
     ) -> str:
         """
         Return the address of a remote dataset.

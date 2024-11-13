@@ -12,7 +12,7 @@ from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
 from narwhals.stable import v1 as nw
 
 from altair.datasets import Loader
-from altair.datasets._typing import DatasetName
+from altair.datasets._typing import Dataset
 from tests import skip_requires_pyarrow, slow
 
 if TYPE_CHECKING:
@@ -333,9 +333,7 @@ earthquakes_fail: ParameterSet = pytest.param(
 @pytest.mark.parametrize("fallback", ["polars", None])
 @skip_requires_pyarrow
 def test_pyarrow_read_json(
-    fallback: _Polars | None,
-    dataset: DatasetName,
-    monkeypatch: pytest.MonkeyPatch,
+    fallback: _Polars | None, dataset: Dataset, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setenv(CACHE_ENV_VAR, "")
     monkeypatch.delitem(sys.modules, "pandas", raising=False)
@@ -348,9 +346,9 @@ def test_pyarrow_read_json(
 
 
 @datasets_debug
-@pytest.mark.parametrize("name", get_args(DatasetName))
+@pytest.mark.parametrize("name", get_args(Dataset))
 def test_all_datasets(
-    name: DatasetName, polars_loader: Loader[pl.DataFrame, pl.LazyFrame]
+    name: Dataset, polars_loader: Loader[pl.DataFrame, pl.LazyFrame]
 ) -> None:
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
     frame = polars_loader(name)

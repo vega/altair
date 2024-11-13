@@ -17,9 +17,9 @@ else:
     from typing_extensions import TypeAlias
 
 
-__all__ = ["DatasetName", "Extension", "Metadata", "VersionTag"]
+__all__ = ["Dataset", "Extension", "Metadata", "Version"]
 
-DatasetName: TypeAlias = Literal[
+Dataset: TypeAlias = Literal[
     "airports",
     "annual-precip",
     "anscombe",
@@ -95,7 +95,7 @@ DatasetName: TypeAlias = Literal[
     "world-110m",
     "zipcodes",
 ]
-VersionTag: TypeAlias = Literal[
+Version: TypeAlias = Literal[
     "v2.10.0",
     "v2.9.0",
     "v2.8.1",

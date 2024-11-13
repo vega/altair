@@ -60,7 +60,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    from altair.datasets._typing import DatasetName, Extension, Metadata, VersionTag
+    from altair.datasets._typing import Dataset, Extension, Metadata, Version
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
@@ -129,10 +129,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
     def dataset(
         self,
-        name: DatasetName | LiteralString,
+        name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | None = None,
+        tag: Version | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         df = self.query(**validate_constraints(name, suffix, tag))
@@ -156,10 +156,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
     def url(
         self,
-        name: DatasetName | LiteralString,
+        name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: VersionTag | None = None,
+        tag: Version | None = None,
     ) -> str:
         frame = self.query(**validate_constraints(name, suffix, tag))
         url = nw.to_py_scalar(frame.item(0, "url_npm"))
@@ -398,10 +398,7 @@ def _parse_predicates_constraints(
 
 
 def validate_constraints(
-    name: DatasetName | LiteralString,
-    suffix: Extension | None,
-    tag: VersionTag | None,
-    /,
+    name: Dataset | LiteralString, suffix: Extension | None, tag: Version | None, /
 ) -> Metadata:
     constraints: Metadata = {}
     suffixes = ".csv", ".json", ".tsv", ".arrow"

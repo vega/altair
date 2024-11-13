@@ -182,8 +182,8 @@ class Application:
             .to_series()
         )
         indent = " " * 4
-        NAME = "DatasetName"
-        TAG = "VersionTag"
+        NAME = "Dataset"
+        TAG = "Version"
         EXT = "Extension"
         METADATA_TD = "Metadata"
         DESCRIPTION_DEFAULT = "_description_"
