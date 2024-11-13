@@ -1,6 +1,14 @@
 """
-Adapted from `altair-viz/vega_datasets`_.
+Metadata generation from `vega/vega-datasets`_.
 
+Inspired by `altair-viz/vega_datasets`_.
+
+The core interface of this package is provided by::
+
+    tools.datasets.app
+
+.. _vega/vega-datasets:
+    https://github.com/vega/vega-datasets
 .. _altair-viz/vega_datasets:
     https://github.com/altair-viz/vega_datasets
 """
