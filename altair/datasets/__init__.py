@@ -35,6 +35,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         from altair.datasets import Loader
 
         data = Loader.with_backend("polars")
+        >>> data  # doctest: +SKIP
         Loader[polars]
 
     .. _vega-datasets:
@@ -96,7 +97,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             data = Loader.with_backend("polars")
             cars = data("cars")
 
-            type(cars)
+            >>> type(cars)  # doctest: +SKIP
             polars.dataframe.frame.DataFrame
 
         Using ``pandas``:
@@ -104,7 +105,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             data = Loader.with_backend("pandas")
             cars = data("cars")
 
-            type(cars)
+            >>> type(cars)  # doctest: +SKIP
             pandas.core.frame.DataFrame
 
         Using ``pandas``, backed by ``pyarrow`` dtypes:
@@ -112,10 +113,10 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             data = Loader.with_backend("pandas[pyarrow]")
             cars = data("cars", tag="v1.29.0")
 
-            type(cars)
+            >>> type(cars)  # doctest: +SKIP
             pandas.core.frame.DataFrame
 
-            cars.dtypes
+            >>> cars.dtypes  # doctest: +SKIP
             Name                string[pyarrow]
             Miles_per_Gallon    double[pyarrow]
             Cylinders            int64[pyarrow]
@@ -131,7 +132,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         obj._reader = backend(backend_name)
         return obj
 
-    # TODO: docs (examples)
     def __call__(
         self,
         name: DatasetName | LiteralString,
@@ -163,6 +163,80 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
         .. _vega-datasets release:
             https://github.com/vega/vega-datasets/releases
+
+        Examples
+        --------
+        Using ``polars``:
+
+            from altair.datasets import Loader
+
+            data = Loader.with_backend("polars")
+            source = data("stocks", tag="v2.10.0")
+
+            >>> source.columns  # doctest: +SKIP
+            ['symbol', 'date', 'price']
+
+            >>> source  # doctest: +SKIP
+            shape: (560, 3)
+            ┌────────┬────────────┬────────┐
+            │ symbol ┆ date       ┆ price  │
+            │ ---    ┆ ---        ┆ ---    │
+            │ str    ┆ str        ┆ f64    │
+            ╞════════╪════════════╪════════╡
+            │ MSFT   ┆ Jan 1 2000 ┆ 39.81  │
+            │ MSFT   ┆ Feb 1 2000 ┆ 36.35  │
+            │ MSFT   ┆ Mar 1 2000 ┆ 43.22  │
+            │ MSFT   ┆ Apr 1 2000 ┆ 28.37  │
+            │ MSFT   ┆ May 1 2000 ┆ 25.45  │
+            │ …      ┆ …          ┆ …      │
+            │ AAPL   ┆ Nov 1 2009 ┆ 199.91 │
+            │ AAPL   ┆ Dec 1 2009 ┆ 210.73 │
+            │ AAPL   ┆ Jan 1 2010 ┆ 192.06 │
+            │ AAPL   ┆ Feb 1 2010 ┆ 204.62 │
+            │ AAPL   ┆ Mar 1 2010 ┆ 223.02 │
+            └────────┴────────────┴────────┘
+
+        Using ``pandas``:
+
+            data = Loader.with_backend("pandas")
+            source = data("stocks", tag="v2.10.0")
+
+            >>> source.columns  # doctest: +SKIP
+            Index(['symbol', 'date', 'price'], dtype='object')
+
+            >>> source  # doctest: +SKIP
+                symbol        date   price
+            0     MSFT  Jan 1 2000   39.81
+            1     MSFT  Feb 1 2000   36.35
+            2     MSFT  Mar 1 2000   43.22
+            3     MSFT  Apr 1 2000   28.37
+            4     MSFT  May 1 2000   25.45
+            ..     ...         ...     ...
+            555   AAPL  Nov 1 2009  199.91
+            556   AAPL  Dec 1 2009  210.73
+            557   AAPL  Jan 1 2010  192.06
+            558   AAPL  Feb 1 2010  204.62
+            559   AAPL  Mar 1 2010  223.02
+
+            [560 rows x 3 columns]
+
+        Using ``pyarrow``:
+
+            data = Loader.with_backend("pyarrow")
+            source = data("stocks", tag="v2.10.0")
+
+            >>> source.column_names  # doctest: +SKIP
+            ['symbol', 'date', 'price']
+
+            >>> source  # doctest: +SKIP
+            pyarrow.Table
+            symbol: string
+            date: string
+            price: double
+            ----
+            symbol: [["MSFT","MSFT","MSFT","MSFT","MSFT",...,"AAPL","AAPL","AAPL","AAPL","AAPL"]]
+            date: [["Jan 1 2000","Feb 1 2000","Mar 1 2000","Apr 1 2000","May 1 2000",...,"Nov 1 2009","Dec 1 2009","Jan 1 2010","Feb 1 2010","Mar 1 2010"]]
+            price: [[39.81,36.35,43.22,28.37,25.45,...,199.91,210.73,192.06,204.62,223.02]]
         """
         return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
@@ -203,7 +277,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             from altair.datasets import Loader
 
             data = Loader.with_backend("polars")
-            data.url("cars", tag="v2.9.0")
+            >>> data.url("cars", tag="v2.9.0")  # doctest: +SKIP
             'https://cdn.jsdelivr.net/npm/vega-datasets@v2.9.0/data/cars.json'
 
         We can pass the result directly to a chart:
@@ -231,7 +305,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             data = Loader.with_backend("polars")
             data.cache_dir = Path.home() / ".altair_cache"
 
-            data.cache_dir.relative_to(Path.home()).as_posix()
+            >>> data.cache_dir.relative_to(Path.home()).as_posix()  # doctest: +SKIP
             '.altair_cache'
         """
         return self._reader._cache
