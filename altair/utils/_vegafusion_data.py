@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import uuid
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, cast, overload
+from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
 
-import narwhals.stable.v1 as nw
+from narwhals.dependencies import is_into_dataframe
 from packaging.version import Version
 
 from altair.utils._importers import import_vegafusion
@@ -19,11 +19,17 @@ from altair.utils.data import (
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
+    import sys
     from collections.abc import MutableMapping
 
     from narwhals.typing import IntoDataFrame
 
     from vegafusion.runtime import ChartState
+
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
@@ -69,29 +75,30 @@ def vegafusion_data_transformer(
     if data is None:
         return vegafusion_data_transformer
 
-    # Test whether VegaFusion supports the data type
-    is_v2 = (
-        Version(version) >= Version("2.0.0a0")
-        if (version := importlib_version("vegafusion"))
-        else False
-    )
-    if is_v2:
-        # VegaFusion v2 support narwhals-compatible DataFrames
-        supported_by_vf = isinstance(data, DataFrameLike) or isinstance(
-            nw.from_native(data, pass_through=True), (nw.DataFrame, nw.LazyFrame)
-        )
-    else:
-        supported_by_vf = isinstance(data, DataFrameLike)
-
-    if supported_by_vf and not isinstance(data, SupportsGeoInterface):
+    if is_supported_by_vf(data) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
-        extracted_inline_tables[table_name] = cast(DataFrameLike, data)
+        extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
     else:
         # Use default transformer for geo interface objects
         # # (e.g. a geopandas GeoDataFrame)
         # Or if we don't recognize data type
         return default_data_transformer(data)
+
+
+if (version := importlib_version("vegafusion")) and Version(version) >= Version(
+    "2.0.0a0"
+):
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        # Test whether VegaFusion supports the data type
+        # VegaFusion v2 support narwhals-compatible DataFrames
+        return isinstance(data, DataFrameLike) or is_into_dataframe(data)
+
+else:
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        return isinstance(data, DataFrameLike)
 
 
 def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
