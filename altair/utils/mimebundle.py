@@ -1,11 +1,18 @@
 from __future__ import annotations
 
 import struct
-from typing import Any, Literal, cast, overload
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, cast, overload
 
 from ._importers import import_vl_convert, vl_version_for_vl_convert
 from .html import spec_to_html
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 MimeBundleFormat: TypeAlias = Literal[
     "html", "json", "png", "svg", "pdf", "vega", "vega-lite"
