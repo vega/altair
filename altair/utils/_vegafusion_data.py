@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import uuid
+from importlib.metadata import version as importlib_version
 from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
+
+import narwhals.stable.v1 as nw
+from packaging.version import Version
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
@@ -64,7 +68,22 @@ def vegafusion_data_transformer(
     """VegaFusion Data Transformer."""
     if data is None:
         return vegafusion_data_transformer
-    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
+
+    # Test whether VegaFusion supports the data type
+    is_v2 = (
+        Version(version) >= Version("2.0.0a0")
+        if (version := importlib_version("vegafusion"))
+        else False
+    )
+    if is_v2:
+        # VegaFusion v2 support narwhals-compatible DataFrames
+        supported_by_vf = isinstance(data, DataFrameLike) or isinstance(
+            nw.from_native(data, pass_through=True), (nw.DataFrame, nw.LazyFrame)
+        )
+    else:
+        supported_by_vf = isinstance(data, DataFrameLike)
+
+    if supported_by_vf and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
