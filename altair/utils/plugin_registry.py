@@ -1,11 +1,20 @@
 from __future__ import annotations
 
+import sys
 from functools import partial
 from importlib.metadata import entry_points
-from typing import TYPE_CHECKING, Any, Callable, Generic, cast
-from typing_extensions import TypeAliasType, TypeIs, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, cast
 
 from altair.utils.deprecation import deprecated_warn
+
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from types import TracebackType
