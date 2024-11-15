@@ -43,6 +43,25 @@ extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionar
 VEGAFUSION_PREFIX: Final = "vegafusion+dataset://"
 
 
+try:
+    VEGAFUSION_VERSION: Version | None = Version(importlib_version("vegafusion"))
+except ImportError:
+    VEGAFUSION_VERSION = None
+
+
+if VEGAFUSION_VERSION and Version("2.0.0a0") <= VEGAFUSION_VERSION:
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        # Test whether VegaFusion supports the data type
+        # VegaFusion v2 support narwhals-compatible DataFrames
+        return isinstance(data, DataFrameLike) or is_into_dataframe(data)
+
+else:
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        return isinstance(data, DataFrameLike)
+
+
 class _ToVegaFusionReturnUrlDict(TypedDict):
     url: str
 
@@ -84,21 +103,6 @@ def vegafusion_data_transformer(
         # # (e.g. a geopandas GeoDataFrame)
         # Or if we don't recognize data type
         return default_data_transformer(data)
-
-
-if (version := importlib_version("vegafusion")) and Version(version) >= Version(
-    "2.0.0a0"
-):
-
-    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
-        # Test whether VegaFusion supports the data type
-        # VegaFusion v2 support narwhals-compatible DataFrames
-        return isinstance(data, DataFrameLike) or is_into_dataframe(data)
-
-else:
-
-    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
-        return isinstance(data, DataFrameLike)
 
 
 def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
