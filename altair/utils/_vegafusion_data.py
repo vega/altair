@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
 # rather than a dict so that the Python interpreter is free to garbage
 # collect the stored DataFrames.
-extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionary()
+extracted_inline_tables: MutableMapping[str, Any] = WeakValueDictionary()
 
 # Special URL prefix that VegaFusion uses to denote that a
 # dataset in a Vega spec corresponds to an entry in the `inline_datasets`
