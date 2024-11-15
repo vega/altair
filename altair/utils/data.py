@@ -12,14 +12,11 @@ from typing import (
     Any,
     Callable,
     Literal,
-    Protocol,
     TypedDict,
     TypeVar,
     Union,
     overload,
-    runtime_checkable,
 )
-from typing_extensions import Concatenate, ParamSpec, TypeAlias
 
 import narwhals.stable.v1 as nw
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
@@ -36,11 +33,24 @@ from .core import (
 from .plugin_registry import PluginRegistry
 
 if sys.version_info >= (3, 13):
-    from typing import TypeIs
+    from typing import Protocol, runtime_checkable
 else:
-    from typing_extensions import TypeIs
+    from typing_extensions import Protocol, runtime_checkable
+if sys.version_info >= (3, 10):
+    from typing import Concatenate, ParamSpec
+else:
+    from typing_extensions import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
     import pandas as pd
     import pyarrow as pa
 

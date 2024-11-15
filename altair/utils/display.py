@@ -4,13 +4,20 @@ import json
 import pkgutil
 import textwrap
 import uuid
-from typing import Any, Callable, Union
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Callable, Union
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
 from .mimebundle import spec_to_mimebundle
 from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 # ==============================================================================
 # Renderer registry
