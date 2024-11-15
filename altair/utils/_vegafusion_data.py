@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, cast, overload
 from weakref import WeakValueDictionary
 
 import narwhals.stable.v1 as nw
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
 # rather than a dict so that the Python interpreter is free to garbage
 # collect the stored DataFrames.
-extracted_inline_tables: MutableMapping[str, Any] = WeakValueDictionary()
+extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionary()
 
 # Special URL prefix that VegaFusion uses to denote that a
 # dataset in a Vega spec corresponds to an entry in the `inline_datasets`
@@ -85,7 +85,7 @@ def vegafusion_data_transformer(
 
     if supported_by_vf and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
-        extracted_inline_tables[table_name] = data
+        extracted_inline_tables[table_name] = cast(DataFrameLike, data)
         return {"url": VEGAFUSION_PREFIX + table_name}
     else:
         # Use default transformer for geo interface objects
