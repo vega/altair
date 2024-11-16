@@ -38,6 +38,7 @@ from altair.datasets._typing import EXTENSION_SUFFIXES, is_ext_read
 if TYPE_CHECKING:
     import json  # noqa: F401
     import sys
+    from io import IOBase
     from urllib.request import OpenerDirector
 
     import pandas as pd
@@ -282,6 +283,37 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
         self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend=_pa)}
 
 
+def _pl_read_json_roundtrip(source: Path | IOBase, /, **kwds: Any) -> pl.DataFrame:
+    """
+    Try to utilize better date parsing available in `pl.read_csv`_.
+
+    `pl.read_json`_ has few options when compared to `pl.read_csv`_.
+
+    Chaining the two together - *where possible* - is still usually faster than `pandas.read_json`_.
+
+    .. _pl.read_json:
+        https://docs.pola.rs/api/python/stable/reference/api/polars.read_json.html
+    .. _pl.read_csv:
+        https://docs.pola.rs/api/python/stable/reference/api/polars.read_csv.html
+    .. _pandas.read_json:
+        https://pandas.pydata.org/docs/reference/api/pandas.read_json.html
+    """
+    from io import BytesIO
+
+    import polars as pl
+
+    df = pl.read_json(source, **kwds)
+    if any(tp.is_nested() for tp in df.schema.dtypes()):
+        # NOTE: Inferred as `(Geo|Topo)JSON`, which wouldn't be supported by `read_csv`
+        return df
+    buf = BytesIO()
+    df.write_csv(buf)
+    if kwds:
+        SHARED_KWDS = {"schema", "schema_overrides", "infer_schema_length"}
+        kwds = {k: v for k, v in kwds.items() if k in SHARED_KWDS}
+    return pl.read_csv(buf, try_parse_dates=True, **kwds)
+
+
 class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
     def __init__(self, name: _Polars, /) -> None:
         self._name = _requirements(name)
@@ -289,7 +321,7 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             pl = self._import(self._name)
         self._read_fn = {
             ".csv": partial(pl.read_csv, try_parse_dates=True),
-            ".json": pl.read_json,
+            ".json": _pl_read_json_roundtrip,
             ".tsv": partial(pl.read_csv, separator="\t", try_parse_dates=True),
             ".arrow": pl.read_ipc,
             ".parquet": pl.read_parquet,
@@ -306,7 +338,7 @@ class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             pa = self._import(_pa)  # noqa: F841
         self._read_fn = {
             ".csv": partial(pl.read_csv, use_pyarrow=True, try_parse_dates=True),
-            ".json": pl.read_json,
+            ".json": _pl_read_json_roundtrip,
             ".tsv": partial(
                 pl.read_csv, separator="\t", use_pyarrow=True, try_parse_dates=True
             ),

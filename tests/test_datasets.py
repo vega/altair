@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime as dt
 import re
 import sys
 from functools import partial
@@ -33,6 +34,15 @@ if TYPE_CHECKING:
     from tests import MarksType
 
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
+
+
+class DatasetSpec(TypedDict, total=False):
+    """Exceptional cases which cannot rely on defaults."""
+
+    name: Dataset
+    suffix: Extension
+    tag: Version
+    marks: MarksType
 
 
 requires_pyarrow: pytest.MarkDecorator = skip_requires_pyarrow()
@@ -346,7 +356,7 @@ earthquakes_fail: ParameterSet = pytest.param(
 
 
 @pytest.mark.parametrize(
-    "dataset",
+    "name",
     [
         "cars",
         movies_fail,
@@ -361,7 +371,7 @@ earthquakes_fail: ParameterSet = pytest.param(
 @pytest.mark.parametrize("fallback", ["polars", None])
 @skip_requires_pyarrow
 def test_pyarrow_read_json(
-    fallback: _Polars | None, dataset: Dataset, monkeypatch: pytest.MonkeyPatch
+    fallback: _Polars | None, name: Dataset, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setenv(CACHE_ENV_VAR, "")
     monkeypatch.delitem(sys.modules, "pandas", raising=False)
@@ -370,15 +380,28 @@ def test_pyarrow_read_json(
 
     data = Loader.with_backend("pyarrow")
 
-    data(dataset, ".json")
+    data(name, ".json")
 
 
-class DatasetSpec(TypedDict, total=False):
-    """Exceptional cases which cannot rely on defaults."""
-
-    suffix: Extension
-    tag: Version
-    marks: MarksType
+@pytest.mark.parametrize(
+    ("spec", "column"),
+    [
+        (DatasetSpec(name="cars", tag="v2.11.0"), "Year"),
+        (DatasetSpec(name="unemployment-across-industries", tag="v2.11.0"), "date"),
+        (DatasetSpec(name="flights-10k", tag="v2.11.0"), "date"),
+        (DatasetSpec(name="football", tag="v2.11.0"), "date"),
+        (DatasetSpec(name="crimea", tag="v2.11.0"), "date"),
+        (DatasetSpec(name="ohlc", tag="v2.11.0"), "date"),
+    ],
+)
+def test_polars_read_json_roundtrip(
+    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
+    spec: DatasetSpec,
+    column: str,
+) -> None:
+    frame = polars_loader(spec["name"], ".json", tag=spec["tag"])
+    tp = frame.schema.to_python()[column]
+    assert tp is dt.date or issubclass(tp, dt.date)
 
 
 def _dataset_params(overrides: Mapping[Dataset, DatasetSpec]) -> Iterator[ParameterSet]:
