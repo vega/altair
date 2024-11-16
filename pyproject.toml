@@ -250,6 +250,8 @@ extend-safe-fixes=[
     "ANN204",
     # unnecessary-dict-comprehension-for-iterable
     "C420",
+    # unnecessary-literal-set
+    "C405"
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview

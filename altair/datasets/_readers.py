@@ -33,6 +33,8 @@ from typing import (
 import narwhals.stable.v1 as nw
 from narwhals.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
+from altair.datasets._typing import EXTENSION_SUFFIXES, is_ext_read
+
 if TYPE_CHECKING:
     import json  # noqa: F401
     import sys
@@ -257,6 +259,7 @@ class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
             ".json": pd.read_json,
             ".tsv": partial["pd.DataFrame"](pd.read_csv, sep="\t"),
             ".arrow": pd.read_feather,
+            ".parquet": pd.read_parquet,
         }
         self._scan_fn = {".parquet": pd.read_parquet}
 
@@ -274,6 +277,7 @@ class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
             ".json": partial["pd.DataFrame"](pd.read_json, dtype_backend=_pa),
             ".tsv": partial["pd.DataFrame"](pd.read_csv, sep="\t", dtype_backend=_pa),
             ".arrow": partial(pd.read_feather, dtype_backend=_pa),
+            ".parquet": partial(pd.read_parquet, dtype_backend=_pa),
         }
         self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend=_pa)}
 
@@ -288,6 +292,7 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             ".json": pl.read_json,
             ".tsv": partial(pl.read_csv, separator="\t"),
             ".arrow": pl.read_ipc,
+            ".parquet": pl.read_parquet,
         }
         self._scan_fn = {".parquet": pl.scan_parquet}
 
@@ -304,6 +309,7 @@ class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             ".json": pl.read_json,
             ".tsv": partial(pl.read_csv, separator="\t", use_pyarrow=True),
             ".arrow": partial(pl.read_ipc, use_pyarrow=True),
+            ".parquet": partial(pl.read_parquet, use_pyarrow=True),
         }
         self._scan_fn = {".parquet": pl.scan_parquet}
 
@@ -378,6 +384,7 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             ".json": pa_read_json,
             ".tsv": partial(pa_read_csv, parse_options=tab_sep),
             ".arrow": pa_read_feather,
+            ".parquet": pa_read_parquet,
         }
         self._scan_fn = {".parquet": pa_read_parquet}
 
@@ -401,17 +408,19 @@ def validate_constraints(
     name: Dataset | LiteralString, suffix: Extension | None, tag: Version | None, /
 ) -> Metadata:
     constraints: Metadata = {}
-    suffixes = ".csv", ".json", ".tsv", ".arrow"
     if tag is not None:
         constraints["tag"] = tag
-    if name.endswith(suffixes):
+    if name.endswith(EXTENSION_SUFFIXES):
         fp = Path(name)
         constraints["dataset_name"] = fp.stem
         constraints["suffix"] = fp.suffix
         return constraints
     elif suffix is not None:
         if not is_ext_read(suffix):
-            msg = f"Expected 'suffix' to be one of {suffixes!r},\nbut got: {suffix!r}"
+            msg = (
+                f"Expected 'suffix' to be one of {EXTENSION_SUFFIXES!r},\n"
+                f"but got: {suffix!r}"
+            )
             raise TypeError(msg)
         else:
             constraints["suffix"] = suffix
@@ -430,10 +439,6 @@ def validate_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
 
 def is_ext_scan(suffix: Any) -> TypeIs[_ExtensionScan]:
     return suffix == ".parquet"
-
-
-def is_ext_read(suffix: Any) -> TypeIs[Extension]:
-    return suffix in {".csv", ".json", ".tsv", ".arrow"}
 
 
 @overload

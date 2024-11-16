@@ -400,7 +400,7 @@ def _dataset_params(overrides: Mapping[Dataset, DatasetSpec]) -> Iterator[Parame
 @datasets_debug
 @pytest.mark.parametrize(
     ("name", "suffix", "tag"),
-    list(_dataset_params({"flights-3m": DatasetSpec(tag="v2.9.0")})),
+    list(_dataset_params({"flights-3m": DatasetSpec(tag="v2.11.0")})),
 )
 def test_all_datasets(
     polars_loader: Loader[pl.DataFrame, pl.LazyFrame],

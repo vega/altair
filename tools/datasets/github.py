@@ -64,7 +64,7 @@ _DATA = "data"
 
 
 def is_ext_supported(suffix: str) -> TypeIs[Extension]:
-    return suffix in {".csv", ".json", ".tsv", ".arrow"}
+    return suffix in {".csv", ".json", ".tsv", ".arrow", ".parquet"}
 
 
 def _is_str(obj: Any) -> TypeIs[str]:

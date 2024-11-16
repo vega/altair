@@ -193,6 +193,9 @@ class Application:
         NAME = "Dataset"
         TAG = "Version"
         EXT = "Extension"
+        EXTENSION_TYPES = ".csv", ".json", ".tsv", ".arrow", ".parquet"
+        EXTENSION_SUFFIXES = "EXTENSION_SUFFIXES"
+        EXTENSION_GUARD = "is_ext_read"
         METADATA_TD = "Metadata"
         DESCRIPTION_DEFAULT = "_description_"
         NOTE_SEP = f"\n\n{indent * 2}" f".. note::\n{indent * 3}"
@@ -276,14 +279,18 @@ class Application:
             f"{HEADER_COMMENT}",
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Literal, TYPE_CHECKING",
+            "from typing import Any, Literal, TYPE_CHECKING",
             utils.import_typing_extensions((3, 14), "TypedDict"),
+            utils.import_typing_extensions((3, 13), "TypeIs"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
-            f"__all__ = {[NAME, TAG, EXT, METADATA_TD]}\n\n"
+            f"__all__ = {[NAME, TAG, EXT, METADATA_TD, EXTENSION_GUARD, EXTENSION_SUFFIXES]}\n\n"
             f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
             f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
-            f'{EXT}: TypeAlias = {utils.spell_literal([".csv", ".json", ".tsv", ".arrow"])}',
+            f"{EXT}: TypeAlias = {utils.spell_literal(EXTENSION_TYPES)}",
+            f"{EXTENSION_SUFFIXES} = {EXTENSION_TYPES!r}",
+            f"def {EXTENSION_GUARD}(suffix: Any) -> TypeIs[{EXT}]:\n"
+            f"{indent}return suffix in set({EXTENSION_TYPES!r})\n",
             UNIVERSAL_TYPED_DICT.format(
                 name=METADATA_TD,
                 metaclass_kwds=", total=False",
