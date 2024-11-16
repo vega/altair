@@ -288,9 +288,9 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
         if not TYPE_CHECKING:
             pl = self._import(self._name)
         self._read_fn = {
-            ".csv": pl.read_csv,
+            ".csv": partial(pl.read_csv, try_parse_dates=True),
             ".json": pl.read_json,
-            ".tsv": partial(pl.read_csv, separator="\t"),
+            ".tsv": partial(pl.read_csv, separator="\t", try_parse_dates=True),
             ".arrow": pl.read_ipc,
             ".parquet": pl.read_parquet,
         }
@@ -305,9 +305,11 @@ class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
             pl = self._import(_pl)
             pa = self._import(_pa)  # noqa: F841
         self._read_fn = {
-            ".csv": partial(pl.read_csv, use_pyarrow=True),
+            ".csv": partial(pl.read_csv, use_pyarrow=True, try_parse_dates=True),
             ".json": pl.read_json,
-            ".tsv": partial(pl.read_csv, separator="\t", use_pyarrow=True),
+            ".tsv": partial(
+                pl.read_csv, separator="\t", use_pyarrow=True, try_parse_dates=True
+            ),
             ".arrow": partial(pl.read_ipc, use_pyarrow=True),
             ".parquet": partial(pl.read_parquet, use_pyarrow=True),
         }
