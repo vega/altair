@@ -3,7 +3,9 @@ from __future__ import annotations
 import datetime as dt
 import re
 import sys
+import warnings
 from functools import partial
+from importlib import import_module
 from importlib.util import find_spec
 from typing import TYPE_CHECKING, Any, cast, get_args
 from urllib.error import URLError
@@ -125,6 +127,58 @@ def test_loader_url(backend: _Backend) -> None:
     url = data.url(dataset_name)
     assert isinstance(url, str)
     assert pattern.match(url) is not None
+
+
+def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Inferring the best backend available.
+
+    Based on the following order:
+
+        priority: Sequence[_Backend] = "polars", "pandas[pyarrow]", "pandas", "pyarrow"
+    """
+    import altair.datasets
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        from altair.datasets import load
+
+        assert load._reader._name == "polars"
+        monkeypatch.delattr(altair.datasets, "load")
+
+        monkeypatch.setitem(sys.modules, "polars", None)
+
+        from altair.datasets import load
+
+        if find_spec("pyarrow") is None:
+            # NOTE: We can end the test early for the CI job that removes `pyarrow`
+            assert load._reader._name == "pandas"
+            monkeypatch.delattr(altair.datasets, "load")
+            monkeypatch.setitem(sys.modules, "pandas", None)
+            with pytest.raises(NotImplementedError, match="no.+backend"):
+                from altair.datasets import load
+        else:
+            assert load._reader._name == "pandas[pyarrow]"
+            monkeypatch.delattr(altair.datasets, "load")
+
+            monkeypatch.setitem(sys.modules, "pyarrow", None)
+
+            from altair.datasets import load
+
+            assert load._reader._name == "pandas"
+            monkeypatch.delattr(altair.datasets, "load")
+
+            monkeypatch.setitem(sys.modules, "pandas", None)
+            monkeypatch.delitem(sys.modules, "pyarrow")
+            monkeypatch.setitem(sys.modules, "pyarrow", import_module("pyarrow"))
+            from altair.datasets import load
+
+            assert load._reader._name == "pyarrow"
+            monkeypatch.delattr(altair.datasets, "load")
+            monkeypatch.setitem(sys.modules, "pyarrow", None)
+
+            with pytest.raises(NotImplementedError, match="no.+backend"):
+                from altair.datasets import load
 
 
 @backends

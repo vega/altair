@@ -23,7 +23,7 @@ if TYPE_CHECKING:
     from altair.datasets._readers import _Backend
     from altair.datasets._typing import Dataset, Extension, Version
 
-__all__ = ["Loader", "data"]
+__all__ = ["Loader", "load"]
 
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
@@ -320,18 +320,29 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         return f"{type(self).__name__}[{self._reader._name}]"
 
 
-def __getattr__(name):
-    if name == "data":
-        global data
-        data = Loader.with_backend("pandas")
-        from altair.utils.deprecation import deprecated_warn
+load: Loader[Any, Any]
 
-        deprecated_warn(
-            "Added only for backwards compatibility with `altair-viz/vega_datasets`.",
-            version="5.5.0",
-            alternative="altair.datasets.Loader.with_backend(...)",
+
+def __getattr__(name):
+    if name == "load":
+        import warnings
+
+        from altair.datasets._readers import infer_backend
+
+        reader = infer_backend()
+        global load
+        load = Loader.__new__(Loader)
+        load._reader = reader
+
+        warnings.warn(
+            "For full IDE completions, instead use:\n\n"
+            "    from altair.datasets import Loader\n"
+            "    load = Loader.with_backend(...)\n\n"
+            "Related: https://github.com/vega/altair/pull/3631#issuecomment-2480832609",
+            UserWarning,
             stacklevel=3,
         )
-        return data
+        return load
     else:
-        raise AttributeError(name)
+        msg = f"module {__name__!r} has no attribute {name!r}"
+        raise AttributeError(msg)

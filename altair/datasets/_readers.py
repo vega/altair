@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import os
 import urllib.request
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from functools import partial
 from importlib import import_module
 from importlib.util import find_spec
@@ -473,6 +473,36 @@ def validate_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
 
 def is_ext_scan(suffix: Any) -> TypeIs[_ExtensionScan]:
     return suffix == ".parquet"
+
+
+def is_available(pkg_names: str | Iterable[str], *more_pkg_names: str) -> bool:
+    pkgs_names = pkg_names if not isinstance(pkg_names, str) else (pkg_names,)
+    names = chain(pkgs_names, more_pkg_names)
+    return all(find_spec(name) is not None for name in names)
+
+
+def infer_backend(
+    *, priority: Sequence[_Backend] = ("polars", "pandas[pyarrow]", "pandas", "pyarrow")
+) -> _Reader[Any, Any]:
+    """
+    Return the first available reader in order of `priority`.
+
+    Notes
+    -----
+    - ``"polars"``: can natively load every dataset (including ``(Geo|Topo)JSON``)
+    - ``"pandas[pyarrow]"``: can load *most* datasets, guarantees ``.parquet`` support
+    - ``"pandas"``: supports ``.parquet``, if `fastparquet`_ is installed
+    - ``"pyarrow"``: least reliable
+
+    .. _fastparquet:
+        https://github.com/dask/fastparquet
+
+    """
+    it = (backend(name) for name in priority if is_available(_requirements(name)))
+    if reader := next(it, None):
+        return reader
+    msg = f"Found no supported backend, searched:\n" f"{priority!r}"
+    raise NotImplementedError(msg)
 
 
 @overload
