@@ -3,7 +3,6 @@ from __future__ import annotations
 import datetime as dt
 import re
 import sys
-import warnings
 from functools import partial
 from importlib import import_module
 from importlib.util import find_spec
@@ -11,7 +10,12 @@ from typing import TYPE_CHECKING, Any, cast, get_args
 from urllib.error import URLError
 
 import pytest
-from narwhals.dependencies import is_into_dataframe, is_polars_dataframe
+from narwhals.dependencies import (
+    is_into_dataframe,
+    is_pandas_dataframe,
+    is_polars_dataframe,
+    is_pyarrow_table,
+)
 from narwhals.stable import v1 as nw
 
 from altair.datasets import Loader
@@ -138,47 +142,66 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
         priority: Sequence[_Backend] = "polars", "pandas[pyarrow]", "pandas", "pyarrow"
     """
     import altair.datasets
+    from altair.datasets import load
 
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=UserWarning)
-        from altair.datasets import load
+    assert load._reader._name == "polars"
+    monkeypatch.delattr(altair.datasets, "load")
 
-        assert load._reader._name == "polars"
+    monkeypatch.setitem(sys.modules, "polars", None)
+
+    from altair.datasets import load
+
+    if find_spec("pyarrow") is None:
+        # NOTE: We can end the test early for the CI job that removes `pyarrow`
+        assert load._reader._name == "pandas"
+        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.setitem(sys.modules, "pandas", None)
+        with pytest.raises(NotImplementedError, match="no.+backend"):
+            from altair.datasets import load
+    else:
+        assert load._reader._name == "pandas[pyarrow]"
         monkeypatch.delattr(altair.datasets, "load")
 
-        monkeypatch.setitem(sys.modules, "polars", None)
+        monkeypatch.setitem(sys.modules, "pyarrow", None)
 
         from altair.datasets import load
 
-        if find_spec("pyarrow") is None:
-            # NOTE: We can end the test early for the CI job that removes `pyarrow`
-            assert load._reader._name == "pandas"
-            monkeypatch.delattr(altair.datasets, "load")
-            monkeypatch.setitem(sys.modules, "pandas", None)
-            with pytest.raises(NotImplementedError, match="no.+backend"):
-                from altair.datasets import load
-        else:
-            assert load._reader._name == "pandas[pyarrow]"
-            monkeypatch.delattr(altair.datasets, "load")
+        assert load._reader._name == "pandas"
+        monkeypatch.delattr(altair.datasets, "load")
 
-            monkeypatch.setitem(sys.modules, "pyarrow", None)
+        monkeypatch.setitem(sys.modules, "pandas", None)
+        monkeypatch.delitem(sys.modules, "pyarrow")
+        monkeypatch.setitem(sys.modules, "pyarrow", import_module("pyarrow"))
+        from altair.datasets import load
 
+        assert load._reader._name == "pyarrow"
+        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.setitem(sys.modules, "pyarrow", None)
+
+        with pytest.raises(NotImplementedError, match="no.+backend"):
             from altair.datasets import load
 
-            assert load._reader._name == "pandas"
-            monkeypatch.delattr(altair.datasets, "load")
 
-            monkeypatch.setitem(sys.modules, "pandas", None)
-            monkeypatch.delitem(sys.modules, "pyarrow")
-            monkeypatch.setitem(sys.modules, "pyarrow", import_module("pyarrow"))
-            from altair.datasets import load
+@requires_pyarrow
+def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
+    import altair.datasets
 
-            assert load._reader._name == "pyarrow"
-            monkeypatch.delattr(altair.datasets, "load")
-            monkeypatch.setitem(sys.modules, "pyarrow", None)
+    monkeypatch.delattr(altair.datasets, "load", raising=False)
 
-            with pytest.raises(NotImplementedError, match="no.+backend"):
-                from altair.datasets import load
+    load = altair.datasets.load
+    assert load._reader._name == "polars"
+
+    default = load("cars")
+    df_pyarrow = load("cars", backend="pyarrow")
+    df_pandas = load("cars", backend="pandas[pyarrow]")
+    default_2 = load("cars")
+    df_polars = load("cars", backend="polars")
+
+    assert is_polars_dataframe(default)
+    assert is_pyarrow_table(df_pyarrow)
+    assert is_pandas_dataframe(df_pandas)
+    assert is_polars_dataframe(default_2)
+    assert is_polars_dataframe(df_polars)
 
 
 @backends

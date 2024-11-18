@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Generic, overload
+from typing import TYPE_CHECKING, Generic, final, overload
 
 from narwhals.typing import IntoDataFrameT, IntoFrameT
 
@@ -320,28 +320,94 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         return f"{type(self).__name__}[{self._reader._name}]"
 
 
-load: Loader[Any, Any]
+@final
+class _Load(Loader[IntoDataFrameT, IntoFrameT]):
+    @overload
+    def __call__(  # pyright: ignore[reportOverlappingOverload]
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = ...,
+        /,
+        tag: Version | None = ...,
+        backend: None = ...,
+        **kwds: Any,
+    ) -> IntoDataFrameT: ...
+    @overload
+    def __call__(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = ...,
+        /,
+        tag: Version | None = ...,
+        backend: Literal["polars", "polars[pyarrow]"] = ...,
+        **kwds: Any,
+    ) -> pl.DataFrame: ...
+    @overload
+    def __call__(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = ...,
+        /,
+        tag: Version | None = ...,
+        backend: Literal["pandas", "pandas[pyarrow]"] = ...,
+        **kwds: Any,
+    ) -> pd.DataFrame: ...
+    @overload
+    def __call__(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = ...,
+        /,
+        tag: Version | None = ...,
+        backend: Literal["pyarrow"] = ...,
+        **kwds: Any,
+    ) -> pa.Table: ...
+    def __call__(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: Version | None = None,
+        backend: _Backend | None = None,
+        **kwds: Any,
+    ) -> IntoDataFrameT | pl.DataFrame | pd.DataFrame | pa.Table:
+        if backend is None:
+            return super().__call__(name, suffix, tag, **kwds)
+        else:
+            return self.from_backend(backend)(name, suffix, tag=tag, **kwds)
+
+
+load: _Load[Any, Any]
+"""
+For full IDE completions, instead use:
+
+    from altair.datasets import Loader
+    load = Loader.from_backend("polars")
+    cars = load("cars")
+    movies = load("movies")
+
+Alternatively, specify ``backend`` during a call:
+
+    from altair.datasets import load
+    cars = load("cars", backend="polars")
+    movies = load("movies", backend="polars")
+
+Related
+-------
+- https://github.com/vega/altair/pull/3631#issuecomment-2480832609
+- https://github.com/vega/altair/pull/3631#discussion_r1847111064
+- https://github.com/vega/altair/pull/3631#discussion_r1847176465
+"""
 
 
 def __getattr__(name):
     if name == "load":
-        import warnings
-
         from altair.datasets._readers import infer_backend
 
         reader = infer_backend()
         global load
-        load = Loader.__new__(Loader)
+        load = _Load.__new__(_Load)
         load._reader = reader
-
-        warnings.warn(
-            "For full IDE completions, instead use:\n\n"
-            "    from altair.datasets import Loader\n"
-            "    load = Loader.from_backend(...)\n\n"
-            "Related: https://github.com/vega/altair/pull/3631#issuecomment-2480832609",
-            UserWarning,
-            stacklevel=3,
-        )
         return load
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
