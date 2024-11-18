@@ -86,7 +86,7 @@ Use for more exhaustive tests that require many requests.
 def polars_loader(
     tmp_path_factory: pytest.TempPathFactory,
 ) -> Loader[pl.DataFrame, pl.LazyFrame]:
-    data = Loader.with_backend("polars")
+    data = Loader.from_backend("polars")
     data.cache_dir = tmp_path_factory.mktemp("loader-cache-polars")
     return data
 
@@ -112,14 +112,14 @@ def metadata_columns() -> frozenset[str]:
 
 
 @backends
-def test_loader_with_backend(backend: _Backend) -> None:
-    data = Loader.with_backend(backend)
+def test_loader_from_backend(backend: _Backend) -> None:
+    data = Loader.from_backend(backend)
     assert data._reader._name == backend
 
 
 @backends
 def test_loader_url(backend: _Backend) -> None:
-    data = Loader.with_backend(backend)
+    data = Loader.from_backend(backend)
     dataset_name = "volcano"
     pattern = re.compile(
         rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{dataset_name}\..+"
@@ -185,7 +185,7 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_loader_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv(CACHE_ENV_VAR, raising=False)
 
-    data = Loader.with_backend(backend)
+    data = Loader.from_backend(backend)
     frame = data("stocks", ".csv")
     assert is_into_dataframe(frame)
     nw_frame = nw.from_native(frame)
@@ -208,7 +208,7 @@ def test_missing_dependency_single(
             flags=re.DOTALL,
         ),
     ):
-        Loader.with_backend(backend)
+        Loader.from_backend(backend)
 
 
 @pytest.mark.parametrize("backend", ["polars[pyarrow]", "pandas[pyarrow]"])
@@ -227,7 +227,7 @@ def test_missing_dependency_multi(
             flags=re.DOTALL,
         ),
     ):
-        Loader.with_backend(backend)
+        Loader.from_backend(backend)
 
 
 @backends
@@ -239,7 +239,7 @@ def test_dataset_not_found(backend: _Backend) -> None:
     """
     import polars as pl
 
-    data = Loader.with_backend(backend)
+    data = Loader.from_backend(backend)
     real_name: Literal["disasters"] = "disasters"
     real_suffix: Literal[".csv"] = ".csv"
     real_tag: Literal["v1.14.0"] = "v1.14.0"
@@ -344,7 +344,7 @@ def test_reader_cache(
 
     monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
 
-    data = Loader.with_backend(backend)
+    data = Loader.from_backend(backend)
     cache_dir = data.cache_dir
     assert cache_dir is not None
     assert cache_dir == tmp_path
@@ -432,7 +432,7 @@ def test_pyarrow_read_json(
     if fallback is None:
         monkeypatch.setitem(sys.modules, "polars", None)
 
-    data = Loader.with_backend("pyarrow")
+    data = Loader.from_backend("pyarrow")
 
     data(name, ".json")
 
@@ -497,7 +497,7 @@ def _raise_exception(e: type[Exception], *args: Any, **kwds: Any):
 def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     from polars.testing import assert_frame_equal
 
-    data = Loader.with_backend("polars")
+    data = Loader.from_backend("polars")
     data.cache_dir = tmp_path
 
     data("londonCentroids")
@@ -536,7 +536,7 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
 @backends
 def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -> None:
     """Ensure all backends will query the same column names."""
-    data = Loader.with_backend(backend)
+    data = Loader.from_backend(backend)
     fn = data._reader.scan_fn(_METADATA)
     native = fn(_METADATA)
     schema_columns = nw.from_native(native).lazy().collect().columns

@@ -34,7 +34,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         from altair.datasets import Loader
 
-        data = Loader.with_backend("polars")
+        data = Loader.from_backend("polars")
         >>> data  # doctest: +SKIP
         Loader[polars]
 
@@ -46,24 +46,24 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
     @overload
     @classmethod
-    def with_backend(
+    def from_backend(
         cls, backend_name: Literal["polars", "polars[pyarrow]"], /
     ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...
 
     @overload
     @classmethod
-    def with_backend(
+    def from_backend(
         cls, backend_name: Literal["pandas", "pandas[pyarrow]"], /
     ) -> Loader[pd.DataFrame, pd.DataFrame]: ...
 
     @overload
     @classmethod
-    def with_backend(
+    def from_backend(
         cls, backend_name: Literal["pyarrow"], /
     ) -> Loader[pa.Table, pa.Table]: ...
 
     @classmethod
-    def with_backend(cls, backend_name: _Backend, /) -> Loader[Any, Any]:
+    def from_backend(cls, backend_name: _Backend, /) -> Loader[Any, Any]:
         """
         Initialize a new loader, with the specified backend.
 
@@ -94,7 +94,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             from altair.datasets import Loader
 
-            data = Loader.with_backend("polars")
+            data = Loader.from_backend("polars")
             cars = data("cars")
 
             >>> type(cars)  # doctest: +SKIP
@@ -102,7 +102,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pandas``:
 
-            data = Loader.with_backend("pandas")
+            data = Loader.from_backend("pandas")
             cars = data("cars")
 
             >>> type(cars)  # doctest: +SKIP
@@ -110,7 +110,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pandas``, backed by ``pyarrow`` dtypes:
 
-            data = Loader.with_backend("pandas[pyarrow]")
+            data = Loader.from_backend("pandas[pyarrow]")
             cars = data("cars", tag="v1.29.0")
 
             >>> type(cars)  # doctest: +SKIP
@@ -170,7 +170,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             from altair.datasets import Loader
 
-            data = Loader.with_backend("polars")
+            data = Loader.from_backend("polars")
             source = data("stocks", tag="v2.10.0")
 
             >>> source.columns  # doctest: +SKIP
@@ -198,7 +198,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pandas``:
 
-            data = Loader.with_backend("pandas")
+            data = Loader.from_backend("pandas")
             source = data("stocks", tag="v2.10.0")
 
             >>> source.columns  # doctest: +SKIP
@@ -222,7 +222,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pyarrow``:
 
-            data = Loader.with_backend("pyarrow")
+            data = Loader.from_backend("pyarrow")
             source = data("stocks", tag="v2.10.0")
 
             >>> source.column_names  # doctest: +SKIP
@@ -276,7 +276,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             import altair as alt
             from altair.datasets import Loader
 
-            data = Loader.with_backend("polars")
+            data = Loader.from_backend("polars")
             >>> data.url("cars", tag="v2.9.0")  # doctest: +SKIP
             'https://cdn.jsdelivr.net/npm/vega-datasets@v2.9.0/data/cars.json'
 
@@ -302,7 +302,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             from altair.datasets import Loader
 
-            data = Loader.with_backend("polars")
+            data = Loader.from_backend("polars")
             data.cache_dir = Path.home() / ".altair_cache"
 
             >>> data.cache_dir.relative_to(Path.home()).as_posix()  # doctest: +SKIP
@@ -337,7 +337,7 @@ def __getattr__(name):
         warnings.warn(
             "For full IDE completions, instead use:\n\n"
             "    from altair.datasets import Loader\n"
-            "    load = Loader.with_backend(...)\n\n"
+            "    load = Loader.from_backend(...)\n\n"
             "Related: https://github.com/vega/altair/pull/3631#issuecomment-2480832609",
             UserWarning,
             stacklevel=3,
