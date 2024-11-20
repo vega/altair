@@ -141,11 +141,11 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
 
         priority: Sequence[_Backend] = "polars", "pandas[pyarrow]", "pandas", "pyarrow"
     """
-    import altair.datasets
+    import altair.datasets._loader
     from altair.datasets import load
 
     assert load._reader._name == "polars"
-    monkeypatch.delattr(altair.datasets, "load")
+    monkeypatch.delattr(altair.datasets._loader, "load", raising=False)
 
     monkeypatch.setitem(sys.modules, "polars", None)
 
@@ -154,20 +154,20 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
     if find_spec("pyarrow") is None:
         # NOTE: We can end the test early for the CI job that removes `pyarrow`
         assert load._reader._name == "pandas"
-        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.delattr(altair.datasets._loader, "load")
         monkeypatch.setitem(sys.modules, "pandas", None)
         with pytest.raises(NotImplementedError, match="no.+backend"):
             from altair.datasets import load
     else:
         assert load._reader._name == "pandas[pyarrow]"
-        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.delattr(altair.datasets._loader, "load")
 
         monkeypatch.setitem(sys.modules, "pyarrow", None)
 
         from altair.datasets import load
 
         assert load._reader._name == "pandas"
-        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.delattr(altair.datasets._loader, "load")
 
         monkeypatch.setitem(sys.modules, "pandas", None)
         monkeypatch.delitem(sys.modules, "pyarrow")
@@ -175,7 +175,7 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
         from altair.datasets import load
 
         assert load._reader._name == "pyarrow"
-        monkeypatch.delattr(altair.datasets, "load")
+        monkeypatch.delattr(altair.datasets._loader, "load")
         monkeypatch.setitem(sys.modules, "pyarrow", None)
 
         with pytest.raises(NotImplementedError, match="no.+backend"):
@@ -184,11 +184,11 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
 
 @requires_pyarrow
 def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
-    import altair.datasets
+    import altair.datasets._loader
 
-    monkeypatch.delattr(altair.datasets, "load", raising=False)
+    monkeypatch.delattr(altair.datasets._loader, "load", raising=False)
+    from altair.datasets import load
 
-    load = altair.datasets.load
     assert load._reader._name == "polars"
 
     default = load("cars")
@@ -202,6 +202,47 @@ def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
     assert is_pandas_dataframe(df_pandas)
     assert is_polars_dataframe(default_2)
     assert is_polars_dataframe(df_polars)
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "jobs",
+        "la-riots",
+        "londonBoroughs",
+        "londonCentroids",
+        "londonTubeLines",
+        "lookup_groups",
+        "lookup_people",
+        "miserables",
+        "monarchs",
+        "movies",
+        "normal-2d",
+        "obesity",
+        "ohlc",
+        "penguins",
+        "platformer-terrain",
+        "points",
+        "political-contributions",
+        "population",
+        "population_engineers_hurricanes",
+        "seattle-temps",
+        "seattle-weather",
+        "seattle-weather-hourly-normals",
+        "sf-temps",
+        "sp500",
+        "sp500-2000",
+        "stocks",
+        "udistrict",
+    ],
+)
+def test_url(name: Dataset) -> None:
+    from altair.datasets import url
+
+    pattern = re.compile(rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{name}\..+")
+    result = url(name)
+    assert isinstance(result, str)
+    assert pattern.match(result) is not None
 
 
 @backends
