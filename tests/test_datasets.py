@@ -159,7 +159,7 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
         assert load._reader._name == "pandas"
         monkeypatch.delattr(altair.datasets._loader, "load")
         monkeypatch.setitem(sys.modules, "pandas", None)
-        with pytest.raises(NotImplementedError, match="no.+backend"):
+        with pytest.raises(AltairDatasetsError, match="no.+backend"):
             from altair.datasets import load
     else:
         assert load._reader._name == "pandas[pyarrow]"
