@@ -83,6 +83,9 @@ __all__ = ["backend"]
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
 
 
+class AltairDatasetsError(Exception): ...
+
+
 class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     """
     Describes basic IO for remote & local tabular resources.
@@ -502,7 +505,7 @@ def infer_backend(
     if reader := next(it, None):
         return reader
     msg = f"Found no supported backend, searched:\n" f"{priority!r}"
-    raise NotImplementedError(msg)
+    raise AltairDatasetsError(msg)
 
 
 @overload

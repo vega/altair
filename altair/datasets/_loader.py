@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Generic, final, overload
+from pathlib import Path
+from typing import TYPE_CHECKING, Generic, TypeVar, final, get_args, overload
 
 from narwhals.typing import IntoDataFrameT, IntoFrameT
 
@@ -8,8 +9,8 @@ from altair.datasets._readers import _Reader, backend
 
 if TYPE_CHECKING:
     import sys
-    from pathlib import Path
-    from typing import Any, Literal
+    from collections.abc import MutableMapping
+    from typing import Any, Final, Literal
 
     import pandas as pd
     import polars as pl
@@ -23,7 +24,14 @@ if TYPE_CHECKING:
     from altair.datasets._readers import _Backend
     from altair.datasets._typing import Dataset, Extension, Version
 
+
 __all__ = ["Loader", "load"]
+
+_KT = TypeVar("_KT")
+_VT = TypeVar("_VT")
+_T = TypeVar("_T")
+
+_URL: Final[Path] = Path(__file__).parent / "_metadata" / "url.csv.gz"
 
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
@@ -377,6 +385,69 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
             return self.from_backend(backend)(name, suffix, tag=tag, **kwds)
 
 
+class UrlCache(Generic[_KT, _VT]):
+    """
+    `csv`_, `gzip`_ -based, lazy url lookup.
+
+    Operates on a subset of available datasets:
+    - Only the latest version
+    - Excludes `.parquet`, which `cannot be read via url`_
+    - Name collisions are pre-resolved
+        - Only provide the smallest (e.g. ``weather.json`` instead of ``weather.csv``)
+
+    .. _csv:
+        https://docs.python.org/3/library/csv.html
+    .. _gzip:
+        https://docs.python.org/3/library/gzip.html
+    .. _cannot be read via url:
+        https://github.com/vega/vega/issues/3961
+    """
+
+    def __init__(
+        self,
+        fp: Path,
+        /,
+        *,
+        columns: tuple[str, str] = ("dataset_name", "url_npm"),
+        tp: type[MutableMapping[_KT, _VT]] = dict["_KT", "_VT"],
+    ) -> None:
+        self.fp: Path = fp
+        self.columns: tuple[str, str] = columns
+        self._mapping: MutableMapping[_KT, _VT] = tp()
+
+    def read(self) -> Any:
+        import csv
+        import gzip
+
+        with gzip.open(self.fp, mode="rb") as f:
+            b_lines = f.readlines()
+        reader = csv.reader((bs.decode() for bs in b_lines), dialect=csv.unix_dialect)
+        header = tuple(next(reader))
+        if header != self.columns:
+            msg = f"Expected header to match {self.columns!r},\n" f"but got: {header!r}"
+            raise ValueError(msg)
+        return dict(reader)
+
+    def __getitem__(self, key: _KT, /) -> _VT:
+        if url := self.get(key, None):
+            return url
+
+        from altair.datasets._typing import Dataset
+
+        if key in get_args(Dataset):
+            msg = f"{key!r} cannot be loaded via url."
+            raise TypeError(msg)
+        else:
+            msg = f"{key!r} does not refer to a known dataset."
+            raise TypeError(msg)
+
+    def get(self, key: _KT, default: _T) -> _VT | _T:
+        if not self._mapping:
+            self._mapping.update(self.read())
+        return self._mapping.get(key, default)
+
+
+url_cache: UrlCache[Dataset | LiteralString, str] = UrlCache(_URL)
 load: _Load[Any, Any]
 
 

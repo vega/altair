@@ -15,12 +15,15 @@ The core interface of this package is provided by::
 
 from __future__ import annotations
 
+import gzip
 import json
 import types
+from io import BytesIO
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
 import polars as pl
+from polars import col
 
 from tools.codemod import ruff
 from tools.datasets.github import GitHub
@@ -107,6 +110,7 @@ class Application:
             }
         )
         self._fp_typing: Path = out_fp_typing
+        self._fp_url: Path = out_dir_altair / "url.csv.gz"
 
     @property
     def github(self) -> GitHub:
@@ -135,6 +139,14 @@ class Application:
         gh_trees = self.github.refresh_trees(gh_tags)
         self.write_parquet(gh_trees, self._paths["gh_trees"])
 
+        npm_urls_min = (
+            gh_trees.lazy()
+            .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
+            .filter(col("size") == col("size").min().over("dataset_name"))
+            .select("dataset_name", "url_npm")
+        )
+        self.write_csv_gzip(npm_urls_min, self._fp_url)
+
         if include_typing:
             self.generate_typing(self._fp_typing)
         return gh_trees
@@ -158,6 +170,17 @@ class Application:
             raise TypeError(msg)
         else:
             return self._paths[name]
+
+    def write_csv_gzip(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
+        if fp.suffix != ".gz":
+            fp = fp.with_suffix(".csv.gz")
+        if not fp.exists():
+            fp.touch()
+        df = frame.lazy().collect()
+        buf = BytesIO()
+        with gzip.open(fp, mode="wb") as f:
+            df.write_csv(buf)
+            f.write(buf.getbuffer())
 
     def write_parquet(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
         """Write ``frame`` to ``fp``, with some extra safety."""

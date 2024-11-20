@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import datetime as dt
 import re
 import sys
@@ -18,8 +19,8 @@ from narwhals.dependencies import (
 )
 from narwhals.stable import v1 as nw
 
-from altair.datasets import Loader
-from altair.datasets._readers import _METADATA
+from altair.datasets import Loader, url
+from altair.datasets._readers import _METADATA, AltairDatasetsError
 from altair.datasets._typing import Dataset, Extension, Metadata, Version
 from tests import skip_requires_pyarrow, slow
 
@@ -115,6 +116,13 @@ def metadata_columns() -> frozenset[str]:
     )
 
 
+def match_url(name: Dataset, url: str) -> bool:
+    return (
+        re.match(rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{name}\..+", url)
+        is not None
+    )
+
+
 @backends
 def test_loader_from_backend(backend: _Backend) -> None:
     data = Loader.from_backend(backend)
@@ -124,13 +132,8 @@ def test_loader_from_backend(backend: _Backend) -> None:
 @backends
 def test_loader_url(backend: _Backend) -> None:
     data = Loader.from_backend(backend)
-    dataset_name = "volcano"
-    pattern = re.compile(
-        rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{dataset_name}\..+"
-    )
-    url = data.url(dataset_name)
-    assert isinstance(url, str)
-    assert pattern.match(url) is not None
+    dataset_name: Dataset = "volcano"
+    assert match_url(dataset_name, data.url(dataset_name))
 
 
 def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -178,7 +181,7 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delattr(altair.datasets._loader, "load")
         monkeypatch.setitem(sys.modules, "pyarrow", None)
 
-        with pytest.raises(NotImplementedError, match="no.+backend"):
+        with pytest.raises(AltairDatasetsError, match="no.+backend"):
             from altair.datasets import load
 
 
@@ -239,10 +242,49 @@ def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_url(name: Dataset) -> None:
     from altair.datasets import url
 
-    pattern = re.compile(rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{name}\..+")
-    result = url(name)
-    assert isinstance(result, str)
-    assert pattern.match(result) is not None
+    assert match_url(name, url(name))
+
+
+def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
+    import altair.datasets
+    from altair.datasets._loader import url_cache
+
+    monkeypatch.setitem(sys.modules, "polars", None)
+    monkeypatch.setitem(sys.modules, "pandas", None)
+    monkeypatch.setitem(sys.modules, "pyarrow", None)
+
+    assert url_cache._mapping == {}
+
+    with contextlib.suppress(AltairDatasetsError):
+        monkeypatch.delattr(altair.datasets._loader, "load", raising=False)
+    with pytest.raises(AltairDatasetsError):
+        from altair.datasets import load as load
+
+    assert match_url("jobs", url("jobs"))
+
+    assert url_cache._mapping != {}
+
+    assert match_url("cars", url("cars"))
+    assert match_url("stocks", url("stocks"))
+    assert match_url("countries", url("countries"))
+    assert match_url("crimea", url("crimea"))
+    assert match_url("disasters", url("disasters"))
+    assert match_url("driving", url("driving"))
+    assert match_url("earthquakes", url("earthquakes"))
+    assert match_url("flare", url("flare"))
+    assert match_url("flights-10k", url("flights-10k"))
+    assert match_url("flights-200k", url("flights-200k"))
+
+    with pytest.raises(TypeError, match="cannot be loaded via url"):
+        url("climate")
+
+    with pytest.raises(TypeError, match="cannot be loaded via url"):
+        url("flights-3m")
+
+    with pytest.raises(
+        TypeError, match="'fake data' does not refer to a known dataset"
+    ):
+        url("fake data")
 
 
 @backends

@@ -78,9 +78,18 @@ def url(
     - https://github.com/vega/altair/discussions/3150#discussioncomment-11280516
     - https://github.com/vega/altair/pull/3631#discussion_r1846662053
     """
-    from altair.datasets._loader import load
+    from altair.datasets._readers import AltairDatasetsError
 
-    return load.url(name, suffix, tag=tag)
+    try:
+        from altair.datasets._loader import load
+
+        url = load.url(name, suffix, tag=tag)
+    except AltairDatasetsError:
+        from altair.datasets._loader import url_cache
+
+        url = url_cache[name]
+
+    return url
 
 
 def __getattr__(name):
