@@ -120,7 +120,9 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
-    def refresh(self, *, include_typing: bool = False) -> pl.DataFrame:
+    def refresh(
+        self, *, include_typing: bool = False, include_csv: bool = False
+    ) -> pl.DataFrame:
         """
         Update and sync all dataset metadata files.
 
@@ -139,13 +141,16 @@ class Application:
         gh_trees = self.github.refresh_trees(gh_tags)
         self.write_parquet(gh_trees, self._paths["gh_trees"])
 
-        npm_urls_min = (
-            gh_trees.lazy()
-            .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
-            .filter(col("size") == col("size").min().over("dataset_name"))
-            .select("dataset_name", "url_npm")
-        )
-        self.write_csv_gzip(npm_urls_min, self._fp_url)
+        if include_csv:
+            # BUG: Non-deterministic
+            # https://github.com/vega/altair/actions/runs/11942284568/job/33288974210?pr=3631
+            npm_urls_min = (
+                gh_trees.lazy()
+                .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
+                .filter(col("size") == col("size").min().over("dataset_name"))
+                .select("dataset_name", "url_npm")
+            )
+            self.write_csv_gzip(npm_urls_min, self._fp_url)
 
         if include_typing:
             self.generate_typing(self._fp_typing)
