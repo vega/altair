@@ -390,7 +390,6 @@ def spec_to_html(
         OLLI_ADAPTERS_VERSION = "2"
         render_kwargs["olli_version"] = OLLI_VERSION
         render_kwargs["olli_adapters_version"] = OLLI_ADAPTERS_VERSION
-        #render_kwargs["use_olli"] = True
 
     jinja_template = TEMPLATES.get(template, template)  # type: ignore[arg-type]
     if not hasattr(jinja_template, "render"):
