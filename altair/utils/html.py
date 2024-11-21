@@ -117,22 +117,12 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     if (outputDiv.id !== "{{ output_div }}") {
       outputDiv = document.getElementById("{{ output_div }}");
     }
-    {%- if use_olli %}
-    const olliDiv = document.createElement("div");
-    const vegaDiv = document.createElement("div");
-    outputDiv.appendChild(vegaDiv);
-    outputDiv.appendChild(olliDiv);
-    outputDiv = vegaDiv;
-    {%- endif %}
+
     const paths = {
       "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
       "vega-lib": "{{ base_url }}/vega-lib?noext",
       "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
       "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
-      {%- if use_olli %}
-      "olli": "{{ base_url }}/olli@{{ olli_version }}?noext",
-      "olli-adapters": "{{ base_url }}/olli-adapters@{{ olli_adapters_version }}?noext",
-      {%- endif %}
     };
 
     function maybeLoadScript(lib, version) {
@@ -157,41 +147,21 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
       throw err;
     }
 
-    function displayChart(vegaEmbed, olli, olliAdapters) {
+    function displayChart(vegaEmbed) {
       vegaEmbed(outputDiv, spec, embedOpt)
         .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
-      {%- if use_olli %}
-      olliAdapters.VegaLiteAdapter(spec).then(olliVisSpec => {
-        // It's a function if it was loaded via maybeLoadScript below.
-        // If it comes from require, it's a module and we access olli.olli
-        const olliFunc = typeof olli === 'function' ? olli : olli.olli;
-        const olliRender = olliFunc(olliVisSpec);
-        olliDiv.append(olliRender);
-      });
-      {%- endif %}
     }
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
       let deps = ["vega-embed"];
-      {%- if use_olli %}
-      deps.push("olli", "olli-adapters");
-      {%- endif %}
       require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
       maybeLoadScript("vega", "{{vega_version}}")
         .then(() => maybeLoadScript("vega-lite", "{{vegalite_version}}"))
         .then(() => maybeLoadScript("vega-embed", "{{vegaembed_version}}"))
-        {%- if use_olli %}
-        .then(() => maybeLoadScript("olli", "{{olli_version}}"))
-        .then(() => maybeLoadScript("olli-adapters", "{{olli_adapters_version}}"))
-        {%- endif %}
         .catch(showError)
-        {%- if use_olli %}
-        .then(() => displayChart(vegaEmbed, olli, OlliAdapters));
-        {%- else %}
         .then(() => displayChart(vegaEmbed));
-        {%- endif %}
     }
   })({{ spec }}, {{ embed_options }});
 </script>
@@ -239,11 +209,98 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 )
 
 
+HTML_TEMPLATE_OLLI = jinja2.Template(
+    """
+<style>
+  #{{ output_div }}.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #{{ output_div }}.vega-embed details,
+  #{{ output_div }}.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="{{ output_div }}"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "{{ output_div }}") {
+      outputDiv = document.getElementById("{{ output_div }}");
+    }
+    const olliDiv = document.createElement("div");
+    const vegaDiv = document.createElement("div");
+    outputDiv.appendChild(vegaDiv);
+    outputDiv.appendChild(olliDiv);
+    outputDiv = vegaDiv;
+
+    const paths = {
+      "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
+      "vega-lib": "{{ base_url }}/vega-lib?noext",
+      "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
+      "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+      "olli": "{{ base_url }}/olli@{{ olli_version }}?noext",
+      "olli-adapters": "{{ base_url }}/olli-adapters@{{ olli_adapters_version }}?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed, olli, olliAdapters) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+      olliAdapters.VegaLiteAdapter(spec).then(olliVisSpec => {
+        const olliFunc = typeof olli === 'function' ? olli : olli.olli;
+        const olliRender = olliFunc(olliVisSpec);
+        olliDiv.append(olliRender);
+      });
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed", "olli", "olli-adapters"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "{{vega_version}}")
+        .then(() => maybeLoadScript("vega-lite", "{{vegalite_version}}"))
+        .then(() => maybeLoadScript("vega-embed", "{{vegaembed_version}}"))
+        .then(() => maybeLoadScript("olli", "{{olli_version}}"))
+        .then(() => maybeLoadScript("olli-adapters", "{{olli_adapters_version}}"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed, olli, OlliAdapters));
+    }
+  })({{ spec }}, {{ embed_options }});
+</script>
+"""
+)
+
+
 TEMPLATES: dict[TemplateName, jinja2.Template] = {
     "standard": HTML_TEMPLATE,
     "universal": HTML_TEMPLATE_UNIVERSAL,
     "inline": INLINE_HTML_TEMPLATE,
-    "olli": HTML_TEMPLATE_UNIVERSAL,
+    "olli": HTML_TEMPLATE_OLLI,
 }
 
 
@@ -333,7 +390,7 @@ def spec_to_html(
         OLLI_ADAPTERS_VERSION = "2"
         render_kwargs["olli_version"] = OLLI_VERSION
         render_kwargs["olli_adapters_version"] = OLLI_ADAPTERS_VERSION
-        render_kwargs["use_olli"] = True
+        #render_kwargs["use_olli"] = True
 
     jinja_template = TEMPLATES.get(template, template)  # type: ignore[arg-type]
     if not hasattr(jinja_template, "render"):
