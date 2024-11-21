@@ -73,9 +73,8 @@ if TYPE_CHECKING:
     _Pandas: TypeAlias = Literal["pandas"]
     _PyArrow: TypeAlias = Literal["pyarrow"]
     _ConcreteT = TypeVar("_ConcreteT", _Polars, _Pandas, _PyArrow)
-    _PolarsAny: TypeAlias = Literal[_Polars, "polars[pyarrow]"]
     _PandasAny: TypeAlias = Literal[_Pandas, "pandas[pyarrow]"]
-    _Backend: TypeAlias = Literal[_PolarsAny, _PandasAny, _PyArrow]
+    _Backend: TypeAlias = Literal[_Polars, _PandasAny, _PyArrow]
 
 
 __all__ = ["backend"]
@@ -332,25 +331,6 @@ class _PolarsReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
         self._scan_fn = {".parquet": pl.scan_parquet}
 
 
-class _PolarsPyArrowReader(_Reader["pl.DataFrame", "pl.LazyFrame"]):
-    def __init__(self, name: Literal["polars[pyarrow]"], /) -> None:
-        _pl, _pa = _requirements(name)
-        self._name = name
-        if not TYPE_CHECKING:
-            pl = self._import(_pl)
-            pa = self._import(_pa)  # noqa: F841
-        self._read_fn = {
-            ".csv": partial(pl.read_csv, use_pyarrow=True, try_parse_dates=True),
-            ".json": _pl_read_json_roundtrip,
-            ".tsv": partial(
-                pl.read_csv, separator="\t", use_pyarrow=True, try_parse_dates=True
-            ),
-            ".arrow": partial(pl.read_ipc, use_pyarrow=True),
-            ".parquet": partial(pl.read_parquet, use_pyarrow=True),
-        }
-        self._scan_fn = {".parquet": pl.scan_parquet}
-
-
 class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
     """
     Reader backed by `pyarrow.Table`_.
@@ -509,7 +489,7 @@ def infer_backend(
 
 
 @overload
-def backend(name: _PolarsAny, /) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
+def backend(name: _Polars, /) -> _Reader[pl.DataFrame, pl.LazyFrame]: ...
 
 
 @overload
@@ -524,8 +504,6 @@ def backend(name: _Backend, /) -> _Reader[Any, Any]:
     """Reader initialization dispatcher."""
     if name == "polars":
         return _PolarsReader(name)
-    elif name == "polars[pyarrow]":
-        return _PolarsPyArrowReader(name)
     elif name == "pandas[pyarrow]":
         return _PandasPyArrowReader(name)
     elif name == "pandas":
@@ -548,10 +526,6 @@ def _requirements(s: _ConcreteT, /) -> _ConcreteT: ...
 def _requirements(s: Literal["pandas[pyarrow]"], /) -> tuple[_Pandas, _PyArrow]: ...
 
 
-@overload
-def _requirements(s: Literal["polars[pyarrow]"], /) -> tuple[_Polars, _PyArrow]: ...
-
-
 def _requirements(s: _Backend, /):
     concrete: set[Literal[_Polars, _Pandas, _PyArrow]] = {"polars", "pandas", "pyarrow"}
     if s in concrete:
@@ -560,7 +534,7 @@ def _requirements(s: _Backend, /):
         from packaging.requirements import Requirement
 
         req = Requirement(s)
-        supports_extras: set[Literal[_Polars, _Pandas]] = {"polars", "pandas"}
+        supports_extras: set[Literal[_Pandas]] = {"pandas"}
         if req.name in supports_extras:
             name = req.name
             if (extras := req.extras) and extras == {"pyarrow"}:

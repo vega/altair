@@ -55,7 +55,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @overload
     @classmethod
     def from_backend(
-        cls, backend_name: Literal["polars", "polars[pyarrow]"], /
+        cls, backend_name: Literal["polars"], /
     ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...
 
     @overload
@@ -81,7 +81,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             DataFrame package/config used to return data.
 
             * *polars*: Using `polars defaults`_
-            * *polars[pyarrow]*: Using ``use_pyarrow=True``
             * *pandas*: Using `pandas defaults`_.
             * *pandas[pyarrow]*: Using ``dtype_backend="pyarrow"``
             * *pyarrow*: (*Experimental*)
@@ -347,7 +346,7 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         suffix: Extension | None = ...,
         /,
         tag: Version | None = ...,
-        backend: Literal["polars", "polars[pyarrow]"] = ...,
+        backend: Literal["polars"] = ...,
         **kwds: Any,
     ) -> pl.DataFrame: ...
     @overload

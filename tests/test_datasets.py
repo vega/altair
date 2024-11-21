@@ -68,7 +68,6 @@ backends: pytest.MarkDecorator = pytest.mark.parametrize(
                 ),
             ),
         ),
-        pytest.param("polars[pyarrow]", marks=requires_pyarrow),
         pytest.param("pandas[pyarrow]", marks=requires_pyarrow),
         pytest.param("pyarrow", marks=requires_pyarrow),
     ],
@@ -302,7 +301,7 @@ def test_loader_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None
 def test_missing_dependency_single(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    if backend in {"polars[pyarrow]", "pandas[pyarrow]"}:
+    if backend == "pandas[pyarrow]":
         pytest.skip("Testing single dependency backends only")
 
     monkeypatch.setitem(sys.modules, backend, None)
@@ -317,7 +316,7 @@ def test_missing_dependency_single(
         Loader.from_backend(backend)
 
 
-@pytest.mark.parametrize("backend", ["polars[pyarrow]", "pandas[pyarrow]"])
+@pytest.mark.parametrize("backend", ["pandas[pyarrow]"])
 @skip_requires_pyarrow
 def test_missing_dependency_multi(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch
