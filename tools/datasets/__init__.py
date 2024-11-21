@@ -172,6 +172,17 @@ class Application:
             return self._paths[name]
 
     def write_csv_gzip(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
+        """
+        Write ``frame`` as a `gzip`_ compressed `csv`_ file.
+
+        - *Much smaller* than a regular ``.csv``.
+        - Still readable using ``stdlib`` modules.
+
+        .. _gzip:
+            https://docs.python.org/3/library/gzip.html
+        .. _csv:
+            https://docs.python.org/3/library/csv.html
+        """
         if fp.suffix != ".gz":
             fp = fp.with_suffix(".csv.gz")
         if not fp.exists():
