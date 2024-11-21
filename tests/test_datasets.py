@@ -86,6 +86,19 @@ Use for more exhaustive tests that require many requests.
 """
 
 
+@pytest.fixture
+def is_flaky_datasets(request: pytest.FixtureRequest) -> bool:
+    mark_filter = request.config.getoption("-m", None)  # pyright: ignore[reportArgumentType]
+    if mark_filter is None:
+        return False
+    elif mark_filter == "":
+        return True
+    elif isinstance(mark_filter, str):
+        return False
+    else:
+        raise TypeError(mark_filter)
+
+
 @pytest.fixture(scope="session")
 def polars_loader(
     tmp_path_factory: pytest.TempPathFactory,
@@ -184,6 +197,20 @@ def test_load(monkeypatch: pytest.MonkeyPatch) -> None:
             from altair.datasets import load
 
 
+# HACK: Using a fixture to get a command line option
+# https://docs.pytest.org/en/stable/example/simple.html#pass-different-values-to-a-test-function-depending-on-command-line-options
+@pytest.mark.xfail(
+    is_flaky_datasets,  # type: ignore
+    reason=(
+        "'pandas[pyarrow]' seems to break locally when running:\n"
+        ">>> pytest -p no:randomly -n logical tests -k test_datasets -m ''\n\n"
+        "Possibly related:\n"
+        "    https://github.com/modin-project/modin/issues/951\n"
+        "    https://github.com/pandas-dev/pandas/blob/1c986d6213904fd7d9acc5622dc91d029d3f1218/pandas/io/parquet.py#L164\n"
+        "    https://github.com/pandas-dev/pandas/blob/1c986d6213904fd7d9acc5622dc91d029d3f1218/pandas/io/parquet.py#L257\n"
+    ),
+    raises=AttributeError,
+)
 @requires_pyarrow
 def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
     import altair.datasets._loader
