@@ -7,6 +7,7 @@ import sys
 from functools import partial
 from importlib import import_module
 from importlib.util import find_spec
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast, get_args
 from urllib.error import URLError
 
@@ -21,7 +22,7 @@ from narwhals.stable import v1 as nw
 
 from altair.datasets import Loader, url
 from altair.datasets._readers import _METADATA, AltairDatasetsError
-from altair.datasets._typing import Dataset, Extension, Metadata, Version
+from altair.datasets._typing import Dataset, Extension, Metadata, Version, is_ext_read
 from tests import skip_requires_pyarrow, slow
 
 if sys.version_info >= (3, 14):
@@ -104,7 +105,7 @@ def polars_loader(
     tmp_path_factory: pytest.TempPathFactory,
 ) -> Loader[pl.DataFrame, pl.LazyFrame]:
     data = Loader.from_backend("polars")
-    data.cache_dir = tmp_path_factory.mktemp("loader-cache-polars")
+    data.cache.path = tmp_path_factory.mktemp("loader-cache-polars")
     return data
 
 
@@ -273,7 +274,7 @@ def test_url(name: Dataset) -> None:
 
 def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     import altair.datasets
-    from altair.datasets._loader import url_cache
+    from altair.datasets._cache import url_cache
 
     monkeypatch.setitem(sys.modules, "polars", None)
     monkeypatch.setitem(sys.modules, "pandas", None)
@@ -477,11 +478,11 @@ def test_reader_cache(
     monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
 
     data = Loader.from_backend(backend)
-    cache_dir = data.cache_dir
-    assert cache_dir is not None
+    assert data.cache.is_active()
+    cache_dir = data.cache.path
     assert cache_dir == tmp_path
 
-    assert tuple(cache_dir.iterdir()) == ()
+    assert tuple(data.cache) == ()
 
     # smallest csvs
     lookup_groups = data("lookup_groups", tag="v2.5.3")
@@ -489,7 +490,7 @@ def test_reader_cache(
     data("iowa-electricity", tag="v2.3.1")
     data("global-temp", tag="v2.9.0")
 
-    cached_paths = tuple(cache_dir.iterdir())
+    cached_paths = tuple(data.cache)
     assert len(cached_paths) == 4
 
     if is_polars_dataframe(lookup_groups):
@@ -504,15 +505,15 @@ def test_reader_cache(
         )
 
     assert_frame_equal(left, right)
-    assert len(tuple(cache_dir.iterdir())) == 4
-    assert cached_paths == tuple(cache_dir.iterdir())
+    assert len(tuple(data.cache)) == 4
+    assert cached_paths == tuple(data.cache)
 
     data("iowa-electricity", tag="v1.30.2")
     data("global-temp", tag="v2.8.1")
     data("global-temp", tag="v2.8.0")
 
-    assert len(tuple(cache_dir.iterdir())) == 4
-    assert cached_paths == tuple(cache_dir.iterdir())
+    assert len(tuple(data.cache)) == 4
+    assert cached_paths == tuple(data.cache)
 
     data("lookup_people", tag="v1.10.0")
     data("lookup_people", tag="v1.11.0")
@@ -522,8 +523,52 @@ def test_reader_cache(
     data("lookup_people", tag="v2.3.0")
     data("lookup_people", tag="v2.5.0-next.0")
 
-    assert len(tuple(cache_dir.iterdir())) == 4
-    assert cached_paths == tuple(cache_dir.iterdir())
+    assert len(tuple(data.cache)) == 4
+    assert cached_paths == tuple(data.cache)
+
+
+@slow
+@datasets_debug
+@backends
+def test_reader_cache_exhaustive(
+    backend: _Backend, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """
+    Fully populate and then purge the cache for all backends.
+
+    - Does not attempt to read the files
+    - Checking we can support pre-downloading and safely deleting
+    """
+    monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
+    data = Loader.from_backend(backend)
+    assert data.cache.is_active()
+    cache_dir = data.cache.path
+    assert cache_dir == tmp_path
+    assert tuple(data.cache) == ()
+
+    data.cache.download_all()
+    cached_paths = tuple(data.cache)
+    assert cached_paths != ()
+
+    # NOTE: Approximating all datasets downloaded
+    assert len(cached_paths) >= 40
+    assert all(
+        bool(fp.exists() and is_ext_read(fp.suffix) and fp.stat().st_size)
+        for fp in data.cache
+    )
+    # NOTE: Confirm this is a no-op
+    data.cache.download_all()
+    assert len(cached_paths) == len(tuple(data.cache))
+
+    # NOTE: Ensure unrelated files in the directory are not removed
+    dummy: Path = tmp_path / "dummy.json"
+    dummy.touch(exist_ok=False)
+    data.cache.clear()
+
+    remaining = tuple(tmp_path.iterdir())
+    assert len(remaining) == 1
+    assert remaining[0] == dummy
+    dummy.unlink()
 
 
 movies_fail: ParameterSet = pytest.param(
@@ -559,7 +604,7 @@ earthquakes_fail: ParameterSet = pytest.param(
 def test_pyarrow_read_json(
     fallback: _Polars | None, name: Dataset, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setenv(CACHE_ENV_VAR, "")
+    monkeypatch.delenv(CACHE_ENV_VAR, raising=False)
     monkeypatch.delitem(sys.modules, "pandas", raising=False)
     if fallback is None:
         monkeypatch.setitem(sys.modules, "polars", None)
@@ -630,7 +675,7 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
     from polars.testing import assert_frame_equal
 
     data = Loader.from_backend("polars")
-    data.cache_dir = tmp_path
+    data.cache.path = tmp_path
 
     data("londonCentroids")
     data("stocks")

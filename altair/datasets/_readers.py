@@ -9,7 +9,6 @@ Backends for ``alt.datasets.Loader``.
 
 from __future__ import annotations
 
-import os
 import urllib.request
 from collections.abc import Iterable, Mapping, Sequence
 from functools import partial
@@ -33,6 +32,7 @@ from typing import (
 import narwhals.stable.v1 as nw
 from narwhals.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
+from altair.datasets._cache import DatasetCache
 from altair.datasets._typing import EXTENSION_SUFFIXES, is_ext_read
 
 if TYPE_CHECKING:
@@ -128,7 +128,6 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     Otherwise, has no concrete meaning.
     """
 
-    _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
 
     def read_fn(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
@@ -151,8 +150,8 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         url = result["url_npm"]
         fn = self.read_fn(url)
 
-        if cache := self._cache:
-            fp = cache / (result["sha"] + result["suffix"])
+        if self.cache.is_active():
+            fp = self.cache.path / (result["sha"] + result["suffix"])
             if fp.exists() and fp.stat().st_size:
                 return fn(fp, **kwds)
             else:
@@ -211,18 +210,8 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         return frame
 
     @property
-    def _cache(self) -> Path | None:  # type: ignore[return]
-        """
-        Returns path to datasets cache, if possible.
-
-        Requires opt-in via environment variable::
-
-            Reader._ENV_VAR
-        """
-        if _dir := os.environ.get(self._ENV_VAR):
-            cache_dir = Path(_dir)
-            cache_dir.mkdir(exist_ok=True)
-            return cache_dir
+    def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
+        return DatasetCache(self)
 
     def _import(self, name: str, /) -> Any:
         if spec := find_spec(name):
