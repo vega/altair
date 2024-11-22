@@ -209,7 +209,7 @@ def sample(
             raise ValueError(msg)
         n = int(frac * len(data))
     indices = random.sample(range(len(data)), n)
-    return nw.to_native(data[indices])
+    return data[indices].to_native()
 
 
 _FormatType = Literal["csv", "json"]

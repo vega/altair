@@ -672,8 +672,8 @@ def parse_shorthand(  # noqa: C901
             if schema[unescaped_field] in {
                 nw.Object,
                 nw.Unknown,
-            } and nw.dependencies.is_pandas_dataframe(nw.to_native(data_nw)):
-                attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
+            } and nw.dependencies.is_pandas_dataframe(data_nw.to_native()):
+                attrs["type"] = infer_vegalite_type_for_pandas(column.to_native())
             else:
                 attrs["type"] = infer_vegalite_type_for_narwhals(column)
             if isinstance(attrs["type"], tuple):
