@@ -226,9 +226,14 @@ class Application:
         indent = " " * 4
         NAME = "Dataset"
         TAG = "Version"
+        LATEST = "VERSION_LATEST"
+        LATEST_TAG = f"{tags.first()!r}"
         EXT = "Extension"
         EXTENSION_TYPES = ".csv", ".json", ".tsv", ".arrow", ".parquet"
         EXTENSION_SUFFIXES = "EXTENSION_SUFFIXES"
+        EXTENSION_TYPE_TP = (
+            f"tuple[{', '.join(f'Literal[{el!r}]' for el in EXTENSION_TYPES)}]"
+        )
         EXTENSION_GUARD = "is_ext_read"
         METADATA_TD = "Metadata"
         DESCRIPTION_DEFAULT = "_description_"
@@ -318,11 +323,12 @@ class Application:
             utils.import_typing_extensions((3, 13), "TypeIs"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
-            f"__all__ = {[NAME, TAG, EXT, METADATA_TD, EXTENSION_GUARD, EXTENSION_SUFFIXES]}\n\n"
+            f"__all__ = {[NAME, TAG, EXT, METADATA_TD, EXTENSION_GUARD, EXTENSION_SUFFIXES, LATEST]}\n\n"
             f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
             f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
             f"{EXT}: TypeAlias = {utils.spell_literal(EXTENSION_TYPES)}",
-            f"{EXTENSION_SUFFIXES} = {EXTENSION_TYPES!r}",
+            f"{LATEST}: Literal[{LATEST_TAG}] = {LATEST_TAG}",
+            f"{EXTENSION_SUFFIXES}: {EXTENSION_TYPE_TP} = {EXTENSION_TYPES!r}",
             f"def {EXTENSION_GUARD}(suffix: Any) -> TypeIs[{EXT}]:\n"
             f"{indent}return suffix in set({EXTENSION_TYPES!r})\n",
             UNIVERSAL_TYPED_DICT.format(

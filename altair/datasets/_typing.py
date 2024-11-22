@@ -24,6 +24,7 @@ else:
 
 __all__ = [
     "EXTENSION_SUFFIXES",
+    "VERSION_LATEST",
     "Dataset",
     "Extension",
     "Metadata",
@@ -154,7 +155,14 @@ Version: TypeAlias = Literal[
     "v1.5.0",
 ]
 Extension: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow", ".parquet"]
-EXTENSION_SUFFIXES = (".csv", ".json", ".tsv", ".arrow", ".parquet")
+VERSION_LATEST: Literal["v2.11.0"] = "v2.11.0"
+EXTENSION_SUFFIXES: tuple[
+    Literal[".csv"],
+    Literal[".json"],
+    Literal[".tsv"],
+    Literal[".arrow"],
+    Literal[".parquet"],
+] = (".csv", ".json", ".tsv", ".arrow", ".parquet")
 
 
 def is_ext_read(suffix: Any) -> TypeIs[Extension]:
