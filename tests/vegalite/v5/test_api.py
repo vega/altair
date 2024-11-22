@@ -1723,6 +1723,18 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "numpy" not in sys.modules
 
 
+def test_polars_date_32():
+    df = pl.DataFrame(
+        {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
+    )
+    result = alt.Chart(df).mark_line().encode(x="a", y="b").to_dict()
+    assert next(iter(result["datasets"].values())) == [
+        {"a": 1, "b": "2020-01-01T00:00:00"},
+        {"a": 2, "b": "2020-01-02T00:00:00"},
+        {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
+
+
 @skip_requires_pyarrow(requires_tzdata=True)
 def test_interchange_with_date_32():
     # Test that objects which Narwhals only supports at the interchange
