@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, get_args
 
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import get_pyarrow
-from narwhals.typing import IntoDataFrameT, IntoFrameT
+from narwhals.stable.v1 import dependencies as nw_dep
+from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
 
 from altair.datasets._typing import VERSION_LATEST
 
@@ -151,7 +151,9 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             .get_column("sha_suffix")
         )
         names = set[str](
-            ser.to_list() if nw.get_native_namespace(ser) is get_pyarrow() else ser
+            ser.to_list()
+            if nw.get_native_namespace(ser) is nw_dep.get_pyarrow()
+            else ser
         )
         for fp in self:
             if fp.name in names:

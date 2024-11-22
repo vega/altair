@@ -12,13 +12,8 @@ from typing import TYPE_CHECKING, Any, cast, get_args
 from urllib.error import URLError
 
 import pytest
-from narwhals.dependencies import (
-    is_into_dataframe,
-    is_pandas_dataframe,
-    is_polars_dataframe,
-    is_pyarrow_table,
-)
 from narwhals.stable import v1 as nw
+from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader, url
 from altair.datasets._readers import _METADATA, AltairDatasetsError
@@ -227,11 +222,11 @@ def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
     default_2 = load("cars")
     df_polars = load("cars", backend="polars")
 
-    assert is_polars_dataframe(default)
-    assert is_pyarrow_table(df_pyarrow)
-    assert is_pandas_dataframe(df_pandas)
-    assert is_polars_dataframe(default_2)
-    assert is_polars_dataframe(df_polars)
+    assert nw_dep.is_polars_dataframe(default)
+    assert nw_dep.is_pyarrow_table(df_pyarrow)
+    assert nw_dep.is_pandas_dataframe(df_pandas)
+    assert nw_dep.is_polars_dataframe(default_2)
+    assert nw_dep.is_polars_dataframe(df_polars)
 
 
 @pytest.mark.parametrize(
@@ -320,7 +315,7 @@ def test_loader_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None
 
     data = Loader.from_backend(backend)
     frame = data("stocks", ".csv")
-    assert is_into_dataframe(frame)
+    assert nw_dep.is_into_dataframe(frame)
     nw_frame = nw.from_native(frame)
     assert set(nw_frame.columns) == {"symbol", "date", "price"}
 
@@ -493,7 +488,7 @@ def test_reader_cache(
     cached_paths = tuple(data.cache)
     assert len(cached_paths) == 4
 
-    if is_polars_dataframe(lookup_groups):
+    if nw_dep.is_polars_dataframe(lookup_groups):
         left, right = (
             lookup_groups,
             cast(pl.DataFrame, data("lookup_groups", tag="v2.5.3")),
@@ -664,7 +659,7 @@ def test_all_datasets(
 ) -> None:
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
     frame = polars_loader(name, suffix, tag=tag)
-    assert is_polars_dataframe(frame)
+    assert nw_dep.is_polars_dataframe(frame)
 
 
 def _raise_exception(e: type[Exception], *args: Any, **kwds: Any):
@@ -698,7 +693,7 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
 
     # Now we can get a cache-hit
     frame = data("birdstrikes")
-    assert is_polars_dataframe(frame)
+    assert nw_dep.is_polars_dataframe(frame)
     assert len(tuple(tmp_path.iterdir())) == 4
 
     with monkeypatch.context() as mp:

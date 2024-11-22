@@ -30,7 +30,7 @@ from typing import (
 )
 
 import narwhals.stable.v1 as nw
-from narwhals.typing import IntoDataFrameT, IntoExpr, IntoFrameT
+from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
 from altair.datasets._cache import DatasetCache
 from altair.datasets._typing import EXTENSION_SUFFIXES, is_ext_read

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Generic, final, overload
 
-from narwhals.typing import IntoDataFrameT, IntoFrameT
+from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
 
 from altair.datasets._readers import _Reader, backend
 
