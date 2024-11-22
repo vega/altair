@@ -280,7 +280,7 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            data = func(nw.to_native(data, strict=False))
+            data = func(nw.to_native(data, pass_through=True))
 
     # convert string input to a URLData
     elif isinstance(data, str):

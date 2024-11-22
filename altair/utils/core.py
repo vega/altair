@@ -16,8 +16,7 @@ from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, overloa
 
 import jsonschema
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import get_polars, is_pandas_dataframe
-from narwhals.typing import IntoDataFrame
+from narwhals.stable.v1.typing import IntoDataFrame
 
 from altair.utils.schemapi import SchemaBase, SchemaLike, Undefined
 
@@ -35,7 +34,7 @@ if TYPE_CHECKING:
     import typing as t
 
     import pandas as pd
-    from narwhals.typing import IntoExpr
+    from narwhals.stable.v1.typing import IntoExpr
 
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
@@ -470,8 +469,9 @@ def sanitize_narwhals_dataframe(
     columns: list[IntoExpr] = []
     # See https://github.com/vega/altair/issues/1027 for why this is necessary.
     local_iso_fmt_string = "%Y-%m-%dT%H:%M:%S"
+    is_polars_dataframe = nw.dependencies.is_polars_dataframe(data.to_native())
     for name, dtype in schema.items():
-        if dtype == nw.Date and nw.get_native_namespace(data) is get_polars():
+        if dtype == nw.Date and is_polars_dataframe:
             # Polars doesn't allow formatting `Date` with time directives.
             # The date -> datetime cast is extremely fast compared with `to_string`
             columns.append(
@@ -673,8 +673,8 @@ def parse_shorthand(  # noqa: C901
             if schema[unescaped_field] in {
                 nw.Object,
                 nw.Unknown,
-            } and is_pandas_dataframe(nw.to_native(data_nw)):
-                attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
+            } and nw.dependencies.is_pandas_dataframe(data_nw.to_native()):
+                attrs["type"] = infer_vegalite_type_for_pandas(column.to_native())
             else:
                 attrs["type"] = infer_vegalite_type_for_narwhals(column)
             if isinstance(attrs["type"], tuple):

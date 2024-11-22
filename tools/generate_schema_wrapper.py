@@ -751,7 +751,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
         "import pkgutil",
         "import json\n",
-        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
+        "import narwhals.stable.v1 as nw\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         import_type_checking(
             "from datetime import date, datetime",

@@ -34,7 +34,7 @@ keywords = [
 ]
 requires-python = ">=3.9"
 dynamic = ["version"]
-license-files = { paths = ["LICENSE"] }
+license = {file = "LICENSE"}
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -405,6 +405,15 @@ Use `Union[T, None]` instead.
 `typing.Optional` is likely to be confused with `altair.typing.Optional`, \
 which have a similar but different semantic meaning.
 See https://github.com/vega/altair/pull/3449
+"""
+"narwhals.dependencies".msg = """
+Import `dependencies` from `narwhals.stable.v1` instead.
+"""
+"narwhals.typing".msg = """
+Import `typing` from `narwhals.stable.v1` instead.
+"""
+"narwhals.dtypes".msg = """
+Import `dtypes` from `narwhals.stable.v1` instead.
 """
 
 [tool.ruff.lint.per-file-ignores]
