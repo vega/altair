@@ -34,7 +34,7 @@ keywords = [
 ]
 requires-python = ">=3.9"
 dynamic = ["version"]
-license-files = { paths = ["LICENSE"] }
+license = {file = "LICENSE"}
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
