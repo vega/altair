@@ -37,7 +37,7 @@ from vega_datasets import data
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
 
-    from narwhals.typing import IntoDataFrame
+    from narwhals.stable.v1.typing import IntoDataFrame
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
