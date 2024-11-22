@@ -469,8 +469,9 @@ def sanitize_narwhals_dataframe(
     columns: list[IntoExpr] = []
     # See https://github.com/vega/altair/issues/1027 for why this is necessary.
     local_iso_fmt_string = "%Y-%m-%dT%H:%M:%S"
+    is_polars_dataframe = nw.dependencies.is_polars_dataframe(data.to_native())
     for name, dtype in schema.items():
-        if dtype == nw.Date and nw.dependencies.is_polars_dataframe(data.to_native()):
+        if dtype == nw.Date and is_polars_dataframe:
             # Polars doesn't allow formatting `Date` with time directives.
             # The date -> datetime cast is extremely fast compared with `to_string`
             columns.append(
