@@ -398,6 +398,15 @@ Use `Union[T, None]` instead.
 which have a similar but different semantic meaning.
 See https://github.com/vega/altair/pull/3449
 """
+"narwhals.dependencies".msg = """
+Import `dependencies` from `narwhals.stable.v1` instead.
+"""
+"narwhals.typing".msg = """
+Import `typing` from `narwhals.stable.v1` instead.
+"""
+"narwhals.dtypes".msg = """
+Import `dtypes` from `narwhals.stable.v1` instead.
+"""
 
 [tool.ruff.lint.per-file-ignores]
 # Only enforce type annotation rules on public api
