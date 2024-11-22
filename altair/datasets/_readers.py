@@ -69,6 +69,13 @@ if TYPE_CHECKING:
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
 
+    # NOTE: Using a constrained instead of bound `TypeVar`
+    #       error: Incompatible return value type (got "DataFrame[Any] | LazyFrame[Any]", expected "FrameT")  [return-value]
+    # - https://typing.readthedocs.io/en/latest/spec/generics.html#introduction
+    # - https://typing.readthedocs.io/en/latest/spec/generics.html#type-variables-with-an-upper-bound
+    # https://github.com/narwhals-dev/narwhals/blob/21b8436567de3631c584ef67632317ad70ae5de0/narwhals/typing.py#L59
+    FrameT = TypeVar("FrameT", nw.DataFrame[Any], nw.LazyFrame)
+
     _Polars: TypeAlias = Literal["polars"]
     _Pandas: TypeAlias = Literal["pandas"]
     _PyArrow: TypeAlias = Literal["pyarrow"]
@@ -111,7 +118,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
     Used exclusively for ``metadata.parquet``.
 
-    Currently ``polars`` backends are the only lazy options.
+    Currently ``"polars"`` is the only lazy option.
     """
 
     _name: LiteralString
@@ -125,12 +132,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
 
     def read_fn(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
-        suffix = validate_suffix(source, is_ext_read)
-        return self._read_fn[suffix]
+        return self._read_fn[_extract_suffix(source, is_ext_read)]
 
     def scan_fn(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
-        suffix = validate_suffix(source, is_ext_scan)
-        return self._scan_fn[suffix]
+        return self._scan_fn[_extract_suffix(source, is_ext_scan)]
 
     def dataset(
         self,
@@ -140,7 +145,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         tag: Version | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
-        df = self.query(**validate_constraints(name, suffix, tag))
+        df = self.query(**_extract_constraints(name, suffix, tag))
         it = islice(df.iter_rows(named=True), 1)
         result = cast("Metadata", next(it))
         url = result["url_npm"]
@@ -166,7 +171,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         /,
         tag: Version | None = None,
     ) -> str:
-        frame = self.query(**validate_constraints(name, suffix, tag))
+        frame = self.query(**_extract_constraints(name, suffix, tag))
         url = nw.to_py_scalar(frame.item(0, "url_npm"))
         if isinstance(url, str):
             return url
@@ -180,6 +185,8 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         """
         Query multi-version trees metadata.
 
+        Applies a filter, erroring out when no results would be returned.
+
         Notes
         -----
         Arguments correspond to those seen in `pl.LazyFrame.filter`_.
@@ -187,12 +194,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         .. _pl.LazyFrame.filter:
             https://docs.pola.rs/api/python/stable/reference/lazyframe/api/polars.LazyFrame.filter.html
         """
-        frame = (
-            nw.from_native(self.scan_fn(_METADATA)(_METADATA))
-            .filter(_parse_predicates_constraints(predicates, constraints))
-            .lazy()
-            .collect()
-        )
+        frame = self._scan_metadata(*predicates, **constraints).collect()
         if not frame.is_empty():
             return frame
         else:
@@ -200,18 +202,13 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
             msg = f"Found no results for:\n    {terms}"
             raise ValueError(msg)
 
-    def _read_metadata(self) -> IntoDataFrameT:
-        """
-        Return the full contents of ``metadata.parquet``.
-
-        Effectively an eager read, no filters.
-        """
-        return (
-            nw.from_native(self.scan_fn(_METADATA)(_METADATA))
-            .lazy()
-            .collect()
-            .to_native()
-        )
+    def _scan_metadata(
+        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
+    ) -> nw.LazyFrame:
+        frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
+        if predicates or constraints:
+            return _filter(frame, *predicates, **constraints)
+        return frame
 
     @property
     def _cache(self) -> Path | None:  # type: ignore[return]
@@ -406,24 +403,30 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
         self._scan_fn = {".parquet": pa_read_parquet}
 
 
-def _parse_predicates_constraints(
-    predicates: tuple[Any, ...], constraints: Metadata, /
-) -> nw.Expr:
+def _filter(
+    frame: FrameT, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
+) -> FrameT:
     """
     ``narwhals`` only accepts ``filter(*predicates)``.
 
     So we convert each item in ``**constraints`` here as::
 
        col("column_name") == literal_value
+
+    - https://github.com/narwhals-dev/narwhals/issues/1383
+    - https://github.com/narwhals-dev/narwhals/pull/1417
     """
-    return nw.all_horizontal(
-        chain(predicates, (nw.col(name) == v for name, v in constraints.items()))
+    return frame.filter(
+        nw.all_horizontal(
+            *chain(predicates, (nw.col(name) == v for name, v in constraints.items()))
+        )
     )
 
 
-def validate_constraints(
+def _extract_constraints(
     name: Dataset | LiteralString, suffix: Extension | None, tag: Version | None, /
 ) -> Metadata:
+    """Transform args into a mapping to column names."""
     constraints: Metadata = {}
     if tag is not None:
         constraints["tag"] = tag
@@ -445,7 +448,7 @@ def validate_constraints(
     return constraints
 
 
-def validate_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
+def _extract_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
     suffix: Any = Path(source).suffix
     if guard(suffix):
         return suffix
@@ -479,7 +482,6 @@ def infer_backend(
 
     .. _fastparquet:
         https://github.com/dask/fastparquet
-
     """
     it = (backend(name) for name in priority if is_available(_requirements(name)))
     if reader := next(it, None):
