@@ -453,7 +453,7 @@ class VegaExprDef:
             if t.get("type") == "link" and (url := t.get("attrs", {}).get("url")):
                 text = rst_renderer.render_children(t, state)
                 text = text.replace("`", "")
-                links[text] = url
+                links[text] = expand_urls(url)
 
         return links
 

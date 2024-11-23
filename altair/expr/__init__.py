@@ -171,23 +171,23 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     .. _continuous uniform probability distribution:
        https://en.wikipedia.org/wiki/Uniform_distribution_(continuous
     .. _*unit*:
-       ../api/time/#time-units
+       https://vega.github.io/vega/docs/api/time/#time-units
     .. _JavaScript's String.replace:
        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
     .. _d3-format specifier:
        https://github.com/d3/d3-format/
     .. _*units*:
-       ../api/time/#time-units
+       https://vega.github.io/vega/docs/api/time/#time-units
     .. _timeUnitSpecifier API documentation:
-       ../api/time/#timeUnitSpecifier
+       https://vega.github.io/vega/docs/api/time/#timeUnitSpecifier
     .. _timeFormat:
-       #timeFormat
+       https://vega.github.io/vega/docs/expressions/#timeFormat
     .. _utcFormat:
-       #utcFormat
+       https://vega.github.io/vega/docs/expressions/#utcFormat
     .. _d3-time-format specifier:
        https://github.com/d3/d3-time-format/
     .. _TimeMultiFormat object:
-       ../types/#TimeMultiFormat
+       https://vega.github.io/vega/docs/types/#TimeMultiFormat
     .. _UTC:
        https://en.wikipedia.org/wiki/Coordinated_Universal_Time
     .. _JavaScript's RegExp:
@@ -211,7 +211,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     .. _W3C Web Content Accessibility Guidelines:
        https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
     .. _continuous color scheme:
-       ../schemes
+       https://vega.github.io/vega/docs/schemes
     .. _geoArea:
        https://github.com/d3/d3-geo#geoArea
     .. _path.area:
