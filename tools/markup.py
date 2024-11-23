@@ -40,7 +40,10 @@ class RSTRenderer(_RSTRenderer):
 
     def inline_html(self, token: Token, state: BlockState) -> str:
         html = token["raw"]
-        return rf"\ :raw-html:`{html}`\ "
+        if html == "<br/>":
+            return "\n"
+        else:
+            return rf" :raw-html:`{html}` "
 
 
 class RSTParse(_Markdown):

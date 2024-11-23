@@ -8308,8 +8308,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -8644,8 +8644,8 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -15197,8 +15197,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -15529,8 +15529,8 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -17067,8 +17067,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -17550,8 +17550,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -19306,8 +19306,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
@@ -19789,8 +19789,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__ and pie charts
           `with percentage tooltip
-          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).  :raw-html:`<br/>`
-          -``"center"`` - stacking with center baseline (for `streamgraph
+          <https://vega.github.io/vega-lite/docs/arc.html#tooltip>`__).
+        * ``"center"`` - stacking with center baseline (for `streamgraph
           <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__).
         * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
