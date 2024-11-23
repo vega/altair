@@ -219,7 +219,7 @@ CLS_DOC = """
 
 CLS_TEMPLATE = '''\
 class expr({base}, metaclass={metaclass}):
-    """{doc}"""
+    """{doc}\n{links}"""
 
     @override
     def __new__(cls: type[{base}], expr: str) -> {base}:  {type_ignore}
@@ -442,6 +442,19 @@ class VegaExprDef:
         self.doc: str = ""
         self.signature: str = ""
         self._special: set[Special] = set()
+
+    def get_links(self, rst_renderer: RSTRenderer) -> dict[str, str]:
+        """Retrieve dict of link text to link url."""
+        from mistune import BlockState
+        links = {}
+        state = BlockState()
+        for t in self._children:
+            if t.get("type") == "link" and (url := t.get("attrs", {}).get("url")):
+                text = rst_renderer.render_children(t, state)
+                text = text.replace("`", "")
+                links[text] = url
+
+        return links
 
     def with_doc(self) -> Self:
         """
@@ -943,6 +956,21 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
     """
     version = version if version.startswith("v") else f"v{version}"
     url = EXPRESSIONS_URL_TEMPLATE.format(version=version)
+
+    # Retrieve all of the links used in expr method docstrings,
+    # so we can include them in the class docstrings, so that sphinx
+    # will find them.
+    expr_defs = parse_expressions(url)
+
+    links = {}
+    rst_renderer = RSTRenderer()
+    for expr_def in expr_defs:
+        links.update(expr_def.get_links(rst_renderer))
+
+    links_rst = []
+    for anchor, link_target in links.items():
+        links_rst.append(f"    .. _{anchor}:\n       {link_target}")
+
     content = (
         MODULE_PRE.format(
             header=header,
@@ -956,6 +984,7 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
             base="_ExprRef",
             metaclass=CLS_META,
             doc=CLS_DOC,
+            links="\n".join(links_rst),
             type_ignore=IGNORE_MISC,
         ),
     )
