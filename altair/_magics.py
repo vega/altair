@@ -7,8 +7,8 @@ import warnings
 from importlib.util import find_spec
 from typing import Any
 
-import narwhals.stable.v1 as nw
 from IPython.core import magic_arguments
+from narwhals.stable.v1.dependencies import is_pandas_dataframe
 
 from altair.vegalite import v5 as vegalite_v5
 
@@ -32,7 +32,7 @@ def _prepare_data(data, data_transformers):
     """Convert input data to data for use within schema."""
     if data is None or isinstance(data, dict):
         return data
-    elif nw.dependencies.is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         if func := data_transformers.get():
             data = func(data)
         return data

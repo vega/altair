@@ -679,8 +679,10 @@ def __getattr__(name: str):
             "    alt.themes.enable('theme_name')\n\n"
             "    # Updated\n"
             "    @alt.theme.register('theme_name', enable=True)\n"
-            "    def custom_theme() -> alt.theme.ThemeConfig:\n"
-            "        return {'height': 400, 'width': 700}\n\n"
+            "    def custom_theme():\n"
+            "        return alt.theme.ThemeConfig(\n"
+            "            {'height': 400, 'width': 700}\n"
+            "        )\n\n"
             "See the updated User Guide for further details:\n"
             "    https://altair-viz.github.io/user_guide/api.html#theme\n"
             "    https://altair-viz.github.io/user_guide/customization.html#chart-themes",

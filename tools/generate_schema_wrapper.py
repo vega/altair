@@ -564,10 +564,14 @@ def download_schemafile(
 def _vega_lite_props_only(
     themes: dict[VegaThemes, dict[str, Any]], props: SchemaProperties, /
 ) -> Iterator[tuple[VegaThemes, dict[str, Any]]]:
-    """Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions."""
+    """
+    Removes properties that are allowed in `Vega` but not `Vega-Lite` from theme definitions.
+
+    Each theme is then nested as ``ThemeConfig["config"] = ...``
+    """
     keep = props.keys()
     for name, theme_spec in themes.items():
-        yield name, {k: v for k, v in theme_spec.items() if k in keep}
+        yield name, {"config": {k: v for k, v in theme_spec.items() if k in keep}}
 
 
 def update_vega_themes(fp: Path, /, indent: str | int | None = 2) -> None:
