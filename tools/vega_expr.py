@@ -446,6 +446,7 @@ class VegaExprDef:
     def get_links(self, rst_renderer: RSTRenderer) -> dict[str, str]:
         """Retrieve dict of link text to link url."""
         from mistune import BlockState
+
         links = {}
         state = BlockState()
         for t in self._children:
