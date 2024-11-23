@@ -169,7 +169,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     .. _log-normal probability distribution:
        https://en.wikipedia.org/wiki/Log-normal_distribution
     .. _continuous uniform probability distribution:
-       https://en.wikipedia.org/wiki/Uniform_distribution_(continuous
+       https://en.wikipedia.org/wiki/Continuous_uniform_distribution
     .. _*unit*:
        https://vega.github.io/vega/docs/api/time/#time-units
     .. _JavaScript's String.replace:
@@ -752,13 +752,13 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         cls, min: IntoExpression = None, max: IntoExpression = None, /
     ) -> Expression:
         """
-        Returns a sample from a univariate `continuous uniform probability distribution`_) over the interval [``min``, ``max``).
+        Returns a sample from a univariate `continuous uniform probability distribution`_ over the interval [``min``, ``max``).
 
         If unspecified, ``min`` defaults to ``0`` and ``max`` defaults to ``1``. If only one
         argument is provided, it is interpreted as the ``max`` value.
 
         .. _continuous uniform probability distribution:
-            https://en.wikipedia.org/wiki/Uniform_distribution_(continuous
+            https://en.wikipedia.org/wiki/Continuous_uniform_distribution
         """
         return FunctionExpression("sampleUniform", (min, max))
 
