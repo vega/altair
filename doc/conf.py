@@ -44,6 +44,9 @@ extensions = [
     "sphinx_design",
 ]
 
+# Support :raw-html: directive
+raw_enabled = True
+
 altair_plot_links = {"editor": True, "source": False, "export": False}
 
 autodoc_default_flags = ["members", "inherited-members"]
