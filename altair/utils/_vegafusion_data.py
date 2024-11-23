@@ -5,7 +5,7 @@ from importlib.metadata import version as importlib_version
 from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
 
-import narwhals.stable.v1 as nw
+from narwhals.stable.v1.dependencies import is_into_dataframe
 from packaging.version import Version
 
 from altair.utils._importers import import_vegafusion
@@ -54,9 +54,7 @@ if VEGAFUSION_VERSION and Version("2.0.0a0") <= VEGAFUSION_VERSION:
     def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
         # Test whether VegaFusion supports the data type
         # VegaFusion v2 support narwhals-compatible DataFrames
-        return isinstance(data, DataFrameLike) or nw.dependencies.is_into_dataframe(
-            data
-        )
+        return isinstance(data, DataFrameLike) or is_into_dataframe(data)
 
 else:
 
