@@ -40,7 +40,10 @@ class RSTRenderer(_RSTRenderer):
 
     def inline_html(self, token: Token, state: BlockState) -> str:
         html = token["raw"]
-        return rf"\ :raw-html:`{html}`\ "
+        if html == "<br/>":
+            return "\n"
+        else:
+            return rf" :raw-html:`{html}` "
 
 
 class RSTParse(_Markdown):
@@ -131,7 +134,9 @@ class InlineParser(_InlineParser):
         state.append_token({"type": "text", "raw": _RE_LIQUID_INCLUDE.sub(r"", text)})
 
 
-def read_ast_tokens(source: Url | Path, /) -> list[Token]:
+def read_ast_tokens(
+    source: Url | Path, /, replacements: list[tuple[str, str]] | None = None
+) -> list[Token]:
     """
     Read from ``source``, drop ``BlockState``.
 
@@ -139,11 +144,17 @@ def read_ast_tokens(source: Url | Path, /) -> list[Token]:
     """
     markdown = _Markdown(renderer=None, inline=InlineParser())
     if isinstance(source, Path):
-        tokens = markdown.read(source)
+        token_text = source.read_text()
     else:
         with request.urlopen(source) as response:
-            s = response.read().decode("utf-8")
-        tokens = markdown.parse(s, markdown.block.state_cls())
+            token_text = response.read().decode("utf-8")
+
+    # Apply replacements
+    if replacements:
+        for replacement in replacements:
+            token_text = token_text.replace(replacement[0], replacement[1])
+
+    tokens = markdown.parse(token_text, markdown.block.state_cls())
     return tokens[0]
 
 

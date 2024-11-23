@@ -791,3 +791,5 @@ Typing
    Optional
    is_chart_type
 
+.. _Generic:
+    https://typing.readthedocs.io/en/latest/spec/generics.html#generics

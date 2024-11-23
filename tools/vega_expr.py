@@ -47,6 +47,14 @@ VEGA_DOCS_URL: LiteralString = "https://vega.github.io/vega/docs/"
 EXPRESSIONS_DOCS_URL: LiteralString = f"{VEGA_DOCS_URL}expressions/"
 EXPRESSIONS_URL_TEMPLATE = "https://raw.githubusercontent.com/vega/vega/refs/tags/{version}/docs/docs/expressions.md"
 
+# Replacements to apply prior to parsing as markdown
+PRE_PARSE_REPLACEMENTS = [
+    # Closing paren messes up markdown parsing, replace with equivalent wikipedia URL
+    (
+        "https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)",
+        "https://en.wikipedia.org/wiki/Continuous_uniform_distribution",
+    )
+]
 
 # NOTE: Regex patterns
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(
@@ -219,7 +227,7 @@ CLS_DOC = """
 
 CLS_TEMPLATE = '''\
 class expr({base}, metaclass={metaclass}):
-    """{doc}"""
+    """{doc}\n{links}"""
 
     @override
     def __new__(cls: type[{base}], expr: str) -> {base}:  {type_ignore}
@@ -442,6 +450,20 @@ class VegaExprDef:
         self.doc: str = ""
         self.signature: str = ""
         self._special: set[Special] = set()
+
+    def get_links(self, rst_renderer: RSTRenderer) -> dict[str, str]:
+        """Retrieve dict of link text to link url."""
+        from mistune import BlockState
+
+        links = {}
+        state = BlockState()
+        for t in self._children:
+            if t.get("type") == "link" and (url := t.get("attrs", {}).get("url")):
+                text = rst_renderer.render_children(t, state)
+                text = text.replace("`", "")
+                links[text] = expand_urls(url)
+
+        return links
 
     def with_doc(self) -> Self:
         """
@@ -917,13 +939,15 @@ def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
     return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
 
 
-def parse_expressions(source: Url | Path, /) -> Iterator[VegaExprDef]:
+def parse_expressions(
+    source: Url | Path, /, replacements: list[tuple[str, str]] | None = None
+) -> Iterator[VegaExprDef]:
     """
     Download remote or read local `.md` resource and eagerly parse signatures of relevant definitions.
 
     Yields with docs to ensure each can use all remapped names, regardless of the order they appear.
     """
-    tokens = read_ast_tokens(source)
+    tokens = read_ast_tokens(source, replacements=replacements)
     expr_defs = tuple(VegaExprDef.from_tokens(tokens))
     VegaExprDef.remap_title.refresh()
     for expr_def in expr_defs:
@@ -943,6 +967,21 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
     """
     version = version if version.startswith("v") else f"v{version}"
     url = EXPRESSIONS_URL_TEMPLATE.format(version=version)
+
+    # Retrieve all of the links used in expr method docstrings,
+    # so we can include them in the class docstrings, so that sphinx
+    # will find them.
+    expr_defs = parse_expressions(url, replacements=PRE_PARSE_REPLACEMENTS)
+
+    links = {}
+    rst_renderer = RSTRenderer()
+    for expr_def in expr_defs:
+        links.update(expr_def.get_links(rst_renderer))
+
+    links_rst = []
+    for anchor, link_target in links.items():
+        links_rst.append(f"    .. _{anchor}:\n       {link_target}")
+
     content = (
         MODULE_PRE.format(
             header=header,
@@ -956,12 +995,16 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
             base="_ExprRef",
             metaclass=CLS_META,
             doc=CLS_DOC,
+            links="\n".join(links_rst),
             type_ignore=IGNORE_MISC,
         ),
     )
     contents = chain(
         content,
-        (expr_def.render() for expr_def in parse_expressions(url)),
+        (
+            expr_def.render()
+            for expr_def in parse_expressions(url, replacements=PRE_PARSE_REPLACEMENTS)
+        ),
         [MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")
