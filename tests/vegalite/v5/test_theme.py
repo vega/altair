@@ -1,23 +1,41 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Callable, cast
+import json
+from collections.abc import Mapping, Set
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, get_args
 
 import pytest
 
 import altair.vegalite.v5 as alt
 from altair import theme
 from altair.theme import ConfigKwds, ThemeConfig
-from altair.vegalite.v5.schema._typing import is_color_hex
+from altair.vegalite.v5 import schema
+from altair.vegalite.v5.schema._typing import VegaThemes, is_color_hex
 from altair.vegalite.v5.theme import VEGA_THEMES
 from tests import slow
 
 if TYPE_CHECKING:
     import sys
 
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
+T = TypeVar("T")
+
+_Config: TypeAlias = Literal["config"]
+_PartialThemeConfig: TypeAlias = Mapping[_Config, ConfigKwds]
+"""Represents ``ThemeConfig``, but **only** using the ``"config"`` key."""
 
 
 @pytest.fixture
@@ -1043,3 +1061,67 @@ def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
     theme.register(name, enable=True)(theme_func)
     assert chart.to_dict(validate=True)
     assert theme.get() == theme_func
+
+
+# NOTE: There are roughly 70 keys
+# - not really reasonable to create a literal that long for testing only
+# - therefore, using `frozenset[str]`
+@pytest.fixture(scope="session")
+def config_keys() -> frozenset[str]:
+    return ConfigKwds.__required_keys__.union(
+        ConfigKwds.__optional_keys__,
+        ConfigKwds.__readonly_keys__,  # type: ignore[attr-defined]
+        ConfigKwds.__mutable_keys__,  # type: ignore[attr-defined]
+    )
+
+
+@pytest.fixture(scope="session")
+def theme_name_keys() -> frozenset[VegaThemes]:
+    return frozenset(get_args(VegaThemes))
+
+
+@pytest.fixture(scope="session")
+def themes_path() -> Path:
+    return Path(schema.__file__).parent / "vega-themes.json"
+
+
+def is_keyed_exact(obj: Any, other: Set[T]) -> TypeIs[Mapping[T, Any]]:
+    return isinstance(obj, Mapping) and obj.keys() == other
+
+
+def is_config_kwds(obj: Any, other: Any) -> TypeIs[ConfigKwds]:
+    return isinstance(obj, Mapping) and obj.keys() <= other
+
+
+def is_vega_theme(obj: Any, config_keys: Any) -> TypeIs[_PartialThemeConfig]:
+    if is_keyed_exact(obj, frozenset[_Config]({"config"})):
+        inner = obj["config"]
+        return is_config_kwds(inner, config_keys)
+    else:
+        return False
+
+
+def is_vega_theme_all(
+    obj: Any, theme_name_keys: frozenset[VegaThemes], config_keys: frozenset[str]
+) -> TypeIs[Mapping[VegaThemes, _PartialThemeConfig]]:
+    return is_keyed_exact(obj, theme_name_keys) and all(
+        is_vega_theme(definition, config_keys) for definition in obj.values()
+    )
+
+
+def test_vendored_vega_themes_json(
+    themes_path: Path,
+    theme_name_keys: frozenset[VegaThemes],
+    config_keys: frozenset[str],
+) -> None:
+    """
+    Ensure every vendored theme can be represented as a ``ThemeConfig`` type.
+
+    Related
+    -------
+    - https://github.com/vega/altair/issues/3666#issuecomment-2450057530
+    """
+    with themes_path.open(encoding="utf-8") as f:
+        content = json.load(f)
+
+    assert is_vega_theme_all(content, theme_name_keys, config_keys)
