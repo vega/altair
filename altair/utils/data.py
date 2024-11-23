@@ -19,6 +19,7 @@ from typing import (
 )
 
 import narwhals.stable.v1 as nw
+from narwhals.stable.v1.dependencies import is_pandas_dataframe
 from narwhals.stable.v1.typing import IntoDataFrame
 
 from ._importers import import_pyarrow_interchange
@@ -187,7 +188,7 @@ def sample(
     if data is None:
         return partial(sample, n=n, frac=frac)
     check_data_type(data)
-    if nw.dependencies.is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
         if "values" in data:
@@ -322,7 +323,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     data_native = nw.to_native(data, pass_through=True)
     if isinstance(data_native, SupportsGeoInterface):
         return {"values": _from_geo_interface(data_native)}
-    elif nw.dependencies.is_pandas_dataframe(data_native):
+    elif is_pandas_dataframe(data_native):
         data_native = sanitize_pandas_dataframe(data_native)
         return {"values": data_native.to_dict(orient="records")}
     elif isinstance(data_native, dict):
@@ -363,7 +364,7 @@ def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
     - ``typing.TypeGuard``
     - ``pd.DataFrame.__getattr__``
     """
-    if nw.dependencies.is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
     return sanitize_geo_interface(data.__geo_interface__)
 
@@ -373,7 +374,7 @@ def _data_to_json_string(data: DataType) -> str:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         return json.dumps(_from_geo_interface(data))
-    elif nw.dependencies.is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
@@ -400,7 +401,7 @@ def _data_to_csv_string(data: DataType) -> str:
             f"See https://github.com/vega/altair/issues/3441"
         )
         raise NotImplementedError(msg)
-    elif nw.dependencies.is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
