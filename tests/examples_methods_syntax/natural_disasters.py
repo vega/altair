@@ -17,7 +17,7 @@ alt.Chart(source).transform_filter(
     strokeWidth=1,
     strokeOpacity=0.4
 ).encode(
-    alt.X('Year:T')
+    alt.X('Year:Q')
         .title(None)
         .scale(domain=['1899','2018']),
     alt.Y('Entity:N')
@@ -30,7 +30,7 @@ alt.Chart(source).transform_filter(
     alt.Color('Entity:N').legend(None),
     tooltip=[
         "Entity:N",
-        alt.Tooltip("Year:T", format='%Y'),
+        alt.Tooltip("Year:Q", format='%Y'),
         alt.Tooltip("Deaths:Q", format='~s')
     ],
 ).properties(
