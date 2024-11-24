@@ -6,19 +6,15 @@ from vega_datasets import data
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
+from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy, skip_requires_vegafusion
 import narwhals.stable.v1 as nw
 
-try:
-    import vegafusion as vf
-except ImportError:
-    vf = None
 
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
 @ignore_DataFrameGroupBy
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
+@skip_requires_vegafusion
 # fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
     ("annual_weather_heatmap.py", 366, ["monthdate_date_end", "max_temp_max"]),
@@ -87,7 +83,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     assert set(cols).issubset(set(nw_df.columns))
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
+@skip_requires_vegafusion
 # fmt: off
 @pytest.mark.parametrize("filename,all_rows,all_cols", [
     ("errorbars_with_std.py", [10, 10], [["upper_yield"], ["extent_yield"]]),
@@ -153,7 +149,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
             assert set(cols).issubset(set(df.columns))
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
+@skip_requires_vegafusion
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_transformed_data_exclude(to_reconstruct):
     source = data.wheat()
