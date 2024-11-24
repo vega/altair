@@ -377,9 +377,7 @@ ignore = [
     # doc-line-too-long
     "W505",
     # Any as annotation
-    "ANN401",
-    # 0.8.0
-    "RUF039", "RUF200"
+    "ANN401" 
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 pydocstyle={ convention="numpy" }
