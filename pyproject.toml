@@ -205,7 +205,6 @@ exclude = [
     "__pycache__",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
-    "tests/test_transformed_data.py",
 ]
 
 [tool.ruff.lint]
