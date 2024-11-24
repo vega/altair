@@ -110,6 +110,8 @@ Typing
 
    {typing_objects}
 
+.. _Generic:
+    https://typing.readthedocs.io/en/latest/spec/generics.html#generics
 """
 
 
