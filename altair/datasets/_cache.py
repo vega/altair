@@ -97,6 +97,8 @@ class UrlCache(Generic[_KT, _VT]):
 
 
 class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
+    """Optional caching of remote dataset requests."""
+
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
 
     def __init__(self, reader: _Reader[IntoDataFrameT, IntoFrameT], /) -> None:

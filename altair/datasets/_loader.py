@@ -287,16 +287,22 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         """
         return self._reader.url(name, suffix, tag=tag)
 
-    # TODO: Examples for tasklist
     @property
     def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
         """
-        Dataset caching.
+        Optional caching of remote dataset requests.
 
-        - [x] Enable via 2 examples
-        - [x] Disable after enabling (self.cache.path = None)
-        - [ ] Pre-download missing
-        - [ ] Clear entire cache
+        Enable caching:
+
+            self.cache.path = ...
+
+        Download the latest datasets *ahead-of-time*:
+
+            self.cache.download_all()
+
+        Remove all downloaded datasets:
+
+            self.cache.clear()
         """
         return self._reader.cache
 
