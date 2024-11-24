@@ -17,7 +17,7 @@ alt.Chart(source).transform_filter(
     strokeWidth=1,
     strokeOpacity=0.4
 ).encode(
-    x=alt.X('Year:Q', title=None, scale=alt.Scale(domain=['1899','2018'])),
+    x=alt.X('Year:T', title=None, scale=alt.Scale(domain=['1899','2018'])),
     y=alt.Y(
         'Entity:N',
         sort=alt.EncodingSortField(field="Deaths", op="sum", order='descending'),
@@ -30,7 +30,7 @@ alt.Chart(source).transform_filter(
     color=alt.Color('Entity:N', legend=None),
     tooltip=[
         "Entity:N", 
-        alt.Tooltip("Year:Q", format='%Y'), 
+        alt.Tooltip("Year:T", format='%Y'), 
         alt.Tooltip("Deaths:Q", format='~s')
     ],
 ).properties(

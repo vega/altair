@@ -59,15 +59,15 @@ source2_df = pd.DataFrame(source2)
 
 
 line = alt.Chart(source_df).mark_line(color="#333").encode(
-    alt.X("year:Q").axis(format="%Y").title("Year"),
+    alt.X("year:T").axis(format="%Y").title("Year"),
     alt.Y("population").title("Population"),
 )
 
 point = line.mark_point(color="#333")
 
 rect = alt.Chart(source2_df).mark_rect().encode(
-    x="start:Q",
-    x2="end:Q",
+    x="start:T",
+    x2="end:T",
     color=alt.Color("event:N").title("Event")
 )
 
