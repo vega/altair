@@ -206,7 +206,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     ) -> nw.LazyFrame:
         frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
         if predicates or constraints:
-            return _filter(frame, *predicates, **constraints)
+            return frame.filter(*predicates, **constraints)
         return frame
 
     @property
@@ -390,26 +390,6 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             ".parquet": pa_read_parquet,
         }
         self._scan_fn = {".parquet": pa_read_parquet}
-
-
-def _filter(
-    frame: FrameT, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-) -> FrameT:
-    """
-    ``narwhals`` only accepts ``filter(*predicates)``.
-
-    So we convert each item in ``**constraints`` here as::
-
-       col("column_name") == literal_value
-
-    - https://github.com/narwhals-dev/narwhals/issues/1383
-    - https://github.com/narwhals-dev/narwhals/pull/1417
-    """
-    return frame.filter(
-        nw.all_horizontal(
-            *chain(predicates, (nw.col(name) == v for name, v in constraints.items()))
-        )
-    )
 
 
 def _extract_constraints(
