@@ -294,7 +294,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Dataset caching.
 
         - [x] Enable via 2 examples
-        - [ ] Disable after enabling (self.cache.path = None)
+        - [x] Disable after enabling (self.cache.path = None)
         - [ ] Pre-download missing
         - [ ] Clear entire cache
         """

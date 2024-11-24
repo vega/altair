@@ -211,6 +211,10 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
 
             >>> load.cache.path.relative_to(Path.home()).as_posix()
             '.altair_cache'
+
+        You can *later* disable caching via:
+
+            >>> load.cache.path = None
         """
         self.ensure_active()
         fp = Path(os.environ[self._ENV_VAR])

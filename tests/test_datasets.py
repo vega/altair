@@ -566,6 +566,36 @@ def test_reader_cache_exhaustive(
     dummy.unlink()
 
 
+def test_reader_cache_disable(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    from altair.datasets import load
+
+    monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
+
+    assert load.cache.is_active()
+    assert load.cache.path == tmp_path
+    assert load.cache.is_empty()
+    load("cars")
+    assert not load.cache.is_empty()
+
+    # RELATED: https://github.com/python/mypy/issues/3004
+    load.cache.path = None  # type: ignore[assignment]
+
+    assert load.cache.is_not_active()
+    with pytest.raises(
+        ValueError,
+        match=re.compile(
+            rf"Cache.+unset.+{CACHE_ENV_VAR}.+\.cache\.path =", flags=re.DOTALL
+        ),
+    ):
+        tuple(load.cache)
+
+    load.cache.path = tmp_path
+
+    assert load.cache.is_active()
+    assert load.cache.path == tmp_path
+    assert not load.cache.is_empty()
+
+
 movies_fail: ParameterSet = pytest.param(
     "movies",
     marks=pytest.mark.xfail(
