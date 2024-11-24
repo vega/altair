@@ -105,14 +105,14 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         _Reader._name
     """
 
-    _read_fn: dict[Extension, Callable[..., IntoDataFrameT]]
+    _read_fn: Mapping[Extension, Callable[..., IntoDataFrameT]]
     """
     Eager file read functions.
 
     Each corresponds to a known file extension within ``vega-datasets``.
     """
 
-    _scan_fn: dict[_ExtensionScan, Callable[..., IntoFrameT]]
+    _scan_fn: Mapping[_ExtensionScan, Callable[..., IntoFrameT]]
     """
     *Optionally*-lazy file read/scan functions.
 
