@@ -380,10 +380,9 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             # -------------------------------------------------------
             # NOTE: Prefer `polars` since it is zero-copy and fast (1)
             if find_spec("polars") is not None:
-                import polars as pl
 
                 def pa_read_json(source: StrPath, /, **kwds) -> pa.Table:
-                    return pl.read_json(source).to_arrow()
+                    return _pl_read_json_roundtrip(source).to_arrow()
 
             else:
                 # NOTE: Convert inline from stdlib json (2)
