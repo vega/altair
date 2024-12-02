@@ -798,7 +798,7 @@ def _parse_when_compose(
     if constraints:
         iters.append(_parse_when_constraints(constraints))
     r = functools.reduce(operator.and_, itertools.chain.from_iterable(iters))
-    return t.cast(_expr_core.BinaryExpression, r)
+    return t.cast("_expr_core.BinaryExpression", r)
 
 
 def _parse_when(
@@ -1107,7 +1107,7 @@ class Then(ConditionLike, t.Generic[_C]):
         conditions = self.to_dict()
         current = conditions["condition"]
         if isinstance(current, list):
-            conditions = t.cast(_Conditional[_Conditions], conditions)
+            conditions = t.cast("_Conditional[_Conditions]", conditions)
             return ChainedWhen(condition, conditions)
         elif isinstance(current, dict):
             cond = _reveal_parsed_shorthand(current)
@@ -1384,7 +1384,7 @@ def param(
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[t.cast(str, empty)]
+            parameter.empty = empty_remap[t.cast("str", empty)]
         else:
             raise ValueError(warn_msg)
 
@@ -3086,7 +3086,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             verbose_composition = chart.transform_filter((datum.year == 2000) & (datum.sex == 1))
             chart.transform_filter(year=2000, sex=1)
         """
-        if depr_filter := t.cast(Any, constraints.pop("filter", None)):
+        if depr_filter := t.cast("Any", constraints.pop("filter", None)):
             utils.deprecated_warn(
                 "Passing `filter` as a keyword is ambiguous.\n\n"
                 "Use a positional argument for `<5.5.0` behavior.\n"
@@ -3986,7 +3986,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
+        return t.cast("_TSchemaBase", core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
