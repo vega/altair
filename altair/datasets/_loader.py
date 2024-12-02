@@ -171,72 +171,72 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             from altair.datasets import Loader
 
             data = Loader.from_backend("polars")
-            source = data("stocks", tag="v2.10.0")
+            source = data("iowa-electricity", tag="v2.10.0")
 
             >>> source.columns  # doctest: +SKIP
-            ['symbol', 'date', 'price']
+            ['year', 'source', 'net_generation']
 
             >>> source  # doctest: +SKIP
-            shape: (560, 3)
-            ┌────────┬────────────┬────────┐
-            │ symbol ┆ date       ┆ price  │
-            │ ---    ┆ ---        ┆ ---    │
-            │ str    ┆ str        ┆ f64    │
-            ╞════════╪════════════╪════════╡
-            │ MSFT   ┆ Jan 1 2000 ┆ 39.81  │
-            │ MSFT   ┆ Feb 1 2000 ┆ 36.35  │
-            │ MSFT   ┆ Mar 1 2000 ┆ 43.22  │
-            │ MSFT   ┆ Apr 1 2000 ┆ 28.37  │
-            │ MSFT   ┆ May 1 2000 ┆ 25.45  │
-            │ …      ┆ …          ┆ …      │
-            │ AAPL   ┆ Nov 1 2009 ┆ 199.91 │
-            │ AAPL   ┆ Dec 1 2009 ┆ 210.73 │
-            │ AAPL   ┆ Jan 1 2010 ┆ 192.06 │
-            │ AAPL   ┆ Feb 1 2010 ┆ 204.62 │
-            │ AAPL   ┆ Mar 1 2010 ┆ 223.02 │
-            └────────┴────────────┴────────┘
+            shape: (51, 3)
+            ┌────────────┬──────────────┬────────────────┐
+            │ year       ┆ source       ┆ net_generation │
+            │ ---        ┆ ---          ┆ ---            │
+            │ date       ┆ str          ┆ i64            │
+            ╞════════════╪══════════════╪════════════════╡
+            │ 2001-01-01 ┆ Fossil Fuels ┆ 35361          │
+            │ 2002-01-01 ┆ Fossil Fuels ┆ 35991          │
+            │ 2003-01-01 ┆ Fossil Fuels ┆ 36234          │
+            │ 2004-01-01 ┆ Fossil Fuels ┆ 36205          │
+            │ 2005-01-01 ┆ Fossil Fuels ┆ 36883          │
+            │ …          ┆ …            ┆ …              │
+            │ 2013-01-01 ┆ Renewables   ┆ 16476          │
+            │ 2014-01-01 ┆ Renewables   ┆ 17452          │
+            │ 2015-01-01 ┆ Renewables   ┆ 19091          │
+            │ 2016-01-01 ┆ Renewables   ┆ 21241          │
+            │ 2017-01-01 ┆ Renewables   ┆ 21933          │
+            └────────────┴──────────────┴────────────────┘
 
         Using ``pandas``:
 
             data = Loader.from_backend("pandas")
-            source = data("stocks", tag="v2.10.0")
+            source = data("iowa-electricity", tag="v2.10.0")
 
             >>> source.columns  # doctest: +SKIP
-            Index(['symbol', 'date', 'price'], dtype='object')
+            Index(['year', 'source', 'net_generation'], dtype='object')
 
             >>> source  # doctest: +SKIP
-                symbol        date   price
-            0     MSFT  Jan 1 2000   39.81
-            1     MSFT  Feb 1 2000   36.35
-            2     MSFT  Mar 1 2000   43.22
-            3     MSFT  Apr 1 2000   28.37
-            4     MSFT  May 1 2000   25.45
-            ..     ...         ...     ...
-            555   AAPL  Nov 1 2009  199.91
-            556   AAPL  Dec 1 2009  210.73
-            557   AAPL  Jan 1 2010  192.06
-            558   AAPL  Feb 1 2010  204.62
-            559   AAPL  Mar 1 2010  223.02
+                     year        source  net_generation
+            0  2001-01-01  Fossil Fuels           35361
+            1  2002-01-01  Fossil Fuels           35991
+            2  2003-01-01  Fossil Fuels           36234
+            3  2004-01-01  Fossil Fuels           36205
+            4  2005-01-01  Fossil Fuels           36883
+            ..        ...           ...             ...
+            46 2013-01-01    Renewables           16476
+            47 2014-01-01    Renewables           17452
+            48 2015-01-01    Renewables           19091
+            49 2016-01-01    Renewables           21241
+            50 2017-01-01    Renewables           21933
 
-            [560 rows x 3 columns]
+            [51 rows x 3 columns]
 
         Using ``pyarrow``:
 
             data = Loader.from_backend("pyarrow")
-            source = data("stocks", tag="v2.10.0")
+            source = data("iowa-electricity", tag="v2.10.0")
 
             >>> source.column_names  # doctest: +SKIP
-            ['symbol', 'date', 'price']
+            ['year', 'source', 'net_generation']
 
             >>> source  # doctest: +SKIP
             pyarrow.Table
-            symbol: string
-            date: string
-            price: double
+            year: date32[day]
+            source: string
+            net_generation: int64
             ----
-            symbol: [["MSFT","MSFT","MSFT","MSFT","MSFT",...,"AAPL","AAPL","AAPL","AAPL","AAPL"]]
-            date: [["Jan 1 2000","Feb 1 2000","Mar 1 2000","Apr 1 2000","May 1 2000",...,"Nov 1 2009","Dec 1 2009","Jan 1 2010","Feb 1 2010","Mar 1 2010"]]
-            price: [[39.81,36.35,43.22,28.37,25.45,...,199.91,210.73,192.06,204.62,223.02]]
+            year: [[2001-01-01,2002-01-01,2003-01-01,2004-01-01,2005-01-01,...,2013-01-01,2014-01-01,2015-01-01,2016-01-01,2017-01-01]]
+            source: [["Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels",...,"Renewables","Renewables","Renewables","Renewables","Renewables"]]
+            net_generation: [[35361,35991,36234,36205,36883,...,16476,17452,19091,21241,21933]]
         """
         return self._reader.dataset(name, suffix, tag=tag, **kwds)
 
