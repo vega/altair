@@ -114,6 +114,15 @@ def path_suffix(column: str | pl.Expr, /) -> pl.Expr:
 
 
 def features_typing(frame: pl.LazyFrame | pl.DataFrame, /) -> Iterator[str]:
+    """
+    Current plan is to use type aliases in overloads.
+
+    - ``Tabular`` can be treated interchangeably
+    - ``Image`` can only work with ``url``
+    - ``(Spatial|Geo|Topo)`` can be read with ``polars``
+        - A future version may implement dedicated support https://github.com/vega/altair/pull/3631#discussion_r1845931955
+    - ``Json`` should warn when using the ``pyarrow`` backend
+    """
     guards = deque[str]()
     ldf = frame.lazy()
     for feat in FEATURES:
