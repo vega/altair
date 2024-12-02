@@ -487,4 +487,4 @@ def _iter_rows(df: pl.DataFrame, stop: int | None, /, tp: type[_TD]) -> Iterator
     if not TYPE_CHECKING:
         assert is_typeddict(tp) or issubclass(tp, Mapping)
 
-    return cast(Iterator[_TD], islice(df.iter_rows(named=True), stop))
+    return cast("Iterator[_TD]", islice(df.iter_rows(named=True), stop))

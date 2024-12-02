@@ -493,7 +493,7 @@ def test_reader_cache(
     if nw_dep.is_polars_dataframe(lookup_groups):
         left, right = (
             lookup_groups,
-            cast(pl.DataFrame, data("lookup_groups", tag="v2.5.3")),
+            cast("pl.DataFrame", data("lookup_groups", tag="v2.5.3")),
         )
     else:
         left, right = (

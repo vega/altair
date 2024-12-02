@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from collections import deque
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal, get_args
+from typing import TYPE_CHECKING, Any, Literal
 
 import polars as pl
 from polars import col
