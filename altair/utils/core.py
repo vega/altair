@@ -383,7 +383,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         # We know that the column names are strings from the isinstance check
         # further above but mypy thinks it is of type Hashable and therefore does not
         # let us assign it to the col_name variable which is already of type str.
-        col_name = cast(str, dtype_item[0])
+        col_name = cast("str", dtype_item[0])
         dtype = dtype_item[1]
         dtype_name = str(dtype)
         if dtype_name == "category":

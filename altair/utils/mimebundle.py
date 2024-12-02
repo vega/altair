@@ -140,7 +140,7 @@ def spec_to_mimebundle(
     if format in {"png", "svg", "pdf", "vega"}:
         return _spec_to_mimebundle_with_engine(
             spec,
-            cast(Literal["png", "svg", "pdf", "vega"], format),
+            cast("Literal['png', 'svg', 'pdf', 'vega']", format),
             internal_mode,
             engine=engine,
             format_locale=embed_options.get("formatLocale", None),
