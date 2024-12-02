@@ -117,15 +117,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             pandas.core.frame.DataFrame
 
             >>> cars.dtypes  # doctest: +SKIP
-            Name                string[pyarrow]
-            Miles_per_Gallon    double[pyarrow]
-            Cylinders            int64[pyarrow]
-            Displacement        double[pyarrow]
-            Horsepower           int64[pyarrow]
-            Weight_in_lbs        int64[pyarrow]
-            Acceleration        double[pyarrow]
-            Year                string[pyarrow]
-            Origin              string[pyarrow]
+            Name                       string[pyarrow]
+            Miles_per_Gallon           double[pyarrow]
+            Cylinders                   int64[pyarrow]
+            Displacement               double[pyarrow]
+            Horsepower                  int64[pyarrow]
+            Weight_in_lbs               int64[pyarrow]
+            Acceleration               double[pyarrow]
+            Year                timestamp[ns][pyarrow]
+            Origin                     string[pyarrow]
             dtype: object
         """
         obj = Loader.__new__(Loader)
