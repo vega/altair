@@ -30,10 +30,12 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import Literal
 
+    import pandas as pd
     import polars as pl
     from _pytest.mark.structures import ParameterSet
 
-    from altair.datasets._readers import _Backend, _Polars
+    from altair.datasets._readers import _Backend, _PandasAny, _Polars
+    from altair.vegalite.v5.schema._typing import OneOrSeq
     from tests import MarksType
 
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
@@ -743,3 +745,67 @@ def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -
     native = fn(_METADATA)
     schema_columns = nw.from_native(native).lazy().collect().columns
     assert set(schema_columns) == metadata_columns
+
+
+@skip_requires_pyarrow
+@pytest.mark.parametrize("backend", ["pandas", "pandas[pyarrow]"])
+@pytest.mark.parametrize(
+    ("name", "columns"),
+    [
+        ("birdstrikes", "Flight Date"),
+        ("cars", "Year"),
+        ("co2-concentration", "Date"),
+        ("crimea", "date"),
+        ("football", "date"),
+        ("iowa-electricity", "year"),
+        ("la-riots", "death_date"),
+        ("ohlc", "date"),
+        ("seattle-weather-hourly-normals", "date"),
+        ("seattle-weather", "date"),
+        ("sp500-2000", "date"),
+        ("unemployment-across-industries", "date"),
+        ("us-employment", "month"),
+    ],
+)
+def test_pandas_date_parse(
+    backend: _PandasAny,
+    name: Dataset,
+    columns: OneOrSeq[str],
+    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
+) -> None:
+    """
+    Ensure schema defaults are correctly parsed.
+
+    NOTE:
+    - Depends on ``frictionless`` being able to detect the date/datetime columns.
+    - Not all format strings work
+    """
+    date_columns: list[str] = [columns] if isinstance(columns, str) else list(columns)
+
+    load = Loader.from_backend(backend)
+    url = load.url(name)
+    kwds: dict[str, Any] = (
+        {"convert_dates": date_columns}
+        if url.endswith(".json")
+        else {"parse_dates": date_columns}
+    )
+    kwds_empty: dict[str, Any] = {k: [] for k in kwds}
+
+    df_schema_derived: pd.DataFrame = load(name)
+    nw_schema = nw.from_native(df_schema_derived).schema
+
+    df_manually_specified: pd.DataFrame = load(name, **kwds)
+    df_dates_empty: pd.DataFrame = load(name, **kwds_empty)
+
+    assert set(date_columns).issubset(nw_schema)
+    for column in date_columns:
+        assert nw_schema[column] in {nw.Date, nw.Datetime}
+
+    assert nw_schema == nw.from_native(df_manually_specified).schema
+    assert nw_schema != nw.from_native(df_dates_empty).schema
+
+    # NOTE: Checking `polars` infers the same[1] as what `pandas` needs a hint for
+    # [1] Doesn't need to be exact, just recognise as *some kind* of date/datetime
+    pl_schema: pl.Schema = polars_loader(name).schema
+    for column in date_columns:
+        assert pl_schema[column].is_temporal()

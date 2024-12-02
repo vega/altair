@@ -33,7 +33,7 @@ import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
 from altair.datasets._cache import DatasetCache
-from altair.datasets._typing import EXTENSION_SUFFIXES, is_ext_read
+from altair.datasets._typing import EXTENSION_SUFFIXES, Metadata, is_ext_read
 
 if TYPE_CHECKING:
     import json  # noqa: F401
@@ -136,6 +136,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def scan_fn(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
         return self._scan_fn[_extract_suffix(source, is_ext_scan)]
 
+    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
+        """Hook to provide additional schema metadata on read."""
+        return {}
+
     def dataset(
         self,
         name: Dataset | LiteralString,
@@ -149,6 +153,8 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         result = cast("Metadata", next(it))
         url = result["url_npm"]
         fn = self.read_fn(url)
+        if default_kwds := self._schema_kwds(result):
+            kwds = default_kwds | kwds if kwds else default_kwds
 
         if self.cache.is_active():
             fp = self.cache.path / (result["sha"] + result["suffix"])
@@ -238,7 +244,32 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def __init__(self, name: LiteralString, /) -> None: ...
 
 
-class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
+class _PandasReaderBase(_Reader["pd.DataFrame", "pd.DataFrame"], Protocol):
+    """
+    Provides temporal column names as keyword arguments on read.
+
+    Related
+    -------
+    - https://github.com/vega/altair/pull/3631#issuecomment-2480816377
+    - https://github.com/vega/vega-datasets/pull/631
+    - https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+    - https://pandas.pydata.org/docs/reference/api/pandas.read_json.html
+    """
+
+    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
+        from altair.datasets._cache import schema_cache
+
+        name: Any = result["dataset_name"]
+        suffix = result["suffix"]
+        if cols := schema_cache.by_dtype(name, nw.Date, nw.Datetime):
+            if suffix == ".json":
+                return {"convert_dates": cols}
+            elif suffix in {".csv", ".tsv"}:
+                return {"parse_dates": cols}
+        return super()._schema_kwds(result)
+
+
+class _PandasReader(_PandasReaderBase):
     def __init__(self, name: _Pandas, /) -> None:
         self._name = _requirements(name)
         if not TYPE_CHECKING:
@@ -253,7 +284,7 @@ class _PandasReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
         self._scan_fn = {".parquet": pd.read_parquet}
 
 
-class _PandasPyArrowReader(_Reader["pd.DataFrame", "pd.DataFrame"]):
+class _PandasPyArrowReader(_PandasReaderBase):
     def __init__(self, name: Literal["pandas[pyarrow]"], /) -> None:
         _pd, _pa = _requirements(name)
         self._name = name

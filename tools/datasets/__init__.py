@@ -39,7 +39,15 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    _PathAlias: TypeAlias = Literal["npm_tags", "gh_tags", "gh_trees"]
+    _PathAlias: TypeAlias = Literal[
+        "npm_tags",
+        "gh_tags",
+        "gh_trees",
+        "typing",
+        "url",
+        "dpkg_features",
+        "dpkg_schemas",
+    ]
 
 __all__ = ["app"]
 
@@ -102,15 +110,17 @@ class Application:
             npm_cdn_url=self._npm.url.CDN,
             **kwds_gh,
         )
-        self._paths = types.MappingProxyType["_PathAlias", Path](
+        self.paths = types.MappingProxyType["_PathAlias", Path](
             {
                 "npm_tags": self.npm._paths["tags"],
                 "gh_tags": self.github._paths["tags"],
                 "gh_trees": self.github._paths["trees"],
+                "typing": out_fp_typing,
+                "url": out_dir_altair / "url.csv.gz",
+                "dpkg_features": out_dir_altair / "datapackage_features.parquet",
+                "dpkg_schemas": out_dir_altair / "datapackage_schemas.json.gz",
             }
         )
-        self._fp_typing: Path = out_fp_typing
-        self._fp_url: Path = out_dir_altair / "url.csv.gz"
 
     @property
     def github(self) -> GitHub:
@@ -131,13 +141,13 @@ class Application:
         """
         print("Syncing datasets ...")
         npm_tags = self.npm.tags()
-        self.write_parquet(npm_tags, self._paths["npm_tags"])
+        self.write_parquet(npm_tags, self.paths["npm_tags"])
 
         gh_tags = self.github.refresh_tags(npm_tags)
-        self.write_parquet(gh_tags, self._paths["gh_tags"])
+        self.write_parquet(gh_tags, self.paths["gh_tags"])
 
         gh_trees = self.github.refresh_trees(gh_tags)
-        self.write_parquet(gh_trees, self._paths["gh_trees"])
+        self.write_parquet(gh_trees, self.paths["gh_trees"])
 
         npm_urls_min = (
             gh_trees.lazy()
@@ -145,31 +155,29 @@ class Application:
             .filter(col("size") == col("size").min().over("dataset_name"))
             .select("dataset_name", "url_npm")
         )
-        self.write_csv_gzip(npm_urls_min, self._fp_url)
+        self.write_csv_gzip(npm_urls_min, self.paths["url"])
+
+        package = self.npm.datapackage()
+        # TODO: Re-enable after deciding on how best to utilize
+        # self.write_parquet(package["features"], self.paths["dpkg_features"])
+        self.write_json_gzip(package["schemas"], self.paths["dpkg_schemas"])
 
         if include_typing:
-            self.generate_typing(self._fp_typing)
+            self.generate_typing()
         return gh_trees
 
     def reset(self) -> None:
         """Remove all metadata files."""
-        for fp in self._paths.values():
+        for fp in self.paths.values():
             fp.unlink(missing_ok=True)
 
     def read(self, name: _PathAlias, /) -> pl.DataFrame:
         """Read existing metadata from file."""
-        return pl.read_parquet(self._from_alias(name))
+        return pl.read_parquet(self.paths[name])
 
     def scan(self, name: _PathAlias, /) -> pl.LazyFrame:
         """Scan existing metadata from file."""
-        return pl.scan_parquet(self._from_alias(name))
-
-    def _from_alias(self, name: _PathAlias, /) -> Path:
-        if name not in {"npm_tags", "gh_tags", "gh_trees"}:
-            msg = f'Expected one of {["npm_tags", "gh_tags", "gh_trees"]!r}, but got: {name!r}'
-            raise TypeError(msg)
-        else:
-            return self._paths[name]
+        return pl.scan_parquet(self.paths[name])
 
     def write_csv_gzip(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
         """
@@ -193,6 +201,21 @@ class Application:
             df.write_csv(buf)
             f.write(buf.getbuffer())
 
+    def write_json_gzip(self, obj: Any, fp: Path, /) -> None:
+        """
+        Write ``obj`` as a `gzip`_ compressed ``json`` file.
+
+        .. _gzip:
+            https://docs.python.org/3/library/gzip.html
+        """
+        if fp.suffix != ".gz":
+            fp = fp.with_suffix(".json.gz")
+        if not fp.exists():
+            fp.touch()
+
+        with gzip.GzipFile(fp, mode="wb", mtime=0) as f:
+            f.write(json.dumps(obj).encode())
+
     def write_parquet(self, frame: pl.DataFrame | pl.LazyFrame, fp: Path, /) -> None:
         """Write ``frame`` to ``fp``, with some extra safety."""
         if not fp.exists():
@@ -207,7 +230,7 @@ class Application:
             with fp_schema.open("w") as f:
                 json.dump(schema, f, indent=2)
 
-    def generate_typing(self, output: Path, /) -> None:
+    def generate_typing(self) -> None:
         from tools.generate_schema_wrapper import UNIVERSAL_TYPED_DICT
 
         tags = self.scan("gh_tags").select("tag").collect().to_series()
@@ -314,6 +337,20 @@ class Application:
             f"{textwrap.indent(textwrap.dedent(examples), indent)}"
         )
 
+        FIELD = "FlFieldStr"
+        FIELD_TYPES = (
+            "integer",
+            "number",
+            "boolean",
+            "string",
+            "object",
+            "array",
+            "date",
+            "datetime",
+            "time",
+            "duration",
+        )
+
         contents = (
             f"{HEADER_COMMENT}",
             "from __future__ import annotations\n",
@@ -341,8 +378,14 @@ class Application:
                 doc=metadata_doc,
                 comment="",
             ),
+            f"{FIELD}: TypeAlias = {utils.spell_literal(FIELD_TYPES)}\n"
+            '"""\n'
+            "String representation of `frictionless`_ `Field Types`_.\n\n"
+            f".. _frictionless:\n{indent}https://github.com/frictionlessdata/frictionless-py\n"
+            f".. _Field Types:\n{indent}https://datapackage.org/standard/table-schema/#field-types\n"
+            '"""\n',
         )
-        ruff.write_lint_format(output, contents)
+        ruff.write_lint_format(self.paths["typing"], contents)
 
 
 _alt_datasets = Path(__file__).parent.parent.parent / "altair" / "datasets"

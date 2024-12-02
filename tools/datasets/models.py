@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Literal, NamedTuple
+from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING, Any, Literal, NamedTuple
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -14,9 +15,18 @@ if TYPE_CHECKING:
     import time
 
     if sys.version_info >= (3, 11):
-        from typing import LiteralString, Required
+        from typing import LiteralString, NotRequired, Required
     else:
-        from typing_extensions import LiteralString, Required
+        from typing_extensions import LiteralString, NotRequired, Required
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    import polars as pl
+
+    from altair.datasets._typing import Dataset, FlFieldStr
+
+Map: TypeAlias = Mapping[str, Any]
 
 
 class GitHubUrl(NamedTuple):
@@ -31,6 +41,7 @@ class GitHubUrl(NamedTuple):
 class NpmUrl(NamedTuple):
     CDN: LiteralString
     TAGS: LiteralString
+    GH: LiteralString
 
 
 class GitHubTag(TypedDict):
@@ -178,3 +189,80 @@ class GitHubRateLimitResources(TypedDict, total=False):
     graphql: GitHubRateLimit
     integration_manifest: GitHubRateLimit
     code_search: GitHubRateLimit
+
+
+#####################################################
+# frictionless datapackage
+#####################################################
+
+
+FlCsvDialect: TypeAlias = Mapping[
+    Literal["csv"], Mapping[Literal["delimiter"], Literal["\t"]]
+]
+FlJsonDialect: TypeAlias = Mapping[
+    Literal[r"json"], Mapping[Literal["keyed"], Literal[True]]
+]
+
+
+class FlField(TypedDict):
+    """https://datapackage.org/standard/table-schema/#field."""
+
+    name: str
+    type: FlFieldStr
+
+
+class FlSchema(TypedDict):
+    """https://datapackage.org/standard/table-schema/#properties."""
+
+    fields: Sequence[FlField]
+
+
+class FlResource(TypedDict):
+    """https://datapackage.org/standard/data-resource/#properties."""
+
+    name: Dataset
+    type: Literal["table", "file", r"json"]
+    path: str
+    format: Literal[
+        "arrow", "csv", "geojson", r"json", "parquet", "png", "topojson", "tsv"
+    ]
+    mediatype: Literal[
+        "application/parquet",
+        "application/vnd.apache.arrow.file",
+        "image/png",
+        "text/csv",
+        "text/tsv",
+        r"text/json",
+        "text/geojson",
+        "text/topojson",
+    ]
+    schema: NotRequired[FlSchema]
+    scheme: Literal["file"]
+    dialect: NotRequired[FlCsvDialect | FlJsonDialect]
+    encoding: NotRequired[Literal["utf-8"]]
+
+
+class FlPackage(TypedDict):
+    """
+    A subset of the `Data Package`_ standard.
+
+    .. _Data Package:
+        https://datapackage.org/standard/data-package/#properties
+    """
+
+    name: Literal["vega-datasets"]
+    version: str
+    homepage: str
+    description: str
+    licenses: Sequence[Map]
+    contributors: Sequence[Map]
+    sources: Sequence[Map]
+    created: str
+    resources: Sequence[FlResource]
+
+
+class ParsedPackage(TypedDict):
+    """Minimal representations to write to disk."""
+
+    features: pl.DataFrame
+    schemas: Mapping[Dataset, Mapping[str, FlFieldStr]]

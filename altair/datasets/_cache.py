@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, get_args
 
@@ -9,19 +10,32 @@ from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
 
 from altair.datasets._typing import VERSION_LATEST
 
+if sys.version_info >= (3, 12):
+    from typing import Protocol
+else:
+    from typing_extensions import Protocol
+
 if TYPE_CHECKING:
-    import sys
-    from collections.abc import Iterator, MutableMapping
+    from collections.abc import Iterator, Mapping, MutableMapping
+    from io import IOBase
     from typing import Any, Final
 
     from _typeshed import StrPath
+    from narwhals.stable.v1.dtypes import DType
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
     from altair.datasets._readers import _Reader
-    from altair.datasets._typing import Dataset
+    from altair.datasets._typing import Dataset, FlFieldStr
+
+    _Dataset: TypeAlias = "Dataset | LiteralString"
+    _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
 
 __all__ = ["DatasetCache", "UrlCache", "url_cache"]
 
@@ -31,9 +45,62 @@ _VT = TypeVar("_VT")
 _T = TypeVar("_T")
 
 _URL: Final[Path] = Path(__file__).parent / "_metadata" / "url.csv.gz"
+_SCHEMA: Final[Path] = (
+    Path(__file__).parent / "_metadata" / "datapackage_schemas.json.gz"
+)
+
+_FIELD_TO_DTYPE: Mapping[FlFieldStr, type[DType]] = {
+    "integer": nw.Int64,
+    "number": nw.Float64,
+    "boolean": nw.Boolean,
+    "string": nw.String,
+    "object": nw.Struct,
+    "array": nw.List,
+    "date": nw.Date,
+    "datetime": nw.Datetime,
+    # "time": nw.Time, (Not Implemented, but we don't have any cases using it anyway)
+    "duration": nw.Duration,
+}
+"""
+Similar to an inverted `pl.datatypes.convert.dtype_to_ffiname`_.
+
+But using the string repr of ``frictionless`` `Field Types`_ to `narwhals.dtypes`_.
+
+.. _pl.datatypes.convert.dtype_to_ffiname:
+    https://github.com/pola-rs/polars/blob/85d078c066860e012f5e7e611558e6382b811b82/py-polars/polars/datatypes/convert.py#L139-L165
+.. _Field Types:
+    https://datapackage.org/standard/table-schema/#field-types
+.. _narwhals.dtypes:
+    https://narwhals-dev.github.io/narwhals/api-reference/dtypes/
+"""
+
+_DTYPE_TO_FIELD: Mapping[type[DType], FlFieldStr] = {
+    v: k for k, v in _FIELD_TO_DTYPE.items()
+}
 
 
-class UrlCache(Generic[_KT, _VT]):
+class CompressedCache(Protocol[_KT, _VT]):
+    fp: Path
+    _mapping: MutableMapping[_KT, _VT]
+
+    def read(self) -> Any: ...
+    def __getitem__(self, key: _KT, /) -> _VT: ...
+
+    def __enter__(self) -> IOBase:
+        import gzip
+
+        return gzip.open(self.fp, mode="rb").__enter__()
+
+    def __exit__(self, *args) -> None:
+        return
+
+    def get(self, key: _KT, default: _T, /) -> _VT | _T:
+        if not self._mapping:
+            self._mapping.update(self.read())
+        return self._mapping.get(key, default)
+
+
+class UrlCache(CompressedCache[_KT, _VT]):
     """
     `csv`_, `gzip`_ -based, lazy url lookup.
 
@@ -65,9 +132,8 @@ class UrlCache(Generic[_KT, _VT]):
 
     def read(self) -> Any:
         import csv
-        import gzip
 
-        with gzip.open(self.fp, mode="rb") as f:
+        with self as f:
             b_lines = f.readlines()
         reader = csv.reader((bs.decode() for bs in b_lines), dialect=csv.unix_dialect)
         header = tuple(next(reader))
@@ -89,10 +155,72 @@ class UrlCache(Generic[_KT, _VT]):
             msg = f"{key!r} does not refer to a known dataset."
             raise TypeError(msg)
 
-    def get(self, key: _KT, default: _T) -> _VT | _T:
-        if not self._mapping:
-            self._mapping.update(self.read())
-        return self._mapping.get(key, default)
+
+class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
+    """
+    `json`_, `gzip`_ -based, lazy schema lookup.
+
+    - Primarily benefits ``pandas``, which needs some help identifying **temporal** columns.
+    - Utilizes `data package`_ schema types.
+    - All methods return falsy containers instead of exceptions
+
+    .. _json:
+        https://docs.python.org/3/library/json.html
+    .. _gzip:
+        https://docs.python.org/3/library/gzip.html
+    .. _data package:
+        https://github.com/vega/vega-datasets/pull/631
+    """
+
+    def __init__(
+        self,
+        fp: Path,
+        /,
+        *,
+        tp: type[MutableMapping[_Dataset, _FlSchema]] = dict["_Dataset", "_FlSchema"],
+    ) -> None:
+        self.fp: Path = fp
+        self._mapping: MutableMapping[_Dataset, _FlSchema] = tp()
+
+    def read(self) -> Any:
+        import json
+
+        with self as f:
+            return json.load(f)
+
+    def __getitem__(self, key: _Dataset, /) -> _FlSchema:
+        return self.get(key, {})
+
+    def by_dtype(self, name: _Dataset, *dtypes: type[DType]) -> list[str]:
+        """
+        Return column names specfied in ``name``'s schema.
+
+        Parameters
+        ----------
+        name
+            Dataset name.
+        *dtypes
+            Optionally, only return columns matching the given data type(s).
+        """
+        if (match := self[name]) and dtypes:
+            include = {_DTYPE_TO_FIELD[tp] for tp in dtypes}
+            return [col for col, tp_str in match.items() if tp_str in include]
+        else:
+            return list(match)
+
+    def schema(self, name: _Dataset, /) -> Mapping[str, DType]:
+        return {
+            column: _FIELD_TO_DTYPE[tp_str]() for column, tp_str in self[name].items()
+        }
+
+    def schema_cast(self, name: _Dataset, /) -> Iterator[nw.Expr]:
+        """
+        Can be passed directly to `.with_columns(...).
+
+        BUG: `cars` doesnt work in either pandas backend
+        """
+        for column, dtype in self.schema(name).items():
+            yield nw.col(column).cast(dtype)
 
 
 class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
@@ -219,3 +347,4 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
 
 
 url_cache: UrlCache[Dataset | LiteralString, str] = UrlCache(_URL)
+schema_cache = SchemaCache(_SCHEMA)

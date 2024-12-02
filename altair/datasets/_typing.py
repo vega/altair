@@ -257,3 +257,25 @@ class Metadata(TypedDict, total=False):
     suffix: str
     tag: str
     url_npm: str
+
+
+FlFieldStr: TypeAlias = Literal[
+    "integer",
+    "number",
+    "boolean",
+    "string",
+    "object",
+    "array",
+    "date",
+    "datetime",
+    "time",
+    "duration",
+]
+"""
+String representation of `frictionless`_ `Field Types`_.
+
+.. _frictionless:
+    https://github.com/frictionlessdata/frictionless-py
+.. _Field Types:
+    https://datapackage.org/standard/table-schema/#field-types
+"""
