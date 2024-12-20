@@ -624,32 +624,7 @@ But since ``mark_bar(size=10)`` only controls the width of the bars, it might be
       y='value:Q'
   )
 
-The width of the chart containing the bar plot can be controlled through setting the ``width``
-property of the chart, either to a pixel value for any chart, or to a step value
-in the case of discrete scales.
-
-Here is an example of setting the width to a single value for the whole chart:
-
-.. altair-plot::
-
-  alt.Chart(data).mark_bar(size=30).encode(
-      x='name:O',
-      y='value:Q'
-  ).properties(width=200)
-
-The width of the bars are set using ``mark_bar(size=30)`` and the width of the chart is set using ``properties(width=100)``
-
-Here is an example of setting the step width for a discrete scale:
-
-.. altair-plot::
-
-  alt.Chart(data).mark_bar(size=30).encode(
-      x='name:N',
-      y='value:Q'
-  ).properties(width=alt.Step(100))
-
-The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the chart is set using ``width=alt.Step(100)``
-
+Therefore, it is often preferred to set the width of the entire chart relative to the number of distinct categories using :class:`Step`, which you can can see an example of a few charts down.
 
 .. _customization-chart-size:
 
@@ -662,9 +637,9 @@ For example:
 
    import altair as alt
    from vega_datasets import data
-   
+
    cars = data.cars()
-   
+
    alt.Chart(cars).mark_bar().encode(
        x='Origin',
        y='count()'
@@ -685,7 +660,25 @@ the subchart rather than to the overall chart:
    ).properties(
        width=100,
        height=100
+   ).resolve_scale(
+       x='independent'
    )
+
+To change the chart size relative to the number of distinct categories, you can use the :class:`Step` class to specify the width/height for each category rather than for the entire chart:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+       column='Cylinders:Q'
+   ).properties(
+       width=alt.Step(35),
+       height=100
+   ).resolve_scale(
+       x='independent'
+   )
+
 
 If you want your chart size to respond to the width of the HTML page or container in which
 it is rendered, you can set ``width`` or ``height`` to the string ``"container"``:
@@ -710,15 +703,20 @@ outside the chart itself; For example, the container may be a ``<div>`` element 
 
 Chart Themes
 ------------
-Altair makes available a theme registry that lets users apply chart configurations
-globally within any Python session. This is done via the ``alt.themes`` object.
+.. note::
 
-The themes registry consists of functions which define a specification dictionary
+   This material was changed considerably with the release of Altair ``5.5.0``.
+
+Altair makes available a theme registry that lets users apply chart configurations
+globally within any Python session. 
+The :mod:`altair.theme` module provides :ref:`helper functions <api-theme>` to interact with the registry.
+
+Each theme in the registry is a function which define a specification dictionary
 that will be added to every created chart.
 For example, the default theme configures the default size of a single chart:
 
     >>> import altair as alt
-    >>> default = alt.themes.get()
+    >>> default = alt.theme.get()
     >>> default()
     {'config': {'view': {'continuousWidth': 300, 'continuousHeight': 300}}}
 
@@ -747,14 +745,14 @@ The rendered chart will then reflect these configurations:
 Changing the Theme
 ~~~~~~~~~~~~~~~~~~
 If you would like to enable any other theme for the length of your Python session,
-you can call ``alt.themes.enable(theme_name)``.
+you can call :func:`altair.theme.enable`.
 For example, Altair includes a theme in which the chart background is opaque
 rather than transparent:
 
 .. altair-plot::
     :output: repr
 
-    alt.themes.enable('opaque')
+    alt.theme.enable('opaque')
     chart.to_dict()
 
 .. altair-plot::
@@ -768,7 +766,7 @@ theme named ``'none'``:
 .. altair-plot::
     :output: repr
 
-    alt.themes.enable('none')
+    alt.theme.enable('none')
     chart.to_dict()
 
 .. altair-plot::
@@ -784,20 +782,32 @@ If you would like to use any theme just for a single chart, you can use the
 .. altair-plot::
    :output: none
 
-   with alt.themes.enable('default'):
+   with alt.theme.enable('default'):
        spec = chart.to_json()
 
+.. note::
+    The above requires that a conversion/saving operation occurs during the ``with`` block,
+    such as :meth:`~Chart.to_dict`, :meth:`~Chart.to_json`, :meth:`~Chart.save`.
+    See https://github.com/vega/altair/issues/3586
+
+Built-in Themes
+~~~~~~~~~~~~~~~
 Currently Altair does not offer many built-in themes, but we plan to add
 more options in the future.
 
-See `Vega Theme Test`_ for an interactive demo of themes inherited from `Vega Themes`_.
+You can get a feel for the themes inherited from `Vega Themes`_ via *Vega-Altair Theme Test* below:
+
+.. altair-theme:: tests.altair_theme_test.alt_theme_test
+    :fold:
+    :summary: Show Vega-Altair Theme Test
 
 Defining a Custom Theme
 ~~~~~~~~~~~~~~~~~~~~~~~
-The theme registry also allows defining and registering custom themes.
 A theme is simply a function that returns a dictionary of default values
-to be added to the chart specification at rendering time, which is then
-registered and activated.
+to be added to the chart specification at rendering time.
+
+Using :func:`altair.theme.register`, we can both register and enable a theme 
+at the site of the function definition.
 
 For example, here we define a theme in which all marks are drawn with black
 fill unless otherwise specified:
@@ -807,26 +817,17 @@ fill unless otherwise specified:
     import altair as alt
     from vega_datasets import data
 
-    # define the theme by returning the dictionary of configurations
-    def black_marks():
+    # define, register and enable theme
+    
+    @alt.theme.register("black_marks", enable=True)
+    def black_marks() -> alt.theme.ThemeConfig:
         return {
-            'config': {
-                'view': {
-                    'height': 300,
-                    'width': 300,
-                },
-                'mark': {
-                    'color': 'black',
-                    'fill': 'black'
-                }
+            "config": {
+                "view": {"continuousWidth": 300, "continuousHeight": 300},
+                "mark": {"color": "black", "fill": "black"},
             }
         }
 
-    # register the custom theme under a chosen name
-    alt.themes.register('black_marks', black_marks)
-
-    # enable the newly registered theme
-    alt.themes.enable('black_marks')
 
     # draw the chart
     cars = data.cars.url
@@ -842,6 +843,13 @@ If you want to restore the default theme, use:
    :output: none
 
    alt.themes.enable('default')
+
+When experimenting with your theme, you can use the code below to see how 
+it translates across a range of charts/marks:
+
+.. altair-code-ref:: tests.altair_theme_test.alt_theme_test
+    :fold:
+    :summary: Show Vega-Altair Theme Test code
 
 
 For more ideas on themes, see the `Vega Themes`_ repository.
@@ -890,4 +898,3 @@ The configured localization settings persist upon saving.
 
 .. _Vega Themes: https://github.com/vega/vega-themes/
 .. _`D3's localization support`: https://d3-wiki.readthedocs.io/zh-cn/master/Localization/
-.. _Vega Theme Test: https://vega.github.io/vega-themes/?renderer=canvas

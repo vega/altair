@@ -1,11 +1,20 @@
 from __future__ import annotations
 
+import sys
 from functools import partial
 from importlib.metadata import entry_points
-from typing import TYPE_CHECKING, Any, Callable, Generic, cast
-from typing_extensions import TypeAliasType, TypeIs, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, cast
 
 from altair.utils.deprecation import deprecated_warn
+
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from types import TracebackType
@@ -39,7 +48,7 @@ class NoSuchEntryPoint(Exception):
         return f"No {self.name!r} entry point found in group {self.group!r}"
 
 
-class PluginEnabler:
+class PluginEnabler(Generic[PluginT, R]):
     """
     Context manager for enabling plugins.
 
@@ -51,21 +60,23 @@ class PluginEnabler:
         # plugins back to original state
     """
 
-    def __init__(self, registry: PluginRegistry, name: str, **options):
-        self.registry: PluginRegistry = registry
+    def __init__(
+        self, registry: PluginRegistry[PluginT, R], name: str, **options: Any
+    ) -> None:
+        self.registry: PluginRegistry[PluginT, R] = registry
         self.name: str = name
         self.options: dict[str, Any] = options
         self.original_state: dict[str, Any] = registry._get_state()
         self.registry._enable(name, **options)
 
-    def __enter__(self) -> PluginEnabler:
+    def __enter__(self) -> PluginEnabler[PluginT, R]:
         return self
 
     def __exit__(self, typ: type, value: Exception, traceback: TracebackType) -> None:
         self.registry._set_state(self.original_state)
 
     def __repr__(self) -> str:
-        return f"{self.registry.__class__.__name__}.enable({self.name!r})"
+        return f"{type(self.registry).__name__}.enable({self.name!r})"
 
 
 class PluginRegistry(Generic[PluginT, R]):
@@ -123,7 +134,7 @@ class PluginRegistry(Generic[PluginT, R]):
                 f"https://docs.astral.sh/ruff/rules/assert/"
             )
             deprecated_warn(msg, version="5.4.0")
-            self.plugin_type = cast(IsPlugin, _is_type(plugin_type))
+            self.plugin_type = cast("IsPlugin", _is_type(plugin_type))
         else:
             self.plugin_type = plugin_type
         self._active: Plugin[R] | None = None
@@ -203,7 +214,7 @@ class PluginRegistry(Generic[PluginT, R]):
                     raise ValueError(self.entrypoint_err_messages[name]) from err
                 else:
                     raise NoSuchEntryPoint(self.entry_point_group, name) from err
-            value = cast(PluginT, ep.load())
+            value = cast("PluginT", ep.load())
             self.register(name, value)
         self._active_name = name
         self._active = self._plugins[name]
@@ -211,7 +222,9 @@ class PluginRegistry(Generic[PluginT, R]):
             self._global_settings[key] = options.pop(key)
         self._options = options
 
-    def enable(self, name: str | None = None, **options) -> PluginEnabler:
+    def enable(
+        self, name: str | None = None, **options: Any
+    ) -> PluginEnabler[PluginT, R]:
         """
         Enable a plugin by name.
 

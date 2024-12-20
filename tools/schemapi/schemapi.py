@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import datetime as dt
 import inspect
 import json
 import sys
 import textwrap
 from collections import defaultdict
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
@@ -14,13 +16,9 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     Final,
-    Iterable,
-    Iterator,
-    List,
+    Generic,
     Literal,
-    Sequence,
     TypeVar,
     Union,
     cast,
@@ -38,6 +36,11 @@ from packaging.version import Version
 # but be aware that when you access it in this script, the vegalite module might
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
+
+if sys.version_info >= (3, 12):
+    from typing import Protocol, TypeAliasType, runtime_checkable
+else:
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable
 
 if TYPE_CHECKING:
     from types import ModuleType
@@ -58,8 +61,8 @@ if TYPE_CHECKING:
         from typing_extensions import Never, Self
     _OptionalModule: TypeAlias = "ModuleType | None"
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
+ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -498,6 +501,34 @@ def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
         return list(obj)
 
 
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
+    """
+    Parse native `datetime.(date|datetime)` into a `DateTime`_ schema.
+
+    .. _DateTime:
+        https://vega.github.io/vega-lite/docs/datetime.html
+    """
+    result: dict[str, Any] = {"year": obj.year, "month": obj.month, "date": obj.day}
+    if isinstance(obj, dt.datetime):
+        if obj.time() != dt.time.min:
+            us = obj.microsecond
+            ms = us if us == 0 else us // 1_000
+            result.update(
+                hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
+            )
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                result["utc"] = True
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
+    return result
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
@@ -522,16 +553,14 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
             for k, v in obj.items()
             if v is not Undefined
         }
-    elif (
-        hasattr(obj, "to_dict")
-        and (module_name := obj.__module__)
-        and module_name.startswith("altair")
-    ):
+    elif isinstance(obj, SchemaLike):
         return obj.to_dict()
     elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
         return pd_opt.Timestamp(obj).isoformat()
     elif _is_iterable(obj, exclude=(str, bytes)):
         return _todict(_from_array_like(obj), context, np_opt, pd_opt)
+    elif isinstance(obj, dt.date):
+        return _from_date_datetime(obj)
     else:
         return obj
 
@@ -692,7 +721,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
-        square_columns = int(ceil(num_param_names**0.5))
+        square_columns = ceil(num_param_names**0.5)
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
@@ -785,6 +814,95 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         )
         message += "".join(it)
         return message
+
+
+_JSON_VT_co = TypeVar(
+    "_JSON_VT_co",
+    Literal["string"],
+    Literal["object"],
+    Literal["array"],
+    covariant=True,
+)
+"""
+One of a subset of JSON Schema `primitive types`_:
+
+    ["string", "object", "array"]
+
+.. _primitive types:
+    https://json-schema.org/draft-07/json-schema-validation#rfc.section.6.1.1
+"""
+
+_TypeMap = TypeAliasType(
+    "_TypeMap", Mapping[Literal["type"], _JSON_VT_co], type_params=(_JSON_VT_co,)
+)
+"""
+A single item JSON Schema using the `type`_ keyword.
+
+This may represent **one of**:
+
+    {"type": "string"}
+    {"type": "object"}
+    {"type": "array"}
+
+.. _type:
+    https://json-schema.org/understanding-json-schema/reference/type
+"""
+
+# NOTE: Type checkers want opposing things:
+# - `mypy`   : Covariant type variable "_JSON_VT_co" used in protocol where invariant one is expected  [misc]
+# - `pyright`: Type variable "_JSON_VT_co" used in generic protocol "SchemaLike" should be covariant [reportInvalidTypeVarUse]
+# Siding with `pyright` as this is consistent with https://github.com/python/typeshed/blob/9e506eb5e8fc2823db8c60ad561b1145ff114947/stdlib/typing.pyi#L690
+
+
+@runtime_checkable
+class SchemaLike(Generic[_JSON_VT_co], Protocol):  # type: ignore[misc]
+    """
+    Represents ``altair`` classes which *may* not derive ``SchemaBase``.
+
+    Attributes
+    ----------
+    _schema
+        A single item JSON Schema using the `type`_ keyword.
+
+    Notes
+    -----
+    Should be kept tightly defined to the **minimum** requirements for:
+        - Converting into a form that can be validated by `jsonschema`_.
+        - Avoiding calling ``.to_dict()`` on a class external to ``altair``.
+    - ``_schema`` is more accurately described as a ``ClassVar``
+        - See `discussion`_ for blocking issue.
+
+    .. _jsonschema:
+        https://github.com/python-jsonschema/jsonschema
+    .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+    .. _discussion:
+        https://github.com/python/typing/discussions/1424
+    """
+
+    _schema: _TypeMap[_JSON_VT_co]
+
+    def to_dict(self, *args, **kwds) -> Any: ...
+
+
+@runtime_checkable
+class ConditionLike(SchemaLike[Literal["object"]], Protocol):
+    """
+    Represents the wrapped state of a conditional encoding or property.
+
+    Attributes
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+
+    Notes
+    -----
+    - Can be extended with additional conditions.
+    - *Does not* define a default value, but can be finalized with one.
+    """
+
+    condition: Any
+    _schema: _TypeMap[Literal["object"]] = {"type": "object"}
 
 
 class UndefinedType:
@@ -1257,7 +1375,7 @@ def _replace_parsed_shorthand(
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
 
-_CopyImpl = TypeVar("_CopyImpl", SchemaBase, Dict[Any, Any], List[Any])
+_CopyImpl = TypeVar("_CopyImpl", SchemaBase, dict[Any, Any], list[Any])
 """
 Types which have an implementation in ``SchemaBase.copy()``.
 

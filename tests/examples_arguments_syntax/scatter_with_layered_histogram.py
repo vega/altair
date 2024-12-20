@@ -30,7 +30,11 @@ selector = alt.selection_point(fields=['gender'])
 
 color_scale = alt.Scale(domain=['M', 'F'],
                         range=['#1FC3AA', '#8624F5'])
-
+color = (
+    alt.when(selector)
+    .then(alt.Color("gender:N", scale=color_scale))
+    .otherwise(alt.value("lightgray"))
+)
 base = alt.Chart(source).properties(
     width=250,
     height=250
@@ -39,11 +43,7 @@ base = alt.Chart(source).properties(
 points = base.mark_point(filled=True, size=200).encode(
     x=alt.X('mean(height):Q', scale=alt.Scale(domain=[0,84])),
     y=alt.Y('mean(weight):Q', scale=alt.Scale(domain=[0,250])),
-    color=alt.condition(
-        selector,
-        'gender:N',
-        alt.value('lightgray'),
-        scale=color_scale),
+    color=color,
 )
 
 hists = base.mark_bar(opacity=0.5, thickness=100).encode(

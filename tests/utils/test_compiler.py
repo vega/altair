@@ -3,11 +3,7 @@ import json
 import pytest
 
 from altair import Chart, vegalite_compilers
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
+from tests import skip_requires_vl_convert
 
 
 @pytest.fixture
@@ -30,27 +26,23 @@ def assert_is_vega_spec(vega_spec):
     assert "axes" in vega_spec
 
 
+@skip_requires_vl_convert
 def test_vegalite_compiler(chart):
-    if vlc is None:
-        pytest.skip("vl_convert is not installed")
-
     vegalite_spec = chart.to_dict()
-    vega_spec = vegalite_compilers.get()(vegalite_spec)
+    fn = vegalite_compilers.get()
+    assert fn is not None
+    vega_spec = fn(vegalite_spec)
     assert_is_vega_spec(vega_spec)
 
 
+@skip_requires_vl_convert
 def test_to_dict_with_format_vega(chart):
-    if vlc is None:
-        pytest.skip("vl_convert is not installed")
-
     vega_spec = chart.to_dict(format="vega")
     assert_is_vega_spec(vega_spec)
 
 
+@skip_requires_vl_convert
 def test_to_json_with_format_vega(chart):
-    if vlc is None:
-        pytest.skip("vl_convert is not installed")
-
     json_spec = chart.to_json(format="vega")
     assert isinstance(json_spec, str)
     spec = json.loads(json_spec)

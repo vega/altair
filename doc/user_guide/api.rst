@@ -9,6 +9,8 @@ Please refer to the `full user guide <http://altair-viz.github.io>`_ for
 further details, as this low-level documentation may not be enough to give
 full guidelines on their use.
 
+.. _api-toplevel:
+
 Top-Level Objects
 -----------------
 .. currentmodule:: altair
@@ -25,6 +27,8 @@ Top-Level Objects
    RepeatChart
    TopLevelMixin
    VConcatChart
+
+.. _api-channels:
 
 Encoding Channels
 -----------------
@@ -134,6 +138,8 @@ Encoding Channels
    YOffsetValue
    YValue
 
+.. _api-functions:
+
 API Functions
 -------------
 .. currentmodule:: altair
@@ -163,6 +169,96 @@ API Functions
    value
    vconcat
    when
+
+.. _api-theme:
+
+Theme
+-----
+.. currentmodule:: altair.theme
+
+.. autosummary::
+   :toctree: generated/theme/
+   :nosignatures:
+
+   active
+   enable
+   get
+   names
+   options
+   register
+   unregister
+   ThemeConfig
+   AreaConfigKwds
+   AutoSizeParamsKwds
+   AxisConfigKwds
+   AxisResolveMapKwds
+   BarConfigKwds
+   BindCheckboxKwds
+   BindDirectKwds
+   BindInputKwds
+   BindRadioSelectKwds
+   BindRangeKwds
+   BoxPlotConfigKwds
+   BrushConfigKwds
+   CompositionConfigKwds
+   ConfigKwds
+   DateTimeKwds
+   DerivedStreamKwds
+   ErrorBandConfigKwds
+   ErrorBarConfigKwds
+   FeatureGeometryGeoJsonPropertiesKwds
+   FormatConfigKwds
+   GeoJsonFeatureCollectionKwds
+   GeoJsonFeatureKwds
+   GeometryCollectionKwds
+   GradientStopKwds
+   HeaderConfigKwds
+   IntervalSelectionConfigKwds
+   IntervalSelectionConfigWithoutTypeKwds
+   LegendConfigKwds
+   LegendResolveMapKwds
+   LegendStreamBindingKwds
+   LineConfigKwds
+   LineStringKwds
+   LinearGradientKwds
+   LocaleKwds
+   MarkConfigKwds
+   MergedStreamKwds
+   MultiLineStringKwds
+   MultiPointKwds
+   MultiPolygonKwds
+   NumberLocaleKwds
+   OverlayMarkDefKwds
+   PaddingKwds
+   PointKwds
+   PointSelectionConfigKwds
+   PointSelectionConfigWithoutTypeKwds
+   PolygonKwds
+   ProjectionConfigKwds
+   ProjectionKwds
+   RadialGradientKwds
+   RangeConfigKwds
+   RectConfigKwds
+   ResolveKwds
+   RowColKwds
+   ScaleConfigKwds
+   ScaleInvalidDataConfigKwds
+   ScaleResolveMapKwds
+   SelectionConfigKwds
+   StepKwds
+   StyleConfigIndexKwds
+   TickConfigKwds
+   TimeIntervalStepKwds
+   TimeLocaleKwds
+   TitleConfigKwds
+   TitleParamsKwds
+   TooltipContentKwds
+   TopLevelSelectionParameterKwds
+   VariableParameterKwds
+   ViewBackgroundKwds
+   ViewConfigKwds
+
+.. _api-core:
 
 Low-Level Schema Wrappers
 -------------------------
@@ -625,6 +721,8 @@ Low-Level Schema Wrappers
    WindowOnlyOp
    WindowTransform
 
+.. _api-cls:
+
 API Utility Classes
 -------------------
 .. currentmodule:: altair
@@ -637,6 +735,8 @@ API Utility Classes
    When
    Then
    ChainedWhen
+
+.. _api-typing:
 
 Typing
 ------
@@ -691,3 +791,5 @@ Typing
    Optional
    is_chart_type
 
+.. _Generic:
+    https://typing.readthedocs.io/en/latest/spec/generics.html#generics

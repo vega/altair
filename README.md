@@ -57,7 +57,7 @@ brush = alt.selection_interval()
 points = alt.Chart(source).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
-    color=alt.condition(brush, 'Origin', alt.value('lightgray'))
+    color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray"))
 ).add_params(
     brush
 )

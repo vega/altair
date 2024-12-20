@@ -39,6 +39,7 @@ extensions = [
     "sphinxext_altair.altairplot",
     "sphinxext.altairgallery",
     "sphinxext.schematable",
+    "sphinxext.code_ref",
     "sphinx_copybutton",
     "sphinx_design",
 ]
@@ -78,7 +79,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.5.0dev"
+version = "5.6.0dev"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 

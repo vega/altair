@@ -139,7 +139,7 @@ We can further apply selection to highlight a certain line on hover.
     )
 
     lines = base.mark_line().encode(
-        size=alt.condition(~highlight, alt.value(1), alt.value(3))
+        size=alt.when(~highlight).then(alt.value(1)).otherwise(alt.value(3))
     )
 
     points + lines

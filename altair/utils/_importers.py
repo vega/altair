@@ -12,20 +12,24 @@ if TYPE_CHECKING:
 def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"
     try:
-        version = importlib_version("vegafusion")
-        embed_version = importlib_version("vegafusion-python-embed")
-        if version != embed_version or Version(version) < Version(min_version):
-            msg = (
-                "The versions of the vegafusion and vegafusion-python-embed packages must match\n"
-                f"and must be version {min_version} or greater.\n"
-                f"Found:\n"
-                f" - vegafusion=={version}\n"
-                f" - vegafusion-python-embed=={embed_version}\n"
-            )
-            raise RuntimeError(msg)
-        import vegafusion as vf  # type: ignore
+        import vegafusion as vf
 
-        return vf
+        version = importlib_version("vegafusion")
+        if Version(version) >= Version("2.0.0a0"):
+            # In VegaFusion 2.0 there is no vegafusion-python-embed package
+            return vf
+        else:
+            embed_version = importlib_version("vegafusion-python-embed")
+            if version != embed_version or Version(version) < Version(min_version):
+                msg = (
+                    "The versions of the vegafusion and vegafusion-python-embed packages must match\n"
+                    f"and must be version {min_version} or greater.\n"
+                    f"Found:\n"
+                    f" - vegafusion=={version}\n"
+                    f" - vegafusion-python-embed=={embed_version}\n"
+                )
+                raise RuntimeError(msg)
+            return vf
     except ImportError as err:
         msg = (
             'The "vegafusion" data transformer and chart.transformed_data feature requires\n'

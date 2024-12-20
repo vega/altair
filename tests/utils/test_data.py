@@ -100,6 +100,7 @@ def test_dataframe_to_json():
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
+    filename = ""
     data = _create_dataframe(10)
     try:
         result1 = _pipe(data, to_json)
@@ -107,7 +108,8 @@ def test_dataframe_to_json():
         filename = result1["url"]
         output = pd.read_json(filename)
     finally:
-        Path(filename).unlink()
+        if filename:
+            Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -120,6 +122,7 @@ def test_dict_to_json():
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
+    filename = ""
     data = _create_data_with_values(10)
     try:
         result1 = _pipe(data, to_json)
@@ -127,7 +130,8 @@ def test_dict_to_json():
         filename = result1["url"]
         output = pd.read_json(filename).to_dict(orient="records")
     finally:
-        Path(filename).unlink()
+        if filename:
+            Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}
@@ -141,6 +145,7 @@ def test_dataframe_to_csv(tp: type[Any]) -> None:
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
+    filename: str = ""
     data = _create_dataframe(10, tp=tp)
     try:
         result1 = _pipe(data, to_csv)
@@ -148,7 +153,8 @@ def test_dataframe_to_csv(tp: type[Any]) -> None:
         filename = result1["url"]
         output = tp(pd.read_csv(filename))
     finally:
-        Path(filename).unlink()
+        if filename:
+            Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -161,6 +167,7 @@ def test_dict_to_csv():
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
+    filename = ""
     data = _create_data_with_values(10)
     try:
         result1 = _pipe(data, to_csv)
@@ -168,7 +175,8 @@ def test_dict_to_csv():
         filename = result1["url"]
         output = pd.read_csv(filename).to_dict(orient="records")
     finally:
-        Path(filename).unlink()
+        if filename:
+            Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}

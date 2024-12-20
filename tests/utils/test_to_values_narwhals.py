@@ -1,6 +1,5 @@
-import sys
+import re
 from datetime import datetime
-from pathlib import Path
 
 import narwhals.stable.v1 as nw
 import pandas as pd
@@ -10,23 +9,7 @@ from altair.utils.data import to_values
 from tests import skip_requires_pyarrow
 
 
-def windows_has_tzdata():
-    """
-    From PyArrow: python/pyarrow/tests/util.py.
-
-    This is the default location where tz.cpp will look for (until we make
-    this configurable at run-time)
-    """
-    return Path.home().joinpath("Downloads", "tzdata").exists()
-
-
-# Skip test on Windows when the tz database is not configured.
-# See https://github.com/vega/altair/issues/3050.
-@pytest.mark.skipif(
-    sys.platform == "win32" and not windows_has_tzdata(),
-    reason="Timezone database is not installed on Windows",
-)
-@skip_requires_pyarrow
+@skip_requires_pyarrow(requires_tzdata=True)
 def test_arrow_timestamp_conversion():
     """Test that arrow timestamp values are converted to ISO-8601 strings."""
     import pyarrow as pa
@@ -63,7 +46,8 @@ def test_duration_raises():
 
     # Check that exception mentions the duration[ns] type,
     # which is what the pandas timedelta is converted into
-    assert (
-        'Field "timedelta" has type "Duration" which is not supported by Altair'
-        in e.value.args[0]
+
+    assert re.match(
+        r'^Field "timedelta" has type "Duration.*" which is not supported by Altair',
+        e.value.args[0],
     )

@@ -8,27 +8,18 @@ import re
 import sys
 import traceback
 import warnings
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterator,
-    Literal,
-    TypeVar,
-    cast,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import get_polars, is_pandas_dataframe
-from narwhals.typing import IntoDataFrame
+from narwhals.stable.v1.dependencies import is_pandas_dataframe, is_polars_dataframe
+from narwhals.stable.v1.typing import IntoDataFrame
 
-from altair.utils.schemapi import SchemaBase, Undefined
+from altair.utils.schemapi import SchemaBase, SchemaLike, Undefined
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
@@ -44,7 +35,7 @@ if TYPE_CHECKING:
     import typing as t
 
     import pandas as pd
-    from narwhals.typing import IntoExpr
+    from narwhals.stable.v1.typing import IntoExpr
 
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
@@ -231,7 +222,7 @@ SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
 
 
 def infer_vegalite_type_for_pandas(
-    data: object,
+    data: Any,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode.
@@ -240,7 +231,7 @@ def infer_vegalite_type_for_pandas(
 
     Parameters
     ----------
-    data: object
+    data: Any
     """
     # This is safe to import here, as this function is only called on pandas input.
     from pandas.api.types import infer_dtype
@@ -334,7 +325,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
     import numpy as np
 
     try:
-        return np.issubdtype(dtype, subtype)
+        return cast("bool", np.issubdtype(dtype, subtype))
     except (NotImplementedError, TypeError):
         return False
 
@@ -392,7 +383,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         # We know that the column names are strings from the isinstance check
         # further above but mypy thinks it is of type Hashable and therefore does not
         # let us assign it to the col_name variable which is already of type str.
-        col_name = cast(str, dtype_item[0])
+        col_name = cast("str", dtype_item[0])
         dtype = dtype_item[1]
         dtype_name = str(dtype)
         if dtype_name == "category":
@@ -479,8 +470,9 @@ def sanitize_narwhals_dataframe(
     columns: list[IntoExpr] = []
     # See https://github.com/vega/altair/issues/1027 for why this is necessary.
     local_iso_fmt_string = "%Y-%m-%dT%H:%M:%S"
+    is_polars = is_polars_dataframe(data.to_native())
     for name, dtype in schema.items():
-        if dtype == nw.Date and nw.get_native_namespace(data) is get_polars():
+        if dtype == nw.Date and is_polars:
             # Polars doesn't allow formatting `Date` with time directives.
             # The date -> datetime cast is extremely fast compared with `to_string`
             columns.append(
@@ -682,8 +674,8 @@ def parse_shorthand(  # noqa: C901
             if schema[unescaped_field] in {
                 nw.Object,
                 nw.Unknown,
-            } and is_pandas_dataframe(nw.to_native(data_nw)):
-                attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
+            } and is_pandas_dataframe(data_nw.to_native()):
+                attrs["type"] = infer_vegalite_type_for_pandas(column.to_native())
             else:
                 attrs["type"] = infer_vegalite_type_for_narwhals(column)
             if isinstance(attrs["type"], tuple):
@@ -718,11 +710,14 @@ def infer_vegalite_type_for_narwhals(
         and not (categories := column.cat.get_categories()).is_empty()
     ):
         return "ordinal", categories.to_list()
-    if dtype in {nw.String, nw.Categorical, nw.Boolean}:
+    if dtype == nw.String or dtype == nw.Categorical or dtype == nw.Boolean:  # noqa: PLR1714
         return "nominal"
     elif dtype.is_numeric():
         return "quantitative"
-    elif dtype in {nw.Datetime, nw.Date}:
+    elif dtype == nw.Datetime or dtype == nw.Date:  # noqa: PLR1714
+        # We use `== nw.Datetime` to check for any kind of Datetime, regardless of time
+        # unit and time zone. Prefer this over `dtype in {nw.Datetime, nw.Date}`,
+        # see https://narwhals-dev.github.io/narwhals/backcompat.
         return "temporal"
     else:
         msg = f"Unexpected DtypeKind: {dtype}"
@@ -744,10 +739,10 @@ def use_signature(tp: Callable[P, Any], /):
     """
 
     @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
+    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
 
     def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
         """
@@ -771,8 +766,20 @@ def use_signature(tp: Callable[P, Any], /):
     return decorate
 
 
+@overload
 def update_nested(
     original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[False] = ...,
+) -> t.MutableMapping[Any, Any]: ...
+@overload
+def update_nested(
+    original: t.Mapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: Literal[True],
+) -> t.MutableMapping[Any, Any]: ...
+def update_nested(
+    original: Any,
     update: t.Mapping[Any, Any],
     copy: bool = False,
 ) -> t.MutableMapping[Any, Any]:
@@ -851,7 +858,7 @@ class _ChannelCache:
             cached = _CHANNEL_CACHE
         except NameError:
             cached = cls.__new__(cls)
-            cached.channel_to_name = _init_channel_to_name()
+            cached.channel_to_name = _init_channel_to_name()  # pyright: ignore[reportAttributeAccessIssue]
             cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
             _CHANNEL_CACHE = cached
         return _CHANNEL_CACHE
@@ -869,6 +876,8 @@ class _ChannelCache:
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [self._wrap_in_channel(el, encoding) for el in obj]
+        elif isinstance(obj, SchemaLike):
+            obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
             try:

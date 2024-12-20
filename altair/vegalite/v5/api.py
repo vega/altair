@@ -9,23 +9,14 @@ import operator
 import sys
 import typing as t
 import warnings
+from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Literal,
-    Protocol,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
 
-from altair import utils
+from altair import theme, utils
 from altair.expr import core as _expr_core
 from altair.utils import Optional, SchemaBase, Undefined
 from altair.utils._vegafusion_data import (
@@ -34,22 +25,39 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
+from altair.utils.schemapi import ConditionLike, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
-from .schema._typing import Map
-from .theme import themes
+from .schema._typing import Map, PrimitiveValue_T, SingleDefUnitChannel_T, Temporal
 
-if sys.version_info >= (3, 13):
+if sys.version_info >= (3, 14):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
+if sys.version_info >= (3, 12):
+    from typing import Protocol, TypeAliasType, runtime_checkable
+else:
+    from typing_extensions import (  # noqa: F401
+        Protocol,
+        TypeAliasType,
+        runtime_checkable,
+    )
+if sys.version_info >= (3, 11):
+    from typing import LiteralString
+else:
+    from typing_extensions import LiteralString
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
     from pathlib import Path
-    from typing import IO, Iterable, Iterator
+    from typing import IO
 
     from altair.utils.core import DataFrameLike
 
@@ -71,6 +79,7 @@ if TYPE_CHECKING:
     )
     from altair.utils.display import MimeBundleType
 
+    from .schema._config import BrushConfigKwds, DerivedStreamKwds, MergedStreamKwds
     from .schema._typing import (
         AggregateOp_T,
         AutosizeType_T,
@@ -85,7 +94,6 @@ if TYPE_CHECKING:
         ResolveMode_T,
         SelectionResolution_T,
         SelectionType_T,
-        SingleDefUnitChannel_T,
         SingleTimeUnit_T,
         StackOffset_T,
     )
@@ -96,9 +104,12 @@ if TYPE_CHECKING:
         AnyMark,
         BindCheckbox,
         Binding,
+        BindInput,
         BindRadioSelect,
         BindRange,
         BinParams,
+        BrushConfig,
+        DateTime,
         Expr,
         ExprRef,
         FacetedEncoding,
@@ -113,11 +124,9 @@ if TYPE_CHECKING:
         JoinAggregateFieldDef,
         LayerRepeatMapping,
         LookupSelection,
-        Mark,
         NamedData,
         ParameterName,
         PointSelectionConfig,
-        Predicate,
         PredicateComposition,
         ProjectionType,
         RepeatMapping,
@@ -271,7 +280,7 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            data = func(nw.to_native(data, strict=False))
+            data = func(nw.to_native(data, pass_through=True))
 
     # convert string input to a URLData
     elif isinstance(data, str):
@@ -356,6 +365,7 @@ TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
     _counter: int = 0
 
     @classmethod
@@ -398,25 +408,25 @@ class Parameter(_expr_core.OperatorMixin):
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
 
-    def __invert__(self) -> SelectionPredicateComposition | Any:
+    def __invert__(self) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            return SelectionPredicateComposition({"not": {"param": self.name}})
+            return core.PredicateComposition({"not": {"param": self.name}})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
-    def __and__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __and__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
+            return core.PredicateComposition({"and": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
-    def __or__(self, other: Any) -> SelectionPredicateComposition | Any:
+    def __or__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
             if isinstance(other, Parameter):
                 other = {"param": other.name}
-            return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
+            return core.PredicateComposition({"or": [{"param": self.name}, other]})
         else:
             return _expr_core.OperatorMixin.__or__(self, other)
 
@@ -446,18 +456,12 @@ class Parameter(_expr_core.OperatorMixin):
 
 
 # Enables use of ~, &, | with compositions of selection objects.
-class SelectionPredicateComposition(core.PredicateComposition):
-    def __invert__(self) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"not": self.to_dict()})
-
-    def __and__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"and": [self.to_dict(), other.to_dict()]})
-
-    def __or__(self, other: SchemaBase) -> SelectionPredicateComposition:
-        return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
+SelectionPredicateComposition = core.PredicateComposition
 
 
 class ParameterExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
@@ -472,6 +476,8 @@ class ParameterExpression(_expr_core.OperatorMixin):
 
 
 class SelectionExpression(_expr_core.OperatorMixin):
+    _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+
     def __init__(self, expr: IntoExpression) -> None:
         self.expr = expr
 
@@ -509,14 +515,14 @@ _TestPredicateType: TypeAlias = Union[
 _PredicateType: TypeAlias = Union[
     Parameter,
     core.Expr,
-    Map,
+    "_ConditionExtra",
     _TestPredicateType,
     _expr_core.OperatorMixin,
 ]
 """Permitted types for `predicate`."""
 
 _ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, SelectionPredicateComposition
+    _expr_core.OperatorMixin, core.PredicateComposition
 ]
 """Permitted types for `&` reduced predicates."""
 
@@ -534,21 +540,20 @@ else:
 ```
 """
 
-_ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
-"""Intermediate type representing a converted `_PredicateType`.
 
-Prior to parsing any `_StatementType`.
+_FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
 """
+Permitted types for equality checks on field values.
 
-_LiteralValue: TypeAlias = Union[str, bool, float, int]
-"""Primitive python value types."""
+Applies to the following context(s):
 
-_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, SchemaBase]
-"""Permitted types for equality checks on field values:
+    import altair as alt
 
-- `datum.field == ...`
-- `FieldEqualPredicate(equal=...)`
-- `when(**constraints=...)`
+    alt.datum.field == ...
+    alt.FieldEqualPredicate(field="field", equal=...)
+    alt.when(field=...)
+    alt.when().then().when(field=...)
+    alt.Chart.transform_filter(field=...)
 """
 
 
@@ -556,15 +561,15 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
-def _get_predicate_expr(p: Parameter) -> Optional[str | SchemaBase]:
+def _get_predicate_expr(p: Parameter) -> Optional[_TestPredicateType]:
     # https://vega.github.io/vega-lite/docs/predicate.html
     return getattr(p.param, "expr", Undefined)
 
 
 def _predicate_to_condition(
     predicate: _PredicateType, *, empty: Optional[bool] = Undefined
-) -> _ConditionType:
-    condition: _ConditionType
+) -> _Condition:
+    condition: _Condition
     if isinstance(predicate, Parameter):
         predicate_expr = _get_predicate_expr(predicate)
         if predicate.param_type == "selection" or utils.is_undefined(predicate_expr):
@@ -591,12 +596,12 @@ def _predicate_to_condition(
 
 
 def _condition_to_selection(
-    condition: _ConditionType,
+    condition: _Condition,
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs: Any,
-) -> SchemaBase | dict[str, _ConditionType | Any]:
-    selection: SchemaBase | dict[str, _ConditionType | Any]
+) -> SchemaBase | _Conditional[_Condition]:
+    selection: SchemaBase | _Conditional[_Condition]
     if isinstance(if_true, SchemaBase):
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
@@ -610,20 +615,47 @@ def _condition_to_selection(
         else:
             if_true = utils.parse_shorthand(if_true)
             if_true.update(kwargs)
-    condition.update(if_true)
+    cond_mutable: Any = dict(condition)
+    cond_mutable.update(if_true)
     if isinstance(if_false, SchemaBase):
         # For the selection, the channel definitions all allow selections
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
-        selection.condition = condition
+        selection.condition = cond_mutable
     elif isinstance(if_false, (str, dict)):
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = dict(condition=condition, **if_false)
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
     else:
         raise TypeError(if_false)
     return selection
+
+
+class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    # Likely a Field predicate
+    empty: Optional[bool]
+    param: Parameter | str
+    test: _TestPredicateType
+    value: Any
+    __extra_items__: _StatementType | OneOrSeq[PrimitiveValue_T]
+
+
+_Condition: TypeAlias = _ConditionExtra
+"""
+A singular, *possibly* non-chainable condition produced by ``.when()``.
+
+The default **permissive** representation.
+
+Allows arbitrary additional keys that *may* be present in a `Conditional Field`_
+but not a `Conditional Value`_.
+
+.. _Conditional Field:
+    https://vega.github.io/vega-lite/docs/condition.html#field
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
 
 
 class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -636,28 +668,43 @@ class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[cal
     value: Any
 
 
-class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
-    # https://peps.python.org/pep-0728/
-    # Likely a Field predicate
-    empty: Optional[bool]
-    param: Parameter | str
-    test: _TestPredicateType
-    value: Any
-    __extra_items__: _StatementType | OneOrSeq[_LiteralValue]
+_Conditions: TypeAlias = list[_ConditionClosed]
+"""
+Chainable conditions produced by ``.when()`` and ``Then.when()``.
 
+All must be a `Conditional Value`_.
 
-_Condition: TypeAlias = _ConditionExtra
-"""A singular, non-chainable condition produced by ``.when()``."""
-
-_Conditions: TypeAlias = t.List[_ConditionClosed]
-"""Chainable conditions produced by ``.when()`` and ``Then.when()``."""
+.. _Conditional Value:
+    https://vega.github.io/vega-lite/docs/condition.html#value
+"""
 
 _C = TypeVar("_C", _Conditions, _Condition)
 
 
 class _Conditional(TypedDict, t.Generic[_C], total=False):
+    """
+    A dictionary representation of a conditional encoding or property.
+
+    Parameters
+    ----------
+    condition
+        One or more (predicate, statement) pairs which each form a condition.
+    value
+        An optional default value, used when no predicates were met.
+    """
+
     condition: Required[_C]
     value: Any
+
+
+IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+"""
+Anything that can be converted into a conditional encoding or property.
+
+Notes
+-----
+Represents all outputs from `when-then-otherwise` conditions, which are not ``SchemaBase`` types.
+"""
 
 
 class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
@@ -687,6 +734,11 @@ def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
     return isinstance(obj, str) or any(_is_extra(obj, *objs, kwds=kwds))
 
 
+def _is_condition_closed(obj: Map) -> TypeIs[_ConditionClosed]:
+    """Return `True` if ``obj`` can be used in a chained condition."""
+    return {"empty", "param", "test", "value"} >= obj.keys()
+
+
 def _parse_when_constraints(
     constraints: dict[str, _FieldEqualType], /
 ) -> Iterator[BinaryExpression]:
@@ -709,7 +761,7 @@ def _validate_composables(
     predicates: Iterable[Any], /
 ) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
-        if isinstance(p, (_expr_core.OperatorMixin, SelectionPredicateComposition)):
+        if isinstance(p, (_expr_core.OperatorMixin, core.PredicateComposition)):
             yield p
         else:
             msg = (
@@ -746,7 +798,7 @@ def _parse_when_compose(
     if constraints:
         iters.append(_parse_when_constraints(constraints))
     r = functools.reduce(operator.and_, itertools.chain.from_iterable(iters))
-    return t.cast(_expr_core.BinaryExpression, r)
+    return t.cast("_expr_core.BinaryExpression", r)
 
 
 def _parse_when(
@@ -754,7 +806,7 @@ def _parse_when(
     *more_predicates: _ComposablePredicateType,
     empty: Optional[bool],
     **constraints: _FieldEqualType,
-) -> _ConditionType:
+) -> _Condition:
     composed: _PredicateType
     if utils.is_undefined(predicate):
         if more_predicates or constraints:
@@ -811,7 +863,7 @@ def _parse_otherwise(
 
 class _BaseWhen(Protocol):
     # NOTE: Temporary solution to non-SchemaBase copy
-    _condition: _ConditionType
+    _condition: _Condition
 
     def _when_then(
         self, statement: _StatementType, kwds: dict[str, Any], /
@@ -835,7 +887,7 @@ class When(_BaseWhen):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    def __init__(self, condition: _ConditionType, /) -> None:
+    def __init__(self, condition: _Condition, /) -> None:
         self._condition = condition
 
     def __repr__(self) -> str:
@@ -859,13 +911,16 @@ class When(_BaseWhen):
             A spec or value to use when the preceding :func:`.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -890,7 +945,7 @@ class When(_BaseWhen):
             return Then(_Conditional(condition=[condition]))
 
 
-class Then(SchemaBase, t.Generic[_C]):
+class Then(ConditionLike, t.Generic[_C]):
     """
     Utility class for ``when-then-otherwise`` conditions.
 
@@ -906,11 +961,8 @@ class Then(SchemaBase, t.Generic[_C]):
     `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
-    _schema = {"type": "object"}
-
     def __init__(self, conditions: _Conditional[_C], /) -> None:
-        super().__init__(**conditions)
-        self.condition: _C
+        self.condition: _C = conditions["condition"]
 
     @overload
     def otherwise(self, statement: _TSchemaBase, /, **kwds: Any) -> _TSchemaBase: ...
@@ -939,10 +991,12 @@ class Then(SchemaBase, t.Generic[_C]):
                 Roughly equivalent to an ``else`` clause.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1020,7 +1074,7 @@ class Then(SchemaBase, t.Generic[_C]):
                 When ``predicate`` is a ``Parameter`` that is used more than once,
                 ``alt.when().then().when(..., empty=...)`` provides granular control for each occurrence.
         **constraints
-            Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+            Specify `Field Equal Predicate`_'s.
             Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
         Returns
@@ -1028,6 +1082,8 @@ class Then(SchemaBase, t.Generic[_C]):
         :class:`ChainedWhen`
             A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
 
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
 
         Examples
         --------
@@ -1051,7 +1107,7 @@ class Then(SchemaBase, t.Generic[_C]):
         conditions = self.to_dict()
         current = conditions["condition"]
         if isinstance(current, list):
-            conditions = t.cast(_Conditional[_Conditions], conditions)
+            conditions = t.cast("_Conditional[_Conditions]", conditions)
             return ChainedWhen(condition, conditions)
         elif isinstance(current, dict):
             cond = _reveal_parsed_shorthand(current)
@@ -1068,12 +1124,22 @@ class Then(SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
-        m = super().to_dict(*args, **kwds)
-        return _Conditional(condition=m["condition"])
+    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:
+        return _Conditional(condition=self.condition.copy())
 
     def __deepcopy__(self, memo: Any) -> Self:
-        return type(self)(_Conditional(condition=_deepcopy(self.condition)))
+        return type(self)(_Conditional(condition=_deepcopy(self.condition, memo)))
+
+    def __repr__(self) -> str:
+        name = type(self).__name__
+        COND = "condition: "
+        LB, RB = "{", "}"
+        if len(self.condition) == 1:
+            args = f"{COND}{self.condition!r}".replace("\n", "\n  ")
+        else:
+            conds = "\n    ".join(f"{c!r}" for c in self.condition)
+            args = f"{COND}[\n    " f"{conds}\n  ]"
+        return f"{name}({LB}\n  {args}\n{RB})"
 
 
 class ChainedWhen(_BaseWhen):
@@ -1091,7 +1157,7 @@ class ChainedWhen(_BaseWhen):
 
     def __init__(
         self,
-        condition: _ConditionType,
+        condition: _Condition,
         conditions: _Conditional[_Conditions],
         /,
     ) -> None:
@@ -1115,13 +1181,16 @@ class ChainedWhen(_BaseWhen):
             A spec or value to use when the preceding :meth:`Then.when()` clause is true.
 
             .. note::
-                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+                ``str`` will be encoded as `shorthand`_.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
         Returns
         -------
         :class:`Then`
+
+        .. _shorthand:
+            https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands
 
         Examples
         --------
@@ -1144,9 +1213,18 @@ class ChainedWhen(_BaseWhen):
             )
         """
         condition = self._when_then(statement, kwds)
-        conditions = self._conditions.copy()
-        conditions["condition"].append(condition)
-        return Then(conditions)
+        if _is_condition_closed(condition):
+            conditions = self._conditions.copy()
+            conditions["condition"].append(condition)
+            return Then(conditions)
+        else:
+            cond = _reveal_parsed_shorthand(condition)
+            msg = (
+                f"Chained conditions cannot be mixed with field conditions.\n"
+                f"Shorthand {statement!r} expanded to {cond!r}\n\n"
+                f"Use `alt.value({statement!r})` if this is not a shorthand string."
+            )
+            raise TypeError(msg)
 
 
 def when(
@@ -1177,7 +1255,7 @@ def when(
             When ``predicate`` is a ``Parameter`` that is used more than once,
             ``alt.when(..., empty=...)`` provides granular control for each occurrence.
     **constraints
-        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+        Specify `Field Equal Predicate`_'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
     Returns
@@ -1187,11 +1265,12 @@ def when(
 
     Notes
     -----
-    - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
+    - Directly inspired by the ``when-then-otherwise`` syntax used in `polars.when`_.
 
-    References
-    ----------
-    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
+    .. _Field Equal Predicate:
+        https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+    .. _polars.when:
+        https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
 
     Examples
     --------
@@ -1305,7 +1384,7 @@ def param(
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[t.cast(str, empty)]
+            parameter.empty = empty_remap[t.cast("str", empty)]
         else:
             raise ValueError(warn_msg)
 
@@ -1374,17 +1453,71 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Param
     return _selection(type=type, **kwds)
 
 
+_SelectionPointValue: TypeAlias = "PrimitiveValue_T | Temporal | DateTime | Sequence[Mapping[SingleDefUnitChannel_T | LiteralString, PrimitiveValue_T | Temporal | DateTime]]"
+"""
+Point selections can be initialized with a single primitive value:
+
+    import altair as alt
+
+    alt.selection_point(fields=["year"], value=1980)
+
+
+You can also provide a sequence of mappings between ``encodings`` or ``fields`` to **values**:
+
+    alt.selection_point(
+        fields=["cylinders", "year"],
+        value=[{"cylinders": 4, "year": 1981}, {"cylinders": 8, "year": 1972}],
+    )
+"""
+
+_SelectionIntervalValueMap: TypeAlias = Mapping[
+    SingleDefUnitChannel_T,
+    Union[
+        tuple[bool, bool],
+        tuple[float, float],
+        tuple[str, str],
+        tuple["Temporal | DateTime", "Temporal | DateTime"],
+        Sequence[bool],
+        Sequence[float],
+        Sequence[str],
+        Sequence["Temporal | DateTime"],
+    ],
+]
+"""
+Interval selections are initialized with a mapping between ``encodings`` to **values**:
+
+    import altair as alt
+
+    alt.selection_interval(
+        encodings=["longitude"],
+        empty=False,
+        value={"longitude": [-50, -110]},
+    )
+
+The values specify the **start** and **end** of the interval selection.
+
+You can use a ``tuple`` for type-checking each sequence has **two** elements:
+
+    alt.selection_interval(value={"x": (55, 160), "y": (13, 37)})
+
+
+.. note::
+
+    Unlike :func:`.selection_point()`, the use of ``None`` is not permitted.
+"""
+
+
 def selection_interval(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[_SelectionIntervalValueMap] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
-    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
-    on: Optional[str] = Undefined,
-    clear: Optional[str | bool] = Undefined,
+    encodings: Optional[Sequence[SingleDefUnitChannel_T]] = Undefined,
+    on: Optional[str | MergedStreamKwds | DerivedStreamKwds] = Undefined,
+    clear: Optional[str | bool | MergedStreamKwds | DerivedStreamKwds] = Undefined,
     resolve: Optional[SelectionResolution_T] = Undefined,
-    mark: Optional[Mark] = Undefined,
+    mark: Optional[BrushConfig | BrushConfigKwds] = Undefined,
     translate: Optional[str | bool] = Undefined,
     zoom: Optional[str | bool] = Undefined,
     **kwds: Any,
@@ -1394,16 +1527,16 @@ def selection_interval(
 
     Parameters
     ----------
-    name : string (optional)
+    name : str (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    value : any (optional)
+    value : Any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
     bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
-    empty : boolean (optional)
+    empty : bool (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
         'empty=False'.
@@ -1411,16 +1544,16 @@ def selection_interval(
         An expression for the value of the parameter. This expression may
         include other parameters, in which case the parameter will
         automatically update in response to upstream parameter changes.
-    encodings : List[str] (optional)
+    encodings : Sequence[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    on : string (optional)
+    on : str (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
-    clear : string or boolean (optional)
+    clear : str, bool (optional)
         Clears the selection, emptying it of all values. This property can
         be an Event Stream or False to disable clear.  Default is 'dblclick'.
-    resolve : enum('global', 'union', 'intersect') (optional)
+    resolve : Literal['global', 'union', 'intersect'] (optional)
         With layered and multi-view displays, a strategy that determines
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
@@ -1436,11 +1569,11 @@ def selection_interval(
           brushes.
 
         The default is 'global'.
-    mark : :class:`Mark` (optional)
+    mark : :class:`BrushConfig` (optional)
         An interval selection also adds a rectangle mark to depict the
-        extents of the interval. The mark property can be used to
+        extents of the interval. The ``mark`` property can be used to
         customize the appearance of the mark.
-    translate : string or boolean (optional)
+    translate : str, bool (optional)
         When truthy, allows a user to interactively move an interval
         selection back-and-forth. Can be True, False (to disable panning),
         or a Vega event stream definition which must include a start and
@@ -1451,7 +1584,7 @@ def selection_interval(
         [pointerdown, window:pointerup] > window:pointermove!
         This default allows users to click and drag within an interval
         selection to reposition it.
-    zoom : string or boolean (optional)
+    zoom : str, bool (optional)
         When truthy, allows a user to interactively resize an interval
         selection. Can be True, False (to disable zooming), or a Vega
         event stream definition. Currently, only wheel events are supported,
@@ -1461,7 +1594,7 @@ def selection_interval(
         The default value is True, which corresponds to wheel!. This
         default allows users to use the mouse wheel to resize an interval
         selection.
-    **kwds :
+    **kwds : Any
         Additional keywords to control the selection.
 
     Returns
@@ -1489,14 +1622,14 @@ def selection_interval(
 
 def selection_point(
     name: str | None = None,
-    value: Optional[Any] = Undefined,
+    value: Optional[_SelectionPointValue] = Undefined,
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
-    expr: Optional[Expr] = Undefined,
-    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
-    fields: Optional[list[str]] = Undefined,
-    on: Optional[str] = Undefined,
-    clear: Optional[str | bool] = Undefined,
+    expr: Optional[str | Expr | Expression] = Undefined,
+    encodings: Optional[Sequence[SingleDefUnitChannel_T]] = Undefined,
+    fields: Optional[Sequence[str]] = Undefined,
+    on: Optional[str | MergedStreamKwds | DerivedStreamKwds] = Undefined,
+    clear: Optional[str | bool | MergedStreamKwds | DerivedStreamKwds] = Undefined,
     resolve: Optional[SelectionResolution_T] = Undefined,
     toggle: Optional[str | bool] = Undefined,
     nearest: Optional[bool] = Undefined,
@@ -1507,16 +1640,16 @@ def selection_point(
 
     Parameters
     ----------
-    name : string (optional)
+    name : str (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    value : any (optional)
+    value : Any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
     bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
-    empty : boolean (optional)
+    empty : bool (optional)
         For selection parameters, the predicate of empty selections returns
         True by default. Override this behavior, by setting this property
         'empty=False'.
@@ -1524,19 +1657,19 @@ def selection_point(
         An expression for the value of the parameter. This expression may
         include other parameters, in which case the parameter will
         automatically update in response to upstream parameter changes.
-    encodings : List[str] (optional)
+    encodings : Sequence[str] (optional)
         A list of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
-    fields : List[str] (optional)
+    fields : Sequence[str] (optional)
         A list of field names whose values must match for a data tuple to
         fall within the selection.
-    on : string (optional)
+    on : str (optional)
         A Vega event stream (object or selector) that triggers the selection.
         For interval selections, the event stream must specify a start and end.
-    clear : string or boolean (optional)
+    clear : str, bool (optional)
         Clears the selection, emptying it of all values. This property can
         be an Event Stream or False to disable clear.  Default is 'dblclick'.
-    resolve : enum('global', 'union', 'intersect') (optional)
+    resolve : Literal['global', 'union', 'intersect'] (optional)
         With layered and multi-view displays, a strategy that determines
         how selections' data queries are resolved when applied in a filter
         transform, conditional encoding rule, or scale domain.
@@ -1552,7 +1685,7 @@ def selection_point(
           brushes.
 
         The default is 'global'.
-    toggle : string or boolean (optional)
+    toggle : str, bool (optional)
         Controls whether data values should be toggled (inserted or
         removed from a point selection) or only ever inserted into
         point selections.
@@ -1572,13 +1705,13 @@ def selection_point(
           value to the Vega expression True will toggle data values
           without the user pressing the shift-key.
 
-    nearest : boolean (optional)
+    nearest : bool (optional)
         When true, an invisible voronoi diagram is computed to accelerate
         discrete selection. The data value nearest the mouse cursor is
         added to the selection.  The default is False, which means that
         data values must be interacted with directly (e.g., clicked on)
         to be added to the selection.
-    **kwds :
+    **kwds : Any
         Additional keywords to control the selection.
 
     Returns
@@ -1616,10 +1749,49 @@ def selection_single(**kwargs: Any) -> Parameter:
     return _selection(type="point", **kwargs)
 
 
-@utils.use_signature(core.Binding)
-def binding(input: Any, **kwargs: Any) -> Binding:
-    """A generic binding."""
-    return core.Binding(input=input, **kwargs)
+def binding(
+    input: str,
+    *,
+    autocomplete: Optional[str] = Undefined,
+    debounce: Optional[float] = Undefined,
+    element: Optional[str] = Undefined,
+    name: Optional[str] = Undefined,
+    placeholder: Optional[str] = Undefined,
+) -> BindInput:
+    """
+    A generic binding.
+
+    Parameters
+    ----------
+    input : str
+        The type of input element to use. The valid values are ``"checkbox"``, ``"radio"``,
+        ``"range"``, ``"select"``, and any other legal `HTML form input type
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`__.
+    autocomplete : str
+        A hint for form autofill. See the `HTML autocomplete attribute
+        <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete>`__ for
+        additional information.
+    debounce : float
+        If defined, delays event handling until the specified milliseconds have elapsed
+        since the last event was fired.
+    element : str
+        An optional CSS selector string indicating the parent element to which the input
+        element should be added. By default, all input elements are added within the parent
+        container of the Vega view.
+    name : str
+        By default, the signal name is used to label input elements. This ``name`` property
+        can be used instead to specify a custom label for the bound signal.
+    placeholder : str
+        Text that appears in the form control when it has no value set.
+    """
+    return core.BindInput(
+        autocomplete=autocomplete,
+        debounce=debounce,
+        element=element,
+        input=input,
+        name=name,
+        placeholder=placeholder,
+    )
 
 
 @utils.use_signature(core.BindCheckbox)
@@ -1663,7 +1835,7 @@ def condition(
     *,
     empty: Optional[bool] = ...,
     **kwargs: Any,
-) -> dict[str, _ConditionType | Any]: ...
+) -> _Conditional[_Condition]: ...
 @overload
 def condition(
     predicate: _PredicateType,
@@ -1672,7 +1844,7 @@ def condition(
     *,
     empty: Optional[bool] = ...,
     **kwargs: Any,
-) -> dict[str, _ConditionType | Any]: ...
+) -> _Conditional[_Condition]: ...
 @overload
 def condition(
     predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any
@@ -1685,7 +1857,7 @@ def condition(
     *,
     empty: Optional[bool] = Undefined,
     **kwargs: Any,
-) -> SchemaBase | dict[str, _ConditionType | Any]:
+) -> SchemaBase | _Conditional[_Condition]:
     """
     A conditional attribute or encoding.
 
@@ -1839,9 +2011,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if "$schema" not in vegalite_spec:
                 vegalite_spec["$schema"] = SCHEMA_URL
 
-            # apply theme from theme registry
-            if theme := themes.get():
-                vegalite_spec = utils.update_nested(theme(), vegalite_spec, copy=True)
+            if func := theme.get():
+                vegalite_spec = utils.update_nested(func(), vegalite_spec, copy=True)
             else:
                 msg = (
                     f"Expected a theme to be set but got {None!r}.\n"
@@ -2821,45 +2992,113 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
-    # TODO: Update docstring
-    # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: str
-        | Expr
-        | Expression
-        | Predicate
-        | Parameter
-        | PredicateComposition
-        | dict[str, Predicate | str | list | bool],
-        **kwargs: Any,
+        predicate: Optional[_PredicateType] = Undefined,
+        *more_predicates: _ComposablePredicateType,
+        empty: Optional[bool] = Undefined,
+        **constraints: _FieldEqualType,
     ) -> Self:
         """
-        Add a :class:`FilterTransform` to the schema.
+        Add a :class:`FilterTransform` to the spec.
+
+        The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
         Parameters
         ----------
-        filter : a filter expression or :class:`PredicateComposition`
-            The `filter` property must be one of the predicate definitions:
-            (1) a string or alt.expr expression
-            (2) a range predicate
-            (3) a selection predicate
-            (4) a logical operand combining (1)-(3)
-            (5) a Selection object
+        predicate
+            A selection or test predicate. ``str`` input will be treated as a test operand.
+        *more_predicates
+            Additional predicates, restricted to types supporting ``&``.
+        empty
+            For selection parameters, the predicate of empty selections returns ``True`` by default.
+            Override this behavior, with ``empty=False``.
 
-        Returns
-        -------
-        self : Chart object
-            returns chart to allow for chaining
+            .. note::
+                When ``predicate`` is a ``Parameter`` that is used more than once,
+                ``self.transform_filter(..., empty=...)`` provides granular control for each occurrence.
+        **constraints
+            Specify `Field Equal Predicate`_'s.
+            Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+        Warns
+        -----
+        AltairDeprecationWarning
+            If called using ``filter`` as a keyword argument.
+
+        See Also
+        --------
+        alt.when : Uses a similar syntax for defining conditional values.
+
+        Notes
+        -----
+        - Directly inspired by the syntax used in `polars.DataFrame.filter`_.
+
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+        .. _polars.DataFrame.filter:
+            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.filter.html
+
+        Examples
+        --------
+        Setting up a common chart::
+
+            import altair as alt
+            from altair import datum
+            from vega_datasets import data
+
+            source = data.population.url
+            chart = (
+                alt.Chart(source)
+                .mark_line()
+                .encode(
+                    x="age:O",
+                    y="sum(people):Q",
+                    color=alt.Color("year:O").legend(symbolType="square"),
+                )
+            )
+            chart
+
+        Singular predicates can be expressed via ``datum``::
+
+            chart.transform_filter(datum.year <= 1980)
+
+        We can also use selection parameters directly::
+
+            selection = alt.selection_point(encodings=["color"], bind="legend")
+            chart.transform_filter(selection).add_params(selection)
+
+        Or a field predicate::
+
+            between_1950_60 = alt.FieldRangePredicate(field="year", range=[1950, 1960])
+            chart.transform_filter(between_1950_60) | chart.transform_filter(~between_1950_60)
+
+        Predicates can be composed together using logical operands::
+
+            chart.transform_filter(between_1950_60 | (datum.year == 1850))
+
+        Predicates passed as positional arguments will be reduced with ``&``::
+
+            chart.transform_filter(datum.year > 1980, datum.age != 90)
+
+        Using keyword-argument ``constraints`` can simplify compositions like::
+
+            verbose_composition = chart.transform_filter((datum.year == 2000) & (datum.sex == 1))
+            chart.transform_filter(year=2000, sex=1)
         """
-        if isinstance(filter, Parameter):
-            new_filter: dict[str, Any] = {"param": filter.name}
-            if "empty" in kwargs:
-                new_filter["empty"] = kwargs.pop("empty")
-            elif isinstance(filter.empty, bool):
-                new_filter["empty"] = filter.empty
-            filter = new_filter
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        if depr_filter := t.cast("Any", constraints.pop("filter", None)):
+            utils.deprecated_warn(
+                "Passing `filter` as a keyword is ambiguous.\n\n"
+                "Use a positional argument for `<5.5.0` behavior.\n"
+                "Or, `alt.datum['filter'] == ...` if referring to a column named 'filter'.",
+                version="5.5.0",
+            )
+            if utils.is_undefined(predicate):
+                predicate = depr_filter
+            else:
+                more_predicates = *more_predicates, depr_filter
+        cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+        return self._add_transform(core.FilterTransform(filter=cond.get("test", cond)))
 
     def transform_flatten(
         self,
@@ -3747,7 +3986,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
+        return t.cast("_TSchemaBase", core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
@@ -4907,7 +5146,7 @@ def _remove_layer_props(  # noqa: C901
             # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
-            msg = f"There are inconsistent values {values} for {prop}"
+            msg = f"There are inconsistent values {values} for {prop}"  # pyright: ignore[reportPossiblyUnboundVariable]
             raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 

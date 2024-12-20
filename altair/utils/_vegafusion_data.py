@@ -1,17 +1,12 @@
 from __future__ import annotations
 
 import uuid
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Final,
-    MutableMapping,
-    TypedDict,
-    Union,
-    overload,
-)
+from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
+
+from narwhals.stable.v1.dependencies import is_into_dataframe
+from packaging.version import Version
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
@@ -24,9 +19,17 @@ from altair.utils.data import (
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
-    from narwhals.typing import IntoDataFrame
+    import sys
+    from collections.abc import MutableMapping
 
-    from vegafusion.runtime import ChartState  # type: ignore
+    from narwhals.stable.v1.typing import IntoDataFrame
+
+    from vegafusion.runtime import ChartState
+
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
@@ -38,6 +41,25 @@ extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionar
 # dataset in a Vega spec corresponds to an entry in the `inline_datasets`
 # kwarg of vf.runtime.pre_transform_spec().
 VEGAFUSION_PREFIX: Final = "vegafusion+dataset://"
+
+
+try:
+    VEGAFUSION_VERSION: Version | None = Version(importlib_version("vegafusion"))
+except ImportError:
+    VEGAFUSION_VERSION = None
+
+
+if VEGAFUSION_VERSION and Version("2.0.0a0") <= VEGAFUSION_VERSION:
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        # Test whether VegaFusion supports the data type
+        # VegaFusion v2 support narwhals-compatible DataFrames
+        return isinstance(data, DataFrameLike) or is_into_dataframe(data)
+
+else:
+
+    def is_supported_by_vf(data: Any) -> TypeIs[DataFrameLike]:
+        return isinstance(data, DataFrameLike)
 
 
 class _ToVegaFusionReturnUrlDict(TypedDict):
@@ -71,7 +93,8 @@ def vegafusion_data_transformer(
     """VegaFusion Data Transformer."""
     if data is None:
         return vegafusion_data_transformer
-    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
+
+    if is_supported_by_vf(data) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}

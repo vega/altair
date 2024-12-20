@@ -3,15 +3,18 @@ from __future__ import annotations
 import importlib
 import re
 import warnings
-from typing import Any, Iterator, Sequence
+from typing import TYPE_CHECKING, Any
 
 from docutils import frontend, nodes, utils
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
-from myst_parser.docutils_ import Parser
+from myst_parser.parsers.docutils_ import Parser
 from sphinx import addnodes
 
 from tools.schemapi.utils import SchemaInfo, fix_docstring_issues
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator, Sequence
 
 
 def type_description(schema: dict[str, Any]) -> str:
@@ -92,7 +95,7 @@ def add_text(node: nodes.paragraph, text: str) -> nodes.paragraph:
     for part in reCode.split(text):
         if part:
             if is_text:
-                node += nodes.Text(part, part)
+                node += nodes.Text(part, part)  # pyright: ignore[reportCallIssue]
             else:
                 node += nodes.literal(part, part)
 
@@ -105,7 +108,7 @@ def build_row(
     item: tuple[str, dict[str, Any]], rootschema: dict[str, Any] | None
 ) -> nodes.row:
     """Return nodes.row with property description."""
-    prop, propschema, _ = item
+    prop, propschema = item
     row = nodes.row()
 
     # Property
@@ -162,17 +165,16 @@ def build_schema_table(
 
 def select_items_from_schema(
     schema: dict[str, Any], props: list[str] | None = None
-) -> Iterator[tuple[Any, Any, bool] | tuple[str, Any, bool]]:
-    """Return iterator  (prop, schema.item, required) on prop, return all in None."""
+) -> Iterator[tuple[Any, Any] | tuple[str, Any]]:
+    """Return iterator  (prop, schema.item) on prop, return all in None."""
     properties = schema.get("properties", {})
-    required = schema.get("required", [])
     if not props:
         for prop, item in properties.items():
-            yield prop, item, prop in required
+            yield prop, item
     else:
         for prop in props:
             try:
-                yield prop, properties[prop], prop in required
+                yield prop, properties[prop]
             except KeyError as err:
                 msg = f"Can't find property: {prop}"
                 raise Exception(msg) from err

@@ -20,7 +20,10 @@ def basic_spec():
 
 
 def make_final_spec(alt, basic_spec):
-    theme = alt.themes.get()
+    from altair.theme import _themes
+
+    theme = _themes.get()
+    assert theme
     spec = theme()
     spec.update(basic_spec)
     return spec
@@ -67,10 +70,12 @@ def test_basic_chart_from_dict(alt, basic_spec):
 
 @pytest.mark.parametrize("alt", [v5])
 def test_theme_enable(alt, basic_spec):
-    active_theme = alt.themes.active
+    from altair.theme import _themes
+
+    active_theme = _themes.active
 
     try:
-        alt.themes.enable("none")
+        _themes.enable("none")
 
         chart = alt.Chart.from_dict(basic_spec)
         dct = chart.to_dict()
@@ -83,7 +88,7 @@ def test_theme_enable(alt, basic_spec):
         assert dct == basic_spec
     finally:
         # reset the theme to its initial value
-        alt.themes.enable(active_theme)
+        _themes.enable(active_theme)  # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize("alt", [v5])
@@ -92,7 +97,8 @@ def test_max_rows(alt):
 
     with alt.data_transformers.enable("default"):
         basic_chart.to_dict()  # this should not fail
-    with alt.data_transformers.enable("default", max_rows=5), pytest.raises(
-        alt.MaxRowsError
+    with (
+        alt.data_transformers.enable("default", max_rows=5),
+        pytest.raises(alt.MaxRowsError),
     ):
         basic_chart.to_dict()  # this should not fail

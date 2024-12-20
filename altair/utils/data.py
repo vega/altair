@@ -4,29 +4,23 @@ import hashlib
 import json
 import random
 import sys
+from collections.abc import MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
-    List,
     Literal,
-    MutableMapping,
-    Protocol,
-    Sequence,
     TypedDict,
     TypeVar,
     Union,
     overload,
-    runtime_checkable,
 )
-from typing_extensions import Concatenate, ParamSpec, TypeAlias
 
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
-from narwhals.typing import IntoDataFrame
+from narwhals.stable.v1.dependencies import is_pandas_dataframe
+from narwhals.stable.v1.typing import IntoDataFrame
 
 from ._importers import import_pyarrow_interchange
 from .core import (
@@ -39,11 +33,24 @@ from .core import (
 from .plugin_registry import PluginRegistry
 
 if sys.version_info >= (3, 13):
-    from typing import TypeIs
+    from typing import Protocol, runtime_checkable
 else:
-    from typing_extensions import TypeIs
+    from typing_extensions import Protocol, runtime_checkable
+if sys.version_info >= (3, 10):
+    from typing import Concatenate, ParamSpec
+else:
+    from typing_extensions import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
     import pandas as pd
     import pyarrow as pa
 
@@ -54,22 +61,23 @@ class SupportsGeoInterface(Protocol):
 
 
 DataType: TypeAlias = Union[
-    Dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
+    dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
 ]
 
 TDataType = TypeVar("TDataType", bound=DataType)
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
-VegaLiteDataDict: TypeAlias = Dict[
-    str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
+VegaLiteDataDict: TypeAlias = dict[
+    str, Union[str, dict[Any, Any], list[dict[Any, Any]]]
 ]
-ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
-SampleReturnType = Union[IntoDataFrame, Dict[str, Sequence], None]
+ToValuesReturnType: TypeAlias = dict[str, Union[dict[Any, Any], list[dict[Any, Any]]]]
+SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return _is_pandas_dataframe(obj) or isinstance(
-        obj, (dict, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    return isinstance(obj, (dict, SupportsGeoInterface)) or isinstance(
+        nw.from_native(obj, eager_or_interchange_only=True, pass_through=True),
+        nw.DataFrame,
     )
 
 
@@ -180,7 +188,7 @@ def sample(
     if data is None:
         return partial(sample, n=n, frac=frac)
     check_data_type(data)
-    if _is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
         if "values" in data:
@@ -202,7 +210,7 @@ def sample(
             raise ValueError(msg)
         n = int(frac * len(data))
     indices = random.sample(range(len(data)), n)
-    return nw.to_native(data[indices])
+    return data[indices].to_native()
 
 
 _FormatType = Literal["csv", "json"]
@@ -311,11 +319,11 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
-    data_native = nw.to_native(data, strict=False)
+    # `pass_through=True` passes `data` through as-is if it is not a Narwhals object.
+    data_native = nw.to_native(data, pass_through=True)
     if isinstance(data_native, SupportsGeoInterface):
         return {"values": _from_geo_interface(data_native)}
-    elif _is_pandas_dataframe(data_native):
+    elif is_pandas_dataframe(data_native):
         data_native = sanitize_pandas_dataframe(data_native)
         return {"values": data_native.to_dict(orient="records")}
     elif isinstance(data_native, dict):
@@ -356,7 +364,7 @@ def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
     - ``typing.TypeGuard``
     - ``pd.DataFrame.__getattr__``
     """
-    if _is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
     return sanitize_geo_interface(data.__geo_interface__)
 
@@ -366,7 +374,7 @@ def _data_to_json_string(data: DataType) -> str:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         return json.dumps(_from_geo_interface(data))
-    elif _is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
@@ -393,7 +401,7 @@ def _data_to_csv_string(data: DataType) -> str:
             f"See https://github.com/vega/altair/issues/3441"
         )
         raise NotImplementedError(msg)
-    elif _is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):

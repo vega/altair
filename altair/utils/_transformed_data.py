@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, Iterable, Tuple, overload
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, overload
 
 from altair import (
     Chart,
@@ -31,11 +30,19 @@ from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
 from altair.utils.schemapi import Undefined
 
 if TYPE_CHECKING:
+    import sys
+    from collections.abc import Iterable
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
     from altair.typing import ChartType
     from altair.utils.core import DataFrameLike
 
-Scope: TypeAlias = Tuple[int, ...]
-FacetMapping: TypeAlias = Dict[Tuple[str, Scope], Tuple[str, Scope]]
+Scope: TypeAlias = tuple[int, ...]
+FacetMapping: TypeAlias = dict[tuple[str, Scope], tuple[str, Scope]]
 
 
 # For the transformed_data functionality, the chart classes in the values
