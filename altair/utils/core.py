@@ -325,7 +325,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
     import numpy as np
 
     try:
-        return np.issubdtype(dtype, subtype)
+        return cast("bool", np.issubdtype(dtype, subtype))
     except (NotImplementedError, TypeError):
         return False
 

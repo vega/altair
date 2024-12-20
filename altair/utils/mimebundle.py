@@ -336,7 +336,7 @@ def _validate_normalize_engine(
 
 def _pngxy(data):
     """
-    read the (width, height) from a PNG header.
+    Read the (width, height) from a PNG header.
 
     Taken from IPython.display
     """

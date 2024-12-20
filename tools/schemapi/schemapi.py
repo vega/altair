@@ -721,7 +721,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
-        square_columns = int(ceil(num_param_names**0.5))
+        square_columns = ceil(num_param_names**0.5)
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names

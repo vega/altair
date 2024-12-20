@@ -69,7 +69,7 @@ all = [
 ]
 dev = [
     "hatch>=1.13.0",
-    "ruff>=0.6.0",
+    "ruff>=0.8.4",
     "duckdb>=1.0",
     "ipython[kernel]",
     "pandas>=1.1.3",
@@ -347,6 +347,8 @@ ignore = [
     "B905",
     # mutable-class-default
     "RUF012",
+    # used-dummy-variable
+    "RUF052",
     # suppressible-exception
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",

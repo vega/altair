@@ -177,7 +177,7 @@ def test_sanitize_dataframe_colnames():
 
     # Test that non-string columns result in an error
     df.columns = [4, "foo", "bar"]
-    with pytest.raises(ValueError, match="Dataframe contains invalid column name: 4."):
+    with pytest.raises(ValueError, match=r"Dataframe contains invalid column name: 4."):
         sanitize_pandas_dataframe(df)
 
 
