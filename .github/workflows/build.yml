@@ -2,6 +2,9 @@ name: build
 
 on: [push, pull_request]
 
+env:
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,15 +19,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install ".[all, dev]"
+        run: uv pip install -e ".[dev, all]"
       - name: Install specific jsonschema
         # Only have to execute this if we don't want the latest jsonschema version
         if: ${{ matrix.jsonschema-version != 'latest' }}
         run: |
-          pip install jsonschema==${{ matrix.jsonschema-version }}
+          uv pip install jsonschema==${{ matrix.jsonschema-version }}
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
@@ -32,17 +35,17 @@ jobs:
         # Also see https://github.com/vega/altair/pull/3114
         if: ${{ matrix.python-version == '3.9' }}
         run: |
-          pip uninstall -y pyarrow vegafusion vegafusion-python-embed vl-convert-python anywidget
+          uv pip uninstall pyarrow vegafusion vegafusion-python-embed vl-convert-python anywidget
       - name: Maybe install lowest supported pandas version
         # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
         # Python 3.9 wheels, so only run this job for Python 3.9
         if: ${{ matrix.python-version == '3.9' }}
         run: |
-          pip install pandas==1.1.3 numpy==1.19.3
+          uv pip install pandas==1.1.3 numpy==1.19.3
       - name: Test that schema generation has no effect
         run: |
-          pip install vl-convert-python
+          uv pip install vl-convert-python
           python tools/generate_schema_wrapper.py
           # This gets the paths of all files which were either deleted, modified
           # or are not yet tracked by Git
@@ -66,7 +69,7 @@ jobs:
           fi
       - name: Test with pytest
         run: |
-          pytest --pyargs --numprocesses=logical --doctest-modules tests
+          uv run pytest --pyargs --numprocesses=logical --doctest-modules tests
       - name: Validate Vega-Lite schema
         run: |
           # We install all 'format' dependencies of jsonschema as check-jsonschema
@@ -74,5 +77,5 @@ jobs:
           # We can always use the latest jsonschema version here.
           # uri-reference check is disabled as the URIs in the Vega-Lite schema do
           # not conform RFC 3986.
-          pip install 'jsonschema[format]' check-jsonschema --upgrade
-          check-jsonschema --check-metaschema altair/vegalite/v5/schema/vega-lite-schema.json --disable-formats uri-reference
+          uv pip install 'jsonschema[format]' check-jsonschema --upgrade
+          uv run check-jsonschema --check-metaschema altair/vegalite/v5/schema/vega-lite-schema.json --disable-formats uri-reference
