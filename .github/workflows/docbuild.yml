@@ -21,7 +21,7 @@ jobs:
     - name: Run doc:build-html
       run: |
         mkdir -p doc/_images
-        uv run sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html
+        uv run sphinx-build -b html -d doc/_build/doctrees --jobs doc doc/_build/html
     - name: Run doc:doctest
       run: |
         uv run sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest
