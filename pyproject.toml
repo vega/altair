@@ -84,6 +84,7 @@ dev = [
     "types-setuptools",
     "geopandas",
     "polars>=0.20.3",
+    "tomli; python_version<\"3.11\""
 ]
 doc = [
     "sphinx",

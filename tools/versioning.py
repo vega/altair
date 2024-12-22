@@ -21,18 +21,22 @@ Examples
 
 from __future__ import annotations
 
+import sys
 from collections import deque
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
-import tomllib
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    # NOTE: See https://github.com/hukkin/tomli?tab=readme-ov-file#building-a-tomlitomllib-compatibility-layer
+    import tomli as tomllib  # type: ignore
 from packaging.version import parse as parse_version
 
 import vl_convert as vlc
 from tools.schemapi.utils import spell_literal
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Iterable, Mapping, Sequence
 
     if sys.version_info >= (3, 11):
