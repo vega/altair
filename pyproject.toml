@@ -99,6 +99,14 @@ doc = [
     "scipy",
 ]
 
+[tool.altair.vega]
+# Minimum/exact versions, for projects under the `vega` organization
+vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
+vega-embed        = "6"       # https://github.com/vega/vega-embed
+vega-lite         = "v5.20.1" # https://github.com/vega/vega-lite
+vegafusion        = "1.5.0"   # https://github.com/vega/vegafusion
+vl-convert-python = "1.7.0"   # https://github.com/vega/vl-convert
+
 [tool.hatch.version]
 path = "altair/__init__.py"
 

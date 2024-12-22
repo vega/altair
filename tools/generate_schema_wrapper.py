@@ -41,6 +41,7 @@ from tools.schemapi.utils import (
     spell_literal,
 )
 from tools.vega_expr import write_expr_module
+from tools.versioning import VERSIONS, inline_versions_literal
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -50,7 +51,7 @@ if TYPE_CHECKING:
 
 T = TypeVar("T", bound="str | Iterable[str]")
 
-SCHEMA_VERSION: Final = "v5.20.1"
+SCHEMA_VERSION: Final = VERSIONS["vega-lite"]
 
 
 HEADER_COMMENT = """\
@@ -632,7 +633,7 @@ def copy_schemapi_util() -> None:
         destination_fp.open("w", encoding="utf8") as dest,
     ):
         dest.write(HEADER_COMMENT)
-        dest.writelines(source.readlines())
+        dest.writelines(chain(source.readlines(), inline_versions_literal("VERSIONS")))
     if sys.platform == "win32":
         ruff.format(destination_fp)
 
@@ -1377,6 +1378,8 @@ def generate_encoding_artifacts(
 
 
 def main() -> None:
+    from tools import versioning
+
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
     )
@@ -1384,6 +1387,7 @@ def main() -> None:
         "--skip-download", action="store_true", help="skip downloading schema files"
     )
     args = parser.parse_args()
+    versioning.update_all_versions()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     write_expr_module(
