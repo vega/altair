@@ -209,6 +209,7 @@ class FlField(TypedDict):
 
     name: str
     type: FlFieldStr
+    description: NotRequired[str]
 
 
 class FlSchema(TypedDict):
@@ -217,12 +218,29 @@ class FlSchema(TypedDict):
     fields: Sequence[FlField]
 
 
+class FlSource(TypedDict, total=False):
+    title: str
+    path: Required[str]
+    email: str
+    version: str
+
+
+class FlLicense(TypedDict):
+    name: str
+    path: str
+    title: NotRequired[str]
+
+
 class FlResource(TypedDict):
     """https://datapackage.org/standard/data-resource/#properties."""
 
     name: Dataset
     type: Literal["table", "file", r"json"]
+    description: NotRequired[str]
+    licenses: NotRequired[Sequence[FlLicense]]
+    sources: NotRequired[Sequence[FlSource]]
     path: str
+    scheme: Literal["file"]
     format: Literal[
         "arrow", "csv", "geojson", r"json", "parquet", "png", "topojson", "tsv"
     ]
@@ -236,10 +254,20 @@ class FlResource(TypedDict):
         "text/geojson",
         "text/topojson",
     ]
-    schema: NotRequired[FlSchema]
-    scheme: Literal["file"]
-    dialect: NotRequired[FlCsvDialect | FlJsonDialect]
     encoding: NotRequired[Literal["utf-8"]]
+    bytes: int
+    dialect: NotRequired[FlCsvDialect | FlJsonDialect]
+    schema: NotRequired[FlSchema]
+
+
+class Contributor(TypedDict, total=False):
+    title: str
+    givenName: str
+    familyName: str
+    path: str
+    email: str
+    roles: Sequence[str]
+    organization: str
 
 
 class FlPackage(TypedDict):
@@ -254,9 +282,9 @@ class FlPackage(TypedDict):
     version: str
     homepage: str
     description: str
-    licenses: Sequence[Map]
-    contributors: Sequence[Map]
-    sources: Sequence[Map]
+    licenses: Sequence[FlLicense]
+    contributors: Sequence[Contributor]
+    sources: Sequence[FlSource]
     created: str
     resources: Sequence[FlResource]
 
