@@ -634,7 +634,6 @@ def copy_schemapi_util() -> None:
     ):
         dest.write(HEADER_COMMENT)
         dest.writelines(chain(source.readlines(), inline_versions_literal("VERSIONS")))
-    if sys.platform == "win32":
         ruff.format(destination_fp)
 
 
