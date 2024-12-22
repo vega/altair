@@ -634,7 +634,7 @@ def copy_schemapi_util() -> None:
     ):
         dest.write(HEADER_COMMENT)
         dest.writelines(chain(source.readlines(), inline_versions_literal("VERSIONS")))
-        ruff.format(destination_fp)
+    ruff.format(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
