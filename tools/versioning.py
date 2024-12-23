@@ -14,6 +14,7 @@ Examples
 
 >>> VERSIONS  # doctest: +SKIP
 {'vega-datasets': 'v2.11.0',
+ 'vega-embed': '6',
  'vega-lite': 'v5.20.1',
  'vegafusion': '1.5.0',
  'vl-convert-python': '1.7.0'}
@@ -74,6 +75,7 @@ def _keypath(mapping: Mapping[str, Any], path: Iterable[str], /) -> Any:
 
 
 def update_vega_embed() -> None:
+    """Updates the **Vega-Lite** version used in ``JupyterChart``."""
     fp = _REPO_ROOT / _JUPYTER_INDEX
     embed = VERSIONS["vega-embed"]
     vega = parse_version(vlc.get_vega_version()).major
@@ -89,11 +91,21 @@ def update_vega_embed() -> None:
         f.writelines(lines)
 
 
-def inline_versions_literal(name: str) -> Iterable[str]:
+def inline_versions_literal(name: str, /) -> Iterable[str]:
     """
-    Write at the bottom of ``altair.utils.schemapi``.
+    Yields the ``[tool.altair.vega]`` table as an inline ``dict``.
 
-    Used in ``altair.utils._importers``.
+    Includes a type annotation and docstring.
+
+    Parameters
+    ----------
+    name
+        Variable name for the literal.
+
+    Notes
+    -----
+    - Write at the bottom of ``altair.utils.schemapi``.
+    - Used in ``altair.utils._importers``.
     """
     ann = f"Mapping[{spell_literal(VERSIONS)}, str]"
     table = f"[{'.'.join(_TABLE_PATH)}]"
