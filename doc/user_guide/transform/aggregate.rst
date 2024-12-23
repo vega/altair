@@ -27,7 +27,7 @@ grouped by the number of Cylinders.
 
     alt.Chart(cars).mark_bar().encode(
         y='Cylinders:O',
-        x='mean(Acceleration):Q'
+        x='mean(Acceleration):Q',
     )
 
 The Altair shorthand string::
