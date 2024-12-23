@@ -2,8 +2,8 @@
 
 .. _user-guide-fold-transform:
 
-Fold Transform
-~~~~~~~~~~~~~~
+Fold
+~~~~
 The fold transform is, in short, a way to convert wide-form data to long-form
 data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
 information). Fold transforms are the opposite of the :ref:`user-guide-pivot-transform`.

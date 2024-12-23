@@ -1,5 +1,4 @@
-from .core import ConstExpression
-
+from __future__ import annotations
 
 CONST_LISTING = {
     "NaN": "not a number (same as JavaScript literal NaN)",
@@ -12,16 +11,3 @@ CONST_LISTING = {
     "SQRT2": "the square root of 2 (alias to Math.SQRT1_2)",
     "PI": "the transcendental number pi (alias to Math.PI)",
 }
-
-NAME_MAP = {}
-
-
-def _populate_namespace():
-    globals_ = globals()
-    for name, doc in CONST_LISTING.items():
-        py_name = NAME_MAP.get(name, name)
-        globals_[py_name] = ConstExpression(name, doc)
-        yield py_name
-
-
-__all__ = list(_populate_namespace())

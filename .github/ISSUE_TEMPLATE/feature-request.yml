@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest an improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature!
+        
+        Note that since Altair is a Python wrapper around the Vega-Lite visualization grammar, [most feature requests should be reported directly to Vega-Lite](https://github.com/vega/vega-lite/issues). You can click the Action Button (`...`) of your Altair chart and "Open in Vega Editor" to see the Vega-Lite chart specification.
+        
+        If you believe this feature is more relevant for Altair than Vega-Lite, then make sure to search for duplicate issues before filling out the form below.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What is your suggestion?
+      description: Describe the feature's goal, motivating use cases, and its expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: alternative-solutions
+    attributes:
+      label: Have you considered any alternative solutions?

@@ -1,32 +1,37 @@
 from .core import (
-    infer_vegalite_type,
-    infer_encoding_types,
-    sanitize_dataframe,
-    parse_shorthand,
-    use_signature,
-    update_subtraits,
-    update_nested,
+    SHORTHAND_KEYS,
     display_traceback,
-    SchemaBase,
-    Undefined,
+    infer_encoding_types,
+    infer_vegalite_type_for_pandas,
+    parse_shorthand,
+    sanitize_narwhals_dataframe,
+    sanitize_pandas_dataframe,
+    update_nested,
+    use_signature,
 )
+from .deprecation import AltairDeprecationWarning, deprecated, deprecated_warn
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
-from .deprecation import AltairDeprecationWarning
-
+from .schemapi import Optional, SchemaBase, SchemaLike, Undefined, is_undefined
 
 __all__ = (
-    "infer_vegalite_type",
-    "infer_encoding_types",
-    "sanitize_dataframe",
-    "spec_to_html",
-    "parse_shorthand",
-    "use_signature",
-    "update_subtraits",
-    "update_nested",
-    "display_traceback",
+    "SHORTHAND_KEYS",
     "AltairDeprecationWarning",
-    "SchemaBase",
-    "Undefined",
+    "Optional",
     "PluginRegistry",
+    "SchemaBase",
+    "SchemaLike",
+    "Undefined",
+    "deprecated",
+    "deprecated_warn",
+    "display_traceback",
+    "infer_encoding_types",
+    "infer_vegalite_type_for_pandas",
+    "is_undefined",
+    "parse_shorthand",
+    "sanitize_narwhals_dataframe",
+    "sanitize_pandas_dataframe",
+    "spec_to_html",
+    "update_nested",
+    "use_signature",
 )

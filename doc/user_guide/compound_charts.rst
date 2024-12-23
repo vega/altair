@@ -2,8 +2,8 @@
 
 .. _user-guide-compound:
 
-Compound Charts: Layer, HConcat, VConcat, Repeat, Facet
--------------------------------------------------------
+Layered & Multi-View Charts
+---------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
 and repeated charts. They are summarized in the following tables:
@@ -34,9 +34,8 @@ same data; for example:
 .. altair-plot::
 
     import altair as alt
-    from altair.expr import datum
-
     from vega_datasets import data
+
     stocks = data.stocks.url
 
     base = alt.Chart(stocks).encode(
@@ -44,7 +43,7 @@ same data; for example:
         y='price:Q',
         color='symbol:N'
     ).transform_filter(
-        datum.symbol == 'GOOG'
+        alt.datum.symbol == 'GOOG'
     )
 
     base.mark_line() + base.mark_point()
@@ -82,9 +81,9 @@ heat-map:
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q', bin=True),
-        alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
-        alt.Color('count()', scale=alt.Scale(scheme='greenblue'))
+        alt.X('IMDB_Rating:Q').bin(),
+        alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+        alt.Color('count()').scale(scheme='greenblue')
     )
 
     points = alt.Chart(source).mark_circle(
@@ -137,7 +136,7 @@ distribution of its points:
 
     chart2 = alt.Chart(iris).mark_bar().encode(
         x='count()',
-        y=alt.Y('petalWidth:Q', bin=alt.Bin(maxbins=30)),
+        y=alt.Y('petalWidth:Q').bin(maxbins=30),
         color='species:N'
     ).properties(
         height=300,
@@ -179,7 +178,7 @@ with a ``brush`` selection to add interaction:
 
     source = data.sp500.url
 
-    brush = alt.selection(type='interval', encodings=['x'])
+    brush = alt.selection_interval(encodings=['x'])
 
     base = alt.Chart(source).mark_area().encode(
         x = 'date:T',
@@ -189,13 +188,11 @@ with a ``brush`` selection to add interaction:
         height=200
     )
 
-    upper = base.encode(
-        alt.X('date:T', scale=alt.Scale(domain=brush))
-    )
+    upper = base.encode(alt.X('date:T').scale(domain=brush))
 
     lower = base.properties(
         height=60
-    ).add_parameter(brush)
+    ).add_params(brush)
 
     alt.vconcat(upper, lower)
 
@@ -272,7 +269,7 @@ encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
 Another option to use the ``repeat`` method is for layering. Here below the
 columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
-using ``alt.repeat('layer')``: 
+using ``alt.repeat('layer')``:
 
 .. altair-plot::
 
@@ -282,8 +279,8 @@ using ``alt.repeat('layer')``:
     source = data.movies()
 
     alt.Chart(source).mark_line().encode(
-        x=alt.X("IMDB_Rating", bin=True),
-        y=alt.Y(alt.repeat('layer'), aggregate='mean', title="Mean of US and Worldwide Gross"),
+        x=alt.X("IMDB_Rating").bin(),
+        y=alt.Y(alt.repeat('layer')).aggregate('mean').title("Mean of US and Worldwide Gross"),
         color=alt.ColorDatum(alt.repeat('layer'))
     ).repeat(layer=["US_Gross", "Worldwide_Gross"])
 
@@ -295,9 +292,13 @@ more general in the future.
 
 Faceted Charts
 ~~~~~~~~~~~~~~
-Like repeated charts, Faceted charts provide a more convenient API for creating
-multiple views of a dataset for a specific type of chart: one where each panel
-contains a different subset of data.
+Like repeated charts, Faceted charts provide multiple views of a dataset.
+But instead of having different panels for different encodings,
+we have different panels for different subsets of data. For example,
+one panel for each of the three species of flower in the iris dataset.
+
+This is also called a `small multiple <https://en.wikipedia.org/wiki/Small_multiple>`_
+chart, trellis chart, lattice chart, grid chart, or panel chart.
 
 We could do this manually using a filter transform along with a horizontal
 concatenation:
@@ -305,8 +306,8 @@ concatenation:
 .. altair-plot::
 
     import altair as alt
-    from altair.expr import datum
     from vega_datasets import data
+
     iris = data.iris.url
 
     base = alt.Chart(iris).mark_point().encode(
@@ -320,13 +321,13 @@ concatenation:
 
     chart = alt.hconcat()
     for species in ['setosa', 'versicolor', 'virginica']:
-        chart |= base.transform_filter(datum.species == species)
+        chart |= base.transform_filter(alt.datum.species == species)
     chart
 
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,
 if a bit verbose.
 
-Using ``alt.facet`` it becomes a bit cleaner:
+Using ``.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
@@ -356,35 +357,32 @@ can give the same results:
         height=180
     )
 
-The advantage of using ``alt.facet`` is that it can create faceted views of
+The advantage of using ``.facet`` is that it can create faceted views of
 more complicated compound charts. For example, here is a faceted view of a
 layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_point(on='mouseover', nearest=True, empty='none')
+    hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
+    when_hover = alt.when(hover)
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',
         y='petalWidth:Q',
-        color=alt.condition(hover, 'species:N', alt.value('lightgray'))
+        color=when_hover.then("species:N").otherwise(alt.value("lightgray"))
     ).properties(
         width=180,
         height=180,
     )
 
-    points = base.mark_point().add_parameter(
-        hover
-    )
+    points = base.mark_point().add_params(hover)
 
     text = base.mark_text(dy=-5).encode(
-        text = 'species:N',
-        opacity = alt.condition(hover, alt.value(1), alt.value(0))
+        text="species:N", 
+        opacity=when_hover.then(alt.value(1)).otherwise(alt.value(0)),
     )
 
-    alt.layer(points, text).facet(
-        'species:N',
-    )
+    (points + text).facet("species:N")
 
 Though each of the above examples have faceted the data across columns,
 faceting across rows (or across rows *and* columns) is supported as

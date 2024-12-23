@@ -1,0 +1,23 @@
+changelog:
+  categories:
+    - title: Breaking
+      labels:
+        - breaking
+    - title: Deprecation
+      labels:
+        - deprecation
+    - title: Enhancements
+      labels:
+        - enhancement
+    - title: Bug Fixes
+      labels:
+        - bug
+    - title: Maintainance
+      labels:
+        - maintainance
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Other Changes
+      labels:
+        - "*"

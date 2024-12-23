@@ -5,19 +5,24 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: black-flake8
+    name: ruff-mypy
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v1
+    - name: "Set up Python"
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
-    - name: Check formatting with black
+        python-version: "3.12"
+    - uses: actions/checkout@v4
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+    # Installing all dependencies and not just the linters as mypy needs them for type checking
+    - name: Install dependencies
+      run: uv pip install -e ".[dev, all]" --system
+    - name: Lint with ruff
+      run: |        
+        uv run ruff check
+    - name: Check formatting with ruff
       run: |
-        pip install black
-        black --diff --color .
-        black --check .
-    - name: Lint with flake8
+        uv run ruff format --check --diff
+    - name: Lint with mypy
       run: |
-        pip install flake8
-        flake8 .  --statistics
+        uv run mypy altair tests

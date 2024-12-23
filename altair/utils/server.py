@@ -4,14 +4,15 @@ A Simple server used to show altair graphics from a prompt or script.
 This is adapted from the mpld3 package; see
 https://github.com/mpld3/mpld3/blob/master/mpld3/_server.py
 """
+
+import itertools
+import random
+import socket
 import sys
 import threading
 import webbrowser
-import socket
 from http import server
 from io import BytesIO as IO
-import itertools
-import random
 
 JUPYTER_WARNING = """
 Note: if you're in the Jupyter notebook, Chart.serve() is not the best
@@ -23,7 +24,7 @@ You must interrupt the kernel to cancel this command.
 # Mock server used for testing
 
 
-class MockRequest(object):
+class MockRequest:
     def makefile(self, *args, **kwargs):
         return IO(b"GET /")
 
@@ -31,7 +32,7 @@ class MockRequest(object):
         pass
 
 
-class MockServer(object):
+class MockServer:
     def __init__(self, ip_port, Handler):
         Handler(MockRequest(), ip_port[0], self)
 
@@ -67,7 +68,7 @@ def generate_handler(html, files=None):
 
 
 def find_open_port(ip, port, n=50):
-    """Find an open port near the specified port"""
+    """Find an open port near the specified port."""
     ports = itertools.chain(
         (port + i for i in range(n)), (port + random.randint(-2 * n, 2 * n))
     )
@@ -78,7 +79,8 @@ def find_open_port(ip, port, n=50):
         s.close()
         if result != 0:
             return port
-    raise ValueError("no open ports found")
+    msg = "no open ports found"
+    raise ValueError(msg)
 
 
 def serve(
@@ -90,8 +92,9 @@ def serve(
     jupyter_warning=True,
     open_browser=True,
     http_server=None,
-):
-    """Start a server serving the given HTML, and (optionally) open a browser
+) -> None:
+    """
+    Start a server serving the given HTML, and (optionally) open a browser.
 
     Parameters
     ----------
@@ -123,20 +126,20 @@ def serve(
 
     if jupyter_warning:
         try:
-            __IPYTHON__  # noqa
+            __IPYTHON__  # type: ignore # noqa
         except NameError:
             pass
         else:
             print(JUPYTER_WARNING)
 
     # Start the server
-    print("Serving to http://{}:{}/    [Ctrl-C to exit]".format(ip, port))
+    print(f"Serving to http://{ip}:{port}/    [Ctrl-C to exit]")
     sys.stdout.flush()
 
     if open_browser:
         # Use a thread to open a web browser pointing to the server
         def b():
-            return webbrowser.open("http://{}:{}".format(ip, port))
+            return webbrowser.open(f"http://{ip}:{port}")
 
         threading.Thread(target=b).start()
 

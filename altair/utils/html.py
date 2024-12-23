@@ -1,6 +1,14 @@
+from __future__ import annotations
+
 import json
+from typing import Any, Literal
+
 import jinja2
 
+from altair.utils._importers import import_vl_convert, vl_version_for_vl_convert
+
+TemplateName = Literal["standard", "universal", "inline", "olli"]
+RenderMode = Literal["vega", "vega-lite"]
 
 HTML_TEMPLATE = jinja2.Template(
     """
@@ -8,10 +16,17 @@ HTML_TEMPLATE = jinja2.Template(
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
 {%- endif %}
   <style>
-    .error {
-        color: red;
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
     }
   </style>
 {%- if not requirejs %}
@@ -60,7 +75,7 @@ requirejs.config({
       var embedOpt = {{ embed_options }};
 
       function showError(el, error){
-          el.innerHTML = ('<div class="error" style="color:red;">'
+          el.innerHTML = ('<div style="color:red;">'
                           + '<p>JavaScript Error: ' + error.message + '</p>'
                           + "<p>This usually means there's a typo in your chart specification. "
                           + "See the javascript console for the full traceback.</p>"
@@ -83,6 +98,17 @@ requirejs.config({
 
 HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     """
+<style>
+  #{{ output_div }}.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #{{ output_div }}.vega-embed details,
+  #{{ output_div }}.vega-embed details summary {
+    position: relative;
+  }
+</style>
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
@@ -91,6 +117,7 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
     if (outputDiv.id !== "{{ output_div }}") {
       outputDiv = document.getElementById("{{ output_div }}");
     }
+
     const paths = {
       "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
       "vega-lib": "{{ base_url }}/vega-lib?noext",
@@ -127,7 +154,8 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
       maybeLoadScript("vega", "{{vega_version}}")
         .then(() => maybeLoadScript("vega-lite", "{{vegalite_version}}"))
@@ -141,27 +169,157 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template(
 )
 
 
-TEMPLATES = {
+# This is like the HTML_TEMPLATE template, but includes vega javascript inline
+# so that the resulting file is not dependent on external resources. This was
+# ported over from altair_saver.
+#
+# implies requirejs=False and full_html=True
+INLINE_HTML_TEMPLATE = jinja2.Template(
+    """\
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #{{ output_div }}.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #{{ output_div }}.vega-embed details,
+    #{{ output_div }}.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript">
+    // vega-embed.js bundle with Vega-Lite version v{{ vegalite_version }}
+    {{ vegaembed_script }}
+  </script>
+</head>
+<body>
+<div class="vega-visualization" id="{{ output_div }}"></div>
+<script type="text/javascript">
+  const spec = {{ spec }};
+  const embedOpt = {{ embed_options }};
+  vegaEmbed('#{{ output_div }}', spec, embedOpt).catch(console.error);
+</script>
+</body>
+</html>
+"""
+)
+
+
+HTML_TEMPLATE_OLLI = jinja2.Template(
+    """
+<style>
+  #{{ output_div }}.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #{{ output_div }}.vega-embed details,
+  #{{ output_div }}.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="{{ output_div }}"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "{{ output_div }}") {
+      outputDiv = document.getElementById("{{ output_div }}");
+    }
+    const olliDiv = document.createElement("div");
+    const vegaDiv = document.createElement("div");
+    outputDiv.appendChild(vegaDiv);
+    outputDiv.appendChild(olliDiv);
+    outputDiv = vegaDiv;
+
+    const paths = {
+      "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
+      "vega-lib": "{{ base_url }}/vega-lib?noext",
+      "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
+      "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+      "olli": "{{ base_url }}/olli@{{ olli_version }}?noext",
+      "olli-adapters": "{{ base_url }}/olli-adapters@{{ olli_adapters_version }}?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed, olli, olliAdapters) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+      olliAdapters.VegaLiteAdapter(spec).then(olliVisSpec => {
+        const olliFunc = typeof olli === 'function' ? olli : olli.olli;
+        const olliRender = olliFunc(olliVisSpec);
+        olliDiv.append(olliRender);
+      });
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed", "olli", "olli-adapters"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "{{vega_version}}")
+        .then(() => maybeLoadScript("vega-lite", "{{vegalite_version}}"))
+        .then(() => maybeLoadScript("vega-embed", "{{vegaembed_version}}"))
+        .then(() => maybeLoadScript("olli", "{{olli_version}}"))
+        .then(() => maybeLoadScript("olli-adapters", "{{olli_adapters_version}}"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed, olli, OlliAdapters));
+    }
+  })({{ spec }}, {{ embed_options }});
+</script>
+"""
+)
+
+
+TEMPLATES: dict[TemplateName, jinja2.Template] = {
     "standard": HTML_TEMPLATE,
     "universal": HTML_TEMPLATE_UNIVERSAL,
+    "inline": INLINE_HTML_TEMPLATE,
+    "olli": HTML_TEMPLATE_OLLI,
 }
 
 
 def spec_to_html(
-    spec,
-    mode,
-    vega_version,
-    vegaembed_version,
-    vegalite_version=None,
-    base_url="https://cdn.jsdelivr.net/npm/",
-    output_div="vis",
-    embed_options=None,
-    json_kwds=None,
-    fullhtml=True,
-    requirejs=False,
-    template="standard",
-):
-    """Embed a Vega/Vega-Lite spec into an HTML page
+    spec: dict[str, Any],
+    mode: RenderMode,
+    vega_version: str | None,
+    vegaembed_version: str | None,
+    vegalite_version: str | None = None,
+    base_url: str = "https://cdn.jsdelivr.net/npm",
+    output_div: str = "vis",
+    embed_options: dict[str, Any] | None = None,
+    json_kwds: dict[str, Any] | None = None,
+    fullhtml: bool = True,
+    requirejs: bool = False,
+    template: jinja2.Template | TemplateName = "standard",
+) -> str:
+    """
+    Embed a Vega/Vega-Lite spec into an HTML page.
 
     Parameters
     ----------
@@ -193,7 +351,7 @@ def spec_to_html(
         tags. If True, then load libraries using requirejs
     template : jinja2.Template or string (optional)
         Specify the template to use (default = 'standard'). If template is a
-        string, it must be one of {'universal', 'standard'}. Otherwise, it
+        string, it must be one of {'universal', 'standard', 'inline'}. Otherwise, it
         can be a jinja2.Template object containing a custom template.
 
     Returns
@@ -206,23 +364,39 @@ def spec_to_html(
 
     mode = embed_options.setdefault("mode", mode)
 
-    if mode not in ["vega", "vega-lite"]:
-        raise ValueError("mode must be either 'vega' or 'vega-lite'")
+    if mode not in {"vega", "vega-lite"}:
+        msg = "mode must be either 'vega' or 'vega-lite'"
+        raise ValueError(msg)
 
     if vega_version is None:
-        raise ValueError("must specify vega_version")
+        msg = "must specify vega_version"
+        raise ValueError(msg)
 
     if vegaembed_version is None:
-        raise ValueError("must specify vegaembed_version")
+        msg = "must specify vegaembed_version"
+        raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version for mode='vega-lite'")
+        msg = "must specify vega-lite version for mode='vega-lite'"
+        raise ValueError(msg)
 
-    template = TEMPLATES.get(template, template)
-    if not hasattr(template, "render"):
-        raise ValueError("Invalid template: {0}".format(template))
+    render_kwargs = {}
+    if template == "inline":
+        vlc = import_vl_convert()
+        vl_version = vl_version_for_vl_convert()
+        render_kwargs["vegaembed_script"] = vlc.javascript_bundle(vl_version=vl_version)
+    elif template == "olli":
+        OLLI_VERSION = "2"
+        OLLI_ADAPTERS_VERSION = "2"
+        render_kwargs["olli_version"] = OLLI_VERSION
+        render_kwargs["olli_adapters_version"] = OLLI_ADAPTERS_VERSION
 
-    return template.render(
+    jinja_template = TEMPLATES.get(template, template)  # type: ignore[arg-type]
+    if not hasattr(jinja_template, "render"):
+        msg = f"Invalid template: {jinja_template}"
+        raise ValueError(msg)
+
+    return jinja_template.render(
         spec=json.dumps(spec, **json_kwds),
         embed_options=json.dumps(embed_options),
         mode=mode,
@@ -233,4 +407,5 @@ def spec_to_html(
         output_div=output_div,
         fullhtml=fullhtml,
         requirejs=requirejs,
+        **render_kwargs,
     )

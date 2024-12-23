@@ -2,8 +2,8 @@
 
 .. _user-guide-flatten-transform:
 
-Flatten Transform
-~~~~~~~~~~~~~~~~~
+Flatten
+~~~~~~~
 The flatten transform can be used to extract the contents of arrays from data entries.
 This will not generally be useful for well-structured data within pandas dataframes,
 but it can be useful for working with data from other sources.

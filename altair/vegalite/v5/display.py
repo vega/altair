@@ -1,17 +1,26 @@
-import os
+from __future__ import annotations
 
-from ...utils.mimebundle import spec_to_mimebundle
-from ..display import Displayable
-from ..display import default_renderer_base
-from ..display import json_renderer_base
-from ..display import RendererRegistry
-from ..display import HTMLRenderer
+from pathlib import Path
+from typing import TYPE_CHECKING, Final
+
+from altair.utils.mimebundle import spec_to_mimebundle
+from altair.vegalite.display import (
+    Displayable,
+    HTMLRenderer,
+    RendererRegistry,
+    default_renderer_base,
+    json_renderer_base,
+)
 
 from .schema import SCHEMA_VERSION
 
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip("v")
-VEGA_VERSION = "5"
-VEGAEMBED_VERSION = "6"
+if TYPE_CHECKING:
+    from altair.vegalite.display import DefaultRendererReturnType
+
+
+VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
+VEGA_VERSION: Final = "5"
+VEGAEMBED_VERSION: Final = "6"
 
 
 # ==============================================================================
@@ -20,37 +29,42 @@ VEGAEMBED_VERSION = "6"
 
 
 # The MIME type for Vega-Lite 5.x releases.
-VEGALITE_MIME_TYPE = "application/vnd.vegalite.v5+json"  # type: str
+VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v5+json"
+
+# The MIME type for Vega 5.x releases.
+VEGA_MIME_TYPE: Final = "application/vnd.vega.v5+json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = "altair.vegalite.v5.renderer"  # type: str
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
 
 # The display message when rendering fails
-DEFAULT_DISPLAY = """\
-<VegaLite 5 object>
+DEFAULT_DISPLAY: Final = f"""\
+<VegaLite {VEGALITE_VERSION.split('.')[0]} object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
-https://altair-viz.github.io/user_guide/troubleshooting.html
+https://altair-viz.github.io/user_guide/display_frontends.html#troubleshooting
 """
 
 renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-here = os.path.dirname(os.path.realpath(__file__))
+here = str(Path(__file__).parent)
 
 
-def mimetype_renderer(spec, **metadata):
+def mimetype_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
     return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY, **metadata)
 
 
-def json_renderer(spec, **metadata):
+def json_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
     return json_renderer_base(spec, DEFAULT_DISPLAY, **metadata)
 
 
-def png_renderer(spec, **metadata):
-    return spec_to_mimebundle(
+def png_renderer(spec: dict, **metadata) -> dict[str, bytes]:
+    # To get proper return value type, would need to write complex
+    # overload signatures for spec_to_mimebundle based on `format`
+    return spec_to_mimebundle(  # type: ignore[return-value]
         spec,
         format="png",
         mode="vega-lite",
@@ -61,7 +75,9 @@ def png_renderer(spec, **metadata):
     )
 
 
-def svg_renderer(spec, **metadata):
+def svg_renderer(spec: dict, **metadata) -> dict[str, str]:
+    # To get proper return value type, would need to write complex
+    # overload signatures for spec_to_mimebundle based on `format`
     return spec_to_mimebundle(
         spec,
         format="svg",
@@ -73,9 +89,59 @@ def svg_renderer(spec, **metadata):
     )
 
 
+def jupyter_renderer(spec: dict, **metadata):
+    """Render chart using the JupyterChart Jupyter Widget."""
+    from altair import Chart, JupyterChart
+
+    # Configure offline mode
+    offline = metadata.get("offline", False)
+
+    # mypy doesn't see the enable_offline class method for some reason
+    JupyterChart.enable_offline(offline=offline)  # type: ignore[attr-defined]
+
+    # propagate embed options
+    embed_options = metadata.get("embed_options")
+
+    # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
+    # conditionally defined in AnyWidget
+    return JupyterChart(
+        chart=Chart.from_dict(spec), embed_options=embed_options
+    )._repr_mimebundle_()  # type: ignore[attr-defined]
+
+
+def browser_renderer(
+    spec: dict, offline=False, using=None, port=0, **metadata
+) -> dict[str, str]:
+    from altair.utils._show import open_html_in_browser
+
+    if offline:
+        metadata["template"] = "inline"
+    mimebundle = spec_to_mimebundle(
+        spec,
+        format="html",
+        mode="vega-lite",
+        vega_version=VEGA_VERSION,
+        vegaembed_version=VEGAEMBED_VERSION,
+        vegalite_version=VEGALITE_VERSION,
+        **metadata,
+    )
+    html = mimebundle["text/html"]
+    open_html_in_browser(html, using=using, port=port)
+    return {}
+
+
 html_renderer = HTMLRenderer(
     mode="vega-lite",
     template="universal",
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+    vegalite_version=VEGALITE_VERSION,
+)
+
+
+olli_renderer = HTMLRenderer(
+    mode="vega-lite",
+    template="olli",
     vega_version=VEGA_VERSION,
     vegaembed_version=VEGAEMBED_VERSION,
     vegalite_version=VEGALITE_VERSION,
@@ -92,6 +158,11 @@ renderers.register("nteract", mimetype_renderer)
 renderers.register("json", json_renderer)
 renderers.register("png", png_renderer)
 renderers.register("svg", svg_renderer)
+# FIXME: Caused by upstream # type: ignore[unreachable]
+# https://github.com/manzt/anywidget/blob/b7961305a7304f4d3def1fafef0df65db56cf41e/anywidget/widget.py#L80-L81
+renderers.register("jupyter", jupyter_renderer)  # pyright: ignore[reportArgumentType]
+renderers.register("browser", browser_renderer)
+renderers.register("olli", olli_renderer)
 renderers.enable("default")
 
 
@@ -102,13 +173,14 @@ class VegaLite(Displayable):
     schema_path = (__name__, "schema/vega-lite-schema.json")
 
 
-def vegalite(spec, validate=True):
-    """Render and optionally validate a VegaLite 5 spec.
+def vegalite(spec: dict, validate: bool = True) -> None:
+    """
+    Render and optionally validate a VegaLite 5 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
-    ==========
+    ----------
     spec: dict
         A fully compliant VegaLite 5 spec, with the data portion fully processed.
     validate: bool

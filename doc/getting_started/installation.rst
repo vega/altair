@@ -4,82 +4,62 @@
 
 Installation
 ============
-Altair can be installed, along with the example datasets in vega_datasets_, using::
 
-    $ pip install altair vega_datasets
+Altair can be installed, along with all its optional dependencies, using:
 
-If you are using the conda_ package manager, the equivalent is::
+.. code-block:: bash
 
-    $ conda install -c conda-forge altair vega_datasets
+    pip install "altair[all]"
 
-At this point, you should be able to open `Jupyter Notebook`_ or `JupyterLab`_
+If you are using the conda_ package manager, the equivalent is:
+
+.. code-block:: bash
+
+    conda install -c conda-forge altair-all
+
+At this point, you should be able to open any IDE compatible with Jupyter Notebooks,
 and execute any of the code from the :ref:`example-gallery`.
 For more information on how to display charts in various notebook environments
 and non-notebook IDEs, see :ref:`displaying-charts`.
+If you wish to install Altair with only the required dependencies,
+you can omit the ``[all]``/``-all`` suffix.
 
-Dependencies
-============
+Altair can also be installed with just the dependencies necessary for saving charts to offline HTML files or PNG/SVG/PDF formats, using:
 
-Altair has the following dependencies, all of which are installed automatically
-with the above installation commands:
+.. code-block:: bash
 
-- python 3.6 or newer
-- entrypoints_
-- jsonschema_
-- NumPy_
-- Pandas_
-- Toolz_
+    pip install "altair[save]"
 
-To run Altair's full test suite and build Altair's documentation requires a few
-additional dependencies:
-
-- flake8
-- pytest
-- jinja2
-- sphinx
-- m2r
-- docutils
-- vega_datasets_
-- ipython
-
-Development Install
-===================
+Development Installation
+========================
 
 The `Altair source repository`_ is available on GitHub. Once you have cloned the
 repository and installed all the above dependencies, run the following command
-from the root of the repository to install the master version of Altair:
+from the root of the repository to install the main version of Altair:
 
 .. code-block:: bash
 
-    $ pip install -e .
+    pip install -e .
 
-To install development dependencies as well, run
+To install optional and development dependencies as well, run
 
 .. code-block:: bash
 
-    $ pip install -e .[dev]
+    pip install -e ".[all, dev]"
 
 If you do not wish to clone the source repository, you can install the
 development version directly from GitHub using:
 
 .. code-block:: bash
 
-    $ pip install -e git+https://github.com/altair-viz/altair.git
+    pip install -e git+https://github.com/vega/altair.git
 
+Please see `CONTRIBUTING.md <https://github.com/vega/altair/blob/main/CONTRIBUTING.md>`_
+for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
 .. _Vega-Lite: http://vega.github.io/vega-lite
+.. _vega_datasets: https://github.com/altair-viz/vega_datasets
 .. _JupyterLab: http://jupyterlab.readthedocs.io/
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/
-.. _Zeppelin: https://zeppelin.apache.org/
-.. _IPython: https://github.com/ipython/ipython
-
-.. _entrypoints: https://github.com/takluyver/entrypoints
-.. _jsonschema: https://github.com/Julian/jsonschema
-.. _NumPy: http://www.numpy.org/
-.. _Pandas: http://pandas.pydata.org
-.. _Toolz: https://github.com/pytoolz/toolz
-.. _vega_datasets: https://github.com/altair-viz/vega_datasets
-.. _Altair source repository: http://github.com/altair-viz/altair
-.. _nteract: https://nteract.io
-.. _vega: https://pypi.python.org/pypi/vega/
+.. _Altair source repository: http://github.com/vega/altair
