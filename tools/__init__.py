@@ -4,6 +4,7 @@ from tools import (
     markup,
     schemapi,
     update_init_file,
+    versioning,
 )
 
 __all__ = [
@@ -12,4 +13,5 @@ __all__ = [
     "markup",
     "schemapi",
     "update_init_file",
+    "versioning",
 ]
