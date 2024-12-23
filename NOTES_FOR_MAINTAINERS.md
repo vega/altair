@@ -27,11 +27,62 @@ The script output is designed to be deterministic; if the vega-lite version
 is not changed, then running the script should overwrite the schema wrappers
 with identical copies.
 
-## Updating the Vega-Lite version
+## Updating Vega versions
+All versions are maintained in [pyproject.toml](pyproject.toml).
 
-The vega & vega-lite versions for the Python code can be updated by manually
-changing the ``SCHEMA_VERSION`` definition within
-``tools/generate_schema_wrapper.py``, and then re-running the script.
+### Python Packages
+
+Projects which publish a package to PyPI are listed with a version bound in one of the following tables:
+
+- [`project.dependencies`](https://packaging.python.org/en/latest/specifications/pyproject-toml/#dependencies-optional-dependencies): Published dependencies.
+- [`project.optional-dependencies`](https://packaging.python.org/en/latest/specifications/pyproject-toml/#dependencies-optional-dependencies): Published optional dependencies, or "extras".
+- [`dependency-groups`](https://peps.python.org/pep-0735/): Local dependencies for development.
+
+> [!NOTE]
+> All are currently declared in sub-tables of `project.optional-dependencies`
+
+#### `vl-convert`
+
+We need to ensure that [vl-convert](https://github.com/vega/vl-convert) includes support for the new Vega-Lite version. 
+Check the [vl-convert releases](https://github.com/vega/vl-convert/releases) to find the minimum
+version of `vl-convert` that includes support for the desired version of Vega-Lite (and [open
+an issue](https://github.com/vega/vl-convert/issues) if this version hasn't been
+included in a released yet).
+
+#### `vegafusion`
+
+
+> [!WARNING]
+> *TODO: Find out how the constraint for `vegafusion` is decided*
+
+### Javascript/other
+
+Additional version constraints, including for [`Vega-Lite`](https://github.com/vega/vega-lite) itself are declared in `[tool.altair.vega]`.
+
+Whereas the [previous dependencies](#python-packages) are used at *install-time*; these are embedded into `altair` for use at *runtime* or when [generating the python code](#auto-generating-the-python-code):
+
+```toml
+[tool.altair.vega]
+vega-datasets     = "..." # https://github.com/vega/vega-datasets
+vega-embed        = "..." # https://github.com/vega/vega-embed
+vega-lite         = "..." # https://github.com/vega/vega-lite
+vegafusion        = "..." # https://github.com/vega/vegafusion
+vl-convert-python = "..." # https://github.com/vega/vl-convert
+```
+
+Some examples of where these propagate to:
+- [altair/jupyter/js/index.js](altair/jupyter/js/index.js)
+- [altair/utils/_importers.py](altair/utils/_importers.py)
+- [tools/generate_schema_wrapper.py](tools/generate_schema_wrapper.py)
+- [tools/versioning.py](tools/versioning.py)
+- [altair/utils/schemapi.py](https://github.com/vega/altair/blob/0e23fd33e9a755bab0ef73a856340c48c14897e6/altair/utils/schemapi.py#L1619-L1640)
+
+> [!IMPORTANT]
+> When updating **any** of these versions, be sure to [re-generate the python code](#auto-generating-the-python-code).
+
+#### Updating the Vega-Lite version
+
+The Vega-Lite version for the Python code propagates to `tools.generate_schema_wrapper.SCHEMA_VERSION`.
 
 This will update all of the automatically-generated files in the ``schema``
 directory for each version, but please note that it will *not* update other
@@ -49,30 +100,6 @@ painless, maybe requiring the addition of a few chart methods or modification
 of some docstrings.
 Major version updates (e.g. Vega-Lite 1.X->2.X) have required substantial
 rewrites, because the internal structure of the schema changed appreciably.
-
-### Updating the Vega-Lite in JupyterChart
-To update the Vega-Lite version used in JupyterChart, update the version in the 
-esm.sh URL in `altair/jupyter/js/index.js`.
-
-For example, to update to Vega-Lite 5.15.1, Vega 5 and Vega-Embed 6, the URL 
-should be:
-
-```javascript
-import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.15.1";
-```
-
-### Updating vl-convert version bound
-
-When updating the version of Vega-Lite, it's important to ensure that 
-[vl-convert](https://github.com/vega/vl-convert) includes support for the new Vega-Lite version. 
-Check the [vl-convert releases](https://github.com/vega/vl-convert/releases) to find the minimum
-version of vl-convert that includes support for the desired version of Vega-Lite (and [open
-an issue](https://github.com/vega/vl-convert/issues) if this version hasn't been
-included in a released yet.). Update the vl-convert version check in `altair/utils/_importers.py` 
-with the new minimum required version of vl-convert.
-
-Also, the version bound of the `vl-convert-python` package should be updated in the 
-`[project.optional-dependencies]/all` dependency group in `pyproject.toml`.
 
 ## Releasing the Package
 
