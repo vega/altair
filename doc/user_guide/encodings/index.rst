@@ -12,13 +12,15 @@ as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 
 For example, here we will visualize the cars dataset using four of the available
-encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
+**encoding channels** (see :ref:`user-guide-encoding-channels` for details): ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
 
    import altair as alt
    from vega_datasets import data
+
+
    cars = data.cars()
 
    alt.Chart(cars).mark_point().encode(
@@ -28,110 +30,83 @@ encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
        shape='Origin'
    )
 
-For data specified as a DataFrame, Altair can automatically determine the
-correct data type for each encoding, and creates appropriate scales and
-legends to represent the data.
+Channel Options
+~~~~~~~~~~~~~~~
 
-.. _encoding-channels:
+Each encoding channel accepts a number of **channel options** (see :ref:`user-guide-encoding-channel-options` for details) which can be used to further configure
+the chart.
+Altair 5.0 introduced a method-based syntax for setting channel options as a more convenient alternative to the traditional attribute-based syntax described in :ref:`attribute-based-attribute-setting` (but you can still use the attribute-based syntax if you prefer).
 
-Encoding Channels
-~~~~~~~~~~~~~~~~~
+.. note::
 
-Altair provides a number of encoding channels that can be useful in different
-circumstances; the following table summarizes them:
+    With the release of Altair 5,
+    the documentation was updated to prefer the method-based syntax.
+    The gallery examples still include the attribute-based syntax
+    in addition to the method-based syntax.
 
-Position Channels
-^^^^^^^^^^^^^^^^^
+.. _method-based-attribute-setting:
 
-==========  ===================  =================================  ===================================
-Channel     Altair Class         Description                        Example
-==========  ===================  =================================  ===================================
-x           :class:`X`           The x-axis value                   :ref:`gallery_scatter_tooltips`
-y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
-x2          :class:`X2`          Second x value for ranges          :ref:`gallery_gantt_chart`
-y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_candlestick_chart`
-longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
-latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
-longitude2  :class:`Longitude2`  Second longitude value for ranges  :ref:`gallery_airport_connections`
-latitude2   :class:`Latitude2`   Second latitude value for ranges   :ref:`gallery_airport_connections`
-xError      :class:`XError`      The x-axis error value             N/A
-yError      :class:`YError`      The y-axis error value             N/A
-xError2     :class:`XError2`     The second x-axis error value      N/A
-yError2     :class:`YError2`     The second y-axis error value      N/A
-xOffset     :class:`XOffset`     Offset to the x position           :ref:`gallery_grouped_bar_chart2`
-yOffset     :class:`YOffset`     Offset to the y position           :ref:`gallery_jitter_chart`
-theta       :class:`Theta`       The start arc angle                :ref:`gallery_radial_chart`
-theta2      :class:`Theta2`      The end arc angle (radian)         :ref:`gallery_pacman_chart`
-==========  ===================  =================================  ===================================
+Method-Based Syntax
+^^^^^^^^^^^^^^^^^^^
 
-Mark Property Channels
+The method-based syntax replaces *keyword arguments* with *methods*.
+For example, an ``axis`` option of the ``x`` channel encoding would traditionally be set using the ``axis`` keyword argument: ``x=alt.X('Horsepower', axis=alt.Axis(tickMinStep=50))``. To define the same :class:`X` object using the method-based syntax, we can instead use the more succinct ``x=alt.X('Horsepower').axis(tickMinStep=50)``.
+
+The same technique works with all encoding channels and all channel options.  For example, notice how we make the analogous change with respect to the ``title`` option of the ``y`` channel. The following produces the same chart as the previous example.
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower').axis(tickMinStep=50),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        color='Origin',
+        shape='Origin'
+    )
+
+These option-setter methods can also be chained together, as in the following, in which we set the ``axis``, ``bin``, and ``scale`` options of the ``x`` channel by using the corresponding methods (``axis``, ``bin``, and ``scale``).  We can break the ``x`` definition over multiple lines to improve readability.  (This is valid syntax because of the enclosing parentheses from ``encode``.)
+
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower')
+            .axis(ticks=False)
+            .bin(maxbins=10)
+            .scale(domain=(30,300), reverse=True),
+        alt.Y('Miles_per_Gallon').title('Miles per Gallon'),
+        color='Origin',
+        shape='Origin'
+    )
+
+
+.. _attribute-based-attribute-setting:
+
+Attribute-Based Syntax
 ^^^^^^^^^^^^^^^^^^^^^^
 
-=============  ======================  ==============================  =========================================
-Channel        Altair Class            Description                     Example
-=============  ======================  ==============================  =========================================
-angle          :class:`Angle`          The angle of the mark           :ref:`gallery_wind_vector_map`
-color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
-fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
-fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
-opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
-radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
-shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
-size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
-stroke         :class:`Stroke`         The stroke of the mark          N/A
-strokeDash     :class:`StrokeDash`     The stroke dash style           :ref:`gallery_multi_series_line`
-strokeOpacity  :class:`StrokeOpacity`  The opacity of the line         N/A
-strokeWidth    :class:`StrokeWidth`    The width of the line           N/A
-=============  ======================  ==============================  =========================================
+The two examples from the section above
+would look as follows with the traditional attribute-based syntax:
 
-Text and Tooltip Channels
-^^^^^^^^^^^^^^^^^^^^^^^^^
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower', axis=alt.Axis(tickMinStep=50)),
+        alt.Y('Miles_per_Gallon', title="Miles per Gallon"),
+        color='Origin',
+        shape='Origin'
+    )
 
-=======  ================  ========================  =========================================
-Channel  Altair Class      Description               Example
-=======  ================  ========================  =========================================
-text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_labels`
-key      :class:`Key`      --                        N/A
-tooltip  :class:`Tooltip`  The tooltip value         :ref:`gallery_scatter_tooltips`
-=======  ================  ========================  =========================================
+For specs making extensive use of channel options,
+the attribute-based syntax can become quite verbose:
 
-Hyperlink Channel
-^^^^^^^^^^^^^^^^^
-
-=======  ================  ========================  =========================================
-Channel  Altair Class      Description               Example
-=======  ================  ========================  =========================================
-href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
-=======  ================  ========================  =========================================
-
-Level of Detail Channel
-^^^^^^^^^^^^^^^^^^^^^^^
-
-=======  ================  ===============================  =========================================
-Channel  Altair Class      Description                      Example
-=======  ================  ===============================  =========================================
-detail   :class:`Detail`   Additional property to group by  :ref:`gallery_ranged_dot_plot`
-=======  ================  ===============================  =========================================
-
-Order Channel
-^^^^^^^^^^^^^
-
-=======  ================  =============================  =====================================
-Channel  Altair Class      Description                    Example
-=======  ================  =============================  =====================================
-order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connected_scatterplot`
-=======  ================  =============================  =====================================
-
-Facet Channels
-^^^^^^^^^^^^^^
-
-=======  ================  ===============================================  =============================================
-Channel  Altair Class      Description                                      Example
-=======  ================  ===============================================  =============================================
-column   :class:`Column`   The column of a faceted plot                     :ref:`gallery_trellis_scatter_plot`
-row      :class:`Row`      The row of a faceted plot                        :ref:`gallery_beckers_barley_trellis_plot`
-facet    :class:`Facet`    The row and/or column of a general faceted plot  :ref:`gallery_us_population_over_time_facet`
-=======  ================  ===============================================  =============================================
+.. altair-plot::
+    alt.Chart(cars).mark_point().encode(
+        alt.X(
+            'Horsepower',
+            axis=alt.Axis(ticks=False),
+            bin=alt.Bin(maxbins=10),
+            scale=alt.Scale(domain=(30,300), reverse=True)
+        ),
+        alt.Y('Miles_per_Gallon', title='Miles per Gallon'),
+        color='Origin',
+        shape='Origin'
+    )
 
 .. _encoding-data-types:
 
@@ -149,6 +124,10 @@ nominal       ``N``           a discrete unordered category
 temporal      ``T``           a time or date value
 geojson       ``G``           a geographic shape
 ============  ==============  ================================================
+
+For data specified as a DataFrame, Altair can automatically determine the
+correct data type for each encoding, and creates appropriate scales and
+legends to represent the data.
 
 If types are not specified for data input as a DataFrame, Altair defaults to
 ``quantitative`` for any numeric data, ``temporal`` for date/time data, and
@@ -180,8 +159,7 @@ identical plots:
 The shorthand form, ``x="name:Q"``, is useful for its lack of boilerplate
 when doing quick data explorations. The long-form,
 ``alt.X('name', type='quantitative')``, is useful when doing more fine-tuned
-adjustments to the encoding, such as binning, axis and scale properties,
-or more.
+adjustments to the encoding using channel options such as binning, axis, and scale.
 
 Specifying the correct type for your data is important, as it affects the
 way Altair represents your encoding in the resulting plot.
@@ -192,7 +170,7 @@ Effect of Data Type on Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
-using three vertically-concatenated charts (see :ref:`vconcat-chart`):
+using three horizontally-concatenated charts (see :ref:`hconcat-chart`):
 
 .. altair-plot::
 
@@ -200,11 +178,11 @@ using three vertically-concatenated charts (see :ref:`vconcat-chart`):
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q',
    ).properties(
-       width=150,
-       height=150
+       width=140,
+       height=140
    )
 
-   alt.vconcat(
+   alt.hconcat(
       base.encode(color='Cylinders:Q').properties(title='quantitative'),
       base.encode(color='Cylinders:O').properties(title='ordinal'),
       base.encode(color='Cylinders:N').properties(title='nominal'),
@@ -220,204 +198,49 @@ Effect of Data Type on Axis Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
-difference between a ``quantitative`` and ``ordinal`` scale for an column
+difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for an column
 that contains integers specifying a year:
 
 .. altair-plot::
 
-    pop = data.population.url
+    pop = data.population()
 
     base = alt.Chart(pop).mark_bar().encode(
-        alt.Y('mean(people):Q', title='total population')
+        alt.Y('mean(people):Q').title('Total population')
     ).properties(
-        width=200,
-        height=200
+        width=140,
+        height=140
     )
 
     alt.hconcat(
-        base.encode(x='year:Q').properties(title='year=quantitative'),
-        base.encode(x='year:O').properties(title='year=ordinal')
+        base.encode(x='year:O').properties(title='ordinal'),
+        base.encode(x='year:Q').properties(title='quantitative'),
+        base.encode(x='year:T').properties(title='temporal')
     )
 
-Because quantitative values do not have an inherent width, the bars do not
+Because values on quantitative and temporal scales do not have an inherent width, the bars do not
 fill the entire space between the values.
-This view also makes clear the missing year of data that was not immediately
-apparent when we treated the years as categories.
+These scales clearly show the missing year of data that was not immediately
+apparent when we treated the years as ordinal data,
+but the axis formatting is undesirable in both cases.
+
+To plot four digit integers as years with proper axis formatting,
+i.e. without thousands separator,
+we recommend converting the integers to strings first,
+and the specifying a temporal data type in Altair.
+While it is also possible to change the axis format with ``.axis(format='i')``,
+it is preferred to specify the appropriate data type to Altair.
+
+.. altair-plot::
+
+    pop['year'] = pop['year'].astype(str)
+
+    base.mark_bar().encode(x='year:T').properties(title='temporal')
 
 This kind of behavior is sometimes surprising to new users, but it emphasizes
 the importance of thinking carefully about your data types when visualizing
 data: a visual encoding that is suitable for categorical data may not be
-suitable for quantitative data, and vice versa.
-
-
-.. _encoding-channel-options:
-
-Encoding Channel Options
-~~~~~~~~~~~~~~~~~~~~~~~~
-Each encoding channel allows for a number of additional options to be expressed;
-these can control things like axis properties, scale properties, headers and
-titles, binning parameters, aggregation, sorting, and many more.
-
-The particular options that are available vary by encoding type; the various
-options are listed below.
-
-X and Y
-^^^^^^^
-
-The :class:`X` and :class:`Y` encodings accept the following options:
-
-.. altair-object-table:: altair.PositionFieldDef
-
-Color, Fill, and Stroke
-^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull
-
-Shape
-^^^^^
-
-The :class:`Shape` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
-
-Order
-^^^^^
-
-The :class:`Order` encoding accepts the following options:
-
-.. altair-object-table:: altair.OrderFieldDef
-
-Angle, FillOpacity, Opacity, Size, StrokeOpacity, and StrokeWidth
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Angle`, :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
-and :class:`StrokeWidth` encodings accept the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
-
-StrokeDash
-^^^^^^^^^^
-
-The :class:`StrokeDash` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
-
-Row and Column
-^^^^^^^^^^^^^^
-
-The :class:`Row` and :class:`Column`, and :class:`Facet` encodings accept the following options:
-
-.. altair-object-table:: altair.RowColumnEncodingFieldDef
-
-Facet
-^^^^^
-
-The :class:`Facet` encoding accepts the following options:
-
-.. altair-object-table:: altair.FacetEncodingFieldDef
-
-Text
-^^^^
-
-The :class:`Text` encoding accepts the following options:
-
-.. altair-object-table:: altair.FieldOrDatumDefWithConditionStringFieldDefText
-
-Description, Href, Tooltip, Url
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Description`, :class:`Href`, :class:`Tooltip`, and :class:`Url` encodings accept the following options:
-
-.. altair-object-table:: altair.StringFieldDefWithCondition
-
-Detail and Key
-^^^^^^^^^^^^^^
-
-The :class:`Detail` and :class:`Key` encodings accept the following options:
-
-.. altair-object-table:: altair.FieldDefWithoutScale
-
-Latitude and Longitude
-^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Latitude` and :class:`Longitude` encodings accept the following options:
-
-.. altair-object-table:: altair.LatLongFieldDef
-
-Radius and Theta
-^^^^^^^^^^^^^^^^
-
-The :class:`Radius` and :class:`Theta` encodings accept the following options:
-
-.. altair-object-table:: altair.PositionFieldDefBase
-
-Latitude2, Longitude2, Radius2, Theta2, X2, Y2, XError, YError, XError2, and YError2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`, :class:`XError2`, and :class:`YError2` encodings accept the following options:
-
-.. altair-object-table:: altair.SecondaryFieldDef
-
-
-.. _encoding-aggregates:
-
-Binning and Aggregation
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Beyond simple channel encodings, Altair's visualizations are built on the
-concept of the database-style grouping and aggregation; that is, the
-`split-apply-combine <https://www.jstatsoft.org/article/view/v040i01>`_
-abstraction that underpins many data analysis approaches.
-
-For example, building a histogram from a one-dimensional dataset involves
-splitting data based on the bin it falls in, aggregating the results within
-each bin using a *count* of the data, and then combining the results into
-a final figure.
-
-In Altair, such an operation looks like this:
-
-.. altair-plot::
-
-   alt.Chart(cars).mark_bar().encode(
-       alt.X('Horsepower', bin=True),
-       y='count()'
-       # could also use alt.Y(aggregate='count', type='quantitative')
-   )
-
-Notice here we use the shorthand version of expressing an encoding channel
-(see :ref:`shorthand-description`) with the ``count`` aggregation,
-which is the one aggregation that does not require a field to be
-specified.
-
-Similarly, we can create a two-dimensional histogram using, for example, the
-size of points to indicate counts within the grid (sometimes called
-a "Bubble Plot"):
-
-.. altair-plot::
-
-   alt.Chart(cars).mark_point().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
-       size='count()',
-   )
-
-There is no need, however, to limit aggregations to counts alone. For example,
-we could similarly create a plot where the color of each point
-represents the mean of a third quantity, such as acceleration:
-
-.. altair-plot::
-
-   alt.Chart(cars).mark_circle().encode(
-       alt.X('Horsepower', bin=True),
-       alt.Y('Miles_per_Gallon', bin=True),
-       size='count()',
-       color='average(Acceleration):Q'
-   )
-
-For a full list of available aggregates, see :ref:`agg-func-table`.
-
+suitable for quantitative data or temporal data, and vice versa.
 
 .. _shorthand-description:
 
@@ -441,94 +264,134 @@ Shorthand            Equivalent long-form
 ``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
 ===================  =======================================================
 
+Escaping special characters in column names
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _ordering-channels:
+Seeing that Altair uses ``:`` as a special character
+to indicate the encoding data type,
+you might wonder what happens
+when the column name in your data includes a colon.
+When this is the case
+you will need to either rename the column or escape the colon.
+This is also true for other special characters
+such as ``.`` and ``[]`` which are used to access nested attributes
+in some data structures.
 
-Ordering marks
-~~~~~~~~~~~~~~
-
-The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
-
-For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-
-    barley = data.barley()
-
-    alt.Chart(barley).mark_bar().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="ascending")
-    )
-
-The order can be reversed by changing the sort option to `descending`.
+The recommended thing to do when you have special characters in a column name
+is to rename your columns.
+For example, in pandas you could replace ``:`` with ``_``
+via ``df.rename(columns=lambda x: x.replace(':', '_'))``.
+If you don't want to rename your columns
+you will need to escape the special characters using a raw string with a backslash:
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
+    import pandas as pd
 
-    barley = data.barley()
+    source = pd.DataFrame({
+        'col:colon': [1, 2, 3],
+        'col.period': ['A', 'B', 'C'],
+        'col[brackets]': range(3),
+    })
 
-    alt.Chart(barley).mark_bar().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="descending")
+    alt.Chart(source).mark_bar().encode(
+        x=r'col\:colon',
+        # Remove the backslash in the title
+        y=alt.Y(r'col\.period').title('col.period'),
+        # Specify the data type
+        color=r'col\[brackets\]:N',
     )
 
-The same approach works for other mark types, like stacked areas charts.
+As can be seen above,
+indicating the data type is optional
+just as for columns without escaped characters.
+Note that the axes titles include the backslashes by default
+and you will need to manually set the title strings to remove them.
+If you are using the long form syntax for encodings,
+you do not need to escape colons as the type is explicit,
+e.g. ``alt.X(field='col:colon', type='quantitative')``
+(but periods and brackets still need to be escaped
+in the long form syntax unless they are used to index nested data structures).
+
+
+.. _encoding-aggregates:
+
+Binning and Aggregation
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Beyond simple channel encodings, Altair's visualizations are built on the
+concept of the database-style grouping and aggregation; that is, the
+`split-apply-combine <https://www.jstatsoft.org/article/view/v040i01>`_
+abstraction that underpins many data analysis approaches.
+
+For example, building a histogram from a one-dimensional dataset involves
+splitting data based on the bin it falls in, aggregating the results within
+each bin using a *count* of the data, and then combining the results into
+a final figure.
+
+In Altair, such an operation looks like this:
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
+   alt.Chart(cars).mark_bar().encode(
+       alt.X('Horsepower').bin(),
+       y='count()'
+       # could also use alt.Y(aggregate='count', type='quantitative')
+   )
 
-    barley = data.barley()
+Notice here we use the shorthand version of expressing an encoding channel
+(see :ref:`shorthand-description`) with the ``count`` aggregation,
+which is the one aggregation that does not require a field to be
+specified.
 
-    alt.Chart(barley).mark_area().encode(
-        x='variety:N',
-        y='sum(yield):Q',
-        color='site:N',
-        order=alt.Order("site", sort="ascending")
-    )
-
-For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
+Similarly, we can create a two-dimensional histogram using, for example, the
+size of points to indicate counts within the grid (sometimes called
+a "Bubble Plot"):
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
+   alt.Chart(cars).mark_point().encode(
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
+       size='count()',
+   )
 
-    driving = data.driving()
+There is no need, however, to limit aggregations to counts alone. For example,
+we could similarly create a plot where the color of each point
+represents the mean of a third quantity, such as acceleration:
 
-    alt.Chart(driving).mark_line(point=True).encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False)),
-        order='year'
-    )
+.. altair-plot::
 
-Sorting
-~~~~~~~
+   alt.Chart(cars).mark_circle().encode(
+       alt.X('Horsepower').bin(),
+       alt.Y('Miles_per_Gallon').bin(),
+       size='count()',
+       color='mean(Acceleration):Q'
+   )
 
-Specific channels can take a  :class:`sort` property which determines the
-order of the scale being used for the channel. There are a number of different
-sort options available:
+For a full list of available aggregates, see :ref:`agg-func-table`.
+
+
+Sort Option
+~~~~~~~~~~~
+
+Some channels accept a  :class:`sort` option which determines the
+order of the scale being used for the channel.
+By default the scale is sorted in ascending alphabetical order,
+unless an `ordered pandas categorical column <https://pandas.pydata.org/docs/user_guide/categorical.html?highlight=categorical#sorting-and-order>`_ is passed (without an explicit type specification)
+in which case Altair will use the column's inherent order to sort the scale.
+There are a number of different
+options available to change the sort order:
 
 - ``sort='ascending'`` (Default) will sort the field's value in ascending order.
-  for string data, this uses standard alphabetical order.
+  For string data, this uses standard alphabetical order.
 - ``sort='descending'`` will sort the field's value in descending order
-- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for 
-  sorting by that channel. An optional minus prefix can be used for a descending 
+- Passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for
+  sorting by that channel. An optional minus prefix can be used for a descending
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
-- passing a list to ``sort`` allows you to explicitly set the order in which
+- Passing a `Sequence <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`_ to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
-- passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
-  an axis by the value of some other field in the dataset.
+- Using the ``field`` and ``op`` parameters to specify a field and aggregation operation to sort by.
 
 Here is an example of applying these five different sort approaches on the
 x-axis, using the barley dataset:
@@ -542,58 +405,61 @@ x-axis, using the barley dataset:
 
     base = alt.Chart(barley).mark_bar().encode(
         y='mean(yield):Q',
-        color=alt.Color('mean(yield):Q', legend=None)
+        color=alt.Color('mean(yield):Q').legend(None)
     ).properties(width=100, height=100)
 
     # Sort x in ascending order
     ascending = base.encode(
-        alt.X(field='site', type='nominal', sort='ascending')
+        alt.X('site:N').sort('ascending')
     ).properties(
         title='Ascending'
     )
 
     # Sort x in descending order
     descending = base.encode(
-        alt.X(field='site', type='nominal', sort='descending')
+        alt.X('site:N').sort('descending')
     ).properties(
         title='Descending'
     )
 
     # Sort x in an explicitly-specified order
     explicit = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=['Duluth', 'Grand Rapids', 'Morris',
-                    'University Farm', 'Waseca', 'Crookston'])
+        alt.X('site:N').sort(
+            ['Duluth', 'Grand Rapids', 'Morris', 'University Farm', 'Waseca', 'Crookston']
+        )
     ).properties(
         title='Explicit'
     )
 
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='mean'))
+        alt.X('site:N').sort(field='yield', op='mean')
     ).properties(
         title='By Yield'
     )
 
     alt.concat(
-        ascending, descending, explicit,
-        sortchannel, sortfield,
+        ascending,
+        descending,
+        explicit,
+        sortchannel,
+        sortfield,
         columns=3
     )
 
-The last two charts are the same because the default aggregation 
-(see :doc:`transform/aggregate`) is ``mean``. To highlight the 
-difference between sorting via channel and sorting via field consider the 
-following example where we don't aggregate the data:
+The last two charts are the same because the default aggregation
+(see :doc:`transform/aggregate`) is ``mean``. To highlight the
+difference between sorting via channel and sorting via field consider the
+following example where we don't aggregate the data
+and use the `op` parameter to specify a different aggregation than `mean`
+to use when sorting:
 
 .. altair-plot::
 
@@ -604,45 +470,165 @@ following example where we don't aggregate the data:
     base = alt.Chart(barley).mark_point().encode(
         y='yield:Q',
     ).properties(width=200)
-    
+
     # Sort according to encoding channel
     sortchannel = base.encode(
-        alt.X(field='site', type='nominal',
-              sort='y')
+        alt.X('site:N').sort('y')
     ).properties(
         title='By Channel'
     )
 
     # Sort according to another field
     sortfield = base.encode(
-        alt.X(field='site', type='nominal',
-              sort=alt.EncodingSortField(field='yield', op='min'))
+        alt.X('site:N').sort(field='yield', op='max')
     ).properties(
-        title='By Min Yield'
+        title='By Max Yield'
     )
     sortchannel | sortfield
-
-By passing a :class:`EncodingSortField` class to ``sort`` we have more control over 
-the sorting process.
 
 
 Sorting Legends
 ^^^^^^^^^^^^^^^
 
-While the above examples show sorting of axes by specifying ``sort`` in the
+Just as how the above examples show sorting of axes by specifying ``sort`` in the
 :class:`X` and :class:`Y` encodings, legends can be sorted by specifying
-``sort`` in the :class:`Color` encoding:
+``sort`` in the encoding used in the legend (e.g. color, shape, size, etc).
+Below we show an example using the :class:`Color` encoding:
 
 .. altair-plot::
 
-    alt.Chart(barley).mark_rect().encode(
-        alt.X('mean(yield):Q', sort='ascending'),
-        alt.Y('site:N', sort='descending'),
-        alt.Color('site:N',
-            sort=['Morris', 'Duluth', 'Grand Rapids',
-                  'University Farm', 'Waseca', 'Crookston']
-        )
+    alt.Chart(barley).mark_bar().encode(
+        alt.X('mean(yield):Q'),
+        alt.Y('site:N').sort('x'),
+        alt.Color('site:N').sort([
+            'Morris', 'Duluth', 'Grand Rapids', 'University Farm', 'Waseca', 'Crookston'
+        ])
     )
 
-Here the y-axis is sorted reverse-alphabetically, while the color legend is
+Here the y-axis is sorted based on the x-values, while the color legend is
 sorted in the specified order, beginning with ``'Morris'``.
+
+In the next example,
+specifying ``field``, ``op`` and ``order``,
+sorts the legend sorted based on a chosen data field
+and operation.
+
+.. altair-plot::
+
+    alt.Chart(barley).mark_bar().encode(
+        alt.X('mean(yield):Q'),
+        alt.Y('site:N').sort('x'),
+        color=alt.Color('site').sort(field='yield', op='max', order='ascending')
+    )
+
+Datum and Value
+~~~~~~~~~~~~~~~
+
+So far we always mapped an encoding channel to a column in our dataset. However, sometimes
+it is also useful to map to a single constant value. In Altair, you can do this with
+
+* ``datum``, which encodes a constant domain value via a scale using the same units as the underlying data
+* ``value``, which encodes a constant visual value, using absolute units such as an exact position in pixels, the name or RGB value of a color, the name of shape,  etc
+
+``datum`` is particularly useful for annotating a specific data value. 
+For example, you can use it with a rule mark to highlight a 
+threshold value (e.g., 300 dollars stock price).
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.datum(300)
+    )
+
+    lines + rule
+
+If we instead used ``alt.value`` in this example, we would position the rule 300 pixels from the top of the chart border rather than at the 300 dollars position. Since the default charts height is 300 pixels, this will show the dotted line just on top of the x-axis -line:
+
+.. altair-plot::
+
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        y=alt.value(300)
+    )
+
+    lines + rule
+
+If we want to use ``datum``  to highlight a certain year on the x-axis,
+we can't simply type in the year as an integer,
+but instead need to use ``datum`` together with :class:`DateTime`.
+Here we also set the color for the rule to the same one as the line for the symbol ``MSFT``
+with ``alt.datum("MSFT")``.
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.datum("MSFT")
+    )
+
+    lines + rule
+
+
+Similar to when mapping to a data column, when using ``datum`` different encoding channels 
+may support ``band``, ``scale``, ``axis``, ``legend``, ``format``, or ``condition`` properties.
+However, data transforms (e.g. ``aggregate``, ``bin``, ``timeUnit``, ``sort``) cannot be applied.
+
+Expanding on the example above, if you would want to color the ``rule`` mark regardless of 
+the color scale used for the lines, you can use ``value``, e.g. ``alt.value("red")``:
+
+.. altair-plot::
+    
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.stocks()
+    base = alt.Chart(source)
+    lines = base.mark_line().encode(
+        x="date:T",
+        y="price:Q",
+        color="symbol:N"
+    )
+    rule = base.mark_rule(strokeDash=[2, 2]).encode(
+        x=alt.datum(alt.DateTime(year=2006)),
+        color=alt.value("red")
+    )
+
+    lines + rule
+
+One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly introduced as of Altair 5.0) method-based syntax to set channel options described in :ref:`method-based-attribute-setting`. For example, if you are using ``alt.datum`` for the ``y`` channel encoding and you wish to use an option setter method (e.g., ``scale``), then you can use :class:`YDatum` instead.  Here is a simple example.
+
+.. altair-plot::
+    
+    import altair as alt
+
+    alt.Chart().mark_bar().encode(
+        y=alt.YDatum(220).scale(domain=(0,500)),
+        color=alt.value("darkkhaki")
+    )
+
+If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
+
+.. toctree::
+   :hidden:
+
+   channels
+   channel_options
