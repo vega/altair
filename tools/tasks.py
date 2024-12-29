@@ -23,9 +23,6 @@ DOC_BUILD: LiteralString = f"{DOC}/_build"
 DOC_IMAGES: LiteralString = f"{DOC}/_images"
 DOC_BUILD_HTML: LiteralString = f"{DOC_BUILD}/html"
 TOOLS: Literal["tools"] = "tools"
-PYTEST_ARGS: LiteralString = (
-    f"-p no:randomly -n logical --doctest-modules tests altair {TOOLS}"
-)
 
 app = Tasks(runner="uv")
 
@@ -54,7 +51,7 @@ def type_check() -> Commands:
 
 @app.task()
 def pytest() -> Commands:
-    yield f"pytest {PYTEST_ARGS}"
+    yield "pytest"
 
 
 @app.task()
@@ -65,13 +62,13 @@ def test() -> Commands:
 @app.task("test-fast")
 def test_fast() -> Commands:
     yield "ruff-fix"
-    yield f'pytest {PYTEST_ARGS} -m "not slow"'
+    yield 'pytest -m "not slow"'
 
 
 @app.task("test-slow")
 def test_slow() -> Commands:
     yield "ruff-fix"
-    yield f'pytest {PYTEST_ARGS} -m "slow"'
+    yield 'pytest -m "slow"'
 
 
 @app.task("generate-schema-wrapper")

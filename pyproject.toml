@@ -431,7 +431,7 @@ docstring-code-line-length = 88
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
-addopts = ["--numprocesses=logical"]
+addopts = ["--numprocesses=logical", "--doctest-modules", "tests", "altair", "tools"]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
     "slow: Label tests as slow (deselect with '-m \"not slow\"')"
