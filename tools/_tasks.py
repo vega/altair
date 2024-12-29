@@ -59,8 +59,7 @@ class _Runner(Protocol):
 
     def resolve(self, command: str, extras: Extras, /) -> str:
         """Turn single command text into the env wrappped version."""
-        cmd = self.with_extras(command, extras) if extras else command
-        return f"{self.run_command} {cmd}"
+        return f"{self.run_command} {self.with_extras(command, extras) if extras else command}"
 
     def __setattr__(self, name: str, value: Any) -> None:
         tp = type(self).__name__
@@ -157,14 +156,14 @@ class Tasks:
         print(
             f'{"Tasks (dry run)" if dry_run else "Tasks"}\n' f'[{", ".join(commands)}]'
         )
-        for idx, cmd in self._iter_commands(commands):
+        for idx, command in self._iter_commands(commands):
             idxs = f"[{idx}]"
-            print(f"{idxs:4} > {cmd}")
+            print(f"{idxs:4} > {command}")
             if dry_run:
                 print("...")
             else:
                 with DirContext():
-                    _run_stream_stdout(cmd)
+                    _run_stream_stdout(command)
 
     @classmethod
     def from_toml(cls, doc: _TOMLDocument, /, *, runner: IntoRunner) -> Tasks:
@@ -226,23 +225,23 @@ class Tasks:
         self, command: str, extras: Extras = (), /
     ) -> Iterator[tuple[str, Extras]]:
         if expand := self._mapping.get(command):
-            sub_extras = expand._extras or extras
-            for cmd in expand:
-                if cmd == command:
-                    yield command, sub_extras
+            extras = expand._extras or extras
+            for c in expand:
+                if c == command:
+                    yield command, extras
                 else:
-                    yield from self._expand(cmd, sub_extras)
+                    yield from self._expand(c, extras)
         else:
             yield command, extras
 
     def _resolve(self, command: str, /) -> Commands:
-        for cmd, extras in self._expand(command):
-            yield self._runner.resolve(cmd, extras)
+        for expanded, extras in self._expand(command):
+            yield self._runner.resolve(expanded, extras)
 
     def _iter_commands(self, commands: Iterable[str], /) -> Iterator[tuple[int, str]]:
         """Flatten and resolve all commands."""
         yield from enumerate(
-            chain.from_iterable(self._resolve(cmd) for cmd in commands)
+            chain.from_iterable(self._resolve(command) for command in commands)
         )
 
     def _metavar(self) -> str:
