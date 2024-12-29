@@ -91,9 +91,9 @@ instead of relying on an implicit type conversion.
 Functions Without Arguments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible for aggregate functions to not
-have an argument. In this case, aggregation will be performed on the column
-used in the other axis.
+Aggregate functions can be used without arguments. 
+In such cases, the function will automatically aggregate 
+the data from the column specified in the other axis.
 
 The following chart demonstrates this by counting the number of cars with
 respect to their country of origin.
@@ -114,7 +114,7 @@ Functions that handle categorical data (such as :code:`count`,
 :code:`missing`, :code:`distinct` and :code:`valid`) are the ones that get
 the most out of this feature.
 
-Argmin / Argmax
+Argmin and Argmax Functions
 ^^^^^^^^^^^^^^^
 Both :code:`argmin` and :code:`argmax` aggregate functions can only be used
 with the :meth:`~Chart.transform_aggregate` method. Trying to use their
