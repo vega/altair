@@ -1,0 +1,54 @@
+[tool.altair.tasks]
+lint = ["ruff check"]
+format = ["ruff format --diff --check"]
+ruff-fix = ["ruff check", "ruff format"]
+type-check = ["mypy altair tests"]
+pytest = [
+    "pytest -p no:randomly -n logical --doctest-modules tests altair tools",
+]
+test = ["lint", "format", "type-check", "pytest"]
+test-fast = [
+    "ruff-fix",
+    "pytest -p no:randomly -n logical --doctest-modules tests altair tools -m \"not slow\"",
+]
+test-slow = [
+    "ruff-fix",
+    "pytest -p no:randomly -n logical --doctest-modules tests altair tools -m \"slow\"",
+]
+generate-schema-wrapper = [
+    "mypy tools",
+    "python tools/generate_schema_wrapper.py",
+    "test",
+]
+update-init-file = ["python tools/update_init_file.py", "ruff-fix"]
+clean = [
+    "python -c \"import shutil;shutil.rmtree('doc/_build', ignore_errors=True)\"",
+]
+clean-generated = [
+    "python -c \"import shutil;shutil.rmtree('doc/user_guide/generated', ignore_errors=True)\"",
+    "python -c \"import shutil;shutil.rmtree('doc/gallery', ignore_errors=True)\"",
+]
+clean-all = [
+    "clean",
+    "clean-generated",
+    "python -c \"import shutil;shutil.rmtree('doc/_images', ignore_errors=True)\"",
+]
+serve = [
+    "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000",
+]
+publish = ["python tools/sync_website.py --no-commit"]
+
+[tool.altair.tasks.build-html]
+commands = [
+    "python -c \"from pathlib import Path;Path('doc/_images').mkdir(exist_ok=True)\"",
+    "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html",
+]
+extras = ["doc"]
+
+[tool.altair.tasks.clean-build]
+commands = ["clean-all", "build-html"]
+extras = ["doc"]
+
+[tool.altair.tasks.publish-clean-build]
+commands = ["clean-build", "publish"]
+extras = ["doc"]

@@ -16,8 +16,9 @@ GITHUB: Literal["github"] = "github"
 WEBSITE: str = f"{DOC_REPO_ORG}.{GITHUB}.io"
 DOC_REPO_URL: str = f"https://{GITHUB}.com/{DOC_REPO_ORG}/{WEBSITE}.git"
 
-WORKING_DIR: Path = Path(__file__).parent
-DOC_BUILD_DIR: Path = WORKING_DIR / "_build"
+REPO_DIR: Path = Path(__file__).parent.parent
+DOC_DIR: Path = REPO_DIR / "doc"
+DOC_BUILD_DIR: Path = DOC_DIR / "_build"
 DOC_REPO_DIR: Path = DOC_BUILD_DIR / WEBSITE
 DOC_HTML_DIR: Path = DOC_BUILD_DIR / "html"
 
@@ -38,7 +39,7 @@ UNTRACKED = ".git"
 
 
 def _path_repr(fp: Path, /) -> str:
-    return f"{fp.relative_to(WORKING_DIR.parent).as_posix()!r}"
+    return f"{fp.relative_to(REPO_DIR).as_posix()!r}"
 
 
 def clone_or_sync_repo() -> None:
