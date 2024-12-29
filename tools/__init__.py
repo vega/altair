@@ -3,7 +3,7 @@ from tools import (
     generate_schema_wrapper,
     markup,
     schemapi,
-    # tasks, (adds everything twice?)
+    tasks,
     update_init_file,
 )
 
@@ -12,6 +12,6 @@ __all__ = [
     "generate_schema_wrapper",
     "markup",
     "schemapi",
-    # "tasks",
+    "tasks",
     "update_init_file",
 ]
