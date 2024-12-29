@@ -433,22 +433,46 @@ def str_path(source: str | Path, /) -> str:
     return Path(source).resolve().relative_to(REPO_ROOT).as_posix()
 
 
-def py_cmd(command: str, /) -> str:
+def py_cmd(*commands: str) -> str:
+    """
+    Execute one or more statements as python code.
+
+    Very basic wrapper around the `python CLI`_.
+
+    .. _python CLI:
+        https://docs.python.org/3/using/cmdline.html#cmdoption-c
+    """
+    command = ";".join(commands)
     return f"python -c {command!r}"
 
 
 def rm_rf_cmd(source: str | Path, /) -> str:
+    """
+    Platform independent `bash rm`_, using ``--recursive --force`` options.
+
+    .. _bash rm:
+        https://ss64.com/bash/rm.html
+    """
     s = str_path(source)
     if Path(source).is_file():
-        command = f"from pathlib import Path;Path({s!r}).unlink(missing_ok=True)"
+        return py_cmd(
+            "from pathlib import Path", f"Path({s!r}).unlink(missing_ok=True)"
+        )
     else:
-        command = f"import shutil;shutil.rmtree({s!r}, ignore_errors=True)"
-    return py_cmd(command)
+        return py_cmd("import shutil", f"shutil.rmtree({s!r}, ignore_errors=True)")
 
 
 def mkdir_cmd(source: str | Path, /) -> str:
+    """
+    Platform independent `bash mkdir`_, using ``--parents` option.
+
+    .. _bash mkdir:
+        https://ss64.com/bash/mkdir.html
+    """
     s = str_path(source)
-    return py_cmd(f"from pathlib import Path;Path({s!r}).mkdir(exist_ok=True)")
+    return py_cmd(
+        "from pathlib import Path", f"Path({s!r}).mkdir(parents=True, exist_ok=True)"
+    )
 
 
 ### NOTE: TOML utils

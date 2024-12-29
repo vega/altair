@@ -135,7 +135,7 @@ def doc_publish_clean_build() -> Commands:
 @app.task("export-tasks")
 def export_tasks() -> Commands:
     TASKS_TOML = "tasks.toml"
-    yield py_cmd(f"from tools.tasks import app;app.to_path({TASKS_TOML!r})")
+    yield py_cmd("from tools.tasks import app", f"app.to_path({TASKS_TOML!r})")
 
 
 def main() -> None:

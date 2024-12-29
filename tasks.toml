@@ -35,7 +35,7 @@ export-tasks = [
 
 [tool.altair.tasks.build-html]
 commands = [
-    "python -c \"from pathlib import Path;Path('doc/_images').mkdir(exist_ok=True)\"",
+    "python -c \"from pathlib import Path;Path('doc/_images').mkdir(parents=True, exist_ok=True)\"",
     "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html",
 ]
 extras = ["doc"]
