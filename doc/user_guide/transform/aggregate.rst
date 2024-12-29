@@ -116,22 +116,20 @@ the most out of this feature.
 
 Argmin and Argmax Functions
 ^^^^^^^^^^^^^^^
-Both :code:`argmin` and :code:`argmax` aggregate functions can only be used
-with the :meth:`~Chart.transform_aggregate` method. Trying to use their
-respective shorthand notations will result in an error. This is due to the fact
-that either :code:`argmin` or :code:`argmax` functions return an object, not
-values.  This object then specifies the values to be selected from other
-columns when encoding.  One can think of the returned object as being a
-dictionary, while the column serves the purpose of being a key, which then
-obtains its respective value.
+The :code:`argmin` and :code:`argmax` functions help you find values from
+one field that correspond to the minimum or maximum values in another
+field. For example, you might want to find the production budget of
+movies that earned the highest gross revenue in each genre.
 
-The true value of these functions is appreciated when we want to compare the
-most **distinctive** samples from two sets of data with respect to another set
-of data.
+These functions must be used with the :meth:`~Chart.transform_aggregate`
+method rather than their shorthand notations. They return objects that act
+as selectors for values in other columns, rather than returning values
+directly. You can think of the returned object as a dictionary where the
+column serves as a key to retrieve corresponding values.
 
-As an example, suppose we want to compare the weight of the strongest cars,
-with respect to their country/region of origin. This can be done using
-:code:`argmax`:
+
+To illustrate this, let's compare the weights of cars with the highest
+horsepower across different regions of origin:
 
 .. altair-plot::
 
@@ -143,8 +141,9 @@ with respect to their country/region of origin. This can be done using
       groupby=['Origin']
    )
 
-It is clear that Japan's strongest car is also the lightest, while that of USA
-is the heaviest.
+This visualization reveals an interesting contrast: among cars with the
+highest horsepower in their respective regions, Japanese cars are notably
+lighter, while American cars are substantially heavier.
 
 See :ref:`gallery_line_chart_with_custom_legend` for another example that uses
 :code:`argmax`. The case of :code:`argmin` is completely similar.
