@@ -27,7 +27,7 @@ PYTEST_ARGS: LiteralString = (
     f"-p no:randomly -n logical --doctest-modules tests altair {TOOLS}"
 )
 
-app = Tasks(runner="hatch")
+app = Tasks(runner="uv")
 
 
 @app.task()
