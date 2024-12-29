@@ -49,12 +49,6 @@ version of `vl-convert` that includes support for the desired version of Vega-Li
 an issue](https://github.com/vega/vl-convert/issues) if this version hasn't been
 included in a released yet).
 
-#### `vegafusion`
-
-
-> [!WARNING]
-> *TODO: Find out how the constraint for `vegafusion` is decided*
-
 ### Javascript/other
 
 Additional version constraints, including for [`Vega-Lite`](https://github.com/vega/vega-lite) itself are declared in `[tool.altair.vega]`.
