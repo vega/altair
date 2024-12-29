@@ -122,13 +122,13 @@ class Tasks:
         --------
         Create an app:
 
-            from altair.tools._tasks import Tasks
+            from tools._tasks import Tasks
 
             app = Tasks(runner="hatch")
 
         Define the commands that compose the task:
 
-            from altair.tools._tasks import Commands
+            from tools._tasks import Commands
 
             @app.task()
             def my_task() -> Commands:
