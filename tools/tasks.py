@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from tools._tasks import Tasks, mkdir_cmd, py_cmd, rm_rf_cmd
+from tools._tasks import Tasks, cmd
 
 if TYPE_CHECKING:
     import sys
@@ -74,36 +74,36 @@ def test_slow() -> Commands:
 @app.task("generate-schema-wrapper")
 def generate_schema_wrapper() -> Commands:
     yield f"mypy {TOOLS}"
-    yield f"python {TOOLS}/generate_schema_wrapper.py"
+    yield cmd.script(f"{TOOLS}/generate_schema_wrapper.py")
     yield "test"
 
 
 @app.task("update-init-file")
 def update_init_file() -> Commands:
-    yield f"python {TOOLS}/update_init_file.py"
+    yield cmd.script(f"{TOOLS}/update_init_file.py")
     yield "ruff-fix"
 
 
 @app.task("clean")
 def doc_clean() -> Commands:
-    yield rm_rf_cmd(REPO_ROOT / DOC_BUILD)
+    yield cmd.rm_rf(REPO_ROOT / DOC_BUILD)
 
 
 @app.task("clean-generated")
 def doc_clean_generated() -> Commands:
-    yield rm_rf_cmd(REPO_ROOT / f"{DOC}/user_guide/generated")
-    yield rm_rf_cmd(REPO_ROOT / f"{DOC}/gallery")
+    yield cmd.rm_rf(REPO_ROOT / f"{DOC}/user_guide/generated")
+    yield cmd.rm_rf(REPO_ROOT / f"{DOC}/gallery")
 
 
 @app.task("clean-all")
 def doc_clean_all() -> Commands:
     yield from ("clean", "clean-generated")
-    yield rm_rf_cmd(REPO_ROOT / DOC_IMAGES)
+    yield cmd.rm_rf(REPO_ROOT / DOC_IMAGES)
 
 
 @app.task("build-html", extras=DOC)
 def doc_build_html() -> Commands:
-    yield mkdir_cmd(DOC_IMAGES)
+    yield cmd.mkdir(DOC_IMAGES)
     yield f"sphinx-build -b html -d {DOC_BUILD}/doctrees {DOC} {DOC_BUILD_HTML}"
 
 
@@ -111,13 +111,14 @@ def doc_build_html() -> Commands:
 def doc_serve() -> Commands:
     ADDRESS = "127.0.0.1"
     PORT = 8000
-    yield f'python -m http.server --bind "{ADDRESS}" --directory {DOC_BUILD_HTML} {PORT}'
+    yield cmd.mod(
+        "http.server", f'--bind "{ADDRESS}"', f"--directory {DOC_BUILD_HTML}", f"{PORT}"
+    )
 
 
 @app.task("publish")
 def doc_publish() -> Commands:
-    SYNC_SCRIPT = f"{TOOLS}/sync_website.py"
-    yield f"python {SYNC_SCRIPT} --no-commit"
+    yield cmd.script(f"{TOOLS}/sync_website.py", "--no-commit")
 
 
 @app.task("clean-build", extras=DOC)
@@ -135,7 +136,7 @@ def doc_publish_clean_build() -> Commands:
 @app.task("export-tasks")
 def export_tasks() -> Commands:
     TASKS_TOML = "tasks.toml"
-    yield py_cmd("from tools.tasks import app", f"app.to_path({TASKS_TOML!r})")
+    yield cmd("from tools.tasks import app", f"app.to_path({TASKS_TOML!r})")
 
 
 def main() -> None:

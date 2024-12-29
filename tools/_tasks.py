@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     from tomlkit.container import Container as _Container
 
 
-__all__ = ["Commands", "Tasks"]
+__all__ = ["Commands", "Tasks", "cmd"]
 
 
 IntoExtras: TypeAlias = "str | Sequence[str] | None"
@@ -375,7 +375,6 @@ def _run_stream_stdout(
     stdout_handler: Callable[[bytes], None] = _stdout_handler,
 ) -> sp.CompletedProcess[Any]:
     """
-
     Mimic `subprocess.run`_, piping stdout back to the caller in real-time*.
 
     Adapted from `stackoverflow-76626021`_.
@@ -422,56 +421,107 @@ class DirContext(AbstractContextManager):
             os.chdir(self._orig_directory)
 
 
-def str_path(source: str | Path, /) -> str:
+class cmd(str):  # noqa: FURB189
     """
-    Normalize to a relative string path.
+    Helpers for invoking the `python command line`_.
 
-    The commands this gets used in can serialize those cross-platform paths.
-    - Getting expanded in the python runtime context.
+    All methods return strings, which can be passed to `subprocess.run`_.
+
+    Notes
+    -----
+    Subclasses ``str`` purely to convince ``mypy`` that this holds:
+
+        isinstance(cmd("some command"), str)
+
+    .. _python command line:
+        https://docs.python.org/3/using/cmdline.html
+    .. _subprocess.run:
+        https://docs.python.org/3/library/subprocess.html#subprocess.run
     """
-    return Path(source).resolve().relative_to(REPO_ROOT).as_posix()
 
+    def __new__(cls, *commands: str) -> str:  # type: ignore[misc]
+        """
+        Execute one or more statements as python code.
 
-def py_cmd(*commands: str) -> str:
-    """
-    Execute one or more statements as python code.
+        Wraps `python -c`_.
 
-    Very basic wrapper around the `python CLI`_.
+        .. _python -c:
+            https://docs.python.org/3/using/cmdline.html#cmdoption-c
+        """
+        command = ";".join(commands)
+        return f"python -c {command!r}"
 
-    .. _python CLI:
-        https://docs.python.org/3/using/cmdline.html#cmdoption-c
-    """
-    command = ";".join(commands)
-    return f"python -c {command!r}"
+    @classmethod
+    def mod(cls, module_name: str, *args: str) -> str:
+        """
+        Run the CLI of a standard library module.
 
+        Wraps `python -m`_.
 
-def rm_rf_cmd(source: str | Path, /) -> str:
-    """
-    Platform independent `bash rm`_, using ``--recursive --force`` options.
+        See `Modules command-line interface`_ for a list of supported modules.
 
-    .. _bash rm:
-        https://ss64.com/bash/rm.html
-    """
-    s = str_path(source)
-    if Path(source).is_file():
-        return py_cmd(
-            "from pathlib import Path", f"Path({s!r}).unlink(missing_ok=True)"
+        .. _python -m:
+            https://docs.python.org/3/using/cmdline.html#cmdoption-m
+        .. _Modules command-line interface:
+            https://docs.python.org/3/library/cmdline.html
+        """
+        return cls._maybe_options(f"python -m {module_name}", args)
+
+    @classmethod
+    def script(cls, source: str | Path, *args: str) -> str:
+        """
+        Execute the python code contained in ``source``.
+
+        Wraps `script`_, (``python <script> [args]``).
+
+        .. _script:
+            https://docs.python.org/3/using/cmdline.html#command-line-and-environment
+        """
+        return cls._maybe_options(f"python {cls._str_path(source)}", args)
+
+    @classmethod
+    def mkdir(cls, source: str | Path, /) -> str:
+        """
+        Platform independent `bash mkdir`_, using ``--parents` option.
+
+        .. _bash mkdir:
+            https://ss64.com/bash/mkdir.html
+        """
+        s = cls._str_path(source)
+        return cmd(
+            "from pathlib import Path",
+            f"Path({s!r}).mkdir(parents=True, exist_ok=True)",
         )
-    else:
-        return py_cmd("import shutil", f"shutil.rmtree({s!r}, ignore_errors=True)")
 
+    @classmethod
+    def rm_rf(cls, source: str | Path, /) -> str:
+        """
+        Platform independent `bash rm`_, using ``--recursive --force`` options.
 
-def mkdir_cmd(source: str | Path, /) -> str:
-    """
-    Platform independent `bash mkdir`_, using ``--parents` option.
+        .. _bash rm:
+            https://ss64.com/bash/rm.html
+        """
+        s = cls._str_path(source)
+        if Path(source).is_file():
+            return cmd(
+                "from pathlib import Path", f"Path({s!r}).unlink(missing_ok=True)"
+            )
+        else:
+            return cmd("import shutil", f"shutil.rmtree({s!r}, ignore_errors=True)")
 
-    .. _bash mkdir:
-        https://ss64.com/bash/mkdir.html
-    """
-    s = str_path(source)
-    return py_cmd(
-        "from pathlib import Path", f"Path({s!r}).mkdir(parents=True, exist_ok=True)"
-    )
+    @staticmethod
+    def _str_path(source: str | Path, /) -> str:
+        """
+        Normalize to a relative string path.
+
+        - The commands this gets used in can serialize those cross-platform paths.
+        - Getting expanded in the python runtime context.
+        """
+        return Path(source).resolve().relative_to(REPO_ROOT).as_posix()
+
+    @staticmethod
+    def _maybe_options(command: str, args: tuple[str, ...] | tuple[()], /) -> str:
+        return f'{command} {" ".join(args)}' if args else command
 
 
 ### NOTE: TOML utils
