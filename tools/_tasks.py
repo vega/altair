@@ -228,7 +228,10 @@ class Tasks:
         if expand := self._mapping.get(command):
             sub_extras = expand._extras or extras
             for cmd in expand:
-                yield from self._expand(cmd, sub_extras)
+                if cmd == command:
+                    yield command, sub_extras
+                else:
+                    yield from self._expand(cmd, sub_extras)
         else:
             yield command, extras
 
