@@ -3,18 +3,10 @@ lint = ["ruff check"]
 format = ["ruff format --diff --check"]
 ruff-fix = ["ruff check", "ruff format"]
 type-check = ["mypy altair tests"]
-pytest = [
-    "pytest -p no:randomly -n logical --doctest-modules tests altair tools",
-]
+pytest = ["pytest"]
 test = ["lint", "format", "type-check", "pytest"]
-test-fast = [
-    "ruff-fix",
-    "pytest -p no:randomly -n logical --doctest-modules tests altair tools -m \"not slow\"",
-]
-test-slow = [
-    "ruff-fix",
-    "pytest -p no:randomly -n logical --doctest-modules tests altair tools -m \"slow\"",
-]
+test-fast = ["ruff-fix", "pytest -m \"not slow\""]
+test-slow = ["ruff-fix", "pytest -m \"slow\""]
 generate-schema-wrapper = [
     "mypy tools",
     "python tools/generate_schema_wrapper.py",
@@ -37,6 +29,9 @@ serve = [
     "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000",
 ]
 publish = ["python tools/sync_website.py --no-commit"]
+export-tasks = [
+    "python -c \"from tools.tasks import app;app.to_path('tasks.toml')\"",
+]
 
 [tool.altair.tasks.build-html]
 commands = [

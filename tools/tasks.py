@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from tools._tasks import Tasks, mkdir_cmd, rm_rf_cmd
+from tools._tasks import Tasks, mkdir_cmd, py_cmd, rm_rf_cmd
 
 if TYPE_CHECKING:
     import sys
@@ -130,6 +130,12 @@ def doc_clean_build() -> Commands:
 def doc_publish_clean_build() -> Commands:
     yield "clean-build"
     yield "publish"
+
+
+@app.task("export-tasks")
+def export_tasks() -> Commands:
+    TASKS_TOML = "tasks.toml"
+    yield py_cmd(f"from tools.tasks import app;app.to_path({TASKS_TOML!r})")
 
 
 def main() -> None:
