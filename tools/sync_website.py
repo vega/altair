@@ -99,6 +99,10 @@ def generate_commit_message() -> str:
     return f"{COMMIT_MSG_PREFIX} {r.stdout.decode().strip()}"
 
 
+def current_branch() -> str:
+    return run_check(["git", "branch", "--show-current"]).stdout.decode().rstrip()
+
+
 def add_commit_push_github(msg: str, /) -> None:
     os.chdir(DOC_REPO_DIR)
     print("Pushing ...")
@@ -136,8 +140,13 @@ def main(*, no_commit: bool = False) -> None:
     clone_or_sync_repo()
     remove_tracked_files()
     sync_from_html_build()
+    branch = current_branch()
     if no_commit:
         print(f"Unused commit message:\n  {commit_message!r}")
+    elif branch != "main":
+        # FIXME: Unsure how to reproduce the RELEASING.md steps from this PR
+        # https://github.com/vega/altair/blob/main/RELEASING.md
+        print(f"Unable to push from {branch!r}.\n" "Must be on 'main'.")
     else:
         add_commit_push_github(commit_message)
 
