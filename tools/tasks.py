@@ -138,7 +138,7 @@ def doc_serve() -> Commands:
 
 @app.task("doc-publish")
 def doc_publish() -> Commands:
-    yield cmd.script(f"{TOOLS}/sync_website.py", "--no-commit")
+    yield cmd.script(f"{TOOLS}/sync_website.py")
 
 
 @app.task("doc-clean-build", extras=DOC)

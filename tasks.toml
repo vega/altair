@@ -28,7 +28,7 @@ doc-clean-all = [
 doc-serve = [
     "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000",
 ]
-doc-publish = ["python tools/sync_website.py --no-commit"]
+doc-publish = ["python tools/sync_website.py"]
 clean = [
     "python -c \"import shutil;shutil.rmtree('dist', ignore_errors=True)\"",
 ]
