@@ -4,7 +4,7 @@ import argparse
 import datetime as dt
 import os
 import shutil
-import subprocess
+import subprocess as sp
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -30,7 +30,7 @@ CMD_CLONE = f"git clone --filter=blob:none {DOC_REPO_URL}"
 
 CMD_PULL = "git pull"
 CMD_HEAD_HASH = "git rev-parse HEAD"
-CMD_ADD = "git add . --all"
+CMD_ADD = "git add . --all --force"
 CMD_COMMIT = "git commit -m"
 CMD_PUSH = "git push origin master"
 
@@ -38,20 +38,40 @@ COMMIT_MSG_PREFIX = "doc build for commit"
 UNTRACKED = ".git"
 
 
+class SubprocessFailedError(sp.CalledProcessError):
+    def __str__(self) -> str:
+        s = super().__str__()
+        out = self.stderr or self.output
+        err = out.decode() if isinstance(out, bytes) else out
+        return f"{s}\nOutput:\n{err}"
+
+    @classmethod
+    def from_completed_process(cls, p: sp.CompletedProcess, /) -> SubprocessFailedError:
+        return cls(p.returncode, p.args, p.stdout, p.stderr)
+
+
 def _path_repr(fp: Path, /) -> str:
     return f"{fp.relative_to(REPO_DIR).as_posix()!r}"
+
+
+def run_check(command: sp._CMD, /) -> sp.CompletedProcess[bytes]:
+    p = sp.run(command, check=False, capture_output=True)
+    if p.returncode:
+        raise SubprocessFailedError.from_completed_process(p)
+    else:
+        return p
 
 
 def clone_or_sync_repo() -> None:
     os.chdir(DOC_BUILD_DIR)
     if not DOC_REPO_DIR.exists():
         print(f"Cloning repo {WEBSITE!r}\n  -> {_path_repr(DOC_REPO_DIR)}")
-        subprocess.run(CMD_CLONE, check=True)
+        run_check(CMD_CLONE)
     else:
         print(f"Using existing cloned altair directory {_path_repr(DOC_REPO_DIR)}")
         os.chdir(DOC_REPO_DIR)
         print(f"Syncing {WEBSITE!r}\n  -> {_path_repr(DOC_REPO_DIR)} ...")
-        subprocess.run(CMD_PULL, check=True)
+        run_check(CMD_PULL)
 
 
 def remove_tracked_files() -> None:
@@ -75,16 +95,18 @@ def sync_from_html_build() -> None:
 def generate_commit_message() -> str:
     os.chdir(DOC_REPO_DIR)
     print("Generating commit message ...")
-    r = subprocess.run(CMD_HEAD_HASH, capture_output=True, check=True)
+    r = run_check(CMD_HEAD_HASH)
     return f"{COMMIT_MSG_PREFIX} {r.stdout.decode().strip()}"
 
 
 def add_commit_push_github(msg: str, /) -> None:
     os.chdir(DOC_REPO_DIR)
     print("Pushing ...")
-    subprocess.run(CMD_ADD, check=True)
-    subprocess.run(f"{CMD_COMMIT} {msg}", check=True)
-    subprocess.run(CMD_PUSH, check=True)
+    # NOTE: Ensures the message uses cross-platform escaping
+    cmd_commit = *CMD_COMMIT.split(" "), msg
+    commands = (CMD_ADD, cmd_commit, CMD_PUSH)
+    for command in commands:
+        run_check(command)
 
 
 def ensure_build_html() -> None:
@@ -92,6 +114,7 @@ def ensure_build_html() -> None:
         raise FileNotFoundError(DOC_HTML_DIR)
     if not DOC_BUILD_INFO.exists():
         raise FileNotFoundError(DOC_BUILD_INFO)
+    DOC_REPO_DIR.mkdir(parents=True, exist_ok=True)
     mtime = DOC_BUILD_INFO.stat().st_mtime
     modified = dt.datetime.fromtimestamp(mtime, dt.timezone.utc).isoformat(
         " ", "seconds"
