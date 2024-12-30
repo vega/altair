@@ -26,6 +26,9 @@ TOOLS: Literal["tools"] = "tools"
 
 app = Tasks(runner="uv")
 
+# -----------------------------------------------------------------------------
+# NOTE: ruff
+
 
 @app.task()
 def lint() -> Commands:
@@ -44,9 +47,17 @@ def ruff_fix() -> Commands:
     yield "ruff format"
 
 
+# -----------------------------------------------------------------------------
+# NOTE: mypy
+
+
 @app.task("type-check")
 def type_check() -> Commands:
     yield "mypy altair tests"
+
+
+# -----------------------------------------------------------------------------
+# NOTE: pytest
 
 
 @app.task()
@@ -71,6 +82,10 @@ def test_slow() -> Commands:
     yield 'pytest -m "slow"'
 
 
+# -----------------------------------------------------------------------------
+# NOTE: Generation
+
+
 @app.task("generate-schema-wrapper")
 def generate_schema_wrapper() -> Commands:
     yield f"mypy {TOOLS}"
@@ -84,30 +99,34 @@ def update_init_file() -> Commands:
     yield "ruff-fix"
 
 
-@app.task("clean")
+# -----------------------------------------------------------------------------
+# NOTE: Docs
+
+
+@app.task("doc-clean")
 def doc_clean() -> Commands:
     yield cmd.rm_rf(REPO_ROOT / DOC_BUILD)
 
 
-@app.task("clean-generated")
+@app.task("doc-clean-generated")
 def doc_clean_generated() -> Commands:
     yield cmd.rm_rf(REPO_ROOT / f"{DOC}/user_guide/generated")
     yield cmd.rm_rf(REPO_ROOT / f"{DOC}/gallery")
 
 
-@app.task("clean-all")
+@app.task("doc-clean-all")
 def doc_clean_all() -> Commands:
-    yield from ("clean", "clean-generated")
+    yield from ("doc-clean", "doc-clean-generated")
     yield cmd.rm_rf(REPO_ROOT / DOC_IMAGES)
 
 
-@app.task("build-html", extras=DOC)
+@app.task("doc-build-html", extras=DOC)
 def doc_build_html() -> Commands:
     yield cmd.mkdir(DOC_IMAGES)
     yield f"sphinx-build -b html -d {DOC_BUILD}/doctrees {DOC} {DOC_BUILD_HTML}"
 
 
-@app.task("serve")
+@app.task("doc-serve")
 def doc_serve() -> Commands:
     ADDRESS = "127.0.0.1"
     PORT = 8000
@@ -116,21 +135,29 @@ def doc_serve() -> Commands:
     )
 
 
-@app.task("publish")
+@app.task("doc-publish")
 def doc_publish() -> Commands:
     yield cmd.script(f"{TOOLS}/sync_website.py", "--no-commit")
 
 
-@app.task("clean-build", extras=DOC)
+@app.task("doc-clean-build", extras=DOC)
 def doc_clean_build() -> Commands:
-    yield "clean-all"
-    yield "build-html"
+    yield "doc-clean-all"
+    yield "doc-build-html"
 
 
-@app.task("publish-clean-build", extras=DOC)
+@app.task("doc-publish-clean-build", extras=DOC)
 def doc_publish_clean_build() -> Commands:
-    yield "clean-build"
-    yield "publish"
+    yield "doc-clean-build"
+    yield "doc-publish"
+
+
+# -----------------------------------------------------------------------------
+# TODO: Build
+
+
+# -----------------------------------------------------------------------------
+# NOTE: Meta
 
 
 @app.task("export-tasks")
