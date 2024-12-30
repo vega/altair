@@ -29,6 +29,11 @@ doc-serve = [
     "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000",
 ]
 doc-publish = ["python tools/sync_website.py --no-commit"]
+clean = [
+    "python -c \"import shutil;shutil.rmtree('dist', ignore_errors=True)\"",
+]
+build = ["clean", "uv build"]
+publish = ["build", "uv publish"]
 export-tasks = [
     "python -c \"from tools.tasks import app;app.to_path('tasks.toml')\"",
 ]

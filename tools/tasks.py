@@ -18,6 +18,7 @@ __all__ = ["app"]
 
 
 REPO_ROOT: Path = Path(__file__).parent.parent
+DIST: Literal["dist"] = "dist"
 DOC: Literal["doc"] = "doc"
 DOC_BUILD: LiteralString = f"{DOC}/_build"
 DOC_IMAGES: LiteralString = f"{DOC}/_images"
@@ -153,7 +154,62 @@ def doc_publish_clean_build() -> Commands:
 
 
 # -----------------------------------------------------------------------------
-# TODO: Build
+# NOTE: Build
+
+
+@app.task()
+def clean() -> Commands:
+    """Clean old builds & distributions."""
+    yield cmd.rm_rf(REPO_ROOT / DIST)
+
+
+@app.task()
+def build() -> Commands:
+    """
+    Create a source distribution and universal wheel.
+
+    HACK: Using `uv` explicitly here breaks the independent runner paradigm.
+
+    ### Other options seem undesirable
+    1. Using string interpolation (e.g. ``"{runner} build"``)
+        - Means we need to check **every string** for this case
+        - Would be more realistic with `PEP 750`_
+    2. Using some callback to represent the replacement
+        - Can't see this translating well to ``.toml``,
+        without needing to introduce special syntax
+
+    ### Additional Notes
+    - Only need to use ``uv`` by name for ``uv build``, ``uv publish``.
+    - Unlikely that ``hatch`` support is going to stay in by the time this merges.
+
+    .. _PEP 750:
+        https://peps.python.org/pep-0750/
+    """
+    yield "clean"
+    yield "uv build"
+
+
+@app.task()
+def publish() -> Commands:
+    """
+    `Publish`_ to PyPI, using `UV_PUBLISH_TOKEN`_.
+
+    Notes
+    -----
+    Currently unable to test:
+
+        uv publish
+        "warning: `uv publish` is experimental and may change without warning"
+        "Publishing 2 files https://upload.pypi.org/legacy/"
+        "Enter username ('__token__' if using a token):"
+
+    .. _Publish:
+        https://docs.astral.sh/uv/guides/publish/#publishing-your-package
+    .. _UV_PUBLISH_TOKEN:
+        https://docs.astral.sh/uv/configuration/environment/#uv_publish_token
+    """
+    yield "build"
+    yield "uv publish"
 
 
 # -----------------------------------------------------------------------------
