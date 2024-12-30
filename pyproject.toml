@@ -476,4 +476,5 @@ ignore=[
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
     "../../../**/Lib",                          # stdlib
+    "../../../**/typeshed*"                     # typeshed-fallback
 ]
