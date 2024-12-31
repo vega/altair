@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar
 
 import tomlkit
+import tomlkit.exceptions
 from tomlkit import toml_file
 from tomlkit.items import Table as _Table
 
@@ -34,8 +35,17 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
+    from _typeshed import SupportsKeysAndGetItem
     from tomlkit import TOMLDocument as _TOMLDocument
     from tomlkit.container import Container as _Container
+    from tomlkit.items import Item as _Item
+
+    _KT = TypeVar("_KT")  # Key type.
+    _VT = TypeVar("_VT")  # Value type.
+
+    _MappingUpdates: TypeAlias = (
+        "SupportsKeysAndGetItem[_KT, _VT] | Iterable[tuple[_KT, _VT]]"
+    )
 
 
 __all__ = ["Commands", "Tasks", "cmd"]
@@ -49,6 +59,15 @@ IntoRunner: TypeAlias = Literal["hatch", "uv"]
 _TaskValueShort: TypeAlias = Sequence[str]
 _TaskValueLong: TypeAlias = Mapping[Literal["commands", "extras"], Sequence[str]]
 _TaskValue: TypeAlias = "_TaskValueShort | _TaskValueLong"  # noqa: TC008
+
+MergeStrategy: TypeAlias = Literal["replace", "update"]
+"""
+How to handle adding items to an existing table.
+
+* **"replace"**: Ignore *existing* items entirely. Only *incoming* items are preserved.
+* **"update"**: Overwrite *existing* items that match *incoming*. New *incoming* items are appended.
+"""
+
 
 REPO_ROOT: Path = Path(__file__).parent.parent
 
@@ -172,7 +191,7 @@ class Tasks:
     @classmethod
     def from_toml(cls, doc: _TOMLDocument, /, *, runner: IntoRunner) -> Tasks:
         obj = cls(runner=runner)
-        for name, value in toml_deep_get(doc, *cls._TABLE_PATH).items():
+        for name, value in toml_deep_get(doc, *cls._TABLE_PATH).unwrap().items():
             obj._add(_Task.from_item(name, value))
         return obj
 
@@ -181,14 +200,19 @@ class Tasks:
         """Import tasks definitions from a ``.toml`` file."""
         return cls.from_toml(toml_file.TOMLFile(source).read(), runner=runner)
 
-    def to_toml(self) -> _TOMLDocument:
+    def to_toml(self, doc: _TOMLDocument | None = None, /) -> _TOMLDocument:
         return toml_deep_set(
-            (task.to_item() for task in self._tasks), *self._TABLE_PATH
+            (task.to_item() for task in self._tasks),
+            *self._TABLE_PATH,
+            doc=doc,
+            how="replace",
         )
 
     def to_path(self, file: str | Path, /) -> None:
         """Export tasks definitions to a ``.toml`` file."""
-        toml_file.TOMLFile(file).write(self.to_toml())
+        tm_file = toml_file.TOMLFile(file)
+        doc_in = None if not _is_updating(file) else tm_file.read()
+        tm_file.write(self.to_toml(doc_in))
 
     def parser(self, prog: str, /) -> argparse.ArgumentParser:
         """Returns a command line argument parser."""
@@ -531,37 +555,85 @@ class cmd(str):  # noqa: FURB189
 ### NOTE: TOML utils
 
 
-def _deep_get(container: _Container, key: str, /) -> _Container:
-    item = container.item(key)
-    if isinstance(item, _Table):
-        return item.value
-    else:
-        raise TypeError(type(item))
+def toml_deep_get(
+    doc: _TOMLDocument, *keys: str, populate_missing: bool = False
+) -> _Container:
+    """
+    Get a nested table from ``doc``.
 
+    Parameters
+    ----------
+    doc
+        Container instance.
+    *keys
+        Path to the target table.
+        Each *key* represents a part of a dotted table key.
+    populate_missing
+        Create intermediate table(s) when any of ``keys`` are not present.
 
-def toml_deep_get(doc: _TOMLDocument, *keys: str) -> dict[str, Any]:
+        .. warning::
+            Mutates ``doc`` in-place.
+    """
+    get = _deep_get_default if populate_missing else _deep_get
     it = iter(keys)
-    value = _deep_get(doc, next(it))
+    value = get(doc, next(it))
     for key in it:
-        value = _deep_get(value, key)
-    return value.unwrap()
+        value = get(value, key)
+    return value
 
 
 def toml_deep_set(
-    m: Iterable[tuple[Any, Any]], *keys: str, doc: _TOMLDocument | None = None
+    m: _MappingUpdates[str, Any],
+    *keys: str,
+    doc: _TOMLDocument | None = None,
+    how: MergeStrategy = "update",
 ) -> _TOMLDocument:
-    it = reversed(keys)
-    name = next(it)
-    leaf = tomlkit.table()
+    """
+    Create a table and insert it by following a nested path.
+
+    Parameters
+    ----------
+    m
+        Incoming items to insert into a ``TOMLDocument``.
+    *keys
+        Path to the target table.
+        Each *key* represents a part of a dotted table key.
+    doc
+        Container instance.
+        By default, an empty document is created.
+    how
+        How to handle adding items to an existing table.
+    """
+    if doc is None:
+        doc = tomlkit.document()
+    leaf = toml_deep_get(doc, *keys, populate_missing=True)
+    if how == "replace":
+        leaf.clear()
     leaf.update(m)
-    for key in it:
-        stem = tomlkit.table()
-        stem.append(name, leaf)
-        name = key
-        leaf = stem
-    if doc is not None:
-        msg = "Need to implement adding to existing toml"
-        raise NotImplementedError(msg)
-    doc = tomlkit.document()
-    doc.append(name, leaf)
     return doc
+
+
+def _deep_get(container: _Container, key: str, /) -> _Container:
+    item = container.item(key)
+    return _unwrap_table(item)
+
+
+def _deep_get_default(container: _Container, key: str, /) -> _Container:
+    try:
+        item = container.item(key)
+    except tomlkit.exceptions.NonExistentKey:
+        container.add(key, tomlkit.table())
+        item = container.item(key)
+    return _unwrap_table(item)
+
+
+def _unwrap_table(item: _Item, /) -> _Container:
+    if isinstance(item, _Table):
+        return item.value
+    msg = f"Expected a table, but got: {type(item).__name__!r}\n{item!r}"
+    raise TypeError(msg)
+
+
+def _is_updating(file: str | Path, /) -> bool:
+    fp = Path(file)
+    return bool(fp.exists() and fp.stat().st_size)
