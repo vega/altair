@@ -73,10 +73,13 @@ class _HatchRunner(_Runner):
     def with_extras(self, command: str, extras: Extras, /) -> str:
         if len(extras) == 0:
             return command
-        elif len(extras) > 1:
+        elif len(extras) == 1:
             return f"{extras[0]}:{command}"
         else:
-            msg = "Only supporting single extra environment for `hatch`"
+            msg = (
+                f"Only supporting single extra environment for `hatch`.\n"
+                f"Got: {extras!r}"
+            )
             raise NotImplementedError(msg)
 
 
