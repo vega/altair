@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal, TypeVar
 
 import tomlkit
+from tomlkit import toml_file
 from tomlkit.items import Table as _Table
 
 if sys.version_info >= (3, 12):
@@ -177,8 +178,8 @@ class Tasks:
 
     @classmethod
     def from_path(cls, source: str | Path, /, *, runner: IntoRunner) -> Tasks:
-        doc = tomlkit.parse(Path(source).read_text("utf-8"))
-        return cls.from_toml(doc, runner=runner)
+        """Import tasks definitions from a ``.toml`` file."""
+        return cls.from_toml(toml_file.TOMLFile(source).read(), runner=runner)
 
     def to_toml(self) -> _TOMLDocument:
         return toml_deep_set(
@@ -187,7 +188,7 @@ class Tasks:
 
     def to_path(self, file: str | Path, /) -> None:
         """Export tasks definitions to a ``.toml`` file."""
-        Path(file).write_text(self.to_toml().as_string(), encoding="utf-8")
+        toml_file.TOMLFile(file).write(self.to_toml())
 
     def parser(self, prog: str, /) -> argparse.ArgumentParser:
         """Returns a command line argument parser."""
