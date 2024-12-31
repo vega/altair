@@ -99,102 +99,20 @@ doc = [
     "scipy",
 ]
 
-[tool.hatch.version]
-path = "altair/__init__.py"
+[tool.hatch]
+build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
+metadata = { allow-direct-references = true }
+version  = { path = "altair/__init__.py" }
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build]
-include = ["/altair"]
-artifacts = ["altair/jupyter/js/index.js"]
-
-[tool.hatch.envs.default]
-features = ["all", "dev"]
+[tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
-installer = "uv"
-
-[tool.hatch.envs.default.scripts]
-generate-schema-wrapper = [
-    "mypy tools",
-    "python tools/generate_schema_wrapper.py",
-    "test"
-]
-test = [
-    "ruff check .",
-    "ruff format --diff --check .",
-    "mypy altair tests",
-    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair tools",
-]
-test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
-test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
-update-init-file = [
-    "python tools/update_init_file.py",
-    "ruff check .",
-    "ruff format .",
-]
-test-fast = [
-    "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"not slow\" {args}"
-]
-test-slow = [
-    "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
-]
+default = { features = ["all", "dev"], installer = "uv" }
+doc     = { features = ["all", "dev", "doc"] }
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
-# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
-default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
-parallel = true
-[[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-[tool.hatch.envs.hatch-test.scripts]
-run = [
-    "ruff check .", 
-    "ruff format --diff --check .",
-    "mypy altair tests",
-    "pytest{env:HATCH_TEST_ARGS:} {args}"
-]
-run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
-cov-combine = "coverage combine"
-cov-report = "coverage report"
-
-[tool.hatch.envs.doc]
-features = ["all", "dev", "doc"]
-
-[tool.hatch.envs.doc.scripts]
-clean = "rm -rf doc/_build"
-clean-generated = ["rm -rf doc/user_guide/generated", "rm -rf doc/gallery"]
-clean-all = ["clean", "clean-generated", "rm -rf doc/_images"]
-clean-win = "if exist doc\\_build rd /s /q doc\\_build"
-clean-generated-win = [
-    "if exist doc\\user_guide\\generated rd /s /q doc\\user_guide\\generated",
-    "if exist doc\\gallery rd /s /q doc\\gallery",
-]
-clean-all-win = [
-    "clean-win",
-    "clean-generated-win",
-    "if exist doc\\_images rd /s /q doc\\_images",
-]
-build-html = [
-    "mkdir doc/_images",
-    "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html",
-]
-build-html-win = [
-    "if not exist doc\\_images md doc\\_images",
-    "sphinx-build -b html -d doc\\_build\\doctrees doc doc\\_build\\html",
-]
-doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
-coverage = "sphinx-build -b coverage -d doc/_build/doctrees doc doc/_build/coverage"
-serve = "(cd doc/_build/html && python -m http.server)"
-publish = "python doc/sync_website.py --no-commit"
-publish-clean-build = [
-    "clean-all",
-    "build-html",
-    "publish"
-]
+matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
 target-version = "py39"
