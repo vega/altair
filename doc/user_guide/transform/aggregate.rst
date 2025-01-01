@@ -190,7 +190,7 @@ stdevp     The population standard deviation of field values.                   
 sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
 product    The product of field values.                                                 N/A
 valid      The count of field values that are not null or undefined.                    N/A
-values     ??                                                                           N/A
+values     A list of data objects in the group.                                         N/A
 variance   The sample variance of field values.                                         N/A
 variancep  The population variance of field values.                                     N/A
 =========  ===========================================================================  =====================================
