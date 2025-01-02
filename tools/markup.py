@@ -68,8 +68,11 @@ class RSTParse(_Markdown):
         super().__init__(renderer, block, inline, plugins)
 
     def __call__(self, s: str) -> str:
-        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
-        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
+        r = super().__call__(s)
+        if isinstance(r, str):
+            return unescape(r).replace(r"\ ,", ",").replace(r"\ ", " ")
+        msg = f"Expected `str` but got {type(r).__name__!r}"
+        raise TypeError(msg)
 
     def render_tokens(self, tokens: Iterable[Token], /) -> str:
         """
