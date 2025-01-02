@@ -14,8 +14,8 @@ from tools.codemod import extract_func_def, extract_func_def_embed
 
 if TYPE_CHECKING:
     import sys
-    from collections.abc import Iterable, Iterator, Mapping, Sequence
-    from typing import Any, Callable, ClassVar, TypeVar, Union
+    from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
+    from typing import Any, ClassVar, TypeVar, Union
 
     from docutils.parsers.rst.states import RSTState, RSTStateMachine
     from docutils.statemachine import StringList

@@ -4,7 +4,7 @@ import datetime as dt
 import operator
 import sys
 from inspect import classify_class_attrs, getmembers, signature
-from typing import TYPE_CHECKING, Any, Callable, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 import pytest
 from jsonschema.exceptions import ValidationError
@@ -14,7 +14,7 @@ from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Callable, Iterable, Iterator
     from inspect import _IntrospectableCallable
 
 T = TypeVar("T")

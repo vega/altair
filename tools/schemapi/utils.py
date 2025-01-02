@@ -613,6 +613,8 @@ class SchemaInfo:
                 tps.add("Parameter")
             if self.is_datetime():
                 tps.add("Temporal")
+            if self.is_top_level_spec_data():
+                tps.add("ChartDataType")
         elif self.is_value():
             value = self.properties["value"]
             t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
@@ -968,6 +970,9 @@ class SchemaInfo:
 
     def is_datetime(self) -> bool:
         return self.refname == "DateTime"
+
+    def is_top_level_spec_data(self) -> bool:
+        return self.refname == "Data"
 
 
 class Grouped(Generic[T]):
