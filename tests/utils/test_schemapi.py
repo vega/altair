@@ -12,7 +12,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 import jsonschema
 import jsonschema.exceptions
@@ -36,7 +36,7 @@ from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Sequence
+    from collections.abc import Callable, Iterable, Sequence
 
     from narwhals.stable.v1.typing import IntoDataFrame
 

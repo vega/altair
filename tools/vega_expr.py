@@ -16,7 +16,7 @@ from inspect import getmembers
 from itertools import chain
 from textwrap import TextWrapper as _TextWrapper
 from textwrap import indent
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, overload
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParse, Token, read_ast_tokens
@@ -25,7 +25,7 @@ from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 
 if TYPE_CHECKING:
     import sys
-    from collections.abc import Iterable, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from re import Match, Pattern
 

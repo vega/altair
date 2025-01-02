@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Mapping, Set
+from collections.abc import Callable, Mapping, Set
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, get_args
+from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, get_args
 
 import pytest
 
