@@ -4,19 +4,10 @@ import hashlib
 import json
 import random
 import sys
-from collections.abc import MutableMapping, Sequence
+from collections.abc import Callable, MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Literal,
-    TypedDict,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, Union, overload
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.dependencies import is_pandas_dataframe

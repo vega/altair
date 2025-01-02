@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import collections.abc as cabc
 import typing as t
 import typing_extensions as te
+from collections.abc import Sequence
 from importlib import import_module as _import_module
 from importlib.util import find_spec as _find_spec
 from inspect import getattr_static, ismodule
@@ -27,10 +29,10 @@ _TYPING_CONSTRUCTS: set[t.Any] = {
     t.Any,
     t.Literal,
     t.Union,
-    t.Iterable,
+    cabc.Iterable,
     t.Protocol,
     te.Protocol,
-    t.Sequence,
+    Sequence,
     t.IO,
     annotations,
     te.Required,

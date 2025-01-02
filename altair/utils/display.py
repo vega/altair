@@ -4,7 +4,8 @@ import json
 import pkgutil
 import textwrap
 import uuid
-from typing import TYPE_CHECKING, Any, Callable, Union
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, Union
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
 from .mimebundle import spec_to_mimebundle

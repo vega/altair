@@ -720,7 +720,7 @@ def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
 
 def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
     for el in objs:
-        if isinstance(el, (SchemaBase, t.Mapping)):
+        if isinstance(el, (SchemaBase, Mapping)):
             item = el.to_dict(validate=False) if isinstance(el, SchemaBase) else el
             yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
         else:
@@ -854,7 +854,7 @@ def _parse_otherwise(
         conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
-        if not isinstance(statement, t.Mapping):
+        if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
         selection.update(**statement, **kwds)  # type: ignore[call-arg]
