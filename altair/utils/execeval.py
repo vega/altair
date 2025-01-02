@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import ast
 import sys
-from typing import TYPE_CHECKING, Any, Callable, Literal, overload
+from typing import TYPE_CHECKING, Any, Literal, overload
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from os import PathLike
 
     from _typeshed import ReadableBuffer

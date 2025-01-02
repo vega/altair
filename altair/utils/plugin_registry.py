@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Callable
 from functools import partial
 from importlib.metadata import entry_points
-from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
 from altair.utils.deprecation import deprecated_warn
 

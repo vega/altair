@@ -82,7 +82,8 @@ from altair.vegalite.v5.theme import themes as _themes
 
 if TYPE_CHECKING:
     import sys
-    from typing import Any, Callable, Literal
+    from collections.abc import Callable
+    from typing import Any, Literal
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
