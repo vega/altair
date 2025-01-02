@@ -34,6 +34,21 @@ _RE_SPECIAL: Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 _RE_LIQUID_INCLUDE: Pattern[str] = re.compile(r"( \{% include.+%\})")
 
 
+_PRE_PARSE_REPLACEMENTS: tuple[str, str] = (
+    "https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)",
+    "https://en.wikipedia.org/wiki/Continuous_uniform_distribution",
+)
+"""
+Replacement to apply *prior* to parsing as markdown.
+
+**HACK**: Closing parenthesis messes up markdown parsing, replace with resolved redirect wikipedia URL.
+
+TODO
+----
+Remove if this gets fixed upstream, via https://github.com/vega/vega/pull/3996
+"""
+
+
 class RSTRenderer(_RSTRenderer):
     def __init__(self) -> None:
         super().__init__()
@@ -132,14 +147,12 @@ class InlineParser(_InlineParser):
         Removes `liquid`_ templating markup.
 
         .. _liquid:
-        https://shopify.github.io/liquid/
+            https://shopify.github.io/liquid/
         """
         state.append_token({"type": "text", "raw": _RE_LIQUID_INCLUDE.sub(r"", text)})
 
 
-def read_ast_tokens(
-    source: Url | Path, /, replacements: list[tuple[str, str]] | None = None
-) -> list[Token]:
+def read_ast_tokens(source: Url | Path, /) -> list[Token]:
     """
     Read from ``source``, drop ``BlockState``.
 
@@ -147,17 +160,13 @@ def read_ast_tokens(
     """
     markdown = _Markdown(renderer=None, inline=InlineParser())
     if isinstance(source, Path):
-        token_text = source.read_text()
+        text = source.read_text()
     else:
         with request.urlopen(source) as response:
-            token_text = response.read().decode("utf-8")
+            text = response.read().decode("utf-8")
 
-    # Apply replacements
-    if replacements:
-        for replacement in replacements:
-            token_text = token_text.replace(replacement[0], replacement[1])
-
-    tokens = markdown.parse(token_text, markdown.block.state_cls())
+    text = text.replace(*_PRE_PARSE_REPLACEMENTS)
+    tokens: Any = markdown.parse(text)
     return tokens[0]
 
 
