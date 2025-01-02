@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 
     from altair import Parameter
     from altair.typing import Optional
+    from altair.vegalite.v5.api import ChartDataType
 
     from ._typing import *  # noqa: F403
 
@@ -7887,7 +7888,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         name: Optional[str] = Undefined,
@@ -11062,7 +11063,7 @@ class LookupData(VegaLiteSchema):
 
     def __init__(
         self,
-        data: Optional[SchemaBase | Map] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map] = Undefined,
         key: Optional[str | SchemaBase] = Undefined,
         fields: Optional[Sequence[str | SchemaBase]] = Undefined,
         **kwds,
@@ -21055,7 +21056,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21182,7 +21183,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21340,7 +21341,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -21429,7 +21430,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         hconcat: Optional[Sequence[SchemaBase | Map]] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21537,7 +21538,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
     def __init__(
         self,
         layer: Optional[Sequence[SchemaBase | Map]] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -21677,7 +21678,7 @@ class LayerRepeatSpec(RepeatSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -21807,7 +21808,7 @@ class NonLayerRepeatSpec(RepeatSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,
@@ -24400,7 +24401,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         center: Optional[bool | SchemaBase | Map] = Undefined,
         columns: Optional[float] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -24565,7 +24566,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         facet: Optional[SchemaBase | Map] = Undefined,
         spec: Optional[SchemaBase | Map] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
@@ -24704,7 +24705,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -24860,7 +24861,7 @@ class TopLevelLayerSpec(TopLevelSpec):
             str | Parameter | SchemaBase | Map | ColorName_T
         ] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
@@ -25067,7 +25068,7 @@ class TopLevelUnitSpec(TopLevelSpec):
 
     def __init__(
         self,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
         align: Optional[SchemaBase | Map | LayoutAlign_T] = Undefined,
         autosize: Optional[SchemaBase | Map | AutosizeType_T] = Undefined,
@@ -25212,7 +25213,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
         config: Optional[SchemaBase | Map] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         datasets: Optional[SchemaBase | Map] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
@@ -26229,7 +26230,7 @@ class UnitSpec(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         name: Optional[str] = Undefined,
@@ -26333,7 +26334,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
     def __init__(
         self,
         mark: Optional[SchemaBase | Map | Mark_T | CompositeMark_T] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[SchemaBase | Map] = Undefined,
         height: Optional[float | SchemaBase | Literal["container"] | Map] = Undefined,
@@ -26460,7 +26461,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         vconcat: Optional[Sequence[SchemaBase | Map]] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
-        data: Optional[SchemaBase | Map | None] = Undefined,
+        data: Optional[SchemaBase | ChartDataType | Map | None] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
         resolve: Optional[SchemaBase | Map] = Undefined,

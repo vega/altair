@@ -3939,11 +3939,8 @@ class Chart(
         height: Optional[int | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
-        # Data type hints won't match with what TopLevelUnitSpec expects
-        # as there is some data processing happening when converting to
-        # a VL spec
         super().__init__(
-            data=data,  # type: ignore[arg-type]
+            data=data,
             encoding=encoding,
             mark=mark,
             width=width,
@@ -4328,7 +4325,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     ) -> None:
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
-        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)
         self.concat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4432,7 +4429,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     ) -> None:
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
-        super().__init__(data=data, hconcat=list(hconcat), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, hconcat=list(hconcat), **kwargs)
         self.hconcat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4536,7 +4533,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     ) -> None:
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
-        super().__init__(data=data, vconcat=list(vconcat), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, vconcat=list(vconcat), **kwargs)
         self.vconcat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4644,7 +4641,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
             _check_if_can_be_layered(spec)
-        super().__init__(data=data, layer=list(layer), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, layer=list(layer), **kwargs)
         self.layer: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4775,7 +4772,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
         self.data: Optional[ChartDataType]
         self.spec: ChartType
         self.params: Optional[Sequence[_Parameter]]

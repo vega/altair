@@ -269,6 +269,7 @@ TEMPORAL: Literal["Temporal"] = "Temporal"
 BIN: Literal["Bin"] = "Bin"
 IMPUTE: Literal["Impute"] = "Impute"
 INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+CHART_DATA_TYPE: Literal["ChartDataType"] = "ChartDataType"
 
 # NOTE: `core.py` typing imports
 DATETIME: Literal["DateTime"] = "DateTime"
@@ -761,6 +762,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
+            f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
