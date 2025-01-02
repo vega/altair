@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from altair.utils.plugin_registry import PluginRegistry
 
