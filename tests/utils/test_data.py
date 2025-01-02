@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Callable, SupportsIndex, TypeVar
+from typing import TYPE_CHECKING, Any, SupportsIndex, TypeVar
 
 import narwhals.stable.v1 as nw
 import pandas as pd
@@ -16,6 +16,9 @@ from altair.utils.data import (
     to_json,
     to_values,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 T = TypeVar("T")
 

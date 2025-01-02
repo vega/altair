@@ -5,11 +5,11 @@ from __future__ import annotations
 import re
 import sys
 import textwrap
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain, starmap
 from operator import attrgetter
-from typing import Any, Callable, ClassVar, Final, Literal, TypeVar, Union
+from typing import Any, ClassVar, Final, Literal, TypeVar, Union
 
 from .utils import (
     Grouped,

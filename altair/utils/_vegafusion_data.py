@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Final, TypedDict, Union, overload
 from weakref import WeakValueDictionary
 
 from narwhals.stable.v1.dependencies import is_into_dataframe
@@ -20,7 +20,7 @@ from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
     import sys
-    from collections.abc import MutableMapping
+    from collections.abc import Callable, MutableMapping
 
     from narwhals.stable.v1.typing import IntoDataFrame
 
