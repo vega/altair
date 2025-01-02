@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import sys
 from collections import deque
+from itertools import chain
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal
 
@@ -32,6 +33,7 @@ if sys.version_info >= (3, 11):
 else:
     # NOTE: See https://github.com/hukkin/tomli?tab=readme-ov-file#building-a-tomlitomllib-compatibility-layer
     import tomli as tomllib  # type: ignore
+from packaging.requirements import Requirement
 from packaging.version import parse as parse_version
 
 import vl_convert as vlc
@@ -61,7 +63,9 @@ __all__ = ["VERSIONS"]
 _REPO_ROOT: Path = Path(__file__).parent.parent
 _JUPYTER_INDEX = "altair/jupyter/js/index.js"
 _PYPROJECT: Literal["pyproject.toml"] = "pyproject.toml"
+_LOWER_BOUNDS = frozenset((">=", "==", "~=", "==="))
 
+VegaProjectPy: TypeAlias = Literal["vegafusion", "vl-convert-python"]
 VegaProject: TypeAlias = Literal[
     "vega-datasets", "vega-embed", "vega-lite", "vegafusion", "vl-convert-python"
 ]
@@ -90,6 +94,13 @@ class _Versions:
 
         [tool.altair.vega] -> "tool", "altair", "vega"
     """
+    _PY_DEPS_PATH: ClassVar[Sequence[LiteralString]] = (
+        "project",
+        "optional-dependencies",
+    )
+    _PY_DEPS: ClassVar[frozenset[VegaProjectPy]] = frozenset(
+        ("vl-convert-python", "vegafusion")
+    )
 
     _CONST_NAME: ClassVar[Literal["VERSIONS"]] = "VERSIONS"
     """Variable name for the exported literal."""
@@ -97,7 +108,11 @@ class _Versions:
     _mapping: Mapping[VegaProject, str]
 
     def __init__(self) -> None:
-        self._mapping = _keypath(_read_pyproject_toml(), self._TABLE_PATH)
+        pyproject = _read_pyproject_toml()
+        py_deps = _keypath(pyproject, self._PY_DEPS_PATH)
+        js_deps = _keypath(pyproject, self._TABLE_PATH)
+        all_deps = chain(js_deps.items(), self._iter_py_deps_versions(py_deps))
+        self._mapping = dict(sorted(all_deps))
 
     def __getitem__(self, key: VegaProject) -> str:
         return self._mapping[key]
@@ -210,6 +225,37 @@ class _Versions:
         lines.appendleft(stmt)
         with fp.open("w", encoding="utf-8", newline="\n") as f:
             f.writelines(lines)
+
+    def _iter_py_deps_versions(
+        self, dep_groups: dict[str, Sequence[str]], /
+    ) -> Iterator[tuple[VegaProjectPy, str]]:
+        """
+        Extract the name and lower version bound for all Vega python packages.
+
+        Parameters
+        ----------
+        dep_groups
+            Mapping of dependency/extra groups to requirement strings.
+
+            .. note::
+                It is expected that this is **either** `project.optional-dependencies`_ or `dependency-groups`_.
+
+        .. _project.optional-dependencies:
+            https://packaging.python.org/en/latest/specifications/pyproject-toml/#dependencies-optional-dependencies
+        .. _dependency-groups:
+            https://peps.python.org/pep-0735/
+        """
+        for deps in dep_groups.values():
+            for req_string in deps:
+                req = Requirement(req_string)
+                if req.name in self._PY_DEPS:
+                    it = (
+                        parse_version(sp.version)
+                        for sp in req.specifier
+                        if sp.operator in _LOWER_BOUNDS
+                    )
+                    version = str(min(it))
+                    yield req.name, version
 
 
 def __getattr__(name: str) -> _Versions:

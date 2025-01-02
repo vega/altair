@@ -1656,7 +1656,7 @@ VERSIONS: Mapping[
     "vega-datasets": "v2.11.0",
     "vega-embed": "6",
     "vega-lite": "v5.20.1",
-    "vegafusion": "1.5.0",
+    "vegafusion": "1.6.6",
     "vl-convert-python": "1.7.0",
 }
 """
