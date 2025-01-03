@@ -39,7 +39,9 @@ Projects which publish a package to PyPI are listed with a version bound in one 
 - [`dependency-groups`](https://peps.python.org/pep-0735/): Local dependencies for development.
 
 > [!NOTE]
-> All are currently declared in sub-tables of `project.optional-dependencies`
+> All are currently declared in sub-tables of `project.optional-dependencies`.
+
+The lower version bounds defined here are reused for [altair/utils/_importers.py](altair/utils/_importers.py).
 
 #### `vl-convert`
 
@@ -53,15 +55,13 @@ included in a released yet).
 
 Additional version constraints, including for [`Vega-Lite`](https://github.com/vega/vega-lite) itself are declared in `[tool.altair.vega]`.
 
-Whereas the [previous dependencies](#python-packages) are used at *install-time*; these are embedded into `altair` for use at *runtime* or when [generating the python code](#auto-generating-the-python-code):
+Whereas the [previous dependencies](#python-packages) are used primarily at *install-time*; this group is embedded into `altair` for use at *runtime* or when [generating the python code](#auto-generating-the-python-code):
 
 ```toml
 [tool.altair.vega]
 vega-datasets     = "..." # https://github.com/vega/vega-datasets
 vega-embed        = "..." # https://github.com/vega/vega-embed
 vega-lite         = "..." # https://github.com/vega/vega-lite
-vegafusion        = "..." # https://github.com/vega/vegafusion
-vl-convert-python = "..." # https://github.com/vega/vl-convert
 ```
 
 Some examples of where these propagate to:
