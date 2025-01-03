@@ -124,7 +124,8 @@ class _TypeAliasTracer:
             "from __future__ import annotations\n",
             "import sys",
             "from datetime import date, datetime",
-            "from typing import Annotated, Any, Generic, Literal, Mapping, TypeVar, Sequence, Union, get_args",
+            "from collections.abc import Sequence, Mapping",
+            "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
