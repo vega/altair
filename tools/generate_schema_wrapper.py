@@ -1383,6 +1383,8 @@ def generate_encoding_artifacts(
 
 
 def main() -> None:
+    from tools import datasets
+
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
     )
@@ -1397,6 +1399,7 @@ def main() -> None:
         output=EXPR_FILE,
         header=HEADER_COMMENT,
     )
+    datasets.app.refresh(include_typing=True)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
