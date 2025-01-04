@@ -52,12 +52,10 @@ def np_ellipse(
         msg = "Method should be either 'deviation' or 'error'."
         raise ValueError(msg)
     angles = (np.arange(0, segments + 1)) * 2 * np.pi / segments
-    circle = np.vstack((np.cos(angles), np.sin(angles))).T
+    circle = np.column_stack((np.cos(angles), np.sin(angles)))
     center = np.mean(arr, axis=0)
-    cov_mat = np.cov(arr.T)
-    # TODO: Figure out why so many transpositions
-    ellipse = center + (radius * np.dot(circle, np.linalg.cholesky(cov_mat).T).T).T
-    return ellipse
+    cov_mat = np.cov(arr, rowvar=False)
+    return center + radius * (circle @ np.linalg.cholesky(cov_mat).T)
 
 
 def pd_ellipse(
