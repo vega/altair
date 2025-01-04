@@ -63,7 +63,7 @@ def pd_ellipse(
     categories = df[col_group].unique()
     for category in categories:
         sliced = df.loc[df[col_group] == category, cols]
-        ell_df = pd.DataFrame(np_ellipse(sliced.to_numpy()), columns=cols)
+        ell_df = pd.DataFrame(np_ellipse(sliced.to_numpy()), columns=cols) # type: ignore
         ell_df[col_group] = category
         groups.append(ell_df)
     return pd.concat(groups).reset_index()
