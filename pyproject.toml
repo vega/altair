@@ -452,8 +452,10 @@ module = [
     "ipykernel.*",
     "ibis.*",
     "vegafusion.*",
+    "scipy.*"
 ]
 ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
 
 [tool.pyright]
 enableExperimentalFeatures=true
