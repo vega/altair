@@ -58,7 +58,7 @@ Example script with invalid Python syntax
 """
 
 
-def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
+def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     """
     Parse source file into AST node.
 
@@ -88,7 +88,7 @@ def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
+def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:  # noqa: C901
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -115,6 +115,7 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
     This function adapted from the sphinx-gallery project; license: BSD-3
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
+    FUTURE_STATEMENT = "from __future__ import annotations"
     node, content = _parse_source_file(filename)
 
     # Find the category comment
@@ -158,9 +159,15 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
         if (
+            isinstance(node.body[0], ast.ImportFrom)
+            and node.body[0].module == "__future__"
+        ):
+            node.body.pop(0)
+            content = content.replace(FUTURE_STATEMENT, "").lstrip("\n")
+        if (
             node.body
             and isinstance(node.body[0], ast.Expr)
-            and isinstance(node.body[0].value, (ast.Str, ast.Constant))
+            and isinstance(node.body[0].value, ast.Constant)
         ):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s  # pyright: ignore[reportAttributeAccessIssue]
