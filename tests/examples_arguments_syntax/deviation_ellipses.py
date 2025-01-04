@@ -10,7 +10,7 @@ from typing import Literal
 
 import numpy as np
 import pandas as pd
-from scipy.stats import f as ssf
+from scipy.stats import f as F
 
 import altair as alt
 from vega_datasets import data
@@ -20,24 +20,30 @@ def np_ellipse(
     arr: np.ndarray[tuple[int, int], np.dtype[np.float64]],
     conf_level: float = 0.95,
     method: Literal["deviation", "error"] = "deviation",
-    segments: int = 50
+    segments: int = 50,
 ):
     """
-    Arguments:
-        arr:  2D numpy array with 2 columns
-        level: confidence level
-        method: either 'deviation' (swarning data) or 'error (swarning the mean)'
-        segments: number of points describing the ellipse.
-    """  # noqa: D205
+    Calculate confidence interval ellipse.
+
+    Parameters
+    ----------
+    arr
+        numpy array with 2 columns
+    conf_level
+        lower tail probability
+    method
+        either 'deviation' (swarning data) or 'error (swarning the mean)'
+    segments
+        number of points describing the ellipse.
+    """
     n_elements = len(arr)
-    # TODO: 
-    # - dfn?
-    # - dfd?
-    # - ssf.ppf?
-    #   - Percent point function (inverse of `cdf`) at q of the given RV.
+    # Degrees of freedom of the chi-squared distribution in the **numerator**
     dfn = 2
+    # Degrees of freedom of the chi-squared distribution in the **denominator**
     dfd = n_elements - 1
-    deviation = np.sqrt(2 * ssf.ppf(conf_level, dfn=dfn, dfd=dfd))
+    # Percent point function at `conf_level` of an F continuous random variable
+    quantile = F.ppf(conf_level, dfn=dfn, dfd=dfd)
+    deviation = np.sqrt(2 * quantile)
     if method == "deviation":
         radius = deviation
     elif method == "error":
