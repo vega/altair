@@ -82,12 +82,12 @@ color = alt.Color(col_group)
 
 source = data.iris()
 ellipse = pd_ellipse(source, col_x=col_x, col_y=col_y, col_group=col_group)
-points = alt.Chart(source).mark_circle().encode(x, y, color)
+points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(x, y, color)
 lines = (
     alt.Chart(ellipse)
     .mark_line(filled=True, fillOpacity=0.2)
     .encode(x, y, color, order="index")
 )
 
-chart = lines + points
+chart = (lines + points).properties(height=500, width=500)
 chart
