@@ -20,7 +20,7 @@ def np_ellipse(
     arr: np.ndarray[tuple[int, int], np.dtype[np.float64]],
     conf_level: float = 0.95,
     method: Literal["deviation", "error"] = "deviation",
-    segments: int = 100,
+    segments: int = 50
 ):
     """
     Arguments:
