@@ -96,7 +96,8 @@ doc = [
     "myst-parser",
     "sphinx_copybutton",
     "sphinx-design",
-    "scipy-stubs[scipy]",
+    "scipy",
+    "scipy-stubs; python_version>=\"3.10\"",
 ]
 
 [tool.hatch.version]
