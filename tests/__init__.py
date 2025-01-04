@@ -95,6 +95,10 @@ Applies when `vegafusion`_ import would fail.
     https://github.com/vega/vegafusion
 """
 
+skip_requires_scipy: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("scipy") is None, reason="`scipy` not installed."
+)
+
 
 def skip_requires_pyarrow(
     fn: Callable[..., Any] | None = None, /, *, requires_tzdata: bool = False
@@ -229,6 +233,7 @@ distributed_examples: pytest.MarkDecorator = pytest.mark.parametrize(
                 "wind_vector_map": slow,
                 r"\.point_map\.py": slow,
                 "line_chart_with_color_datum": slow,
+                "deviation_ellipses": skip_requires_scipy,
             },
         )
     ),
