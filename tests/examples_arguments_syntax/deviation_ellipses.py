@@ -51,7 +51,7 @@ def np_ellipse(
     else:
         msg = "Method should be either 'deviation' or 'error'."
         raise ValueError(msg)
-    angles = (np.arange(0, segments + 1)) * 2 * np.pi / segments
+    angles = np.arange(0, segments) * 2 * np.pi / segments
     circle = np.column_stack((np.cos(angles), np.sin(angles)))
     center = np.mean(arr, axis=0)
     cov_mat = np.cov(arr, rowvar=False)
