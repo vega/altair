@@ -701,6 +701,20 @@ Existing parameter names are:
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         return message
 
+    def _maybe_channel(self, tp: type[Any], candidate: str, obj: Any) -> type[Any]:
+        """https://github.com/vega/altair/issues/2913#issuecomment-2571762700."""
+        vl = vegalite
+        channel_attrs = "datum", "value"
+        if isinstance(obj, dict) and not (set(channel_attrs).isdisjoint(obj)):
+            it: Iterator[type[Any]] = (
+                narrower
+                for chan in channel_attrs
+                if chan in obj
+                and (narrower := getattr(vl, f"{candidate}{chan.capitalize()}", None))
+            )
+            return next(it, tp)
+        return tp
+
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
     ) -> type[SchemaBase]:
@@ -712,9 +726,9 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
-                potential_class_name = prop_name[0].upper() + prop_name[1:]
-                cls = getattr(vegalite, potential_class_name, None)
-                if cls is not None:
+                candidate = prop_name[0].upper() + prop_name[1:]
+                if tp := getattr(vegalite, candidate, None):
+                    cls = self._maybe_channel(tp, candidate, self.instance)
                     break
         else:
             # Did not find a suitable class based on traversing the path so we fall
