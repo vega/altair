@@ -1,11 +1,12 @@
-from __future__ import annotations
-
 """
 Deviation ellipse
 -----------------
 This example shows bivariate deviation ellipses of petal length and width of three iris species.
 """
+
 # category: distributions
+from __future__ import annotations
+
 from typing import Literal
 
 import numpy as np

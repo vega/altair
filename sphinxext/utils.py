@@ -88,7 +88,7 @@ def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:  # noqa: C901
+def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -115,7 +115,6 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
     This function adapted from the sphinx-gallery project; license: BSD-3
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
-    FUTURE_STATEMENT = "from __future__ import annotations"
     node, content = _parse_source_file(filename)
 
     # Find the category comment
@@ -158,12 +157,6 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
 
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
-        if (
-            isinstance(node.body[0], ast.ImportFrom)
-            and node.body[0].module == "__future__"
-        ):
-            node.body.pop(0)
-            content = content.replace(FUTURE_STATEMENT, "").lstrip("\n")
         if (
             node.body
             and isinstance(node.body[0], ast.Expr)
