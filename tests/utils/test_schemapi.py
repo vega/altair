@@ -812,15 +812,14 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__additional_datum_argument,
-        r"""`X` has no parameter named 'wrong_argument'
+        r"""`XDatum` has no parameter named 'wrong_argument'
 
                 Existing parameter names are:
-                shorthand      bin      scale   timeUnit   
-                aggregate      field    sort    title      
-                axis           impute   stack   type       
-                bandPosition                               
+                datum          impute   title   
+                axis           scale    type    
+                bandPosition   stack            
 
-                See the help for `X` to read the full description of these parameters$""",
+                See the help for `XDatum` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_value_type,
