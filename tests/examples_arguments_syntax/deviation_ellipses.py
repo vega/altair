@@ -1,6 +1,6 @@
 """
-Deviation ellipse
------------------
+Confidence Interval Ellipses
+----------------------------
 This example shows bivariate deviation ellipses of petal length and width of three iris species.
 """
 
