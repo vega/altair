@@ -7,8 +7,6 @@ This example shows bivariate deviation ellipses of petal length and width of thr
 # category: distributions
 from __future__ import annotations
 
-from typing import Literal
-
 import numpy as np
 import pandas as pd
 from scipy.stats import f as F
@@ -20,7 +18,6 @@ from vega_datasets import data
 def np_ellipse(
     arr: np.ndarray[tuple[int, int], np.dtype[np.float64]],
     conf_level: float = 0.95,
-    method: Literal["deviation", "error"] = "deviation",
     segments: int = 50,
 ):
     """
@@ -32,8 +29,6 @@ def np_ellipse(
         numpy array with 2 columns
     conf_level
         lower tail probability
-    method
-        either 'deviation' (swarning data) or 'error (swarning the mean)'
     segments
         number of points describing the ellipse.
     """
@@ -44,14 +39,7 @@ def np_ellipse(
     dfd = n_elements - 1
     # Percent point function at `conf_level` of an F continuous random variable
     quantile = F.ppf(conf_level, dfn=dfn, dfd=dfd)
-    deviation = np.sqrt(2 * quantile)
-    if method == "deviation":
-        radius = deviation
-    elif method == "error":
-        radius = deviation / np.sqrt(n_elements)
-    else:
-        msg = "Method should be either 'deviation' or 'error'."
-        raise ValueError(msg)
+    radius = np.sqrt(2 * quantile)
     angles = np.arange(0, segments) * 2 * np.pi / segments
     circle = np.column_stack((np.cos(angles), np.sin(angles)))
     center = np.mean(arr, axis=0)
