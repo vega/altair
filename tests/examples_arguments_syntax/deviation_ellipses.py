@@ -2,6 +2,15 @@
 Confidence Interval Ellipses
 ----------------------------
 This example shows bivariate deviation ellipses of petal length and width of three iris species.
+
+Inspired by `ggplot2.stat_ellipse`_ and directly based on `Deviation ellipses example`_ by `@essicolo`_
+
+.. _ggplot2.stat_ellipse:
+    https://ggplot2.tidyverse.org/reference/stat_ellipse.html#ref-examples
+.. _Deviation ellipses example:
+    https://github.com/vega/altair/pull/514
+.. _@essicolo:
+    https://github.com/essicolo
 """
 
 # category: distributions
