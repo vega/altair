@@ -1676,3 +1676,27 @@ def with_property_setters(cls: type[TSchemaBase]) -> type[TSchemaBase]:
     for prop, propschema in schema.get("properties", {}).items():
         setattr(cls, prop, _PropertySetter(prop, propschema))
     return cls
+
+
+VERSIONS: Mapping[
+    Literal[
+        "vega-datasets", "vega-embed", "vega-lite", "vegafusion", "vl-convert-python"
+    ],
+    str,
+] = {
+    "vega-datasets": "v2.11.0",
+    "vega-embed": "6",
+    "vega-lite": "v5.20.1",
+    "vegafusion": "1.6.6",
+    "vl-convert-python": "1.7.0",
+}
+"""
+Version pins for non-``python`` `vega projects`_.
+
+Notes
+-----
+When cutting a new release, make sure to update ``[tool.altair.vega]`` in ``pyproject.toml``.
+
+.. _vega projects:
+    https://github.com/vega
+"""
