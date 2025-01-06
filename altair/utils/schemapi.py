@@ -592,6 +592,42 @@ def _validator_values(errors: Iterable[ValidationError], /) -> Iterator[str]:
         yield cast("str", err.validator_value)
 
 
+def _iter_channels(tp: type[Any], spec: Mapping[str, Any], /) -> Iterator[type[Any]]:
+    from altair import vegalite
+
+    for channel_type in ("datum", "value"):
+        if channel_type in spec:
+            name = f"{tp.__name__}{channel_type.capitalize()}"
+            if narrower := getattr(vegalite, name, None):
+                yield narrower
+
+
+def _is_channel(obj: Any) -> TypeIs[dict[str, Any]]:
+    props = {"datum", "value"}
+    return (
+        _is_dict(obj)
+        and all(isinstance(k, str) for k in obj)
+        and not (props.isdisjoint(obj))
+    )
+
+
+def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
+    """
+    Replace a channel type with a `more specific`_ one or passthrough unchanged.
+
+    Parameters
+    ----------
+    tp
+        An imported ``SchemaBase`` class.
+    spec
+        The instance that failed validation.
+
+    .. _more specific:
+        https://github.com/vega/altair/issues/2913#issuecomment-2571762700
+    """
+    return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -696,21 +732,6 @@ Existing parameter names are:
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         return message
 
-    def _maybe_channel(self, tp: type[Any], candidate: str, spec: Any) -> type[Any]:
-        """https://github.com/vega/altair/issues/2913#issuecomment-2571762700."""
-        from altair import vegalite as vl
-
-        channel_attrs = "datum", "value"
-        if isinstance(spec, dict) and not (set(channel_attrs).isdisjoint(spec)):
-            it: Iterator[type[Any]] = (
-                narrower
-                for chan in channel_attrs
-                if chan in spec
-                and (narrower := getattr(vl, f"{candidate}{chan.capitalize()}", None))
-            )
-            return next(it, tp)
-        return tp
-
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
     ) -> type[SchemaBase]:
@@ -726,7 +747,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             if isinstance(prop_name, str):
                 candidate = prop_name[0].upper() + prop_name[1:]
                 if tp := getattr(vegalite, candidate, None):
-                    cls = self._maybe_channel(tp, candidate, self.instance)
+                    cls = _maybe_channel(tp, self.instance)
                     break
         else:
             # Did not find a suitable class based on traversing the path so we fall
