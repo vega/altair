@@ -33,11 +33,6 @@ import jsonschema.validators
 import narwhals.stable.v1 as nw
 from packaging.version import Version
 
-# This leads to circular imports with the vegalite module. Currently, this works
-# but be aware that when you access it in this script, the vegalite module might
-# not yet be fully instantiated in case your code is being executed during import time
-from altair import vegalite
-
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
@@ -595,6 +590,42 @@ def _validator_values(errors: Iterable[ValidationError], /) -> Iterator[str]:
         yield cast("str", err.validator_value)
 
 
+def _iter_channels(tp: type[Any], spec: Mapping[str, Any], /) -> Iterator[type[Any]]:
+    from altair import vegalite
+
+    for channel_type in ("datum", "value"):
+        if channel_type in spec:
+            name = f"{tp.__name__}{channel_type.capitalize()}"
+            if narrower := getattr(vegalite, name, None):
+                yield narrower
+
+
+def _is_channel(obj: Any) -> TypeIs[dict[str, Any]]:
+    props = {"datum", "value"}
+    return (
+        _is_dict(obj)
+        and all(isinstance(k, str) for k in obj)
+        and not (props.isdisjoint(obj))
+    )
+
+
+def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
+    """
+    Replace a channel type with a `more specific`_ one or passthrough unchanged.
+
+    Parameters
+    ----------
+    tp
+        An imported ``SchemaBase`` class.
+    spec
+        The instance that failed validation.
+
+    .. _more specific:
+        https://github.com/vega/altair/issues/2913#issuecomment-2571762700
+    """
+    return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -706,20 +737,19 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
 
         This should lead to more informative error messages pointing the user closer to the source of the issue.
+
+        If we did not find a suitable class based on traversing the path so we fall
+        back on the class of the top-level object which created the SchemaValidationError
         """
+        from altair import vegalite
+
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
-                potential_class_name = prop_name[0].upper() + prop_name[1:]
-                cls = getattr(vegalite, potential_class_name, None)
-                if cls is not None:
-                    break
-        else:
-            # Did not find a suitable class based on traversing the path so we fall
-            # back on the class of the top-level object which created
-            # the SchemaValidationError
-            cls = self.obj.__class__
-        return cls
+                candidate = prop_name[0].upper() + prop_name[1:]
+                if tp := getattr(vegalite, candidate, None):
+                    return _maybe_channel(tp, self.instance)
+        return type(self.obj)
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
@@ -1595,14 +1625,15 @@ class _PropertySetter:
         self.schema = schema
 
     def __get__(self, obj, cls):
+        from altair import vegalite
+
         self.obj = obj
         self.cls = cls
         # The docs from the encoding class parameter (e.g. `bin` in X, Color,
         # etc); this provides a general description of the parameter.
         self.__doc__ = self.schema["description"].replace("__", "**")
         property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
-        if hasattr(vegalite, property_name):
-            altair_prop = getattr(vegalite, property_name)
+        if altair_prop := getattr(vegalite, property_name, None):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
