@@ -739,6 +739,9 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
 
         This should lead to more informative error messages pointing the user closer to the source of the issue.
+
+        If we did not find a suitable class based on traversing the path so we fall
+        back on the class of the top-level object which created the SchemaValidationError
         """
         from altair import vegalite
 
@@ -747,14 +750,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             if isinstance(prop_name, str):
                 candidate = prop_name[0].upper() + prop_name[1:]
                 if tp := getattr(vegalite, candidate, None):
-                    cls = _maybe_channel(tp, self.instance)
-                    break
-        else:
-            # Did not find a suitable class based on traversing the path so we fall
-            # back on the class of the top-level object which created
-            # the SchemaValidationError
-            cls = self.obj.__class__
-        return cls
+                    return _maybe_channel(tp, self.instance)
+        return type(self.obj)
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
