@@ -33,11 +33,6 @@ import jsonschema.validators
 import narwhals.stable.v1 as nw
 from packaging.version import Version
 
-# This leads to circular imports with the vegalite module. Currently, this works
-# but be aware that when you access it in this script, the vegalite module might
-# not yet be fully instantiated in case your code is being executed during import time
-from altair import vegalite
-
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
@@ -721,6 +716,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
         This should lead to more informative error messages pointing the user closer to the source of the issue.
         """
+        from altair import vegalite
+
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
@@ -1609,14 +1606,15 @@ class _PropertySetter:
         self.schema = schema
 
     def __get__(self, obj, cls):
+        from altair import vegalite
+
         self.obj = obj
         self.cls = cls
         # The docs from the encoding class parameter (e.g. `bin` in X, Color,
         # etc); this provides a general description of the parameter.
         self.__doc__ = self.schema["description"].replace("__", "**")
         property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
-        if hasattr(vegalite, property_name):
-            altair_prop = getattr(vegalite, property_name)
+        if altair_prop := getattr(vegalite, property_name, None):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
