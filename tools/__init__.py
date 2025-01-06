@@ -5,6 +5,7 @@ from tools import (
     schemapi,
     tasks,
     update_init_file,
+    versioning,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "schemapi",
     "tasks",
     "update_init_file",
+    "versioning",
 ]
