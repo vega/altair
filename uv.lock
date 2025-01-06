@@ -86,6 +86,7 @@ dev = [
     { name = "pytest-cov" },
     { name = "pytest-xdist", extra = ["psutil"] },
     { name = "ruff" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "types-jsonschema" },
     { name = "types-setuptools" },
 ]
@@ -145,6 +146,7 @@ requires-dist = [
     { name = "sphinx-copybutton", marker = "extra == 'doc'" },
     { name = "sphinx-design", marker = "extra == 'doc'" },
     { name = "sphinxext-altair", marker = "extra == 'doc'" },
+    { name = "tomli", marker = "python_full_version < '3.11' and extra == 'dev'" },
     { name = "types-jsonschema", marker = "extra == 'dev'" },
     { name = "types-setuptools", marker = "extra == 'dev'" },
     { name = "typing-extensions", marker = "python_full_version < '3.14'", specifier = ">=4.10.0" },
