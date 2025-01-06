@@ -699,15 +699,15 @@ Existing parameter names are:
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
         return message
 
-    def _maybe_channel(self, tp: type[Any], candidate: str, obj: Any) -> type[Any]:
+    def _maybe_channel(self, tp: type[Any], candidate: str, spec: Any) -> type[Any]:
         """https://github.com/vega/altair/issues/2913#issuecomment-2571762700."""
         vl = vegalite
         channel_attrs = "datum", "value"
-        if isinstance(obj, dict) and not (set(channel_attrs).isdisjoint(obj)):
+        if isinstance(spec, dict) and not (set(channel_attrs).isdisjoint(spec)):
             it: Iterator[type[Any]] = (
                 narrower
                 for chan in channel_attrs
-                if chan in obj
+                if chan in spec
                 and (narrower := getattr(vl, f"{candidate}{chan.capitalize()}", None))
             )
             return next(it, tp)
