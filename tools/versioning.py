@@ -255,7 +255,7 @@ class _Versions:
                         if sp.operator in _LOWER_BOUNDS
                     )
                     version = str(min(it))
-                    yield req.name, version
+                    yield req.name, version  # type: ignore[misc]
 
 
 def __getattr__(name: str) -> _Versions:
