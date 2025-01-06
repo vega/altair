@@ -696,7 +696,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     def _maybe_channel(self, tp: type[Any], candidate: str, spec: Any) -> type[Any]:
         """https://github.com/vega/altair/issues/2913#issuecomment-2571762700."""
-        vl = vegalite
+        from altair import vegalite as vl
+
         channel_attrs = "datum", "value"
         if isinstance(spec, dict) and not (set(channel_attrs).isdisjoint(spec)):
             it: Iterator[type[Any]] = (
