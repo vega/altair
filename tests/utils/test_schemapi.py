@@ -522,6 +522,11 @@ def chart_error_example__additional_datum_argument():
     return alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
 
 
+def chart_error_example__additional_value_argument():
+    # Error: `ColorValue` has no parameter named 'predicate'
+    return alt.Chart().mark_point().encode(color=alt.value("red", predicate=True))
+
+
 def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
@@ -812,15 +817,23 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__additional_datum_argument,
-        r"""`X` has no parameter named 'wrong_argument'
+        r"""`XDatum` has no parameter named 'wrong_argument'
 
                 Existing parameter names are:
-                shorthand      bin      scale   timeUnit   
-                aggregate      field    sort    title      
-                axis           impute   stack   type       
-                bandPosition                               
+                datum          impute   title   
+                axis           scale    type    
+                bandPosition   stack            
 
-                See the help for `X` to read the full description of these parameters$""",
+                See the help for `XDatum` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__additional_value_argument,
+        r"""`ColorValue` has no parameter named 'predicate'
+
+                Existing parameter names are:
+                value   condition   
+
+                See the help for `ColorValue` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_value_type,
