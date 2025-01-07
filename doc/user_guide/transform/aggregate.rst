@@ -12,7 +12,7 @@ summary statistics (e.g., :code:`median`, :code:`min`, :code:`max`) over groups 
 
 If any field in the specified encoding channels contains an aggregate,
 the resulting visualization will show aggregate data. In this case, all
-fields without aggregation function specified are treated as group-by fields
+fields without a specified aggregation function are treated as group-by fields
 in the aggregation process.
 
 For example, the following bar chart aggregates mean of ``acceleration``,
