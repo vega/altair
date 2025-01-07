@@ -10,7 +10,7 @@ or using a top level aggregate transform.
 The aggregate property of a field definition can be used to compute aggregate
 summary statistics (e.g., :code:`median`, :code:`min`, :code:`max`) over groups of data.
 
-If at least one fields in the specified encoding channels contain aggregate,
+If any field in the specified encoding channels contains an aggregate,
 the resulting visualization will show aggregate data. In this case, all
 fields without aggregation function specified are treated as group-by fields
 in the aggregation process.
