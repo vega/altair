@@ -119,16 +119,15 @@ Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
 
 #### Failures on specific python version(s)
-<!-- This section might stay mostly the same (see message https://github.com/vega/altair/pull/3723/commits/e8d57cd757d316e60cac6ce51ee8ccf69d62c399) -->
 
-By default, `hatch test` will run the test suite against the currently active python version.
+By default, `uv run task test` will run the test suite against the currently active python version.
 Two useful variants for debugging failures that only appear *after* you've submitted your PR:
 
 ```bash
 # Test against all python version(s) in the matrix
-hatch test --all
-# Test against a specific python version
-hatch test --python 3.8
+uv run task test-all
+# Test against our minimum required version
+uv run task test-min
 ```
 
 See [hatch test](https://hatch.pypa.io/latest/cli/reference/#hatch-test) docs for other options.

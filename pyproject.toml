@@ -365,6 +365,8 @@ pytest    = "pytest"
 test      = "task lint && task format && task type-check && task pytest"
 test-fast = "task ruff-fix && pytest -m \"not slow\""
 test-slow = "task ruff-fix && pytest -m \"slow\""
+test-min  = "task lint && task format && task type-check && hatch test --python 3.9"
+test-all  = "task lint && task format && task type-check && hatch test --all"
 
 generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
