@@ -28,6 +28,8 @@ git clone https://github.com/YOUR-USERNAME/altair.git
 To keep your fork up to date with changes in this repo,
 you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
+<!-- Replace with installing `uv` and adding `uv sync` (editable by default) -->
+
 Now you can install the latest version of Altair locally using `pip`.
 The `-e` flag indicates that your local changes will be reflected
 every time you open a new Python interpreter
@@ -59,7 +61,7 @@ make sure to run the following to see if there are any changes
 to the automatically generated files: 
 
 ```bash
-hatch run generate-schema-wrapper
+uv run task generate-schema-wrapper
 ```
 
 For information on how to update the Vega-Lite version that Altair uses,
@@ -72,7 +74,7 @@ it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
 ```bash
-hatch test
+uv run task test
 ```
 
 
@@ -83,6 +85,8 @@ Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
 
 #### Failures on specific python version(s)
+<!-- This section might stay mostly the same (see message https://github.com/vega/altair/pull/3723/commits/e8d57cd757d316e60cac6ce51ee8ccf69d62c399) -->
+
 By default, `hatch test` will run the test suite against the currently active python version.
 Two useful variants for debugging failures that only appear *after* you've submitted your PR:
 
@@ -99,7 +103,7 @@ See [hatch test](https://hatch.pypa.io/latest/cli/reference/#hatch-test) docs fo
 If `test_completeness_of__all__` fails, you may need to run:
 
 ```bash
-hatch run update-init-file
+uv run task update-init-file
 ```
 However, this test usually indicates *unintentional* addition(s) to the top-level `alt.` namespace that will need resolving first.
 
@@ -204,26 +208,19 @@ Some additional notes:
 
 The process to build the documentation locally consists of three steps:
 
-1. Clean any previously generated files to ensure a clean build.
-2. Generate the documentation in HTML format.
-3. View the generated documentation using a local Python testing server.
+1. **Clean** (remove) any previously generated documentation files.
+2. **Build** the documentation in HTML format.
+3. View the documentation using a *local* Python testing **server**.
 
-The specific commands for each step depend on your operating system.
-Make sure you execute the following commands from the root dir of altair and have [`hatch`](https://hatch.pypa.io/) installed in your local environment.
-
-- For MacOS and Linux, run the following commands in your terminal:
-```bash
-hatch run doc:clean-all
-hatch run doc:build-html
-hatch run doc:serve
-```
-
-- For Windows, use these commands instead:
+Steps 1 & 2 can be run as a single command, followed by step 3:
 ```cmd
-hatch run doc:clean-all-win
-hatch run doc:build-html-win
-hatch run doc:serve
+uv run task doc-clean-build
+uv run task doc-serve
 ```
+
+> [!TIP]
+> If these commands were not available for you, make sure you've [set up your environment](#setting-up-your-environment)
+
 
 To view the documentation, open your browser and go to `http://localhost:8000`. To stop the server, use `^C` (control+c) in the terminal.
 
