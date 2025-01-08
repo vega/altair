@@ -487,6 +487,7 @@ ColorScheme_T: TypeAlias = Literal[
     "set3",
     "tableau10",
     "tableau20",
+    "observable10",
     "blues",
     "tealblues",
     "teals",
@@ -1051,6 +1052,8 @@ ScaleType_T: TypeAlias = Literal[
 SelectionResolution_T: TypeAlias = Literal["global", "union", "intersect"]
 SelectionType_T: TypeAlias = Literal["point", "interval"]
 SingleDefUnitChannel_T: TypeAlias = Literal[
+    "text",
+    "shape",
     "x",
     "y",
     "xOffset",
@@ -1075,9 +1078,7 @@ SingleDefUnitChannel_T: TypeAlias = Literal[
     "strokeDash",
     "size",
     "angle",
-    "shape",
     "key",
-    "text",
     "href",
     "url",
     "description",
