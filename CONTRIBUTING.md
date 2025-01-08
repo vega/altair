@@ -28,20 +28,54 @@ git clone https://github.com/YOUR-USERNAME/altair.git
 To keep your fork up to date with changes in this repo,
 you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
-<!-- Replace with installing `uv` and adding `uv sync` (editable by default) -->
 
-Now you can install the latest version of Altair locally using `pip`.
-The `-e` flag indicates that your local changes will be reflected
-every time you open a new Python interpreter
-(instead of having to reinstall the package each time).
+[Install `uv`](https://docs.astral.sh/uv/getting-started/installation/), or update to the latest version:
 
 ```cmd
-cd altair/ 
-python -m pip install -e ".[all, dev]"
+uv self update
+```
+Install Python:
+
+```cmd
+uv python install 3.12
 ```
 
-'[all, dev]' indicates that pip should also install the optional and development requirements
-which you can find in `pyproject.toml` (`[project.optional-dependencies]/all` and `[project.optional-dependencies]/dev`)
+Initialize a new virtual environment:
+
+```cmd
+cd altair/
+uv venv -p 3.12
+```
+
+Activate your environment:
+
+<details><summary>macOS/Linux</summary>
+<p>
+
+```bash
+source .venv/bin/activate
+```
+
+</p>
+</details> 
+
+<details><summary>Windows</summary>
+<p>
+
+```cmd
+.venv\Scripts\activate
+```
+
+</p>
+</details> 
+
+Install the project with all development dependencies:
+```cmd
+uv sync --all-extras
+```
+
+> [!TIP]
+> If you're new to `uv`, check out their [Getting started](https://docs.astral.sh/uv/getting-started/) guide for help
 
 ### Creating a Branch
 
