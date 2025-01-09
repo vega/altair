@@ -30,7 +30,7 @@ def create_thumbnail(
         final_height = height
         final_width = int(im_width * height_factor)
 
-    thumb = im.resize((final_width, final_height), Image.ANTIALIAS)
+    thumb = im.resize((final_width, final_height), Image.Resampling.LANCZOS)
     thumb.save(thumb_filename)
 
 
