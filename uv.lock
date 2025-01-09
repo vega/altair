@@ -133,7 +133,7 @@ requires-dist = [
     { name = "pandas", marker = "extra == 'all'", specifier = ">=1.1.3" },
     { name = "pandas", marker = "extra == 'dev'", specifier = ">=1.1.3" },
     { name = "pandas-stubs", marker = "extra == 'dev'" },
-    { name = "pillow", marker = "extra == 'doc'", specifier = ">=9,<10" },
+    { name = "pillow", marker = "extra == 'doc'" },
     { name = "polars", marker = "extra == 'dev'", specifier = ">=0.20.3" },
     { name = "pyarrow", marker = "extra == 'all'", specifier = ">=11" },
     { name = "pyarrow-stubs", marker = "extra == 'dev'" },
