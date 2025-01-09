@@ -1,4 +1,5 @@
 from tools import (
+    fs,
     generate_api_docs,
     generate_schema_wrapper,
     markup,
@@ -8,6 +9,7 @@ from tools import (
 )
 
 __all__ = [
+    "fs",
     "generate_api_docs",
     "generate_schema_wrapper",
     "markup",
