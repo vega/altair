@@ -12,7 +12,18 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-__all__ = ["REPO_ROOT", "mkdir", "rm"]
+__all__ = [
+    "REPO_ROOT",
+    "copytree",
+    "dir_exists",
+    "file_exists",
+    "mkdir",
+    "modified_time",
+    "path_repr",
+    "rm",
+    "run_check",
+    "run_stream_stdout",
+]
 
 REPO_ROOT: Path = Path(__file__).parent.parent
 
@@ -44,6 +55,14 @@ def rm(*sources: str | Path, force: bool = True) -> None:
 
 
 def copytree(src: str | Path, dst: str | Path, *, force: bool = True):
+    """
+    Recursively copy a directory tree and return the destination directory.
+
+    Wraps `shutil.copytree`_.
+
+    .. _shutil.copytree:
+        https://docs.python.org/3/library/shutil.html#shutil.copytree
+    """
     return shutil.copytree(src, dst, dirs_exist_ok=force)
 
 
@@ -54,7 +73,6 @@ def file_exists(file: str | Path, /) -> bool:
 
 
 def dir_exists(file: str | Path, /) -> bool:
-    """Fail on files created using ``Path.touch()``."""
     fp = Path(file)
     return fp.exists() and fp.is_dir()
 
