@@ -92,7 +92,7 @@ doc = [
     "sphinxext_altair",
     "jinja2",
     "numpydoc",
-    "pillow>=9,<10",
+    "pillow",
     "pydata-sphinx-theme>=0.14.1",
     "myst-parser",
     "sphinx_copybutton",
