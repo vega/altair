@@ -112,13 +112,6 @@ For bugs and feature requests, please open a [Github Issue](https://github.com/v
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pytest](https://img.shields.io/badge/logo-pytest-blue?logo=pytest&labelColor=5c5c5c&label=%20)](https://github.com/pytest-dev/pytest)
 
-You can find the instructions on how to install the package for development in [the documentation](https://altair-viz.github.io/getting_started/installation.html).
-
-To run the tests and linters, use
-```bash
-uv run task test
-```
-
 For information on how to contribute your developments back to the Vega-Altair repository, see
 [`CONTRIBUTING.md`](https://github.com/vega/altair/blob/main/CONTRIBUTING.md)
 
