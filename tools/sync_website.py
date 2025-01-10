@@ -23,10 +23,7 @@ DOC_HTML_DIR: Path = DOC_BUILD_DIR / "html"
 
 DOC_BUILD_INFO: Path = DOC_HTML_DIR / ".buildinfo"
 
-
-CMD_CLONE = f"git clone --filter=blob:none {DOC_REPO_URL}"
-"""Partial clone, as we only keep ``./.git/**``."""
-
+CMD_CLONE = "git", "clone", DOC_REPO_URL
 CMD_PULL = "git pull"
 CMD_HEAD_HASH = "git rev-parse HEAD"
 CMD_ADD = "git", "add", ".", "--all", "--force"
