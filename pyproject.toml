@@ -123,193 +123,102 @@ features = ["all", "dev", "doc"]
 matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
-target-version = "py39"
-line-length = 88
-indent-width = 4
 exclude = [
     ".git",
-    "build",
     "__pycache__",
+    "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
 ]
+indent-width = 4
+line-length = 88
+target-version = "py39"
 
 [tool.ruff.lint]
-# https://docs.astral.sh/ruff/preview/
-preview = true
-
-# https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
-extend-safe-fixes=[
-    # unnecessary-comprehension-in-call
-    "C419",
-    # literal-membership
-    "PLR6201",
-    # from __future__ import annotations #
-    # ---------------------------------- # 
-    "UP006",
-    "UP007",
-    "UP008",
-    "TCH",
-    # assign exception msg to variable #
-    # -------------------------------- #
-    "EM101",
-    "EM102",
-    # trailing-whitespace
-    "W291",
-    # blank line contains whitespace
-    "W293",
-    # unsorted-dunder-all
-    "RUF022",
-    # pydocstyle #
-    # ---------- #
-    # fits-on-one-line
-    "D200",
-    # escape-sequence-in-docstring
-    "D301",
-    # ends-in-period
-    "D400",
-    # missing-return-type-special-method 
-    "ANN204",
-    # unnecessary-dict-comprehension-for-iterable
-    "C420",
+extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+    "ANN204",  # missing-return-type-special-method 
+    "C419",    # unnecessary-comprehension-in-call
+    "C420",    # unnecessary-dict-comprehension-for-iterable
+    "D200",    # fits-on-one-line
+    "D301",    # escape-sequence-in-docstring
+    "D400",    # ends-in-period
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
+    "PLR6201", # literal-membership
+    "TC",      # flake8-type-checking
+    "UP006",   # non-pep585-annotation
+    "UP007",   # non-pep604-annotation-union
+    "UP008",   # super-call-with-parameters
+    "W291",    # trailing-whitespace
+    "W293",    # blank line contains whitespace
 ]
-
-# https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
-extend-select=[
-    # refurb
-    "FURB", 
-    # pylint (preview) autofix #
-    # ------------------------ #
-    # unnecessary-dunder-call
-    "PLC2801", 
-    # unnecessary-dict-index-lookup
-    "PLR1733", 
-    # unnecessary-list-index-lookup
-    "PLR1736",
-    # literal-membership
-    "PLR6201",
-    # unspecified-encoding
-    "PLW1514",
+extend-select = [ # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+    "FURB",    # refurb
+    "PLC2801", # unnecessary-dunder-call
+    "PLR1733", # unnecessary-dict-index-lookup
+    "PLR1736", # unnecessary-list-index-lookup
+    "PLR6201", # literal-membership
+    "PLW1514", # unspecified-encoding
 ]
+ignore = [
+    "ANN401", # any-type
+    "D100",   # undocumented-public-module
+    "D101",   # undocumented-public-class
+    "D102",   # undocumented-public-method
+    "D103",   # undocumented-public-function
+    "D104",   # undocumented-public-package
+    "D105",   # undocumented-magic-method
+    "D107",   # undocumented-public-init
+    "D206",   # indent-with-spaces
+    "D212",   # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D401",   # non-imperative-mood  
+    "D413",   # missing-blank-line-after-last-section
+    "E501",   # line-too-long (https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules)
+    "RUF012", # mutable-class-default
+    "RUF052", # used-dummy-variable
+    "SIM105", # suppressible-exception (https://github.com/vega/altair/pull/3431#discussion_r1629808660)
+    "W505",   # doc-line-too-long
+]
+mccabe.max-complexity = 10
+preview = true # https://docs.astral.sh/ruff/preview/
+pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 select = [
-    # flake8-bugbear
-    "B",
-    # flake8-comprehensions
-    "C4",
-    # pycodestyle-error
-    "E",
-    # flake8-errmsg
-    "EM",
-    # pyflakes
-    "F",
-    # flake8-future-annotations
-    "FA",
-    # flynt
-    "FLY",
-    # flake8-pie
-    "PIE",
-    # flake8-pytest-style
-    "PT",
-    # flake8-use-pathlib
-    "PTH",
-    # Ruff-specific rules
-    "RUF",
-    # flake8-simplify
-    "SIM",
-    # flake8-type-checking
-    "TCH",
-    # flake8-tidy-imports
-    "TID",
-    # pyupgrade
-    "UP",
-    # pycodestyle-warning
-    "W",
-    # pylint (stable) autofix #
-    # ----------------------- #
-    # iteration-over-set
-    "PLC0208",
-    # manual-from-import
-    "PLR0402",
-    # useless-return
-    "PLR1711",
-    # repeated-equality-comparison
-    "PLR1714",
-    # collapsible-else-if
-    "PLR5501",
-    # useless-else-on-loop
-    "PLW0120",
-    # subprocess-run-without-check
-    "PLW1510",
-    # nested-min-max
-    "PLW3301",
-    # pydocstyle #
-    # ---------- #
-    "D",
-    # multi-line-summary-second-line
-    "D213",
-    # numpy-specific-rules
-    "NPY",
-    # flake8-annotations
-    "ANN",
-    # unsorted-imports
-    "I001",
-    # complex-structure
-    "C901",
+    "ANN",     # flake8-annotations
+    "B",       # flake8-bugbear
+    "C4",      # flake8-comprehensions
+    "C901",    # complex-structure
+    "D",       # pydocstyle
+    "D213",    # multi-line-summary-second-line
+    "E",       # pycodestyle-error
+    "EM",      # flake8-errmsg
+    "F",       # pyflakes
+    "FA",      # flake8-future-annotations
+    "FLY",     # flynt
+    "I001",    # unsorted-imports
+    "NPY",     # numpy-specific-rules
+    "PIE",     # flake8-pie
+    "PLC0208", # iteration-over-set
+    "PLR0402", # manual-from-import
+    "PLR1711", # useless-return
+    "PLR1714", # repeated-equality-comparison
+    "PLR5501", # collapsible-else-if
+    "PLW0120", # useless-else-on-loop
+    "PLW1510", # subprocess-run-without-check
+    "PLW3301", # nested-min-max
+    "PT",      # flake8-pytest-style
+    "PTH",     # flake8-use-pathlib
+    "RUF",     # Ruff-specific rules
+    "SIM",     # flake8-simplify
+    "TC",      # flake8-type-checking
+    "TID",     # flake8-tidy-imports
+    "UP",      # pyupgrade
+    "W",       # pycodestyle-warning
 ]
-ignore = [  
-    # Whitespace before ':'
-    "E203",
-    # Too many leading '#' for block comment
-    "E266",
-    # Line too long
-    "E501",
-    # zip() without an explicit strict= parameter set.
-    # python>=3.10 only
-    "B905",
-    # mutable-class-default
-    "RUF012",
-    # used-dummy-variable
-    "RUF052",
-    # suppressible-exception
-    # https://github.com/vega/altair/pull/3431#discussion_r1629808660
-    "SIM105",
-    # pydocstyle/ https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules #
-    # ------------------------------------------------------------------------- #
-    # undocumented-public-module
-    "D100",
-    # undocumented-public-class
-    "D101",
-    # undocumented-public-method  
-    "D102",
-    # undocumented-public-function  
-    "D103",
-    # undocumented-public-package   
-    "D104",
-    # undocumented-magic-method 
-    "D105",
-    # undocumented-public-init  
-    "D107",
-    # indent-with-spaces
-    "D206",
-    # multi-line-summary-first-line ((D213) is the opposite of this)
-    "D212",
-    # Imperative mood   
-    "D401",
-    # Blank line after last section 
-    "D413",
-    # doc-line-too-long
-    "W505",
-    # Any as annotation
-    "ANN401" 
-]
-# https://docs.astral.sh/ruff/settings/#lintpydocstyle
-pydocstyle={ convention="numpy" }
-mccabe={ max-complexity=10 }
 
 [tool.ruff.lint.isort]
-classes = ["expr", "datum"]
+classes = ["datum", "expr"]
 extra-standard-library = ["typing_extensions"]
-known-first-party=[
+known-first-party = [
     "altair_tiles",
     "sphinxext_altair",
     "vega_datasets",
@@ -320,37 +229,30 @@ split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
+"narwhals.dependencies".msg = """
+Import `dependencies` from `narwhals.stable.v1` instead.
+"""
+"narwhals.dtypes".msg = """
+Import `dtypes` from `narwhals.stable.v1` instead.
+"""
+"narwhals.typing".msg = """
+Import `typing` from `narwhals.stable.v1` instead.
+"""
 "typing.Optional".msg = """
 Use `Union[T, None]` instead.
 `typing.Optional` is likely to be confused with `altair.typing.Optional`, \
 which have a similar but different semantic meaning.
 See https://github.com/vega/altair/pull/3449
 """
-"narwhals.dependencies".msg = """
-Import `dependencies` from `narwhals.stable.v1` instead.
-"""
-"narwhals.typing".msg = """
-Import `typing` from `narwhals.stable.v1` instead.
-"""
-"narwhals.dtypes".msg = """
-Import `dtypes` from `narwhals.stable.v1` instead.
-"""
 
 [tool.ruff.lint.per-file-ignores]
-# Only enforce type annotation rules on public api
-"!altair/vegalite/v5/api.py" = ["ANN"]
-# Allow complex if/elif branching during tests
-"tests/**/*.py"= ["C901"]
-
+"!altair/vegalite/v5/api.py" = ["ANN"]  # Only enforce annotation rules on public api
+"tests/**/*.py"              = ["C901"] # Allow complex if/elif branching during tests
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "lf"
-# https://docs.astral.sh/ruff/formatter/#docstring-formatting
-docstring-code-format = true
+docstring-code-format      = true # https://docs.astral.sh/ruff/formatter/#docstring-formatting
 docstring-code-line-length = 88
+line-ending                = "lf"
 
 [tool.taskipy.settings]
 cwd = "."

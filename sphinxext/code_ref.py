@@ -64,7 +64,7 @@ def validate_packages(packages: Any) -> str:
         if len(split) == 1:
             return f'["{split[0]}"]'
         else:
-            return f'[{",".join(split)}]'
+            return f"[{','.join(split)}]"
 
 
 def raw_html(text: str, /) -> nodes.raw:

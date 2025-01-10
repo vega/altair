@@ -362,9 +362,7 @@ def test_attribute_error():
     invalid_attr = "invalid_attribute"
     with pytest.raises(AttributeError) as err:
         getattr(m, invalid_attr)
-    assert str(err.value) == (
-        "'MySchema' object has no attribute " "'invalid_attribute'"
-    )
+    assert str(err.value) == ("'MySchema' object has no attribute 'invalid_attribute'")
 
 
 def test_to_from_json(dct):

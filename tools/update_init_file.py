@@ -83,7 +83,7 @@ def update__all__variable() -> None:
     ruff.write_lint_format(init_path, new_lines)
 
     for source in DYNAMIC_ALL:
-        print(f"Updating `__all__`\n " f"{source!r}\n  ->{normalize_source(source)!s}")
+        print(f"Updating `__all__`\n {source!r}\n  ->{normalize_source(source)!s}")
         update_dynamic__all__(source)
 
 
@@ -149,8 +149,7 @@ def _retrieve_all(name: str, /) -> list[str]:
     found = _import_module(name).__all__
     if not found:
         msg = (
-            f"Expected to find a populated `__all__` for {name!r},\n"
-            f"but got: {found!r}"
+            f"Expected to find a populated `__all__` for {name!r},\nbut got: {found!r}"
         )
         raise AttributeError(msg)
     return found
