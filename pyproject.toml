@@ -336,16 +336,9 @@ select = [
     # complex-structure
     "C901",
 ]
-ignore = [  
-    # Whitespace before ':'
-    "E203",
-    # Too many leading '#' for block comment
-    "E266",
+ignore = [
     # Line too long
     "E501",
-    # zip() without an explicit strict= parameter set.
-    # python>=3.10 only
-    "B905",
     # mutable-class-default
     "RUF012",
     # used-dummy-variable
