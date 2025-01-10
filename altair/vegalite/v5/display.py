@@ -41,7 +41,7 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
 
 # The display message when rendering fails
 DEFAULT_DISPLAY: Final = f"""\
-<VegaLite {VEGALITE_VERSION.split('.')[0]} object>
+<VegaLite {VEGALITE_VERSION.split(".")[0]} object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see

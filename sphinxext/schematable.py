@@ -40,7 +40,7 @@ def type_description(schema: dict[str, Any]) -> str:
         )
     else:
         warnings.warn(
-            f"cannot infer type for schema with keys {schema.keys()}" "",
+            f"cannot infer type for schema with keys {schema.keys()}",
             stacklevel=1,
         )
         return "--"
