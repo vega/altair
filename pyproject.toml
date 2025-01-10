@@ -229,7 +229,7 @@ extend-safe-fixes=[
     "UP006",
     "UP007",
     "UP008",
-    "TCH",
+    "TC",
     # assign exception msg to variable #
     # -------------------------------- #
     "EM101",
@@ -238,8 +238,6 @@ extend-safe-fixes=[
     "W291",
     # blank line contains whitespace
     "W293",
-    # unsorted-dunder-all
-    "RUF022",
     # pydocstyle #
     # ---------- #
     # fits-on-one-line
@@ -297,7 +295,7 @@ select = [
     # flake8-simplify
     "SIM",
     # flake8-type-checking
-    "TCH",
+    "TC",
     # flake8-tidy-imports
     "TID",
     # pyupgrade
