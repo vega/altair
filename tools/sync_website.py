@@ -20,15 +20,14 @@ DOC_DIR: Path = fs.REPO_ROOT / "doc"
 DOC_BUILD_DIR: Path = DOC_DIR / "_build"
 DOC_REPO_DIR: Path = DOC_BUILD_DIR / WEBSITE
 DOC_HTML_DIR: Path = DOC_BUILD_DIR / "html"
-
 DOC_BUILD_INFO: Path = DOC_HTML_DIR / ".buildinfo"
 
 CMD_CLONE = "git", "clone", DOC_REPO_URL
-CMD_PULL = "git pull"
-CMD_HEAD_HASH = "git rev-parse HEAD"
+CMD_PULL = "git", "pull"
+CMD_HEAD_HASH = "git", "rev-parse", "HEAD"
 CMD_ADD = "git", "add", ".", "--all", "--force"
 CMD_COMMIT = "git", "commit", "-m"
-CMD_PUSH = "git", "push", "origin", "master", "--dry-run"
+CMD_PUSH = "git", "push", "origin", "master"
 
 COMMIT_MSG_PREFIX = "doc build for commit"
 UNTRACKED = ".git"
@@ -67,16 +66,12 @@ def generate_commit_message() -> str:
     return f"{COMMIT_MSG_PREFIX} {fs.run_check(CMD_HEAD_HASH).stdout.strip()}"
 
 
-def current_branch() -> str:
-    return fs.run_check(["git", "branch", "--show-current"]).stdout.rstrip()
-
-
-def add_commit_push_github(msg: str, /) -> None:
+def add_commit_push_github(msg: str, /, *, dry_run: bool) -> None:
     os.chdir(DOC_REPO_DIR)
     print("Pushing ...")
-    # NOTE: Ensures the message uses cross-platform escaping
     cmd_commit = *CMD_COMMIT, msg
-    commands = (CMD_ADD, cmd_commit, CMD_PUSH)
+    cmd_push = (*CMD_PUSH, "--dry-run") if dry_run else CMD_PUSH
+    commands = (CMD_ADD, cmd_commit, cmd_push)
     for command in commands:
         fs.run_stream_stdout(command)
 
@@ -91,21 +86,17 @@ def ensure_build_html() -> None:
     print(f"Docs last build time: {time!r}")
 
 
-def main(*, no_commit: bool = False) -> None:
+def main(*, dry_run: bool = False) -> None:
     ensure_build_html()
     commit_message = generate_commit_message()
     clone_or_sync_repo()
     remove_tracked_files()
     sync_from_html_build()
-    branch = current_branch()  # noqa: F841
-    if no_commit:
-        print(f"Unused commit message:\n  {commit_message!r}")
-    else:
-        add_commit_push_github(commit_message)
+    add_commit_push_github(commit_message, dry_run=dry_run)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="sync_website.py")
-    parser.add_argument("--no-commit", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
-    main(no_commit=args.no_commit)
+    main(dry_run=args.dry_run)
