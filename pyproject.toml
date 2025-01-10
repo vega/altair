@@ -424,9 +424,6 @@ Import `dtypes` from `narwhals.stable.v1` instead.
 
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
 line-ending = "lf"
 # https://docs.astral.sh/ruff/formatter/#docstring-formatting
 docstring-code-format = true
