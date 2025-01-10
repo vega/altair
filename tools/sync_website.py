@@ -29,8 +29,8 @@ CMD_CLONE = f"git clone --filter=blob:none {DOC_REPO_URL}"
 
 CMD_PULL = "git pull"
 CMD_HEAD_HASH = "git rev-parse HEAD"
-CMD_ADD = "git add . --all --force"
-CMD_COMMIT = "git commit -m"
+CMD_ADD = "git", "add", ".", "--all", "--force"
+CMD_COMMIT = "git", "commit", "-m"
 CMD_PUSH = "git", "push", "origin", "master", "--dry-run"
 
 COMMIT_MSG_PREFIX = "doc build for commit"
@@ -78,7 +78,7 @@ def add_commit_push_github(msg: str, /) -> None:
     os.chdir(DOC_REPO_DIR)
     print("Pushing ...")
     # NOTE: Ensures the message uses cross-platform escaping
-    cmd_commit = *CMD_COMMIT.split(" "), msg
+    cmd_commit = *CMD_COMMIT, msg
     commands = (CMD_ADD, cmd_commit, CMD_PUSH)
     for command in commands:
         fs.run_stream_stdout(command)
