@@ -59,16 +59,15 @@ def np_ellipse(
 def pd_ellipse(
     df: pd.DataFrame, col_x: str, col_y: str, col_group: str
 ) -> pd.DataFrame:
-    cols = col_x, col_y
-    groups = []
-    # TODO: Rewrite in a more readable way
-    categories = df[col_group].unique()
-    for category in categories:
-        sliced = df.loc[df[col_group] == category, cols]
-        ell_df = pd.DataFrame(np_ellipse(sliced.to_numpy()), columns=cols) # type: ignore
-        ell_df[col_group] = category
-        groups.append(ell_df)
-    return pd.concat(groups).reset_index()
+    cols = [col_x, col_y]
+    ellipses = []
+    ser: pd.Series[float] = df[col_group]
+    for group in ser.drop_duplicates():
+        arr = df.loc[ser == group, cols].to_numpy()
+        ellipse = pd.DataFrame(np_ellipse(arr), columns=cols)
+        ellipse[col_group] = group
+        ellipses.append(ellipse)
+    return pd.concat(ellipses).reset_index(names="order")
 
 
 col_x = "petalLength"
@@ -84,7 +83,7 @@ points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(x, y, color
 lines = (
     alt.Chart(ellipse)
     .mark_line(filled=True, fillOpacity=0.2)
-    .encode(x, y, color, order="index")
+    .encode(x, y, color, order="order")
 )
 
 chart = (lines + points).properties(height=500, width=500)
