@@ -766,7 +766,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
             f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
-        "\n" f"__all__ = {all_}\n",
+        f"\n__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile=SCHEMA_FILE),
         BASE_SCHEMA.format(basename=basename),
         schema_class(
@@ -905,7 +905,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
-        "\n" f"__all__ = {all_}\n",
+        f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,
         *class_defs,
         *generate_encoding_artifacts(
@@ -1016,9 +1016,7 @@ def generate_typed_dict(
             f"{args}\n    "
             f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
         )
-        doc = (
-            f"{doc}\n" f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
-        )
+        doc = f"{doc}\n{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
 
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
