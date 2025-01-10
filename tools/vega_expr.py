@@ -391,8 +391,7 @@ class ReplaceMany:
         if not self._mapping:
             name = self._mapping.__qualname__  # type: ignore[attr-defined]
             msg = (
-                f"Requires {name!r} to be populated, but got:\n"
-                f"{name}={self._mapping!r}"
+                f"Requires {name!r} to be populated, but got:\n{name}={self._mapping!r}"
             )
             raise TypeError(msg)
         return re.compile(rf"{self._fmt_match.format('|'.join(self._mapping))}")

@@ -1138,7 +1138,7 @@ class Then(ConditionLike, t.Generic[_C]):
             args = f"{COND}{self.condition!r}".replace("\n", "\n  ")
         else:
             conds = "\n    ".join(f"{c!r}" for c in self.condition)
-            args = f"{COND}[\n    " f"{conds}\n  ]"
+            args = f"{COND}[\n    {conds}\n  ]"
         return f"{name}({LB}\n  {args}\n{RB})"
 
 
@@ -1166,9 +1166,7 @@ class ChainedWhen(_BaseWhen):
 
     def __repr__(self) -> str:
         return (
-            f"{type(self).__name__}(\n"
-            f"  {self._conditions!r},\n  {self._condition!r}\n"
-            ")"
+            f"{type(self).__name__}(\n  {self._conditions!r},\n  {self._condition!r}\n)"
         )
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
@@ -3771,7 +3769,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def _set_resolve(self, **kwargs: Any):  # noqa: ANN202
         """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
-            msg = f"{self.__class__} object has no attribute " "'resolve'"
+            msg = f"{self.__class__} object has no attribute 'resolve'"
             raise ValueError(msg)
         copy = _top_schema_base(self).copy(deep=["resolve"])
         if copy.resolve is Undefined:
@@ -4726,7 +4724,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         """
         if not self.layer:
-            msg = "LayerChart: cannot call interactive() until a " "layer is defined"
+            msg = "LayerChart: cannot call interactive() until a layer is defined"
             raise ValueError(msg)
         copy = self.copy(deep=["layer"])
         copy.layer[0] = copy.layer[0].interactive(
