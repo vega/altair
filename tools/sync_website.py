@@ -31,7 +31,7 @@ CMD_PULL = "git pull"
 CMD_HEAD_HASH = "git rev-parse HEAD"
 CMD_ADD = "git add . --all --force"
 CMD_COMMIT = "git commit -m"
-CMD_PUSH = "git push origin master"
+CMD_PUSH = "git", "push", "origin", "master", "--dry-run"
 
 COMMIT_MSG_PREFIX = "doc build for commit"
 UNTRACKED = ".git"
