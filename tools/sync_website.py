@@ -106,7 +106,7 @@ def main(*, no_commit: bool = False) -> None:
     elif branch != "main":
         # FIXME: Unsure how to reproduce the RELEASING.md steps from this PR
         # https://github.com/vega/altair/blob/main/RELEASING.md
-        print(f"Unable to push from {branch!r}.\n" "Must be on 'main'.")
+        print(f"Unable to push from {branch!r}.\nMust be on 'main'.")
     else:
         add_commit_push_github(commit_message)
 
