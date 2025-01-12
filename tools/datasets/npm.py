@@ -45,8 +45,9 @@ class Npm:
         jsdelivr_version: LiteralString = "v1",
     ) -> None:
         output_dir.mkdir(exist_ok=True)
-        self._paths: dict[Literal["tags"], Path] = {
-            "tags": output_dir / f"{name_tags}.parquet"
+        self._paths: dict[Literal["tags", "datapackage"], Path] = {
+            "tags": output_dir / f"{name_tags}.parquet",
+            "datapackage": output_dir / "datapackage.json",
         }
         self._url: NpmUrl = NpmUrl(
             CDN=f"https://cdn.{jsdelivr}.net/{npm}/{package}@",
@@ -121,6 +122,12 @@ class Npm:
         with self._opener.open(req) as response:
             return read_fn(response)
 
-    def datapackage(self, *, tag: LiteralString | None = None) -> ParsedPackage:
-        pkg: FlPackage = self.file_gh(tag or "main", "datapackage.json")
+    def datapackage(
+        self, *, tag: LiteralString | None = None, frozen: bool = False
+    ) -> ParsedPackage:
+        pkg: FlPackage = (
+            json.loads(self._paths["datapackage"].read_text("utf-8"))
+            if frozen
+            else self.file_gh(tag or "main", "datapackage.json")
+        )
         return datapackage.parse_package(pkg)

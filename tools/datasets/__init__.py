@@ -130,7 +130,9 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
-    def refresh(self, *, include_typing: bool = False) -> pl.DataFrame:
+    def refresh(
+        self, *, include_typing: bool = False, frozen: bool = False
+    ) -> pl.DataFrame:
         """
         Update and sync all dataset metadata files.
 
@@ -138,26 +140,38 @@ class Application:
         ----------
         include_typing
             Regenerate ``altair.datasets._typing``.
+        frozen
+            Don't perform any requests or attempt to check for new versions.
+
+            .. note::
+                **Temporary** measure to work from ``main`` until `vega-datasets@3`_.
+
+        .. _vega-datasets@3:
+            https://github.com/vega/vega-datasets/issues/654
         """
-        print("Syncing datasets ...")
-        npm_tags = self.npm.tags()
-        self.write_parquet(npm_tags, self.paths["npm_tags"])
+        if not frozen:
+            print("Syncing datasets ...")
+            npm_tags = self.npm.tags()
+            self.write_parquet(npm_tags, self.paths["npm_tags"])
 
-        gh_tags = self.github.refresh_tags(npm_tags)
-        self.write_parquet(gh_tags, self.paths["gh_tags"])
+            gh_tags = self.github.refresh_tags(npm_tags)
+            self.write_parquet(gh_tags, self.paths["gh_tags"])
 
-        gh_trees = self.github.refresh_trees(gh_tags)
-        self.write_parquet(gh_trees, self.paths["gh_trees"])
+            gh_trees = self.github.refresh_trees(gh_tags)
+            self.write_parquet(gh_trees, self.paths["gh_trees"])
 
-        npm_urls_min = (
-            gh_trees.lazy()
-            .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
-            .filter(col("size") == col("size").min().over("dataset_name"))
-            .select("dataset_name", "url_npm")
-        )
-        self.write_csv_gzip(npm_urls_min, self.paths["url"])
+            npm_urls_min = (
+                gh_trees.lazy()
+                .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
+                .filter(col("size") == col("size").min().over("dataset_name"))
+                .select("dataset_name", "url_npm")
+            )
+            self.write_csv_gzip(npm_urls_min, self.paths["url"])
+        else:
+            print("Reusing frozen metadata ...")
+            gh_trees = pl.read_parquet(self.paths["gh_trees"])
 
-        package = self.npm.datapackage()
+        package = self.npm.datapackage(frozen=frozen)
         # TODO: Re-enable after deciding on how best to utilize
         # self.write_parquet(package["features"], self.paths["dpkg_features"])
         self.write_json_gzip(package["schemas"], self.paths["dpkg_schemas"])
