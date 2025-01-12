@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from altair.utils.plugin_registry import PluginRegistry
 
@@ -32,7 +32,7 @@ def test_plugin_registry():
     assert plugins.active == ""
     assert plugins.get() is None
     assert repr(plugins) == (
-        "TypedCallableRegistry(active='', " "registered=['new_plugin'])"
+        "TypedCallableRegistry(active='', registered=['new_plugin'])"
     )
 
     plugins.enable("new_plugin")
@@ -42,7 +42,7 @@ def test_plugin_registry():
     assert fn is not None
     assert fn(3) == 9
     assert repr(plugins) == (
-        "TypedCallableRegistry(active='new_plugin', " "registered=['new_plugin'])"
+        "TypedCallableRegistry(active='new_plugin', registered=['new_plugin'])"
     )
 
 

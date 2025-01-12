@@ -41,6 +41,7 @@ from tools.schemapi.utils import (
     spell_literal,
 )
 from tools.vega_expr import write_expr_module
+from tools.versioning import VERSIONS
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -50,7 +51,7 @@ if TYPE_CHECKING:
 
 T = TypeVar("T", bound="str | Iterable[str]")
 
-SCHEMA_VERSION: Final = "v5.20.1"
+SCHEMA_VERSION: Final = VERSIONS["vega-lite"]
 
 
 HEADER_COMMENT = """\
@@ -269,6 +270,7 @@ TEMPORAL: Literal["Temporal"] = "Temporal"
 BIN: Literal["Bin"] = "Bin"
 IMPUTE: Literal["Impute"] = "Impute"
 INTO_CONDITION: Literal["IntoCondition"] = "IntoCondition"
+CHART_DATA_TYPE: Literal["ChartDataType"] = "ChartDataType"
 
 # NOTE: `core.py` typing imports
 DATETIME: Literal["DateTime"] = "DateTime"
@@ -632,9 +634,8 @@ def copy_schemapi_util() -> None:
         destination_fp.open("w", encoding="utf8") as dest,
     ):
         dest.write(HEADER_COMMENT)
-        dest.writelines(source.readlines())
-    if sys.platform == "win32":
-        ruff.format(destination_fp)
+        dest.writelines(chain(source.readlines(), VERSIONS.iter_inline_literal()))
+    ruff.format(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -752,7 +753,8 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
     contents = [
         HEADER,
-        "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
+        "from collections.abc import Iterator, Sequence",
+        "from typing import Any, Literal, Union, Protocol, TYPE_CHECKING",
         "import pkgutil",
         "import json\n",
         "import narwhals.stable.v1 as nw\n",
@@ -761,9 +763,10 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
+            f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
-        "\n" f"__all__ = {all_}\n",
+        f"\n__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile=SCHEMA_FILE),
         BASE_SCHEMA.format(basename=basename),
         schema_class(
@@ -869,7 +872,8 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
         "import sys",
-        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING, TypedDict",
+        "from collections.abc import Sequence",
+        "from typing import Any, overload, Literal, Union, TYPE_CHECKING, TypedDict",
         import_typing_extensions((3, 10), "TypeAlias"),
         "import narwhals.stable.v1 as nw",
         "from altair.utils.schemapi import Undefined, with_property_setters",
@@ -901,7 +905,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
-        "\n" f"__all__ = {all_}\n",
+        f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,
         *class_defs,
         *generate_encoding_artifacts(
@@ -1012,9 +1016,7 @@ def generate_typed_dict(
             f"{args}\n    "
             f"__extra_items__: {finalize_type_reprs(kwds_all_tps, target=TARGET)}"
         )
-        doc = (
-            f"{doc}\n" f"{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
-        )
+        doc = f"{doc}\n{EXTRA_ITEMS_MESSAGE.format(invalid_kwds=repr(sorted(kwds)))}"
 
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
@@ -1224,7 +1226,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_mixins = schemapath / "mixins.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
     mixins_imports = (
-        "from typing import Any, Sequence, List, Literal, Union",
+        "from collections.abc import Sequence",
+        "from typing import Any, Literal, Union",
         "from altair.utils import use_signature, Undefined, SchemaBase",
         "from . import core",
     )
@@ -1254,7 +1257,8 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_theme_config: Path = schemapath / "_config.py"
     content_theme_config = [
         HEADER,
-        "from typing import Any, TYPE_CHECKING, Literal, Sequence, TypedDict, Union",
+        "from collections.abc import Sequence",
+        "from typing import Any, TYPE_CHECKING, Literal, TypedDict, Union",
         import_typing_extensions((3, 14), "TypedDict", include_sys=True),
         f"from ._typing import {ROW_COL_KWDS}, {PADDING_KWDS}",
         "\n\n",
@@ -1386,13 +1390,10 @@ def main() -> None:
         "--skip-download", action="store_true", help="skip downloading schema files"
     )
     args = parser.parse_args()
+    VERSIONS.update_all()
     copy_schemapi_util()
     vegalite_main(args.skip_download)
-    write_expr_module(
-        vlc.get_vega_version(),
-        output=EXPR_FILE,
-        header=HEADER_COMMENT,
-    )
+    write_expr_module(VERSIONS.vlc_vega, output=EXPR_FILE, header=HEADER_COMMENT)
     datasets.app.refresh(include_typing=True)
 
     # The modules below are imported after the generation of the new schema files

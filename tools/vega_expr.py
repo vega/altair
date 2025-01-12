@@ -16,7 +16,7 @@ from inspect import getmembers
 from itertools import chain
 from textwrap import TextWrapper as _TextWrapper
 from textwrap import indent
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Literal, overload
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParse, Token, read_ast_tokens
@@ -25,7 +25,7 @@ from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 
 if TYPE_CHECKING:
     import sys
-    from collections.abc import Iterable, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from re import Match, Pattern
 
@@ -47,14 +47,6 @@ VEGA_DOCS_URL: LiteralString = "https://vega.github.io/vega/docs/"
 EXPRESSIONS_DOCS_URL: LiteralString = f"{VEGA_DOCS_URL}expressions/"
 EXPRESSIONS_URL_TEMPLATE = "https://raw.githubusercontent.com/vega/vega/refs/tags/{version}/docs/docs/expressions.md"
 
-# Replacements to apply prior to parsing as markdown
-PRE_PARSE_REPLACEMENTS = [
-    # Closing paren messes up markdown parsing, replace with equivalent wikipedia URL
-    (
-        "https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)",
-        "https://en.wikipedia.org/wiki/Continuous_uniform_distribution",
-    )
-]
 
 # NOTE: Regex patterns
 FUNCTION_DEF_LINE: Pattern[str] = re.compile(
@@ -399,8 +391,7 @@ class ReplaceMany:
         if not self._mapping:
             name = self._mapping.__qualname__  # type: ignore[attr-defined]
             msg = (
-                f"Requires {name!r} to be populated, but got:\n"
-                f"{name}={self._mapping!r}"
+                f"Requires {name!r} to be populated, but got:\n{name}={self._mapping!r}"
             )
             raise TypeError(msg)
         return re.compile(rf"{self._fmt_match.format('|'.join(self._mapping))}")
@@ -939,15 +930,13 @@ def italics_to_backticks(s: str, names: Iterable[str], /) -> str:
     return re.sub(pattern, r"\g<not_link_start>``\g<name>``\g<not_link_end>", s)
 
 
-def parse_expressions(
-    source: Url | Path, /, replacements: list[tuple[str, str]] | None = None
-) -> Iterator[VegaExprDef]:
+def parse_expressions(source: Url | Path, /) -> Iterator[VegaExprDef]:
     """
     Download remote or read local `.md` resource and eagerly parse signatures of relevant definitions.
 
     Yields with docs to ensure each can use all remapped names, regardless of the order they appear.
     """
-    tokens = read_ast_tokens(source, replacements=replacements)
+    tokens = read_ast_tokens(source)
     expr_defs = tuple(VegaExprDef.from_tokens(tokens))
     VegaExprDef.remap_title.refresh()
     for expr_def in expr_defs:
@@ -971,7 +960,7 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
     # Retrieve all of the links used in expr method docstrings,
     # so we can include them in the class docstrings, so that sphinx
     # will find them.
-    expr_defs = parse_expressions(url, replacements=PRE_PARSE_REPLACEMENTS)
+    expr_defs = parse_expressions(url)
 
     links = {}
     rst_renderer = RSTRenderer()
@@ -1001,10 +990,7 @@ def write_expr_module(version: str, output: Path, *, header: str) -> None:
     )
     contents = chain(
         content,
-        (
-            expr_def.render()
-            for expr_def in parse_expressions(url, replacements=PRE_PARSE_REPLACEMENTS)
-        ),
+        (expr_def.render() for expr_def in parse_expressions(url)),
         [MODULE_POST],
     )
     print(f"Generating\n {url!s}\n  ->{output!s}")

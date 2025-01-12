@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     from altair.datasets._readers import _Reader
     from altair.datasets._typing import Dataset, FlFieldStr
 
-    _Dataset: TypeAlias = "Dataset | LiteralString"
+    _Dataset: TypeAlias = "Dataset | LiteralString"  # noqa: TC008
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
 
 __all__ = ["DatasetCache", "UrlCache", "url_cache"]
@@ -138,7 +138,7 @@ class UrlCache(CompressedCache[_KT, _VT]):
         reader = csv.reader((bs.decode() for bs in b_lines), dialect=csv.unix_dialect)
         header = tuple(next(reader))
         if header != self.columns:
-            msg = f"Expected header to match {self.columns!r},\n" f"but got: {header!r}"
+            msg = f"Expected header to match {self.columns!r},\nbut got: {header!r}"
             raise ValueError(msg)
         return dict(reader)
 

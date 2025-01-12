@@ -181,7 +181,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         if isinstance(url, str):
             return url
         else:
-            msg = f"Expected 'str' but got {type(url).__name__!r}\n" f"from {url!r}."
+            msg = f"Expected 'str' but got {type(url).__name__!r}\nfrom {url!r}."
             raise TypeError(msg)
 
     def query(
@@ -485,7 +485,7 @@ def infer_backend(
     it = (backend(name) for name in priority if is_available(_requirements(name)))
     if reader := next(it, None):
         return reader
-    msg = f"Found no supported backend, searched:\n" f"{priority!r}"
+    msg = f"Found no supported backend, searched:\n{priority!r}"
     raise AltairDatasetsError(msg)
 
 

@@ -138,7 +138,7 @@ class _GitHubRequestNamespace:
         if warn_lower and len(content) < n:
             earliest = response[-1]["name"]
             n_response = len(content)
-            msg = f"Requested {n=} tags, but got {n_response}\n" f"{earliest=}"
+            msg = f"Requested {n=} tags, but got {n_response}\n{earliest=}"
             warnings.warn(msg, stacklevel=3)
         return content
 
@@ -457,7 +457,7 @@ class GitHub:
             time.sleep(self.delay(rate_limit))
             dfs.append(self.trees(tag))
         df = pl.concat(dfs)
-        print(f"Finished collection.\n" f"Found {df.height} new rows")
+        print(f"Finished collection.\nFound {df.height} new rows")
         return df
 
 

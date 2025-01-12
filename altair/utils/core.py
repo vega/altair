@@ -8,11 +8,11 @@ import re
 import sys
 import traceback
 import warnings
-from collections.abc import Iterator, Mapping, MutableMapping
+from collections.abc import Callable, Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, cast, overload
+from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -32,8 +32,6 @@ else:
 
 
 if TYPE_CHECKING:
-    import typing as t
-
     import pandas as pd
     from narwhals.stable.v1.typing import IntoExpr
 
@@ -287,7 +285,7 @@ def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     return props_geom
 
 
-def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
+def sanitize_geo_interface(geo: MutableMapping[Any, Any]) -> dict[str, Any]:
     """
     Santize a geo_interface to prepare it for serialization.
 
@@ -768,21 +766,21 @@ def use_signature(tp: Callable[P, Any], /):
 
 @overload
 def update_nested(
-    original: t.MutableMapping[Any, Any],
-    update: t.Mapping[Any, Any],
+    original: MutableMapping[Any, Any],
+    update: Mapping[Any, Any],
     copy: Literal[False] = ...,
-) -> t.MutableMapping[Any, Any]: ...
+) -> MutableMapping[Any, Any]: ...
 @overload
 def update_nested(
-    original: t.Mapping[Any, Any],
-    update: t.Mapping[Any, Any],
+    original: Mapping[Any, Any],
+    update: Mapping[Any, Any],
     copy: Literal[True],
-) -> t.MutableMapping[Any, Any]: ...
+) -> MutableMapping[Any, Any]: ...
 def update_nested(
     original: Any,
-    update: t.Mapping[Any, Any],
+    update: Mapping[Any, Any],
     copy: bool = False,
-) -> t.MutableMapping[Any, Any]:
+) -> MutableMapping[Any, Any]:
     """
     Update nested dictionaries.
 

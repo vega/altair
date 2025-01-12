@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import collections.abc as cabc
 import typing as t
 import typing_extensions as te
+from collections.abc import Sequence
 from importlib import import_module as _import_module
 from importlib.util import find_spec as _find_spec
 from inspect import getattr_static, ismodule
@@ -27,10 +29,10 @@ _TYPING_CONSTRUCTS: set[t.Any] = {
     t.Any,
     t.Literal,
     t.Union,
-    t.Iterable,
+    cabc.Iterable,
     t.Protocol,
     te.Protocol,
-    t.Sequence,
+    Sequence,
     t.IO,
     annotations,
     te.Required,
@@ -81,7 +83,7 @@ def update__all__variable() -> None:
     ruff.write_lint_format(init_path, new_lines)
 
     for source in DYNAMIC_ALL:
-        print(f"Updating `__all__`\n " f"{source!r}\n  ->{normalize_source(source)!s}")
+        print(f"Updating `__all__`\n {source!r}\n  ->{normalize_source(source)!s}")
         update_dynamic__all__(source)
 
 
@@ -147,8 +149,7 @@ def _retrieve_all(name: str, /) -> list[str]:
     found = _import_module(name).__all__
     if not found:
         msg = (
-            f"Expected to find a populated `__all__` for {name!r},\n"
-            f"but got: {found!r}"
+            f"Expected to find a populated `__all__` for {name!r},\nbut got: {found!r}"
         )
         raise AttributeError(msg)
     return found

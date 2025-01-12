@@ -23,7 +23,7 @@ if TYPE_CHECKING:
     from _pytest.mark.structures import Markable
 
     MarksType: TypeAlias = (
-        "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
+        "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"  # noqa: TC008
     )
 
 

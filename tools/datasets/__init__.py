@@ -260,7 +260,7 @@ class Application:
         EXTENSION_GUARD = "is_ext_read"
         METADATA_TD = "Metadata"
         DESCRIPTION_DEFAULT = "_description_"
-        NOTE_SEP = f"\n\n{indent * 2}" f".. note::\n{indent * 3}"
+        NOTE_SEP = f"\n\n{indent * 2}.. note::\n{indent * 3}"
 
         name_collision = (
             f"Dataset is available via multiple formats.{NOTE_SEP}"

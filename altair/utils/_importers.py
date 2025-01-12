@@ -5,12 +5,14 @@ from typing import TYPE_CHECKING
 
 from packaging.version import Version
 
+from altair.utils.schemapi import VERSIONS
+
 if TYPE_CHECKING:
     from types import ModuleType
 
 
 def import_vegafusion() -> ModuleType:
-    min_version = "1.5.0"
+    min_version = VERSIONS["vegafusion"]
     try:
         import vegafusion as vf
 
@@ -45,7 +47,7 @@ def import_vegafusion() -> ModuleType:
 
 
 def import_vl_convert() -> ModuleType:
-    min_version = "1.6.0"
+    min_version = VERSIONS["vl-convert-python"]
     try:
         version = importlib_version("vl-convert-python")
         if Version(version) < Version(min_version):

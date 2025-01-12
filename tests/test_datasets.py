@@ -608,7 +608,7 @@ movies_fail: ParameterSet = pytest.param(
 earthquakes_fail: ParameterSet = pytest.param(
     "earthquakes",
     marks=pytest.mark.xfail(
-        reason="Only working for `polars`.\n" "GeoJSON fails on native `pyarrow`"
+        reason="Only working for `polars`.\nGeoJSON fails on native `pyarrow`"
     ),
 )
 
