@@ -172,8 +172,7 @@ class Application:
             gh_trees = pl.read_parquet(self.paths["gh_trees"])
 
         package = self.npm.datapackage(frozen=frozen)
-        # TODO: Re-enable after deciding on how best to utilize
-        # self.write_parquet(package["features"], self.paths["dpkg_features"])
+        self.write_parquet(package["features"], self.paths["dpkg_features"])
         self.write_json_gzip(package["schemas"], self.paths["dpkg_schemas"])
 
         if include_typing:

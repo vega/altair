@@ -88,6 +88,7 @@ def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
             col("hash").str.split(":").list.last().alias("sha"),
             pl.concat_str(pl.lit(base_url), "path").alias("url"),
         )
+        .sort(DATASET_NAME, "bytes")
         .collect()
     )
 
