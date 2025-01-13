@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
     from altair.datasets._readers import _Backend
-    from altair.datasets._typing import Dataset, Extension, Version
+    from altair.datasets._typing import Dataset, Extension
 
 
 __all__ = ["Loader", "load"]
@@ -111,7 +111,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pandas``, backed by ``pyarrow`` dtypes:
 
             data = Loader.from_backend("pandas[pyarrow]")
-            cars = data("cars", tag="v1.29.0")
+            cars = data("cars")
 
             >>> type(cars)  # doctest: +SKIP
             pandas.core.frame.DataFrame
@@ -137,7 +137,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: Version | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
         """
@@ -152,8 +151,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             .. note::
                 Only needed if ``name`` is available in multiple formats.
-        tag
-            Version identifier for a `vega-datasets release`_.
         **kwds
             Arguments passed to the underlying read function.
 
@@ -161,8 +158,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
         .. _Path.suffix:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-        .. _vega-datasets release:
-            https://github.com/vega/vega-datasets/releases
 
         Examples
         --------
@@ -171,7 +166,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             from altair.datasets import Loader
 
             data = Loader.from_backend("polars")
-            source = data("iowa-electricity", tag="v2.10.0")
+            source = data("iowa-electricity")
 
             >>> source.columns  # doctest: +SKIP
             ['year', 'source', 'net_generation']
@@ -199,7 +194,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pandas``:
 
             data = Loader.from_backend("pandas")
-            source = data("iowa-electricity", tag="v2.10.0")
+            source = data("iowa-electricity")
 
             >>> source.columns  # doctest: +SKIP
             Index(['year', 'source', 'net_generation'], dtype='object')
@@ -223,7 +218,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pyarrow``:
 
             data = Loader.from_backend("pyarrow")
-            source = data("iowa-electricity", tag="v2.10.0")
+            source = data("iowa-electricity")
 
             >>> source.column_names  # doctest: +SKIP
             ['year', 'source', 'net_generation']
@@ -238,14 +233,13 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             source: [["Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels",...,"Renewables","Renewables","Renewables","Renewables","Renewables"]]
             net_generation: [[35361,35991,36234,36205,36883,...,16476,17452,19091,21241,21933]]
         """
-        return self._reader.dataset(name, suffix, tag=tag, **kwds)
+        return self._reader.dataset(name, suffix, **kwds)
 
     def url(
         self,
         name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: Version | None = None,
     ) -> str:
         """
         Return the address of a remote dataset.
@@ -259,15 +253,11 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             .. note::
                 Only needed if ``name`` is available in multiple formats.
-        tag
-            Version identifier for a `vega-datasets release`_.
 
         .. _Path.stem:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
         .. _Path.suffix:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-        .. _vega-datasets release:
-            https://github.com/vega/vega-datasets/releases
 
         Examples
         --------
@@ -277,15 +267,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             from altair.datasets import Loader
 
             data = Loader.from_backend("polars")
-            >>> data.url("cars", tag="v2.9.0")  # doctest: +SKIP
-            'https://cdn.jsdelivr.net/npm/vega-datasets@v2.9.0/data/cars.json'
+            >>> data.url("cars")  # doctest: +SKIP
+            'https://cdn.jsdelivr.net/npm/vega-datasets@v2.11.0/data/cars.json'
 
         We can pass the result directly to a chart:
 
-            url = data.url("cars", tag="v2.9.0")
+            url = data.url("cars")
             alt.Chart(url).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
         """
-        return self._reader.url(name, suffix, tag=tag)
+        return self._reader.url(name, suffix)
 
     @property
     def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
@@ -318,7 +308,6 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = ...,
         /,
-        tag: Version | None = ...,
         backend: None = ...,
         **kwds: Any,
     ) -> IntoDataFrameT: ...
@@ -328,7 +317,6 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = ...,
         /,
-        tag: Version | None = ...,
         backend: Literal["polars"] = ...,
         **kwds: Any,
     ) -> pl.DataFrame: ...
@@ -338,7 +326,6 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = ...,
         /,
-        tag: Version | None = ...,
         backend: Literal["pandas", "pandas[pyarrow]"] = ...,
         **kwds: Any,
     ) -> pd.DataFrame: ...
@@ -348,7 +335,6 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = ...,
         /,
-        tag: Version | None = ...,
         backend: Literal["pyarrow"] = ...,
         **kwds: Any,
     ) -> pa.Table: ...
@@ -357,14 +343,13 @@ class _Load(Loader[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: Version | None = None,
         backend: _Backend | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT | pl.DataFrame | pd.DataFrame | pa.Table:
         if backend is None:
-            return super().__call__(name, suffix, tag, **kwds)
+            return super().__call__(name, suffix, **kwds)
         else:
-            return self.from_backend(backend)(name, suffix, tag=tag, **kwds)
+            return self.from_backend(backend)(name, suffix, **kwds)
 
 
 load: _Load[Any, Any]

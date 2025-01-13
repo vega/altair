@@ -14,7 +14,7 @@ if TYPE_CHECKING:
         from typing_extensions import LiteralString
 
     from altair.datasets._loader import _Load
-    from altair.datasets._typing import Dataset, Extension, Version
+    from altair.datasets._typing import Dataset, Extension
 
 
 __all__ = ["Loader", "load", "url"]
@@ -47,7 +47,6 @@ def url(
     name: Dataset | LiteralString,
     suffix: Extension | None = None,
     /,
-    tag: Version | None = None,
 ) -> str:
     """
     Return the address of a remote dataset.
@@ -61,15 +60,11 @@ def url(
 
         .. note::
             Only needed if ``name`` is available in multiple formats.
-    tag
-        Version identifier for a `vega-datasets release`_.
 
     .. _Path.stem:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
     .. _Path.suffix:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-    .. _vega-datasets release:
-        https://github.com/vega/vega-datasets/releases
 
     Related
     -------
@@ -83,7 +78,7 @@ def url(
     try:
         from altair.datasets._loader import load
 
-        url = load.url(name, suffix, tag=tag)
+        url = load.url(name, suffix)
     except AltairDatasetsError:
         from altair.datasets._cache import url_cache
 

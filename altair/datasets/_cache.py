@@ -8,8 +8,6 @@ from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, get_args
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
 
-from altair.datasets._typing import VERSION_LATEST
-
 if sys.version_info >= (3, 12):
     from typing import Protocol
 else:
@@ -105,10 +103,7 @@ class UrlCache(CompressedCache[_KT, _VT]):
     `csv`_, `gzip`_ -based, lazy url lookup.
 
     Operates on a subset of available datasets:
-    - Only the latest version
     - Excludes `.parquet`, which `cannot be read via url`_
-    - Name collisions are pre-resolved
-        - Only provide the smallest (e.g. ``weather.json`` instead of ``weather.csv``)
 
     .. _csv:
         https://docs.python.org/3/library/csv.html
@@ -256,13 +251,10 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         Requires **30-50MB** of disk-space.
         """
         stems = tuple(fp.stem for fp in self)
-        latest = nw.col("tag") == nw.lit(VERSION_LATEST)
-        predicates = (~(nw.col("sha").is_in(stems)), latest) if stems else (latest,)
+        predicates = (~(nw.col("sha").is_in(stems)),) if stems else ()
         frame = (
-            self._rd._scan_metadata(
-                predicates, ext_supported=True, name_collision=False
-            )
-            .select("sha", "suffix", "url_npm")
+            self._rd._scan_metadata(predicates, is_image=False)  # type: ignore
+            .select("sha", "suffix", "url")
             .unique("sha")
             .collect()
         )
@@ -272,7 +264,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         print(f"Downloading {len(frame)} missing datasets...")
         for row in frame.iter_rows(named=True):
             fp: Path = self.path / (row["sha"] + row["suffix"])
-            with self._rd._opener.open(row["url_npm"]) as f:
+            with self._rd._opener.open(row["url"]) as f:
                 fp.touch()
                 fp.write_bytes(f.read())
         print("Finished downloads")

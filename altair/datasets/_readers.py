@@ -14,7 +14,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from functools import partial
 from importlib import import_module
 from importlib.util import find_spec
-from itertools import chain, islice
+from itertools import chain
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
@@ -25,7 +25,6 @@ from typing import (
     Literal,
     Protocol,
     TypeVar,
-    cast,
     overload,
 )
 
@@ -63,7 +62,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    from altair.datasets._typing import Dataset, Extension, Metadata, Version
+    from altair.datasets._typing import Dataset, Extension, Metadata
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
     _ExtensionScan: TypeAlias = Literal[".parquet"]
@@ -148,15 +147,13 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: Version | None = None,
         **kwds: Any,
     ) -> IntoDataFrameT:
-        df = self.query(**_extract_constraints(name, suffix, tag))
-        it = islice(df.iter_rows(named=True), 1)
-        result = cast("Metadata", next(it))
-        url = result["url_npm"]
+        df = self.query(**_extract_constraints(name, suffix))
+        result = next(df.iter_rows(named=True))
+        url = result["url"]
         fn = self.read_fn(url)
-        if default_kwds := self._schema_kwds(result):
+        if default_kwds := self._schema_kwds(result):  # type: ignore
             kwds = default_kwds | kwds if kwds else default_kwds
 
         if self.cache.is_active():
@@ -177,10 +174,9 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         name: Dataset | LiteralString,
         suffix: Extension | None = None,
         /,
-        tag: Version | None = None,
     ) -> str:
-        frame = self.query(**_extract_constraints(name, suffix, tag))
-        url = nw.to_py_scalar(frame.item(0, "url_npm"))
+        frame = self.query(**_extract_constraints(name, suffix))
+        url = frame.item(0, "url")
         if isinstance(url, str):
             return url
         else:
@@ -213,71 +209,6 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.LazyFrame:
-        frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
-        if predicates or constraints:
-            return frame.filter(*predicates, **constraints)
-        return frame
-
-    def dataset_dpkg(
-        self,
-        name: Dataset | LiteralString,
-        suffix: Extension | None = None,
-        /,
-        tag: Version | None = None,
-        **kwds: Any,
-    ) -> IntoDataFrameT:
-        df = self.query_dpkg(**_extract_constraints(name, suffix, tag))
-        result = next(df.iter_rows(named=True))
-        url = result["url"]
-        fn = self.read_fn(url)
-        if default_kwds := self._schema_kwds(result):  # type: ignore
-            kwds = default_kwds | kwds if kwds else default_kwds
-
-        if self.cache.is_active():
-            fp = self.cache.path / (result["sha"] + result["suffix"])
-            if fp.exists() and fp.stat().st_size:
-                return fn(fp, **kwds)
-            else:
-                with self._opener.open(url) as f:
-                    fp.touch()
-                    fp.write_bytes(f.read())
-                return fn(fp, **kwds)
-        else:
-            with self._opener.open(url) as f:
-                return fn(f, **kwds)
-
-    def url_dpkg(
-        self,
-        name: Dataset | LiteralString,
-        suffix: Extension | None = None,
-        /,
-        tag: Version | None = None,
-    ) -> str:
-        frame = self.query_dpkg(**_extract_constraints(name, suffix, tag))
-        url = frame.item(0, "url")
-        if isinstance(url, str):
-            return url
-        else:
-            msg = f"Expected 'str' but got {type(url).__name__!r}\nfrom {url!r}."
-            raise TypeError(msg)
-
-    def query_dpkg(
-        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-    ) -> nw.DataFrame[IntoDataFrameT]:
-        frame = self._scan_dpkg(*predicates, **constraints).collect()
-        if not frame.is_empty():
-            return frame
-        else:
-            terms = "\n".join(f"{t!r}" for t in (predicates, constraints) if t)
-            msg = f"Found no results for:\n    {terms}"
-            raise ValueError(msg)
-
-    def _scan_dpkg(
-        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-    ) -> nw.LazyFrame:
-        if "tag" in constraints:
-            msg = f"{_DATAPACKAGE.name!r} only supports the latest version, but got: {constraints.get('tag')!r}"
-            raise NotImplementedError(msg)
         frame = nw.from_native(self.scan_fn(_DATAPACKAGE)(_DATAPACKAGE)).lazy()
         if predicates or constraints:
             return frame.filter(*predicates, **constraints)
@@ -491,12 +422,10 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
 
 
 def _extract_constraints(
-    name: Dataset | LiteralString, suffix: Extension | None, tag: Version | None, /
+    name: Dataset | LiteralString, suffix: Extension | None, /
 ) -> Metadata:
     """Transform args into a mapping to column names."""
     constraints: Metadata = {}
-    if tag is not None:
-        constraints["tag"] = tag
     if name.endswith(EXTENSION_SUFFIXES):
         fp = Path(name)
         constraints["dataset_name"] = fp.stem
