@@ -59,10 +59,6 @@ def extract_schemas(pkg: FlPackage, /) -> Mapping[Dataset, Mapping[str, FlFieldS
 
 
 def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
-    # NOTE: `is_name_collision` != `GitHub.trees`/`Metadata.name_collision`
-    # - This only considers latest version
-    #   - Those others are based on whatever tag the tree refers to
-    # https://github.com/vega/vega-datasets/issues/633
     EXCLUDE = (
         "name",
         "type",
@@ -82,7 +78,6 @@ def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
         .with_columns(
             path_stem("path").alias(DATASET_NAME),
             cs.exclude("name"),
-            col("name").is_duplicated().alias("is_name_collision"),
         )
         .select(
             DATASET_NAME,
