@@ -17,7 +17,7 @@ from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader, url
 from altair.datasets._readers import _METADATA, AltairDatasetsError
-from altair.datasets._typing import Dataset, Extension, Metadata, Version, is_ext_read
+from altair.datasets._typing import Dataset, Extension, Metadata, is_ext_read
 from tests import skip_requires_pyarrow, slow
 
 if sys.version_info >= (3, 14):
@@ -26,7 +26,7 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Mapping
+    from collections.abc import Container, Iterator
     from pathlib import Path
     from typing import Literal
 
@@ -46,7 +46,6 @@ class DatasetSpec(TypedDict, total=False):
 
     name: Dataset
     suffix: Extension
-    tag: Version
     marks: MarksType
 
 
@@ -127,10 +126,8 @@ def metadata_columns() -> frozenset[str]:
 
 
 def match_url(name: Dataset, url: str) -> bool:
-    return (
-        re.match(rf".+jsdelivr\.net/npm/vega-datasets@.+/data/{name}\..+", url)
-        is not None
-    )
+    pattern = rf".+/vega-datasets@.+/data/{name}\..+"
+    return re.match(pattern, url) is not None
 
 
 @backends
@@ -253,10 +250,10 @@ def test_load_call(monkeypatch: pytest.MonkeyPatch) -> None:
         "political-contributions",
         "population",
         "population_engineers_hurricanes",
-        "seattle-temps",
+        "unemployment",
         "seattle-weather",
         "seattle-weather-hourly-normals",
-        "sf-temps",
+        "gapminder-health-income",
         "sp500",
         "sp500-2000",
         "stocks",
@@ -367,30 +364,16 @@ def test_dataset_not_found(backend: _Backend) -> None:
 
     ``Loader.url`` is used since it doesn't require a remote connection.
     """
-    import polars as pl
-
     data = Loader.from_backend(backend)
     real_name: Literal["disasters"] = "disasters"
-    real_suffix: Literal[".csv"] = ".csv"
-    real_tag: Literal["v1.14.0"] = "v1.14.0"
-
     invalid_name: Literal["fake name"] = "fake name"
     invalid_suffix: Literal["fake suffix"] = "fake suffix"
-    invalid_tag: Literal["fake tag"] = "fake tag"
-
     incorrect_suffix: Literal[".json"] = ".json"
-    incorrect_tag: Literal["v1.5.0"] = "v1.5.0"
 
     ERR_NO_RESULT = ValueError
-    # NOTE: ``polars`` enforces enums stricter than other packages.
-    # Rather than returning an empty dataframe, filtering on a value
-    # *outside* of the enum range raises an internal error.
-    ERR_NO_RESULT_OR_ENUM = (ERR_NO_RESULT, pl.exceptions.InvalidOperationError)
-
     MSG_NO_RESULT = "Found no results for"
     NAME = "dataset_name"
     SUFFIX = "suffix"
-    TAG = "tag"
 
     with pytest.raises(
         ERR_NO_RESULT,
@@ -408,27 +391,6 @@ def test_dataset_not_found(backend: _Backend) -> None:
         data.url(real_name, invalid_suffix)  # type: ignore[arg-type]
 
     with pytest.raises(
-        ERR_NO_RESULT_OR_ENUM,
-        match=re.compile(rf"{invalid_tag}", re.DOTALL),
-    ):
-        data.url(real_name, tag=invalid_tag)  # type: ignore[arg-type]
-
-    with pytest.raises(
-        ERR_NO_RESULT_OR_ENUM,
-        match=re.compile(rf"{invalid_tag}", re.DOTALL),
-    ):
-        data.url(real_name, real_suffix, tag=invalid_tag)  # type: ignore[arg-type]
-
-    with pytest.raises(
-        ERR_NO_RESULT,
-        match=re.compile(
-            rf"{MSG_NO_RESULT}.+{TAG}.+{incorrect_tag}.+{SUFFIX}.+{real_suffix}.+{NAME}.+{real_name}",
-            re.DOTALL,
-        ),
-    ):
-        data.url(real_name, real_suffix, tag=incorrect_tag)
-
-    with pytest.raises(
         ERR_NO_RESULT,
         match=re.compile(
             rf"{MSG_NO_RESULT}.+{SUFFIX}.+{incorrect_suffix}.+{NAME}.+{real_name}",
@@ -436,23 +398,6 @@ def test_dataset_not_found(backend: _Backend) -> None:
         ),
     ):
         data.url(real_name, incorrect_suffix)
-
-    with pytest.raises(
-        ERR_NO_RESULT,
-        match=re.compile(
-            rf"{MSG_NO_RESULT}.+{TAG}.+{real_tag}.+{SUFFIX}.+{incorrect_suffix}.+{NAME}.+{real_name}",
-            re.DOTALL,
-        ),
-    ):
-        data.url(real_name, incorrect_suffix, tag=real_tag)
-
-    with pytest.raises(
-        ERR_NO_RESULT,
-        match=re.compile(
-            rf"{MSG_NO_RESULT}.+{TAG}.+{incorrect_tag}.+{NAME}.+{real_name}", re.DOTALL
-        ),
-    ):
-        data.url(real_name, tag=incorrect_tag)
 
 
 @backends
@@ -482,10 +427,10 @@ def test_reader_cache(
     assert tuple(data.cache) == ()
 
     # smallest csvs
-    lookup_groups = data("lookup_groups", tag="v2.5.3")
-    data("lookup_people", tag="v2.4.0")
-    data("iowa-electricity", tag="v2.3.1")
-    data("global-temp", tag="v2.9.0")
+    lookup_groups = data("lookup_groups")
+    data("lookup_people")
+    data("iowa-electricity")
+    data("global-temp")
 
     cached_paths = tuple(data.cache)
     assert len(cached_paths) == 4
@@ -493,32 +438,29 @@ def test_reader_cache(
     if nw_dep.is_polars_dataframe(lookup_groups):
         left, right = (
             lookup_groups,
-            cast("pl.DataFrame", data("lookup_groups", tag="v2.5.3")),
+            cast("pl.DataFrame", data("lookup_groups", ".csv")),
         )
     else:
         left, right = (
             pl.DataFrame(lookup_groups),
-            pl.DataFrame(data("lookup_groups", tag="v2.5.3")),
+            pl.DataFrame(data("lookup_groups", ".csv")),
         )
 
     assert_frame_equal(left, right)
     assert len(tuple(data.cache)) == 4
     assert cached_paths == tuple(data.cache)
 
-    data("iowa-electricity", tag="v1.30.2")
-    data("global-temp", tag="v2.8.1")
-    data("global-temp", tag="v2.8.0")
+    data("iowa-electricity", ".csv")
+    data("global-temp", ".csv")
+    data("global-temp.csv")
 
     assert len(tuple(data.cache)) == 4
     assert cached_paths == tuple(data.cache)
 
-    data("lookup_people", tag="v1.10.0")
-    data("lookup_people", tag="v1.11.0")
-    data("lookup_people", tag="v1.20.0")
-    data("lookup_people", tag="v1.21.0")
-    data("lookup_people", tag="v2.1.0")
-    data("lookup_people", tag="v2.3.0")
-    data("lookup_people", tag="v2.5.0-next.0")
+    data("lookup_people")
+    data("lookup_people.csv")
+    data("lookup_people", ".csv")
+    data("lookup_people")
 
     assert len(tuple(data.cache)) == 4
     assert cached_paths == tuple(data.cache)
@@ -644,12 +586,12 @@ def test_pyarrow_read_json(
 @pytest.mark.parametrize(
     ("spec", "column"),
     [
-        (DatasetSpec(name="cars", tag="v2.11.0"), "Year"),
-        (DatasetSpec(name="unemployment-across-industries", tag="v2.11.0"), "date"),
-        (DatasetSpec(name="flights-10k", tag="v2.11.0"), "date"),
-        (DatasetSpec(name="football", tag="v2.11.0"), "date"),
-        (DatasetSpec(name="crimea", tag="v2.11.0"), "date"),
-        (DatasetSpec(name="ohlc", tag="v2.11.0"), "date"),
+        (DatasetSpec(name="cars"), "Year"),
+        (DatasetSpec(name="unemployment-across-industries"), "date"),
+        (DatasetSpec(name="flights-10k"), "date"),
+        (DatasetSpec(name="football"), "date"),
+        (DatasetSpec(name="crimea"), "date"),
+        (DatasetSpec(name="ohlc"), "date"),
     ],
 )
 def test_polars_read_json_roundtrip(
@@ -657,40 +599,47 @@ def test_polars_read_json_roundtrip(
     spec: DatasetSpec,
     column: str,
 ) -> None:
-    frame = polars_loader(spec["name"], ".json", tag=spec["tag"])
+    frame = polars_loader(spec["name"], ".json")
     tp = frame.schema.to_python()[column]
     assert tp is dt.date or issubclass(tp, dt.date)
 
 
-def _dataset_params(overrides: Mapping[Dataset, DatasetSpec]) -> Iterator[ParameterSet]:
-    """https://github.com/vega/vega-datasets/issues/627."""
+def _dataset_params(*, skip: Container[str] = ()) -> Iterator[ParameterSet]:
+    """Temp way of excluding datasets that were removed."""
     names: tuple[Dataset, ...] = get_args(Dataset)
-    args: tuple[Dataset, Extension | None, Version | None]
+    args: tuple[Dataset, Extension | None]
     for name in names:
         marks: MarksType = ()
-        if name in overrides:
-            el = overrides[name]
-            args = name, el.get("suffix"), el.get("tag")
-            marks = el.get("marks", ())
-        else:
-            args = name, None, None
+        if name in skip:
+            continue
+        args = name, None
         yield pytest.param(*args, marks=marks)
 
 
 @slow
 @datasets_debug
 @pytest.mark.parametrize(
-    ("name", "suffix", "tag"),
-    list(_dataset_params({"flights-3m": DatasetSpec(tag="v2.11.0")})),
+    ("name", "suffix"),
+    list(
+        _dataset_params(
+            skip=(
+                "climate",
+                "graticule",
+                "sf-temps",
+                "iris",
+                "weball26",
+                "seattle-temps",
+            )
+        )
+    ),
 )
 def test_all_datasets(
     polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
     name: Dataset,
     suffix: Extension,
-    tag: Version,
 ) -> None:
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
-    frame = polars_loader(name, suffix, tag=tag)
+    frame = polars_loader(name, suffix)
     assert nw_dep.is_polars_dataframe(frame)
 
 
