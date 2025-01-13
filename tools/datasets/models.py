@@ -255,6 +255,7 @@ class FlResource(TypedDict):
         "text/topojson",
     ]
     encoding: NotRequired[Literal["utf-8"]]
+    hash: str
     bytes: int
     dialect: NotRequired[FlCsvDialect | FlJsonDialect]
     schema: NotRequired[FlSchema]

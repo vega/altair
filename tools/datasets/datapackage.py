@@ -70,6 +70,10 @@ def extract_features(pkg: FlPackage, /) -> pl.DataFrame:
         "encoding",
         "dialect",
         "schema",
+        "sources",
+        "licenses",
+        "hash",
+        "description",
     )
     return (
         pl.LazyFrame(pkg["resources"])
@@ -84,6 +88,7 @@ def extract_features(pkg: FlPackage, /) -> pl.DataFrame:
             ~cs.by_name(DATASET_NAME, EXCLUDE),
             *FEATURES,
             col("schema").is_not_null().alias("has_schema"),
+            col("hash").str.split(":").list.last().alias("sha"),
         )
         .collect()
     )
