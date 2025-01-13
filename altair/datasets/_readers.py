@@ -87,6 +87,9 @@ if TYPE_CHECKING:
 __all__ = ["backend"]
 
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
+_DATAPACKAGE: Final[Path] = (
+    Path(__file__).parent / "_metadata" / "datapackage_features.parquet"
+)
 
 
 class AltairDatasetsError(Exception): ...
@@ -211,6 +214,71 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.LazyFrame:
         frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
+        if predicates or constraints:
+            return frame.filter(*predicates, **constraints)
+        return frame
+
+    def dataset_dpkg(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: Version | None = None,
+        **kwds: Any,
+    ) -> IntoDataFrameT:
+        df = self.query_dpkg(**_extract_constraints(name, suffix, tag))
+        result = next(df.iter_rows(named=True))
+        url = result["url"]
+        fn = self.read_fn(url)
+        if default_kwds := self._schema_kwds(result):  # type: ignore
+            kwds = default_kwds | kwds if kwds else default_kwds
+
+        if self.cache.is_active():
+            fp = self.cache.path / (result["sha"] + result["suffix"])
+            if fp.exists() and fp.stat().st_size:
+                return fn(fp, **kwds)
+            else:
+                with self._opener.open(url) as f:
+                    fp.touch()
+                    fp.write_bytes(f.read())
+                return fn(fp, **kwds)
+        else:
+            with self._opener.open(url) as f:
+                return fn(f, **kwds)
+
+    def url_dpkg(
+        self,
+        name: Dataset | LiteralString,
+        suffix: Extension | None = None,
+        /,
+        tag: Version | None = None,
+    ) -> str:
+        frame = self.query_dpkg(**_extract_constraints(name, suffix, tag))
+        url = frame.item(0, "url")
+        if isinstance(url, str):
+            return url
+        else:
+            msg = f"Expected 'str' but got {type(url).__name__!r}\nfrom {url!r}."
+            raise TypeError(msg)
+
+    def query_dpkg(
+        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
+    ) -> nw.DataFrame[IntoDataFrameT]:
+        frame = self._scan_dpkg(*predicates, **constraints).collect()
+        if not frame.is_empty():
+            return frame
+        else:
+            terms = "\n".join(f"{t!r}" for t in (predicates, constraints) if t)
+            msg = f"Found no results for:\n    {terms}"
+            raise ValueError(msg)
+
+    def _scan_dpkg(
+        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
+    ) -> nw.LazyFrame:
+        if "tag" in constraints:
+            msg = f"{_DATAPACKAGE.name!r} only supports the latest version, but got: {constraints.get('tag')!r}"
+            raise NotImplementedError(msg)
+        frame = nw.from_native(self.scan_fn(_DATAPACKAGE)(_DATAPACKAGE)).lazy()
         if predicates or constraints:
             return frame.filter(*predicates, **constraints)
         return frame
