@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import string
 import urllib.request
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal
@@ -18,12 +19,18 @@ if TYPE_CHECKING:
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
     from altair.datasets._typing import Version
     from tools.datasets.models import (
         FlPackage,
         NpmPackageMetadataResponse,
         ParsedPackage,
     )
+
+    BranchOrTag: TypeAlias = 'Literal["main"] | Version | LiteralString'  # noqa: TC008
 
 
 __all__ = ["Npm"]
@@ -54,6 +61,19 @@ class Npm:
             TAGS=f"https://data.{jsdelivr}.com/{jsdelivr_version}/packages/{npm}/{package}",
             GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
         )
+
+    def dataset_base_url(self, version: BranchOrTag, /) -> LiteralString:
+        """
+        Common url prefix for all datasets derived from ``version``.
+
+        Notes
+        -----
+        - Encodes the endpoint at this stage
+            - Use github if its the only option (since its slower otherwise)
+            - npm only has releases/tags (not branches)
+        - So the column can be renamed ``"url_npm"`` -> ``"url"``
+        """
+        return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/data/"
 
     @property
     def url(self) -> NpmUrl:
@@ -88,7 +108,7 @@ class Npm:
 
     def file_gh(
         self,
-        branch_or_tag: Literal["main"] | Version | LiteralString,
+        branch_or_tag: BranchOrTag,
         path: str,
         /,
     ) -> Any:
@@ -125,9 +145,15 @@ class Npm:
     def datapackage(
         self, *, tag: LiteralString | None = None, frozen: bool = False
     ) -> ParsedPackage:
+        tag = tag or "main"
         pkg: FlPackage = (
             json.loads(self._paths["datapackage"].read_text("utf-8"))
             if frozen
-            else self.file_gh(tag or "main", "datapackage.json")
+            else self.file_gh(tag, "datapackage.json")
         )
-        return datapackage.parse_package(pkg)
+
+        return datapackage.parse_package(pkg, self.dataset_base_url(tag))
+
+
+def is_branch(s: BranchOrTag, /) -> bool:
+    return s == "main" or not (s.startswith(tuple("v" + string.digits)))

@@ -42,8 +42,10 @@ FEATURES: Sequence[pl.Expr] = (
 )
 
 
-def parse_package(pkg: FlPackage, /) -> ParsedPackage:
-    return ParsedPackage(features=extract_features(pkg), schemas=extract_schemas(pkg))
+def parse_package(pkg: FlPackage, base_url: str, /) -> ParsedPackage:
+    return ParsedPackage(
+        features=extract_features(pkg, base_url), schemas=extract_schemas(pkg)
+    )
 
 
 def extract_schemas(pkg: FlPackage, /) -> Mapping[Dataset, Mapping[str, FlFieldStr]]:
@@ -56,7 +58,7 @@ def extract_schemas(pkg: FlPackage, /) -> Mapping[Dataset, Mapping[str, FlFieldS
     return m
 
 
-def extract_features(pkg: FlPackage, /) -> pl.DataFrame:
+def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
     # NOTE: `is_name_collision` != `GitHub.trees`/`Metadata.name_collision`
     # - This only considers latest version
     #   - Those others are based on whatever tag the tree refers to
@@ -89,6 +91,7 @@ def extract_features(pkg: FlPackage, /) -> pl.DataFrame:
             *FEATURES,
             col("schema").is_not_null().alias("has_schema"),
             col("hash").str.split(":").list.last().alias("sha"),
+            pl.concat_str(pl.lit(base_url), "path").alias("url"),
         )
         .collect()
     )
