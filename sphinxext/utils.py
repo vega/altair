@@ -58,7 +58,7 @@ Example script with invalid Python syntax
 """
 
 
-def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
+def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     """
     Parse source file into AST node.
 
@@ -88,7 +88,7 @@ def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
+def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -160,7 +160,7 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
         if (
             node.body
             and isinstance(node.body[0], ast.Expr)
-            and isinstance(node.body[0].value, (ast.Str, ast.Constant))
+            and isinstance(node.body[0].value, ast.Constant)
         ):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s  # pyright: ignore[reportAttributeAccessIssue]
