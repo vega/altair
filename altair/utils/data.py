@@ -106,6 +106,26 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType, R]):
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
+    def __init__(self, message: str, /) -> None:
+        self.message = message
+        super().__init__(self.message)
+
+    @classmethod
+    def from_limit_rows(cls, user_rows: int, max_rows: int, /) -> MaxRowsError:
+        msg = (
+            f"The number of rows in your dataset ({user_rows}) is greater "
+            f"than the maximum allowed ({max_rows}).\n\n"
+            "Try enabling the VegaFusion data transformer which "
+            "raises this limit by pre-evaluating data\n"
+            "transformations in Python.\n"
+            "    >> import altair as alt\n"
+            '    >> alt.data_transformers.enable("vegafusion")\n\n'
+            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
+            "for additional information\n"
+            "on how to plot large datasets."
+        )
+        return cls(msg)
+
 
 @overload
 def limit_rows(data: None = ..., max_rows: int | None = ...) -> partial: ...
@@ -123,21 +143,6 @@ def limit_rows(
         return partial(limit_rows, max_rows=max_rows)
     check_data_type(data)
 
-    def raise_max_rows_error():
-        msg = (
-            "The number of rows in your dataset is greater "
-            f"than the maximum allowed ({max_rows}).\n\n"
-            "Try enabling the VegaFusion data transformer which "
-            "raises this limit by pre-evaluating data\n"
-            "transformations in Python.\n"
-            "    >> import altair as alt\n"
-            '    >> alt.data_transformers.enable("vegafusion")\n\n'
-            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
-            "for additional information\n"
-            "on how to plot large datasets."
-        )
-        raise MaxRowsError(msg)
-
     if isinstance(data, SupportsGeoInterface):
         if data.__geo_interface__["type"] == "FeatureCollection":
             values = data.__geo_interface__["features"]
@@ -152,8 +157,9 @@ def limit_rows(
         data = to_eager_narwhals_dataframe(data)
         values = data
 
-    if max_rows is not None and len(values) > max_rows:
-        raise_max_rows_error()
+    n = len(values)
+    if max_rows is not None and n > max_rows:
+        raise MaxRowsError.from_limit_rows(n, max_rows)
 
     return data
 
