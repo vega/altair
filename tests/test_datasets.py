@@ -16,7 +16,7 @@ from narwhals.stable import v1 as nw
 from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader, url
-from altair.datasets._readers import _METADATA, AltairDatasetsError
+from altair.datasets._readers import AltairDatasetsError
 from altair.datasets._typing import Dataset, Extension, Metadata, is_ext_read
 from tests import skip_requires_pyarrow, slow
 
@@ -295,9 +295,6 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     assert match_url("flare", url("flare"))
     assert match_url("flights-10k", url("flights-10k"))
     assert match_url("flights-200k", url("flights-200k"))
-
-    with pytest.raises(TypeError, match="cannot be loaded via url"):
-        url("climate")
 
     with pytest.raises(TypeError, match="cannot be loaded via url"):
         url("flights-3m")
@@ -690,9 +687,7 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
 def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -> None:
     """Ensure all backends will query the same column names."""
     data = Loader.from_backend(backend)
-    fn = data._reader.scan_fn(_METADATA)
-    native = fn(_METADATA)
-    schema_columns = nw.from_native(native).lazy().collect().columns
+    schema_columns = data._reader._scan_metadata().collect().columns
     assert set(schema_columns) == metadata_columns
 
 

@@ -86,9 +86,6 @@ if TYPE_CHECKING:
 __all__ = ["backend"]
 
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
-_DATAPACKAGE: Final[Path] = (
-    Path(__file__).parent / "_metadata" / "datapackage_features.parquet"
-)
 
 
 class AltairDatasetsError(Exception): ...
@@ -209,7 +206,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.LazyFrame:
-        frame = nw.from_native(self.scan_fn(_DATAPACKAGE)(_DATAPACKAGE)).lazy()
+        frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
         if predicates or constraints:
             return frame.filter(*predicates, **constraints)
         return frame

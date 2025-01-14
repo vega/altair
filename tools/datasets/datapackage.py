@@ -72,6 +72,7 @@ def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
         "licenses",
         "hash",
         "description",
+        "path",
     )
     return (
         pl.LazyFrame(pkg["resources"])
@@ -82,6 +83,7 @@ def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
         .select(
             DATASET_NAME,
             path_suffix("path").alias("suffix"),
+            col("path").alias("file_name"),
             ~cs.by_name(DATASET_NAME, EXCLUDE),
             *FEATURES,
             col("schema").is_not_null().alias("has_schema"),

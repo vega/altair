@@ -26,7 +26,6 @@ import polars as pl
 from polars import col
 
 from tools.codemod import ruff
-from tools.datasets.github import GitHub
 from tools.datasets.npm import Npm
 from tools.schemapi import utils
 
@@ -40,13 +39,10 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
 
     _PathAlias: TypeAlias = Literal[
-        "npm_tags",
-        "gh_tags",
-        "gh_trees",
         "typing",
         "url",
-        "dpkg_features",
-        "dpkg_schemas",
+        "metadata",
+        "schemas",
     ]
 
 __all__ = ["app"]
@@ -67,20 +63,11 @@ class Application:
         Directories to store ``.parquet`` metadata files.
     out_fp_typing
         Path to write metadata-derived typing module.
-    write_schema
-        Produce addtional ``...-schema.json`` files that describe table columns.
-    trees_gh
-        ``GitHub.trees`` metadata file name.
-    tags_gh
-        ``GitHub.tags`` metadata file name.
-    tags_npm
-        ``Npm.tags`` metadata file name.
-    kwds_gh, kwds_npm
+    kwds_npm
         Arguments passed to corresponding constructor.
 
     See Also
     --------
-    - tools.datasets.github.GitHub
     - tools.datasets.npm.Npm
     """
 
@@ -90,41 +77,19 @@ class Application:
         out_dir_altair: Path,
         out_fp_typing: Path,
         *,
-        write_schema: bool,
-        trees_gh: str = "metadata",
-        tags_gh: str = "tags",
-        tags_npm: str = "tags_npm",
-        kwds_gh: Mapping[str, Any] | None = None,
         kwds_npm: Mapping[str, Any] | None = None,
     ) -> None:
         out_dir_tools.mkdir(exist_ok=True)
-        kwds_gh = kwds_gh or {}
         kwds_npm = kwds_npm or {}
-        self._write_schema: bool = write_schema
-        self._npm: Npm = Npm(out_dir_tools, name_tags=tags_npm, **kwds_npm)
-        self._github: GitHub = GitHub(
-            out_dir_tools,
-            out_dir_altair,
-            name_tags=tags_gh,
-            name_trees=trees_gh,
-            npm_cdn_url=self._npm.url.CDN,
-            **kwds_gh,
-        )
+        self._npm: Npm = Npm(out_dir_tools, **kwds_npm)
         self.paths = types.MappingProxyType["_PathAlias", Path](
             {
-                "npm_tags": self.npm._paths["tags"],
-                "gh_tags": self.github._paths["tags"],
-                "gh_trees": self.github._paths["trees"],
                 "typing": out_fp_typing,
                 "url": out_dir_altair / "url.csv.gz",
-                "dpkg_features": out_dir_altair / "datapackage_features.parquet",
-                "dpkg_schemas": out_dir_altair / "datapackage_schemas.json.gz",
+                "metadata": out_dir_altair / "metadata.parquet",
+                "schemas": out_dir_altair / "schemas.json.gz",
             }
         )
-
-    @property
-    def github(self) -> GitHub:
-        return self._github
 
     @property
     def npm(self) -> Npm:
@@ -151,35 +116,26 @@ class Application:
         .. _vega-datasets@3:
             https://github.com/vega/vega-datasets/issues/654
         """
-        if not frozen:
-            print("Syncing datasets ...")
-            npm_tags = self.npm.tags()
-            self.write_parquet(npm_tags, self.paths["npm_tags"])
-
-            gh_tags = self.github.refresh_tags(npm_tags)
-            self.write_parquet(gh_tags, self.paths["gh_tags"])
-
-            gh_trees = self.github.refresh_trees(gh_tags)
-            self.write_parquet(gh_trees, self.paths["gh_trees"])
-
-            npm_urls_min = (
-                gh_trees.lazy()
-                .filter(col("tag") == col("tag").first(), col("suffix") != ".parquet")
-                .filter(col("size") == col("size").min().over("dataset_name"))
-                .select("dataset_name", "url_npm")
-            )
-            self.write_csv_gzip(npm_urls_min, self.paths["url"])
-        else:
-            print("Reusing frozen metadata ...")
-            gh_trees = pl.read_parquet(self.paths["gh_trees"])
-
+        print("Syncing datasets ...")
         package = self.npm.datapackage(tag=tag, frozen=frozen)
-        self.write_parquet(package["features"], self.paths["dpkg_features"])
-        self.write_json_gzip(package["schemas"], self.paths["dpkg_schemas"])
+        self.write_parquet(package["features"], self.paths["metadata"])
+        self.write_json_gzip(package["schemas"], self.paths["schemas"])
+        # FIXME: 2-Part replacement
+        # - [x] Switch source to `"metadata"` + refresh (easy)
+        # - [ ] Rewriting `UrlCache` to operate on result rows (difficult)
+        urls_min = (
+            package["features"]
+            .lazy()
+            .filter(~(col("suffix").is_in((".parquet", ".arrow"))))
+            .select("dataset_name", "url")
+            .sort("dataset_name")
+            .collect()
+        )
+        self.write_csv_gzip(urls_min, self.paths["url"])
 
         if include_typing:
             self.generate_typing()
-        return gh_trees
+        return package["features"]
 
     def reset(self) -> None:
         """Remove all metadata files."""
@@ -237,25 +193,16 @@ class Application:
             fp.touch()
         df = frame.lazy().collect()
         df.write_parquet(fp, compression="zstd", compression_level=17)
-        if self._write_schema:
-            schema = {name: tp.__name__ for name, tp in df.schema.to_python().items()}
-            fp_schema = fp.with_name(f"{fp.stem}-schema.json")
-            if not fp_schema.exists():
-                fp_schema.touch()
-            with fp_schema.open("w") as f:
-                json.dump(schema, f, indent=2)
 
     def generate_typing(self) -> None:
         from tools.generate_schema_wrapper import UNIVERSAL_TYPED_DICT
 
-        tags = self.scan("gh_tags").select("tag").collect().to_series()
-        metadata_schema = self.scan("gh_trees").collect_schema().to_python()
+        dpkg = self.scan("metadata")
+        metadata_schema = dpkg.collect_schema().to_python()
 
         DATASET_NAME = "dataset_name"
         names = (
-            self.scan("gh_trees")
-            .filter("ext_supported")
-            .unique(DATASET_NAME)
+            dpkg.unique(DATASET_NAME)
             .select(DATASET_NAME)
             .sort(DATASET_NAME)
             .collect()
@@ -263,34 +210,32 @@ class Application:
         )
         indent = " " * 4
         NAME = "Dataset"
-        TAG = "Version"
-        LATEST = "VERSION_LATEST"
-        LATEST_TAG = f"{tags.first()!r}"
         EXT = "Extension"
-        EXTENSION_TYPES = ".csv", ".json", ".tsv", ".arrow", ".parquet"
+        EXT_TYPES = tuple(
+            dpkg.filter(is_image=False)
+            .select(col("suffix").unique().sort())
+            .collect()
+            .to_series()
+            .to_list()
+        )
         EXTENSION_SUFFIXES = "EXTENSION_SUFFIXES"
         EXTENSION_TYPE_TP = (
-            f"tuple[{', '.join(f'Literal[{el!r}]' for el in EXTENSION_TYPES)}]"
+            f"tuple[{', '.join(f'Literal[{el!r}]' for el in EXT_TYPES)}]"
         )
         EXTENSION_GUARD = "is_ext_read"
         METADATA_TD = "Metadata"
         DESCRIPTION_DEFAULT = "_description_"
         NOTE_SEP = f"\n\n{indent * 2}.. note::\n{indent * 3}"
 
-        name_collision = (
-            f"Dataset is available via multiple formats.{NOTE_SEP}"
-            "Requires specifying a preference in calls to ``data(name, suffix=...)``"
-        )
         sha = (
             f"Unique hash for the dataset.{NOTE_SEP}"
-            f"If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;\n\n{indent * 3}"
-            f"then all ``tag``(s) in this range would **share** this value."
+            f"E.g. if the dataset did *not* change between ``v1.0.0``-``v2.0.0``;\n\n{indent * 3}"
+            f"then this value would remain stable."
         )
         links = (
             f".. _Path.stem:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem\n"
             f".. _Path.name:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name\n"
             f".. _Path.suffix:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix\n"
-            f".. _vega-datasets release:\n{indent * 2}https://github.com/vega/vega-datasets/releases"
         )
         import textwrap
 
@@ -298,6 +243,8 @@ class Application:
         Examples
         --------
         ``{METADATA_TD}`` keywords form constraints to filter a table like the below sample:
+
+        ### FIXME: NEEDS UPDATING TO DATAPACKAGE VERSION
 
         ```
         shape: (2_879, 9)
@@ -334,14 +281,13 @@ class Application:
 
         descriptions: dict[str, str] = {
             "dataset_name": "Name of the dataset/`Path.stem`_.",
-            "ext_supported": "Dataset can be read as tabular data.",
-            "file_name": "Equivalent to `Path.name`_.",
-            "name_collision": name_collision,
-            "sha": sha,
-            "size": "File size (*bytes*).",
             "suffix": "File extension/`Path.suffix`_.",
-            "tag": "Version identifier for a `vega-datasets release`_.",
-            "url_npm": "Remote url used to access dataset.",
+            "file_name": "Equivalent to `Path.name`_.",
+            "bytes": "File size in *bytes*.",
+            "is_tabular": "Can be read as tabular data.",
+            "has_schema": "Data types available for improved ``pandas`` parsing.",
+            "sha": sha,
+            "url": "Remote url used to access dataset.",
         }
         metadata_doc = (
             f"\n{indent}".join(
@@ -375,14 +321,12 @@ class Application:
             utils.import_typing_extensions((3, 13), "TypeIs"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
-            f"__all__ = {[NAME, TAG, EXT, METADATA_TD, EXTENSION_GUARD, EXTENSION_SUFFIXES, LATEST]}\n\n"
+            f"__all__ = {[NAME, EXT, METADATA_TD, EXTENSION_GUARD, EXTENSION_SUFFIXES]}\n\n"
             f"{NAME}: TypeAlias = {utils.spell_literal(names)}",
-            f"{TAG}: TypeAlias = {utils.spell_literal(tags)}",
-            f"{EXT}: TypeAlias = {utils.spell_literal(EXTENSION_TYPES)}",
-            f"{LATEST}: Literal[{LATEST_TAG}] = {LATEST_TAG}",
-            f"{EXTENSION_SUFFIXES}: {EXTENSION_TYPE_TP} = {EXTENSION_TYPES!r}",
+            f"{EXT}: TypeAlias = {utils.spell_literal(EXT_TYPES)}",
+            f"{EXTENSION_SUFFIXES}: {EXTENSION_TYPE_TP} = {EXT_TYPES!r}",
             f"def {EXTENSION_GUARD}(suffix: Any) -> TypeIs[{EXT}]:\n"
-            f"{indent}return suffix in set({EXTENSION_TYPES!r})\n",
+            f"{indent}return suffix in set({EXT_TYPES!r})\n",
             UNIVERSAL_TYPED_DICT.format(
                 name=METADATA_TD,
                 metaclass_kwds=", total=False",
@@ -408,7 +352,6 @@ app = Application(
     Path(__file__).parent / "_metadata",
     _alt_datasets / "_metadata",
     _alt_datasets / "_typing.py",
-    write_schema=False,
 )
 
 

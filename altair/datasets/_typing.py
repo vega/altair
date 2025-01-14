@@ -22,17 +22,10 @@ else:
     from typing_extensions import TypeAlias
 
 
-__all__ = [
-    "EXTENSION_SUFFIXES",
-    "VERSION_LATEST",
-    "Dataset",
-    "Extension",
-    "Metadata",
-    "Version",
-    "is_ext_read",
-]
+__all__ = ["EXTENSION_SUFFIXES", "Dataset", "Extension", "Metadata", "is_ext_read"]
 
 Dataset: TypeAlias = Literal[
+    "7zip",
     "airports",
     "annual-precip",
     "anscombe",
@@ -42,13 +35,13 @@ Dataset: TypeAlias = Literal[
     "budgets",
     "burtin",
     "cars",
-    "climate",
     "co2-concentration",
     "countries",
     "crimea",
     "disasters",
     "driving",
     "earthquakes",
+    "ffox",
     "flare",
     "flare-dependencies",
     "flights-10k",
@@ -61,12 +54,11 @@ Dataset: TypeAlias = Literal[
     "football",
     "gapminder",
     "gapminder-health-income",
+    "gimp",
     "github",
     "global-temp",
-    "graticule",
     "income",
     "iowa-electricity",
-    "iris",
     "jobs",
     "la-riots",
     "londonBoroughs",
@@ -86,10 +78,8 @@ Dataset: TypeAlias = Literal[
     "political-contributions",
     "population",
     "population_engineers_hurricanes",
-    "seattle-temps",
     "seattle-weather",
     "seattle-weather-hourly-normals",
-    "sf-temps",
     "sp500",
     "sp500-2000",
     "stocks",
@@ -102,71 +92,24 @@ Dataset: TypeAlias = Literal[
     "us-state-capitals",
     "volcano",
     "weather",
-    "weball26",
+    "weekly-weather",
     "wheat",
     "windvectors",
     "world-110m",
     "zipcodes",
 ]
-Version: TypeAlias = Literal[
-    "v2.11.0",
-    "v2.10.0",
-    "v2.9.0",
-    "v2.8.1",
-    "v2.8.0",
-    "v2.7.0",
-    "v2.5.4",
-    "v2.5.3",
-    "v2.5.3-next.0",
-    "v2.5.2",
-    "v2.5.2-next.0",
-    "v2.5.1",
-    "v2.5.1-next.0",
-    "v2.5.0",
-    "v2.5.0-next.0",
-    "v2.4.0",
-    "v2.3.1",
-    "v2.3.0",
-    "v2.1.0",
-    "v2.0.0",
-    "v1.31.1",
-    "v1.31.0",
-    "v1.30.4",
-    "v1.30.3",
-    "v1.30.2",
-    "v1.30.1",
-    "v1.29.0",
-    "v1.24.0",
-    "v1.22.0",
-    "v1.21.1",
-    "v1.21.0",
-    "v1.20.0",
-    "v1.19.0",
-    "v1.18.0",
-    "v1.17.0",
-    "v1.16.0",
-    "v1.15.0",
-    "v1.14.0",
-    "v1.12.0",
-    "v1.11.0",
-    "v1.10.0",
-    "v1.8.0",
-    "v1.7.0",
-    "v1.5.0",
-]
-Extension: TypeAlias = Literal[".csv", ".json", ".tsv", ".arrow", ".parquet"]
-VERSION_LATEST: Literal["v2.11.0"] = "v2.11.0"
+Extension: TypeAlias = Literal[".arrow", ".csv", ".json", ".parquet", ".tsv"]
 EXTENSION_SUFFIXES: tuple[
+    Literal[".arrow"],
     Literal[".csv"],
     Literal[".json"],
-    Literal[".tsv"],
-    Literal[".arrow"],
     Literal[".parquet"],
-] = (".csv", ".json", ".tsv", ".arrow", ".parquet")
+    Literal[".tsv"],
+] = (".arrow", ".csv", ".json", ".parquet", ".tsv")
 
 
 def is_ext_read(suffix: Any) -> TypeIs[Extension]:
-    return suffix in {".csv", ".json", ".tsv", ".arrow", ".parquet"}
+    return suffix in {".arrow", ".csv", ".json", ".parquet", ".tsv"}
 
 
 class Metadata(TypedDict, total=False):
@@ -177,29 +120,34 @@ class Metadata(TypedDict, total=False):
     ----------
     dataset_name
         Name of the dataset/`Path.stem`_.
-    ext_supported
-        Dataset can be read as tabular data.
+    suffix
+        File extension/`Path.suffix`_.
     file_name
         Equivalent to `Path.name`_.
-    name_collision
-        Dataset is available via multiple formats.
-
-        .. note::
-            Requires specifying a preference in calls to ``data(name, suffix=...)``
+    bytes
+        File size in *bytes*.
+    is_image
+        _description_
+    is_tabular
+        Can be read as tabular data.
+    is_geo
+        _description_
+    is_topo
+        _description_
+    is_spatial
+        _description_
+    is_json
+        _description_
+    has_schema
+        Data types available for improved ``pandas`` parsing.
     sha
         Unique hash for the dataset.
 
         .. note::
-            If the dataset did *not* change between ``v1.0.0``-``v2.0.0``;
+            E.g. if the dataset did *not* change between ``v1.0.0``-``v2.0.0``;
 
-            then all ``tag``(s) in this range would **share** this value.
-    size
-        File size (*bytes*).
-    suffix
-        File extension/`Path.suffix`_.
-    tag
-        Version identifier for a `vega-datasets release`_.
-    url_npm
+            then this value would remain stable.
+    url
         Remote url used to access dataset.
 
     .. _Path.stem:
@@ -208,12 +156,13 @@ class Metadata(TypedDict, total=False):
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name
     .. _Path.suffix:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-    .. _vega-datasets release:
-        https://github.com/vega/vega-datasets/releases
+
 
     Examples
     --------
     ``Metadata`` keywords form constraints to filter a table like the below sample:
+
+    ### FIXME: NEEDS UPDATING TO DATAPACKAGE VERSION
 
     ```
     shape: (2_879, 9)
@@ -249,14 +198,18 @@ class Metadata(TypedDict, total=False):
     """
 
     dataset_name: str
-    ext_supported: bool
-    file_name: str
-    name_collision: bool
-    sha: str
-    size: int
     suffix: str
-    tag: str
-    url_npm: str
+    file_name: str
+    bytes: int
+    is_image: bool
+    is_tabular: bool
+    is_geo: bool
+    is_topo: bool
+    is_spatial: bool
+    is_json: bool
+    has_schema: bool
+    sha: str
+    url: str
 
 
 FlFieldStr: TypeAlias = Literal[

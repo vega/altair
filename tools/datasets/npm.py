@@ -6,9 +6,7 @@ import urllib.request
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal
 
-import polars as pl
-
-from tools.datasets import datapackage, semver
+from tools.datasets import datapackage
 from tools.datasets.models import NpmUrl
 
 if TYPE_CHECKING:
@@ -23,14 +21,9 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from altair.datasets._typing import Version
-    from tools.datasets.models import (
-        FlPackage,
-        NpmPackageMetadataResponse,
-        ParsedPackage,
-    )
+    from tools.datasets.models import FlPackage, ParsedPackage
 
-    BranchOrTag: TypeAlias = 'Literal["main"] | Version | LiteralString'  # noqa: TC008
+    BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'  # noqa: TC008
 
 
 __all__ = ["Npm"]
@@ -44,21 +37,17 @@ class Npm:
     def __init__(
         self,
         output_dir: Path,
-        name_tags: str,
         *,
         jsdelivr: Literal["jsdelivr"] = "jsdelivr",
         npm: Literal["npm"] = "npm",
         package: LiteralString = "vega-datasets",
-        jsdelivr_version: LiteralString = "v1",
     ) -> None:
         output_dir.mkdir(exist_ok=True)
-        self._paths: dict[Literal["tags", "datapackage"], Path] = {
-            "tags": output_dir / f"{name_tags}.parquet",
+        self._paths: dict[Literal["datapackage"], Path] = {
             "datapackage": output_dir / "datapackage.json",
         }
         self._url: NpmUrl = NpmUrl(
             CDN=f"https://cdn.{jsdelivr}.net/{npm}/{package}@",
-            TAGS=f"https://data.{jsdelivr}.com/{jsdelivr_version}/packages/{npm}/{package}",
             GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
         )
 
@@ -78,33 +67,6 @@ class Npm:
     @property
     def url(self) -> NpmUrl:
         return self._url
-
-    def tags(self) -> pl.DataFrame:
-        """
-        Request, parse tags from `Get package metadata`_.
-
-        Notes
-        -----
-        - Ignores canary releases
-        - ``npm`` can accept either, but this endpoint returns without "v":
-
-            {tag}
-            v{tag}
-
-        .. _Get package metadata:
-            https://www.jsdelivr.com/docs/data.jsdelivr.com#get-/v1/packages/npm/-package-
-        """
-        req = urllib.request.Request(
-            self.url.TAGS, headers={"Accept": "application/json"}
-        )
-        with self._opener.open(req) as response:
-            content: NpmPackageMetadataResponse = json.load(response)
-        versions = [
-            f"v{tag}"
-            for v in content["versions"]
-            if (tag := v["version"]) and semver.CANARY not in tag
-        ]
-        return pl.DataFrame({"tag": versions}).pipe(semver.with_columns)
 
     def file_gh(
         self,

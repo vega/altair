@@ -43,9 +43,7 @@ _VT = TypeVar("_VT")
 _T = TypeVar("_T")
 
 _URL: Final[Path] = Path(__file__).parent / "_metadata" / "url.csv.gz"
-_SCHEMA: Final[Path] = (
-    Path(__file__).parent / "_metadata" / "datapackage_schemas.json.gz"
-)
+_SCHEMA: Final[Path] = Path(__file__).parent / "_metadata" / "schemas.json.gz"
 
 _FIELD_TO_DTYPE: Mapping[FlFieldStr, type[DType]] = {
     "integer": nw.Int64,
@@ -118,7 +116,7 @@ class UrlCache(CompressedCache[_KT, _VT]):
         fp: Path,
         /,
         *,
-        columns: tuple[str, str] = ("dataset_name", "url_npm"),
+        columns: tuple[str, str],
         tp: type[MutableMapping[_KT, _VT]] = dict["_KT", "_VT"],
     ) -> None:
         self.fp: Path = fp
@@ -253,7 +251,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         stems = tuple(fp.stem for fp in self)
         predicates = (~(nw.col("sha").is_in(stems)),) if stems else ()
         frame = (
-            self._rd._scan_metadata(predicates, is_image=False)  # type: ignore
+            self._rd._scan_metadata(predicates, is_image=False)
             .select("sha", "suffix", "url")
             .unique("sha")
             .collect()
@@ -338,5 +336,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             raise ValueError(msg)
 
 
-url_cache: UrlCache[Dataset | LiteralString, str] = UrlCache(_URL)
+url_cache: UrlCache[Dataset | LiteralString, str] = UrlCache(
+    _URL, columns=("dataset_name", "url")
+)
 schema_cache = SchemaCache(_SCHEMA)
