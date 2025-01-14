@@ -236,6 +236,8 @@ class Application:
             f".. _Path.stem:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem\n"
             f".. _Path.name:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name\n"
             f".. _Path.suffix:\n{indent * 2}https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix\n"
+            f".. _GeoJSON:\n{indent * 2}https://en.wikipedia.org/wiki/GeoJSON\n"
+            f".. _TopoJSON:\n{indent * 2}https://en.wikipedia.org/wiki/GeoJSON#TopoJSON\n"
         )
         import textwrap
 
@@ -283,6 +285,11 @@ class Application:
             "file_name": "Equivalent to `Path.name`_.",
             "bytes": "File size in *bytes*.",
             "is_tabular": "Can be read as tabular data.",
+            "is_image": "Only accessible via url.",
+            "is_geo": "`GeoJSON`_ format.",
+            "is_topo": "`TopoJSON`_ format.",
+            "is_spatial": "Any geospatial format. Only natively supported by ``polars``.",
+            "is_json": "Not supported natively by ``pyarrow``.",
             "has_schema": "Data types available for improved ``pandas`` parsing.",
             "sha": sha,
             "url": "Remote url used to access dataset.",

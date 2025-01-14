@@ -127,17 +127,17 @@ class Metadata(TypedDict, total=False):
     bytes
         File size in *bytes*.
     is_image
-        _description_
+        Only accessible via url.
     is_tabular
         Can be read as tabular data.
     is_geo
-        _description_
+        `GeoJSON`_ format.
     is_topo
-        _description_
+        `TopoJSON`_ format.
     is_spatial
-        _description_
+        Any geospatial format. Only natively supported by ``polars``.
     is_json
-        _description_
+        Not supported natively by ``pyarrow``.
     has_schema
         Data types available for improved ``pandas`` parsing.
     sha
@@ -156,6 +156,10 @@ class Metadata(TypedDict, total=False):
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.name
     .. _Path.suffix:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
+    .. _GeoJSON:
+        https://en.wikipedia.org/wiki/GeoJSON
+    .. _TopoJSON:
+        https://en.wikipedia.org/wiki/GeoJSON#TopoJSON
 
 
     Examples
