@@ -2,9 +2,6 @@ name: docbuild
 
 on: [push, pull_request]
 
-env:
-  UV_SYSTEM_PYTHON: 1
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,13 +13,18 @@ jobs:
         python-version: "3.12"
     - name: Install uv
       uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: |
+          **/uv.lock
+          **/pyproject.toml
     - name: Install dependencies
-      run: uv pip install -e ".[dev, all, doc]"
-    - name: Run doc:build-html
+      run: uv sync --all-extras
+    - name: Build docs
       run: |
         mkdir -p doc/_images
         uv run sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html
-    - name: Run doc:doctest
+    - name: Run doctests
       run: |
         uv run sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest
 

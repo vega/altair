@@ -1,10 +1,10 @@
 1. Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md)
 
-2. Make sure to have an environment set up with `hatch` installed. See [CONTRIBUTING.md](CONTRIBUTING.md).
-   Remove any existing environments managed by `hatch` so that it will create new ones
-   with the latest dependencies when executing the commands further below:
+
+2. Make sure to have [set up your environment](CONTRIBUTING.md#setting-up-your-environment).
+   Update your environment with the latest dependencies:
    
-        hatch env prune
+        uv sync --all-extras
 
 3. Make certain your branch is in sync with head, and that you have no uncommitted modifications. If you work on a fork, replace `origin` with `upstream`:
  
@@ -12,11 +12,7 @@
         git pull origin main
         git status  # Should show "nothing to commit, working tree clean"
 
-4. Do a clean doc build:
-
-        hatch run doc:clean-all
-        hatch run doc:build-html
-        hatch run doc:serve
+4. Do a [clean doc build](CONTRIBUTING.md#building-the-documentation-locally):
    
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
@@ -38,20 +34,19 @@
 
 8. Merge release branch into main, make sure that all required checks pass
 
-9.  On main, build source & wheel distributions. If you work on a fork, replace `origin` with `upstream`:
+9.  Switch to main, If you work on a fork, replace `origin` with `upstream`:
 
         git switch main
         git pull origin main
-        hatch clean  # clean old builds & distributions
-        hatch build  # create a source distribution and universal wheel
+        
+10. Build a source distribution and universal wheel, 
+    publish to PyPI (Requires correct PyPI owner permissions and [UV_PUBLISH_TOKEN](https://docs.astral.sh/uv/configuration/environment/#uv_publish_token)):
 
-10. publish to PyPI (Requires correct PyPI owner permissions):
+        uv run task publish
 
-        hatch publish
+11. Build and publish docs (Requires write-access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io)):
 
-11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
-
-        hatch run doc:publish-clean-build
+        uv run task doc-publish-clean-build
 
 12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
