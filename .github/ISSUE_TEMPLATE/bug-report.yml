@@ -1,6 +1,6 @@
 name: Bug report
 description: Report something that is broken
-labels: ["bug"]
+labels: ["bug", "needs-triage"]
 body:
   - type: markdown
     attributes:
