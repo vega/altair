@@ -4,10 +4,9 @@ import json
 import string
 import urllib.request
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, ClassVar, Literal
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, NamedTuple
 
 from tools.datasets import datapackage
-from tools.datasets.models import NpmUrl
 
 if TYPE_CHECKING:
     import sys
@@ -21,12 +20,17 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from tools.datasets.models import FlPackage, ParsedPackage
+    from tools.datasets.models import Package, ParsedPackage
 
     BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'  # noqa: TC008
 
 
 __all__ = ["Npm"]
+
+
+class NpmUrl(NamedTuple):
+    CDN: LiteralString
+    GH: LiteralString
 
 
 class Npm:
@@ -60,7 +64,6 @@ class Npm:
         - Encodes the endpoint at this stage
             - Use github if its the only option (since its slower otherwise)
             - npm only has releases/tags (not branches)
-        - So the column can be renamed ``"url_npm"`` -> ``"url"``
         """
         return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/data/"
 
@@ -105,7 +108,7 @@ class Npm:
             return read_fn(response)
 
     def datapackage(self, *, tag: LiteralString, frozen: bool = False) -> ParsedPackage:
-        pkg: FlPackage = (
+        pkg: Package = (
             json.loads(self._paths["datapackage"].read_text("utf-8"))
             if frozen
             else self.file_gh(tag, "datapackage.json")

@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Mapping, Sequence
 
     from altair.datasets._typing import Dataset, FlFieldStr
-    from tools.datasets.models import FlPackage
+    from tools.datasets.models import Package
 
 
 __all__ = ["parse_package"]
@@ -42,13 +42,13 @@ FEATURES: Sequence[pl.Expr] = (
 )
 
 
-def parse_package(pkg: FlPackage, base_url: str, /) -> ParsedPackage:
+def parse_package(pkg: Package, base_url: str, /) -> ParsedPackage:
     return ParsedPackage(
         features=extract_features(pkg, base_url), schemas=extract_schemas(pkg)
     )
 
 
-def extract_schemas(pkg: FlPackage, /) -> Mapping[Dataset, Mapping[str, FlFieldStr]]:
+def extract_schemas(pkg: Package, /) -> Mapping[Dataset, Mapping[str, FlFieldStr]]:
     """Reduce all datasets with schemas to a minimal mapping."""
     m: Any = {
         Path(rsrc["path"]).stem: {f["name"]: f["type"] for f in s["fields"]}
@@ -58,7 +58,7 @@ def extract_schemas(pkg: FlPackage, /) -> Mapping[Dataset, Mapping[str, FlFieldS
     return m
 
 
-def extract_features(pkg: FlPackage, base_url: str, /) -> pl.DataFrame:
+def extract_features(pkg: Package, base_url: str, /) -> pl.DataFrame:
     EXCLUDE = (
         "name",
         "type",

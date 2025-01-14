@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING, Literal, NamedTuple
+from typing import TYPE_CHECKING, Literal
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -13,9 +13,9 @@ else:
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 11):
-        from typing import LiteralString, NotRequired, Required
+        from typing import NotRequired, Required
     else:
-        from typing_extensions import LiteralString, NotRequired, Required
+        from typing_extensions import NotRequired, Required
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
@@ -25,25 +25,15 @@ if TYPE_CHECKING:
     from altair.datasets._typing import Dataset, FlFieldStr
 
 
-class NpmUrl(NamedTuple):
-    CDN: LiteralString
-    GH: LiteralString
-
-
-#####################################################
-# frictionless datapackage
-#####################################################
-
-
-FlCsvDialect: TypeAlias = Mapping[
+CsvDialect: TypeAlias = Mapping[
     Literal["csv"], Mapping[Literal["delimiter"], Literal["\t"]]
 ]
-FlJsonDialect: TypeAlias = Mapping[
+JsonDialect: TypeAlias = Mapping[
     Literal[r"json"], Mapping[Literal["keyed"], Literal[True]]
 ]
 
 
-class FlField(TypedDict):
+class Field(TypedDict):
     """https://datapackage.org/standard/table-schema/#field."""
 
     name: str
@@ -51,33 +41,33 @@ class FlField(TypedDict):
     description: NotRequired[str]
 
 
-class FlSchema(TypedDict):
+class Schema(TypedDict):
     """https://datapackage.org/standard/table-schema/#properties."""
 
-    fields: Sequence[FlField]
+    fields: Sequence[Field]
 
 
-class FlSource(TypedDict, total=False):
+class Source(TypedDict, total=False):
     title: str
     path: Required[str]
     email: str
     version: str
 
 
-class FlLicense(TypedDict):
+class License(TypedDict):
     name: str
     path: str
     title: NotRequired[str]
 
 
-class FlResource(TypedDict):
+class Resource(TypedDict):
     """https://datapackage.org/standard/data-resource/#properties."""
 
     name: Dataset
     type: Literal["table", "file", r"json"]
     description: NotRequired[str]
-    licenses: NotRequired[Sequence[FlLicense]]
-    sources: NotRequired[Sequence[FlSource]]
+    licenses: NotRequired[Sequence[License]]
+    sources: NotRequired[Sequence[Source]]
     path: str
     scheme: Literal["file"]
     format: Literal[
@@ -96,8 +86,8 @@ class FlResource(TypedDict):
     encoding: NotRequired[Literal["utf-8"]]
     hash: str
     bytes: int
-    dialect: NotRequired[FlCsvDialect | FlJsonDialect]
-    schema: NotRequired[FlSchema]
+    dialect: NotRequired[CsvDialect | JsonDialect]
+    schema: NotRequired[Schema]
 
 
 class Contributor(TypedDict, total=False):
@@ -110,7 +100,7 @@ class Contributor(TypedDict, total=False):
     organization: str
 
 
-class FlPackage(TypedDict):
+class Package(TypedDict):
     """
     A subset of the `Data Package`_ standard.
 
@@ -122,11 +112,11 @@ class FlPackage(TypedDict):
     version: str
     homepage: str
     description: str
-    licenses: Sequence[FlLicense]
+    licenses: Sequence[License]
     contributors: Sequence[Contributor]
-    sources: Sequence[FlSource]
+    sources: Sequence[Source]
     created: str
-    resources: Sequence[FlResource]
+    resources: Sequence[Resource]
 
 
 class ParsedPackage(TypedDict):
