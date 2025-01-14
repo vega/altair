@@ -131,13 +131,15 @@ class Application:
         return self._npm
 
     def refresh(
-        self, *, include_typing: bool = False, frozen: bool = False
+        self, tag: Any, /, *, include_typing: bool = False, frozen: bool = False
     ) -> pl.DataFrame:
         """
         Update and sync all dataset metadata files.
 
         Parameters
         ----------
+        tag
+            Branch or release version to build against.
         include_typing
             Regenerate ``altair.datasets._typing``.
         frozen
@@ -171,7 +173,7 @@ class Application:
             print("Reusing frozen metadata ...")
             gh_trees = pl.read_parquet(self.paths["gh_trees"])
 
-        package = self.npm.datapackage(frozen=frozen)
+        package = self.npm.datapackage(tag=tag, frozen=frozen)
         self.write_parquet(package["features"], self.paths["dpkg_features"])
         self.write_json_gzip(package["schemas"], self.paths["dpkg_schemas"])
 

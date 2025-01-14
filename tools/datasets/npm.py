@@ -142,10 +142,7 @@ class Npm:
         with self._opener.open(req) as response:
             return read_fn(response)
 
-    def datapackage(
-        self, *, tag: LiteralString | None = None, frozen: bool = False
-    ) -> ParsedPackage:
-        tag = tag or "main"
+    def datapackage(self, *, tag: LiteralString, frozen: bool = False) -> ParsedPackage:
         pkg: FlPackage = (
             json.loads(self._paths["datapackage"].read_text("utf-8"))
             if frozen
