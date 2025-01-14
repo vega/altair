@@ -617,18 +617,7 @@ def _dataset_params(*, skip: Container[str] = ()) -> Iterator[ParameterSet]:
 @datasets_debug
 @pytest.mark.parametrize(
     ("name", "suffix"),
-    list(
-        _dataset_params(
-            skip=(
-                "climate",
-                "graticule",
-                "sf-temps",
-                "iris",
-                "weball26",
-                "seattle-temps",
-            )
-        )
-    ),
+    list(_dataset_params(skip=("7zip", "ffox", "gimp"))),
 )
 def test_all_datasets(
     polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
