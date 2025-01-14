@@ -239,43 +239,41 @@ class Application:
         )
         import textwrap
 
+        # NOTE: Uses `pl.Config(fmt_str_lengths=25, tbl_cols=5, tbl_width_chars=80)`
         examples = f"""\
         Examples
         --------
         ``{METADATA_TD}`` keywords form constraints to filter a table like the below sample:
 
-        ### FIXME: NEEDS UPDATING TO DATAPACKAGE VERSION
-
         ```
-        shape: (2_879, 9)
-        ┌───────────┬──────────┬──────────┬──────────┬───┬────────┬─────────┬──────────┐
-        │ dataset_n ┆ ext_supp ┆ file_nam ┆ name_col ┆ … ┆ suffix ┆ tag     ┆ url_npm  │
-        │ a…        ┆ or…      ┆ e        ┆ li…      ┆   ┆ ---    ┆ ---     ┆ ---      │
-        │ ---       ┆ ---      ┆ ---      ┆ ---      ┆   ┆ str    ┆ enum    ┆ str      │
-        │ str       ┆ bool     ┆ str      ┆ bool     ┆   ┆        ┆         ┆          │
-        ╞═══════════╪══════════╪══════════╪══════════╪═══╪════════╪═════════╪══════════╡
-        │ cars      ┆ true     ┆ cars.jso ┆ false    ┆ … ┆ .json  ┆ v1.21.0 ┆ https:// │
-        │           ┆          ┆ n        ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ flights-2 ┆ true     ┆ flights- ┆ true     ┆ … ┆ .arrow ┆ v1.31.1 ┆ https:// │
-        │ 0…        ┆          ┆ 20…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ flights-2 ┆ true     ┆ flights- ┆ false    ┆ … ┆ .json  ┆ v2.9.0  ┆ https:// │
-        │ 0…        ┆          ┆ 20…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ unemploym ┆ true     ┆ unemploy ┆ false    ┆ … ┆ .json  ┆ v2.7.0  ┆ https:// │
-        │ e…        ┆          ┆ me…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ ffox      ┆ false    ┆ ffox.png ┆ false    ┆ … ┆ .png   ┆ v2.5.2  ┆ https:// │
-        │           ┆          ┆          ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ …         ┆ …        ┆ …        ┆ …        ┆ … ┆ …      ┆ …       ┆ …        │
-        │ flights-a ┆ true     ┆ flights- ┆ false    ┆ … ┆ .csv   ┆ v1.18.0 ┆ https:// │
-        │ i…        ┆          ┆ ai…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ income    ┆ true     ┆ income.j ┆ false    ┆ … ┆ .json  ┆ v1.21.0 ┆ https:// │
-        │           ┆          ┆ so…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ burtin    ┆ true     ┆ burtin.j ┆ false    ┆ … ┆ .json  ┆ v2.8.0  ┆ https:// │
-        │           ┆          ┆ so…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ flights-5 ┆ true     ┆ flights- ┆ false    ┆ … ┆ .json  ┆ v1.8.0  ┆ https:// │
-        │ k         ┆          ┆ 5k…      ┆          ┆   ┆        ┆         ┆ cd…      │
-        │ wheat     ┆ true     ┆ wheat.js ┆ false    ┆ … ┆ .json  ┆ v1.18.0 ┆ https:// │
-        │           ┆          ┆ on       ┆          ┆   ┆        ┆         ┆ cd…      │
-        └───────────┴──────────┴──────────┴──────────┴───┴────────┴─────────┴──────────┘
+        shape: (73, 13)
+        ┌────────────────┬────────┬────────────────┬───┬───────────────┬───────────────┐
+        │ dataset_name   ┆ suffix ┆ file_name      ┆ … ┆ sha           ┆ url           │
+        │ ---            ┆ ---    ┆ ---            ┆   ┆ ---           ┆ ---           │
+        │ str            ┆ str    ┆ str            ┆   ┆ str           ┆ str           │
+        ╞════════════════╪════════╪════════════════╪═══╪═══════════════╪═══════════════╡
+        │ 7zip           ┆ .png   ┆ 7zip.png       ┆ … ┆ 6586d6c00887c ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ d48850099c17… ┆ sdelivr.net/… │
+        │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 608ba6d51fa70 ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ 584c3fa1d31e… ┆ sdelivr.net/… │
+        │ annual-precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://cdn.j │
+        │                ┆        ┆ json           ┆   ┆ 8f16dda65151… ┆ sdelivr.net/… │
+        │ anscombe       ┆ .json  ┆ anscombe.json  ┆ … ┆ 11ae97090b626 ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ 3bdf0c866115… ┆ sdelivr.net/… │
+        │ barley         ┆ .json  ┆ barley.json    ┆ … ┆ 8dc50de2509b6 ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ e197ce95c24c… ┆ sdelivr.net/… │
+        │ …              ┆ …      ┆ …              ┆ … ┆ …             ┆ …             │
+        │ weekly-weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://cdn.j │
+        │                ┆        ┆ .json          ┆   ┆ ccd6baaa89f9… ┆ sdelivr.net/… │
+        │ wheat          ┆ .json  ┆ wheat.json     ┆ … ┆ cde46b43fc82f ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ 4c3c2a37ddcf… ┆ sdelivr.net/… │
+        │ windvectors    ┆ .csv   ┆ windvectors.cs ┆ … ┆ ed686b0ba613a ┆ https://cdn.j │
+        │                ┆        ┆ v              ┆   ┆ bd59d09fcd94… ┆ sdelivr.net/… │
+        │ world-110m     ┆ .json  ┆ world-110m.jso ┆ … ┆ a1ce852de6f27 ┆ https://cdn.j │
+        │                ┆        ┆ n              ┆   ┆ 13c94c0c2840… ┆ sdelivr.net/… │
+        │ zipcodes       ┆ .csv   ┆ zipcodes.csv   ┆ … ┆ d3df33e12be0d ┆ https://cdn.j │
+        │                ┆        ┆                ┆   ┆ 0544c95f1bd4… ┆ sdelivr.net/… │
+        └────────────────┴────────┴────────────────┴───┴───────────────┴───────────────┘
         ```
         """
 
