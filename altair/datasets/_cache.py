@@ -217,9 +217,12 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
 
 
 class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
-    """Optional caching of remote dataset requests."""
+    """Opt-out caching of remote dataset requests."""
 
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
+    _XDG_CACHE: ClassVar[Path] = (
+        Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "altair"
+    ).resolve()
 
     def __init__(self, reader: _Reader[IntoDataFrameT, IntoFrameT], /) -> None:
         self._rd: _Reader[IntoDataFrameT, IntoFrameT] = reader
@@ -273,9 +276,13 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         """
         Returns path to datasets cache.
 
-        By default, this can be configured using the environment variable:
+        Defaults to (`XDG_CACHE_HOME`_):
 
-            "ALTAIR_DATASETS_DIR"
+            "$XDG_CACHE_HOME/altair/"
+
+        But can be configured using the environment variable:
+
+            "$ALTAIR_DATASETS_DIR"
 
         You can set this for the current session via:
 
@@ -289,10 +296,13 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         You can *later* disable caching via:
 
             >>> load.cache.path = None
+
+        .. _XDG_CACHE_HOME:
+            https://specifications.freedesktop.org/basedir-spec/latest/#variables
         """
         self._ensure_active()
-        fp = Path(os.environ[self._ENV_VAR])
-        fp.mkdir(exist_ok=True)
+        fp = Path(usr) if (usr := os.environ.get(self._ENV_VAR)) else self._XDG_CACHE
+        fp.mkdir(parents=True, exist_ok=True)
         return fp
 
     @path.setter
@@ -300,7 +310,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         if source is not None:
             os.environ[self._ENV_VAR] = str(Path(source).resolve())
         else:
-            os.environ.pop(self._ENV_VAR, None)
+            os.environ[self._ENV_VAR] = ""
 
     def __iter__(self) -> Iterator[Path]:
         yield from self.path.iterdir()
@@ -316,7 +326,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         return not self.is_not_active()
 
     def is_not_active(self) -> bool:
-        return os.environ.get(self._ENV_VAR) is None
+        return os.environ.get(self._ENV_VAR) == ""
 
     def is_empty(self) -> bool:
         """Cache is active, but no files are stored in ``self.path``."""

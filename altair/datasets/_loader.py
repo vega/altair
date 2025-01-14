@@ -29,7 +29,7 @@ __all__ = ["Loader", "load"]
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     """
-    Load examples **remotely** from `vega-datasets`_, with *optional* caching.
+    Load examples **remotely** from `vega-datasets`_, with caching.
 
     A new ``Loader`` must be initialized by specifying a backend:
 
@@ -280,11 +280,11 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @property
     def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
         """
-        Optional caching of remote dataset requests.
+        Caching of remote dataset requests.
 
-        Enable caching:
+        Configure cache path:
 
-            self.cache.path = ...
+            self.cache.path = "..."
 
         Download the latest datasets *ahead-of-time*:
 
@@ -293,6 +293,10 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Remove all downloaded datasets:
 
             self.cache.clear()
+
+        Disable caching:
+
+            self.cache.path = None
         """
         return self._reader.cache
 
