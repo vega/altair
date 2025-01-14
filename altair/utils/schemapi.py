@@ -1684,7 +1684,7 @@ VERSIONS: Mapping[
     ],
     str,
 ] = {
-    "vega-datasets": "v2.11.0",
+    "vega-datasets": "main",
     "vega-embed": "6",
     "vega-lite": "v5.21.0",
     "vegafusion": "1.6.6",

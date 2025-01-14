@@ -102,7 +102,7 @@ doc = [
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
-vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
+vega-datasets     = "main" # https://github.com/vega/vega-datasets
 vega-embed        = "6"       # https://github.com/vega/vega-embed
 vega-lite         = "v5.21.0" # https://github.com/vega/vega-lite
 
@@ -147,6 +147,10 @@ test-fast = [
 test-slow = [
     "ruff check .", "ruff format .",
     "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
+]
+test-datasets = [
+    "ruff check .", "ruff format .",
+    "pytest -p no:randomly -n logical tests -k test_datasets -m \"\" {args}"
 ]
 
 [tool.hatch.envs.hatch-test]
@@ -216,7 +220,8 @@ target-version = "py39"
 
 [tool.ruff.lint]
 extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
-    "ANN204",  # missing-return-type-special-method 
+    "ANN204",  # missing-return-type-special-method
+    "C405",    # unnecessary-literal-set
     "C419",    # unnecessary-comprehension-in-call
     "C420",    # unnecessary-dict-comprehension-for-iterable
     "D200",    # fits-on-one-line
@@ -339,10 +344,14 @@ line-ending                = "lf"
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
-addopts = ["--numprocesses=logical"]
+addopts = [
+    "--numprocesses=logical",
+    "-m not datasets_debug"
+]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
-    "slow: Label tests as slow (deselect with '-m \"not slow\"')"
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')",
+    "datasets_debug: Disabled by default due to high number of requests"
 ]
 
 [tool.mypy]
