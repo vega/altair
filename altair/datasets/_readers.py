@@ -31,7 +31,7 @@ from typing import (
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
-from altair.datasets._cache import DatasetCache
+from altair.datasets._cache import DatasetCache, _iter_results
 from altair.datasets._typing import EXTENSION_SUFFIXES, Metadata, is_ext_read
 
 if TYPE_CHECKING:
@@ -147,10 +147,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         **kwds: Any,
     ) -> IntoDataFrameT:
         df = self.query(**_extract_constraints(name, suffix))
-        result = next(df.iter_rows(named=True))
+        result = next(_iter_results(df))
         url = result["url"]
         fn = self.read_fn(url)
-        if default_kwds := self._schema_kwds(result):  # type: ignore
+        if default_kwds := self._schema_kwds(result):
             kwds = default_kwds | kwds if kwds else default_kwds
 
         if self.cache.is_active():

@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, get_args
+from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, cast, get_args
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
@@ -20,6 +20,8 @@ if TYPE_CHECKING:
 
     from _typeshed import StrPath
     from narwhals.stable.v1.dtypes import DType
+
+    from altair.datasets._typing import Metadata
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
@@ -73,6 +75,17 @@ But using the string repr of ``frictionless`` `Field Types`_ to `narwhals.dtypes
 _DTYPE_TO_FIELD: Mapping[type[DType], FlFieldStr] = {
     v: k for k, v in _FIELD_TO_DTYPE.items()
 }
+
+
+def _iter_results(df: nw.DataFrame[Any], /) -> Iterator[Metadata]:
+    """
+    Yield rows from ``df``, where each represents a dataset.
+
+    See Also
+    --------
+    ``altair.datasets._typing.Metadata``
+    """
+    yield from cast("Iterator[Metadata]", df.iter_rows(named=True))
 
 
 class CompressedCache(Protocol[_KT, _VT]):
@@ -263,7 +276,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             print("Already downloaded all datasets")
             return None
         print(f"Downloading {len(frame)} missing datasets...")
-        for row in frame.iter_rows(named=True):
+        for row in _iter_results(frame):
             fp: Path = self.path / (row["sha"] + row["suffix"])
             with self._rd._opener.open(row["url"]) as f:
                 fp.touch()
