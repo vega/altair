@@ -40,7 +40,7 @@ if TYPE_CHECKING:
 
     _PathAlias: TypeAlias = Literal[
         "typing",
-        "url",
+        "metadata-csv",
         "metadata",
         "schemas",
     ]
@@ -82,11 +82,12 @@ class Application:
         out_dir_tools.mkdir(exist_ok=True)
         kwds_npm = kwds_npm or {}
         self._npm: Npm = Npm(out_dir_tools, **kwds_npm)
+        METADATA = "metadata"
         self.paths = types.MappingProxyType["_PathAlias", Path](
             {
                 "typing": out_fp_typing,
-                "url": out_dir_altair / "url.csv.gz",
-                "metadata": out_dir_altair / "metadata.parquet",
+                "metadata-csv": out_dir_altair / f"{METADATA}.csv.gz",
+                "metadata": out_dir_altair / f"{METADATA}.parquet",
                 "schemas": out_dir_altair / "schemas.json.gz",
             }
         )
@@ -120,18 +121,13 @@ class Application:
         package = self.npm.datapackage(tag=tag, frozen=frozen)
         self.write_parquet(package["features"], self.paths["metadata"])
         self.write_json_gzip(package["schemas"], self.paths["schemas"])
-        # FIXME: 2-Part replacement
-        # - [x] Switch source to `"metadata"` + refresh (easy)
-        # - [ ] Rewriting `UrlCache` to operate on result rows (difficult)
-        urls_min = (
+        metadata_min = (
             package["features"]
             .lazy()
             .filter(~(col("suffix").is_in((".parquet", ".arrow"))))
-            .select("dataset_name", "url")
             .sort("dataset_name")
-            .collect()
         )
-        self.write_csv_gzip(urls_min, self.paths["url"])
+        self.write_csv_gzip(metadata_min, self.paths["metadata-csv"])
 
         if include_typing:
             self.generate_typing()

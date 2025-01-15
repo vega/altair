@@ -37,15 +37,16 @@ if TYPE_CHECKING:
     _Dataset: TypeAlias = "Dataset | LiteralString"  # noqa: TC008
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
 
-__all__ = ["DatasetCache", "UrlCache", "url_cache"]
+__all__ = ["DatasetCache"]
 
 
 _KT = TypeVar("_KT")
 _VT = TypeVar("_VT")
 _T = TypeVar("_T")
 
-_URL: Final[Path] = Path(__file__).parent / "_metadata" / "url.csv.gz"
-_SCHEMA: Final[Path] = Path(__file__).parent / "_metadata" / "schemas.json.gz"
+_METADATA_DIR: Final[Path] = Path(__file__).parent / "_metadata"
+_SCHEMA: Final[Path] = _METADATA_DIR / "schemas.json.gz"
+_CSV: Final[Path] = _METADATA_DIR / "metadata.csv.gz"
 
 _FIELD_TO_DTYPE: Mapping[FlFieldStr, type[DType]] = {
     "integer": nw.Int64,
@@ -109,19 +110,23 @@ class CompressedCache(Protocol[_KT, _VT]):
         return self._mapping.get(key, default)
 
 
-class UrlCache(CompressedCache[_KT, _VT]):
+class CsvCache(CompressedCache["_Dataset", "Metadata"]):
     """
-    `csv`_, `gzip`_ -based, lazy url lookup.
+    `csv`_, `gzip`_ -based, lazy metadata lookup.
 
-    Operates on a subset of available datasets:
-    - Excludes `.parquet`, which `cannot be read via url`_
+    Used as a fallback for 2 scenarios:
+
+    1. ``url(...)`` when no optional dependencies are installed.
+    2. ``(Loader|load)(...)`` when the backend is missing* ``.parquet`` support.
+
+    Notes
+    -----
+    *All backends *can* support ``.parquet``, but ``pandas`` requires an optional dependency.
 
     .. _csv:
         https://docs.python.org/3/library/csv.html
     .. _gzip:
         https://docs.python.org/3/library/gzip.html
-    .. _cannot be read via url:
-        https://github.com/vega/vega/issues/3961
     """
 
     def __init__(
@@ -129,12 +134,10 @@ class UrlCache(CompressedCache[_KT, _VT]):
         fp: Path,
         /,
         *,
-        columns: tuple[str, str],
-        tp: type[MutableMapping[_KT, _VT]] = dict["_KT", "_VT"],
+        tp: type[MutableMapping[_Dataset, Metadata]] = dict["_Dataset", "Metadata"],
     ) -> None:
         self.fp: Path = fp
-        self.columns: tuple[str, str] = columns
-        self._mapping: MutableMapping[_KT, _VT] = tp()
+        self._mapping: MutableMapping[_Dataset, Metadata] = tp()
 
     def read(self) -> Any:
         import csv
@@ -143,22 +146,30 @@ class UrlCache(CompressedCache[_KT, _VT]):
             b_lines = f.readlines()
         reader = csv.reader((bs.decode() for bs in b_lines), dialect=csv.unix_dialect)
         header = tuple(next(reader))
-        if header != self.columns:
-            msg = f"Expected header to match {self.columns!r},\nbut got: {header!r}"
-            raise ValueError(msg)
-        return dict(reader)
+        return {row[0]: dict(zip(header, row)) for row in reader}
 
-    def __getitem__(self, key: _KT, /) -> _VT:
-        if url := self.get(key, None):
-            return url
-
+    def __getitem__(self, key: _Dataset, /) -> Metadata:
+        if result := self.get(key, None):
+            return result
         from altair.datasets._typing import Dataset
 
         if key in get_args(Dataset):
-            msg = f"{key!r} cannot be loaded via url."
+            msg = f"{key!r} cannot be loaded via {type(self).__name__!r}."
             raise TypeError(msg)
         else:
             msg = f"{key!r} does not refer to a known dataset."
+            raise TypeError(msg)
+
+    def url(self, name: _Dataset, /) -> str:
+        if result := self.get(name, None):
+            return result["url"]
+        from altair.datasets._typing import Dataset
+
+        if name in get_args(Dataset):
+            msg = f"{name!r} cannot be loaded via url."
+            raise TypeError(msg)
+        else:
+            msg = f"{name!r} does not refer to a known dataset."
             raise TypeError(msg)
 
 
@@ -359,7 +370,5 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             raise ValueError(msg)
 
 
-url_cache: UrlCache[Dataset | LiteralString, str] = UrlCache(
-    _URL, columns=("dataset_name", "url")
-)
 schema_cache = SchemaCache(_SCHEMA)
+csv_cache = CsvCache(_CSV)

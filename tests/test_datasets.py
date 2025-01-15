@@ -268,13 +268,13 @@ def test_url(name: Dataset) -> None:
 
 def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     import altair.datasets
-    from altair.datasets._cache import url_cache
+    from altair.datasets._cache import csv_cache
 
     monkeypatch.setitem(sys.modules, "polars", None)
     monkeypatch.setitem(sys.modules, "pandas", None)
     monkeypatch.setitem(sys.modules, "pyarrow", None)
 
-    assert url_cache._mapping == {}
+    assert csv_cache._mapping == {}
 
     with contextlib.suppress(AltairDatasetsError):
         monkeypatch.delattr(altair.datasets._loader, "load", raising=False)
@@ -283,7 +283,7 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert match_url("jobs", url("jobs"))
 
-    assert url_cache._mapping != {}
+    assert csv_cache._mapping != {}
 
     assert match_url("cars", url("cars"))
     assert match_url("stocks", url("stocks"))

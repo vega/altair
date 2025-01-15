@@ -80,9 +80,9 @@ def url(
 
         url = load.url(name, suffix)
     except AltairDatasetsError:
-        from altair.datasets._cache import url_cache
+        from altair.datasets._cache import csv_cache
 
-        url = url_cache[name]
+        url = csv_cache.url(name)
 
     return url
 
