@@ -56,7 +56,7 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
-    _OptionalModule: TypeAlias = "ModuleType | None"  # noqa: TC008
+    _OptionalModule: TypeAlias = "ModuleType | None"
 
 ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
