@@ -16,7 +16,7 @@ from narwhals.stable import v1 as nw
 from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader, url
-from altair.datasets._readers import AltairDatasetsError
+from altair.datasets._exceptions import AltairDatasetsError
 from altair.datasets._typing import Dataset, Extension, Metadata, is_ext_read
 from tests import skip_requires_pyarrow, slow
 
@@ -296,8 +296,13 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     assert match_url("flights-10k", url("flights-10k"))
     assert match_url("flights-200k", url("flights-200k"))
 
-    with pytest.raises(TypeError, match="cannot be loaded via url"):
-        url("flights-3m")
+    if find_spec("vegafusion"):
+        assert match_url("flights-3m", url("flights-3m"))
+
+    with monkeypatch.context() as mp:
+        mp.setitem(sys.modules, "vegafusion", None)
+        with pytest.raises(AltairDatasetsError, match=r".parquet.+require.+vegafusion"):
+            url("flights-3m")
 
     with pytest.raises(
         TypeError, match="'fake data' does not refer to a known dataset"

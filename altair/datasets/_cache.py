@@ -3,11 +3,14 @@ from __future__ import annotations
 import os
 import sys
 from collections import defaultdict
+from importlib.util import find_spec
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, cast, get_args
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
+
+from altair.datasets._exceptions import AltairDatasetsError
 from altair.datasets._typing import Dataset
 
 if sys.version_info >= (3, 12):
@@ -81,7 +84,7 @@ But using `narwhals.dtypes`_ to the string repr of ``frictionless`` `Field Types
 """
 
 
-def _iter_results(df: nw.DataFrame[Any], /) -> Iterator[Metadata]:
+def _iter_metadata(df: nw.DataFrame[Any], /) -> Iterator[Metadata]:
     """
     Yield rows from ``df``, where each represents a dataset.
 
@@ -181,8 +184,8 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         return nw.maybe_convert_dtypes(nw.from_dict(data, native_namespace=ns).lazy())
 
     def __getitem__(self, key: _Dataset, /) -> Metadata:
-        if result := self.get(key, None):
-            return result
+        if meta := self.get(key, None):
+            return meta
 
         if key in get_args(Dataset):
             msg = f"{key!r} cannot be loaded via {type(self).__name__!r}."
@@ -192,8 +195,10 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
             raise TypeError(msg)
 
     def url(self, name: _Dataset, /) -> str:
-        if result := self.get(name, None):
-            return result["url"]
+        if meta := self.get(name, None):
+            if meta["suffix"] == ".parquet" and not find_spec("vegafusion"):
+                raise AltairDatasetsError.url_parquet(meta)
+            return meta["url"]
 
         if name in get_args(Dataset):
             msg = f"{name!r} cannot be loaded via url."
@@ -302,8 +307,8 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             print("Already downloaded all datasets")
             return None
         print(f"Downloading {len(frame)} missing datasets...")
-        for row in _iter_results(frame):
-            self._rd._download(row["url"], self.path / (row["sha"] + row["suffix"]))
+        for meta in _iter_metadata(frame):
+            self._rd._download(meta["url"], self.path / (meta["sha"] + meta["suffix"]))
         print("Finished downloads")
         return None
 

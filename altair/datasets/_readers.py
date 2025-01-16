@@ -10,7 +10,7 @@ Backends for ``alt.datasets.Loader``.
 from __future__ import annotations
 
 import urllib.request
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import partial
 from importlib import import_module
 from importlib.util import find_spec
@@ -19,7 +19,6 @@ from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     ClassVar,
     Final,
     Literal,
@@ -31,11 +30,11 @@ from typing import (
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
-from altair.datasets._cache import CsvCache, DatasetCache, SchemaCache, _iter_results
+from altair.datasets import _exceptions as _ds_exc
+from altair.datasets._cache import CsvCache, DatasetCache, SchemaCache, _iter_metadata
 from altair.datasets._typing import EXTENSION_SUFFIXES, Metadata, is_ext_read
 
 if TYPE_CHECKING:
-    import json  # noqa: F401
     import sys
     from io import IOBase
     from urllib.request import OpenerDirector
@@ -84,12 +83,9 @@ if TYPE_CHECKING:
     _Backend: TypeAlias = Literal[_Polars, _PandasAny, _PyArrow]
 
 
-__all__ = ["backend"]
+__all__ = ["backend", "infer_backend"]
 
 _METADATA: Final[Path] = Path(__file__).parent / "_metadata" / "metadata.parquet"
-
-
-class AltairDatasetsError(Exception): ...
 
 
 class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
@@ -136,9 +132,15 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def scan_fn(self, source: _IntoSuffix, /) -> Callable[..., IntoFrameT]:
         return self._scan_fn[_extract_suffix(source, is_ext_scan)]
 
-    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
+    def _schema_kwds(self, meta: Metadata, /) -> dict[str, Any]:
         """Hook to provide additional schema metadata on read."""
         return {}
+
+    def _maybe_fn(self, meta: Metadata, /) -> Callable[..., IntoDataFrameT]:
+        """Backend specific tweaks/errors/warnings, based on ``Metadata``."""
+        if meta["is_image"]:
+            raise _ds_exc.image(meta)
+        return self.read_fn(meta)
 
     def dataset(
         self,
@@ -148,14 +150,14 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         **kwds: Any,
     ) -> IntoDataFrameT:
         df = self.query(**_extract_constraints(name, suffix))
-        result = next(_iter_results(df))
-        url = result["url"]
-        fn = self.read_fn(url)
-        if default_kwds := self._schema_kwds(result):
+        meta = next(_iter_metadata(df))
+        fn = self._maybe_fn(meta)
+        url = meta["url"]
+        if default_kwds := self._schema_kwds(meta):
             kwds = default_kwds | kwds if kwds else default_kwds
 
         if self.cache.is_active():
-            fp = self.cache.path / (result["sha"] + result["suffix"])
+            fp = self.cache.path / (meta["sha"] + meta["suffix"])
             if not (fp.exists() and fp.stat().st_size):
                 self._download(url, fp)
             return fn(fp, **kwds)
@@ -170,7 +172,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         /,
     ) -> str:
         frame = self.query(**_extract_constraints(name, suffix))
-        url = frame.item(0, "url")
+        meta = next(_iter_metadata(frame))
+        if meta["suffix"] == ".parquet" and not is_available("vegafusion"):
+            raise _ds_exc.AltairDatasetsError.url_parquet(meta)
+        url = meta["url"]
         if isinstance(url, str):
             return url
         else:
@@ -223,21 +228,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def _import(self, name: str, /) -> Any:
         if spec := find_spec(name):
             return import_module(spec.name)
-        else:
-            reqs = _requirements(self._name)  # type: ignore[call-overload]
-            if isinstance(reqs, tuple):
-                depends = ", ".join(f"{req!r}" for req in reqs) + " packages"
-            else:
-                depends = f"{reqs!r} package"
-
-            msg = (
-                f"Backend {self._name!r} requires the {depends}, but {name!r} could not be found.\n"
-                f"This can be installed with pip using:\n"
-                f"    pip install {name}\n"
-                f"Or with conda using:\n"
-                f"    conda install -c conda-forge {name}"
-            )
-            raise ModuleNotFoundError(msg, name=name)
+        raise _ds_exc.module_not_found(self._name, _requirements(self._name), name)  # type: ignore[call-overload]
 
     def __repr__(self) -> str:
         return f"Reader[{self._name}]"
@@ -259,15 +250,21 @@ class _PandasReaderBase(_Reader["pd.DataFrame", "pd.DataFrame"], Protocol):
 
     _schema_cache: SchemaCache
 
-    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
-        name: Any = result["dataset_name"]
-        suffix = result["suffix"]
+    def _schema_kwds(self, meta: Metadata, /) -> dict[str, Any]:
+        name: Any = meta["dataset_name"]
+        suffix = meta["suffix"]
         if cols := self._schema_cache.by_dtype(name, nw.Date, nw.Datetime):
             if suffix == ".json":
                 return {"convert_dates": cols}
             elif suffix in {".csv", ".tsv"}:
                 return {"parse_dates": cols}
-        return super()._schema_kwds(result)
+        return super()._schema_kwds(meta)
+
+    def _maybe_fn(self, meta: Metadata, /) -> Callable[..., pd.DataFrame]:
+        fn = super()._maybe_fn(meta)
+        if meta["is_spatial"]:
+            raise _ds_exc.geospatial(self._name)
+        return fn
 
 
 class _PandasReader(_PandasReaderBase):
@@ -378,51 +375,49 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
         https://arrow.apache.org/docs/python/json.html#reading-json-files
     """
 
+    def _maybe_fn(self, meta: Metadata, /) -> Callable[..., pa.Table]:
+        fn = super()._maybe_fn(meta)
+        if fn is self._read_json_polars:
+            return fn
+        elif meta["is_json"]:
+            if meta["is_tabular"]:
+                return self._read_json_tabular
+            elif meta["is_spatial"]:
+                raise _ds_exc.geospatial(self._name)
+            else:
+                raise _ds_exc.non_tabular_json(self._name)
+        else:
+            return fn
+
+    def _read_json_tabular(self, source: Any, /, **kwds: Any) -> pa.Table:
+        import json
+
+        if not isinstance(source, Path):
+            obj = json.load(source)
+        else:
+            with Path(source).open(encoding="utf-8") as f:
+                obj = json.load(f)
+        pa = nw.dependencies.get_pyarrow()
+        return pa.Table.from_pylist(obj)
+
+    def _read_json_polars(self, source: Any, /, **kwds: Any) -> pa.Table:
+        return _pl_read_json_roundtrip(source).to_arrow()
+
     def __init__(self, name: _PyArrow, /) -> None:
         self._name = _requirements(name)
         if not TYPE_CHECKING:
-            pa = self._import(self._name)
-            pa_csv = self._import(f"{self._name}.csv")
-            pa_feather = self._import(f"{self._name}.feather")
-            pa_parquet = self._import(f"{self._name}.parquet")
-            pa_read_csv = pa_csv.read_csv
-            pa_read_feather = pa_feather.read_table
-            pa_read_parquet = pa_parquet.read_table
+            pa = self._import(self._name)  # noqa: F841
+            pa_read_csv = self._import(f"{self._name}.csv").read_csv
+            pa_read_feather = self._import(f"{self._name}.feather").read_table
+            pa_read_parquet = self._import(f"{self._name}.parquet").read_table
 
-            # HACK: Multiple alternatives to `pyarrow.json.read_json`
-            # -------------------------------------------------------
-            # NOTE: Prefer `polars` since it is zero-copy and fast (1)
+            # NOTE: Prefer `polars` since it is zero-copy and fast
             if find_spec("polars") is not None:
-
-                def pa_read_json(source: StrPath, /, **kwds) -> pa.Table:
-                    return _pl_read_json_roundtrip(source).to_arrow()
-
+                pa_read_json = self._read_json_polars
             else:
-                # NOTE: Convert inline from stdlib json (2)
-                import json
+                pa_read_json = self._import(f"{self._name}.json").read_json
 
-                pa_json = self._import(f"{self._name}.json")
-
-                def pa_read_json(source: Any, /, **kwds) -> pa.Table:
-                    if not isinstance(source, Path):
-                        obj = json.load(source)
-                    else:
-                        with Path(source).open(encoding="utf-8") as f:
-                            obj = json.load(f)
-                    # NOTE: Common case of {"values": [{...}]}, missing the `"values"` keys
-                    if isinstance(obj, Sequence) and isinstance(obj[0], Mapping):
-                        return pa.Table.from_pylist(obj)
-                    elif isinstance(obj, Mapping) and "type" in obj:
-                        msg = (
-                            "Inferred file as geojson, unsupported by pyarrow.\n"
-                            "Try installing `polars` or using `Loader.url(...)` instead."
-                        )
-                        raise NotImplementedError(msg)
-                    else:
-                        # NOTE: Almost certainly will fail on read as of `v2.9.0`
-                        return pa_json.read_json(source)
-
-        # Stubs suggest using a dataclass, but no way to construct it
+        # NOTE: Stubs suggest using a dataclass, but no way to construct it
         tab_sep: Any = {"delimiter": "\t"}
 
         self._read_fn = {
@@ -512,8 +507,7 @@ def infer_backend(
     it = (backend(name) for name in priority if is_available(_requirements(name)))
     if reader := next(it, None):
         return reader
-    msg = f"Found no supported backend, searched:\n{priority!r}"
-    raise AltairDatasetsError(msg)
+    raise _ds_exc.AltairDatasetsError.from_priority(priority)
 
 
 @overload

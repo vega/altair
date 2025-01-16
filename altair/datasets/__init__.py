@@ -73,7 +73,7 @@ def url(
     - https://github.com/vega/altair/discussions/3150#discussioncomment-11280516
     - https://github.com/vega/altair/pull/3631#discussion_r1846662053
     """
-    from altair.datasets._readers import AltairDatasetsError
+    from altair.datasets._exceptions import AltairDatasetsError
 
     try:
         from altair.datasets._loader import load
