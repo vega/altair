@@ -156,13 +156,9 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
         if self.cache.is_active():
             fp = self.cache.path / (result["sha"] + result["suffix"])
-            if fp.exists() and fp.stat().st_size:
-                return fn(fp, **kwds)
-            else:
-                with self._opener.open(url) as f:
-                    fp.touch()
-                    fp.write_bytes(f.read())
-                return fn(fp, **kwds)
+            if not (fp.exists() and fp.stat().st_size):
+                self._download(url, fp)
+            return fn(fp, **kwds)
         else:
             with self._opener.open(url) as f:
                 return fn(f, **kwds)
@@ -214,6 +210,11 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     @property
     def _metadata(self) -> nw.LazyFrame:
         return nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
+
+    def _download(self, url: str, fp: Path, /) -> None:
+        with self._opener.open(url) as f:
+            fp.touch()
+            fp.write_bytes(f.read())
 
     @property
     def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:

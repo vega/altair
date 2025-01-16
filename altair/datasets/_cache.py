@@ -303,10 +303,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             return None
         print(f"Downloading {len(frame)} missing datasets...")
         for row in _iter_results(frame):
-            fp: Path = self.path / (row["sha"] + row["suffix"])
-            with self._rd._opener.open(row["url"]) as f:
-                fp.touch()
-                fp.write_bytes(f.read())
+            self._rd._download(row["url"], self.path / (row["sha"] + row["suffix"]))
         print("Finished downloads")
         return None
 
