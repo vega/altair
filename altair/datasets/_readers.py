@@ -65,6 +65,7 @@ if TYPE_CHECKING:
     from altair.datasets._typing import Dataset, Extension, Metadata
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
+    _IntoSuffix: TypeAlias = "StrPath | Metadata"  # noqa: TC008
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
 
@@ -129,10 +130,10 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
 
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
 
-    def read_fn(self, source: StrPath, /) -> Callable[..., IntoDataFrameT]:
+    def read_fn(self, source: _IntoSuffix, /) -> Callable[..., IntoDataFrameT]:
         return self._read_fn[_extract_suffix(source, is_ext_read)]
 
-    def scan_fn(self, source: StrPath, /) -> Callable[..., IntoFrameT]:
+    def scan_fn(self, source: _IntoSuffix, /) -> Callable[..., IntoFrameT]:
         return self._scan_fn[_extract_suffix(source, is_ext_scan)]
 
     def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
@@ -443,8 +444,10 @@ def _extract_constraints(
     return constraints
 
 
-def _extract_suffix(source: StrPath, guard: Callable[..., TypeIs[_T]], /) -> _T:
-    suffix: Any = Path(source).suffix
+def _extract_suffix(source: _IntoSuffix, guard: Callable[..., TypeIs[_T]], /) -> _T:
+    suffix: Any = (
+        Path(source).suffix if not isinstance(source, Mapping) else source["suffix"]
+    )
     if guard(suffix):
         return suffix
     else:
