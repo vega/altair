@@ -207,10 +207,13 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.LazyFrame:
-        frame = nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
         if predicates or constraints:
-            return frame.filter(*predicates, **constraints)
-        return frame
+            return self._metadata.filter(*predicates, **constraints)
+        return self._metadata
+
+    @property
+    def _metadata(self) -> nw.LazyFrame:
+        return nw.from_native(self.scan_fn(_METADATA)(_METADATA)).lazy()
 
     @property
     def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
@@ -279,7 +282,17 @@ class _PandasReader(_PandasReaderBase):
             ".parquet": pd.read_parquet,
         }
         self._scan_fn = {".parquet": pd.read_parquet}
+        self._supports_parquet: bool = is_available(
+            "pyarrow", "fastparquet", require_all=False
+        )
+        self._csv_cache = CsvCache()
         self._schema_cache = SchemaCache()
+
+    @property
+    def _metadata(self) -> nw.LazyFrame:
+        if self._supports_parquet:
+            return super()._metadata
+        return self._csv_cache.metadata(nw.dependencies.get_pandas())
 
 
 class _PandasPyArrowReader(_PandasReaderBase):
@@ -459,10 +472,24 @@ def is_ext_scan(suffix: Any) -> TypeIs[_ExtensionScan]:
     return suffix == ".parquet"
 
 
-def is_available(pkg_names: str | Iterable[str], *more_pkg_names: str) -> bool:
+def is_available(
+    pkg_names: str | Iterable[str], *more_pkg_names: str, require_all: bool = True
+) -> bool:
+    """
+    Check for importable package(s), without raising on failure.
+
+    Parameters
+    ----------
+    pkg_names, more_pkg_names
+        One or more packages.
+    require_all
+        * ``True`` every package.
+        * ``False`` at least one package.
+    """
     pkgs_names = pkg_names if not isinstance(pkg_names, str) else (pkg_names,)
     names = chain(pkgs_names, more_pkg_names)
-    return all(find_spec(name) is not None for name in names)
+    fn = all if require_all else any
+    return fn(find_spec(name) is not None for name in names)
 
 
 def infer_backend(

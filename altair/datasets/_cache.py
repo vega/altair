@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, cast, get_args
 
@@ -107,9 +108,13 @@ class CompressedCache(Protocol[_KT, _VT]):
         return
 
     def get(self, key: _KT, default: _T, /) -> _VT | _T:
+        return self.mapping.get(key, default)
+
+    @property
+    def mapping(self) -> MutableMapping[_KT, _VT]:
         if not self._mapping:
             self._mapping.update(self.read())
-        return self._mapping.get(key, default)
+        return self._mapping
 
 
 class CsvCache(CompressedCache["_Dataset", "Metadata"]):
@@ -139,6 +144,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         tp: type[MutableMapping[_Dataset, Metadata]] = dict["_Dataset", "Metadata"],
     ) -> None:
         self._mapping: MutableMapping[_Dataset, Metadata] = tp()
+        self._rotated: MutableMapping[str, MutableSequence[Any]] = defaultdict(list)
 
     def read(self) -> Any:
         import csv
@@ -160,6 +166,19 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
                 yield col, int(value)
             else:
                 yield col, value
+
+    @property
+    def rotated(self) -> Mapping[str, Sequence[Any]]:
+        """Columnar view."""
+        if not self._rotated:
+            for record in self.mapping.values():
+                for k, v in record.items():
+                    self._rotated[k].append(v)
+        return self._rotated
+
+    def metadata(self, ns: Any, /) -> nw.LazyFrame:
+        data: Any = self.rotated
+        return nw.maybe_convert_dtypes(nw.from_dict(data, native_namespace=ns).lazy())
 
     def __getitem__(self, key: _Dataset, /) -> Metadata:
         if result := self.get(key, None):
@@ -274,7 +293,7 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         stems = tuple(fp.stem for fp in self)
         predicates = (~(nw.col("sha").is_in(stems)),) if stems else ()
         frame = (
-            self._rd._scan_metadata(predicates, is_image=False)
+            self._rd._scan_metadata(*predicates, is_image=False)
             .select("sha", "suffix", "url")
             .unique("sha")
             .collect()
