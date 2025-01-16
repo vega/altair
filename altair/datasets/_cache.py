@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, cast, get_args
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
+from altair.datasets._typing import Dataset
 
 if sys.version_info >= (3, 12):
     from typing import Protocol
@@ -32,7 +33,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
     from altair.datasets._readers import _Reader
-    from altair.datasets._typing import Dataset, FlFieldStr
+    from altair.datasets._typing import FlFieldStr
 
     _Dataset: TypeAlias = "Dataset | LiteralString"  # noqa: TC008
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
@@ -144,7 +145,6 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
     def __getitem__(self, key: _Dataset, /) -> Metadata:
         if result := self.get(key, None):
             return result
-        from altair.datasets._typing import Dataset
 
         if key in get_args(Dataset):
             msg = f"{key!r} cannot be loaded via {type(self).__name__!r}."
@@ -156,7 +156,6 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
     def url(self, name: _Dataset, /) -> str:
         if result := self.get(name, None):
             return result["url"]
-        from altair.datasets._typing import Dataset
 
         if name in get_args(Dataset):
             msg = f"{name!r} cannot be loaded via url."
