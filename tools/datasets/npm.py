@@ -22,7 +22,7 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     from tools.datasets.models import Package, ParsedPackage
 
-    BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'  # noqa: TC008
+    BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'
 
 
 __all__ = ["Npm"]

@@ -46,7 +46,7 @@ if TYPE_CHECKING:
     from altair.datasets._readers import _Reader
     from altair.datasets._typing import FlFieldStr
 
-    _Dataset: TypeAlias = "Dataset | LiteralString"  # noqa: TC008
+    _Dataset: TypeAlias = "Dataset | LiteralString"
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
 
 __all__ = ["CsvCache", "DatasetCache", "SchemaCache", "csv_cache"]

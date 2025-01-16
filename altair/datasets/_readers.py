@@ -64,7 +64,7 @@ if TYPE_CHECKING:
     from altair.datasets._typing import Dataset, Extension, Metadata
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
-    _IntoSuffix: TypeAlias = "StrPath | Metadata"  # noqa: TC008
+    _IntoSuffix: TypeAlias = "StrPath | Metadata"
     _ExtensionScan: TypeAlias = Literal[".parquet"]
     _T = TypeVar("_T")
 
