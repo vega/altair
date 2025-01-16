@@ -35,7 +35,7 @@ def chart():
     return alt.Chart("data.csv").mark_point()
 
 
-def test_html_renderer_embed_options(chart, renderer="html"):
+def test_html_renderer_embed_options(chart):
     """Test that embed_options in renderer metadata are correctly manifest in html."""
     # Short of parsing the javascript, it's difficult to parse out the
     # actions. So we use string matching
@@ -45,7 +45,7 @@ def test_html_renderer_embed_options(chart, renderer="html"):
         for key, val in opts.items():
             assert json.dumps({key: val})[1:-1] in html
 
-    with alt.renderers.enable(renderer):
+    with alt.renderers.enable("html"):
         assert_has_options(chart, mode="vega-lite")
 
         with alt.renderers.enable(embed_options={"actions": {"export": True}}):
@@ -55,11 +55,13 @@ def test_html_renderer_embed_options(chart, renderer="html"):
             assert_has_options(chart, mode="vega-lite", actions=True)
 
 
-def test_mimetype_renderer_embed_options(chart, renderer="mimetype"):
+def test_mimetype_renderer_embed_options(chart):
     # check that metadata is passed appropriately
-    mimetype = alt.display.VEGALITE_MIME_TYPE
+    from altair.vegalite.v5.display import VEGALITE_MIME_TYPE
+
+    mimetype = VEGALITE_MIME_TYPE
     spec = chart.to_dict()
-    with alt.renderers.enable(renderer):
+    with alt.renderers.enable("mimetype"):
         # Sanity check: no metadata specified
         bundle, metadata = chart._repr_mimebundle_(None, None)
         assert bundle[mimetype] == spec
@@ -71,11 +73,11 @@ def test_mimetype_renderer_embed_options(chart, renderer="mimetype"):
             assert metadata == {mimetype: {"embed_options": {"actions": False}}}
 
 
-def test_json_renderer_embed_options(chart, renderer="json"):
+def test_json_renderer_embed_options(chart):
     """Test that embed_options in renderer metadata are correctly manifest in html."""
     mimetype = "application/json"
     spec = chart.to_dict()
-    with alt.renderers.enable(renderer):
+    with alt.renderers.enable("json"):
         # Sanity check: no options specified
         bundle, metadata = chart._repr_mimebundle_(None, None)
         assert bundle[mimetype] == spec
@@ -89,12 +91,12 @@ def test_json_renderer_embed_options(chart, renderer="json"):
 
 
 @skip_requires_vl_convert
-def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
+def test_renderer_with_none_embed_options(chart):
     # Check that setting embed_options to None doesn't crash
     from altair.utils.mimebundle import spec_to_mimebundle
 
     spec = chart.to_dict()
-    with alt.renderers.enable(renderer, embed_options=None):
+    with alt.renderers.enable("mimetype", embed_options=None):
         bundle = spec_to_mimebundle(
             spec=spec,
             mode="vega-lite",
@@ -105,9 +107,9 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
 
 
 @jupyter_marks
-def test_jupyter_renderer_mimetype(chart, renderer="jupyter") -> None:
+def test_jupyter_renderer_mimetype(chart) -> None:
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled."""
-    with alt.renderers.enable(renderer):
+    with alt.renderers.enable("jupyter"):
         assert (
             "application/vnd.jupyter.widget-view+json"
             in chart._repr_mimebundle_(None, None)[0]
