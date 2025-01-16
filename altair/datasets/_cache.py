@@ -15,7 +15,14 @@ else:
     from typing_extensions import Protocol
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Mapping, MutableMapping
+    from collections.abc import (
+        Iterable,
+        Iterator,
+        Mapping,
+        MutableMapping,
+        MutableSequence,
+        Sequence,
+    )
     from io import IOBase
     from typing import Any, Final
 
@@ -140,7 +147,19 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
             b_lines = f.readlines()
         reader = csv.reader((bs.decode() for bs in b_lines), dialect=csv.unix_dialect)
         header = tuple(next(reader))
-        return {row[0]: dict(zip(header, row)) for row in reader}
+        return {row[0]: dict(self._convert_row(header, row)) for row in reader}
+
+    def _convert_row(
+        self, header: Iterable[str], row: Iterable[str], /
+    ) -> Iterator[tuple[str, Any]]:
+        map_tf = {"true": True, "false": False}
+        for col, value in zip(header, row):
+            if col.startswith(("is_", "has_")):
+                yield col, map_tf[value]
+            elif col == "bytes":
+                yield col, int(value)
+            else:
+                yield col, value
 
     def __getitem__(self, key: _Dataset, /) -> Metadata:
         if result := self.get(key, None):
