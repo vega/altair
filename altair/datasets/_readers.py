@@ -31,7 +31,7 @@ from typing import (
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr, IntoFrameT
 
-from altair.datasets._cache import DatasetCache, _iter_results
+from altair.datasets._cache import CsvCache, DatasetCache, SchemaCache, _iter_results
 from altair.datasets._typing import EXTENSION_SUFFIXES, Metadata, is_ext_read
 
 if TYPE_CHECKING:
@@ -252,12 +252,12 @@ class _PandasReaderBase(_Reader["pd.DataFrame", "pd.DataFrame"], Protocol):
     - https://pandas.pydata.org/docs/reference/api/pandas.read_json.html
     """
 
-    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
-        from altair.datasets._cache import schema_cache
+    _schema_cache: SchemaCache
 
+    def _schema_kwds(self, result: Metadata, /) -> dict[str, Any]:
         name: Any = result["dataset_name"]
         suffix = result["suffix"]
-        if cols := schema_cache.by_dtype(name, nw.Date, nw.Datetime):
+        if cols := self._schema_cache.by_dtype(name, nw.Date, nw.Datetime):
             if suffix == ".json":
                 return {"convert_dates": cols}
             elif suffix in {".csv", ".tsv"}:
@@ -278,6 +278,7 @@ class _PandasReader(_PandasReaderBase):
             ".parquet": pd.read_parquet,
         }
         self._scan_fn = {".parquet": pd.read_parquet}
+        self._schema_cache = SchemaCache()
 
 
 class _PandasPyArrowReader(_PandasReaderBase):
@@ -296,6 +297,7 @@ class _PandasPyArrowReader(_PandasReaderBase):
             ".parquet": partial(pd.read_parquet, dtype_backend=_pa),
         }
         self._scan_fn = {".parquet": partial(pd.read_parquet, dtype_backend=_pa)}
+        self._schema_cache = SchemaCache()
 
 
 def _pl_read_json_roundtrip(source: Path | IOBase, /, **kwds: Any) -> pl.DataFrame:

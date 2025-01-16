@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     _Dataset: TypeAlias = "Dataset | LiteralString"  # noqa: TC008
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
 
-__all__ = ["DatasetCache"]
+__all__ = ["CsvCache", "DatasetCache", "SchemaCache", "csv_cache"]
 
 
 _KT = TypeVar("_KT")
@@ -45,25 +45,23 @@ _VT = TypeVar("_VT")
 _T = TypeVar("_T")
 
 _METADATA_DIR: Final[Path] = Path(__file__).parent / "_metadata"
-_SCHEMA: Final[Path] = _METADATA_DIR / "schemas.json.gz"
-_CSV: Final[Path] = _METADATA_DIR / "metadata.csv.gz"
 
-_FIELD_TO_DTYPE: Mapping[FlFieldStr, type[DType]] = {
-    "integer": nw.Int64,
-    "number": nw.Float64,
-    "boolean": nw.Boolean,
-    "string": nw.String,
-    "object": nw.Struct,
-    "array": nw.List,
-    "date": nw.Date,
-    "datetime": nw.Datetime,
-    # "time": nw.Time, (Not Implemented, but we don't have any cases using it anyway)
-    "duration": nw.Duration,
+_DTYPE_TO_FIELD: Mapping[type[DType], FlFieldStr] = {
+    nw.Int64: "integer",
+    nw.Float64: "number",
+    nw.Boolean: "boolean",
+    nw.String: "string",
+    nw.Struct: "object",
+    nw.List: "array",
+    nw.Date: "date",
+    nw.Datetime: "datetime",
+    nw.Duration: "duration",
+    # nw.Time: "time" (Not Implemented, but we don't have any cases using it anyway)
 }
 """
-Similar to an inverted `pl.datatypes.convert.dtype_to_ffiname`_.
+Similar to `pl.datatypes.convert.dtype_to_ffiname`_.
 
-But using the string repr of ``frictionless`` `Field Types`_ to `narwhals.dtypes`_.
+But using `narwhals.dtypes`_ to the string repr of ``frictionless`` `Field Types`_.
 
 .. _pl.datatypes.convert.dtype_to_ffiname:
     https://github.com/pola-rs/polars/blob/85d078c066860e012f5e7e611558e6382b811b82/py-polars/polars/datatypes/convert.py#L139-L165
@@ -72,10 +70,6 @@ But using the string repr of ``frictionless`` `Field Types`_ to `narwhals.dtypes
 .. _narwhals.dtypes:
     https://narwhals-dev.github.io/narwhals/api-reference/dtypes/
 """
-
-_DTYPE_TO_FIELD: Mapping[type[DType], FlFieldStr] = {
-    v: k for k, v in _FIELD_TO_DTYPE.items()
-}
 
 
 def _iter_results(df: nw.DataFrame[Any], /) -> Iterator[Metadata]:
@@ -129,14 +123,13 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         https://docs.python.org/3/library/gzip.html
     """
 
+    fp = _METADATA_DIR / "metadata.csv.gz"
+
     def __init__(
         self,
-        fp: Path,
-        /,
         *,
         tp: type[MutableMapping[_Dataset, Metadata]] = dict["_Dataset", "Metadata"],
     ) -> None:
-        self.fp: Path = fp
         self._mapping: MutableMapping[_Dataset, Metadata] = tp()
 
     def read(self) -> Any:
@@ -189,14 +182,13 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
         https://github.com/vega/vega-datasets/pull/631
     """
 
+    fp = _METADATA_DIR / "schemas.json.gz"
+
     def __init__(
         self,
-        fp: Path,
-        /,
         *,
         tp: type[MutableMapping[_Dataset, _FlSchema]] = dict["_Dataset", "_FlSchema"],
     ) -> None:
-        self.fp: Path = fp
         self._mapping: MutableMapping[_Dataset, _FlSchema] = tp()
 
     def read(self) -> Any:
@@ -224,20 +216,6 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
             return [col for col, tp_str in match.items() if tp_str in include]
         else:
             return list(match)
-
-    def schema(self, name: _Dataset, /) -> Mapping[str, DType]:
-        return {
-            column: _FIELD_TO_DTYPE[tp_str]() for column, tp_str in self[name].items()
-        }
-
-    def schema_cast(self, name: _Dataset, /) -> Iterator[nw.Expr]:
-        """
-        Can be passed directly to `.with_columns(...).
-
-        BUG: `cars` doesnt work in either pandas backend
-        """
-        for column, dtype in self.schema(name).items():
-            yield nw.col(column).cast(dtype)
 
 
 class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
@@ -370,5 +348,15 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             raise ValueError(msg)
 
 
-schema_cache = SchemaCache(_SCHEMA)
-csv_cache = CsvCache(_CSV)
+csv_cache: CsvCache
+
+
+def __getattr__(name):
+    if name == "csv_cache":
+        global csv_cache
+        csv_cache = CsvCache()
+        return csv_cache
+
+    else:
+        msg = f"module {__name__!r} has no attribute {name!r}"
+        raise AttributeError(msg)
