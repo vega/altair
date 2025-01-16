@@ -124,7 +124,7 @@ class Application:
         metadata_min = (
             package["features"]
             .lazy()
-            .filter(~(col("suffix").is_in((".parquet", ".arrow"))))
+            .filter(col("suffix") != ".arrow")
             .sort("dataset_name")
         )
         self.write_csv_gzip(metadata_min, self.paths["metadata-csv"])
