@@ -7,10 +7,10 @@ The core Python API for Altair can be found in the following locations:
 - ``altair/vegalite/v5/schema/``
 
 All the files within these directories are created automatically by running
-the following script from the root of the repository:
+the following script:
 
 ```bash
-hatch run generate-schema-wrapper
+uv run task generate-schema-wrapper
 ```
 
 This script does a couple things:
@@ -86,7 +86,7 @@ These additional methods have fairly good test coverage, so running the test
 suite should identify any inconsistencies:
 
 ```bash
-hatch test
+uv run task test
 ```
 
 Generally, minor version updates (e.g. Vega-Lite 2.3->2.4) have been relatively
