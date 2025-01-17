@@ -84,7 +84,8 @@ dev = [
     "types-setuptools",
     "geopandas",
     "polars>=0.20.3",
-    "tomli; python_version<\"3.11\""
+    "taskipy>=1.14.1",
+    "tomli>=2.2.1",
 ]
 doc = [
     "sphinx",
@@ -92,7 +93,7 @@ doc = [
     "sphinxext_altair",
     "jinja2",
     "numpydoc",
-    "pillow>=9,<10",
+    "pillow",
     "pydata-sphinx-theme>=0.14.1",
     "myst-parser",
     "sphinx_copybutton",
@@ -104,292 +105,120 @@ doc = [
 # Minimum/exact versions, for projects under the `vega` organization
 vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
 vega-embed        = "6"       # https://github.com/vega/vega-embed
-vega-lite         = "v5.20.1" # https://github.com/vega/vega-lite
+vega-lite         = "v5.21.0" # https://github.com/vega/vega-lite
 
-[tool.hatch.version]
-path = "altair/__init__.py"
+[tool.hatch]
+build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
+metadata = { allow-direct-references = true }
+version  = { path = "altair/__init__.py" }
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build]
-include = ["/altair"]
-artifacts = ["altair/jupyter/js/index.js"]
-
-[tool.hatch.envs.default]
-features = ["all", "dev"]
+[tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
-installer = "uv"
-
-[tool.hatch.envs.default.scripts]
-generate-schema-wrapper = [
-    "mypy tools",
-    "python tools/generate_schema_wrapper.py",
-    "test"
-]
-test = [
-    "ruff check .",
-    "ruff format --diff --check .",
-    "mypy altair tests",
-    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair tools",
-]
-test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
-test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
-update-init-file = [
-    "python tools/update_init_file.py",
-    "ruff check .",
-    "ruff format .",
-]
-test-fast = [
-    "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"not slow\" {args}"
-]
-test-slow = [
-    "ruff check .", "ruff format .",
-    "pytest -p no:randomly -n logical --numprocesses=logical --doctest-modules tests altair tools -m \"slow\" {args}"
-]
+default = { features = ["all", "dev"], installer = "uv" }
+doc     = { features = ["all", "dev", "doc"] }
 
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
-# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
-default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair", "tools"]
-parallel = true
-[[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-[tool.hatch.envs.hatch-test.scripts]
-run = [
-    "ruff check .", 
-    "ruff format --diff --check .",
-    "mypy altair tests",
-    "pytest{env:HATCH_TEST_ARGS:} {args}"
-]
-run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
-cov-combine = "coverage combine"
-cov-report = "coverage report"
-
-[tool.hatch.envs.doc]
-features = ["all", "dev", "doc"]
-
-[tool.hatch.envs.doc.scripts]
-clean = "rm -rf doc/_build"
-clean-generated = ["rm -rf doc/user_guide/generated", "rm -rf doc/gallery"]
-clean-all = ["clean", "clean-generated", "rm -rf doc/_images"]
-clean-win = "if exist doc\\_build rd /s /q doc\\_build"
-clean-generated-win = [
-    "if exist doc\\user_guide\\generated rd /s /q doc\\user_guide\\generated",
-    "if exist doc\\gallery rd /s /q doc\\gallery",
-]
-clean-all-win = [
-    "clean-win",
-    "clean-generated-win",
-    "if exist doc\\_images rd /s /q doc\\_images",
-]
-build-html = [
-    "mkdir -p doc/_images",
-    "sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html",
-]
-build-html-win = [
-    "if not exist doc\\_images md doc\\_images",
-    "sphinx-build -b html -d doc\\_build\\doctrees doc doc\\_build\\html",
-]
-doctest = "sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest"
-coverage = "sphinx-build -b coverage -d doc/_build/doctrees doc doc/_build/coverage"
-serve = "(cd doc/_build/html && python -m http.server)"
-publish-clean-build = [
-    "clean-all",
-    "build-html",
-    "(cd doc && bash sync_website.sh)",
-]
+matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
-target-version = "py39"
-line-length = 88
-indent-width = 4
 exclude = [
     ".git",
-    "build",
     "__pycache__",
+    "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
 ]
+indent-width = 4
+line-length = 88
+target-version = "py39"
 
 [tool.ruff.lint]
-# https://docs.astral.sh/ruff/preview/
-preview = true
-
-# https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
-extend-safe-fixes=[
-    # unnecessary-comprehension-in-call
-    "C419",
-    # literal-membership
-    "PLR6201",
-    # from __future__ import annotations #
-    # ---------------------------------- # 
-    "UP006",
-    "UP007",
-    "UP008",
-    "TCH",
-    # assign exception msg to variable #
-    # -------------------------------- #
-    "EM101",
-    "EM102",
-    # trailing-whitespace
-    "W291",
-    # blank line contains whitespace
-    "W293",
-    # unsorted-dunder-all
-    "RUF022",
-    # pydocstyle #
-    # ---------- #
-    # fits-on-one-line
-    "D200",
-    # escape-sequence-in-docstring
-    "D301",
-    # ends-in-period
-    "D400",
-    # missing-return-type-special-method 
-    "ANN204",
-    # unnecessary-dict-comprehension-for-iterable
-    "C420",
+extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+    "ANN204",  # missing-return-type-special-method 
+    "C419",    # unnecessary-comprehension-in-call
+    "C420",    # unnecessary-dict-comprehension-for-iterable
+    "D200",    # fits-on-one-line
+    "D301",    # escape-sequence-in-docstring
+    "D400",    # ends-in-period
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
+    "PLR6201", # literal-membership
+    "TC",      # flake8-type-checking
+    "UP006",   # non-pep585-annotation
+    "UP007",   # non-pep604-annotation-union
+    "UP008",   # super-call-with-parameters
+    "W291",    # trailing-whitespace
+    "W293",    # blank line contains whitespace
 ]
-
-# https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
-extend-select=[
-    # refurb
-    "FURB", 
-    # pylint (preview) autofix #
-    # ------------------------ #
-    # unnecessary-dunder-call
-    "PLC2801", 
-    # unnecessary-dict-index-lookup
-    "PLR1733", 
-    # unnecessary-list-index-lookup
-    "PLR1736",
-    # literal-membership
-    "PLR6201",
-    # unspecified-encoding
-    "PLW1514",
+extend-select = [ # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+    "FURB",    # refurb
+    "PLC2801", # unnecessary-dunder-call
+    "PLR1733", # unnecessary-dict-index-lookup
+    "PLR1736", # unnecessary-list-index-lookup
+    "PLR6201", # literal-membership
+    "PLW1514", # unspecified-encoding
 ]
+ignore = [
+    "ANN401", # any-type
+    "D100",   # undocumented-public-module
+    "D101",   # undocumented-public-class
+    "D102",   # undocumented-public-method
+    "D103",   # undocumented-public-function
+    "D104",   # undocumented-public-package
+    "D105",   # undocumented-magic-method
+    "D107",   # undocumented-public-init
+    "D206",   # indent-with-spaces
+    "D212",   # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D401",   # non-imperative-mood  
+    "D413",   # missing-blank-line-after-last-section
+    "E501",   # line-too-long (https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules)
+    "RUF012", # mutable-class-default
+    "RUF052", # used-dummy-variable
+    "SIM105", # suppressible-exception (https://github.com/vega/altair/pull/3431#discussion_r1629808660)
+    "W505",   # doc-line-too-long
+]
+mccabe.max-complexity = 10
+preview = true # https://docs.astral.sh/ruff/preview/
+pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 select = [
-    # flake8-bugbear
-    "B",
-    # flake8-comprehensions
-    "C4",
-    # pycodestyle-error
-    "E",
-    # flake8-errmsg
-    "EM",
-    # pyflakes
-    "F",
-    # flake8-future-annotations
-    "FA",
-    # flynt
-    "FLY",
-    # flake8-pie
-    "PIE",
-    # flake8-pytest-style
-    "PT",
-    # flake8-use-pathlib
-    "PTH",
-    # Ruff-specific rules
-    "RUF",
-    # flake8-simplify
-    "SIM",
-    # flake8-type-checking
-    "TCH",
-    # flake8-tidy-imports
-    "TID",
-    # pyupgrade
-    "UP",
-    # pycodestyle-warning
-    "W",
-    # pylint (stable) autofix #
-    # ----------------------- #
-    # iteration-over-set
-    "PLC0208",
-    # manual-from-import
-    "PLR0402",
-    # useless-return
-    "PLR1711",
-    # repeated-equality-comparison
-    "PLR1714",
-    # collapsible-else-if
-    "PLR5501",
-    # useless-else-on-loop
-    "PLW0120",
-    # subprocess-run-without-check
-    "PLW1510",
-    # nested-min-max
-    "PLW3301",
-    # pydocstyle #
-    # ---------- #
-    "D",
-    # multi-line-summary-second-line
-    "D213",
-    # numpy-specific-rules
-    "NPY",
-    # flake8-annotations
-    "ANN",
-    # unsorted-imports
-    "I001",
-    # complex-structure
-    "C901",
+    "ANN",     # flake8-annotations
+    "B",       # flake8-bugbear
+    "C4",      # flake8-comprehensions
+    "C901",    # complex-structure
+    "D",       # pydocstyle
+    "D213",    # multi-line-summary-second-line
+    "E",       # pycodestyle-error
+    "EM",      # flake8-errmsg
+    "F",       # pyflakes
+    "FA",      # flake8-future-annotations
+    "FLY",     # flynt
+    "I001",    # unsorted-imports
+    "NPY",     # numpy-specific-rules
+    "PIE",     # flake8-pie
+    "PLC0208", # iteration-over-set
+    "PLR0402", # manual-from-import
+    "PLR1711", # useless-return
+    "PLR1714", # repeated-equality-comparison
+    "PLR5501", # collapsible-else-if
+    "PLW0120", # useless-else-on-loop
+    "PLW1510", # subprocess-run-without-check
+    "PLW3301", # nested-min-max
+    "PT",      # flake8-pytest-style
+    "PTH",     # flake8-use-pathlib
+    "RUF",     # Ruff-specific rules
+    "SIM",     # flake8-simplify
+    "TC",      # flake8-type-checking
+    "TID",     # flake8-tidy-imports
+    "UP",      # pyupgrade
+    "W",       # pycodestyle-warning
 ]
-ignore = [  
-    # Whitespace before ':'
-    "E203",
-    # Too many leading '#' for block comment
-    "E266",
-    # Line too long
-    "E501",
-    # zip() without an explicit strict= parameter set.
-    # python>=3.10 only
-    "B905",
-    # mutable-class-default
-    "RUF012",
-    # used-dummy-variable
-    "RUF052",
-    # suppressible-exception
-    # https://github.com/vega/altair/pull/3431#discussion_r1629808660
-    "SIM105",
-    # pydocstyle/ https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules #
-    # ------------------------------------------------------------------------- #
-    # undocumented-public-module
-    "D100",
-    # undocumented-public-class
-    "D101",
-    # undocumented-public-method  
-    "D102",
-    # undocumented-public-function  
-    "D103",
-    # undocumented-public-package   
-    "D104",
-    # undocumented-magic-method 
-    "D105",
-    # undocumented-public-init  
-    "D107",
-    # indent-with-spaces
-    "D206",
-    # multi-line-summary-first-line ((D213) is the opposite of this)
-    "D212",
-    # Imperative mood   
-    "D401",
-    # Blank line after last section 
-    "D413",
-    # doc-line-too-long
-    "W505",
-    # Any as annotation
-    "ANN401" 
-]
-# https://docs.astral.sh/ruff/settings/#lintpydocstyle
-pydocstyle={ convention="numpy" }
-mccabe={ max-complexity=10 }
 
 [tool.ruff.lint.isort]
-classes = ["expr", "datum"]
+classes = ["datum", "expr"]
 extra-standard-library = ["typing_extensions"]
-known-first-party=[
+known-first-party = [
     "altair_tiles",
     "sphinxext_altair",
     "vega_datasets",
@@ -400,44 +229,71 @@ split-on-trailing-comma = false
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
+"narwhals.dependencies".msg = """
+Import `dependencies` from `narwhals.stable.v1` instead.
+"""
+"narwhals.dtypes".msg = """
+Import `dtypes` from `narwhals.stable.v1` instead.
+"""
+"narwhals.typing".msg = """
+Import `typing` from `narwhals.stable.v1` instead.
+"""
 "typing.Optional".msg = """
 Use `Union[T, None]` instead.
 `typing.Optional` is likely to be confused with `altair.typing.Optional`, \
 which have a similar but different semantic meaning.
 See https://github.com/vega/altair/pull/3449
 """
-"narwhals.dependencies".msg = """
-Import `dependencies` from `narwhals.stable.v1` instead.
-"""
-"narwhals.typing".msg = """
-Import `typing` from `narwhals.stable.v1` instead.
-"""
-"narwhals.dtypes".msg = """
-Import `dtypes` from `narwhals.stable.v1` instead.
-"""
 
 [tool.ruff.lint.per-file-ignores]
-# Only enforce type annotation rules on public api
-"!altair/vegalite/v5/api.py" = ["ANN"]
-# Allow complex if/elif branching during tests
-"tests/**/*.py"= ["C901"]
-
+"!altair/vegalite/v5/api.py" = ["ANN"]  # Only enforce annotation rules on public api
+"tests/**/*.py"              = ["C901"] # Allow complex if/elif branching during tests
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "lf"
-# https://docs.astral.sh/ruff/formatter/#docstring-formatting
-docstring-code-format = true
+docstring-code-format      = true # https://docs.astral.sh/ruff/formatter/#docstring-formatting
 docstring-code-line-length = 88
+line-ending                = "lf"
+
+[tool.taskipy.settings]
+cwd = "."
+
+[tool.taskipy.tasks]
+lint       = "ruff check"
+format     = "ruff format --diff --check"
+ruff-fix   = "task lint && ruff format"
+type-check = "mypy altair tests"
+
+pytest    = "pytest"
+test      = "task lint && task format && task type-check && task pytest"
+test-fast = "task ruff-fix && pytest -m \"not slow\""
+test-slow = "task ruff-fix && pytest -m \"slow\""
+test-min  = "task lint && task format && task type-check && hatch test --python 3.9"
+test-all  = "task lint && task format && task type-check && hatch test --all"
+
+generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
+update-init-file        = "python tools/update_init_file.py && task ruff-fix"
+
+doc-clean               = "python -c \"import tools;tools.fs.rm('doc/_build')\""
+doc-clean-generated     = "python -c \"import tools;tools.fs.rm('doc/user_guide/generated', 'doc/gallery')\""
+doc-clean-images        = "python -c \"import tools;tools.fs.rm('doc/_images')\""
+doc-clean-all           = "task doc-clean && task doc-clean-generated && task doc-clean-images"
+doc-mkdir               = "python -c \"import tools;tools.fs.mkdir('doc/_images')\""
+doc-build-html          = "task doc-mkdir && sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
+doc-clean-build         = "task doc-clean-all && task doc-build-html"
+doc-serve               = "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000"
+doc-publish             = "python tools/sync_website.py"
+doc-publish-clean-build = "task doc-clean-build && task doc-publish"
+
+clean   = "python -c \"import tools;tools.fs.rm('dist')\""
+build   = "task clean && uv build"
+publish = "task build && uv publish"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
-addopts = ["--numprocesses=logical"]
+addopts = ["--numprocesses=logical", "--doctest-modules", "tests", "altair", "tools"]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
     "slow: Label tests as slow (deselect with '-m \"not slow\"')"

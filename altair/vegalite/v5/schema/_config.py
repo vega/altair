@@ -6627,6 +6627,11 @@ class TickConfigKwds(TypedDict, total=False):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
+    binSpacing
+        Offset between bars for binned field. The ideal value for this is either 0
+        (preferred by statisticians) or 1 (Vega-Lite default, D3 example style).
+
+        **Default value:** ``1``
     blend
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
@@ -6645,6 +6650,10 @@ class TickConfigKwds(TypedDict, total=False):
           <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
+    continuousBandSize
+        The default size of the bars on continuous scales.
+
+        **Default value:** ``5``
     cornerRadius
         The radius in pixels of rounded rectangles or arcs' corners.
 
@@ -6679,6 +6688,9 @@ class TickConfigKwds(TypedDict, total=False):
         the limit parameter.
 
         **Default value:** ``"ltr"``
+    discreteBandSize
+        The default size of the bars with discrete dimensions. If unspecified, the default
+        size is  ``step-2``, which provides 2 pixel offset between bars.
     dx
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -6795,6 +6807,8 @@ class TickConfigKwds(TypedDict, total=False):
     lineHeight
         The line height in pixels (the spacing between subsequent lines of text) for
         multi-line text marks.
+    minBandSize
+        The minimum band size for bar and rectangle marks. **Default value:** ``0.25``
     opacity
         The overall opacity (value between [0,1]).
 
@@ -6974,8 +6988,10 @@ class TickConfigKwds(TypedDict, total=False):
     aspect: bool
     bandSize: float
     baseline: TextBaseline_T
+    binSpacing: float
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
+    continuousBandSize: float
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -6984,6 +7000,7 @@ class TickConfigKwds(TypedDict, total=False):
     cursor: Cursor_T
     description: str
     dir: TextDirection_T
+    discreteBandSize: float
     dx: float
     dy: float
     ellipsis: str
@@ -7003,6 +7020,7 @@ class TickConfigKwds(TypedDict, total=False):
     limit: float
     lineBreak: str
     lineHeight: float
+    minBandSize: float
     opacity: float
     order: bool | None
     orient: Orientation_T
