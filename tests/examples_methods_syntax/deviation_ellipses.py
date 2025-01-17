@@ -22,7 +22,7 @@ import altair as alt
 from vega_datasets import data
 
 
-def np_ellipse(
+def confidence_region_2d(
     arr: np.ndarray[tuple[int, int], np.dtype[np.float64]],
     conf_level: float = 0.95,
     segments: int = 50,
@@ -62,7 +62,7 @@ def pd_ellipse(
     ser: pd.Series[float] = df[col_group]
     for group in ser.drop_duplicates():
         arr = df.loc[ser == group, cols].to_numpy()
-        ellipse = pd.DataFrame(np_ellipse(arr), columns=cols)
+        ellipse = pd.DataFrame(confidence_region_2d(arr), columns=cols)
         ellipse[col_group] = group
         ellipses.append(ellipse)
     return pd.concat(ellipses).reset_index(names="order")
