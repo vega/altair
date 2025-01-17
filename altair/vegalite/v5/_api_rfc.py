@@ -315,7 +315,7 @@ class field:
     ) -> Predicate:
         if value is None:
             return cls.valid(field, False, timeUnit=timeUnit)
-        return FieldEqualPredicate(field=field, equal=value, timeUnit=timeUnit)
+        return FieldEqualPredicate(field=field, equal=value, timeUnit=timeUnit)  # pyright: ignore[reportArgumentType]
 
     @classmethod
     def lt(
