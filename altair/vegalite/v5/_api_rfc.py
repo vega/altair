@@ -40,7 +40,7 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from narwhals.typing import IntoDataFrame
+    from narwhals.stable.v1.typing import IntoDataFrame
 
     from altair.utils.schemapi import Optional
     from altair.vegalite.v5.api import Parameter, _FieldEqualType
