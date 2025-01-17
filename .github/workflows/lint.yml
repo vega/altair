@@ -14,15 +14,20 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install uv
       uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: |
+          **/uv.lock
+          **/pyproject.toml
     # Installing all dependencies and not just the linters as mypy needs them for type checking
     - name: Install dependencies
-      run: uv pip install -e ".[dev, all]" --system
-    - name: Lint with ruff
+      run: uv sync --all-extras
+    - name: ruff check (lint)
       run: |        
         uv run ruff check
-    - name: Check formatting with ruff
+    - name: ruff format
       run: |
         uv run ruff format --check --diff
-    - name: Lint with mypy
+    - name: mypy (type check)
       run: |
         uv run mypy altair tests
