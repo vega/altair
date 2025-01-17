@@ -14,8 +14,6 @@ Inspired by `ggplot2.stat_ellipse`_ and directly based on `Deviation ellipses ex
 """
 
 # category: distributions
-from __future__ import annotations
-
 import numpy as np
 import pandas as pd
 from scipy.stats import f as F
