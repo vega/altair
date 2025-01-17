@@ -174,7 +174,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         frame = self.query(**_extract_constraints(name, suffix))
         meta = next(_iter_metadata(frame))
         if meta["suffix"] == ".parquet" and not is_available("vegafusion"):
-            raise _ds_exc.AltairDatasetsError.url_parquet(meta)
+            raise _ds_exc.AltairDatasetsError.from_url(meta)
         url = meta["url"]
         if isinstance(url, str):
             return url
@@ -263,7 +263,7 @@ class _PandasReaderBase(_Reader["pd.DataFrame", "pd.DataFrame"], Protocol):
     def _maybe_fn(self, meta: Metadata, /) -> Callable[..., pd.DataFrame]:
         fn = super()._maybe_fn(meta)
         if meta["is_spatial"]:
-            raise _ds_exc.geospatial(self._name)
+            raise _ds_exc.geospatial(meta, self._name)
         return fn
 
 
@@ -383,9 +383,9 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
             if meta["is_tabular"]:
                 return self._read_json_tabular
             elif meta["is_spatial"]:
-                raise _ds_exc.geospatial(self._name)
+                raise _ds_exc.geospatial(meta, self._name)
             else:
-                raise _ds_exc.non_tabular_json(self._name)
+                raise _ds_exc.non_tabular_json(meta, self._name)
         else:
             return fn
 

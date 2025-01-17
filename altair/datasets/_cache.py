@@ -197,7 +197,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
     def url(self, name: _Dataset, /) -> str:
         if meta := self.get(name, None):
             if meta["suffix"] == ".parquet" and not find_spec("vegafusion"):
-                raise AltairDatasetsError.url_parquet(meta)
+                raise AltairDatasetsError.from_url(meta)
             return meta["url"]
 
         if name in get_args(Dataset):

@@ -10,14 +10,20 @@ if TYPE_CHECKING:
 
 
 class AltairDatasetsError(Exception):
-    # TODO: Rename, try to reduce verbosity of message, link to vegafusion?
     @classmethod
-    def url_parquet(cls, meta: Metadata, /) -> AltairDatasetsError:
-        name = meta["file_name"]
-        msg = (
-            f"Currently unable to load {name!r} via url, as '.parquet' datasets require `vegafusion`.\n"
-            "See upstream issue for details: https://github.com/vega/vega/issues/3961"
-        )
+    def from_url(cls, meta: Metadata, /) -> AltairDatasetsError:
+        if meta["suffix"] == ".parquet":
+            msg = (
+                f"{_failed_url(meta)}"
+                f"{meta['suffix']!r} datasets require `vegafusion`.\n"
+                "See upstream issue for details: https://github.com/vega/vega/issues/3961"
+            )
+        else:
+            msg = (
+                f"{cls.from_url.__qualname__}() called for "
+                f"unimplemented extension: {meta['suffix']}\n\n{meta!r}"
+            )
+            raise NotImplementedError(msg)
         return cls(msg)
 
     @classmethod
@@ -43,30 +49,41 @@ def module_not_found(
     return ModuleNotFoundError(msg, name=missing)
 
 
-# TODO: Give more direct help (e.g. url("7zip"))
-def image(meta: Metadata):
-    name = meta["file_name"]
-    ext = meta["suffix"]
-    msg = (
-        f"Unable to load {name!r} as tabular data.\n"
-        f"{ext!r} datasets are only compatible with `url(...)` or `Loader.url(...)`."
-    )
+def image(meta: Metadata, /) -> AltairDatasetsError:
+    msg = f"{_failed_tabular(meta)}\n{_suggest_url(meta)}"
     return AltairDatasetsError(msg)
 
 
-# TODO: Pass in `meta`
-def geospatial(backend_name: str) -> NotImplementedError:
-    msg = _suggest_supported(
+def geospatial(meta: Metadata, backend_name: str) -> NotImplementedError:
+    msg = (
+        f"{_failed_tabular(meta)}"
         f"Geospatial data is not supported natively by {backend_name!r}."
+        f"{_suggest_url(meta, 'polars')}"
     )
     return NotImplementedError(msg)
 
 
-# TODO: Pass in `meta`
-def non_tabular_json(backend_name: str) -> NotImplementedError:
-    msg = _suggest_supported(f"Non-tabular json is not supported {backend_name!r}.")
+def non_tabular_json(meta: Metadata, backend_name: str) -> NotImplementedError:
+    msg = (
+        f"{_failed_tabular(meta)}"
+        f"Non-tabular json is not supported natively by {backend_name!r}."
+        f"{_suggest_url(meta, 'polars')}"
+    )
     return NotImplementedError(msg)
 
 
-def _suggest_supported(msg: str) -> str:
-    return f"{msg}\nTry installing `polars` or using `Loader.url(...)` instead."
+def _failed_url(meta: Metadata, /) -> str:
+    return f"Unable to load {meta['file_name']!r} via url.\n"
+
+
+def _failed_tabular(meta: Metadata, /) -> str:
+    return f"Unable to load {meta['file_name']!r} as tabular data.\n"
+
+
+def _suggest_url(meta: Metadata, install_other: str | None = None) -> str:
+    other = f" installing `{install_other}` or" if install_other else ""
+    return (
+        f"\n\nInstead, try{other}:\n\n"
+        "    from altair.datasets import url\n"
+        f"    url({meta['dataset_name']!r})"
+    )
