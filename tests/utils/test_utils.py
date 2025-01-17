@@ -30,7 +30,7 @@ def test_infer_vegalite_type():
     _check(nulled, "quantitative")
     _check(["a", "b", "c"], "nominal")
 
-    with pytest.warns(UserWarning):
+    with pytest.warns(UserWarning, match=r"infer vegalite type"):
         _check([], "nominal")
 
 
