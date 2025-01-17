@@ -35,8 +35,8 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         from altair.datasets import Loader
 
-        data = Loader.from_backend("polars")
-        >>> data  # doctest: +SKIP
+        load = Loader.from_backend("polars")
+        >>> load  # doctest: +SKIP
         Loader[polars]
 
     .. _vega-datasets:
@@ -94,24 +94,24 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             from altair.datasets import Loader
 
-            data = Loader.from_backend("polars")
-            cars = data("cars")
+            load = Loader.from_backend("polars")
+            cars = load("cars")
 
             >>> type(cars)  # doctest: +SKIP
             polars.dataframe.frame.DataFrame
 
         Using ``pandas``:
 
-            data = Loader.from_backend("pandas")
-            cars = data("cars")
+            load = Loader.from_backend("pandas")
+            cars = load("cars")
 
             >>> type(cars)  # doctest: +SKIP
             pandas.core.frame.DataFrame
 
         Using ``pandas``, backed by ``pyarrow`` dtypes:
 
-            data = Loader.from_backend("pandas[pyarrow]")
-            cars = data("cars")
+            load = Loader.from_backend("pandas[pyarrow]")
+            cars = load("cars")
 
             >>> type(cars)  # doctest: +SKIP
             pandas.core.frame.DataFrame
@@ -165,8 +165,8 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             from altair.datasets import Loader
 
-            data = Loader.from_backend("polars")
-            source = data("iowa-electricity")
+            load = Loader.from_backend("polars")
+            source = load("iowa-electricity")
 
             >>> source.columns  # doctest: +SKIP
             ['year', 'source', 'net_generation']
@@ -193,8 +193,8 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pandas``:
 
-            data = Loader.from_backend("pandas")
-            source = data("iowa-electricity")
+            load = Loader.from_backend("pandas")
+            source = load("iowa-electricity")
 
             >>> source.columns  # doctest: +SKIP
             Index(['year', 'source', 'net_generation'], dtype='object')
@@ -217,8 +217,8 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Using ``pyarrow``:
 
-            data = Loader.from_backend("pyarrow")
-            source = data("iowa-electricity")
+            load = Loader.from_backend("pyarrow")
+            source = load("iowa-electricity")
 
             >>> source.column_names  # doctest: +SKIP
             ['year', 'source', 'net_generation']
@@ -266,13 +266,13 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             import altair as alt
             from altair.datasets import Loader
 
-            data = Loader.from_backend("polars")
-            >>> data.url("cars")  # doctest: +SKIP
+            load = Loader.from_backend("polars")
+            >>> load.url("cars")  # doctest: +SKIP
             'https://cdn.jsdelivr.net/npm/vega-datasets@v2.11.0/data/cars.json'
 
         We can pass the result directly to a chart:
 
-            url = data.url("cars")
+            url = load.url("cars")
             alt.Chart(url).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
         """
         return self._reader.url(name, suffix)

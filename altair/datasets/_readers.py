@@ -186,7 +186,7 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
     ) -> nw.DataFrame[IntoDataFrameT]:
         """
-        Query multi-version trees metadata.
+        Query a tabular version of `vega-datasets/datapackage.json`_.
 
         Applies a filter, erroring out when no results would be returned.
 
@@ -194,6 +194,8 @@ class _Reader(Protocol[IntoDataFrameT, IntoFrameT]):
         -----
         Arguments correspond to those seen in `pl.LazyFrame.filter`_.
 
+        .. _vega-datasets/datapackage.json:
+            https://github.com/vega/vega-datasets/blob/main/datapackage.json
         .. _pl.LazyFrame.filter:
             https://docs.pola.rs/api/python/stable/reference/lazyframe/api/polars.LazyFrame.filter.html
         """
