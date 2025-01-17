@@ -54,7 +54,7 @@ def confidence_region_2d(
     return center + radius * (circle @ np.linalg.cholesky(cov_mat).T)
 
 
-def pd_ellipse(
+def grouped_confidence_regions(
     df: pd.DataFrame, col_x: str, col_y: str, col_group: str
 ) -> pd.DataFrame:
     cols = [col_x, col_y]
@@ -76,7 +76,7 @@ y = alt.Y(col_y).scale(zero=False)
 color = alt.Color(col_group)
 
 source = data.iris()
-ellipse = pd_ellipse(source, col_x=col_x, col_y=col_y, col_group=col_group)
+ellipse = grouped_confidence_regions(source, col_x=col_x, col_y=col_y, col_group=col_group)
 points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(x, y, color)
 lines = (
     alt.Chart(ellipse)
