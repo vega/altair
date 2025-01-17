@@ -38,6 +38,12 @@ if TYPE_CHECKING:
     from altair.vegalite.v5.schema._typing import OneOrSeq
     from tests import MarksType
 
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+    PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]
+
 CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
 
@@ -51,23 +57,34 @@ class DatasetSpec(TypedDict, total=False):
 
 requires_pyarrow: pytest.MarkDecorator = skip_requires_pyarrow()
 
-backends: pytest.MarkDecorator = pytest.mark.parametrize(
-    "backend",
-    [
-        "polars",
-        pytest.param(
-            "pandas",
-            marks=pytest.mark.xfail(
-                find_spec("pyarrow") is None,
-                reason=(
-                    "`pandas` supports backends other than `pyarrow` for `.parquet`.\n"
-                    "However, none of these are currently an `altair` dependency."
-                ),
+_b_params = {
+    "polars": pytest.param("polars"),
+    "pandas": pytest.param(
+        "pandas",
+        marks=pytest.mark.xfail(
+            find_spec("pyarrow") is None,
+            reason=(
+                "`pandas` supports backends other than `pyarrow` for `.parquet`.\n"
+                "However, none of these are currently an `altair` dependency."
             ),
         ),
-        pytest.param("pandas[pyarrow]", marks=requires_pyarrow),
-        pytest.param("pyarrow", marks=requires_pyarrow),
-    ],
+    ),
+    "pandas[pyarrow]": pytest.param("pandas[pyarrow]", marks=requires_pyarrow),
+    "pyarrow": pytest.param("pyarrow", marks=requires_pyarrow),
+}
+
+backends: pytest.MarkDecorator = pytest.mark.parametrize("backend", _b_params.values())
+backends_no_polars: pytest.MarkDecorator = pytest.mark.parametrize(
+    "backend", [v for k, v in _b_params.items() if k != "polars"]
+)
+backends_pandas_any: pytest.MarkDecorator = pytest.mark.parametrize(
+    "backend", [v for k, v in _b_params.items() if "pandas" in k]
+)
+backends_single: pytest.MarkDecorator = pytest.mark.parametrize(
+    "backend", [v for k, v in _b_params.items() if "[" not in k]
+)
+backends_multi: pytest.MarkDecorator = pytest.mark.parametrize(
+    "backend", [v for k, v in _b_params.items() if "[" in k]
 )
 
 datasets_debug: pytest.MarkDecorator = pytest.mark.datasets_debug()
@@ -97,12 +114,28 @@ def is_flaky_datasets(request: pytest.FixtureRequest) -> bool:
 
 
 @pytest.fixture(scope="session")
-def polars_loader(
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Loader[pl.DataFrame, pl.LazyFrame]:
+def polars_loader(tmp_path_factory: pytest.TempPathFactory) -> PolarsLoader:
     data = Loader.from_backend("polars")
     data.cache.path = tmp_path_factory.mktemp("loader-cache-polars")
     return data
+
+
+@pytest.fixture(
+    params=("earthquakes", "londonBoroughs", "londonTubeLines", "us-10m", "world-110m")
+)
+def spatial_datasets(request: pytest.FixtureRequest) -> Dataset:
+    return request.param
+
+
+@backends_no_polars
+def test_spatial(spatial_datasets, backend: _Backend) -> None:
+    load = Loader.from_backend(backend)
+    pattern = re.compile(
+        rf"{spatial_datasets}.+geospatial.+native.+{re.escape(backend)}.+url",
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    with pytest.raises(NotImplementedError, match=pattern):
+        load(spatial_datasets)
 
 
 @pytest.fixture
@@ -321,13 +354,10 @@ def test_loader_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None
     assert set(nw_frame.columns) == {"symbol", "date", "price"}
 
 
-@backends
+@backends_single
 def test_missing_dependency_single(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    if backend == "pandas[pyarrow]":
-        pytest.skip("Testing single dependency backends only")
-
     monkeypatch.setitem(sys.modules, backend, None)
 
     with pytest.raises(
@@ -340,7 +370,7 @@ def test_missing_dependency_single(
         Loader.from_backend(backend)
 
 
-@pytest.mark.parametrize("backend", ["pandas[pyarrow]"])
+@backends_multi
 @skip_requires_pyarrow
 def test_missing_dependency_multi(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch
@@ -597,9 +627,7 @@ def test_pyarrow_read_json(
     ],
 )
 def test_polars_read_json_roundtrip(
-    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
-    spec: DatasetSpec,
-    column: str,
+    polars_loader: PolarsLoader, spec: DatasetSpec, column: str
 ) -> None:
     frame = polars_loader(spec["name"], ".json")
     tp = frame.schema.to_python()[column]
@@ -620,18 +648,17 @@ def _dataset_params(*, skip: Container[str] = ()) -> Iterator[ParameterSet]:
 
 @slow
 @datasets_debug
-@pytest.mark.parametrize(
-    ("name", "suffix"),
-    list(_dataset_params(skip=("7zip", "ffox", "gimp"))),
-)
+@pytest.mark.parametrize(("name", "suffix"), list(_dataset_params()))
 def test_all_datasets(
-    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
-    name: Dataset,
-    suffix: Extension,
+    polars_loader: PolarsLoader, name: Dataset, suffix: Extension
 ) -> None:
     """Ensure all annotated datasets can be loaded with the most reliable backend."""
-    frame = polars_loader(name, suffix)
-    assert nw_dep.is_polars_dataframe(frame)
+    if name in {"7zip", "ffox", "gimp"}:
+        with pytest.raises(AltairDatasetsError, match=rf"{name}.+tabular"):
+            polars_loader(name, suffix)
+    else:
+        frame = polars_loader(name, suffix)
+        assert nw_dep.is_polars_dataframe(frame)
 
 
 def _raise_exception(e: type[Exception], *args: Any, **kwds: Any):
@@ -686,7 +713,7 @@ def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -
 
 
 @skip_requires_pyarrow
-@pytest.mark.parametrize("backend", ["pandas", "pandas[pyarrow]"])
+@backends_pandas_any
 @pytest.mark.parametrize(
     ("name", "columns"),
     [
@@ -709,7 +736,7 @@ def test_pandas_date_parse(
     backend: _PandasAny,
     name: Dataset,
     columns: OneOrSeq[str],
-    polars_loader: Loader[pl.DataFrame, pl.LazyFrame],
+    polars_loader: PolarsLoader,
 ) -> None:
     """
     Ensure schema defaults are correctly parsed.
