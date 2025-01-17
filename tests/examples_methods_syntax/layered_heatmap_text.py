@@ -27,14 +27,15 @@ heatmap = base.mark_rect().encode(
         .title("Mean of Horsepower")
 )
 
+color = (
+    alt.when(alt.datum.mean_horsepower > 150)
+    .then(alt.value("black"))
+    .otherwise(alt.value("white"))
+)
+
 # Configure text
 text = base.mark_text(baseline='middle').encode(
-    alt.Text('mean_horsepower:Q', format=".0f"),
-    color=alt.condition(
-        alt.datum.mean_horsepower > 150,
-        alt.value('black'),
-        alt.value('white')
-    )
+    alt.Text('mean_horsepower:Q', format=".0f"), color=color
 )
 
 # Draw the chart

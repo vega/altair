@@ -29,7 +29,9 @@ def assert_is_vega_spec(vega_spec):
 @skip_requires_vl_convert
 def test_vegalite_compiler(chart):
     vegalite_spec = chart.to_dict()
-    vega_spec = vegalite_compilers.get()(vegalite_spec)
+    fn = vegalite_compilers.get()
+    assert fn is not None
+    vega_spec = fn(vegalite_spec)
     assert_is_vega_spec(vega_spec)
 
 

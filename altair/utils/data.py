@@ -4,26 +4,14 @@ import hashlib
 import json
 import random
 import sys
-from collections.abc import MutableMapping, Sequence
+from collections.abc import Callable, MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Literal,
-    Protocol,
-    TypedDict,
-    TypeVar,
-    Union,
-    overload,
-    runtime_checkable,
-)
-from typing_extensions import Concatenate, ParamSpec, TypeAlias
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, Union, overload
 
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
-from narwhals.typing import IntoDataFrame
+from narwhals.stable.v1.dependencies import is_pandas_dataframe
+from narwhals.stable.v1.typing import IntoDataFrame
 
 from ._importers import import_pyarrow_interchange
 from .core import (
@@ -36,11 +24,24 @@ from .core import (
 from .plugin_registry import PluginRegistry
 
 if sys.version_info >= (3, 13):
-    from typing import TypeIs
+    from typing import Protocol, runtime_checkable
 else:
-    from typing_extensions import TypeIs
+    from typing_extensions import Protocol, runtime_checkable
+if sys.version_info >= (3, 10):
+    from typing import Concatenate, ParamSpec
+else:
+    from typing_extensions import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
     import pandas as pd
     import pyarrow as pa
 
@@ -65,8 +66,9 @@ SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return _is_pandas_dataframe(obj) or isinstance(
-        obj, (dict, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    return isinstance(obj, (dict, SupportsGeoInterface)) or isinstance(
+        nw.from_native(obj, eager_or_interchange_only=True, pass_through=True),
+        nw.DataFrame,
     )
 
 
@@ -104,6 +106,26 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType, R]):
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
+    def __init__(self, message: str, /) -> None:
+        self.message = message
+        super().__init__(self.message)
+
+    @classmethod
+    def from_limit_rows(cls, user_rows: int, max_rows: int, /) -> MaxRowsError:
+        msg = (
+            f"The number of rows in your dataset ({user_rows}) is greater "
+            f"than the maximum allowed ({max_rows}).\n\n"
+            "Try enabling the VegaFusion data transformer which "
+            "raises this limit by pre-evaluating data\n"
+            "transformations in Python.\n"
+            "    >> import altair as alt\n"
+            '    >> alt.data_transformers.enable("vegafusion")\n\n'
+            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
+            "for additional information\n"
+            "on how to plot large datasets."
+        )
+        return cls(msg)
+
 
 @overload
 def limit_rows(data: None = ..., max_rows: int | None = ...) -> partial: ...
@@ -121,21 +143,6 @@ def limit_rows(
         return partial(limit_rows, max_rows=max_rows)
     check_data_type(data)
 
-    def raise_max_rows_error():
-        msg = (
-            "The number of rows in your dataset is greater "
-            f"than the maximum allowed ({max_rows}).\n\n"
-            "Try enabling the VegaFusion data transformer which "
-            "raises this limit by pre-evaluating data\n"
-            "transformations in Python.\n"
-            "    >> import altair as alt\n"
-            '    >> alt.data_transformers.enable("vegafusion")\n\n'
-            "Or, see https://altair-viz.github.io/user_guide/large_datasets.html "
-            "for additional information\n"
-            "on how to plot large datasets."
-        )
-        raise MaxRowsError(msg)
-
     if isinstance(data, SupportsGeoInterface):
         if data.__geo_interface__["type"] == "FeatureCollection":
             values = data.__geo_interface__["features"]
@@ -150,8 +157,9 @@ def limit_rows(
         data = to_eager_narwhals_dataframe(data)
         values = data
 
-    if max_rows is not None and len(values) > max_rows:
-        raise_max_rows_error()
+    n = len(values)
+    if max_rows is not None and n > max_rows:
+        raise MaxRowsError.from_limit_rows(n, max_rows)
 
     return data
 
@@ -177,7 +185,7 @@ def sample(
     if data is None:
         return partial(sample, n=n, frac=frac)
     check_data_type(data)
-    if _is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
         if "values" in data:
@@ -199,7 +207,7 @@ def sample(
             raise ValueError(msg)
         n = int(frac * len(data))
     indices = random.sample(range(len(data)), n)
-    return nw.to_native(data[indices])
+    return data[indices].to_native()
 
 
 _FormatType = Literal["csv", "json"]
@@ -308,11 +316,11 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
-    data_native = nw.to_native(data, strict=False)
+    # `pass_through=True` passes `data` through as-is if it is not a Narwhals object.
+    data_native = nw.to_native(data, pass_through=True)
     if isinstance(data_native, SupportsGeoInterface):
         return {"values": _from_geo_interface(data_native)}
-    elif _is_pandas_dataframe(data_native):
+    elif is_pandas_dataframe(data_native):
         data_native = sanitize_pandas_dataframe(data_native)
         return {"values": data_native.to_dict(orient="records")}
     elif isinstance(data_native, dict):
@@ -353,7 +361,7 @@ def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
     - ``typing.TypeGuard``
     - ``pd.DataFrame.__getattr__``
     """
-    if _is_pandas_dataframe(data):
+    if is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
     return sanitize_geo_interface(data.__geo_interface__)
 
@@ -363,7 +371,7 @@ def _data_to_json_string(data: DataType) -> str:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         return json.dumps(_from_geo_interface(data))
-    elif _is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
@@ -390,7 +398,7 @@ def _data_to_csv_string(data: DataType) -> str:
             f"See https://github.com/vega/altair/issues/3441"
         )
         raise NotImplementedError(msg)
-    elif _is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):

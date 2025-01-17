@@ -5,11 +5,11 @@ from __future__ import annotations
 import re
 import sys
 import textwrap
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
 from itertools import chain, starmap
 from operator import attrgetter
-from typing import Any, Callable, ClassVar, Final, Literal, TypeVar, Union
+from typing import Any, ClassVar, Final, Literal, TypeVar, Union
 
 from .utils import (
     Grouped,
@@ -221,6 +221,9 @@ class SchemaGenerator:
         schemarepr: object | None = None,
         rootschemarepr: object | None = None,
         nodefault: list[str] | None = None,
+        *,
+        exclude_properties: Iterable[str] = (),
+        summary: str | None = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -230,6 +233,8 @@ class SchemaGenerator:
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault or ()
+        self.exclude_properties: set[str] = set(exclude_properties)
+        self.summary: str = summary or f"{self.classname} schema wrapper"
         self.kwargs = kwargs
 
     def subclasses(self) -> Iterator[str]:
@@ -260,16 +265,20 @@ class SchemaGenerator:
             basename = self.basename
         else:
             basename = ", ".join(self.basename)
+        docstring = self.docstring(indent=4)
+        init_code = self.init_code(indent=4)
+        if type(self).haspropsetters:
+            method_code = self.overload_code(indent=4)
+        else:
+            method_code = self.kwargs.pop("method_code", None)
         return self.schema_class_template.format(
             classname=self.classname,
             basename=basename,
             schema=schemarepr,
             rootschema=rootschemarepr,
-            docstring=self.docstring(indent=4),
-            init_code=self.init_code(indent=4),
-            method_code=(
-                self.overload_code(indent=4) if type(self).haspropsetters else None
-            ),
+            docstring=docstring,
+            init_code=init_code,
+            method_code=method_code,
             **self.kwargs,
         )
 
@@ -284,7 +293,7 @@ class SchemaGenerator:
     def docstring(self, indent: int = 0) -> str:
         info = self.info
         # https://numpydoc.readthedocs.io/en/latest/format.html#short-summary
-        doc = [f"{self.classname} schema wrapper"]
+        doc = [self.summary]
         if info.description:
             # https://numpydoc.readthedocs.io/en/latest/format.html#extended-summary
             # Remove condition from description
@@ -305,7 +314,10 @@ class SchemaGenerator:
             it = chain.from_iterable(
                 (f"{p} : {p_info.to_type_repr()}", f"    {p_info.deep_description}")
                 for p, p_info in arg_info.iter_args(
-                    arg_info.required, arg_kwds, arg_invalid_kwds
+                    arg_info.required,
+                    arg_kwds,
+                    arg_invalid_kwds,
+                    exclude=self.exclude_properties,
                 )
             )
             doc.extend(chain(["", "Parameters", "----------", ""], it))
@@ -327,10 +339,11 @@ class SchemaGenerator:
     def init_args(self) -> tuple[list[str], list[str]]:
         info = self.info
         arg_info = self.arg_info
+        exclude = self.exclude_properties
 
         nodefault = set(self.nodefault)
-        arg_info.required -= nodefault
-        arg_info.kwds -= nodefault
+        arg_info.required.difference_update(nodefault, exclude)
+        arg_info.kwds.difference_update(nodefault, exclude)
 
         args: list[str] = ["self"]
         super_args: list[str] = []

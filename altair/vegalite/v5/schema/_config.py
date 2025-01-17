@@ -95,7 +95,7 @@ __all__ = [
 
 class AreaConfigKwds(TypedDict, total=False):
     """
-    :class:`AreaConfig` ``TypedDict`` wrapper.
+    :class:`altair.AreaConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -569,7 +569,7 @@ class AreaConfigKwds(TypedDict, total=False):
 
 class AutoSizeParamsKwds(TypedDict, total=False):
     """
-    :class:`AutoSizeParams` ``TypedDict`` wrapper.
+    :class:`altair.AutoSizeParams` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -603,7 +603,7 @@ class AutoSizeParamsKwds(TypedDict, total=False):
 
 class AxisConfigKwds(TypedDict, total=False):
     """
-    :class:`AxisConfig` ``TypedDict`` wrapper.
+    :class:`altair.AxisConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1059,7 +1059,7 @@ class AxisConfigKwds(TypedDict, total=False):
 
 class AxisResolveMapKwds(TypedDict, total=False):
     """
-    :class:`AxisResolveMap` ``TypedDict`` wrapper.
+    :class:`altair.AxisResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1075,7 +1075,7 @@ class AxisResolveMapKwds(TypedDict, total=False):
 
 class BarConfigKwds(TypedDict, total=False):
     """
-    :class:`BarConfig` ``TypedDict`` wrapper.
+    :class:`altair.BarConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1546,7 +1546,7 @@ class BarConfigKwds(TypedDict, total=False):
 
 class BindCheckboxKwds(TypedDict, total=False):
     """
-    :class:`BindCheckbox` ``TypedDict`` wrapper.
+    :class:`altair.BindCheckbox` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1572,7 +1572,7 @@ class BindCheckboxKwds(TypedDict, total=False):
 
 class BindDirectKwds(TypedDict, total=False):
     """
-    :class:`BindDirect` ``TypedDict`` wrapper.
+    :class:`altair.BindDirect` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1598,7 +1598,7 @@ class BindDirectKwds(TypedDict, total=False):
 
 class BindInputKwds(TypedDict, total=False):
     """
-    :class:`BindInput` ``TypedDict`` wrapper.
+    :class:`altair.BindInput` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1634,7 +1634,7 @@ class BindInputKwds(TypedDict, total=False):
 
 class BindRadioSelectKwds(TypedDict, total=False):
     """
-    :class:`BindRadioSelect` ``TypedDict`` wrapper.
+    :class:`altair.BindRadioSelect` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1667,7 +1667,7 @@ class BindRadioSelectKwds(TypedDict, total=False):
 
 class BindRangeKwds(TypedDict, total=False):
     """
-    :class:`BindRange` ``TypedDict`` wrapper.
+    :class:`altair.BindRange` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1705,7 +1705,7 @@ class BindRangeKwds(TypedDict, total=False):
 
 class BoxPlotConfigKwds(TypedDict, total=False):
     """
-    :class:`BoxPlotConfig` ``TypedDict`` wrapper.
+    :class:`altair.BoxPlotConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1785,7 +1785,7 @@ class BoxPlotConfigKwds(TypedDict, total=False):
 
 class BrushConfigKwds(TypedDict, total=False):
     """
-    :class:`BrushConfig` ``TypedDict`` wrapper.
+    :class:`altair.BrushConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1827,7 +1827,7 @@ class BrushConfigKwds(TypedDict, total=False):
 
 class CompositionConfigKwds(TypedDict, total=False):
     """
-    :class:`CompositionConfig` ``TypedDict`` wrapper.
+    :class:`altair.CompositionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -1860,7 +1860,7 @@ class CompositionConfigKwds(TypedDict, total=False):
 
 class ConfigKwds(TypedDict, total=False):
     """
-    :class:`Config` ``TypedDict`` wrapper.
+    :class:`altair.Config` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2209,7 +2209,7 @@ class ConfigKwds(TypedDict, total=False):
 
 class DateTimeKwds(TypedDict, total=False):
     """
-    :class:`DateTime` ``TypedDict`` wrapper.
+    :class:`altair.DateTime` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2257,7 +2257,7 @@ class DateTimeKwds(TypedDict, total=False):
 
 class DerivedStreamKwds(TypedDict, total=False):
     """
-    :class:`DerivedStream` ``TypedDict`` wrapper.
+    :class:`altair.DerivedStream` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2291,7 +2291,7 @@ class DerivedStreamKwds(TypedDict, total=False):
 
 class ErrorBandConfigKwds(TypedDict, total=False):
     """
-    :class:`ErrorBandConfig` ``TypedDict`` wrapper.
+    :class:`altair.ErrorBandConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2361,7 +2361,7 @@ class ErrorBandConfigKwds(TypedDict, total=False):
 
 class ErrorBarConfigKwds(TypedDict, total=False):
     """
-    :class:`ErrorBarConfig` ``TypedDict`` wrapper.
+    :class:`altair.ErrorBarConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2411,7 +2411,7 @@ class ErrorBarConfigKwds(TypedDict, total=False):
 
 class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
     """
-    :class:`FeatureGeometryGeoJsonProperties` ``TypedDict`` wrapper.
+    :class:`altair.FeatureGeometryGeoJsonProperties` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2446,7 +2446,7 @@ class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
 
 class FormatConfigKwds(TypedDict, total=False):
     """
-    :class:`FormatConfig` ``TypedDict`` wrapper.
+    :class:`altair.FormatConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2515,7 +2515,7 @@ class FormatConfigKwds(TypedDict, total=False):
 
 class GeoJsonFeatureKwds(TypedDict, total=False):
     """
-    :class:`GeoJsonFeature` ``TypedDict`` wrapper.
+    :class:`altair.GeoJsonFeature` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2550,7 +2550,7 @@ class GeoJsonFeatureKwds(TypedDict, total=False):
 
 class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
     """
-    :class:`GeoJsonFeatureCollection` ``TypedDict`` wrapper.
+    :class:`altair.GeoJsonFeatureCollection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2570,7 +2570,7 @@ class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
 
 class GeometryCollectionKwds(TypedDict, total=False):
     """
-    :class:`GeometryCollection` ``TypedDict`` wrapper.
+    :class:`altair.GeometryCollection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2598,7 +2598,7 @@ class GeometryCollectionKwds(TypedDict, total=False):
 
 class GradientStopKwds(TypedDict, total=False):
     """
-    :class:`GradientStop` ``TypedDict`` wrapper.
+    :class:`altair.GradientStop` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2614,7 +2614,7 @@ class GradientStopKwds(TypedDict, total=False):
 
 class HeaderConfigKwds(TypedDict, total=False):
     """
-    :class:`HeaderConfig` ``TypedDict`` wrapper.
+    :class:`altair.HeaderConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2789,7 +2789,7 @@ class HeaderConfigKwds(TypedDict, total=False):
 
 class IntervalSelectionConfigKwds(TypedDict, total=False):
     """
-    :class:`IntervalSelectionConfig` ``TypedDict`` wrapper.
+    :class:`altair.IntervalSelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -2899,7 +2899,7 @@ class IntervalSelectionConfigKwds(TypedDict, total=False):
 
 class IntervalSelectionConfigWithoutTypeKwds(TypedDict, total=False):
     """
-    :class:`IntervalSelectionConfigWithoutType` ``TypedDict`` wrapper.
+    :class:`altair.IntervalSelectionConfigWithoutType` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3001,7 +3001,7 @@ class IntervalSelectionConfigWithoutTypeKwds(TypedDict, total=False):
 
 class LegendConfigKwds(TypedDict, total=False):
     """
-    :class:`LegendConfig` ``TypedDict`` wrapper.
+    :class:`altair.LegendConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3356,7 +3356,7 @@ class LegendConfigKwds(TypedDict, total=False):
 
 class LegendResolveMapKwds(TypedDict, total=False):
     """
-    :class:`LegendResolveMap` ``TypedDict`` wrapper.
+    :class:`altair.LegendResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3399,7 +3399,7 @@ class LegendResolveMapKwds(TypedDict, total=False):
 
 class LegendStreamBindingKwds(TypedDict, total=False):
     """
-    :class:`LegendStreamBinding` ``TypedDict`` wrapper.
+    :class:`altair.LegendStreamBinding` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3412,7 +3412,7 @@ class LegendStreamBindingKwds(TypedDict, total=False):
 
 class LineConfigKwds(TypedDict, total=False):
     """
-    :class:`LineConfig` ``TypedDict`` wrapper.
+    :class:`altair.LineConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3875,7 +3875,7 @@ class LineConfigKwds(TypedDict, total=False):
 
 class LineStringKwds(TypedDict, total=False):
     """
-    :class:`LineString` ``TypedDict`` wrapper.
+    :class:`altair.LineString` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3895,7 +3895,7 @@ class LineStringKwds(TypedDict, total=False):
 
 class LinearGradientKwds(TypedDict, total=False):
     """
-    :class:`LinearGradient` ``TypedDict`` wrapper.
+    :class:`altair.LinearGradient` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3934,7 +3934,7 @@ class LinearGradientKwds(TypedDict, total=False):
 
 class LocaleKwds(TypedDict, total=False):
     """
-    :class:`Locale` ``TypedDict`` wrapper.
+    :class:`altair.Locale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -3950,7 +3950,7 @@ class LocaleKwds(TypedDict, total=False):
 
 class MarkConfigKwds(TypedDict, total=False):
     """
-    :class:`MarkConfig` ``TypedDict`` wrapper.
+    :class:`altair.MarkConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4398,7 +4398,7 @@ class MarkConfigKwds(TypedDict, total=False):
 
 class MergedStreamKwds(TypedDict, total=False):
     """
-    :class:`MergedStream` ``TypedDict`` wrapper.
+    :class:`altair.MergedStream` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4432,7 +4432,7 @@ class MergedStreamKwds(TypedDict, total=False):
 
 class MultiLineStringKwds(TypedDict, total=False):
     """
-    :class:`MultiLineString` ``TypedDict`` wrapper.
+    :class:`altair.MultiLineString` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4452,7 +4452,7 @@ class MultiLineStringKwds(TypedDict, total=False):
 
 class MultiPointKwds(TypedDict, total=False):
     """
-    :class:`MultiPoint` ``TypedDict`` wrapper.
+    :class:`altair.MultiPoint` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4472,7 +4472,7 @@ class MultiPointKwds(TypedDict, total=False):
 
 class MultiPolygonKwds(TypedDict, total=False):
     """
-    :class:`MultiPolygon` ``TypedDict`` wrapper.
+    :class:`altair.MultiPolygon` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4492,7 +4492,7 @@ class MultiPolygonKwds(TypedDict, total=False):
 
 class NumberLocaleKwds(TypedDict, total=False):
     """
-    :class:`NumberLocale` ``TypedDict`` wrapper.
+    :class:`altair.NumberLocale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -4526,7 +4526,7 @@ class NumberLocaleKwds(TypedDict, total=False):
 
 class OverlayMarkDefKwds(TypedDict, total=False):
     """
-    :class:`OverlayMarkDef` ``TypedDict`` wrapper.
+    :class:`altair.OverlayMarkDef` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5016,7 +5016,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
 
 class PointKwds(TypedDict, total=False):
     """
-    :class:`Point` ``TypedDict`` wrapper.
+    :class:`altair.Point` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5040,7 +5040,7 @@ class PointKwds(TypedDict, total=False):
 
 class PointSelectionConfigKwds(TypedDict, total=False):
     """
-    :class:`PointSelectionConfig` ``TypedDict`` wrapper.
+    :class:`altair.PointSelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5148,7 +5148,7 @@ class PointSelectionConfigKwds(TypedDict, total=False):
 
 class PointSelectionConfigWithoutTypeKwds(TypedDict, total=False):
     """
-    :class:`PointSelectionConfigWithoutType` ``TypedDict`` wrapper.
+    :class:`altair.PointSelectionConfigWithoutType` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5248,7 +5248,7 @@ class PointSelectionConfigWithoutTypeKwds(TypedDict, total=False):
 
 class PolygonKwds(TypedDict, total=False):
     """
-    :class:`Polygon` ``TypedDict`` wrapper.
+    :class:`altair.Polygon` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5268,7 +5268,7 @@ class PolygonKwds(TypedDict, total=False):
 
 class ProjectionKwds(TypedDict, total=False):
     """
-    :class:`Projection` ``TypedDict`` wrapper.
+    :class:`altair.Projection` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5411,7 +5411,7 @@ class ProjectionKwds(TypedDict, total=False):
 
 class ProjectionConfigKwds(TypedDict, total=False):
     """
-    :class:`ProjectionConfig` ``TypedDict`` wrapper.
+    :class:`altair.ProjectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5554,7 +5554,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
 
 class RadialGradientKwds(TypedDict, total=False):
     """
-    :class:`RadialGradient` ``TypedDict`` wrapper.
+    :class:`altair.RadialGradient` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5609,7 +5609,7 @@ class RadialGradientKwds(TypedDict, total=False):
 
 class RangeConfigKwds(TypedDict, total=False):
     """
-    :class:`RangeConfig` ``TypedDict`` wrapper.
+    :class:`altair.RangeConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -5663,7 +5663,7 @@ class RangeConfigKwds(TypedDict, total=False):
 
 class RectConfigKwds(TypedDict, total=False):
     """
-    :class:`RectConfig` ``TypedDict`` wrapper.
+    :class:`altair.RectConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6129,7 +6129,7 @@ class RectConfigKwds(TypedDict, total=False):
 
 class ResolveKwds(TypedDict, total=False):
     """
-    :class:`Resolve` ``TypedDict`` wrapper.
+    :class:`altair.Resolve` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6148,7 +6148,7 @@ class ResolveKwds(TypedDict, total=False):
 
 class ScaleConfigKwds(TypedDict, total=False):
     """
-    :class:`ScaleConfig` ``TypedDict`` wrapper.
+    :class:`altair.ScaleConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6331,7 +6331,7 @@ class ScaleConfigKwds(TypedDict, total=False):
 
 class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     """
-    :class:`ScaleInvalidDataConfig` ``TypedDict`` wrapper.
+    :class:`altair.ScaleInvalidDataConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6401,7 +6401,7 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
 
 class ScaleResolveMapKwds(TypedDict, total=False):
     """
-    :class:`ScaleResolveMap` ``TypedDict`` wrapper.
+    :class:`altair.ScaleResolveMap` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6462,7 +6462,7 @@ class ScaleResolveMapKwds(TypedDict, total=False):
 
 class SelectionConfigKwds(TypedDict, total=False):
     """
-    :class:`SelectionConfig` ``TypedDict`` wrapper.
+    :class:`altair.SelectionConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6490,7 +6490,7 @@ class SelectionConfigKwds(TypedDict, total=False):
 
 class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     """
-    :class:`Step` ``TypedDict`` wrapper.
+    :class:`altair.Step` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6515,7 +6515,7 @@ class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
 
 class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     """
-    :class:`StyleConfigIndex` ``TypedDict`` wrapper.
+    :class:`altair.StyleConfigIndex` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6582,7 +6582,7 @@ class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore
 
 class TickConfigKwds(TypedDict, total=False):
     """
-    :class:`TickConfig` ``TypedDict`` wrapper.
+    :class:`altair.TickConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -6627,6 +6627,11 @@ class TickConfigKwds(TypedDict, total=False):
         ``"middle"``, ``"bottom"``.
 
         **Note:** Expression reference is *not* supported for range marks.
+    binSpacing
+        Offset between bars for binned field. The ideal value for this is either 0
+        (preferred by statisticians) or 1 (Vega-Lite default, D3 example style).
+
+        **Default value:** ``1``
     blend
         The color blend mode for drawing an item on its current background. Any valid `CSS
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
@@ -6645,6 +6650,10 @@ class TickConfigKwds(TypedDict, total=False):
           <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
         * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
           will override ``color``.
+    continuousBandSize
+        The default size of the bars on continuous scales.
+
+        **Default value:** ``5``
     cornerRadius
         The radius in pixels of rounded rectangles or arcs' corners.
 
@@ -6679,6 +6688,9 @@ class TickConfigKwds(TypedDict, total=False):
         the limit parameter.
 
         **Default value:** ``"ltr"``
+    discreteBandSize
+        The default size of the bars with discrete dimensions. If unspecified, the default
+        size is  ``step-2``, which provides 2 pixel offset between bars.
     dx
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -6795,6 +6807,8 @@ class TickConfigKwds(TypedDict, total=False):
     lineHeight
         The line height in pixels (the spacing between subsequent lines of text) for
         multi-line text marks.
+    minBandSize
+        The minimum band size for bar and rectangle marks. **Default value:** ``0.25``
     opacity
         The overall opacity (value between [0,1]).
 
@@ -6974,8 +6988,10 @@ class TickConfigKwds(TypedDict, total=False):
     aspect: bool
     bandSize: float
     baseline: TextBaseline_T
+    binSpacing: float
     blend: Blend_T
     color: ColorHex | LinearGradientKwds | RadialGradientKwds | ColorName_T
+    continuousBandSize: float
     cornerRadius: float
     cornerRadiusBottomLeft: float
     cornerRadiusBottomRight: float
@@ -6984,6 +7000,7 @@ class TickConfigKwds(TypedDict, total=False):
     cursor: Cursor_T
     description: str
     dir: TextDirection_T
+    discreteBandSize: float
     dx: float
     dy: float
     ellipsis: str
@@ -7003,6 +7020,7 @@ class TickConfigKwds(TypedDict, total=False):
     limit: float
     lineBreak: str
     lineHeight: float
+    minBandSize: float
     opacity: float
     order: bool | None
     orient: Orientation_T
@@ -7041,7 +7059,7 @@ class TickConfigKwds(TypedDict, total=False):
 
 class TimeIntervalStepKwds(TypedDict, total=False):
     """
-    :class:`TimeIntervalStep` ``TypedDict`` wrapper.
+    :class:`altair.TimeIntervalStep` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7057,7 +7075,7 @@ class TimeIntervalStepKwds(TypedDict, total=False):
 
 class TimeLocaleKwds(TypedDict, total=False):
     """
-    :class:`TimeLocale` ``TypedDict`` wrapper.
+    :class:`altair.TimeLocale` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7091,7 +7109,7 @@ class TimeLocaleKwds(TypedDict, total=False):
 
 class TitleConfigKwds(TypedDict, total=False):
     """
-    :class:`TitleConfig` ``TypedDict`` wrapper.
+    :class:`altair.TitleConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7199,7 +7217,7 @@ class TitleConfigKwds(TypedDict, total=False):
 
 class TitleParamsKwds(TypedDict, total=False):
     """
-    :class:`TitleParams` ``TypedDict`` wrapper.
+    :class:`altair.TitleParams` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7330,7 +7348,7 @@ class TitleParamsKwds(TypedDict, total=False):
 
 class TooltipContentKwds(TypedDict, total=False):
     """
-    :class:`TooltipContent` ``TypedDict`` wrapper.
+    :class:`altair.TooltipContent` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7343,7 +7361,7 @@ class TooltipContentKwds(TypedDict, total=False):
 
 class TopLevelSelectionParameterKwds(TypedDict, total=False):
     """
-    :class:`TopLevelSelectionParameter` ``TypedDict`` wrapper.
+    :class:`altair.TopLevelSelectionParameter` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7405,7 +7423,7 @@ class TopLevelSelectionParameterKwds(TypedDict, total=False):
 
 class VariableParameterKwds(TypedDict, total=False):
     """
-    :class:`VariableParameter` ``TypedDict`` wrapper.
+    :class:`altair.VariableParameter` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7450,7 +7468,7 @@ class VariableParameterKwds(TypedDict, total=False):
 
 class ViewBackgroundKwds(TypedDict, total=False):
     """
-    :class:`ViewBackground` ``TypedDict`` wrapper.
+    :class:`altair.ViewBackground` ``TypedDict`` wrapper.
 
     Parameters
     ----------
@@ -7528,7 +7546,7 @@ class ViewBackgroundKwds(TypedDict, total=False):
 
 class ViewConfigKwds(TypedDict, total=False):
     """
-    :class:`ViewConfig` ``TypedDict`` wrapper.
+    :class:`altair.ViewConfig` ``TypedDict`` wrapper.
 
     Parameters
     ----------
