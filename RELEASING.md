@@ -1,63 +1,57 @@
-1. Make sure to have an environment set up with `hatch` installed. See `CONTRIBUTING.md`.
-   Remove any existing environments managed by `hatch` so that it will create new ones
-   with the latest dependencies when executing the commands further below:
+1. Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md)
+
+
+2. Make sure to have [set up your environment](CONTRIBUTING.md#setting-up-your-environment).
+   Update your environment with the latest dependencies:
    
-       hatch env prune
+        uv sync --all-extras
 
-2. Make certain your branch is in sync with head. If you work on a fork, replace `origin` with `upstream`:
+3. Make certain your branch is in sync with head, and that you have no uncommitted modifications. If you work on a fork, replace `origin` with `upstream`:
  
-       git pull origin main
+        git checkout main
+        git pull origin main
+        git status  # Should show "nothing to commit, working tree clean"
 
-3. Do a clean doc build:
-
-       hatch run doc:clean-all
-       hatch run doc:build-html
-       hatch run doc:serve
+4. Do a [clean doc build](CONTRIBUTING.md#building-the-documentation-locally):
    
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
 
-4. Create a new release branch:
+5. Create a new release branch:
        
-       git switch -c version_5.0.0
+        git switch -c version_5.0.0
 
-5. Update version to, e.g. 5.0.0:
+6. Update version to, e.g. 5.0.0:
 
    - in ``altair/__init__.py``
    - in ``doc/conf.py``
 
-6. Commit changes and push:
+7. Commit changes and push:
 
-       git add . -u
-       git commit -m "chore: Bump version to 5.0.0"
-       git push
+        git add . -u
+        git commit -m "chore: Bump version to 5.0.0"
+        git push
 
-7. Merge release branch into main, make sure that all required checks pass
+8. Merge release branch into main, make sure that all required checks pass
 
-8. Tag the release:
+9.  Switch to main, If you work on a fork, replace `origin` with `upstream`:
 
-       git tag -a v5.0.0 -m "version 5.0.0 release"
-       git push origin v5.0.0
+        git switch main
+        git pull origin main
+        
+10. Build a source distribution and universal wheel, 
+    publish to PyPI (Requires correct PyPI owner permissions and [UV_PUBLISH_TOKEN](https://docs.astral.sh/uv/configuration/environment/#uv_publish_token)):
 
-9. On main, build source & wheel distributions. If you work on a fork, replace `origin` with `upstream`:
+        uv run task publish
 
-       git switch main
-       git pull origin main
-       hatch clean  # clean old builds & distributions
-       hatch build  # create a source distribution and universal wheel
+11. Build and publish docs (Requires write-access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io)):
 
-10. publish to PyPI (Requires correct PyPI owner permissions):
-
-        hatch publish
-
-11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
-
-        hatch run doc:publish-clean-build
+        uv run task doc-publish-clean-build
 
 12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
-        git tag -a v5.0.0 -m "Version 5.0.0 release"
-        git push origin v5.0.0
+       git tag -a v5.0.0 -m "Version 5.0.0 release"
+       git push origin v5.0.0
 
 13. Create a new branch:
        

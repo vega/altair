@@ -1,5 +1,5 @@
 # ruff: noqa
-__version__ = "5.5.0dev"
+__version__ = "5.6.0dev"
 
 # The content of __all__ is automatically written by
 # tools/update_init_file.py. Do not modify directly.
@@ -619,7 +619,6 @@ __all__ = [
     "mixins",
     "param",
     "parse_shorthand",
-    "register_theme",
     "renderers",
     "repeat",
     "sample",
@@ -629,7 +628,6 @@ __all__ = [
     "sequence",
     "sphere",
     "theme",
-    "themes",
     "to_csv",
     "to_json",
     "to_values",
@@ -655,10 +653,46 @@ from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
-from altair import typing
+from altair import typing, theme
 
 
 def load_ipython_extension(ipython):
     from altair._magics import vegalite
 
     ipython.register_magic_function(vegalite, "cell")
+
+
+def __getattr__(name: str):
+    from altair.utils.deprecation import deprecated_warn
+
+    if name == "themes":
+        deprecated_warn(
+            "Most cases require only the following change:\n\n"
+            "    # Deprecated\n"
+            "    alt.themes.enable('quartz')\n\n"
+            "    # Updated\n"
+            "    alt.theme.enable('quartz')\n\n"
+            "If your code registers a theme, make the following change:\n\n"
+            "    # Deprecated\n"
+            "    def custom_theme():\n"
+            "        return {'height': 400, 'width': 700}\n"
+            "    alt.themes.register('theme_name', custom_theme)\n"
+            "    alt.themes.enable('theme_name')\n\n"
+            "    # Updated\n"
+            "    @alt.theme.register('theme_name', enable=True)\n"
+            "    def custom_theme():\n"
+            "        return alt.theme.ThemeConfig(\n"
+            "            {'height': 400, 'width': 700}\n"
+            "        )\n\n"
+            "See the updated User Guide for further details:\n"
+            "    https://altair-viz.github.io/user_guide/api.html#theme\n"
+            "    https://altair-viz.github.io/user_guide/customization.html#chart-themes",
+            version="5.5.0",
+            alternative="altair.theme",
+            stacklevel=3,
+            action="once",
+        )
+        return theme._themes
+    else:
+        msg = f"module {__name__!r} has no attribute {name!r}"
+        raise AttributeError(msg)

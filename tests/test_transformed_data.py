@@ -1,26 +1,37 @@
 import pkgutil
 import sys
+from importlib.metadata import version
+from importlib.util import find_spec
 
+import narwhals.stable.v1 as nw
 import pytest
-from vega_datasets import data
+from packaging.version import Version
 
 import altair as alt
 from altair.utils.execeval import eval_block
-from tests import examples_methods_syntax, slow, ignore_DataFrameGroupBy
-import narwhals.stable.v1 as nw
-
-try:
-    import vegafusion as vf
-except ImportError:
-    vf = None
+from tests import (
+    examples_methods_syntax,
+    ignore_DataFrameGroupBy,
+    skip_requires_vegafusion,
+    slow,
+)
+from vega_datasets import data
 
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
-@ignore_DataFrameGroupBy
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
+xfail_vegafusion_2: pytest.MarkDecorator = pytest.mark.xfail(
+    bool(find_spec("vegafusion"))
+    and Version(version("vegafusion")) >= Version("2.0.0a0"),
+    raises=ValueError,
+    reason="https://github.com/vega/altair/issues/3701",
+)
+
+
 # fmt: off
-@pytest.mark.parametrize("filename,rows,cols", [
+@ignore_DataFrameGroupBy
+@skip_requires_vegafusion
+@pytest.mark.parametrize(("filename", "rows", "cols"), [
     ("annual_weather_heatmap.py", 366, ["monthdate_date_end", "max_temp_max"]),
     ("anscombe_plot.py", 44, ["Series", "X", "Y"]),
     ("bar_chart_sorted.py", 6, ["site", "sum_yield"]),
@@ -49,7 +60,7 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     pytest.param("line_percent.py", 30, ["sex", "perc"], marks=slow),
     ("line_with_log_scale.py", 15, ["year", "sum_people"]),
     ("multifeature_scatter_plot.py", 150, ["petalWidth", "species"]),
-    ("natural_disasters.py", 686, ["Deaths", "Year"]),
+    pytest.param("natural_disasters.py", 686, ["Deaths", "Year"], marks=xfail_vegafusion_2),
     ("normalized_stacked_area_chart.py", 51, ["source", "net_generation_start"]),
     ("normalized_stacked_bar_chart.py", 60, ["site", "sum_yield_start"]),
     ("parallel_coordinates.py", 600, ["key", "value"]),
@@ -69,9 +80,9 @@ XDIST_ENABLED: bool = "xdist" in sys.modules
     ("wilkinson-dot-plot.py", 21, ["data", "id"]),
     ("window_rank.py", 12, ["team", "diff"]),
 ])
-# fmt: on
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
+    # fmt: on
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source, strict=True)
     if to_reconstruct:
@@ -83,17 +94,17 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     assert df is not None
     nw_df = nw.from_native(df, eager_only=True, strict=True)
 
-    assert len(nw_df) == rows 
+    assert len(nw_df) == rows
     assert set(cols).issubset(set(nw_df.columns))
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
-@pytest.mark.parametrize("filename,all_rows,all_cols", [
+@skip_requires_vegafusion
+@pytest.mark.parametrize(("filename", "all_rows", "all_cols"), [
     ("errorbars_with_std.py", [10, 10], [["upper_yield"], ["extent_yield"]]),
     ("candlestick_chart.py", [44, 44], [["low"], ["close"]]),
     ("co2_concentration.py", [713, 7, 7], [["first_date"], ["scaled_date"], ["end"]]),
-    ("falkensee.py", [2, 38, 38], [["event"], ["population"], ["population"]]),
+    pytest.param("falkensee.py", [2, 38, 38], [["event"], ["population"], ["population"]], marks=xfail_vegafusion_2),
     ("heat_lane.py", [10, 10], [["bin_count_start"], ["y2"]]),
     ("histogram_responsive.py", [20, 20], [["__count"], ["__count"]]),
     ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB_Rating"]]),
@@ -127,9 +138,9 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("us_employment.py", [120, 1, 2], [["month"], ["president"], ["president"]]),
     ("us_population_pyramid_over_time.py", [19, 38, 19], [["gender"], ["year"], ["gender"]]),
 ])
-# fmt: on
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
+    # fmt: on
     source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
     chart = eval_block(source, strict=True)
     if to_reconstruct:
@@ -137,7 +148,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # then what might have been originally used. See
         # https://github.com/hex-inc/vegafusion/issues/354 for more info.
         chart = alt.Chart.from_dict(chart.to_dict())
-   
+
     assert isinstance(chart, (alt.LayerChart, alt.ConcatChart, alt.HConcatChart, alt.VConcatChart))
     dfs = chart.transformed_data()
 
@@ -145,7 +156,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # Only run assert statements if the chart is not reconstructed. Reason
         # is that for some charts, the original chart contained duplicated datasets
         # which disappear when reconstructing the chart.
-        
+
         nw_dfs = (nw.from_native(d, eager_only=True, strict=True) for d in dfs)
         assert len(dfs) == len(all_rows)
         for df, rows, cols in zip(nw_dfs, all_rows, all_cols):
@@ -153,7 +164,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
             assert set(cols).issubset(set(df.columns))
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion not installed")
+@skip_requires_vegafusion
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_transformed_data_exclude(to_reconstruct):
     source = data.wheat()
@@ -179,5 +190,5 @@ def test_transformed_data_exclude(to_reconstruct):
     assert len(_datasets) == 2
     assert len(_datasets[0]) == 52
     assert "wheat_start" in _datasets[0]
-    assert len(_datasets[1]) == 1 
-    assert "mean_wheat" in _datasets[1] 
+    assert len(_datasets[1]) == 1
+    assert "mean_wheat" in _datasets[1]

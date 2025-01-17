@@ -30,7 +30,7 @@ def test_infer_vegalite_type():
     _check(nulled, "quantitative")
     _check(["a", "b", "c"], "nominal")
 
-    with pytest.warns(UserWarning):
+    with pytest.warns(UserWarning, match=r"infer vegalite type"):
         _check([], "nominal")
 
 
@@ -75,7 +75,7 @@ def test_sanitize_dataframe():
         if str(df[col].dtype).startswith("datetime"):
             # astype(datetime) introduces time-zone issues:
             # to_datetime() does not.
-            utc = isinstance(df[col].dtype, pd.core.dtypes.dtypes.DatetimeTZDtype)
+            utc = isinstance(df[col].dtype, pd.DatetimeTZDtype)
             df2[col] = pd.to_datetime(df2[col], utc=utc)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
@@ -140,7 +140,7 @@ def test_sanitize_pyarrow_table_columns() -> None:
     pa_table = pa.Table.from_pandas(
         df,
         pa.schema(
-            [
+            (
                 pa.field("s", pa.string()),
                 pa.field("f", pa.float64()),
                 pa.field("i", pa.int64()),
@@ -148,7 +148,7 @@ def test_sanitize_pyarrow_table_columns() -> None:
                 pa.field("d", pa.date32()),
                 pa.field("c", pa.dictionary(pa.int8(), pa.string())),
                 pa.field("p", pa.timestamp("ns", tz="UTC")),
-            ]
+            )
         ),
     )
     sanitized = sanitize_narwhals_dataframe(nw.from_native(pa_table, eager_only=True))
@@ -177,7 +177,7 @@ def test_sanitize_dataframe_colnames():
 
     # Test that non-string columns result in an error
     df.columns = [4, "foo", "bar"]
-    with pytest.raises(ValueError, match="Dataframe contains invalid column name: 4."):
+    with pytest.raises(ValueError, match=r"Dataframe contains invalid column name: 4."):
         sanitize_pandas_dataframe(df)
 
 

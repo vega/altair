@@ -5,14 +5,14 @@ import re
 import sys
 from importlib.util import find_spec
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, overload
 
 import pytest
 
 from tests import examples_arguments_syntax, examples_methods_syntax
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Collection, Iterator, Mapping
+    from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
 
     if sys.version_info >= (3, 11):
@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
     from _pytest.mark import ParameterSet
+    from _pytest.mark.structures import Markable
 
     MarksType: TypeAlias = (
         "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
@@ -59,6 +60,17 @@ Either script can accept ``pytest`` args::
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
 """
 
+skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("IPython") is None, reason="`IPython` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `IPython`_ import would fail.
+
+.. _IPython:
+   https://github.com/ipython/ipython
+"""
 
 skip_requires_vl_convert: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("vl_convert") is None, reason="`vl_convert` not installed."
@@ -85,9 +97,21 @@ Applies when `vegafusion`_ import would fail.
 """
 
 
+@overload
 def skip_requires_pyarrow(
-    fn: Callable[..., Any] | None = None, /, *, requires_tzdata: bool = False
-) -> Callable[..., Any]:
+    fn: None = ..., /, *, requires_tzdata: bool = ...
+) -> pytest.MarkDecorator: ...
+
+
+@overload
+def skip_requires_pyarrow(
+    fn: Markable, /, *, requires_tzdata: bool = ...
+) -> Markable: ...
+
+
+def skip_requires_pyarrow(
+    fn: Markable | None = None, /, *, requires_tzdata: bool = False
+) -> pytest.MarkDecorator | Markable:
     """
     ``pytest.mark.skipif`` decorator.
 
@@ -98,7 +122,7 @@ def skip_requires_pyarrow(
     https://github.com/vega/altair/issues/3050
 
     .. _pyarrow:
-    https://pypi.org/project/pyarrow/
+        https://pypi.org/project/pyarrow/
     """
     composed = pytest.mark.skipif(
         find_spec("pyarrow") is None, reason="`pyarrow` not installed."
@@ -109,13 +133,7 @@ def skip_requires_pyarrow(
             reason="Timezone database is not installed on Windows",
         )(composed)
 
-    def wrap(test_fn: Callable[..., Any], /) -> Callable[..., Any]:
-        return composed(test_fn)
-
-    if fn is None:
-        return wrap
-    else:
-        return wrap(fn)
+    return composed if fn is None else composed(fn)
 
 
 def id_func_str_only(val) -> str:

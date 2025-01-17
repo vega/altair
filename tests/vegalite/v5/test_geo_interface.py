@@ -1,11 +1,20 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 import pytest
 
 import altair.vegalite.v5 as alt
 
+if TYPE_CHECKING:
+    from collections.abc import MutableMapping
 
-def geom_obj(geom):
+    from altair.utils.data import SupportsGeoInterface
+
+
+def geom_obj(geom: dict[str, Any]) -> SupportsGeoInterface:
     class Geom:
-        pass
+        __geo_interface__: MutableMapping[str, Any]
 
     geom_obj = Geom()
     geom_obj.__geo_interface__ = geom
@@ -13,8 +22,8 @@ def geom_obj(geom):
 
 
 # correct translation of Polygon geometry to Feature type
-def test_geo_interface_polygon_feature():
-    geom = {
+def test_geo_interface_polygon_feature() -> None:
+    geom: dict[str, Any] = {
         "coordinates": [[(0, 0), (0, 2), (2, 2), (2, 0), (0, 0)]],
         "type": "Polygon",
     }
@@ -26,7 +35,7 @@ def test_geo_interface_polygon_feature():
 
 
 # merge geometry with empty properties dictionary
-def test_geo_interface_removal_empty_properties():
+def test_geo_interface_removal_empty_properties() -> None:
     geom = {
         "geometry": {
             "coordinates": [
@@ -46,7 +55,7 @@ def test_geo_interface_removal_empty_properties():
 
 
 # only register metadata in the properties member
-def test_geo_interface_register_foreign_member():
+def test_geo_interface_register_foreign_member() -> None:
     geom = {
         "geometry": {
             "coordinates": [
@@ -68,7 +77,7 @@ def test_geo_interface_register_foreign_member():
 
 
 # correct serializing of arrays and nested tuples
-def test_geo_interface_serializing_arrays_tuples():
+def test_geo_interface_serializing_arrays_tuples() -> None:
     import array as arr
 
     geom = {
@@ -96,7 +105,7 @@ def test_geo_interface_serializing_arrays_tuples():
 
 
 # overwrite existing 'type' value in properties with `Feature`
-def test_geo_interface_reserved_members():
+def test_geo_interface_reserved_members() -> None:
     geom = {
         "geometry": {
             "coordinates": [
@@ -116,7 +125,7 @@ def test_geo_interface_reserved_members():
 
 
 # an empty FeatureCollection is valid
-def test_geo_interface_empty_feature_collection():
+def test_geo_interface_empty_feature_collection() -> None:
     geom = {"type": "FeatureCollection", "features": []}
     feat = geom_obj(geom)
 
@@ -126,7 +135,7 @@ def test_geo_interface_empty_feature_collection():
 
 
 # Features in a FeatureCollection only keep properties and geometry
-def test_geo_interface_feature_collection():
+def test_geo_interface_feature_collection() -> None:
     geom = {
         "type": "FeatureCollection",
         "features": [
@@ -170,7 +179,7 @@ def test_geo_interface_feature_collection():
 # notic that the index value is registerd as a commonly used identifier
 # with the name "id" (in this case 49). Similar to serialization of a
 # pandas DataFrame is the index not included in the output
-def test_geo_interface_feature_collection_gdf():
+def test_geo_interface_feature_collection_gdf() -> None:
     geom = {
         "bbox": (19.89, -26.82, 29.43, -17.66),
         "features": [

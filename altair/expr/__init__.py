@@ -117,6 +117,115 @@ class expr(_ExprRef, metaclass=_ExprMeta):
       }))},
       shorthand: 'yval'
     })
+
+    .. _Number.isNaN:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNan
+    .. _Number.isFinite:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite
+    .. _Math.abs:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs
+    .. _Math.acos:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/acos
+    .. _Math.asin:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/asin
+    .. _Math.atan:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan
+    .. _Math.atan2:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2
+    .. _Math.ceil:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
+    .. _Math.cos:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cos
+    .. _Math.exp:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/exp
+    .. _Math.floor:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
+    .. _Math.hypot:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
+    .. _Math.log:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log
+    .. _Math.max:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
+    .. _Math.min:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min
+    .. _Math.pow:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow
+    .. _Math.random:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    .. _Math.round:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+    .. _Math.sin:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sin
+    .. _Math.sqrt:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt
+    .. _Math.tan:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/tan
+    .. _normal (Gaussian) probability distribution:
+       https://en.wikipedia.org/wiki/Normal_distribution
+    .. _cumulative distribution function:
+       https://en.wikipedia.org/wiki/Cumulative_distribution_function
+    .. _probability density function:
+       https://en.wikipedia.org/wiki/Probability_density_function
+    .. _log-normal probability distribution:
+       https://en.wikipedia.org/wiki/Log-normal_distribution
+    .. _continuous uniform probability distribution:
+       https://en.wikipedia.org/wiki/Continuous_uniform_distribution
+    .. _*unit*:
+       https://vega.github.io/vega/docs/api/time/#time-units
+    .. _JavaScript's String.replace:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+    .. _d3-format specifier:
+       https://github.com/d3/d3-format/
+    .. _*units*:
+       https://vega.github.io/vega/docs/api/time/#time-units
+    .. _timeUnitSpecifier API documentation:
+       https://vega.github.io/vega/docs/api/time/#timeUnitSpecifier
+    .. _timeFormat:
+       https://vega.github.io/vega/docs/expressions/#timeFormat
+    .. _utcFormat:
+       https://vega.github.io/vega/docs/expressions/#utcFormat
+    .. _d3-time-format specifier:
+       https://github.com/d3/d3-time-format/
+    .. _TimeMultiFormat object:
+       https://vega.github.io/vega/docs/types/#TimeMultiFormat
+    .. _UTC:
+       https://en.wikipedia.org/wiki/Coordinated_Universal_Time
+    .. _JavaScript's RegExp:
+       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+    .. _RGB:
+       https://en.wikipedia.org/wiki/RGB_color_model
+    .. _d3-color's rgb function:
+       https://github.com/d3/d3-color#rgb
+    .. _HSL:
+       https://en.wikipedia.org/wiki/HSL_and_HSV
+    .. _d3-color's hsl function:
+       https://github.com/d3/d3-color#hsl
+    .. _CIE LAB:
+       https://en.wikipedia.org/wiki/Lab_color_space#CIELAB
+    .. _d3-color's lab function:
+       https://github.com/d3/d3-color#lab
+    .. _HCL:
+       https://en.wikipedia.org/wiki/Lab_color_space#CIELAB
+    .. _d3-color's hcl function:
+       https://github.com/d3/d3-color#hcl
+    .. _W3C Web Content Accessibility Guidelines:
+       https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+    .. _continuous color scheme:
+       https://vega.github.io/vega/docs/schemes
+    .. _geoArea:
+       https://github.com/d3/d3-geo#geoArea
+    .. _path.area:
+       https://github.com/d3/d3-geo#path_area
+    .. _geoBounds:
+       https://github.com/d3/d3-geo#geoBounds
+    .. _path.bounds:
+       https://github.com/d3/d3-geo#path_bounds
+    .. _geoCentroid:
+       https://github.com/d3/d3-geo#geoCentroid
+    .. _path.centroid:
+       https://github.com/d3/d3-geo#path_centroid
+    .. _window.screen:
+       https://developer.mozilla.org/en-US/docs/Web/API/Window/screen
     """
 
     @override
@@ -643,13 +752,13 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         cls, min: IntoExpression = None, max: IntoExpression = None, /
     ) -> Expression:
         """
-        Returns a sample from a univariate `continuous uniform probability distribution`_) over the interval [``min``, ``max``).
+        Returns a sample from a univariate `continuous uniform probability distribution`_ over the interval [``min``, ``max``).
 
         If unspecified, ``min`` defaults to ``0`` and ``max`` defaults to ``1``. If only one
         argument is provided, it is interpreted as the ``max`` value.
 
         .. _continuous uniform probability distribution:
-            https://en.wikipedia.org/wiki/Uniform_distribution_(continuous
+            https://en.wikipedia.org/wiki/Continuous_uniform_distribution
         """
         return FunctionExpression("sampleUniform", (min, max))
 

@@ -10,6 +10,7 @@ import pathlib
 import re
 import sys
 import tempfile
+import warnings
 from collections.abc import Mapping
 from datetime import date, datetime
 from importlib.metadata import version as importlib_version
@@ -85,7 +86,7 @@ def _make_chart_type(chart_type):
 
 
 @pytest.fixture
-def basic_chart():
+def basic_chart() -> alt.Chart:
     data = pd.DataFrame(
         {
             "a": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
@@ -1247,6 +1248,64 @@ def test_predicate_composition() -> None:
     assert actual_multi == expected_multi
 
 
+def test_filter_transform_predicates(basic_chart) -> None:
+    lhs, rhs = alt.datum["b"] >= 30, alt.datum["b"] < 60
+    expected = [{"filter": lhs & rhs}]
+    actual = basic_chart.transform_filter(lhs, rhs).to_dict()["transform"]
+    assert actual == expected
+
+
+def test_filter_transform_constraints(basic_chart) -> None:
+    lhs, rhs = alt.datum["a"] == "A", alt.datum["b"] == 30
+    expected = [{"filter": lhs & rhs}]
+    actual = basic_chart.transform_filter(a="A", b=30).to_dict()["transform"]
+    assert actual == expected
+
+
+def test_filter_transform_predicates_constraints(basic_chart) -> None:
+    from functools import reduce
+    from operator import and_
+
+    predicates = (
+        alt.datum["a"] != "A",
+        alt.datum["a"] != "B",
+        alt.datum["a"] != "C",
+        alt.datum["b"] > 1,
+        alt.datum["b"] < 99,
+    )
+    constraints = {"b": 30, "a": "D"}
+    pred_constraints = *predicates, alt.datum["b"] == 30, alt.datum["a"] != "D"
+    expected = [{"filter": reduce(and_, pred_constraints)}]
+    actual = basic_chart.transform_filter(*predicates, **constraints).to_dict()[
+        "transform"
+    ]
+    assert actual == expected
+
+
+def test_filter_transform_errors(basic_chart) -> None:
+    NO_ARGS = r"At least one.+Undefined"
+    FILTER_KWARGS = r"ambiguous"
+
+    depr_filter = {"field": "year", "oneOf": [1955, 2000]}
+    expected = [{"filter": depr_filter}]
+
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter()
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter(empty=True)
+    with pytest.raises(TypeError, match=NO_ARGS):
+        basic_chart.transform_filter(empty=False)
+
+    with pytest.warns(alt.AltairDeprecationWarning, match=FILTER_KWARGS):
+        basic_chart.transform_filter(filter=depr_filter)
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=alt.AltairDeprecationWarning)
+        actual = basic_chart.transform_filter(filter=depr_filter).to_dict()["transform"]
+
+    assert actual == expected
+
+
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x="shared", y="independent")
     assert chart.resolve == alt.Resolve(
@@ -1347,20 +1406,22 @@ def test_LookupData():
 
 
 def test_themes():
+    from altair import theme
+
     chart = alt.Chart("foo.txt").mark_point()
 
-    with alt.themes.enable("default"):
+    with theme.enable("default"):
         assert chart.to_dict()["config"] == {
             "view": {"continuousWidth": 300, "continuousHeight": 300}
         }
 
-    with alt.themes.enable("opaque"):
+    with theme.enable("opaque"):
         assert chart.to_dict()["config"] == {
             "background": "white",
             "view": {"continuousWidth": 300, "continuousHeight": 300},
         }
 
-    with alt.themes.enable("none"):
+    with theme.enable("none"):
         assert "config" not in chart.to_dict()
 
 
@@ -1660,6 +1721,18 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "pandas" not in sys.modules
     assert "pyarrow" not in sys.modules
     assert "numpy" not in sys.modules
+
+
+def test_polars_date_32():
+    df = pl.DataFrame(
+        {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
+    )
+    result = alt.Chart(df).mark_line().encode(x="a", y="b").to_dict()
+    assert next(iter(result["datasets"].values())) == [
+        {"a": 1, "b": "2020-01-01T00:00:00"},
+        {"a": 2, "b": "2020-01-02T00:00:00"},
+        {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
 
 
 @skip_requires_pyarrow(requires_tzdata=True)

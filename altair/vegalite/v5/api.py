@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
 import jsonschema
 import narwhals.stable.v1 as nw
 
-from altair import utils
+from altair import theme, utils
 from altair.expr import core as _expr_core
 from altair.utils import Optional, SchemaBase, Undefined
 from altair.utils._vegafusion_data import (
@@ -32,7 +32,6 @@ from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map, PrimitiveValue_T, SingleDefUnitChannel_T, Temporal
-from .theme import themes
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -128,7 +127,6 @@ if TYPE_CHECKING:
         NamedData,
         ParameterName,
         PointSelectionConfig,
-        Predicate,
         PredicateComposition,
         ProjectionType,
         RepeatMapping,
@@ -282,7 +280,7 @@ def _prepare_data(
     # convert dataframes  or objects with __geo_interface__ to dict
     elif not isinstance(data, dict) and _is_data_type(data):
         if func := data_transformers.get():
-            data = func(nw.to_native(data, strict=False))
+            data = func(nw.to_native(data, pass_through=True))
 
     # convert string input to a URLData
     elif isinstance(data, str):
@@ -543,12 +541,19 @@ else:
 """
 
 
-_FieldEqualType: TypeAlias = Union[PrimitiveValue_T, Map, Parameter, SchemaBase]
-"""Permitted types for equality checks on field values:
+_FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
+"""
+Permitted types for equality checks on field values.
 
-- `datum.field == ...`
-- `FieldEqualPredicate(equal=...)`
-- `when(**constraints=...)`
+Applies to the following context(s):
+
+    import altair as alt
+
+    alt.datum.field == ...
+    alt.FieldEqualPredicate(field="field", equal=...)
+    alt.when(field=...)
+    alt.when().then().when(field=...)
+    alt.Chart.transform_filter(field=...)
 """
 
 
@@ -715,7 +720,7 @@ def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
 
 def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
     for el in objs:
-        if isinstance(el, (SchemaBase, t.Mapping)):
+        if isinstance(el, (SchemaBase, Mapping)):
             item = el.to_dict(validate=False) if isinstance(el, SchemaBase) else el
             yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
         else:
@@ -793,7 +798,7 @@ def _parse_when_compose(
     if constraints:
         iters.append(_parse_when_constraints(constraints))
     r = functools.reduce(operator.and_, itertools.chain.from_iterable(iters))
-    return t.cast(_expr_core.BinaryExpression, r)
+    return t.cast("_expr_core.BinaryExpression", r)
 
 
 def _parse_when(
@@ -849,7 +854,7 @@ def _parse_otherwise(
         conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
-        if not isinstance(statement, t.Mapping):
+        if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
         selection.update(**statement, **kwds)  # type: ignore[call-arg]
@@ -1102,7 +1107,7 @@ class Then(ConditionLike, t.Generic[_C]):
         conditions = self.to_dict()
         current = conditions["condition"]
         if isinstance(current, list):
-            conditions = t.cast(_Conditional[_Conditions], conditions)
+            conditions = t.cast("_Conditional[_Conditions]", conditions)
             return ChainedWhen(condition, conditions)
         elif isinstance(current, dict):
             cond = _reveal_parsed_shorthand(current)
@@ -1133,7 +1138,7 @@ class Then(ConditionLike, t.Generic[_C]):
             args = f"{COND}{self.condition!r}".replace("\n", "\n  ")
         else:
             conds = "\n    ".join(f"{c!r}" for c in self.condition)
-            args = f"{COND}[\n    " f"{conds}\n  ]"
+            args = f"{COND}[\n    {conds}\n  ]"
         return f"{name}({LB}\n  {args}\n{RB})"
 
 
@@ -1161,9 +1166,7 @@ class ChainedWhen(_BaseWhen):
 
     def __repr__(self) -> str:
         return (
-            f"{type(self).__name__}(\n"
-            f"  {self._conditions!r},\n  {self._condition!r}\n"
-            ")"
+            f"{type(self).__name__}(\n  {self._conditions!r},\n  {self._condition!r}\n)"
         )
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
@@ -1379,7 +1382,7 @@ def param(
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[t.cast(str, empty)]
+            parameter.empty = empty_remap[t.cast("str", empty)]
         else:
             raise ValueError(warn_msg)
 
@@ -2006,9 +2009,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if "$schema" not in vegalite_spec:
                 vegalite_spec["$schema"] = SCHEMA_URL
 
-            # apply theme from theme registry
-            if theme := themes.get():
-                vegalite_spec = utils.update_nested(theme(), vegalite_spec, copy=True)
+            if func := theme.get():
+                vegalite_spec = utils.update_nested(func(), vegalite_spec, copy=True)
             else:
                 msg = (
                     f"Expected a theme to be set but got {None!r}.\n"
@@ -2988,45 +2990,113 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
-    # TODO: Update docstring
-    # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: str
-        | Expr
-        | Expression
-        | Predicate
-        | Parameter
-        | PredicateComposition
-        | dict[str, Predicate | str | list | bool],
-        **kwargs: Any,
+        predicate: Optional[_PredicateType] = Undefined,
+        *more_predicates: _ComposablePredicateType,
+        empty: Optional[bool] = Undefined,
+        **constraints: _FieldEqualType,
     ) -> Self:
         """
-        Add a :class:`FilterTransform` to the schema.
+        Add a :class:`FilterTransform` to the spec.
+
+        The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
         Parameters
         ----------
-        filter : a filter expression or :class:`PredicateComposition`
-            The `filter` property must be one of the predicate definitions:
-            (1) a string or alt.expr expression
-            (2) a range predicate
-            (3) a selection predicate
-            (4) a logical operand combining (1)-(3)
-            (5) a Selection object
+        predicate
+            A selection or test predicate. ``str`` input will be treated as a test operand.
+        *more_predicates
+            Additional predicates, restricted to types supporting ``&``.
+        empty
+            For selection parameters, the predicate of empty selections returns ``True`` by default.
+            Override this behavior, with ``empty=False``.
 
-        Returns
-        -------
-        self : Chart object
-            returns chart to allow for chaining
+            .. note::
+                When ``predicate`` is a ``Parameter`` that is used more than once,
+                ``self.transform_filter(..., empty=...)`` provides granular control for each occurrence.
+        **constraints
+            Specify `Field Equal Predicate`_'s.
+            Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+        Warns
+        -----
+        AltairDeprecationWarning
+            If called using ``filter`` as a keyword argument.
+
+        See Also
+        --------
+        alt.when : Uses a similar syntax for defining conditional values.
+
+        Notes
+        -----
+        - Directly inspired by the syntax used in `polars.DataFrame.filter`_.
+
+        .. _Field Equal Predicate:
+            https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate
+        .. _polars.DataFrame.filter:
+            https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.filter.html
+
+        Examples
+        --------
+        Setting up a common chart::
+
+            import altair as alt
+            from altair import datum
+            from vega_datasets import data
+
+            source = data.population.url
+            chart = (
+                alt.Chart(source)
+                .mark_line()
+                .encode(
+                    x="age:O",
+                    y="sum(people):Q",
+                    color=alt.Color("year:O").legend(symbolType="square"),
+                )
+            )
+            chart
+
+        Singular predicates can be expressed via ``datum``::
+
+            chart.transform_filter(datum.year <= 1980)
+
+        We can also use selection parameters directly::
+
+            selection = alt.selection_point(encodings=["color"], bind="legend")
+            chart.transform_filter(selection).add_params(selection)
+
+        Or a field predicate::
+
+            between_1950_60 = alt.FieldRangePredicate(field="year", range=[1950, 1960])
+            chart.transform_filter(between_1950_60) | chart.transform_filter(~between_1950_60)
+
+        Predicates can be composed together using logical operands::
+
+            chart.transform_filter(between_1950_60 | (datum.year == 1850))
+
+        Predicates passed as positional arguments will be reduced with ``&``::
+
+            chart.transform_filter(datum.year > 1980, datum.age != 90)
+
+        Using keyword-argument ``constraints`` can simplify compositions like::
+
+            verbose_composition = chart.transform_filter((datum.year == 2000) & (datum.sex == 1))
+            chart.transform_filter(year=2000, sex=1)
         """
-        if isinstance(filter, Parameter):
-            new_filter: dict[str, Any] = {"param": filter.name}
-            if "empty" in kwargs:
-                new_filter["empty"] = kwargs.pop("empty")
-            elif isinstance(filter.empty, bool):
-                new_filter["empty"] = filter.empty
-            filter = new_filter
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        if depr_filter := t.cast("Any", constraints.pop("filter", None)):
+            utils.deprecated_warn(
+                "Passing `filter` as a keyword is ambiguous.\n\n"
+                "Use a positional argument for `<5.5.0` behavior.\n"
+                "Or, `alt.datum['filter'] == ...` if referring to a column named 'filter'.",
+                version="5.5.0",
+            )
+            if utils.is_undefined(predicate):
+                predicate = depr_filter
+            else:
+                more_predicates = *more_predicates, depr_filter
+        cond = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+        return self._add_transform(core.FilterTransform(filter=cond.get("test", cond)))
 
     def transform_flatten(
         self,
@@ -3699,7 +3769,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def _set_resolve(self, **kwargs: Any):  # noqa: ANN202
         """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
-            msg = f"{self.__class__} object has no attribute " "'resolve'"
+            msg = f"{self.__class__} object has no attribute 'resolve'"
             raise ValueError(msg)
         copy = _top_schema_base(self).copy(deep=["resolve"])
         if copy.resolve is Undefined:
@@ -3867,11 +3937,8 @@ class Chart(
         height: Optional[int | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
-        # Data type hints won't match with what TopLevelUnitSpec expects
-        # as there is some data processing happening when converting to
-        # a VL spec
         super().__init__(
-            data=data,  # type: ignore[arg-type]
+            data=data,
             encoding=encoding,
             mark=mark,
             width=width,
@@ -3914,7 +3981,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
+        return t.cast("_TSchemaBase", core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
@@ -4256,7 +4323,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     ) -> None:
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
-        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)
         self.concat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4360,7 +4427,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     ) -> None:
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
-        super().__init__(data=data, hconcat=list(hconcat), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, hconcat=list(hconcat), **kwargs)
         self.hconcat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4464,7 +4531,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     ) -> None:
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
-        super().__init__(data=data, vconcat=list(vconcat), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, vconcat=list(vconcat), **kwargs)
         self.vconcat: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4572,7 +4639,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
             _check_if_can_be_layered(spec)
-        super().__init__(data=data, layer=list(layer), **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, layer=list(layer), **kwargs)
         self.layer: list[ChartType]
         self.params: Optional[Sequence[_Parameter]]
         self.data: Optional[ChartDataType]
@@ -4657,7 +4724,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         """
         if not self.layer:
-            msg = "LayerChart: cannot call interactive() until a " "layer is defined"
+            msg = "LayerChart: cannot call interactive() until a layer is defined"
             raise ValueError(msg)
         copy = self.copy(deep=["layer"])
         copy.layer[0] = copy.layer[0].interactive(
@@ -4703,7 +4770,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)  # type: ignore[arg-type]
+        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
         self.data: Optional[ChartDataType]
         self.spec: ChartType
         self.params: Optional[Sequence[_Parameter]]
