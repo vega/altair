@@ -22,11 +22,7 @@ import altair as alt
 from vega_datasets import data
 
 
-def confidence_region_2d(
-    arr: np.ndarray[tuple[int, int], np.dtype[np.float64]],
-    conf_level: float = 0.95,
-    segments: int = 50,
-):
+def confidence_region_2d(arr, conf_level=0.95, segments=50):
     """
     Calculate confidence interval ellipse.
 
@@ -54,9 +50,7 @@ def confidence_region_2d(
     return center + radius * (circle @ np.linalg.cholesky(cov_mat).T)
 
 
-def grouped_confidence_regions(
-    df: pd.DataFrame, col_x: str, col_y: str, col_group: str
-) -> pd.DataFrame:
+def grouped_confidence_regions(df, col_x, col_y, col_group):
     cols = [col_x, col_y]
     ellipses = []
     ser: pd.Series[float] = df[col_group]
@@ -71,17 +65,23 @@ def grouped_confidence_regions(
 col_x = "petalLength"
 col_y = "petalWidth"
 col_group = "species"
+
 x = alt.X(col_x).scale(zero=False)
 y = alt.Y(col_y).scale(zero=False)
 color = alt.Color(col_group)
 
 source = data.iris()
 ellipse = grouped_confidence_regions(source, col_x=col_x, col_y=col_y, col_group=col_group)
-points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(x, y, color)
-lines = (
-    alt.Chart(ellipse)
-    .mark_line(filled=True, fillOpacity=0.2)
-    .encode(x, y, color, order="order")
+points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(
+    x=x,
+    y=y,
+    color=color
+)
+lines = alt.Chart(ellipse).mark_line(filled=True, fillOpacity=0.2).encode(
+    x=x,
+    y=y,
+    color=color,
+    order="order"
 )
 
 chart = (lines + points).properties(height=500, width=500)
