@@ -99,6 +99,7 @@ doc = [
     "sphinx_copybutton",
     "sphinx-design",
     "scipy",
+    "scipy-stubs; python_version>=\"3.10\"",
 ]
 
 [tool.altair.vega]
@@ -314,8 +315,10 @@ module = [
     "ipykernel.*",
     "ibis.*",
     "vegafusion.*",
+    "scipy.*"
 ]
 ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
 
 [tool.pyright]
 enableExperimentalFeatures=true
