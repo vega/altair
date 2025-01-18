@@ -20,7 +20,9 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from tools.datasets.models import Package, ParsedPackage
+    from tools.datasets import PathMap
+    from tools.datasets.datapackage import DataPackage
+    from tools.datasets.models import Package
 
     BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'
 
@@ -40,16 +42,13 @@ class Npm:
 
     def __init__(
         self,
-        output_dir: Path,
+        paths: PathMap,
         *,
         jsdelivr: Literal["jsdelivr"] = "jsdelivr",
         npm: Literal["npm"] = "npm",
         package: LiteralString = "vega-datasets",
     ) -> None:
-        output_dir.mkdir(exist_ok=True)
-        self._paths: dict[Literal["datapackage"], Path] = {
-            "datapackage": output_dir / "datapackage.json",
-        }
+        self.paths: PathMap = paths
         self._url: NpmUrl = NpmUrl(
             CDN=f"https://cdn.{jsdelivr}.net/{npm}/{package}@",
             GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
@@ -107,14 +106,15 @@ class Npm:
         with self._opener.open(req) as response:
             return read_fn(response)
 
-    def datapackage(self, *, tag: LiteralString, frozen: bool = False) -> ParsedPackage:
+    def datapackage(self, *, tag: LiteralString, frozen: bool = False) -> DataPackage:
         pkg: Package = (
-            json.loads(self._paths["datapackage"].read_text("utf-8"))
+            json.loads(self.paths["datapackage"].read_text("utf-8"))
             if frozen
             else self.file_gh(tag, "datapackage.json")
         )
-
-        return datapackage.parse_package(pkg, self.dataset_base_url(tag))
+        return datapackage.DataPackage(
+            pkg, self.dataset_base_url(tag), self.paths["metadata"]
+        )
 
 
 def is_branch(s: BranchOrTag, /) -> bool:

@@ -1227,6 +1227,26 @@ def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
     return f"Literal[{', '.join(it_el)}]"
 
 
+def spell_literal_alias(
+    alias_name: str, members: Iterable[str], /, *, quote: bool = True
+) -> str:
+    """
+    Wraps ``utils.spell_literal`` as a ``TypeAlias``.
+
+    Examples
+    --------
+    >>> spell_literal_alias("Animals", ("Dog", "Cat", "Fish"))
+    "Animals: TypeAlias = Literal['Dog', 'Cat', 'Fish']"
+
+    >>> spell_literal_alias("Digits", "0123456789")
+    "Digits: TypeAlias = Literal['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
+
+    >>> spell_literal_alias("LessThanFive", (repr(i) for i in range(5)))
+    "LessThanFive: TypeAlias = Literal['0', '1', '2', '3', '4']"
+    """
+    return f"{alias_name}: TypeAlias = {spell_literal(members, quote=quote)}"
+
+
 def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:
     """
     Where `it` may contain one or more `"enum"`, `"const"`, flatten to a single `Literal[...]`.
