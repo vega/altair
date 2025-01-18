@@ -320,6 +320,13 @@ module = [
 ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
 
+[[tool.mypy.overrides]]
+module = [
+    "tests/examples_arguments_syntax.*",
+    "tests/examples_methods_syntax.*",
+]
+disable_error_code = ["annotation-unchecked"]
+
 [tool.pyright]
 enableExperimentalFeatures=true
 extraPaths=["./tools"]
