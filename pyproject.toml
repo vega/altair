@@ -262,16 +262,18 @@ cwd = "."
 [tool.taskipy.tasks]
 lint       = "ruff check"
 format     = "ruff format --diff --check"
+ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
 type-check = "mypy altair tests"
 
-pytest        = "pytest"
-test          = "task lint && task format && task type-check && task pytest"
-test-fast     = "task ruff-fix && pytest -m \"not slow\""
-test-slow     = "task ruff-fix && pytest -m \"slow\""
-test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"\""
-test-min      = "task lint && task format && task type-check && hatch test --python 3.9"
-test-all      = "task lint && task format && task type-check && hatch test --all"
+pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
+pytest        = "pytest && task pytest-serial"
+test          = "task ruff-check && task type-check && task pytest"
+test-fast     = "task ruff-fix && pytest -m \"not slow and not datasets_debug and not no_xdist\""
+test-slow     = "task ruff-fix && pytest -m \"slow and not datasets_debug and not no_xdist\""
+test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdist\" && task pytest-serial"
+test-min      = "task ruff-check && task type-check && hatch test --python 3.9"
+test-all      = "task ruff-check && task type-check && hatch test --all"
 
 
 generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
@@ -303,12 +305,13 @@ addopts = [
     "tests",
     "altair",
     "tools",
-    "-m not datasets_debug",
+    "-m not datasets_debug and not no_xdist",
 ]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
     "slow: Label tests as slow (deselect with '-m \"not slow\"')",
-    "datasets_debug: Disabled by default due to high number of requests"
+    "datasets_debug: Disabled by default due to high number of requests",
+    "no_xdist: Unsafe to run in parallel"
 ]
 
 [tool.mypy]

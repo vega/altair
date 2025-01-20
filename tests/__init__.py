@@ -60,6 +60,16 @@ Either script can accept ``pytest`` args::
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
 """
 
+no_xdist: pytest.MarkDecorator = pytest.mark.no_xdist()
+"""
+Custom ``pytest.mark`` decorator.
+
+Each marked test will run **serially**, after all other selected tests.
+
+.. tip::
+   Use as a last resort when a test depends on manipulating global state.
+"""
+
 skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("IPython") is None, reason="`IPython` not installed."
 )

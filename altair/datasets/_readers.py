@@ -60,6 +60,7 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
+    from packaging.requirements import Requirement
 
     from altair.datasets._typing import Dataset, Extension, Metadata
     from altair.vegalite.v5.schema._typing import OneOrSeq
@@ -379,7 +380,7 @@ class _PyArrowReader(_Reader["pa.Table", "pa.Table"]):
 
     def _maybe_fn(self, meta: Metadata, /) -> Callable[..., pa.Table]:
         fn = super()._maybe_fn(meta)
-        if fn is self._read_json_polars:
+        if fn == self._read_json_polars:
             return fn
         elif meta["is_json"]:
             if meta["is_tabular"]:
@@ -550,7 +551,7 @@ def _requirements(s: _ConcreteT, /) -> _ConcreteT: ...
 def _requirements(s: Literal["pandas[pyarrow]"], /) -> tuple[_Pandas, _PyArrow]: ...
 
 
-def _requirements(s: _Backend, /):
+def _requirements(s: Any, /) -> Any:
     concrete: set[Literal[_Polars, _Pandas, _PyArrow]] = {"polars", "pandas", "pyarrow"}
     if s in concrete:
         return s
@@ -559,12 +560,13 @@ def _requirements(s: _Backend, /):
 
         req = Requirement(s)
         supports_extras: set[Literal[_Pandas]] = {"pandas"}
-        if req.name in supports_extras:
-            name = req.name
-            if (extras := req.extras) and extras == {"pyarrow"}:
-                extra = "pyarrow"
-                return name, extra
-            else:
-                raise NotImplementedError(s)
-        else:
-            raise NotImplementedError(s)
+        if req.name in supports_extras and req.extras == {"pyarrow"}:
+            return req.name, "pyarrow"
+        return _requirements_unknown(req)
+
+
+def _requirements_unknown(req: Requirement | str, /) -> Any:
+    from packaging.requirements import Requirement
+
+    req = Requirement(req) if isinstance(req, str) else req
+    return (req.name, *req.extras)
