@@ -29,7 +29,7 @@ __all__ = ["Loader", "load"]
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     """
-    Load examples **remotely** from `vega-datasets`_, with caching.
+    Load example datasets **remotely** from `vega-datasets`_, with caching.
 
     A new ``Loader`` must be initialized by specifying a backend:
 
