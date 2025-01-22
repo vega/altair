@@ -16,12 +16,12 @@ from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader
 from altair.datasets._exceptions import AltairDatasetsError
-from altair.datasets._typing import Dataset, Extension, Metadata, is_ext_read
+from altair.datasets._typing import Dataset, Metadata, is_ext_read
 from tests import no_xdist, skip_requires_pyarrow
 from tools import fs
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Container, Iterator, Mapping
+    from collections.abc import Callable, Mapping
     from pathlib import Path
     from typing import Literal
 
@@ -31,7 +31,6 @@ if TYPE_CHECKING:
 
     from altair.datasets._readers import _Backend, _PandasAny, _Polars, _PyArrow
     from altair.vegalite.v5.schema._typing import OneOrSeq
-    from tests import MarksType
 
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
@@ -39,7 +38,18 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]
 
-CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
+datasets_debug: pytest.MarkDecorator = pytest.mark.datasets_debug()
+"""
+Custom ``pytest.mark`` decorator.
+
+Use for more exhaustive tests that require many requests.
+
+**Disabled** by default in ``pyproject.toml``:
+
+    [tool.pytest.ini_options]
+    addopts = ...
+"""
+
 _backend_params: Mapping[_Backend, ParameterSet] = {
     "polars": pytest.param("polars"),
     "pandas": pytest.param("pandas"),
@@ -60,52 +70,26 @@ backends_pyarrow: pytest.MarkDecorator = pytest.mark.parametrize(
     "backend", [v for k, v in _backend_params.items() if k == "pyarrow"]
 )
 
-datasets_debug: pytest.MarkDecorator = pytest.mark.datasets_debug()
-"""
-Custom ``pytest.mark`` decorator.
+datasets_all: pytest.MarkDecorator = pytest.mark.parametrize("name", get_args(Dataset))
+datasets_spatial: pytest.MarkDecorator = pytest.mark.parametrize(
+    "name", ["earthquakes", "londonBoroughs", "londonTubeLines", "us-10m", "world-110m"]
+)
 
-Use for more exhaustive tests that require many requests.
-
-**Disabled** by default in ``pyproject.toml``:
-
-    [tool.pytest.ini_options]
-    addopts = ...
-"""
+CACHE_ENV_VAR: Literal["ALTAIR_DATASETS_DIR"] = "ALTAIR_DATASETS_DIR"
 
 
 @pytest.fixture(scope="session")
 def polars_loader() -> PolarsLoader:
+    """Fastest and **most reliable** backend."""
     load = Loader.from_backend("polars")
     if load.cache.is_not_active():
         load.cache.path = load.cache._XDG_CACHE
     return load
 
 
-@pytest.fixture(
-    params=("earthquakes", "londonBoroughs", "londonTubeLines", "us-10m", "world-110m")
-)
-def spatial_datasets(request: pytest.FixtureRequest) -> Dataset:
-    return request.param
-
-
 @pytest.fixture
 def metadata_columns() -> frozenset[str]:
-    """
-    Returns all defined keys ``Metadata`` (``TypedDict``).
-
-    Note
-    ----
-    - ``# type: ignore``(s) are to fix a false positive.
-    - Should be recognised by this stub `typing_extensions.pyi`_
-
-    .. _typing_extensions.pyi:
-        https://github.com/python/typeshed/blob/51d0f0194c27347ab7d0083bd7b11210a09fef75/stdlib/typing_extensions.pyi#L222-L229
-    """
-    return Metadata.__required_keys__.union(
-        Metadata.__optional_keys__,
-        Metadata.__readonly_keys__,  # type: ignore[attr-defined]
-        Metadata.__mutable_keys__,  # type: ignore[attr-defined]
-    )
+    return Metadata.__required_keys__.union(Metadata.__optional_keys__)
 
 
 def is_frame_backend(frame: Any, backend: _Backend, /) -> bool:
@@ -131,13 +115,8 @@ def is_url(name: Dataset, fn_url: Callable[..., str], /) -> bool:
 
 
 def is_polars_backed_pyarrow(loader: Loader[Any, Any], /) -> bool:
-    """
-    User requested ``pyarrow``, but also has ``polars`` installed.
-
-    Notes
-    -----
-    - Currently, defers to ``polars`` only for ``.json``.
-    """
+    """User requested ``pyarrow``, but also has ``polars`` installed."""
+    # NOTE: Would prefer if there was a *less* private method to test this.
     return bool(
         is_loader_backend(loader, "pyarrow")
         and (fn := getattr(loader._reader, "_read_json_polars", None))
@@ -168,18 +147,17 @@ def test_loader_url(backend: _Backend) -> None:
 @no_xdist
 def test_load_infer_priority(monkeypatch: pytest.MonkeyPatch) -> None:
     """
-    Inferring the best backend available.
+    Ensure the **most reliable**, available backend is selected.
 
-    Based on the following order:
-
-        priority: Sequence[_Backend] = "polars", "pandas[pyarrow]", "pandas", "pyarrow"
+    See Also
+    --------
+    ``altair.datasets._readers.infer_backend``
     """
     import altair.datasets._loader
     from altair.datasets import load
 
     assert is_loader_backend(load, "polars")
     monkeypatch.delattr(altair.datasets._loader, "load", raising=False)
-
     monkeypatch.setitem(sys.modules, "polars", None)
 
     from altair.datasets import load
@@ -194,14 +172,12 @@ def test_load_infer_priority(monkeypatch: pytest.MonkeyPatch) -> None:
     else:
         assert is_loader_backend(load, "pandas[pyarrow]")
         monkeypatch.delattr(altair.datasets._loader, "load")
-
         monkeypatch.setitem(sys.modules, "pyarrow", None)
 
         from altair.datasets import load
 
         assert is_loader_backend(load, "pandas")
         monkeypatch.delattr(altair.datasets._loader, "load")
-
         monkeypatch.setitem(sys.modules, "pandas", None)
         monkeypatch.delitem(sys.modules, "pyarrow")
         monkeypatch.setitem(sys.modules, "pyarrow", import_module("pyarrow"))
@@ -223,11 +199,9 @@ def test_load_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None:
     from altair.datasets import load
 
     assert is_loader_backend(load, "polars")
-
     default = load("cars")
     df = load("cars", backend=backend)
     default_2 = load("cars")
-
     assert nw_dep.is_polars_dataframe(default)
     assert is_frame_backend(df, backend)
     assert nw_dep.is_polars_dataframe(default_2)
@@ -276,7 +250,6 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     from altair.datasets._readers import infer_backend
 
     priority: Any = ("fake_mod_1", "fake_mod_2", "fake_mod_3", "fake_mod_4")
-
     assert csv_cache._mapping == {}
     with pytest.raises(AltairDatasetsError):
         infer_backend(priority=priority)
@@ -284,7 +257,6 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     url = csv_cache.url
     assert is_url("jobs", url)
     assert csv_cache._mapping != {}
-
     assert is_url("cars", url)
     assert is_url("stocks", url)
     assert is_url("countries", url)
@@ -295,7 +267,6 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     assert is_url("flare", url)
     assert is_url("flights-10k", url)
     assert is_url("flights-200k", url)
-
     if find_spec("vegafusion"):
         assert is_url("flights-3m", url)
 
@@ -303,7 +274,6 @@ def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
         mp.setitem(sys.modules, "vegafusion", None)
         with pytest.raises(AltairDatasetsError, match=r".parquet.+require.+vegafusion"):
             url("flights-3m")
-
     with pytest.raises(
         TypeError, match="'fake data' does not refer to a known dataset"
     ):
@@ -321,17 +291,12 @@ def test_loader_call(backend: _Backend) -> None:
 
 @backends
 def test_dataset_not_found(backend: _Backend) -> None:
-    """
-    Various queries that should **always raise** due to non-existent dataset.
-
-    ``Loader.url`` is used since it doesn't require a remote connection.
-    """
+    """Various queries that should **always raise** due to non-existent dataset."""
     load = Loader.from_backend(backend)
     real_name: Literal["disasters"] = "disasters"
     invalid_name: Literal["fake name"] = "fake name"
     invalid_suffix: Literal["fake suffix"] = "fake suffix"
     incorrect_suffix: Literal[".json"] = ".json"
-
     ERR_NO_RESULT = ValueError
     MSG_NO_RESULT = "Found no results for"
     NAME = "dataset_name"
@@ -342,7 +307,6 @@ def test_dataset_not_found(backend: _Backend) -> None:
         match=re.compile(rf"{MSG_NO_RESULT}.+{NAME}.+{invalid_name}", re.DOTALL),
     ):
         load.url(invalid_name)
-
     with pytest.raises(
         TypeError,
         match=re.compile(
@@ -351,7 +315,6 @@ def test_dataset_not_found(backend: _Backend) -> None:
         ),
     ):
         load.url(real_name, invalid_suffix)  # type: ignore[arg-type]
-
     with pytest.raises(
         ERR_NO_RESULT,
         match=re.compile(
@@ -403,26 +366,15 @@ def test_reader_missing_dependencies() -> None:
 def test_reader_cache(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    """
-    Using a sample of the smallest datasets, make *"requests"* that are all caught by prior hits.
-
-    Note
-    ----
-    `tmp_path`_ is a built-in fixture.
-
-    .. _tmp_path:
-        https://docs.pytest.org/en/stable/getting-started.html#request-a-unique-temporary-directory-for-functional-tests
-    """
+    """Ensure cache hits avoid network activity."""
     import polars as pl
     from polars.testing import assert_frame_equal
 
     monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
-
     load = Loader.from_backend(backend)
     assert load.cache.is_active()
     cache_dir = load.cache.path
     assert cache_dir == tmp_path
-
     assert tuple(load.cache) == ()
 
     # smallest csvs
@@ -430,7 +382,6 @@ def test_reader_cache(
     load("lookup_people")
     load("iowa-electricity")
     load("global-temp")
-
     cached_paths = tuple(load.cache)
     assert len(cached_paths) == 4
 
@@ -448,19 +399,15 @@ def test_reader_cache(
     assert_frame_equal(left, right)
     assert len(tuple(load.cache)) == 4
     assert cached_paths == tuple(load.cache)
-
     load("iowa-electricity", ".csv")
     load("global-temp", ".csv")
     load("global-temp.csv")
-
     assert len(tuple(load.cache)) == 4
     assert cached_paths == tuple(load.cache)
-
     load("lookup_people")
     load("lookup_people.csv")
     load("lookup_people", ".csv")
     load("lookup_people")
-
     assert len(tuple(load.cache)) == 4
     assert cached_paths == tuple(load.cache)
 
@@ -476,15 +423,14 @@ def test_reader_cache_exhaustive(
     """
     Fully populate and then purge the cache for all backends.
 
-    - Does not attempt to read the files
-    - Checking we can support pre-downloading and safely deleting
-
     Notes
     -----
-    - Requests work the same for all backends
-    - The logic for detecting the cache contents uses ``narhwals``
-    - Here, we're testing that these ``narwhals`` ops are consistent
-    - `DatasetCache.download_all` is expensive for CI, so aiming for it to run at most once
+    - Does not attempt to read the files
+    - Checking we can support pre-downloading and safely deleting
+        - Requests work the same for all backends
+        - The logic for detecting the cache contents uses ``narhwals``
+        - Here, we're testing that these ``narwhals`` ops are consistent
+    - `DatasetCache.download_all` is expensive for CI, so aiming for it to run **at most once**
         - 34-45s per call (4x backends)
     """
     polars_loader.cache.download_all()
@@ -498,13 +444,12 @@ def test_reader_cache_exhaustive(
     cache_dir = load.cache.path
     assert cache_dir == tmp_path
     assert tuple(load.cache) == (CLONED,)
-
     load.cache.path = CLONED
     cached_paths = tuple(load.cache)
     assert cached_paths != ()
 
     # NOTE: Approximating all datasets downloaded
-    assert len(cached_paths) >= 40
+    assert len(cached_paths) >= 70
     assert all(
         bool(fp.exists() and is_ext_read(fp.suffix) and fp.stat().st_size)
         for fp in load.cache
@@ -528,16 +473,13 @@ def test_reader_cache_disable(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
     from altair.datasets import load
 
     monkeypatch.setenv(CACHE_ENV_VAR, str(tmp_path))
-
     assert load.cache.is_active()
     assert load.cache.path == tmp_path
     assert load.cache.is_empty()
     load("cars")
     assert not load.cache.is_empty()
-
-    # RELATED: https://github.com/python/mypy/issues/3004
+    # ISSUE: https://github.com/python/mypy/issues/3004
     load.cache.path = None  # type: ignore[assignment]
-
     assert load.cache.is_not_active()
     with pytest.raises(
         ValueError,
@@ -546,9 +488,7 @@ def test_reader_cache_disable(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         ),
     ):
         tuple(load.cache)
-
     load.cache.path = tmp_path
-
     assert load.cache.is_active()
     assert load.cache.path == tmp_path
     assert not load.cache.is_empty()
@@ -599,44 +539,29 @@ def test_pyarrow_read_json(
     assert load(name, ".json")
 
 
+@datasets_spatial
 @backends_no_polars
-def test_spatial(spatial_datasets, backend: _Backend) -> None:
+def test_spatial(backend: _Backend, name: Dataset) -> None:
     load = Loader.from_backend(backend)
     if is_polars_backed_pyarrow(load):
-        assert nw_dep.is_pyarrow_table(load(spatial_datasets))
+        assert nw_dep.is_pyarrow_table(load(name))
     else:
         pattern = re.compile(
-            rf"{spatial_datasets}.+geospatial.+native.+{re.escape(backend)}.+try.+polars.+url",
+            rf"{name}.+geospatial.+native.+{re.escape(backend)}.+try.+polars.+url",
             flags=re.DOTALL | re.IGNORECASE,
         )
         with pytest.raises(NotImplementedError, match=pattern):
-            load(spatial_datasets)
+            load(name)
 
 
-# TODO: Adapt into something useful or simplify into just param name
-def _dataset_params(*, skip: Container[str] = ()) -> Iterator[ParameterSet]:
-    """Temp way of excluding datasets that were removed."""
-    names: tuple[Dataset, ...] = get_args(Dataset)
-    args: tuple[Dataset, Extension | None]
-    for name in names:
-        marks: MarksType = ()
-        if name in skip:
-            continue
-        args = name, None
-        yield pytest.param(*args, marks=marks)
-
-
-@pytest.mark.parametrize(("name", "suffix"), list(_dataset_params()))
+@datasets_all
 @datasets_debug
-def test_all_datasets(
-    polars_loader: PolarsLoader, name: Dataset, suffix: Extension
-) -> None:
-    """Ensure all annotated datasets can be loaded with the most reliable backend."""
+def test_all_datasets(polars_loader: PolarsLoader, name: Dataset) -> None:
     if name in {"7zip", "ffox", "gimp"}:
         with pytest.raises(AltairDatasetsError, match=rf"{name}.+tabular"):
-            polars_loader(name, suffix)
+            polars_loader(name)
     else:
-        frame = polars_loader(name, suffix)
+        frame = polars_loader(name)
         assert nw_dep.is_polars_dataframe(frame)
 
 
@@ -649,14 +574,11 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
 
     load = Loader.from_backend("polars")
     load.cache.path = tmp_path
-
     load("londonCentroids")
     load("stocks")
     load("driving")
-
     cached_paths = tuple(tmp_path.iterdir())
     assert len(cached_paths) == 3
-
     raiser = partial(_raise_exception, URLError)
     with monkeypatch.context() as mp:
         mp.setattr(load._reader._opener, "open", raiser)
@@ -679,7 +601,6 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         # Here, the remote conn isn't considered - we already have the file
         frame_from_cache = load("birdstrikes")
         assert len(tuple(tmp_path.iterdir())) == 4
-
     assert_frame_equal(frame, frame_from_cache)
 
 
@@ -731,12 +652,12 @@ def test_pandas_date_parse(
     """
     Ensure schema defaults are correctly parsed.
 
-    NOTE:
+    Notes
+    -----
     - Depends on ``frictionless`` being able to detect the date/datetime columns.
     - Not all format strings work
     """
     date_columns: list[str] = [columns] if isinstance(columns, str) else list(columns)
-
     load = Loader.from_backend(backend)
     url = load.url(name)
     kwds: dict[str, Any] = (
@@ -745,10 +666,8 @@ def test_pandas_date_parse(
         else {"parse_dates": date_columns}
     )
     kwds_empty: dict[str, Any] = {k: [] for k in kwds}
-
     df_schema_derived: pd.DataFrame = load(name)
     nw_schema = nw.from_native(df_schema_derived).schema
-
     df_manually_specified: pd.DataFrame = load(name, **kwds)
     df_dates_empty: pd.DataFrame = load(name, **kwds_empty)
 
