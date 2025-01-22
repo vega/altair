@@ -791,5 +791,21 @@ Typing
    Optional
    is_chart_type
 
+.. _api-datasets:
+
+Datasets
+--------
+.. currentmodule:: altair.datasets
+
+.. autosummary::
+   :toctree: generated/datasets/
+   :nosignatures:
+
+   Loader
+   load
+   url
+
 .. _Generic:
     https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+.. _vega-datasets:
+    https://github.com/vega/vega-datasets

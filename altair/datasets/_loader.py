@@ -29,14 +29,14 @@ __all__ = ["Loader", "load"]
 
 class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     """
-    Load example datasets **remotely** from `vega-datasets`_, with caching.
+    Load example datasets *remotely* from `vega-datasets`_, with caching.
 
-    A new ``Loader`` must be initialized by specifying a backend:
+    A new ``Loader`` must be initialized by specifying a backend::
 
         from altair.datasets import Loader
 
         load = Loader.from_backend("polars")
-        >>> load  # doctest: +SKIP
+        load
         Loader[polars]
 
     .. _vega-datasets:
@@ -81,42 +81,35 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             .. warning::
                 Most datasets use a `JSON format not supported`_ by ``pyarrow``
 
-        .. _polars defaults:
-            https://docs.pola.rs/api/python/stable/reference/io.html
-        .. _pandas defaults:
-            https://pandas.pydata.org/docs/reference/io.html
-        .. _JSON format not supported:
-            https://arrow.apache.org/docs/python/json.html#reading-json-files
-
         Examples
         --------
-        Using ``polars``:
+        Using ``polars``::
 
             from altair.datasets import Loader
 
             load = Loader.from_backend("polars")
             cars = load("cars")
 
-            >>> type(cars)  # doctest: +SKIP
+            type(cars)
             polars.dataframe.frame.DataFrame
 
-        Using ``pandas``:
+        Using ``pandas``::
 
             load = Loader.from_backend("pandas")
             cars = load("cars")
 
-            >>> type(cars)  # doctest: +SKIP
+            type(cars)
             pandas.core.frame.DataFrame
 
-        Using ``pandas``, backed by ``pyarrow`` dtypes:
+        Using ``pandas``, backed by ``pyarrow`` dtypes::
 
             load = Loader.from_backend("pandas[pyarrow]")
             cars = load("cars")
 
-            >>> type(cars)  # doctest: +SKIP
+            type(cars)
             pandas.core.frame.DataFrame
 
-            >>> cars.dtypes  # doctest: +SKIP
+            cars.dtypes
             Name                       string[pyarrow]
             Miles_per_Gallon           double[pyarrow]
             Cylinders                   int64[pyarrow]
@@ -127,6 +120,13 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             Year                timestamp[ns][pyarrow]
             Origin                     string[pyarrow]
             dtype: object
+
+        .. _polars defaults:
+            https://docs.pola.rs/api/python/stable/reference/io.html
+        .. _pandas defaults:
+            https://pandas.pydata.org/docs/reference/io.html
+        .. _JSON format not supported:
+            https://arrow.apache.org/docs/python/json.html#reading-json-files
         """
         obj = Loader.__new__(Loader)
         obj._reader = backend(backend_name)
@@ -154,24 +154,19 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         **kwds
             Arguments passed to the underlying read function.
 
-        .. _Path.stem:
-            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
-        .. _Path.suffix:
-            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-
         Examples
         --------
-        Using ``polars``:
+        Using ``polars``::
 
             from altair.datasets import Loader
 
             load = Loader.from_backend("polars")
             source = load("iowa-electricity")
 
-            >>> source.columns  # doctest: +SKIP
+            source.columns
             ['year', 'source', 'net_generation']
 
-            >>> source  # doctest: +SKIP
+            source
             shape: (51, 3)
             ┌────────────┬──────────────┬────────────────┐
             │ year       ┆ source       ┆ net_generation │
@@ -191,15 +186,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             │ 2017-01-01 ┆ Renewables   ┆ 21933          │
             └────────────┴──────────────┴────────────────┘
 
-        Using ``pandas``:
+        Using ``pandas``::
 
             load = Loader.from_backend("pandas")
             source = load("iowa-electricity")
 
-            >>> source.columns  # doctest: +SKIP
+            source.columns
             Index(['year', 'source', 'net_generation'], dtype='object')
 
-            >>> source  # doctest: +SKIP
+            source
                      year        source  net_generation
             0  2001-01-01  Fossil Fuels           35361
             1  2002-01-01  Fossil Fuels           35991
@@ -215,15 +210,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
             [51 rows x 3 columns]
 
-        Using ``pyarrow``:
+        Using ``pyarrow``::
 
             load = Loader.from_backend("pyarrow")
             source = load("iowa-electricity")
 
-            >>> source.column_names  # doctest: +SKIP
+            source.column_names
             ['year', 'source', 'net_generation']
 
-            >>> source  # doctest: +SKIP
+            source
             pyarrow.Table
             year: date32[day]
             source: string
@@ -232,6 +227,11 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             year: [[2001-01-01,2002-01-01,2003-01-01,2004-01-01,2005-01-01,...,2013-01-01,2014-01-01,2015-01-01,2016-01-01,2017-01-01]]
             source: [["Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels",...,"Renewables","Renewables","Renewables","Renewables","Renewables"]]
             net_generation: [[35361,35991,36234,36205,36883,...,16476,17452,19091,21241,21933]]
+
+        .. _Path.stem:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
+        .. _Path.suffix:
+            https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
         """
         return self._reader.dataset(name, suffix, **kwds)
 
@@ -261,16 +261,16 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
         Examples
         --------
-        The returned url will always point to an accessible dataset:
+        The returned url will always point to an accessible dataset::
 
             import altair as alt
             from altair.datasets import Loader
 
             load = Loader.from_backend("polars")
-            >>> load.url("cars")  # doctest: +SKIP
-            'https://cdn.jsdelivr.net/npm/vega-datasets@v2.11.0/data/cars.json'
+            load.url("cars")
+            "https://cdn.jsdelivr.net/npm/vega-datasets@v2.11.0/data/cars.json"
 
-        We can pass the result directly to a chart:
+        We can pass the result directly to a chart::
 
             url = load.url("cars")
             alt.Chart(url).mark_point().encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
@@ -282,19 +282,19 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         """
         Caching of remote dataset requests.
 
-        Configure cache path:
+        Configure cache path::
 
             self.cache.path = "..."
 
-        Download the latest datasets *ahead-of-time*:
+        Download the latest datasets *ahead-of-time*::
 
             self.cache.download_all()
 
-        Remove all downloaded datasets:
+        Remove all downloaded datasets::
 
             self.cache.clear()
 
-        Disable caching:
+        Disable caching::
 
             self.cache.path = None
         """

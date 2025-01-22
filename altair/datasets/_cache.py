@@ -317,26 +317,27 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         """
         Returns path to datasets cache.
 
-        Defaults to (`XDG_CACHE_HOME`_):
+        Defaults to (`XDG_CACHE_HOME`_)::
 
             "$XDG_CACHE_HOME/altair/"
 
-        But can be configured using the environment variable:
+        But can be configured using the environment variable::
 
             "$ALTAIR_DATASETS_DIR"
 
-        You can set this for the current session via:
+        You can set this for the current session via::
 
-            >>> from pathlib import Path
-            >>> from altair.datasets import load
-            >>> load.cache.path = Path.home() / ".altair_cache"
+            from pathlib import Path
+            from altair.datasets import load
 
-            >>> load.cache.path.relative_to(Path.home()).as_posix()
-            '.altair_cache'
+            load.cache.path = Path.home() / ".altair_cache"
 
-        You can *later* disable caching via:
+            load.cache.path.relative_to(Path.home()).as_posix()
+            ".altair_cache"
 
-            >>> load.cache.path = None
+        You can *later* disable caching via::
+
+           load.cache.path = None
 
         .. _XDG_CACHE_HOME:
             https://specifications.freedesktop.org/basedir-spec/latest/#variables

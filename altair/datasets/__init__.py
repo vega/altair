@@ -1,5 +1,5 @@
 """
-Load example datasets **remotely** from `vega-datasets`_.
+Load example datasets *remotely* from `vega-datasets`_.
 
 Provides over **70+** datasets, used throughout our `Example Gallery`_.
 
@@ -85,24 +85,18 @@ load: _Load[Any, Any]
 """
 Get a remote dataset and load as tabular data.
 
-For full <kbd>Tab</kbd> completions, instead use:
+For full <kbd>Tab</kbd> completions, instead use::
 
     from altair.datasets import Loader
     load = Loader.from_backend("polars")
     cars = load("cars")
     movies = load("movies")
 
-Alternatively, specify ``backend`` during a call:
+Alternatively, specify ``backend`` during a call::
 
     from altair.datasets import load
     cars = load("cars", backend="polars")
     movies = load("movies", backend="polars")
-
-Related
--------
-- https://github.com/vega/altair/pull/3631#issuecomment-2480832609
-- https://github.com/vega/altair/pull/3631#discussion_r1847111064
-- https://github.com/vega/altair/pull/3631#discussion_r1847176465
 """
 
 
@@ -124,17 +118,14 @@ def url(
         .. note::
             Only needed if ``name`` is available in multiple formats.
 
+    Returns
+    -------
+    ``str``
+
     .. _Path.stem:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
     .. _Path.suffix:
         https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.suffix
-
-    Related
-    -------
-    - https://github.com/vega/altair/pull/3631#issuecomment-2484826592
-    - https://github.com/vega/altair/pull/3631#issuecomment-2480832711
-    - https://github.com/vega/altair/discussions/3150#discussioncomment-11280516
-    - https://github.com/vega/altair/pull/3631#discussion_r1846662053
     """
     from altair.datasets._exceptions import AltairDatasetsError
 
