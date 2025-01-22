@@ -48,7 +48,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @overload
     @classmethod
     def from_backend(
-        cls, backend_name: Literal["polars"], /
+        cls, backend_name: Literal["polars"] = ..., /
     ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...
 
     @overload
@@ -64,7 +64,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     ) -> Loader[pa.Table, pa.Table]: ...
 
     @classmethod
-    def from_backend(cls, backend_name: _Backend, /) -> Loader[Any, Any]:
+    def from_backend(cls, backend_name: _Backend = "polars", /) -> Loader[Any, Any]:
         """
         Initialize a new loader, with the specified backend.
 
