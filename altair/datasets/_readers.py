@@ -485,6 +485,8 @@ def is_available(
         * ``True`` every package.
         * ``False`` at least one package.
     """
+    if not more_pkg_names and isinstance(pkg_names, str):
+        return find_spec(pkg_names) is not None
     pkgs_names = pkg_names if not isinstance(pkg_names, str) else (pkg_names,)
     names = chain(pkgs_names, more_pkg_names)
     fn = all if require_all else any
