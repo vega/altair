@@ -5,12 +5,11 @@ import sys
 from collections import defaultdict
 from importlib.util import find_spec
 from pathlib import Path
-from typing import TYPE_CHECKING, ClassVar, TypeVar, cast, get_args
+from typing import TYPE_CHECKING, ClassVar, TypeVar, cast
 
 import narwhals.stable.v1 as nw
 
 from altair.datasets._exceptions import AltairDatasetsError
-from altair.datasets._typing import Dataset
 
 if sys.version_info >= (3, 12):
     from typing import Protocol
@@ -34,7 +33,7 @@ if TYPE_CHECKING:
     from narwhals.stable.v1.dtypes import DType
     from narwhals.stable.v1.typing import IntoExpr
 
-    from altair.datasets._typing import Metadata
+    from altair.datasets._typing import Dataset, Metadata
 
     if sys.version_info >= (3, 12):
         from typing import Unpack
@@ -188,31 +187,17 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
                     self._rotated[k].append(v)
         return self._rotated
 
-    # TODO: Evaluate which errors are now obsolete
     def __getitem__(self, key: _Dataset, /) -> Metadata:
         if meta := self.get(key, None):
             return meta
+        msg = f"{key!r} does not refer to a known dataset."
+        raise TypeError(msg)
 
-        if key in get_args(Dataset):
-            msg = f"{key!r} cannot be loaded via {type(self).__name__!r}."
-            raise TypeError(msg)
-        else:
-            msg = f"{key!r} does not refer to a known dataset."
-            raise TypeError(msg)
-
-    # TODO: Evaluate which errors are now obsolete
     def url(self, name: _Dataset, /) -> str:
-        if meta := self.get(name, None):
-            if meta["suffix"] == ".parquet" and not find_spec("vegafusion"):
-                raise AltairDatasetsError.from_url(meta)
-            return meta["url"]
-
-        if name in get_args(Dataset):
-            msg = f"{name!r} cannot be loaded via url."
-            raise TypeError(msg)
-        else:
-            msg = f"{name!r} does not refer to a known dataset."
-            raise TypeError(msg)
+        meta = self[name]
+        if meta["suffix"] == ".parquet" and not find_spec("vegafusion"):
+            raise AltairDatasetsError.from_url(meta)
+        return meta["url"]
 
     def __repr__(self) -> str:
         return f"<{type(self).__name__}: {'COLLECTED' if self._mapping else 'READY'}>"
