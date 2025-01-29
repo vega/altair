@@ -5,10 +5,9 @@ import sys
 from collections import defaultdict
 from importlib.util import find_spec
 from pathlib import Path
-from typing import TYPE_CHECKING, ClassVar, Generic, TypeVar, cast, get_args
+from typing import TYPE_CHECKING, ClassVar, TypeVar, cast, get_args
 
 import narwhals.stable.v1 as nw
-from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
 
 from altair.datasets._exceptions import AltairDatasetsError
 from altair.datasets._typing import Dataset
@@ -29,12 +28,18 @@ if TYPE_CHECKING:
     )
     from io import IOBase
     from typing import Any, Final
+    from urllib.request import OpenerDirector
 
     from _typeshed import StrPath
     from narwhals.stable.v1.dtypes import DType
+    from narwhals.stable.v1.typing import IntoExpr
 
     from altair.datasets._typing import Metadata
 
+    if sys.version_info >= (3, 12):
+        from typing import Unpack
+    else:
+        from typing_extensions import Unpack
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
@@ -43,8 +48,8 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from altair.datasets._readers import _Reader
     from altair.datasets._typing import FlFieldStr
+    from altair.vegalite.v5.schema._typing import OneOrSeq
 
     _Dataset: TypeAlias = "Dataset | LiteralString"
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]
@@ -82,6 +87,10 @@ But using `narwhals.dtypes`_ to the string repr of ``frictionless`` `Field Types
 .. _narwhals.dtypes:
     https://narwhals-dev.github.io/narwhals/api-reference/dtypes/
 """
+
+_FIELD_TO_DTYPE: Mapping[FlFieldStr, type[DType]] = {
+    v: k for k, v in _DTYPE_TO_FIELD.items()
+}
 
 
 def _iter_metadata(df: nw.DataFrame[Any], /) -> Iterator[Metadata]:
@@ -179,10 +188,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
                     self._rotated[k].append(v)
         return self._rotated
 
-    def metadata(self, ns: Any, /) -> nw.LazyFrame:
-        data: Any = self.rotated
-        return nw.maybe_convert_dtypes(nw.from_dict(data, native_namespace=ns).lazy())
-
+    # TODO: Evaluate which errors are now obsolete
     def __getitem__(self, key: _Dataset, /) -> Metadata:
         if meta := self.get(key, None):
             return meta
@@ -194,6 +200,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
             msg = f"{key!r} does not refer to a known dataset."
             raise TypeError(msg)
 
+    # TODO: Evaluate which errors are now obsolete
     def url(self, name: _Dataset, /) -> str:
         if meta := self.get(name, None):
             if meta["suffix"] == ".parquet" and not find_spec("vegafusion"):
@@ -206,6 +213,9 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         else:
             msg = f"{name!r} does not refer to a known dataset."
             raise TypeError(msg)
+
+    def __repr__(self) -> str:
+        return f"<{type(self).__name__}: {'COLLECTED' if self._mapping else 'READY'}>"
 
 
 class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
@@ -230,8 +240,10 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
         self,
         *,
         tp: type[MutableMapping[_Dataset, _FlSchema]] = dict["_Dataset", "_FlSchema"],
+        implementation: nw.Implementation = nw.Implementation.UNKNOWN,
     ) -> None:
         self._mapping: MutableMapping[_Dataset, _FlSchema] = tp()
+        self._implementation: nw.Implementation = implementation
 
     def read(self) -> Any:
         import json
@@ -259,8 +271,63 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
         else:
             return list(match)
 
+    def is_active(self) -> bool:
+        return self._implementation in {
+            nw.Implementation.PANDAS,
+            nw.Implementation.PYARROW,
+            nw.Implementation.MODIN,
+            nw.Implementation.PYARROW,
+        }
 
-class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
+    def schema_kwds(self, meta: Metadata, /) -> dict[str, Any]:
+        name: Any = meta["dataset_name"]
+        impl = self._implementation
+        if (impl.is_pandas_like() or impl.is_pyarrow()) and (self[name]):
+            suffix = meta["suffix"]
+            if impl.is_pandas_like():
+                if cols := self.by_dtype(name, nw.Date, nw.Datetime):
+                    if suffix == ".json":
+                        return {"convert_dates": cols}
+                    elif suffix in {".csv", ".tsv"}:
+                        return {"parse_dates": cols}
+            else:
+                schema = self.schema_pyarrow(name)
+                if suffix in {".csv", ".tsv"}:
+                    from pyarrow.csv import ConvertOptions
+
+                    return {"convert_options": ConvertOptions(column_types=schema)}  # pyright: ignore[reportCallIssue]
+                elif suffix == ".parquet":
+                    return {"schema": schema}
+
+        return {}
+
+    def schema(self, name: _Dataset, /) -> Mapping[str, DType]:
+        return {
+            column: _FIELD_TO_DTYPE[tp_str]() for column, tp_str in self[name].items()
+        }
+
+    # TODO: Open an issue in ``narwhals`` to try and get a public api for type conversion
+    def schema_pyarrow(self, name: _Dataset, /):
+        schema = self.schema(name)
+        if schema:
+            from narwhals._arrow.utils import narwhals_to_native_dtype
+            from narwhals.utils import Version
+
+            m = {k: narwhals_to_native_dtype(v, Version.V1) for k, v in schema.items()}
+        else:
+            m = {}
+        return nw.dependencies.get_pyarrow().schema(m)
+
+
+class _SupportsScanMetadata(Protocol):
+    _opener: ClassVar[OpenerDirector]
+
+    def _scan_metadata(
+        self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
+    ) -> nw.LazyFrame: ...
+
+
+class DatasetCache:
     """Opt-out caching of remote dataset requests."""
 
     _ENV_VAR: ClassVar[LiteralString] = "ALTAIR_DATASETS_DIR"
@@ -268,8 +335,8 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
         Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "altair"
     ).resolve()
 
-    def __init__(self, reader: _Reader[IntoDataFrameT, IntoFrameT], /) -> None:
-        self._rd: _Reader[IntoDataFrameT, IntoFrameT] = reader
+    def __init__(self, reader: _SupportsScanMetadata, /) -> None:
+        self._rd: _SupportsScanMetadata = reader
 
     def clear(self) -> None:
         """Delete all previously cached datasets."""
@@ -308,9 +375,23 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             return None
         print(f"Downloading {len(frame)} missing datasets...")
         for meta in _iter_metadata(frame):
-            self._rd._download(meta["url"], self.path / (meta["sha"] + meta["suffix"]))
+            self._download_one(meta["url"], self.path_meta(meta))
         print("Finished downloads")
         return None
+
+    def _maybe_download(self, meta: Metadata, /) -> Path:
+        fp = self.path_meta(meta)
+        return (
+            fp
+            if (fp.exists() and fp.stat().st_size)
+            else self._download_one(meta["url"], fp)
+        )
+
+    def _download_one(self, url: str, fp: Path, /) -> Path:
+        with self._rd._opener.open(url) as f:
+            fp.touch()
+            fp.write_bytes(f.read())
+        return fp
 
     @property
     def path(self) -> Path:
@@ -353,6 +434,9 @@ class DatasetCache(Generic[IntoDataFrameT, IntoFrameT]):
             os.environ[self._ENV_VAR] = str(Path(source).resolve())
         else:
             os.environ[self._ENV_VAR] = ""
+
+    def path_meta(self, meta: Metadata, /) -> Path:
+        return self.path / (meta["sha"] + meta["suffix"])
 
     def __iter__(self) -> Iterator[Path]:
         yield from self.path.iterdir()

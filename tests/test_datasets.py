@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     import polars as pl
     from _pytest.mark.structures import ParameterSet
 
-    from altair.datasets._readers import _Backend, _PandasAny, _Polars, _PyArrow
+    from altair.datasets._reader import _Backend, _PandasAny, _Polars, _PyArrow
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
     if sys.version_info >= (3, 10):
@@ -117,11 +117,14 @@ def is_url(name: Dataset, fn_url: Callable[..., str], /) -> bool:
 def is_polars_backed_pyarrow(loader: Loader[Any, Any], /) -> bool:
     """User requested ``pyarrow``, but also has ``polars`` installed."""
     # NOTE: Would prefer if there was a *less* private method to test this.
-    return bool(
-        is_loader_backend(loader, "pyarrow")
-        and (fn := getattr(loader._reader, "_read_json_polars", None))
-        and fn == loader._reader.read_fn("dummy.json")
-    )
+    from altair.datasets._constraints import is_meta
+
+    if is_loader_backend(loader, "pyarrow"):
+        items = is_meta(suffix=".json", is_spatial=True)
+        impls = loader._reader._read
+        it = (some for impl in impls if (some := impl.unwrap_or(items)))
+        return callable(next(it, None))
+    return False
 
 
 @backends
@@ -151,7 +154,7 @@ def test_load_infer_priority(monkeypatch: pytest.MonkeyPatch) -> None:
 
     See Also
     --------
-    ``altair.datasets._readers.infer_backend``
+    ``altair.datasets._reader.infer_backend``
     """
     import altair.datasets._loader
     from altair.datasets import load
@@ -247,7 +250,7 @@ def test_url(name: Dataset) -> None:
 
 def test_url_no_backend(monkeypatch: pytest.MonkeyPatch) -> None:
     from altair.datasets._cache import csv_cache
-    from altair.datasets._readers import infer_backend
+    from altair.datasets._reader import infer_backend
 
     priority: Any = ("fake_mod_1", "fake_mod_2", "fake_mod_3", "fake_mod_4")
     assert csv_cache._mapping == {}
@@ -318,7 +321,7 @@ def test_dataset_not_found(backend: _Backend) -> None:
     with pytest.raises(
         ERR_NO_RESULT,
         match=re.compile(
-            rf"{MSG_NO_RESULT}.+{SUFFIX}.+{incorrect_suffix}.+{NAME}.+{real_name}",
+            rf"{MSG_NO_RESULT}.+{NAME}.+{real_name}.+{SUFFIX}.+{incorrect_suffix}",
             re.DOTALL,
         ),
     ):
@@ -326,19 +329,7 @@ def test_dataset_not_found(backend: _Backend) -> None:
 
 
 def test_reader_missing_dependencies() -> None:
-    from packaging.requirements import Requirement
-
-    from altair.datasets._readers import _Reader
-
-    class MissingDeps(_Reader):
-        def __init__(self, name) -> None:
-            self._name = name
-            reqs = Requirement(name)
-            for req in (reqs.name, *reqs.extras):
-                self._import(req)
-
-            self._read_fn = {}
-            self._scan_fn = {}
+    from altair.datasets._reader import _import_guarded
 
     fake_name = "not_a_real_package"
     real_name = "altair"
@@ -351,7 +342,7 @@ def test_reader_missing_dependencies() -> None:
             flags=re.DOTALL,
         ),
     ):
-        MissingDeps(fake_name)
+        _import_guarded(fake_name)  # type: ignore
     with pytest.raises(
         ModuleNotFoundError,
         match=re.compile(
@@ -359,7 +350,7 @@ def test_reader_missing_dependencies() -> None:
             flags=re.DOTALL,
         ),
     ):
-        MissingDeps(backend)
+        _import_guarded(backend)  # type: ignore
 
 
 @backends
@@ -494,38 +485,10 @@ def test_reader_cache_disable(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
     assert not load.cache.is_empty()
 
 
-# TODO: Investigate adding schemas for `pyarrow`.
 @pytest.mark.parametrize(
-    ("name", "fallback"),
-    [
-        ("cars", "polars"),
-        ("movies", "polars"),
-        ("wheat", "polars"),
-        ("barley", "polars"),
-        ("gapminder", "polars"),
-        ("income", "polars"),
-        ("burtin", "polars"),
-        ("cars", None),
-        pytest.param(
-            "movies",
-            None,
-            marks=pytest.mark.xfail(
-                True,
-                raises=TypeError,
-                reason=(
-                    "msg: `Expected bytes, got a 'int' object`\n"
-                    "Isn't happy with the mixed `int`/`str` column."
-                ),
-                strict=True,
-            ),
-        ),
-        ("wheat", None),
-        ("barley", None),
-        ("gapminder", None),
-        ("income", None),
-        ("burtin", None),
-    ],
+    "name", ["cars", "movies", "wheat", "barley", "gapminder", "income", "burtin"]
 )
+@pytest.mark.parametrize("fallback", ["polars", None])
 @backends_pyarrow
 def test_pyarrow_read_json(
     backend: _PyArrow,
@@ -550,7 +513,7 @@ def test_spatial(backend: _Backend, name: Dataset) -> None:
             rf"{name}.+geospatial.+native.+{re.escape(backend)}.+try.+polars.+url",
             flags=re.DOTALL | re.IGNORECASE,
         )
-        with pytest.raises(NotImplementedError, match=pattern):
+        with pytest.raises(AltairDatasetsError, match=pattern):
             load(name)
 
 
@@ -558,7 +521,11 @@ def test_spatial(backend: _Backend, name: Dataset) -> None:
 @datasets_debug
 def test_all_datasets(polars_loader: PolarsLoader, name: Dataset) -> None:
     if name in {"7zip", "ffox", "gimp"}:
-        with pytest.raises(AltairDatasetsError, match=rf"{name}.+tabular"):
+        pattern = re.compile(
+            rf"Unable to load.+{name}.png.+as tabular data",
+            flags=re.DOTALL | re.IGNORECASE,
+        )
+        with pytest.raises((AltairDatasetsError, NotImplementedError), match=pattern):
             polars_loader(name)
     else:
         frame = polars_loader(name)

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from altair.datasets._readers import _Backend
+    from altair.datasets._reader import _Backend
     from altair.datasets._typing import Metadata
 
 
@@ -27,18 +27,31 @@ class AltairDatasetsError(Exception):
         return cls(msg)
 
     @classmethod
+    def from_tabular(cls, meta: Metadata, backend_name: str, /) -> AltairDatasetsError:
+        install_other = None
+        mid = "\n"
+        if not meta["is_image"] and not meta["is_tabular"]:
+            install_other = "polars"
+            if meta["is_spatial"]:
+                mid = f"Geospatial data is not supported natively by {backend_name!r}."
+            elif meta["is_json"]:
+                mid = f"Non-tabular json is not supported natively by {backend_name!r}."
+        msg = f"{_failed_tabular(meta)}{mid}{_suggest_url(meta, install_other)}"
+        return cls(msg)
+
+    @classmethod
     def from_priority(cls, priority: Sequence[_Backend], /) -> AltairDatasetsError:
         msg = f"Found no supported backend, searched:\n{priority!r}"
         return cls(msg)
 
 
 def module_not_found(
-    backend_name: str, reqs: str | tuple[str, ...], missing: str
+    backend_name: str, reqs: Sequence[str], missing: str
 ) -> ModuleNotFoundError:
-    if isinstance(reqs, tuple):
-        depends = ", ".join(f"{req!r}" for req in reqs) + " packages"
+    if len(reqs) == 1:
+        depends = f"{reqs[0]!r} package"
     else:
-        depends = f"{reqs!r} package"
+        depends = ", ".join(f"{req!r}" for req in reqs) + " packages"
     msg = (
         f"Backend {backend_name!r} requires the {depends}, but {missing!r} could not be found.\n"
         f"This can be installed with pip using:\n"
@@ -47,29 +60,6 @@ def module_not_found(
         f"    conda install -c conda-forge {missing}"
     )
     return ModuleNotFoundError(msg, name=missing)
-
-
-def image(meta: Metadata, /) -> AltairDatasetsError:
-    msg = f"{_failed_tabular(meta)}\n{_suggest_url(meta)}"
-    return AltairDatasetsError(msg)
-
-
-def geospatial(meta: Metadata, backend_name: str) -> NotImplementedError:
-    msg = (
-        f"{_failed_tabular(meta)}"
-        f"Geospatial data is not supported natively by {backend_name!r}."
-        f"{_suggest_url(meta, 'polars')}"
-    )
-    return NotImplementedError(msg)
-
-
-def non_tabular_json(meta: Metadata, backend_name: str) -> NotImplementedError:
-    msg = (
-        f"{_failed_tabular(meta)}"
-        f"Non-tabular json is not supported natively by {backend_name!r}."
-        f"{_suggest_url(meta, 'polars')}"
-    )
-    return NotImplementedError(msg)
 
 
 def _failed_url(meta: Metadata, /) -> str:
@@ -87,3 +77,35 @@ def _suggest_url(meta: Metadata, install_other: str | None = None) -> str:
         "    from altair.datasets import url\n"
         f"    url({meta['dataset_name']!r})"
     )
+
+
+# TODO:
+# - Use `AltairDatasetsError`
+# - Remove notes from doc
+# - Improve message and how data is selected
+def implementation_not_found(meta: Metadata, /) -> NotImplementedError:
+    """
+    Search finished without finding a *declared* incompatibility.
+
+    Notes
+    -----
+    - New kind of error
+    - Previously, every backend had a function assigned
+        - But they might not all work
+    - Now, only things that are known to be widely safe are added
+        - Should probably suggest using a pre-defined backend that supports everything
+    - What can reach here?
+        - `is_image` (all)
+        - `"pandas"` (using inference wont trigger these)
+          - `.arrow` (w/o `pyarrow`)
+          - `.parquet` (w/o either `pyarrow` or `fastparquet`)
+    """
+    INDENT = " " * 4
+    record = f",\n{INDENT}".join(
+        f"{k}={v!r}"
+        for k, v in meta.items()
+        if not (k.startswith(("is_", "sha", "bytes", "has_")))
+        or (v is True and k.startswith("is_"))
+    )
+    msg = f"Found no implementation that supports:\n{INDENT}{record}"
+    return NotImplementedError(msg)

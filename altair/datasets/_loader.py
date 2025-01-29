@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Generic, final, overload
 
-from narwhals.stable.v1.typing import IntoDataFrameT, IntoFrameT
+from narwhals.stable.v1.typing import IntoDataFrameT
 
-from altair.datasets._readers import _Reader, backend
+from altair.datasets import _reader
+from altair.datasets._reader import IntoFrameT
 
 if TYPE_CHECKING:
     import sys
@@ -13,14 +14,16 @@ if TYPE_CHECKING:
     import pandas as pd
     import polars as pl
     import pyarrow as pa
+    from narwhals.stable import v1 as nw
 
     from altair.datasets._cache import DatasetCache
+    from altair.datasets._reader import Reader
 
     if sys.version_info >= (3, 11):
-        from typing import LiteralString
+        from typing import LiteralString, Self
     else:
-        from typing_extensions import LiteralString
-    from altair.datasets._readers import _Backend
+        from typing_extensions import LiteralString, Self
+    from altair.datasets._reader import _Backend
     from altair.datasets._typing import Dataset, Extension
 
 
@@ -43,7 +46,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         https://github.com/vega/vega-datasets
     """
 
-    _reader: _Reader[IntoDataFrameT, IntoFrameT]
+    _reader: Reader[IntoDataFrameT, IntoFrameT]
 
     @overload
     @classmethod
@@ -55,16 +58,18 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @classmethod
     def from_backend(
         cls, backend_name: Literal["pandas", "pandas[pyarrow]"], /
-    ) -> Loader[pd.DataFrame, pd.DataFrame]: ...
+    ) -> Loader[pd.DataFrame, nw.LazyFrame]: ...
 
     @overload
     @classmethod
     def from_backend(
         cls, backend_name: Literal["pyarrow"], /
-    ) -> Loader[pa.Table, pa.Table]: ...
+    ) -> Loader[pa.Table, nw.LazyFrame]: ...
 
     @classmethod
-    def from_backend(cls, backend_name: _Backend = "polars", /) -> Loader[Any, Any]:
+    def from_backend(
+        cls: type[Loader[Any, Any]], backend_name: _Backend = "polars", /
+    ) -> Loader[Any, Any]:
         """
         Initialize a new loader, with the specified backend.
 
@@ -128,8 +133,12 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         .. _JSON format not supported:
             https://arrow.apache.org/docs/python/json.html#reading-json-files
         """
-        obj = Loader.__new__(Loader)
-        obj._reader = backend(backend_name)
+        return cls.from_reader(_reader._from_backend(backend_name))
+
+    @classmethod
+    def from_reader(cls, reader: Reader[IntoDataFrameT, IntoFrameT], /) -> Self:
+        obj = cls.__new__(cls)
+        obj._reader = reader
         return obj
 
     def __call__(
@@ -278,7 +287,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         return self._reader.url(name, suffix)
 
     @property
-    def cache(self) -> DatasetCache[IntoDataFrameT, IntoFrameT]:
+    def cache(self) -> DatasetCache:
         """
         Caching of remote dataset requests.
 
@@ -361,12 +370,9 @@ load: _Load[Any, Any]
 
 def __getattr__(name):
     if name == "load":
-        from altair.datasets._readers import infer_backend
-
-        reader = infer_backend()
+        reader = _reader.infer_backend()
         global load
-        load = _Load.__new__(_Load)
-        load._reader = reader
+        load = _Load.from_reader(reader)
         return load
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
