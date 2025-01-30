@@ -254,15 +254,11 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             msg = f"Found no results for:\n    {constraints!r}"
             raise ValueError(msg)
 
-    # TODO: Docs
     def _merge_kwds(self, meta: Metadata, kwds: dict[str, Any], /) -> Mapping[str, Any]:
         """
-        Hook to utilize ``meta`` to extend ``kwds`` with known helpful defaults.
+        Extend user-provided arguments with dataset & library-specfic defaults.
 
-        - User provided arguments have a higher precedence.
-        - The keywords for schemas vary between libraries
-            - pandas is internally inconsistent
-        - By default, returns unchanged
+        .. important:: User-provided arguments have a higher precedence.
         """
         if self._schema_cache.is_active() and (
             schema := self._schema_cache.schema_kwds(meta)
@@ -282,22 +278,15 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             return self._metadata_frame.filter(*predicates, **constraints)
         return self._metadata_frame
 
-    # TODO: Docs
     def _solve(
         self, meta: Metadata, impls: Sequence[BaseImpl[R]], /
     ) -> Callable[..., R]:
         """
-        Return the first function meeting constraints of meta.
+        Return the first function that satisfies dataset constraints.
 
-        Notes
-        -----
-        - Iterate over impls
-        - Each one can either match or signal an error
-        - An error blocks any additional checking
-            - Both include & exclude
-        - Uses ``ItemsView`` to support set ops
-            - `meta` isn't iterated over
-            - Leaves the door open for caching the search space
+        See Also
+        --------
+        ``altair.datasets._readimpl.BaseImpl.unwrap_or_skip``
         """
         items = meta.items()
         it = (some for impl in impls if (some := impl.unwrap_or_skip(items)))
