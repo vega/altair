@@ -97,14 +97,24 @@ class BaseImpl(Generic[R]):
         object.__setattr__(self, "include", include)
         object.__setattr__(self, "exclude", exclude)
 
-    # TODO: Consider renaming
-    # NOTE:
-    # - Fn means call it
-    # - Err means raise it
-    # - Skip means its safe to check other impls
-    def unwrap_or(
+    def unwrap_or_skip(
         self, meta: Items, /
     ) -> Callable[..., R] | type[AltairDatasetsError] | Skip:
+        """
+        Indicate an action to take for a dataset.
+
+        **Supports** dataset, use this function::
+
+            Callable[..., R]
+
+        Has explicitly marked as **not supported**::
+
+            type[AltairDatasetsError]
+
+        No relevant constraints overlap, safe to check others::
+
+            Skip
+        """
         if self.include.issubset(meta):
             return self.fn if self.exclude.isdisjoint(meta) else AltairDatasetsError
         return Skip.skip

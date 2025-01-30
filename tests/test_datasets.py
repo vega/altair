@@ -122,7 +122,7 @@ def is_polars_backed_pyarrow(loader: Loader[Any, Any], /) -> bool:
     if is_loader_backend(loader, "pyarrow"):
         items = is_meta(suffix=".json", is_spatial=True)
         impls = loader._reader._read
-        it = (some for impl in impls if (some := impl.unwrap_or(items)))
+        it = (some for impl in impls if (some := impl.unwrap_or_skip(items)))
         return callable(next(it, None))
     return False
 

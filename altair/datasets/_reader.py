@@ -311,7 +311,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             - Leaves the door open for caching the search space
         """
         items = meta.items()
-        it = (some for impl in impls if (some := impl.unwrap_or(items)))
+        it = (some for impl in impls if (some := impl.unwrap_or_skip(items)))
         if fn_or_err := next(it, None):
             if _is_err(fn_or_err):
                 raise fn_or_err.from_tabular(meta, self._name)
