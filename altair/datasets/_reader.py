@@ -106,20 +106,11 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         Use ``reader(...)`` instead of instantiating ``Reader`` directly.
     """
 
-    # TODO: Docs
     _read: Sequence[Read[IntoDataFrameT]]
     """Eager file read functions."""
 
-    # TODO: Docs
     _scan: Sequence[Scan[IntoFrameT]]
-    """
-    *Optionally*-lazy file read/scan functions.
-
-    Used exclusively for ``metadata.parquet``.
-
-    Currently ``"polars"`` is the only lazy option.
-    All others defer to the eager variant.
-    """
+    """Lazy file read functions."""
 
     _name: str
     """

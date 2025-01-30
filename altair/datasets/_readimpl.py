@@ -56,8 +56,11 @@ IntoFrameT = TypeVar(
     bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame | nwt.DataFrameLike",
     default=nw.LazyFrame,
 )
-Scan = TypeAliasType("Scan", "BaseImpl[IntoFrameT]", type_params=(IntoFrameT,))
 Read = TypeAliasType("Read", "BaseImpl[IntoDataFrameT]", type_params=(IntoDataFrameT,))
+"""An *eager* file read function."""
+
+Scan = TypeAliasType("Scan", "BaseImpl[IntoFrameT]", type_params=(IntoFrameT,))
+"""A *lazy* file read function."""
 
 
 class Skip(Enum):
@@ -73,12 +76,33 @@ class Skip(Enum):
 
 
 class BaseImpl(Generic[R]):
+    """
+    A function wrapped with dataset support constraints.
+
+    The ``include``, ``exclude`` properties form a `NIMPLY gate`_ (`Material nonimplication`_).
+
+    Examples
+    --------
+    For some dataset ``D``, we can use ``fn`` if::
+
+        impl: BaseImpl
+        impl.include(D) and not impl.exclude(D)
+
+
+    .. _NIMPLY gate:
+        https://en.m.wikipedia.org/wiki/NIMPLY_gate
+    .. _Material nonimplication:
+        https://en.m.wikipedia.org/wiki/Material_nonimplication#Truth_table
+    """
+
     fn: Callable[..., R]
-    """Wrapped read function."""
+    """Wrapped read/scan function."""
+
     include: MetaIs
-    """Passing this makes ``fn`` a candidate."""
+    """Constraint indicating ``fn`` **supports** reading a dataset."""
+
     exclude: MetaIs
-    """Passing this overrides ``include``, transforming into an error."""
+    """Constraint *subsetting* ``include`` to mark **non-support**."""
 
     def __init__(
         self,
@@ -121,6 +145,7 @@ class BaseImpl(Generic[R]):
 
     @classmethod
     def _exclude_none(cls) -> MetaIs:
+        """Represents the empty set."""
         return is_meta()
 
     def __setattr__(self, name: str, value: Any):
