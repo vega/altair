@@ -517,6 +517,12 @@ def test_spatial(backend: _Backend, name: Dataset) -> None:
             load(name)
 
 
+@backends
+def test_tsv(backend: _Backend) -> None:
+    load = Loader.from_backend(backend)
+    is_frame_backend(load("unemployment", ".tsv"), backend)
+
+
 @datasets_all
 @datasets_debug
 def test_all_datasets(polars_loader: PolarsLoader, name: Dataset) -> None:

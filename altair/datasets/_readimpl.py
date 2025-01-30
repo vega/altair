@@ -294,7 +294,7 @@ def pa_any() -> Sequence[Read[pa.Table]]:
     return (
         read(csv.read_csv, is_csv),
         _pa_read_json_impl(),
-        read(csv.read_csv, is_tsv, parse_options={"delimiter": "\t"}),
+        read(csv.read_csv, is_tsv, parse_options=csv.ParseOptions(delimiter="\t")),  # pyright: ignore[reportCallIssue]
         read(feather.read_table, is_arrow),
         read(parquet.read_table, is_parquet),
     )
