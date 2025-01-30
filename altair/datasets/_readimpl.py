@@ -136,22 +136,17 @@ class BaseImpl(Generic[R]):
 
     def __repr__(self) -> str:
         tp_name = f"{type(self).__name__}[{self._inferred_package}?]"
-        return f"{tp_name}({self._contents})"
+        return f"{tp_name}({self})"
 
-    # TODO: Consider renaming
-    @property
-    def _contents(self) -> str:
+    def __str__(self) -> str:
         if isinstance(self.fn, partial):
             fn = _unwrap_partial(self.fn)
-            it = (f"{k}={v!r}" for k, v in self.fn.keywords.items())
-            fn_repr = f"{fn.__name__}(..., {', '.join(it)})"
+            kwds = self.fn.keywords.items()
+            fn_repr = f"{fn.__name__}(..., {', '.join(f'{k}={v!r}' for k, v in kwds)})"
         else:
             fn_repr = f"{self.fn.__name__}(...)"
-        if self.exclude:
-            params = f"include={self.include!r}, exclude={self.exclude!r}"
-        else:
-            params = repr(self.include)
-        return f"{fn_repr}, {params}"
+        inc, exc = self.include, self.exclude
+        return f"{fn_repr}, {f'include={inc!r}, exclude={exc!r}' if exc else repr(inc)}"
 
     @property
     def _relevant_columns(self) -> Iterator[str]:

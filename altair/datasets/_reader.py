@@ -182,7 +182,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             m = {}
             frame = self._scan_metadata()
             for impl in self._read:
-                name = impl._contents
+                name = str(impl)
                 m[name] = {"include": _dataset_names(frame, impl._include_expr)}
                 if impl.exclude:
                     m[name].update(exclude=_dataset_names(frame, impl._exclude_expr))
@@ -196,11 +196,9 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
 
         PREFIX = " " * 4
         NL = "\n"
-        body = f"read\n{indent(NL.join(el._contents for el in self._read), PREFIX)}"
+        body = f"read\n{indent(NL.join(str(el) for el in self._read), PREFIX)}"
         if self._scan:
-            body += (
-                f"\nscan\n{indent(NL.join(el._contents for el in self._scan), PREFIX)}"
-            )
+            body += f"\nscan\n{indent(NL.join(str(el) for el in self._scan), PREFIX)}"
         return f"Reader[{self._name}] {self._implementation!r}\n{body}"
 
     def read_fn(self, meta: Metadata, /) -> Callable[..., IntoDataFrameT]:
