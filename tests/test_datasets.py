@@ -16,7 +16,7 @@ from narwhals.stable.v1 import dependencies as nw_dep
 
 from altair.datasets import Loader
 from altair.datasets._exceptions import AltairDatasetsError
-from altair.datasets._typing import Dataset, Metadata, is_ext_read
+from altair.datasets._typing import Dataset, Metadata
 from tests import no_xdist, skip_requires_pyarrow
 from tools import fs
 
@@ -441,10 +441,7 @@ def test_reader_cache_exhaustive(
 
     # NOTE: Approximating all datasets downloaded
     assert len(cached_paths) >= 70
-    assert all(
-        bool(fp.exists() and is_ext_read(fp.suffix) and fp.stat().st_size)
-        for fp in load.cache
-    )
+    assert all(bool(fp.exists() and fp.stat().st_size) for fp in load.cache)
     # NOTE: Confirm this is a no-op
     load.cache.download_all()
     assert len(cached_paths) == len(tuple(load.cache))

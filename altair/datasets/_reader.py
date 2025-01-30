@@ -41,7 +41,6 @@ from altair.datasets._exceptions import (
     module_not_found,
 )
 from altair.datasets._readimpl import IntoFrameT, is_available
-from altair.datasets._typing import EXTENSION_SUFFIXES
 
 if TYPE_CHECKING:
     import sys
@@ -443,8 +442,12 @@ def _into_constraints(
     elif suffix.startswith("."):
         m = {"dataset_name": name, "suffix": suffix}
     else:
+        from typing import get_args
+
+        from altair.datasets._typing import Extension
+
         msg = (
-            f"Expected 'suffix' to be one of {EXTENSION_SUFFIXES!r},\n"
+            f"Expected 'suffix' to be one of {get_args(Extension)!r},\n"
             f"but got: {suffix!r}"
         )
         raise TypeError(msg)

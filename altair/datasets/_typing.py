@@ -4,17 +4,12 @@
 from __future__ import annotations
 
 import sys
-from typing import Any, Literal
+from typing import Literal
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
 
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
@@ -22,7 +17,7 @@ else:
     from typing_extensions import TypeAlias
 
 
-__all__ = ["EXTENSION_SUFFIXES", "Dataset", "Extension", "Metadata", "is_ext_read"]
+__all__ = ["Dataset", "Extension", "Metadata"]
 
 Dataset: TypeAlias = Literal[
     "7zip",
@@ -98,18 +93,7 @@ Dataset: TypeAlias = Literal[
     "world-110m",
     "zipcodes",
 ]
-Extension: TypeAlias = Literal[".arrow", ".csv", ".json", ".parquet", ".tsv"]
-EXTENSION_SUFFIXES: tuple[
-    Literal[".arrow"],
-    Literal[".csv"],
-    Literal[".json"],
-    Literal[".parquet"],
-    Literal[".tsv"],
-] = (".arrow", ".csv", ".json", ".parquet", ".tsv")
-
-
-def is_ext_read(suffix: Any) -> TypeIs[Extension]:
-    return suffix in {".arrow", ".csv", ".json", ".parquet", ".tsv"}
+Extension: TypeAlias = Literal[".arrow", ".csv", ".json", ".parquet", ".png", ".tsv"]
 
 
 class Metadata(TypedDict, total=False):

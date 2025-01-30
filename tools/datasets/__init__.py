@@ -190,13 +190,6 @@ class Application:
         indent = " " * 4
         NAME = "Dataset"
         EXT = "Extension"
-        EXT_TYPES = dpkg.extensions()
-        EXTENSION_SUFFIXES = "EXTENSION_SUFFIXES"
-        EXTENSION_TYPE_TP = (
-            f"tuple[{', '.join(f'Literal[{el!r}]' for el in EXT_TYPES)}]"
-        )
-        EXTENSION_GUARD = "is_ext_read"
-
         FIELD = "FlFieldStr"
         FIELD_TYPES = (
             "integer",
@@ -215,17 +208,13 @@ class Application:
             f"{HEADER_COMMENT}",
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Literal, TYPE_CHECKING",
+            "from typing import Literal, TYPE_CHECKING",
             utils.import_typing_extensions((3, 14), "TypedDict"),
-            utils.import_typing_extensions((3, 13), "TypeIs"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
-            f"__all__ = {[NAME, EXT, dpkg._NAME_TYPED_DICT, EXTENSION_GUARD, EXTENSION_SUFFIXES]}\n",
+            f"__all__ = {[NAME, EXT, dpkg._NAME_TYPED_DICT]}\n",
             utils.spell_literal_alias(NAME, dpkg.dataset_names()),
-            utils.spell_literal_alias(EXT, EXT_TYPES),
-            f"{EXTENSION_SUFFIXES}: {EXTENSION_TYPE_TP} = {EXT_TYPES!r}",
-            f"def {EXTENSION_GUARD}(suffix: Any) -> TypeIs[{EXT}]:\n"
-            f"{indent}return suffix in set({EXT_TYPES!r})\n",
+            utils.spell_literal_alias(EXT, dpkg.extensions()),
             dpkg.typed_dict(),
             utils.spell_literal_alias(FIELD, FIELD_TYPES),
             '"""\n'

@@ -103,8 +103,7 @@ class DataPackage:
 
     def extensions(self) -> tuple[str, ...]:
         return tuple(
-            self.core.filter(is_image=False)
-            .select(col("suffix").unique().sort())
+            self.core.select(col("suffix").unique().sort())
             .collect()
             .to_series()
             .to_list()
