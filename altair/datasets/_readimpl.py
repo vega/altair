@@ -31,6 +31,10 @@ if sys.version_info >= (3, 13):
     from typing import TypeVar
 else:
     from typing_extensions import TypeVar
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Iterator, Sequence
@@ -46,12 +50,14 @@ if TYPE_CHECKING:
 
 __all__ = ["is_available", "pa_any", "pd_only", "pd_pyarrow", "pl_only", "read", "scan"]
 
-R = TypeVar("R")
+R = TypeVar("R", bound="nwt.IntoFrame")
 IntoFrameT = TypeVar(
     "IntoFrameT",
     bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame | nwt.DataFrameLike",
     default=nw.LazyFrame,
 )
+Scan = TypeAliasType("Scan", "BaseImpl[IntoFrameT]", type_params=(IntoFrameT,))
+Read = TypeAliasType("Read", "BaseImpl[IntoDataFrameT]", type_params=(IntoDataFrameT,))
 
 
 class Skip(Enum):
@@ -158,41 +164,35 @@ class BaseImpl(Generic[R]):
         raise TypeError(msg)
 
 
-def _unwrap_partial(fn: Any, /) -> Any:
-    # NOTE: ``functools._unwrap_partial``
-    func = fn
-    while isinstance(func, partial):
-        func = func.func
-    return func
+def read(
+    fn: Callable[..., IntoDataFrameT],
+    /,
+    include: MetaIs,
+    exclude: MetaIs | None = None,
+    **kwds: Any,
+) -> Read[IntoDataFrameT]:
+    return BaseImpl(fn, include, exclude, kwds)
 
 
-class ScanImpl(BaseImpl[IntoFrameT]): ...
+def scan(
+    fn: Callable[..., IntoFrameT],
+    /,
+    include: MetaIs,
+    exclude: MetaIs | None = None,
+    **kwds: Any,
+) -> Scan[IntoFrameT]:
+    return BaseImpl(fn, include, exclude, kwds)
 
 
-class ReadImpl(BaseImpl[IntoDataFrameT]):
-    def to_scan_impl(self) -> ScanImpl[nw.LazyFrame]:
-        return ScanImpl(_into_scan_fn(self.fn), self.include, self.exclude, {})
+def into_scan(impl: Read[IntoDataFrameT], /) -> Scan[nw.LazyFrame]:
+    def scan_fn(fn: Callable[..., IntoDataFrameT], /) -> Callable[..., nw.LazyFrame]:
+        @wraps(_unwrap_partial(fn))
+        def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame:
+            return nw.from_native(fn(*args, **kwds)).lazy()
 
+        return wrapper
 
-def _into_scan_fn(fn: Callable[..., IntoDataFrameT], /) -> Callable[..., nw.LazyFrame]:
-    @wraps(_unwrap_partial(fn))
-    def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame:
-        return nw.from_native(fn(*args, **kwds)).lazy()
-
-    return wrapper
-
-
-def _root_package_name(obj: Any, default: str, /) -> str:
-    # NOTE: Defers importing `inspect`, if we can get the module name
-    if hasattr(obj, "__module__"):
-        return obj.__module__.split(".")[0]
-    else:
-        from inspect import getmodule
-
-        module = getmodule(obj)
-    if module and (pkg := module.__package__):
-        return pkg.split(".")[0]
-    return default
+    return BaseImpl(scan_fn(impl.fn), impl.include, impl.exclude, {})
 
 
 def is_available(
@@ -217,29 +217,28 @@ def is_available(
     return fn(find_spec(name) is not None for name in names)
 
 
-def read(
-    fn: Callable[..., IntoDataFrameT],
-    /,
-    include: MetaIs,
-    exclude: MetaIs | None = None,
-    **kwds: Any,
-) -> ReadImpl[IntoDataFrameT]:
-    return ReadImpl(fn, include, exclude, kwds)
+def _root_package_name(obj: Any, default: str, /) -> str:
+    # NOTE: Defers importing `inspect`, if we can get the module name
+    if hasattr(obj, "__module__"):
+        return obj.__module__.split(".")[0]
+    else:
+        from inspect import getmodule
+
+        module = getmodule(obj)
+    if module and (pkg := module.__package__):
+        return pkg.split(".")[0]
+    return default
 
 
-def scan(
-    fn: Callable[..., IntoFrameT],
-    /,
-    include: MetaIs,
-    exclude: MetaIs | None = None,
-    **kwds: Any,
-) -> ScanImpl[IntoFrameT]:
-    return ScanImpl(fn, include, exclude, kwds)
+def _unwrap_partial(fn: Any, /) -> Any:
+    # NOTE: ``functools._unwrap_partial``
+    func = fn
+    while isinstance(func, partial):
+        func = func.func
+    return func
 
 
-def pl_only() -> tuple[
-    Sequence[ReadImpl[pl.DataFrame]], Sequence[ScanImpl[pl.LazyFrame]]
-]:
+def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:
     import polars as pl
 
     read_fns = (
@@ -253,10 +252,10 @@ def pl_only() -> tuple[
     return read_fns, scan_fns
 
 
-def pd_only() -> Sequence[ReadImpl[pd.DataFrame]]:
+def pd_only() -> Sequence[Read[pd.DataFrame]]:
     import pandas as pd
 
-    opt: Sequence[ReadImpl[pd.DataFrame]]
+    opt: Sequence[Read[pd.DataFrame]]
     if is_available("pyarrow"):
         opt = read(pd.read_feather, is_arrow), read(pd.read_parquet, is_parquet)
     elif is_available("fastparquet"):
@@ -271,7 +270,7 @@ def pd_only() -> Sequence[ReadImpl[pd.DataFrame]]:
     )
 
 
-def pd_pyarrow() -> Sequence[ReadImpl[pd.DataFrame]]:
+def pd_pyarrow() -> Sequence[Read[pd.DataFrame]]:
     import pandas as pd
 
     kwds: dict[str, Any] = {"dtype_backend": "pyarrow"}
@@ -284,7 +283,7 @@ def pd_pyarrow() -> Sequence[ReadImpl[pd.DataFrame]]:
     )
 
 
-def pa_any() -> Sequence[ReadImpl[pa.Table]]:
+def pa_any() -> Sequence[Read[pa.Table]]:
     from pyarrow import csv, feather, parquet
 
     return (
@@ -296,7 +295,7 @@ def pa_any() -> Sequence[ReadImpl[pa.Table]]:
     )
 
 
-def _pa_read_json_impl() -> ReadImpl[pa.Table]:
+def _pa_read_json_impl() -> Read[pa.Table]:
     """
     Mitigating ``pyarrow``'s `line-delimited`_ JSON requirement.
 

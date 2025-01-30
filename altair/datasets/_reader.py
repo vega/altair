@@ -52,7 +52,7 @@ if TYPE_CHECKING:
     import polars as pl
     import pyarrow as pa
 
-    from altair.datasets._readimpl import BaseImpl, R, ReadImpl, ScanImpl
+    from altair.datasets._readimpl import BaseImpl, R, Read, Scan
     from altair.datasets._typing import Dataset, Extension, Metadata
     from altair.vegalite.v5.schema._typing import OneOrSeq
 
@@ -107,11 +107,11 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     """
 
     # TODO: Docs
-    _read: Sequence[ReadImpl[IntoDataFrameT]]
+    _read: Sequence[Read[IntoDataFrameT]]
     """Eager file read functions."""
 
     # TODO: Docs
-    _scan: Sequence[ScanImpl[IntoFrameT]]
+    _scan: Sequence[Scan[IntoFrameT]]
     """
     *Optionally*-lazy file read/scan functions.
 
@@ -143,8 +143,8 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
 
     def __init__(
         self,
-        read: Sequence[ReadImpl[IntoDataFrameT]],
-        scan: Sequence[ScanImpl[IntoFrameT]],
+        read: Sequence[Read[IntoDataFrameT]],
+        scan: Sequence[Scan[IntoFrameT]],
         name: str,
         implementation: nw.Implementation,
     ) -> None:
@@ -356,7 +356,7 @@ class _NoParquetReader(Reader[IntoDataFrameT, IntoFrameT]):
 
 @overload
 def reader(
-    read_fns: Sequence[ReadImpl[IntoDataFrameT]],
+    read_fns: Sequence[Read[IntoDataFrameT]],
     scan_fns: tuple[()] = ...,
     *,
     name: str | None = ...,
@@ -366,8 +366,8 @@ def reader(
 
 @overload
 def reader(
-    read_fns: Sequence[ReadImpl[IntoDataFrameT]],
-    scan_fns: Sequence[ScanImpl[IntoFrameT]],
+    read_fns: Sequence[Read[IntoDataFrameT]],
+    scan_fns: Sequence[Scan[IntoFrameT]],
     *,
     name: str | None = ...,
     implementation: nw.Implementation = ...,
@@ -375,8 +375,8 @@ def reader(
 
 
 def reader(
-    read_fns: Sequence[ReadImpl[IntoDataFrameT]],
-    scan_fns: Sequence[ScanImpl[IntoFrameT]] = (),
+    read_fns: Sequence[Read[IntoDataFrameT]],
+    scan_fns: Sequence[Scan[IntoFrameT]] = (),
     *,
     name: str | None = None,
     implementation: nw.Implementation = nw.Implementation.UNKNOWN,
@@ -504,10 +504,10 @@ def _into_suffix(obj: Path | str, /) -> Any:
 
 
 def _steal_eager_parquet(
-    read_fns: Sequence[ReadImpl[IntoDataFrameT]], /
-) -> Sequence[ScanImpl[nw.LazyFrame]] | None:
+    read_fns: Sequence[Read[IntoDataFrameT]], /
+) -> Sequence[Scan[nw.LazyFrame]] | None:
     if convertable := next((rd for rd in read_fns if rd.include <= is_parquet), None):
-        return (convertable.to_scan_impl(),)
+        return (_readimpl.into_scan(convertable),)
     return None
 
 
