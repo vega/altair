@@ -171,13 +171,11 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             )
             frame = self._scan_metadata().select("dataset_name", *relevant_columns)
             it = (impl._include_expr for impl in self._read)
-            # BUG: ``narwhals`` raises a ``ValueError`` when ``__invert__``-ing a previously used Expr?
-            # - Can't reproduce trivially
-            # - Doesnt seem to be related to genexp
             inc_expr = nw.any_horizontal(*it)
-            include = _dataset_names(frame, inc_expr)
-            exclude = _dataset_names(frame, ~nw.col("dataset_name").is_in(include))
-            return {"include": include, "exclude": exclude}
+            return {
+                "include": _dataset_names(frame, inc_expr),
+                "exclude": _dataset_names(frame, ~inc_expr),
+            }
         elif mode == "each":
             # FIXME: Rough draft of how to group results
             # - Don't really want a nested dict
