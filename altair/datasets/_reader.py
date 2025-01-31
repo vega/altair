@@ -96,6 +96,26 @@ if TYPE_CHECKING:
         _PySpark,
     )
 
+_SupportProfile: TypeAlias = Mapping[
+    Literal["supported", "unsupported"], "Sequence[Dataset]"
+]
+"""
+Dataset support varies between backends and available dependencies.
+
+Any name listed in ``"unsupported"`` will raise an error on::
+
+    from altair.datasets import load
+
+    load("7zip")
+
+Instead, they can be loaded via::
+
+    import altair as alt
+    from altair.datasets import url
+
+    alt.Chart(url("7zip"))
+"""
+
 
 class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     """
@@ -143,43 +163,6 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         self._name = name
         self._implementation = implementation
         self._schema_cache = SchemaCache(implementation=implementation)
-
-    # TODO: Finish working on presentation
-    # - The contents of both are functional
-    def profile(self, mode: Literal["any", "each"]):
-        """
-        Describe which datasets/groups are supported.
-
-        Focusing on actual datasets, rather than describing wrapped functions (repr)
-
-        .. note::
-            Having this public to make testing easier (``tests.test_datasets.is_polars_backed_pyarrow``)
-        """
-        if mode == "any":
-            relevant_columns = set(
-                chain.from_iterable(impl._relevant_columns for impl in self._read)
-            )
-            frame = self._scan_metadata().select("dataset_name", *relevant_columns)
-            it = (impl._include_expr for impl in self._read)
-            inc_expr = nw.any_horizontal(*it)
-            return {
-                "include": _dataset_names(frame, inc_expr),
-                "exclude": _dataset_names(frame, ~inc_expr),
-            }
-        elif mode == "each":
-            # FIXME: Rough draft of how to group results
-            # - Don't really want a nested dict
-            m = {}
-            frame = self._scan_metadata()
-            for impl in self._read:
-                name = str(impl)
-                m[name] = {"include": _dataset_names(frame, impl._include_expr)}
-                if impl.exclude:
-                    m[name].update(exclude=_dataset_names(frame, impl._exclude_expr))
-            return m
-        else:
-            msg = f"Unexpected {mode=}"
-            raise TypeError(msg)
 
     def __repr__(self) -> str:
         from textwrap import indent
@@ -233,6 +216,38 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         else:
             msg = f"Expected 'str' but got {type(url).__name__!r}\nfrom {url!r}."
             raise TypeError(msg)
+
+    @overload
+    def profile(self, *, show: Literal[False] = ...) -> _SupportProfile: ...
+
+    @overload
+    def profile(self, *, show: Literal[True]) -> None: ...
+
+    def profile(self, *, show: bool = False) -> _SupportProfile | None:
+        """
+        Describe which datasets can be loaded as tabular data.
+
+        Parameters
+        ----------
+        show
+            Print a densely formatted repr *instead of* returning a mapping.
+        """
+        relevant_columns = set(
+            chain.from_iterable(impl._relevant_columns for impl in self._read)
+        )
+        frame = self._scan_metadata().select("dataset_name", *relevant_columns)
+        it = (impl._include_expr for impl in self._read)
+        inc_expr = nw.any_horizontal(*it)
+        result: _SupportProfile = {
+            "unsupported": _dataset_names(frame, ~inc_expr),
+            "supported": _dataset_names(frame, inc_expr),
+        }
+        if show:
+            import pprint
+
+            pprint.pprint(result, compact=True, sort_dicts=False)
+            return None
+        return result
 
     def _query(
         self, name: Dataset | LiteralString, suffix: Extension | None = None, /
@@ -298,15 +313,12 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         raise implementation_not_found(meta)
 
 
-# TODO: Review after finishing `profile`
-# NOTE: Temp helper function for `Reader.profile`
 def _dataset_names(
-    frame: nw.LazyFrame,
-    *predicates: OneOrSeq[IntoExpr],
-    **constraints: Unpack[Metadata],
-):
+    frame: nw.LazyFrame, *predicates: OneOrSeq[IntoExpr]
+) -> Sequence[Dataset]:
+    # NOTE: helper function for `Reader.profile`
     return (
-        frame.filter(*predicates, **constraints)
+        frame.filter(*predicates)
         .select("dataset_name")
         .collect()
         .get_column("dataset_name")
