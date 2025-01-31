@@ -115,16 +115,15 @@ def is_url(name: Dataset, fn_url: Callable[..., str], /) -> bool:
 
 
 def is_polars_backed_pyarrow(loader: Loader[Any, Any], /) -> bool:
-    """User requested ``pyarrow``, but also has ``polars`` installed."""
-    # NOTE: Would prefer if there was a *less* private method to test this.
-    from altair.datasets._constraints import is_meta
+    """
+    User requested ``pyarrow``, but also has ``polars`` installed.
 
-    if is_loader_backend(loader, "pyarrow"):
-        items = is_meta(suffix=".json", is_spatial=True)
-        impls = loader._reader._read
-        it = (some for impl in impls if (some := impl.unwrap_or_skip(items)))
-        return callable(next(it, None))
-    return False
+    Both support nested datatypes, which are required for spatial json.
+    """
+    return (
+        is_loader_backend(loader, "pyarrow")
+        and "earthquakes" in loader._reader.profile()["supported"]
+    )
 
 
 @backends
