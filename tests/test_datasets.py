@@ -352,6 +352,33 @@ def test_reader_missing_dependencies() -> None:
         _import_guarded(backend)  # type: ignore
 
 
+def test_reader_missing_implementation() -> None:
+    from altair.datasets._constraints import is_csv
+    from altair.datasets._reader import reader
+    from altair.datasets._readimpl import read
+
+    def func(*args, **kwds) -> pd.DataFrame:
+        if TYPE_CHECKING:
+            return pd.DataFrame()
+
+    name = "pandas"
+    rd = reader((read(func, is_csv),), name=name)
+    with pytest.raises(
+        AltairDatasetsError,
+        match=re.compile(rf"Unable.+parquet.+native.+{name}", flags=re.DOTALL),
+    ):
+        rd.dataset("flights-3m")
+    with pytest.raises(
+        AltairDatasetsError,
+        match=re.compile(r"Found no.+support.+flights.+json", flags=re.DOTALL),
+    ):
+        rd.dataset("flights-2k")
+    with pytest.raises(
+        AltairDatasetsError, match=re.compile(r"Image data is non-tabular")
+    ):
+        rd.dataset("7zip")
+
+
 @backends
 def test_reader_cache(
     backend: _Backend, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
@@ -527,7 +554,7 @@ def test_all_datasets(polars_loader: PolarsLoader, name: Dataset) -> None:
             rf"Unable to load.+{name}.png.+as tabular data",
             flags=re.DOTALL | re.IGNORECASE,
         )
-        with pytest.raises((AltairDatasetsError, NotImplementedError), match=pattern):
+        with pytest.raises(AltairDatasetsError, match=pattern):
             polars_loader(name)
     else:
         frame = polars_loader(name)

@@ -28,16 +28,25 @@ class AltairDatasetsError(Exception):
 
     @classmethod
     def from_tabular(cls, meta: Metadata, backend_name: str, /) -> AltairDatasetsError:
-        install_other = None
-        mid = "\n"
-        if not meta["is_image"] and not meta["is_tabular"]:
-            install_other = "polars"
-            if meta["is_spatial"]:
-                mid = f"Geospatial data is not supported natively by {backend_name!r}."
-            elif meta["is_json"]:
-                mid = f"Non-tabular json is not supported natively by {backend_name!r}."
-        msg = f"{_failed_tabular(meta)}{mid}{_suggest_url(meta, install_other)}"
-        return cls(msg)
+        if meta["is_image"]:
+            reason = "Image data is non-tabular."
+            return cls(f"{_failed_tabular(meta)}{reason}{_suggest_url(meta)}")
+        elif not meta["is_tabular"] or meta["suffix"] in {".arrow", ".parquet"}:
+            if meta["suffix"] in {".arrow", ".parquet"}:
+                install: tuple[str, ...] = "pyarrow", "polars"
+                what = f"{meta['suffix']!r}"
+            else:
+                install = ("polars",)
+                if meta["is_spatial"]:
+                    what = "Geospatial data"
+                elif meta["is_json"]:
+                    what = "Non-tabular json"
+                else:
+                    what = f"{meta['file_name']!r}"
+            reason = _why(what, backend_name)
+            return cls(f"{_failed_tabular(meta)}{reason}{_suggest_url(meta, *install)}")
+        else:
+            return cls(_implementation_not_found(meta))
 
     @classmethod
     def from_priority(cls, priority: Sequence[_Backend], /) -> AltairDatasetsError:
@@ -70,36 +79,24 @@ def _failed_tabular(meta: Metadata, /) -> str:
     return f"Unable to load {meta['file_name']!r} as tabular data.\n"
 
 
-def _suggest_url(meta: Metadata, install_other: str | None = None) -> str:
-    other = f" installing `{install_other}` or" if install_other else ""
+def _why(what: str, backend_name: str, /) -> str:
+    return f"{what} is not supported natively by {backend_name!r}."
+
+
+def _suggest_url(meta: Metadata, *install_other: str) -> str:
+    other = ""
+    if install_other:
+        others = " or ".join(f"`{other}`" for other in install_other)
+        other = f" installing {others}, or use"
     return (
-        f"\n\nInstead, try{other}:\n\n"
+        f"\n\nInstead, try{other}:\n"
         "    from altair.datasets import url\n"
         f"    url({meta['dataset_name']!r})"
     )
 
 
-# TODO:
-# - Use `AltairDatasetsError`
-# - Remove notes from doc
-# - Improve message and how data is selected
-def implementation_not_found(meta: Metadata, /) -> NotImplementedError:
-    """
-    Search finished without finding a *declared* incompatibility.
-
-    Notes
-    -----
-    - New kind of error
-    - Previously, every backend had a function assigned
-        - But they might not all work
-    - Now, only things that are known to be widely safe are added
-        - Should probably suggest using a pre-defined backend that supports everything
-    - What can reach here?
-        - `is_image` (all)
-        - `"pandas"` (using inference wont trigger these)
-          - `.arrow` (w/o `pyarrow`)
-          - `.parquet` (w/o either `pyarrow` or `fastparquet`)
-    """
+def _implementation_not_found(meta: Metadata, /) -> str:
+    """Search finished without finding a *declared* incompatibility."""
     INDENT = " " * 4
     record = f",\n{INDENT}".join(
         f"{k}={v!r}"
@@ -107,5 +104,4 @@ def implementation_not_found(meta: Metadata, /) -> NotImplementedError:
         if not (k.startswith(("is_", "sha", "bytes", "has_")))
         or (v is True and k.startswith("is_"))
     )
-    msg = f"Found no implementation that supports:\n{INDENT}{record}"
-    return NotImplementedError(msg)
+    return f"Found no implementation that supports:\n{INDENT}{record}"

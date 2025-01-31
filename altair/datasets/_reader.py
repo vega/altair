@@ -35,11 +35,7 @@ from packaging.requirements import Requirement
 from altair.datasets import _readimpl
 from altair.datasets._cache import CsvCache, DatasetCache, SchemaCache, _iter_metadata
 from altair.datasets._constraints import is_parquet
-from altair.datasets._exceptions import (
-    AltairDatasetsError,
-    implementation_not_found,
-    module_not_found,
-)
+from altair.datasets._exceptions import AltairDatasetsError, module_not_found
 from altair.datasets._readimpl import IntoFrameT, is_available
 
 if TYPE_CHECKING:
@@ -308,9 +304,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             if _is_err(fn_or_err):
                 raise fn_or_err.from_tabular(meta, self._name)
             return fn_or_err
-        if meta["is_image"]:
-            raise AltairDatasetsError.from_tabular(meta, self._name)
-        raise implementation_not_found(meta)
+        raise AltairDatasetsError.from_tabular(meta, self._name)
 
 
 def _dataset_names(
