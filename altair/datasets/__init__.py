@@ -1,7 +1,7 @@
 """
 Load example datasets *remotely* from `vega-datasets`_.
 
-Provides over **70+** datasets, used throughout our `Example Gallery`_.
+Provides **70+** datasets, used throughout our `Example Gallery`_.
 
 You can learn more about each dataset at `datapackage.md`_.
 
