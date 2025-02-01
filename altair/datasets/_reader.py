@@ -213,6 +213,36 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             msg = f"Expected 'str' but got {type(url).__name__!r}\nfrom {url!r}."
             raise TypeError(msg)
 
+    # TODO: (Multiple)
+    # - Settle on a better name
+    # - Add method to `Loader`
+    # - Move docs to `Loader.{new name}`
+    def open_markdown(self, name: Dataset, /) -> None:
+        """
+        Learn more about a dataset, opening `vega-datasets/datapackage.md`_ with the default browser.
+
+        Additional info *may* include: `description`_, `schema`_, `sources`_, `licenses`_.
+
+        .. _vega-datasets/datapackage.md:
+            https://github.com/vega/vega-datasets/blob/main/datapackage.md
+        .. _description:
+            https://datapackage.org/standard/data-resource/#description
+        .. _schema:
+            https://datapackage.org/standard/table-schema/#schema
+        .. _sources:
+            https://datapackage.org/standard/data-package/#sources
+        .. _licenses:
+            https://datapackage.org/standard/data-package/#licenses
+        """
+        import webbrowser
+
+        from altair.utils import VERSIONS
+
+        ref = self._query(name).get_column("file_name").item(0).replace(".", "")
+        tag = VERSIONS["vega-datasets"]
+        url = f"https://github.com/vega/vega-datasets/blob/{tag}/datapackage.md#{ref}"
+        webbrowser.open(url)
+
     @overload
     def profile(self, *, show: Literal[False] = ...) -> _SupportProfile: ...
 
