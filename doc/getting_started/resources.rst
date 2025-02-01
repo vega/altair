@@ -154,7 +154,7 @@ Altair in R provides an R interface to the Altair Python package. See the `docs 
 .. _`Altair in R`: https://github.com/vegawidget/altair
 
 Altair-upset_
-~~~~~~~~~~
+~~~~~~~~~~~~~
 
 Create beautiful and interactive UpSet plots using Altair. UpSet plots are a powerful alternative to Venn diagrams for visualizing set intersections, especially when dealing with many sets. The library supports both Pandas and Polars DataFrames, making it flexible for different data processing workflows.
 
