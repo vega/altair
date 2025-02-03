@@ -57,6 +57,9 @@ class RSTRenderer(_RSTRenderer):
         html = token["raw"]
         if html == "<br/>":
             return "\n"
+        # HACK: https://github.com/vega/altair/pull/3787#discussion_r1939885356
+        elif re.match(r"<span style=\"color: #.+;\">", (html)) or html == "</span>":
+            return ""
         else:
             return rf" :raw-html:`{html}` "
 
@@ -122,10 +125,11 @@ class RSTParseVegaLite(RSTParse):
             _RE_SPECIAL.sub("", d) if i % 2 else d
             for i, d in enumerate(_RE_LINK.split(s))
         )
+        # NOTE: Some entries in the Vega-Lite schema miss the second occurence of '__'
+        # (Needs to happen pre-parse to convert into `**Default value:**` for `.rst`)
+        description = description.replace("__Default value: ", "__Default value:__ ")
 
         description = super().__call__(description)
-        # Some entries in the Vega-Lite schema miss the second occurence of '__'
-        description = description.replace("__Default value: ", "__Default value:__ ")
         # Links to the vega-lite documentation cannot be relative but instead need to
         # contain the full URL.
         description = description.replace(
@@ -135,6 +139,13 @@ class RSTParseVegaLite(RSTParse):
         description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
         description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
         description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
+
+        # Fixing `codespan` followed by a non-whitespace character
+        description = description.replace("``aggregate``d", "aggregated").replace(
+            '``"extent"``s', "extents"
+        )
+        # HACK: https://github.com/vega/altair/pull/3787#discussion_r1939885356
+        description = description.replace("■ ", "")
         return description.strip()
 
 
