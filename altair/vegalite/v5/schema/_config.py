@@ -140,7 +140,7 @@ class AreaConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
@@ -1125,7 +1125,7 @@ class BarConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
@@ -3457,7 +3457,7 @@ class LineConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
@@ -3995,7 +3995,7 @@ class MarkConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
@@ -4571,7 +4571,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     clip
         Whether a mark be clipped to the enclosing group's width and height.
     color
@@ -5713,7 +5713,7 @@ class RectConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
@@ -6637,7 +6637,7 @@ class TickConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
