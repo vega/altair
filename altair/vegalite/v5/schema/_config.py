@@ -140,12 +140,11 @@ class AreaConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -842,7 +841,7 @@ class AxisConfigKwds(TypedDict, total=False):
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand
         For band scales, indicates if ticks and grid lines should be placed at the
-        ``"center"`` of a band (default) or at the band ``"extent"``s to indicate intervals
+        ``"center"`` of a band (default) or at the band extents to indicate intervals
     tickCap
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
@@ -1125,12 +1124,11 @@ class BarConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -3457,12 +3455,11 @@ class LineConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -3995,12 +3992,11 @@ class MarkConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -4571,14 +4567,13 @@ class OverlayMarkDefKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     clip
         Whether a mark be clipped to the enclosing group's width and height.
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -5713,12 +5708,11 @@ class RectConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -6637,12 +6631,11 @@ class TickConfigKwds(TypedDict, total=False):
         mix-blend-mode <https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode>`__
         value can be used.
 
-        __Default value:__ ``"source-over"``
+        **Default value:** ``"source-over"``
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
