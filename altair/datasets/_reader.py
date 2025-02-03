@@ -506,7 +506,7 @@ def _into_implementation(
     }
     if impl := mapping.get(primary):
         return impl
-    msg = f"Package {primary!r} is not supported by `narhwals`."
+    msg = f"Package {primary!r} is not supported by `narwhals`."
     raise ValueError(msg)
 
 
