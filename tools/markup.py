@@ -57,6 +57,9 @@ class RSTRenderer(_RSTRenderer):
         html = token["raw"]
         if html == "<br/>":
             return "\n"
+        # HACK: https://github.com/vega/altair/pull/3787#discussion_r1939885356
+        elif re.match(r"<span style=\"color: #.+;\">", (html)) or html == "</span>":
+            return ""
         else:
             return rf" :raw-html:`{html}` "
 
@@ -141,6 +144,8 @@ class RSTParseVegaLite(RSTParse):
         description = description.replace("``aggregate``d", "aggregated").replace(
             '``"extent"``s', "extents"
         )
+        # HACK: https://github.com/vega/altair/pull/3787#discussion_r1939885356
+        description = description.replace("■ ", "")
         return description.strip()
 
 

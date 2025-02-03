@@ -144,8 +144,7 @@ class AreaConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -1129,8 +1128,7 @@ class BarConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -3461,8 +3459,7 @@ class LineConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -3999,8 +3996,7 @@ class MarkConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -4577,8 +4573,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -5717,8 +5712,7 @@ class RectConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
@@ -6641,8 +6635,7 @@ class TickConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
-        ``"#4682b4"``
+        **Default value:** ``"#4682b4"``
 
         **Note:**
 
