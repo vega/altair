@@ -128,6 +128,10 @@ class Value(TypedDict, Generic[T]):
     value: T
         Wrapped value.
 
+    Returns
+    -------
+    dict
+
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
     """
@@ -179,6 +183,10 @@ class RowColKwds(TypedDict, Generic[T], total=False):
     ----------
     column: T
     row: T
+
+    Returns
+    -------
+    dict
 
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
