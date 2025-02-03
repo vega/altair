@@ -1480,7 +1480,7 @@ class Axis(VegaLiteSchema):
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand : dict, :class:`ExprRef`, Literal['center', 'extent']
         For band scales, indicates if ticks and grid lines should be placed at the
-        ``"center"`` of a band (default) or at the band ``"extent"``s to indicate intervals
+        ``"center"`` of a band (default) or at the band extents to indicate intervals
     tickCap : dict, :class:`ExprRef`, :class:`StrokeCap`, Literal['butt', 'round', 'square']
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
@@ -2056,7 +2056,7 @@ class AxisConfig(VegaLiteSchema):
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand : dict, :class:`ExprRef`, Literal['center', 'extent']
         For band scales, indicates if ticks and grid lines should be placed at the
-        ``"center"`` of a band (default) or at the band ``"extent"``s to indicate intervals
+        ``"center"`` of a band (default) or at the band extents to indicate intervals
     tickCap : dict, :class:`ExprRef`, :class:`StrokeCap`, Literal['butt', 'round', 'square']
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.
@@ -5787,8 +5787,8 @@ class Encoding(VegaLiteSchema):
           the data sources.
         * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
-        creating additional aggregation grouping.
+        **Note**: In aggregate plots, ``order`` field should be aggregated to avoid creating
+        additional aggregation grouping.
     radius : dict, :class:`PolarDef`, :class:`PositionValueDef`, :class:`PositionDatumDefBase`, :class:`PositionFieldDefBase`
         The outer radius in pixels of arc marks.
     radius2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
@@ -6959,8 +6959,8 @@ class FacetedEncoding(VegaLiteSchema):
           the data sources.
         * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
-        creating additional aggregation grouping.
+        **Note**: In aggregate plots, ``order`` field should be aggregated to avoid creating
+        additional aggregation grouping.
     radius : dict, :class:`PolarDef`, :class:`PositionValueDef`, :class:`PositionDatumDefBase`, :class:`PositionFieldDefBase`
         The outer radius in pixels of arc marks.
     radius2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
@@ -20650,8 +20650,8 @@ class SharedEncoding(VegaLiteSchema):
           the data sources.
         * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
-        creating additional aggregation grouping.
+        **Note**: In aggregate plots, ``order`` field should be aggregated to avoid creating
+        additional aggregation grouping.
     radius : dict
 
     radius2 : dict

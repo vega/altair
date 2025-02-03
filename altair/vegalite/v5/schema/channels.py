@@ -21618,8 +21618,8 @@ class _EncodingMixin:
               original order in the data sources.
             * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-            **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to
-            avoid creating additional aggregation grouping.
+            **Note**: In aggregate plots, ``order`` field should be aggregated to avoid
+            creating additional aggregation grouping.
         radius : str, :class:`Radius`, Dict, :class:`RadiusDatum`, :class:`RadiusValue`
             The outer radius in pixels of arc marks.
         radius2 : str, :class:`Radius2`, Dict, :class:`Radius2Datum`, :class:`Radius2Value`
@@ -21882,8 +21882,8 @@ class EncodeKwds(TypedDict, total=False):
           the data sources.
         * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-        **Note**: In aggregate plots, ``order`` field should be ``aggregate``d to avoid
-        creating additional aggregation grouping.
+        **Note**: In aggregate plots, ``order`` field should be aggregated to avoid creating
+        additional aggregation grouping.
     radius
         The outer radius in pixels of arc marks.
     radius2

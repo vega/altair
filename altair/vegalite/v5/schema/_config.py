@@ -842,7 +842,7 @@ class AxisConfigKwds(TypedDict, total=False):
         and ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tickBand
         For band scales, indicates if ticks and grid lines should be placed at the
-        ``"center"`` of a band (default) or at the band ``"extent"``s to indicate intervals
+        ``"center"`` of a band (default) or at the band extents to indicate intervals
     tickCap
         The stroke cap for the tick lines' ending style. One of ``"butt"``, ``"round"`` or
         ``"square"``.

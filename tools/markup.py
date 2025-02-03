@@ -135,6 +135,11 @@ class RSTParseVegaLite(RSTParse):
         description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
         description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
         description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
+
+        # Fixing `codespan` followed by a non-whitespace character
+        description = description.replace("``aggregate``d", "aggregated").replace(
+            '``"extent"``s', "extents"
+        )
         return description.strip()
 
 
