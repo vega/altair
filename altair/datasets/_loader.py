@@ -14,7 +14,6 @@ if TYPE_CHECKING:
     import pandas as pd
     import polars as pl
     import pyarrow as pa
-    from narwhals.stable import v1 as nw
 
     from altair.datasets._cache import DatasetCache
     from altair.datasets._reader import Reader
@@ -58,13 +57,13 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @classmethod
     def from_backend(
         cls, backend_name: Literal["pandas", "pandas[pyarrow]"], /
-    ) -> Loader[pd.DataFrame, nw.LazyFrame]: ...
+    ) -> Loader[pd.DataFrame, pd.DataFrame]: ...
 
     @overload
     @classmethod
     def from_backend(
         cls, backend_name: Literal["pyarrow"], /
-    ) -> Loader[pa.Table, nw.LazyFrame]: ...
+    ) -> Loader[pa.Table, pa.Table]: ...
 
     @classmethod
     def from_backend(

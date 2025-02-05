@@ -309,7 +309,7 @@ class _SupportsScanMetadata(Protocol):
 
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-    ) -> nw.LazyFrame: ...
+    ) -> nw.LazyFrame[Any]: ...
 
 
 class DatasetCache:

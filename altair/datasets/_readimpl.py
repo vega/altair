@@ -53,8 +53,8 @@ __all__ = ["is_available", "pa_any", "pd_only", "pd_pyarrow", "pl_only", "read",
 R = TypeVar("R", bound="nwt.IntoFrame")
 IntoFrameT = TypeVar(
     "IntoFrameT",
-    bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame | nwt.DataFrameLike",
-    default=nw.LazyFrame,
+    bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame[Any] | nwt.DataFrameLike",
+    default=nw.LazyFrame[Any],
 )
 Read = TypeAliasType("Read", "BaseImpl[IntoDataFrameT]", type_params=(IntoDataFrameT,))
 """An *eager* file read function."""
@@ -214,15 +214,17 @@ def scan(
     return BaseImpl(fn, include, exclude, kwds)
 
 
-def into_scan(impl: Read[IntoDataFrameT], /) -> Scan[nw.LazyFrame]:
-    def scan_fn(fn: Callable[..., IntoDataFrameT], /) -> Callable[..., nw.LazyFrame]:
+def into_scan(impl: Read[IntoDataFrameT], /) -> Scan[nw.LazyFrame[IntoDataFrameT]]:
+    def scan_fn(
+        fn: Callable[..., IntoDataFrameT], /
+    ) -> Callable[..., nw.LazyFrame[IntoDataFrameT]]:
         @wraps(_unwrap_partial(fn))
-        def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame:
+        def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame[IntoDataFrameT]:
             return nw.from_native(fn(*args, **kwds)).lazy()
 
         return wrapper
 
-    return BaseImpl(scan_fn(impl.fn), impl.include, impl.exclude, {})
+    return scan(scan_fn(impl.fn), impl.include, impl.exclude)
 
 
 def is_available(

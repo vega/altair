@@ -306,13 +306,13 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         return kwds
 
     @property
-    def _metadata_frame(self) -> nw.LazyFrame:
+    def _metadata_frame(self) -> nw.LazyFrame[IntoFrameT]:
         fp = self._metadata_path
         return nw.from_native(self.scan_fn(fp)(fp)).lazy()
 
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-    ) -> nw.LazyFrame:
+    ) -> nw.LazyFrame[IntoFrameT]:
         if predicates or constraints:
             return self._metadata_frame.filter(*predicates, **constraints)
         return self._metadata_frame
@@ -360,7 +360,7 @@ class _NoParquetReader(Reader[IntoDataFrameT, IntoFrameT]):
         return self._csv_cache
 
     @property
-    def _metadata_frame(self) -> nw.LazyFrame:
+    def _metadata_frame(self) -> nw.LazyFrame[IntoFrameT]:
         data = cast("dict[str, Any]", self.csv_cache.rotated)
         impl = self._implementation
         return nw.maybe_convert_dtypes(nw.from_dict(data, backend=impl)).lazy()
@@ -373,7 +373,7 @@ def reader(
     *,
     name: str | None = ...,
     implementation: nw.Implementation = ...,
-) -> Reader[IntoDataFrameT, nw.LazyFrame]: ...
+) -> Reader[IntoDataFrameT, nw.LazyFrame[IntoDataFrameT]]: ...
 
 
 @overload
@@ -392,7 +392,10 @@ def reader(
     *,
     name: str | None = None,
     implementation: nw.Implementation = nw.Implementation.UNKNOWN,
-) -> Reader[IntoDataFrameT, IntoFrameT] | Reader[IntoDataFrameT, nw.LazyFrame]:
+) -> (
+    Reader[IntoDataFrameT, IntoFrameT]
+    | Reader[IntoDataFrameT, nw.LazyFrame[IntoDataFrameT]]
+):
     name = name or Counter(el._inferred_package for el in read_fns).most_common(1)[0][0]
     if implementation is nw.Implementation.UNKNOWN:
         implementation = _into_implementation(Requirement(name))
@@ -429,9 +432,9 @@ def infer_backend(
 @overload
 def _from_backend(name: _Polars, /) -> Reader[pl.DataFrame, pl.LazyFrame]: ...
 @overload
-def _from_backend(name: _PandasAny, /) -> Reader[pd.DataFrame, nw.LazyFrame]: ...
+def _from_backend(name: _PandasAny, /) -> Reader[pd.DataFrame, pd.DataFrame]: ...
 @overload
-def _from_backend(name: _PyArrow, /) -> Reader[pa.Table, nw.LazyFrame]: ...
+def _from_backend(name: _PyArrow, /) -> Reader[pa.Table, pa.Table]: ...
 
 
 # FIXME: The order this is defined in makes splitting the module complicated
@@ -512,7 +515,7 @@ def _into_suffix(obj: Path | str, /) -> Any:
 
 def _steal_eager_parquet(
     read_fns: Sequence[Read[IntoDataFrameT]], /
-) -> Sequence[Scan[nw.LazyFrame]] | None:
+) -> Sequence[Scan[nw.LazyFrame[IntoDataFrameT]]] | None:
     if convertable := next((rd for rd in read_fns if rd.include <= is_parquet), None):
         return (_readimpl.into_scan(convertable),)
     return None
