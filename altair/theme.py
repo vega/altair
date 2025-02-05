@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from functools import wraps as _wraps
 from typing import TYPE_CHECKING, Any
 from typing import overload as _overload
 
@@ -89,14 +88,8 @@ if TYPE_CHECKING:
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import ParamSpec
-    else:
-        from typing_extensions import ParamSpec
-
     from altair.utils.plugin_registry import Plugin
 
-    P = ParamSpec("P")
 
 __all__ = [
     "AreaConfigKwds",
@@ -246,12 +239,7 @@ def register(
         _register(name, func)
         if enable:
             _themes.enable(name)
-
-        @_wraps(func)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> ThemeConfig:
-            return func(*args, **kwargs)
-
-        return wrapper
+        return func
 
     return decorate
 
