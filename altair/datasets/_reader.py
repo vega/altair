@@ -361,9 +361,9 @@ class _NoParquetReader(Reader[IntoDataFrameT, IntoFrameT]):
 
     @property
     def _metadata_frame(self) -> nw.LazyFrame:
-        ns = self._implementation.to_native_namespace()
         data = cast("dict[str, Any]", self.csv_cache.rotated)
-        return nw.maybe_convert_dtypes(nw.from_dict(data, native_namespace=ns)).lazy()
+        impl = self._implementation
+        return nw.maybe_convert_dtypes(nw.from_dict(data, backend=impl)).lazy()
 
 
 @overload
@@ -493,17 +493,8 @@ def _into_implementation(
     backend: _NwSupport | _PandasAny | Requirement, /
 ) -> nw.Implementation:
     primary = _import_guarded(backend)
-    mapping: Mapping[LiteralString, nw.Implementation] = {
-        "polars": nw.Implementation.POLARS,
-        "pandas": nw.Implementation.PANDAS,
-        "pyarrow": nw.Implementation.PYARROW,
-        "cudf": nw.Implementation.CUDF,
-        "dask": nw.Implementation.DASK,
-        "duckdb": nw.Implementation.DUCKDB,
-        "ibis": nw.Implementation.IBIS,
-        "pyspark": nw.Implementation.PYSPARK,
-    }
-    if impl := mapping.get(primary):
+    impl = nw.Implementation.from_backend(primary)
+    if impl is not nw.Implementation.UNKNOWN:
         return impl
     msg = f"Package {primary!r} is not supported by `narwhals`."
     raise ValueError(msg)
