@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import functools
-import operator
 from collections.abc import Set
 from itertools import chain
 from typing import TYPE_CHECKING, Any
@@ -61,23 +59,11 @@ class MetaIs(Set[tuple[str, Any]]):
         return dict(self)
 
     def to_expr(self) -> nw.Expr:
-        """
-        Convert constraint into a narhwals expression.
-
-        Notes
-        -----
-        Workaround for `issue`_ is performing the reduction with ``stdlib``
-
-        .. _issue:
-            https://github.com/narwhals-dev/narwhals/issues/1897
-        .. _discussion:
-            https://github.com/vega/altair/pull/3631#discussion_r1934313255
-        """
+        """Convert constraint into a narwhals expression."""
         if not self:
             msg = f"Unable to convert an empty set to an expression:\n\n{self!r}"
             raise TypeError(msg)
-        exprs = (nw.col(name) == val for name, val in self)
-        return functools.reduce(operator.and_, exprs)
+        return nw.all_horizontal(nw.col(name) == val for name, val in self)
 
     def isdisjoint(self, other: Iterable[Any]) -> bool:
         return super().isdisjoint(other)

@@ -262,8 +262,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
             chain.from_iterable(impl._relevant_columns for impl in self._read)
         )
         frame = self._scan_metadata().select("dataset_name", *relevant_columns)
-        it = (impl._include_expr for impl in self._read)
-        inc_expr = nw.any_horizontal(*it)
+        inc_expr = nw.any_horizontal(impl._include_expr for impl in self._read)
         result: _SupportProfile = {
             "unsupported": _dataset_names(frame, ~inc_expr),
             "supported": _dataset_names(frame, inc_expr),
