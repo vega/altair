@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, get_args
+from typing import TYPE_CHECKING, Literal, cast, get_args
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -52,7 +52,7 @@ def validate_output(output: Any) -> _OutputLong:
         msg = f":output: option must be one of {get_args(_OutputShort)!r}"
         raise TypeError(msg)
     else:
-        short: _OutputShort = output
+        short = cast("_OutputShort", output)
         return _OUTPUT_REMAP[short]
 
 
