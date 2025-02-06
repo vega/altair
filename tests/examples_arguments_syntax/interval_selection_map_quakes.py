@@ -11,8 +11,8 @@ from vega_datasets import data
 import geopandas as gpd
 
 # load data
-gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+gdf_quakies = gpd.read_file(data.earthquakes.url)
+gdf_world = gpd.read_file(data.world_110m.url, layer="countries")
 
 # defintion for interactive brush
 brush = alt.selection_interval(
