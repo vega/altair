@@ -254,7 +254,7 @@ Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the 
     from vega_datasets import data
     import geopandas as gpd
 
-    gdf_us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+    gdf_us_counties = gpd.read_file(data.us_10m.url, layer="counties")
     df_us_unemp = data.unemployment()
 
     alt.Chart(gdf_us_counties).mark_geoshape().transform_lookup(
@@ -470,7 +470,7 @@ regular faceting will not work for geographic visualization:
 .. altair-plot::
 
     source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
-    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
+    us_states = gpd.read_file(data.us_10m.url, layer="states")
     gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
@@ -524,7 +524,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
     import geopandas as gpd
 
     # load the data
-    us_states = gpd.read_file(data.us_10m.url, driver="TopoJSON", layer="states")
+    us_states = gpd.read_file(data.us_10m.url, layer="states")
     us_population = data.population_engineers_hurricanes()[["state", "id", "population"]]
 
     # define a pointer selection
@@ -583,8 +583,8 @@ We use here an elegant way to access the nested point coordinates from the geome
     import geopandas as gpd
 
     # load data
-    gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-    gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+    gdf_quakies = gpd.read_file(data.earthquakes.url)
+    gdf_world = gpd.read_file(data.world_110m.url, layer="countries")
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5, name='rotate longitude ')
