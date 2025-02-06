@@ -108,21 +108,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pandas``, backed by ``pyarrow`` dtypes::
 
             load = Loader.from_backend("pandas[pyarrow]")
-            cars = load("cars")
+            co2 = load("co2")
 
-            type(cars)
+            type(co2)
             pandas.core.frame.DataFrame
 
-            cars.dtypes
-            Name                       string[pyarrow]
-            Miles_per_Gallon           double[pyarrow]
-            Cylinders                   int64[pyarrow]
-            Displacement               double[pyarrow]
-            Horsepower                  int64[pyarrow]
-            Weight_in_lbs               int64[pyarrow]
-            Acceleration               double[pyarrow]
-            Year                timestamp[ns][pyarrow]
-            Origin                     string[pyarrow]
+            co2.dtypes
+            Date             datetime64[ns]
+            CO2             double[pyarrow]
+            adjusted CO2    double[pyarrow]
             dtype: object
 
         .. _polars defaults:
@@ -174,8 +168,8 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             source.columns
             ['year', 'source', 'net_generation']
 
-            source
-            shape: (51, 3)
+            source.head(5)
+            shape: (5, 3)
             ┌────────────┬──────────────┬────────────────┐
             │ year       ┆ source       ┆ net_generation │
             │ ---        ┆ ---          ┆ ---            │
@@ -186,12 +180,6 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             │ 2003-01-01 ┆ Fossil Fuels ┆ 36234          │
             │ 2004-01-01 ┆ Fossil Fuels ┆ 36205          │
             │ 2005-01-01 ┆ Fossil Fuels ┆ 36883          │
-            │ …          ┆ …            ┆ …              │
-            │ 2013-01-01 ┆ Renewables   ┆ 16476          │
-            │ 2014-01-01 ┆ Renewables   ┆ 17452          │
-            │ 2015-01-01 ┆ Renewables   ┆ 19091          │
-            │ 2016-01-01 ┆ Renewables   ┆ 21241          │
-            │ 2017-01-01 ┆ Renewables   ┆ 21933          │
             └────────────┴──────────────┴────────────────┘
 
         Using ``pandas``::
@@ -202,21 +190,13 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             source.columns
             Index(['year', 'source', 'net_generation'], dtype='object')
 
-            source
-                     year        source  net_generation
-            0  2001-01-01  Fossil Fuels           35361
-            1  2002-01-01  Fossil Fuels           35991
-            2  2003-01-01  Fossil Fuels           36234
-            3  2004-01-01  Fossil Fuels           36205
-            4  2005-01-01  Fossil Fuels           36883
-            ..        ...           ...             ...
-            46 2013-01-01    Renewables           16476
-            47 2014-01-01    Renewables           17452
-            48 2015-01-01    Renewables           19091
-            49 2016-01-01    Renewables           21241
-            50 2017-01-01    Renewables           21933
-
-            [51 rows x 3 columns]
+            source.head(5)
+                    year        source  net_generation
+            0 2001-01-01  Fossil Fuels           35361
+            1 2002-01-01  Fossil Fuels           35991
+            2 2003-01-01  Fossil Fuels           36234
+            3 2004-01-01  Fossil Fuels           36205
+            4 2005-01-01  Fossil Fuels           36883
 
         Using ``pyarrow``::
 
@@ -226,15 +206,15 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             source.column_names
             ['year', 'source', 'net_generation']
 
-            source
+            source.slice(0, 5)
             pyarrow.Table
             year: date32[day]
             source: string
             net_generation: int64
             ----
-            year: [[2001-01-01,2002-01-01,2003-01-01,2004-01-01,2005-01-01,...,2013-01-01,2014-01-01,2015-01-01,2016-01-01,2017-01-01]]
-            source: [["Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels",...,"Renewables","Renewables","Renewables","Renewables","Renewables"]]
-            net_generation: [[35361,35991,36234,36205,36883,...,16476,17452,19091,21241,21933]]
+            year: [[2001-01-01,2002-01-01,2003-01-01,2004-01-01,2005-01-01]]
+            source: [["Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels","Fossil Fuels"]]
+            net_generation: [[35361,35991,36234,36205,36883]]
 
         .. _Path.stem:
             https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.stem
