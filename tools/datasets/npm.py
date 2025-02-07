@@ -5,6 +5,7 @@ import string
 import urllib.request
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal, NamedTuple
+from urllib.request import Request
 
 from tools.datasets import datapackage
 
@@ -22,7 +23,6 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
     from tools.datasets import PathMap
     from tools.datasets.datapackage import DataPackage
-    from tools.datasets.models import Package
 
     BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'
 
@@ -54,30 +54,25 @@ class Npm:
             GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
         )
 
-    def dataset_base_url(self, version: BranchOrTag, /) -> LiteralString:
-        """
-        Common url prefix for all datasets derived from ``version``.
+    def _prefix(self, version: BranchOrTag, /) -> LiteralString:
+        return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/"
 
-        Notes
-        -----
-        - Encodes the endpoint at this stage
-            - Use github if its the only option (since its slower otherwise)
-            - npm only has releases/tags (not branches)
-        """
-        return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/data/"
+    def dataset_base_url(self, version: BranchOrTag, /) -> LiteralString:
+        """Common url prefix for all datasets derived from ``version``."""
+        return f"{self._prefix(version)}data/"
 
     @property
     def url(self) -> NpmUrl:
         return self._url
 
-    def file_gh(
+    def file(
         self,
         branch_or_tag: BranchOrTag,
         path: str,
         /,
     ) -> Any:
         """
-        Request a file from the `jsdelivr GitHub`_ endpoint.
+        Request a file from `jsdelivr`  `npm`_ or `GitHub`_ endpoints.
 
         Parameters
         ----------
@@ -86,7 +81,9 @@ class Npm:
         path
             Relative filepath from the root of the repo.
 
-        .. _jsdelivr GitHub:
+        .. _npm:
+            https://www.jsdelivr.com/documentation#id-npm
+        .. _GitHub:
             https://www.jsdelivr.com/documentation#id-github
         .. _branches:
             https://github.com/vega/vega-datasets/branches
@@ -100,20 +97,15 @@ class Npm:
             read_fn = json.load
         else:
             raise NotImplementedError(path, suffix)
-        req = urllib.request.Request(
-            f"{self.url.GH}{branch_or_tag}/{path}", headers=headers
-        )
+        req = Request(f"{self._prefix(branch_or_tag)}{path}", headers=headers)
         with self._opener.open(req) as response:
             return read_fn(response)
 
-    def datapackage(self, *, tag: LiteralString, frozen: bool = False) -> DataPackage:
-        pkg: Package = (
-            json.loads(self.paths["datapackage"].read_text("utf-8"))
-            if frozen
-            else self.file_gh(tag, "datapackage.json")
-        )
+    def datapackage(self, *, tag: LiteralString) -> DataPackage:
         return datapackage.DataPackage(
-            pkg, self.dataset_base_url(tag), self.paths["metadata"]
+            self.file(tag, "datapackage.json"),
+            self.dataset_base_url(tag),
+            self.paths["metadata"],
         )
 
 

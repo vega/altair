@@ -1405,7 +1405,7 @@ def main() -> None:
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     write_expr_module(VERSIONS.vlc_vega, output=EXPR_FILE, header=HEADER_COMMENT)
-    datasets.app.refresh(VERSIONS["vega-datasets"], include_typing=True, frozen=True)
+    datasets.app.refresh(VERSIONS["vega-datasets"], include_typing=True)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

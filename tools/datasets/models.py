@@ -20,7 +20,6 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    import polars as pl
 
     from altair.datasets._typing import Dataset, FlFieldStr
 
@@ -117,10 +116,3 @@ class Package(TypedDict):
     sources: Sequence[Source]
     created: str
     resources: Sequence[Resource]
-
-
-class ParsedPackage(TypedDict):
-    """Minimal representations to write to disk."""
-
-    features: pl.DataFrame
-    schemas: Mapping[Dataset, Mapping[str, FlFieldStr]]

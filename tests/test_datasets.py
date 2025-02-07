@@ -227,7 +227,6 @@ def test_load_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None:
         "ohlc",
         "penguins",
         "platformer-terrain",
-        "points",
         "political-contributions",
         "population",
         "population_engineers_hurricanes",

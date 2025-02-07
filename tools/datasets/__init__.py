@@ -20,7 +20,7 @@ import json
 import types
 from io import BytesIO
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Any, ClassVar, Literal
 
 from tools import fs
 from tools.codemod import ruff
@@ -40,9 +40,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    _PathAlias: TypeAlias = Literal[
-        "typing", "metadata-csv", "metadata", "schemas", "datapackage"
-    ]
+    _PathAlias: TypeAlias = Literal["typing", "metadata-csv", "metadata", "schemas"]
     PathMap: TypeAlias = Mapping[_PathAlias, Path]
 
 __all__ = ["app"]
@@ -54,33 +52,19 @@ HEADER_COMMENT = """\
 
 
 class Application:
-    """
-    Top-level context.
+    """Top-level context."""
 
-    Parameters
-    ----------
-    out_dir_tools, out_dir_altair
-        Directories to store metadata files.
-    out_fp_typing
-        Path to write metadata-derived typing module.
+    OUT_DIR: ClassVar[Path] = fs.REPO_ROOT / "altair" / "datasets"
 
-    See Also
-    --------
-    - tools.datasets.npm.Npm
-    """
-
-    def __init__(
-        self, out_dir_tools: Path, out_dir_altair: Path, out_fp_typing: Path
-    ) -> None:
-        fs.mkdir(out_dir_tools)
+    def __init__(self) -> None:
         METADATA = "metadata"
+        out_meta = self.OUT_DIR / "_metadata"
         self.paths = types.MappingProxyType["_PathAlias", Path](
             {
-                "typing": out_fp_typing,
-                "metadata-csv": out_dir_altair / f"{METADATA}.csv.gz",
-                "metadata": out_dir_altair / f"{METADATA}.parquet",
-                "schemas": out_dir_altair / "schemas.json.gz",
-                "datapackage": out_dir_tools / "datapackage.json",
+                "typing": self.OUT_DIR / "_typing.py",
+                "metadata-csv": out_meta / f"{METADATA}.csv.gz",
+                "metadata": out_meta / f"{METADATA}.parquet",
+                "schemas": out_meta / "schemas.json.gz",
             }
         )
         self._npm: Npm = Npm(self.paths)
@@ -89,9 +73,7 @@ class Application:
     def npm(self) -> Npm:
         return self._npm
 
-    def refresh(
-        self, tag: Any, /, *, include_typing: bool = False, frozen: bool = False
-    ) -> pl.DataFrame:
+    def refresh(self, tag: Any, /, *, include_typing: bool = False) -> pl.DataFrame:
         """
         Update and sync all dataset metadata files.
 
@@ -101,17 +83,9 @@ class Application:
             Branch or release version to build against.
         include_typing
             Regenerate ``altair.datasets._typing``.
-        frozen
-            Don't perform any requests.
-
-            .. note::
-                **Temporary** measure to work from ``main`` until `vega-datasets@3`_.
-
-        .. _vega-datasets@3:
-            https://github.com/vega/vega-datasets/issues/654
         """
         print("Syncing datasets ...")
-        dpkg = self.npm.datapackage(tag=tag, frozen=frozen)
+        dpkg = self.npm.datapackage(tag=tag)
         self.write_parquet(dpkg.core, self.paths["metadata"])
         self.write_json_gzip(dpkg.schemas(), self.paths["schemas"])
         self.write_csv_gzip(dpkg.metadata_csv(), self.paths["metadata-csv"])
@@ -226,9 +200,4 @@ class Application:
         ruff.write_lint_format(self.paths["typing"], contents)
 
 
-_alt_datasets = fs.REPO_ROOT / "altair" / "datasets"
-app = Application(
-    Path(__file__).parent / "_metadata",
-    _alt_datasets / "_metadata",
-    _alt_datasets / "_typing.py",
-)
+app = Application()

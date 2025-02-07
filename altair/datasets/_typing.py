@@ -69,7 +69,6 @@ Dataset: TypeAlias = Literal[
     "ohlc",
     "penguins",
     "platformer-terrain",
-    "points",
     "political-contributions",
     "population",
     "population_engineers_hurricanes",
@@ -151,7 +150,7 @@ class Metadata(TypedDict, total=False):
     ``Metadata`` keywords form constraints to filter a table like the below sample:
 
     ```
-    shape: (73, 13)
+    shape: (72, 13)
     ┌────────────────┬────────┬────────────────┬───┬───────────────┬───────────────┐
     │ dataset_name   ┆ suffix ┆ file_name      ┆ … ┆ sha           ┆ url           │
     │ ---            ┆ ---    ┆ ---            ┆   ┆ ---           ┆ ---           │
