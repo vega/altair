@@ -42,7 +42,7 @@ _OUTPUT_REMAP: Mapping[_OutputShort, _OutputLong] = {
 _Option: TypeAlias = Literal["output", "fold", "summary"]
 
 _PYSCRIPT_URL_FMT = "https://pyscript.net/releases/{0}/core.js"
-_PYSCRIPT_VERSION = "2025.2.1"
+_PYSCRIPT_VERSION = "2025.2.2"
 _PYSCRIPT_URL = _PYSCRIPT_URL_FMT.format(_PYSCRIPT_VERSION)
 
 
