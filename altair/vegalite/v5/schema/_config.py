@@ -6,10 +6,6 @@ from __future__ import annotations
 import sys
 from typing import TYPE_CHECKING, Any, Literal, TypedDict
 
-if sys.version_info >= (3, 14):
-    from typing import TypedDict
-else:
-    from typing_extensions import TypedDict
 from ._typing import PaddingKwds, RowColKwds
 
 if TYPE_CHECKING:
@@ -17,6 +13,12 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from ._typing import *  # noqa: F403
+
+
+if sys.version_info >= (3, 14):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 
 __all__ = [
