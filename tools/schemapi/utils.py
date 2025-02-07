@@ -1251,7 +1251,12 @@ def unwrap_literal(tp: str, /) -> str:
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
     imps = "\n".join(f"    {s}" for s in imports)
-    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imps}\n"
+    return (
+        f"from typing import TYPE_CHECKING\n\n"
+        f"if TYPE_CHECKING:\n"
+        f"    # ruff: noqa: F405\n"
+        f"{imps}\n"
+    )
 
 
 def import_typing_extensions(

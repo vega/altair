@@ -10,11 +10,9 @@ from altair.utils import SchemaBase, Undefined, use_signature
 from . import core
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
-if TYPE_CHECKING:
     # ruff: noqa: F405
     import sys
+    from collections.abc import Sequence
 
     if sys.version_info >= (3, 11):
         from typing import Self
