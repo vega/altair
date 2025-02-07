@@ -10,13 +10,8 @@ from __future__ import annotations
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
-import sys
 from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
 import narwhals.stable.v1 as nw
 
 from altair.utils import infer_encoding_types as _infer_encoding_types
@@ -28,6 +23,7 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
+    import sys
     from collections.abc import Sequence
 
     from altair import Parameter, SchemaBase
@@ -48,6 +44,10 @@ if TYPE_CHECKING:
         from typing import Self
     else:
         from typing_extensions import Self
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 
 __all__ = [
