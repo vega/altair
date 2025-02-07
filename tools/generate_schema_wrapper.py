@@ -761,13 +761,12 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
     contents = [
         HEADER,
-        "from collections.abc import Iterator, Sequence",
-        "from typing import Any, Literal, Union, Protocol, TYPE_CHECKING",
+        "from typing import Any, Literal, Union",
         "import pkgutil",
         "import json\n",
-        "import narwhals.stable.v1 as nw\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         import_type_checking(
+            "from collections.abc import Iterator, Sequence",
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
@@ -880,13 +879,11 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
         "import sys",
-        "from collections.abc import Sequence",
-        "from typing import Any, overload, Literal, Union, TYPE_CHECKING, TypedDict",
-        import_typing_extensions((3, 10), "TypeAlias"),
+        "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
-        "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
+        "from altair.utils.schemapi import Undefined, with_property_setters",
         "from . import core",
         "from ._typing import * # noqa: F403",
     ]
@@ -906,12 +903,16 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
         import_type_checking(
-            "from datetime import date, datetime",
+            "from collections.abc import Sequence",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
             f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
             f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
-            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
+            textwrap.indent(
+                import_typing_extensions((3, 11), "Self")
+                + import_typing_extensions((3, 10), "TypeAlias"),
+                "    ",
+            ),
         ),
         f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,
@@ -1234,7 +1235,6 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_mixins = schemapath / "mixins.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
     mixins_imports = (
-        "from collections.abc import Sequence",
         "from typing import Any, Literal, Union",
         "from altair.utils import use_signature, Undefined, SchemaBase",
         "from . import core",
@@ -1249,6 +1249,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         import_type_checking(
             "import sys",
+            "from collections.abc import Sequence",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -1265,12 +1266,14 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_theme_config: Path = schemapath / "_config.py"
     content_theme_config = [
         HEADER,
-        "from collections.abc import Sequence",
-        "from typing import Any, TYPE_CHECKING, Literal, TypedDict, Union",
-        import_typing_extensions((3, 14), "TypedDict", include_sys=True),
+        "from typing import Any, Literal, TypedDict, Union",
+        "import sys",
         f"from ._typing import {ROW_COL_KWDS}, {PADDING_KWDS}",
-        "\n\n",
-        import_type_checking("from ._typing import * # noqa: F403"),
+        import_type_checking(
+            "from collections.abc import Sequence",
+            "from ._typing import * # noqa: F403",
+        ),
+        import_typing_extensions((3, 14), "TypedDict"),
         "\n\n",
         *generate_config_typed_dicts(schemafile),
     ]
