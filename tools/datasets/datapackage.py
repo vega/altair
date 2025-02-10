@@ -31,10 +31,13 @@ INDENT = " " * 4
 
 
 class Column:
-    def __init__(self, name: str, expr: pl.Expr, /, doc: str = "_description_") -> None:
+    def __init__(
+        self, name: str, expr: pl.Expr, /, doc: str = "_description_", tp_str: str = ""
+    ) -> None:
         self._name: str = name
         self._expr: pl.Expr = expr
         self._doc: str = doc
+        self._tp_str: str = tp_str
 
     @property
     def expr(self) -> pl.Expr:
@@ -161,7 +164,10 @@ class DataPackage:
     @property
     def _metadata_td_args(self) -> str:
         schema = self.core.collect_schema().to_python()
-        return f"\n{INDENT}".join(f"{p}: {tp.__name__}" for p, tp in schema.items())
+        return f"\n{INDENT}".join(
+            f"{column._name}: {column._tp_str or tp.__name__}"
+            for column, tp in zip(self.columns, schema.values())
+        )
 
     @property
     def _url(self) -> Column:
@@ -237,8 +243,18 @@ def note(s: str, /) -> str:
 
 fmt = col("format")
 DataPackage.with_columns(
-    Column("dataset_name", path_stem("path"), "Name of the dataset/`Path.stem`_."),
-    Column("suffix", path_suffix("path"), "File extension/`Path.suffix`_."),
+    Column(
+        "dataset_name",
+        path_stem("path"),
+        "Name of the dataset/`Path.stem`_.",
+        tp_str="Dataset | LiteralString",
+    ),
+    Column(
+        "suffix",
+        path_suffix("path"),
+        "File extension/`Path.suffix`_.",
+        tp_str="Extension",
+    ),
     Column("file_name", col("path"), "Equivalent to `Path.name`_."),
     Column("bytes", col("bytes"), "File size in *bytes*."),
     Column("is_image", fmt == "png", "Only accessible via url."),

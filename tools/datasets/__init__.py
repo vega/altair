@@ -184,6 +184,7 @@ class Application:
             "import sys",
             "from typing import Literal, TYPE_CHECKING",
             utils.import_typing_extensions((3, 14), "TypedDict"),
+            utils.import_typing_extensions((3, 11), "LiteralString"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
             f"__all__ = {[NAME, EXT, dpkg._NAME_TYPED_DICT]}\n",

@@ -11,6 +11,11 @@ if sys.version_info >= (3, 14):
 else:
     from typing_extensions import TypedDict
 
+if sys.version_info >= (3, 11):
+    from typing import LiteralString
+else:
+    from typing_extensions import LiteralString
+
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
@@ -181,8 +186,8 @@ class Metadata(TypedDict, total=False):
     ```
     """
 
-    dataset_name: str
-    suffix: str
+    dataset_name: Dataset | LiteralString
+    suffix: Extension
     file_name: str
     bytes: int
     is_image: bool
