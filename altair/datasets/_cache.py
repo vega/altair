@@ -264,19 +264,22 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
             nw.Implementation.PYARROW,
         }
 
+    def schema(self, name: _Dataset, /) -> nw.Schema:
+        it = ((col, _FIELD_TO_DTYPE[tp_str]()) for col, tp_str in self[name].items())
+        return nw.Schema(it)
+
     def schema_kwds(self, meta: Metadata, /) -> dict[str, Any]:
         name: Any = meta["dataset_name"]
-        impl = self._implementation
-        if (impl.is_pandas_like() or impl.is_pyarrow()) and (self[name]):
+        if self.is_active() and (self[name]):
             suffix = meta["suffix"]
-            if impl.is_pandas_like():
+            if self._implementation.is_pandas_like():
                 if cols := self.by_dtype(name, nw.Date, nw.Datetime):
                     if suffix == ".json":
                         return {"convert_dates": cols}
                     elif suffix in {".csv", ".tsv"}:
                         return {"parse_dates": cols}
             else:
-                schema = self.schema_pyarrow(name)
+                schema = self.schema(name).to_arrow()
                 if suffix in {".csv", ".tsv"}:
                     from pyarrow.csv import ConvertOptions
 
@@ -285,23 +288,6 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
                     return {"schema": schema}
 
         return {}
-
-    def schema(self, name: _Dataset, /) -> Mapping[str, DType]:
-        return {
-            column: _FIELD_TO_DTYPE[tp_str]() for column, tp_str in self[name].items()
-        }
-
-    # TODO: Open an issue in ``narwhals`` to try and get a public api for type conversion
-    def schema_pyarrow(self, name: _Dataset, /):
-        schema = self.schema(name)
-        if schema:
-            from narwhals._arrow.utils import narwhals_to_native_dtype
-            from narwhals.utils import Version
-
-            m = {k: narwhals_to_native_dtype(v, Version.V1) for k, v in schema.items()}
-        else:
-            m = {}
-        return nw.dependencies.get_pyarrow().schema(m)
 
 
 class _SupportsScanMetadata(Protocol):
