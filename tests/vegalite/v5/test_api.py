@@ -591,7 +591,7 @@ def test_when_expressions_inside_parameters() -> None:
     """
     Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
 
-    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
+    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions/expressions.html#expressions-inside-parameters)
     """
     import polars as pl
 
