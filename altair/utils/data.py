@@ -350,7 +350,6 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
-# ahhhhhh
 def _from_geo_interface(data: SupportsGeoInterface) -> dict[str, Any]:
     """
     Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
