@@ -38,6 +38,8 @@ if TYPE_CHECKING:
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
 
+    _PandasDataFrameT = TypeVar("_PandasDataFrameT", bound="pd.DataFrame")
+
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 T = TypeVar("T")
 P = ParamSpec("P")
@@ -328,7 +330,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # noqa: C901
     """
     Sanitize a DataFrame to prepare it for serialization.
 
@@ -351,7 +353,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     import numpy as np
     import pandas as pd
 
-    df = df.copy()
+    df = cast("_PandasDataFrameT", df.copy())
 
     if isinstance(df.columns, pd.RangeIndex):
         df.columns = df.columns.astype(str)
