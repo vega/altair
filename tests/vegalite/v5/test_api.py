@@ -588,11 +588,7 @@ def test_when_labels_position_based_on_condition() -> None:
 
 
 def test_when_expressions_inside_parameters() -> None:
-    """
-    Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
-
-    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
-    """
+    """Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)."""
     import polars as pl
 
     source = pl.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
