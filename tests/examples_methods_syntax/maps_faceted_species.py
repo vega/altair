@@ -12,7 +12,7 @@ import pandas as pd
 from vega_datasets import data
 
 # Load the CSV data
-url = "https://raw.githubusercontent.com/vega/vega-datasets/e40833e505c7212bf28b5d3bf4d5f1d84baaa69b/data/species.csv" # temporary until vega/vega-datasets#684 is merged
+url = "https://raw.githubusercontent.com/vega/vega-datasets/8551a8d7fcdef2efa28c845f80963e3c1636f34a/data/species.csv" # temporary until vega/vega-datasets#684 is merged
 df = pd.read_csv(url)
 
 # Disable row limit for Altair
@@ -25,15 +25,15 @@ counties = alt.topo_feature(data.us_10m.url, 'counties')
 species_list = df['common_name'].unique()[:4]
 
 charts = [
-    alt.Chart(counties).mark_geoshape(tooltip=True)
+    alt.Chart(counties).mark_geoshape()
     .encode(
-        color=alt.Color("habitat_pct:Q")
+        color=alt.Color("habitat_yearround_pct:Q")
         .scale(domain=[0, 1], scheme='viridis', zero=True, nice=False)
         .title(['Suitable Habitat', '% of County'])
         .legend(format=".0%"),
         tooltip=[
             alt.Tooltip("id:N").title('County ID'),
-            alt.Tooltip("habitat_pct:Q").title('Habitat %').format('.2%')
+            alt.Tooltip("habitat_yearround_pct:Q").title('Habitat %').format('.2%')
         ]
     )
     .transform_lookup(
@@ -44,24 +44,14 @@ charts = [
             fields=['habitat_yearround_pct']
         )
     )
-    .transform_filter(
-        "indexof(['2', '15'], '' + floor(datum.id / 1000)) == -1"
-    )
-    .transform_calculate(
-        habitat_pct="datum.habitat_yearround_pct === null ? 0 : datum.habitat_yearround_pct"
-    )
-    .project(type='albersUsa')
+    .project(type='albers')
     .properties(width=300, height=200)
     .properties(title=species)
     for species in species_list
 ]
 
 # Combine charts into a grid
-chart = alt.concat(*charts, columns=2).configure_view(
-    stroke=None
-).configure_mark(
-    invalid='filter'
-)
+chart = alt.concat(*charts, columns=2)
 
 # Display the chart
 chart
