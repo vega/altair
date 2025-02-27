@@ -492,7 +492,7 @@ def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
     try:
-        ser = nw.from_native(obj, strict=True, series_only=True)
+        ser = nw.from_native(obj, series_only=True)
         return ser.to_list()
     except TypeError:
         return list(obj)
