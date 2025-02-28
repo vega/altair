@@ -124,7 +124,7 @@ features = ["all", "dev", "doc"]
 matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
-exclude = [
+extend-exclude = [
     ".git",
     "__pycache__",
     "build",
