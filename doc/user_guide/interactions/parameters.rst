@@ -381,8 +381,57 @@ You can create such a selection using the :func:`selection_interval` function:
 As you click and drag on the plot, you'll find that your mouse creates a box
 that can be subsequently moved to change the selection.
 
-The :func:`selection_interval` function takes a few additional arguments; for
-example we can bind the interval to only the x-axis, and set it such that the
+**Setting Initial Values**
+
+You can set initial values for an interval selection using the ``value`` parameter.
+This lets you pre-select a region when the chart first renders:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    import datetime as dt
+    
+    source = data.sp500.url
+    
+    # Set initial date range for the selection
+    date_range = (dt.date(2007, 6, 30), dt.date(2009, 6, 30))
+    interval = alt.selection_interval(encodings=['x'], value={'x': date_range})
+    
+    alt.Chart(source).mark_area().encode(
+        x='date:T',
+        y='price:Q'
+    ).add_params(
+        interval
+    ).properties(
+        width=600, 
+        height=300
+    )
+    
+When working with datetime values, you can use Python's native ``datetime.date`` or 
+``datetime.datetime`` objects directly. Altair automatically handles the conversion of 
+these objects to the appropriate format for Vega-Lite.
+
+For numeric fields, you can similarly specify a range of values:
+
+.. altair-plot::
+
+    cars = data.cars.url
+    
+    # Set initial horsepower range
+    hp_range = (100, 200)
+    interval = alt.selection_interval(encodings=['x'], value={'x': hp_range})
+    
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).add_params(
+        interval
+    )
+
+The :func:`selection_interval` function takes additional arguments to customize behavior.
+For example, we can bind the interval to only the x-axis, and set it such that the
 empty selection contains none of the points:
 
 .. altair-plot::
@@ -399,7 +448,7 @@ rather than having to define separate selection objects::
     color=alt.when(brush).then(...)
     size=alt.when(brush, empty=False).then(...)
     ...
-
+    
 Point Selections
 ^^^^^^^^^^^^^^^^
 A *point* selection allows you to select chart elements one at a time
