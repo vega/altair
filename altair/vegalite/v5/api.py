@@ -4070,25 +4070,35 @@ class Chart(
         return self.add_params(*params)
 
     def interactive(
-        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
-    ) -> Self:
+        self,
+        name: str | None = None,
+        bind_x: bool = True,
+        bind_y: bool = True,
+        tooltip: bool = True,
+        legend: bool | LegendChannel_T = False,
+    ) -> Chart:
         """
-        Make chart axes scales interactive.
+        Add common interactive elements to the chart.
 
         Parameters
         ----------
-        name : string
+        name : string or None
             The parameter name to use for the axes scales. This name should be
-            unique among all parameters within the chart.
+            unique among all parameters within the chart
         bind_x : boolean, default True
-            If true, then bind the interactive scales to the x-axis
+            Bind the interactive scales to the x-axis
         bind_y : boolean, default True
-            If true, then bind the interactive scales to the y-axis
+            Bind the interactive scales to the y-axis
+        tooltip : boolean, default True,
+            Add a tooltip containing the encodings used in the chart
+        legend : boolean or string, default True
+            A single encoding channel to be used to create a clickable legend.
+            The deafult is to guess from the spec based on the most commonly used legend encodings.
 
         Returns
         -------
         chart :
-            copy of self, with interactive axes added
+            copy of self, with interactivity added
 
         """
         encodings: list[SingleDefUnitChannel_T] = []
@@ -4096,7 +4106,81 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        chart: Chart = self.copy().add_params(
+            selection_interval(bind="scales", encodings=encodings)
+        )
+        # We can't simply use configure_mark since configure methods
+        # are not allowed in layered specs
+        if tooltip:
+            chart = _add_tooltip(chart)
+        legend_encodings_missing = utils.is_undefined(chart.encoding)
+        if legend and not legend_encodings_missing:
+            facet_encoding: FacetedEncoding = chart.encoding
+            if not isinstance(legend, str):
+                legend = _infer_legend_encoding(facet_encoding)
+
+            facet_legend = facet_encoding[legend]
+            legend_type = facet_legend["type"]
+            if utils.is_undefined(legend_type):
+                legend_type = facet_legend.to_dict(context={"data": chart.data})["type"]
+
+            if legend_type == "nominal":
+                # TODO Ideally this would work for ordinal data too
+                legend_selection = selection_point(bind="legend", encodings=[legend])
+                initial_computed_domain = param(expr=f"domain('{legend}')")
+                nonreactive_domain = param(
+                    react=False, expr=initial_computed_domain.name
+                )
+                scale = facet_legend["scale"]
+                if utils.is_undefined(scale):
+                    scale = {"domain": nonreactive_domain}
+                else:
+                    scale["domain"] = nonreactive_domain
+                chart = chart.add_params(
+                    legend_selection,
+                    initial_computed_domain,
+                    nonreactive_domain,
+                ).transform_filter(legend_selection)
+            else:
+                msg = f"Expected only 'nominal' legend type but got {legend_type!r}"
+                raise NotImplementedError(msg)
+        return chart
+
+
+LegendChannel_T: TypeAlias = Literal[
+    "color",
+    "fill",
+    "shape",
+    "stroke",
+    "opacity",
+    "fillOpacity",
+    "strokeOpacity",
+    "strokeWidth",
+    "strokeDash",
+    "angle",  # TODO Untested
+    "radius",  # TODO Untested
+    "radius2",  # TODO Untested
+    # "size",  # TODO Currently size is not working, renders empty legend
+]
+
+
+def _add_tooltip(chart: _TChart, /) -> _TChart:
+    if isinstance(chart.mark, str):
+        chart.mark = {"type": chart.mark, "tooltip": True}
+    else:
+        chart.mark.tooltip = True
+    return chart
+
+
+def _infer_legend_encoding(encoding: FacetedEncoding, /) -> LegendChannel_T:
+    """Set the legend to commonly used encodings by default."""
+    _channels = t.get_args(LegendChannel_T)
+    it = (ch for ch in _channels if not utils.is_undefined(encoding[ch]))
+    if legend := next(it, None):
+        return legend
+    else:
+        msg = f"Unable to infer target channel for 'legend'.\n\n{encoding!r}"
+        raise NotImplementedError(msg)
 
 
 def _check_if_valid_subspec(
@@ -5176,6 +5260,16 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
+_TChart = TypeVar(
+    "_TChart",
+    Chart,
+    RepeatChart,
+    ConcatChart,
+    HConcatChart,
+    VConcatChart,
+    FacetChart,
+    LayerChart,
+)
 ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
