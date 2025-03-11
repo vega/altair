@@ -46,7 +46,7 @@ we create a parameter with a default value of 0.1 using the ``value`` property:
 
     op_var = alt.param(value=0.1)
 
-In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`add_params` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter.
+In order to use this variable in the chart specification, we explicitly add it to the chart using the :meth:`add_params` method, and we can then reference the variable within the chart specification.  Here we set the opacity using our ``op_var`` parameter. The :meth:`add_params` method adds the parameter to the chart, making it available for use in encodings, conditions, and filters.
 
 .. altair-plot::
 
@@ -342,12 +342,15 @@ Selection Types
 ~~~~~~~~~~~~~~~
 
 Now that we have seen the basics of how we can use a selection to interact with a chart,
-let's take a more systematic look at some of the types of selection parameters available in Altair.
-For simplicity, we'll use a common chart in all the following examples; a
-simple heat-map based on the ``cars`` dataset.
-For convenience, let's write a quick Python function that will take a selection
-object and create a chart with the color of the chart elements linked to this
-selection:
+let's take a more systematic look at the types of selection parameters available in Altair.
+There are two main types of selections you'll work with through mouse actions:
+
+1. **Interval selections**: Select ranges of data by clicking and dragging
+2. **Point selections**: Select individual data points by clicking or hovering
+
+To demonstrate these selection types clearly, we'll use a consistent visualization
+approach. The following helper function creates a heatmap from the ``cars`` dataset
+where the color encoding responds to our selection:
 
 .. altair-plot::
     :output: none
@@ -366,111 +369,163 @@ selection:
             selector
         )
 
-Next we'll use this function to demonstrate the properties of various selections.
-
 Interval Selections
 ^^^^^^^^^^^^^^^^^^^
-An *interval* selection allows you to select chart elements by clicking and dragging.
-You can create such a selection using the :func:`selection_interval` function:
+An *interval* selection allows you to select a range of data elements by clicking and dragging.
+This is often referred to as a "brush" selection and is commonly used for filtering,
+zooming, or highlighting ranges of data points.
+
+Basic Interval Selection
+"""""""""""""""""""""""
+The simplest interval selection is created with the :func:`selection_interval` function:
 
 .. altair-plot::
 
    interval = alt.selection_interval()
    make_example(interval)
 
-As you click and drag on the plot, you'll find that your mouse creates a box
-that can be subsequently moved to change the selection.
+As you click and drag on the plot, your mouse creates a selection region that can be
+moved to change which data points are selected.
 
-**Setting Initial Values**
-
-You can set initial values for an interval selection using the ``value`` parameter.
-This lets you pre-select a region when the chart first renders:
-
-.. altair-plot::
-
-    import altair as alt
-    from vega_datasets import data
-    import datetime as dt
-    
-    source = data.sp500.url
-    
-    # Set initial date range for the selection
-    date_range = (dt.date(2007, 6, 30), dt.date(2009, 6, 30))
-    interval = alt.selection_interval(encodings=['x'], value={'x': date_range})
-    
-    alt.Chart(source).mark_area().encode(
-        x='date:T',
-        y='price:Q'
-    ).add_params(
-        interval
-    ).properties(
-        width=600, 
-        height=300
-    )
-    
-When working with datetime values, you can use Python's native ``datetime.date`` or 
-``datetime.datetime`` objects directly. Altair automatically handles the conversion of 
-these objects to the appropriate format for Vega-Lite.
-
-For numeric fields, you can similarly specify a range of values:
-
-.. altair-plot::
-
-    cars = data.cars.url
-    
-    # Set initial horsepower range
-    hp_range = (100, 200)
-    interval = alt.selection_interval(encodings=['x'], value={'x': hp_range})
-    
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color='Origin:N'
-    ).add_params(
-        interval
-    )
-
-The :func:`selection_interval` function takes additional arguments to customize behavior.
-For example, we can bind the interval to only the x-axis, and set it such that the
-empty selection contains none of the points:
+Customizing Interval Behavior
+""""""""""""""""""""""""""""
+The :func:`selection_interval` function accepts several arguments for customization.
+For example, you can limit the selection to only the x-axis and set it so that
+an empty selection contains no points:
 
 .. altair-plot::
 
    interval_x = alt.selection_interval(encodings=['x'], empty=False)
    make_example(interval_x)
 
-The ``empty=False`` argument could instead be set inside :func:`when`,
-to change the behavior of each condition when an empty selection is passed,
-rather than having to define separate selection objects::
+The ``empty=False`` argument can also be set inside :func:`when` to control
+how individual conditions respond to empty selections.  By default, `empty=True`, which means the selection predicate evaluates to true for *all* data points when the selection is empty.  With `empty=False`, the predicate evaluates to false for all points when the selection is empty. This affects what happens when no data points are selected yet::
 
     brush = alt.selection_interval()
-    ...
-    color=alt.when(brush).then(...)
-    size=alt.when(brush, empty=False).then(...)
-    ...
-    
+
+    # Default behavior (empty=True): When nothing is selected, all points are gray
+    color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
+
+    # Custom behavior (empty=False): When nothing is selected, points keep their category colors
+    color=alt.when(brush, empty=False).then(alt.value("steelblue")).otherwise("Origin:N")
+
+Setting Initial Values
+"""""""""""""""""""""
+When creating interactive visualizations, you often want to guide users by
+starting with a pre-selected region rather than an empty selection. You can do this
+using the ``value`` parameter of :func:`selection_interval`.
+
+Setting initial values is particularly useful when:
+
+- Creating a filtered overview-detail pattern where a detailed subset is shown
+- Guiding viewer attention to a particular area of interest immediately
+- Preserving selection states across different visualizations or user sessions
+
+Here's an example using time series data where we initially focus on a specific date range
+containing the 2008 financial crisis:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    import datetime as dt
+
+    source = data.sp500.url
+
+    # Define initial date range to select
+    date_range = (dt.date(2007, 6, 30), dt.date(2009, 6, 30))
+
+    # Create interval selection with initial value
+    brush = alt.selection_interval(encodings=['x'],
+                                value={'x': date_range})
+
+    # Create base chart for both panels
+    base = alt.Chart(source, width=600, height=200).mark_area().encode(
+        x = 'date:T',
+        y = 'price:Q'
+    )
+
+    # Upper panel shows detailed view filtered by the brush
+    upper = base.encode(
+        alt.X('date:T').scale(domain=brush)
+    )
+
+    # Lower panel shows overview with the brush control
+    lower = base.properties(
+        height=60
+    ).add_params(brush)
+
+    # Combine the two charts
+    upper & lower
+
+This example demonstrates an "overview+detail" pattern - a common visualization technique
+where one chart shows the complete dataset while another shows a detailed view of the
+selected portion.
+
+When working with datetime values, you can use Python's native ``datetime.date`` or 
+``datetime.datetime`` objects directly. Altair automatically handles the conversion of 
+these objects to the appropriate format for Vega-Lite.
+
+The format of the ``value`` parameter depends on the encodings used in the selection:
+
+- For selections with `x` encoding: ``value={'x': [min, max]}``
+- For selections with `y` encoding: ``value={'y': [min, max]}``
+- For selections with both: ``value={'x': [xmin, xmax], 'y': [ymin, ymax]}``
+
+You can also use this feature with categorical data by specifying the categories to select. For example, to initially select only cars with 4 or 6 cylinders:
+
+.. altair-plot::
+
+    cylinder_select = alt.selection_interval(
+        encodings=['x'],
+        value={"x": [4, 6]}  # Select 4 and 6 cylinder cars
+    )
+    make_example(cylinder_select)
+
+
 Point Selections
 ^^^^^^^^^^^^^^^^
-A *point* selection allows you to select chart elements one at a time
-via mouse actions. By default, points are selected on click:
+A *point* selection allows you to select individual data elements one at a time.
+Unlike interval selections which select ranges, point selections work with discrete 
+data points, making them ideal for interactive legends, tooltips, and highlighting 
+specific data points.
+
+Basic Point Selection
+""""""""""""""""""""
+The simplest point selection is created with the :func:`selection_point` function. 
+By default, points are selected on click:
 
 .. altair-plot::
 
     point = alt.selection_point()
     make_example(point)
 
-By changing some arguments, we can select points when hovering over them rather than on
-click. We can also set the ``nearest`` flag to ``True`` so that the nearest
-point is highlighted:
+Customizing Point Selection Behavior
+"""""""""""""""""""""""""""""""""""
+Point selections offer several customization options. For example, you can trigger
+selection when hovering over points rather than clicking, and use the ``nearest`` flag
+to ensure the closest point is selected:
 
 .. altair-plot::
 
     point_nearest = alt.selection_point(on='pointerover', nearest=True)
     make_example(point_nearest)
 
-Point selections also allow for multiple chart objects to be selected.
-By default, chart elements can be added to and removed from the selection
-by clicking on them while holding the *shift* key, you can try in the two charts above.
+Point selections also support multi-selection. By default, you can add or remove 
+data points from your selection by holding the *shift* key while clicking. Try this
+behavior in the examples above to see how it works.
+
+Setting Initial Values
+""""""""""""""""""""""
+You can also set initial values for point selections using the ``value`` parameter.  For point selections, the value is a dictionary specifying the initial selection based on fields or encodings.
+
+.. altair-plot::
+
+    point_initial = alt.selection_point(
+        fields=['Origin'],
+        value=[{'Origin': 'USA'}]  # Initially select USA
+    )
+    make_example(point_initial)
 
 Selection Targets
 ~~~~~~~~~~~~~~~~~
@@ -635,10 +690,10 @@ operands.
 
 Returning to our heatmap examples,
 we can construct a scenario where there are two people who can make an interval
-selection in the same chart. The person Alex makes a selection box when the
+selection in the same chart. The person Alex makes a selection region when the
 alt-key (macOS: option-key) is selected and Morgan can make a selection
-box when the shift-key is selected.
-We use :class:`BrushConfig` to give the selection box of Morgan a different
+region when the shift-key is selected.
+We use :class:`BrushConfig` to give the selection region of Morgan a different
 style.
 Now, we color the rectangles when they fall within Alex's or Morgan's
 selection
@@ -677,7 +732,7 @@ With these operators, selections can be combined in arbitrary ways:
 
 For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
-<https://vega.github.io/vega-lite/docs/selection.html>`_.
+<https://vega.github.io/vega-lite/docs/selection.html>`_.  Also see :class:`BrushConfig` for information on how to customize the appearance of the brush.
 
 .. _polars.when:
     https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html
