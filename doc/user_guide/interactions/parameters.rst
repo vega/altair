@@ -399,7 +399,12 @@ an empty selection contains no points:
    make_example(interval_x)
 
 The ``empty=False`` argument can also be set inside :func:`when` to control
-how individual conditions respond to empty selections.  By default, `empty=True`, which means the selection predicate evaluates to true for *all* data points when the selection is empty.  With `empty=False`, the predicate evaluates to false for all points when the selection is empty. This affects what happens when no data points are selected yet::
+how individual conditions respond to empty selections.  
+By default, `empty=True`, which means the selection predicate evaluates to 
+true for *all* data points when the selection is empty.  
+With `empty=False`, the predicate evaluates to false for all points when 
+the selection is empty. 
+This affects what happens when no data points are selected yet::
 
     brush = alt.selection_interval()
 
