@@ -20,7 +20,7 @@ dependencies = [
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
     "packaging",
-    "narwhals>=1.26.0"
+    "narwhals>=1.27.1"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
@@ -124,7 +124,7 @@ features = ["all", "dev", "doc"]
 matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
-exclude = [
+extend-exclude = [
     ".git",
     "__pycache__",
     "build",

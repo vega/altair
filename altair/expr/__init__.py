@@ -91,9 +91,9 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     ``ExprRef``
 
     .. _Expressions:
-        https://altair-viz.github.io/user_guide/interactions.html#expressions
+        https://altair-viz.github.io/user_guide/interactions/expressions.html
     .. _inline expression:
-       https://altair-viz.github.io/user_guide/interactions.html#inline-expressions
+       https://altair-viz.github.io/user_guide/interactions/expressions.html#inline-expressions
     .. _vega expression:
        https://vega.github.io/vega/docs/expressions/
 

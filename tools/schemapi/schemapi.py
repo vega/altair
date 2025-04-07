@@ -25,12 +25,12 @@ from typing import (
     cast,
     overload,
 )
-from typing_extensions import TypeAlias
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+from narwhals.stable.v1.dependencies import is_narwhals_series
 from packaging.version import Version
 
 if sys.version_info >= (3, 12):
@@ -56,6 +56,11 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
     _OptionalModule: TypeAlias = "ModuleType | None"
 
 ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
@@ -491,11 +496,10 @@ def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
-    try:
-        ser = nw.from_native(obj, strict=True, series_only=True)
-        return ser.to_list()
-    except TypeError:
-        return list(obj)
+    # TODO @dangotbanned: Review after available (https://github.com/narwhals-dev/narwhals/pull/2110)
+    # See for what this silences for `narwhals` CI (https://github.com/narwhals-dev/narwhals/pull/2110#issuecomment-2687936504)
+    maybe_ser: Any = nw.from_native(obj, pass_through=True)
+    return maybe_ser.to_list() if is_narwhals_series(maybe_ser) else list(obj)
 
 
 def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:

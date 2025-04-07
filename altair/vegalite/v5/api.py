@@ -1338,7 +1338,7 @@ def param(
     **kwds: Any,
 ) -> Parameter:
     """
-    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions.html for examples.
+    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions/parameters.html for examples.
 
     Although both variable parameters and selection parameters can be created using
     this 'param' function, to create a selection parameter, it is recommended to use

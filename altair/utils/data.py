@@ -350,20 +350,16 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
-def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
+def _from_geo_interface(data: SupportsGeoInterface) -> dict[str, Any]:
     """
     Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
 
-    Notes
-    -----
-    Split out to resolve typing issues related to:
-    - Intersection types
-    - ``typing.TypeGuard``
-    - ``pd.DataFrame.__getattr__``
+    Introduces an intersection type::
+
+        geo: <subclass of SupportsGeoInterface and DataFrame> | SupportsGeoInterface
     """
-    if is_pandas_dataframe(data):
-        data = sanitize_pandas_dataframe(data)
-    return sanitize_geo_interface(data.__geo_interface__)
+    geo = sanitize_pandas_dataframe(data) if is_pandas_dataframe(data) else data
+    return sanitize_geo_interface(geo.__geo_interface__)
 
 
 def _data_to_json_string(data: DataType) -> str:
