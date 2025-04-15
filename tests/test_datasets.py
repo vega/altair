@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 
     import pandas as pd
     import polars as pl
-    from _pytest.mark.structures import ParameterSet
+    from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
 
     from altair.datasets._reader import _Backend, _PandasAny, _Polars, _PyArrow
     from altair.vegalite.v5.schema._typing import OneOrSeq
