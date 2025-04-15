@@ -126,6 +126,13 @@ def is_polars_backed_pyarrow(loader: Loader[Any, Any], /) -> bool:
     )
 
 
+def is_geopandas_backed_pandas(loader: Loader[Any, Any], /) -> bool:
+    return (
+        is_loader_backend(loader, "pandas")
+        or is_loader_backend(loader, "pandas[pyarrow]")
+    ) and "earthquakes" in loader._reader.profile()["supported"]
+
+
 @backends
 def test_metadata_columns(backend: _Backend, metadata_columns: frozenset[str]) -> None:
     """Ensure all backends will query the same column names."""
@@ -530,6 +537,10 @@ def test_spatial(backend: _Backend, name: Dataset) -> None:
     load = Loader.from_backend(backend)
     if is_polars_backed_pyarrow(load):
         assert nw_dep.is_pyarrow_table(load(name))
+    elif is_geopandas_backed_pandas(load):
+        import geopandas
+
+        assert isinstance(load(name), geopandas.GeoDataFrame)
     else:
         pattern = re.compile(
             rf"{name}.+geospatial.+native.+{re.escape(backend)}.+try.+polars.+url",
