@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+import warnings
 from enum import Enum
 from functools import partial, wraps
 from importlib.util import find_spec
@@ -294,9 +295,17 @@ def pd_only() -> Sequence[Read[pd.DataFrame]]:
         opt = (read(pd.read_parquet, is_parquet),)
     else:
         opt = ()
+    pd_read_json = read(_pd_read_json(get_pandas()), is_json, exclude=is_spatial)
+    if is_available("geopandas"):
+        fn_json: Sequence[Read[pd.DataFrame]] = (
+            _pd_read_json_geopandas_impl(),
+            pd_read_json,
+        )
+    else:
+        fn_json = (pd_read_json,)
     return (
         read(pd.read_csv, is_csv),
-        read(_pd_read_json(get_pandas()), is_json, exclude=is_spatial),
+        *fn_json,
         read(pd.read_csv, is_tsv, sep="\t"),
         *opt,
     )
@@ -306,9 +315,19 @@ def pd_pyarrow() -> Sequence[Read[pd.DataFrame]]:
     import pandas as pd
 
     kwds: dict[str, Any] = {"dtype_backend": "pyarrow"}
+    pd_read_json = read(
+        _pd_read_json(get_pandas()), is_json, exclude=is_spatial, **kwds
+    )
+    if is_available("geopandas"):
+        fn_json: Sequence[Read[pd.DataFrame]] = (
+            _pd_read_json_geopandas_impl(),
+            pd_read_json,
+        )
+    else:
+        fn_json = (pd_read_json,)
     return (
         read(pd.read_csv, is_csv, **kwds),
-        read(_pd_read_json(get_pandas()), is_json, exclude=is_spatial, **kwds),
+        *fn_json,
         read(pd.read_csv, is_tsv, sep="\t", **kwds),
         read(pd.read_feather, is_arrow, **kwds),
         read(pd.read_parquet, is_parquet, **kwds),
@@ -347,6 +366,18 @@ def _pd_read_json(ns: ModuleType, /) -> Callable[..., pd.DataFrame]:
         return _pd_fix_dtypes_nw(ns.read_json(source, **kwds), **kwds).to_native()
 
     return fn
+
+
+def _pd_read_json_geopandas_impl() -> Read[pd.DataFrame]:
+    import geopandas
+
+    @wraps(geopandas.read_file)
+    def fn(source: Path | Any, /, schema: Any = None, **kwds: Any) -> pd.DataFrame:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", r"More than one layer found", UserWarning)
+            return geopandas.read_file(source, **kwds)
+
+    return read(fn, is_meta(is_spatial=True, suffix=".json"))
 
 
 def _pd_fix_dtypes_nw(
