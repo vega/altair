@@ -240,7 +240,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
 
         ref = self._query(name).get_column("file_name").item(0).replace(".", "")
         tag = VERSIONS["vega-datasets"]
-        url = f"https://github.com/vega/vega-datasets/blob/{tag}/datapackage.md#{ref}"
+        url = f"https://github.com/vega/vega-datasets/blob/v{tag}/datapackage.md#{ref}"
         webbrowser.open(url)
 
     @overload
