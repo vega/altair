@@ -51,7 +51,7 @@ if TYPE_CHECKING:
 
 __all__ = ["is_available", "pa_any", "pd_only", "pd_pyarrow", "pl_only", "read", "scan"]
 
-R = TypeVar("R", bound="nwt.IntoFrame")
+R = TypeVar("R", bound="nwt.IntoFrame", covariant=True)
 IntoFrameT = TypeVar(
     "IntoFrameT",
     bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame[Any] | nwt.DataFrameLike",
@@ -274,9 +274,18 @@ def _unwrap_partial(fn: Any, /) -> Any:
 def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:
     import polars as pl
 
+    pl_read_json = read(_pl_read_json_roundtrip(get_polars()), is_json)
+    if is_available("polars_st"):
+        fn_json: Sequence[Read[pl.DataFrame]] = (
+            _pl_read_json_polars_st_impl(),
+            pl_read_json,
+        )
+    else:
+        fn_json = (pl_read_json,)
+
     read_fns = (
         read(pl.read_csv, is_csv, try_parse_dates=True),
-        read(_pl_read_json_roundtrip(get_polars()), is_json),
+        *fn_json,
         read(pl.read_csv, is_tsv, separator="\t", try_parse_dates=True),
         read(pl.read_ipc, is_arrow),
         read(pl.read_parquet, is_parquet),
@@ -402,6 +411,18 @@ def _pd_read_json_to_arrow(ns: ModuleType, /) -> Callable[..., pa.Table]:
         )
 
     return fn
+
+
+def _pl_read_json_polars_st_impl() -> Read[pl.DataFrame]:
+    import polars_st as st
+
+    @wraps(st.read_file)
+    def fn(source: Path | Any, /, schema: Any = None, **kwds: Any) -> pl.DataFrame:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", r"More than one layer found", UserWarning)
+            return st.read_file(source, **kwds)
+
+    return read(fn, is_meta(is_spatial=True, suffix=".json"))
 
 
 def _pl_read_json_roundtrip(ns: ModuleType, /) -> Callable[..., pl.DataFrame]:
