@@ -101,6 +101,12 @@ doc = [
     "scipy",
     "scipy-stubs; python_version>=\"3.10\"",
 ]
+[dependency-groups]
+geospatial = [
+    "geopandas>=1.0.1",
+    "polars-st>=0.1.0a27 ; python_full_version >= '3.10'",
+]
+
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
@@ -365,3 +371,4 @@ ignore=[
     "../../../**/Lib",                          # stdlib
     "../../../**/typeshed*"                     # typeshed-fallback
 ]
+
