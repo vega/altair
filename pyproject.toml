@@ -335,7 +335,8 @@ module = [
     "ipykernel.*",
     "ibis.*",
     "vegafusion.*",
-    "scipy.*"
+    "scipy.*",
+    "polars_st.*",
 ]
 ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
