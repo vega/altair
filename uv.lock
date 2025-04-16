@@ -170,7 +170,7 @@ provides-extras = ["all", "dev", "doc", "save"]
 
 [package.metadata.requires-dev]
 geospatial = [
-    { name = "geopandas", specifier = ">=1.0.1" },
+    { name = "geopandas", specifier = ">=0.14.3" },
     { name = "polars-st", marker = "python_full_version >= '3.10'", specifier = ">=0.1.0a27" },
 ]
 

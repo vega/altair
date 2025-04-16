@@ -103,7 +103,7 @@ doc = [
 ]
 [dependency-groups]
 geospatial = [
-    "geopandas>=1.0.1",
+    "geopandas>=0.14.3",
     "polars-st>=0.1.0a27 ; python_full_version >= '3.10'",
 ]
 
