@@ -6,6 +6,7 @@ import sys
 from inspect import classify_class_attrs, getmembers, signature
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
+import numpy as np
 import pytest
 from jsonschema.exceptions import ValidationError
 
@@ -140,6 +141,7 @@ def test_json_reprs():
     assert repr(datum.xxx == None) == "(datum.xxx === null)"  # noqa: E711
     assert repr(datum.xxx == False) == "(datum.xxx === false)"  # noqa: E712
     assert repr(datum.xxx == True) == "(datum.xxx === true)"  # noqa: E712
+    assert repr(datum.xxx == np.int64(0)) == "(datum.xxx === 0)"
 
 
 def test_to_dict():
