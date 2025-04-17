@@ -1,4 +1,4 @@
-# ruff: noqa: F401, F403, F405
+# ruff: noqa: F403, F405
 from altair.expr.core import datum
 from altair.vegalite.v5 import api, compiler, schema
 from altair.vegalite.v5.api import *
