@@ -3,6 +3,8 @@ from __future__ import annotations
 import datetime as dt
 from typing import TYPE_CHECKING, Any, Literal, Union
 
+import numpy as np
+
 from altair.utils import SchemaBase
 
 if TYPE_CHECKING:
@@ -50,6 +52,8 @@ def _js_repr(val) -> str:
         return val._to_expr()
     elif isinstance(val, dt.date):
         return _from_date_datetime(val)
+    elif isinstance(val, np.generic):
+        return repr(val.item())
     else:
         return repr(val)
 
