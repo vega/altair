@@ -19,8 +19,10 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from _pytest.mark import ParameterSet
-    from _pytest.mark.structures import Markable
+    from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
+    from _pytest.mark.structures import (
+        Markable,  # pyright: ignore[reportPrivateImportUsage]
+    )
 
     MarksType: TypeAlias = (
         "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
@@ -58,6 +60,16 @@ To run **only** slow tests use::
 Either script can accept ``pytest`` args::
 
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
+"""
+
+no_xdist: pytest.MarkDecorator = pytest.mark.no_xdist()
+"""
+Custom ``pytest.mark`` decorator.
+
+Each marked test will run **serially**, after all other selected tests.
+
+.. tip::
+   Use as a last resort when a test depends on manipulating global state.
 """
 
 skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
