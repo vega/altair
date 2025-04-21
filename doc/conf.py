@@ -370,4 +370,4 @@ altairplot_links = {"editor": True, "source": True, "export": True}
 # Defaults for below are drawn from Altair; override here.
 # altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@5"
 # altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@4"
-# altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@6"
+# altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@7"
