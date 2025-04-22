@@ -61,8 +61,8 @@ color_coding = (
     alt.when((label == "Begin") | (label == "End"))
     .then(alt.value("#878d96"))
     .when(calc_amount < 0)
-    .then(alt.value("#24a148"))
-    .otherwise(alt.value("#fa4d56"))
+    .then(alt.value("#fa4d56"))
+    .otherwise(alt.value("#24a148"))
 )
 
 bar = base_chart.mark_bar(size=45).encode(
