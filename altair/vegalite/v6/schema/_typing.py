@@ -1076,6 +1076,7 @@ SingleDefUnitChannel_T: TypeAlias = Literal[
     "theta2",
     "radius",
     "radius2",
+    "time",
     "color",
     "fill",
     "stroke",
