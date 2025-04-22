@@ -14,7 +14,7 @@ Examples
 
 >>> VERSIONS  # doctest: +SKIP
 {'vega-datasets': 'v2.11.0',
- 'vega-embed': '6',
+ 'vega-embed': '7',
  'vega-lite': 'v5.20.1',
  'vegafusion': '1.5.0',
  'vl-convert-python': '1.7.0'}
