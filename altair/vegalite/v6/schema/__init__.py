@@ -2,13 +2,13 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from altair.vegalite.v5.schema import channels, core
-from altair.vegalite.v5.schema.channels import *
-from altair.vegalite.v5.schema.core import *
+from altair.vegalite.v6.schema import channels, core
+from altair.vegalite.v6.schema.channels import *
+from altair.vegalite.v6.schema.core import *
 
-SCHEMA_VERSION = "v5.21.0"
+SCHEMA_VERSION = "v6.1.0"
 
-SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v5.21.0.json"
+SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v6.1.0.json"
 
 __all__ = [
     "SCHEMA_URL",
@@ -204,6 +204,7 @@ __all__ = [
     "FoldTransform",
     "FontStyle",
     "FontWeight",
+    "Format",
     "FormatConfig",
     "Generator",
     "GenericUnitSpecEncodingAnyMark",
@@ -380,6 +381,7 @@ __all__ = [
     "ScaleInvalidDataShowAsValuestrokeOpacity",
     "ScaleInvalidDataShowAsValuestrokeWidth",
     "ScaleInvalidDataShowAsValuetheta",
+    "ScaleInvalidDataShowAsValuetime",
     "ScaleInvalidDataShowAsValuex",
     "ScaleInvalidDataShowAsValuexOffset",
     "ScaleInvalidDataShowAsValuey",
@@ -397,6 +399,7 @@ __all__ = [
     "ScaleInvalidDataShowAsstrokeOpacity",
     "ScaleInvalidDataShowAsstrokeWidth",
     "ScaleInvalidDataShowAstheta",
+    "ScaleInvalidDataShowAstime",
     "ScaleInvalidDataShowAsx",
     "ScaleInvalidDataShowAsxOffset",
     "ScaleInvalidDataShowAsy",
@@ -476,6 +479,10 @@ __all__ = [
     "ThetaValue",
     "TickConfig",
     "TickCount",
+    "Time",
+    "TimeDef",
+    "TimeFieldDef",
+    "TimeFormatSpecifier",
     "TimeInterval",
     "TimeIntervalStep",
     "TimeLocale",

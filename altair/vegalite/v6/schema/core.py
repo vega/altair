@@ -196,6 +196,7 @@ __all__ = [
     "FoldTransform",
     "FontStyle",
     "FontWeight",
+    "Format",
     "FormatConfig",
     "Generator",
     "GenericUnitSpecEncodingAnyMark",
@@ -347,6 +348,7 @@ __all__ = [
     "ScaleInvalidDataShowAsValuestrokeOpacity",
     "ScaleInvalidDataShowAsValuestrokeWidth",
     "ScaleInvalidDataShowAsValuetheta",
+    "ScaleInvalidDataShowAsValuetime",
     "ScaleInvalidDataShowAsValuex",
     "ScaleInvalidDataShowAsValuexOffset",
     "ScaleInvalidDataShowAsValuey",
@@ -364,6 +366,7 @@ __all__ = [
     "ScaleInvalidDataShowAsstrokeOpacity",
     "ScaleInvalidDataShowAsstrokeWidth",
     "ScaleInvalidDataShowAstheta",
+    "ScaleInvalidDataShowAstime",
     "ScaleInvalidDataShowAsx",
     "ScaleInvalidDataShowAsxOffset",
     "ScaleInvalidDataShowAsy",
@@ -416,6 +419,9 @@ __all__ = [
     "TextDirection",
     "TickConfig",
     "TickCount",
+    "TimeDef",
+    "TimeFieldDef",
+    "TimeFormatSpecifier",
     "TimeInterval",
     "TimeIntervalStep",
     "TimeLocale",
@@ -933,6 +939,8 @@ class AreaConfig(AnyMarkConfig):
     theta2 : dict, float, :class:`ExprRef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -1061,6 +1069,7 @@ class AreaConfig(AnyMarkConfig):
         text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -1145,6 +1154,7 @@ class AreaConfig(AnyMarkConfig):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -1290,17 +1300,22 @@ class Axis(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -1866,17 +1881,22 @@ class AxisConfig(VegaLiteSchema):
         Stroke width of axis domain line
 
         **Default value:** ``1``
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -2781,6 +2801,8 @@ class BarConfig(AnyMarkConfig):
     theta2 : dict, float, :class:`ExprRef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -2912,6 +2934,7 @@ class BarConfig(AnyMarkConfig):
         text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -2999,6 +3022,7 @@ class BarConfig(AnyMarkConfig):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -4200,17 +4224,22 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -4420,17 +4449,22 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -5584,15 +5618,6 @@ class Day(VegaLiteSchema):
         super().__init__(*args)
 
 
-class Dict(VegaLiteSchema):
-    """Dict schema wrapper."""
-
-    _schema = {"$ref": "#/definitions/Dict"}
-
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
-
-
 class DictInlineDataset(VegaLiteSchema):
     """DictInlineDataset schema wrapper."""
 
@@ -5851,6 +5876,8 @@ class Encoding(VegaLiteSchema):
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, :class:`TimeDef`
+
     tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
@@ -5927,6 +5954,7 @@ class Encoding(VegaLiteSchema):
         text: Optional[SchemaBase | Map] = Undefined,
         theta: Optional[SchemaBase | Map] = Undefined,
         theta2: Optional[SchemaBase | Map] = Undefined,
+        time: Optional[SchemaBase | Map] = Undefined,
         tooltip: Optional[
             SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
@@ -5969,6 +5997,7 @@ class Encoding(VegaLiteSchema):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             tooltip=tooltip,
             url=url,
             x=x,
@@ -6007,7 +6036,7 @@ class ErrorBandConfig(VegaLiteSchema):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the band. Available options include:
 
-        * ``"ci"``: Extend the band to the confidence interval of the mean.
+        * ``"ci"``: Extend the band to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of band are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of band are set to the value of standard deviation,
@@ -6093,7 +6122,7 @@ class ErrorBandDef(CompositeMarkDef):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the band. Available options include:
 
-        * ``"ci"``: Extend the band to the confidence interval of the mean.
+        * ``"ci"``: Extend the band to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of band are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of band are set to the value of standard deviation,
@@ -6181,7 +6210,7 @@ class ErrorBarConfig(VegaLiteSchema):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the rule. Available options include:
 
-        * ``"ci"``: Extend the rule to the confidence interval of the mean.
+        * ``"ci"``: Extend the rule to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of rule are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of rule are set to the value of standard deviation,
@@ -6247,7 +6276,7 @@ class ErrorBarDef(CompositeMarkDef):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the rule. Available options include:
 
-        * ``"ci"``: Extend the rule to the confidence interval of the mean.
+        * ``"ci"``: Extend the rule to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of rule are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of rule are set to the value of standard deviation,
@@ -7023,6 +7052,8 @@ class FacetedEncoding(VegaLiteSchema):
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, :class:`TimeDef`
+
     tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
@@ -7102,6 +7133,7 @@ class FacetedEncoding(VegaLiteSchema):
         text: Optional[SchemaBase | Map] = Undefined,
         theta: Optional[SchemaBase | Map] = Undefined,
         theta2: Optional[SchemaBase | Map] = Undefined,
+        time: Optional[SchemaBase | Map] = Undefined,
         tooltip: Optional[
             SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
@@ -7147,6 +7179,7 @@ class FacetedEncoding(VegaLiteSchema):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             tooltip=tooltip,
             url=url,
             x=x,
@@ -7180,7 +7213,11 @@ class Feature(VegaLiteSchema):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     id : str, float
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
@@ -7221,7 +7258,11 @@ class FeatureCollection(VegaLiteSchema):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/FeatureCollection"}
@@ -7253,7 +7294,11 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     id : str, float
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
@@ -7543,17 +7588,22 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -7750,6 +7800,24 @@ class FontWeight(VegaLiteSchema):
         super().__init__(*args)
 
 
+class Format(VegaLiteSchema):
+    """Format schema wrapper."""
+
+    _schema = {"$ref": "#/definitions/Format"}
+
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+
+
+class Dict(Format):
+    """Dict schema wrapper."""
+
+    _schema = {"$ref": "#/definitions/Dict"}
+
+    def __init__(self, **kwds):
+        super().__init__(**kwds)
+
+
 class FormatConfig(VegaLiteSchema):
     """
     FormatConfig schema wrapper.
@@ -7924,7 +7992,11 @@ class GeoJsonFeature(Fit):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     id : str, float
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
@@ -7965,7 +8037,11 @@ class GeoJsonFeatureCollection(Fit):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/GeoJsonFeatureCollection"}
@@ -7993,7 +8069,7 @@ class Geometry(VegaLiteSchema):
     """
     Geometry schema wrapper.
 
-    Union of geometry objects. https://tools.ietf.org/html/rfc7946#section-3
+    Geometry object. https://tools.ietf.org/html/rfc7946#section-3
     """
 
     _schema = {"$ref": "#/definitions/Geometry"}
@@ -8016,7 +8092,11 @@ class GeometryCollection(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/GeometryCollection"}
@@ -8153,17 +8233,22 @@ class Header(VegaLiteSchema):
 
     Parameters
     ----------
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -8399,17 +8484,22 @@ class HeaderConfig(VegaLiteSchema):
 
     Parameters
     ----------
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -8794,7 +8884,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
+    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'time', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -8915,7 +9005,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
+    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'time', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -9371,17 +9461,22 @@ class Legend(VegaLiteSchema):
           legends and ``"vertical"`` for symbol legends.
     fillColor : str, dict, :class:`Color`, :class:`ExprRef`, :class:`HexColor`, :class:`ColorName`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Background fill color for the full legend.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -9946,7 +10041,7 @@ class LegendConfig(VegaLiteSchema):
         scan of the labels is performed, removing any label that overlaps with the last
         visible label (this often works better for log-scaled axes).
 
-        **Default value:** ``"greedy"`` for ``log scales otherwise ``true`.
+        **Default value:** ``"greedy"`` for log scales otherwise ``true``.
     labelPadding : dict, float, :class:`ExprRef`
         Padding in pixels between the legend and legend labels.
     labelSeparation : dict, float, :class:`ExprRef`
@@ -10324,6 +10419,8 @@ class LegendResolveMap(VegaLiteSchema):
 
     strokeWidth : :class:`ResolveMode`, Literal['independent', 'shared']
 
+    time : :class:`ResolveMode`, Literal['independent', 'shared']
+
     """
 
     _schema = {"$ref": "#/definitions/LegendResolveMap"}
@@ -10341,6 +10438,7 @@ class LegendResolveMap(VegaLiteSchema):
         strokeDash: Optional[SchemaBase | ResolveMode_T] = Undefined,
         strokeOpacity: Optional[SchemaBase | ResolveMode_T] = Undefined,
         strokeWidth: Optional[SchemaBase | ResolveMode_T] = Undefined,
+        time: Optional[SchemaBase | ResolveMode_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -10355,6 +10453,7 @@ class LegendResolveMap(VegaLiteSchema):
             strokeDash=strokeDash,
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
+            time=time,
             **kwds,
         )
 
@@ -10715,6 +10814,8 @@ class LineConfig(AnyMarkConfig):
     theta2 : dict, float, :class:`ExprRef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -10842,6 +10943,7 @@ class LineConfig(AnyMarkConfig):
         text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -10925,6 +11027,7 @@ class LineConfig(AnyMarkConfig):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -10952,7 +11055,11 @@ class LineString(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/LineString"}
@@ -11431,6 +11538,8 @@ class MarkConfig(AnyMarkConfig):
     theta2 : dict, float, :class:`ExprRef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -11557,6 +11666,7 @@ class MarkConfig(AnyMarkConfig):
         text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -11639,6 +11749,7 @@ class MarkConfig(AnyMarkConfig):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -12057,6 +12168,8 @@ class MarkDef(AnyMark):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -12210,6 +12323,7 @@ class MarkDef(AnyMark):
         theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -12310,6 +12424,7 @@ class MarkDef(AnyMark):
             theta2Offset=theta2Offset,
             thetaOffset=thetaOffset,
             thickness=thickness,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -12808,7 +12923,11 @@ class MultiLineString(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/MultiLineString"}
@@ -12839,7 +12958,11 @@ class MultiPoint(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/MultiPoint"}
@@ -12868,7 +12991,11 @@ class MultiPolygon(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/MultiPolygon"}
@@ -14417,6 +14544,8 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for theta2.
     thetaOffset : dict, float, :class:`ExprRef`
         Offset for theta.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -14557,6 +14686,7 @@ class OverlayMarkDef(VegaLiteSchema):
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -14649,6 +14779,7 @@ class OverlayMarkDef(VegaLiteSchema):
             theta2=theta2,
             theta2Offset=theta2Offset,
             thetaOffset=thetaOffset,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -14725,11 +14856,31 @@ class Point(Geometry):
         and three elements. The previous GeoJSON specification allowed more elements (e.g.,
         which could be used to represent M values), but the current specification only
         allows X, Y, and (optionally) Z to be defined.
+
+        Note: the type will not be narrowed down to ``[number, number] | [number, number,
+        number]`` due to marginal benefits and the large impact of breaking change.
+
+        See previous discussions on the type narrowing:
+
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/pull/21590 Nov 2017 }
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/67773 Dec
+          2023 }
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/71441 Dec
+          2024 }
+
+        One can use a  {@link
+        https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
+        user-defined type guard that returns a type predicate }  to determine if a position
+        is a 2D or 3D position.
     type : Literal['Point']
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/Point"}
@@ -14767,7 +14918,7 @@ class PointSelectionConfig(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
+    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'time', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -14885,7 +15036,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** `clear examples
         <https://vega.github.io/vega-lite/docs/selection.html#clear>`__ in the
         documentation.
-    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
+    encodings : Sequence[:class:`SingleDefUnitChannel`, Literal['text', 'shape', 'x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'time', 'color', 'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash', 'size', 'angle', 'key', 'href', 'url', 'description']]
         An array of encoding channels. The corresponding data field values must match for a
         data tuple to fall within the selection.
 
@@ -15008,7 +15159,11 @@ class Polygon(Geometry):
         Specifies the type of GeoJSON object.
     bbox : :class:`BBox`, Sequence[float]
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     _schema = {"$ref": "#/definitions/Polygon"}
@@ -15033,6 +15188,20 @@ class Position(VegaLiteSchema):
     Array should contain between two and three elements. The previous GeoJSON specification
     allowed more elements (e.g., which could be used to represent M values), but the current
     specification only allows X, Y, and (optionally) Z to be defined.
+
+    Note: the type will not be narrowed down to ``[number, number] | [number, number, number]``
+    due to marginal benefits and the large impact of breaking change.
+
+    See previous discussions on the type narrowing:
+
+    * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/pull/21590 Nov 2017 }
+    * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/67773 Dec 2023 }
+    * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/71441 Dec 2024 }
+
+    One can use a  {@link
+    https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
+    user-defined type guard that returns a type predicate }  to determine if a position is a 2D
+    or 3D position.
     """
 
     _schema = {"$ref": "#/definitions/Position"}
@@ -17371,6 +17540,8 @@ class RectConfig(AnyMarkConfig):
     theta2 : dict, float, :class:`ExprRef`
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -17501,6 +17672,7 @@ class RectConfig(AnyMarkConfig):
         text: Optional[str | Parameter | SchemaBase | Sequence[str] | Map] = Undefined,
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -17587,6 +17759,7 @@ class RectConfig(AnyMarkConfig):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -18408,6 +18581,11 @@ class ScaleConfig(VegaLiteSchema):
 
     Parameters
     ----------
+    animationDuration : float
+        Default animation duration (in seconds) for time encodings, except for `band
+        <https://vega.github.io/vega-lite/docs/scale.html#band>`__ scales.
+
+        **Default value:** ``5``
     bandPaddingInner : dict, float, :class:`ExprRef`
         Default inner padding for ``x`` and ``y`` band scales.
 
@@ -18443,6 +18621,11 @@ class ScaleConfig(VegaLiteSchema):
 
         **Default:** The bar width for continuous x-scale of a vertical bar and continuous
         y-scale of a horizontal bar.; ``0`` otherwise.
+    framesPerSecond : float
+        Default framerate (frames per second) for time `band
+        <https://vega.github.io/vega-lite/docs/scale.html#band>`__ scales.
+
+        **Default value:** ``2``
     invalid : dict, :class:`ScaleInvalidDataConfig`
         An object that defines scale outputs per channel for invalid values (nulls and NaNs
         on a continuous scale).
@@ -18558,6 +18741,7 @@ class ScaleConfig(VegaLiteSchema):
 
     def __init__(
         self,
+        animationDuration: Optional[float] = Undefined,
         bandPaddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bandPaddingOuter: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         bandWithNestedOffsetPaddingInner: Optional[
@@ -18569,6 +18753,7 @@ class ScaleConfig(VegaLiteSchema):
         barBandPaddingInner: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         clamp: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
         continuousPadding: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        framesPerSecond: Optional[float] = Undefined,
         invalid: Optional[SchemaBase | Map] = Undefined,
         maxBandSize: Optional[float] = Undefined,
         maxFontSize: Optional[float] = Undefined,
@@ -18602,6 +18787,7 @@ class ScaleConfig(VegaLiteSchema):
         **kwds,
     ):
         super().__init__(
+            animationDuration=animationDuration,
             bandPaddingInner=bandPaddingInner,
             bandPaddingOuter=bandPaddingOuter,
             bandWithNestedOffsetPaddingInner=bandWithNestedOffsetPaddingInner,
@@ -18609,6 +18795,7 @@ class ScaleConfig(VegaLiteSchema):
             barBandPaddingInner=barBandPaddingInner,
             clamp=clamp,
             continuousPadding=continuousPadding,
+            framesPerSecond=framesPerSecond,
             invalid=invalid,
             maxBandSize=maxBandSize,
             maxFontSize=maxFontSize,
@@ -19081,6 +19268,8 @@ class ScaleInvalidDataConfig(VegaLiteSchema):
 
     theta : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAstheta`, :class:`ScaleInvalidDataShowAsValuetheta`
 
+    time : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAstime`, :class:`ScaleInvalidDataShowAsValuetime`
+
     x : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsx`, :class:`ScaleInvalidDataShowAsValuex`
 
     xOffset : dict, Literal['zero-or-min'], :class:`ScaleInvalidDataShowAsxOffset`, :class:`ScaleInvalidDataShowAsValuexOffset`
@@ -19108,6 +19297,7 @@ class ScaleInvalidDataConfig(VegaLiteSchema):
         strokeOpacity: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
         strokeWidth: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
         theta: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
+        time: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
         x: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
         xOffset: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
         y: Optional[SchemaBase | Literal["zero-or-min"] | Map] = Undefined,
@@ -19128,6 +19318,7 @@ class ScaleInvalidDataConfig(VegaLiteSchema):
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
             theta=theta,
+            time=time,
             x=x,
             xOffset=xOffset,
             y=y,
@@ -19527,6 +19718,31 @@ class ScaleInvalidDataShowAsValuetheta(ScaleInvalidDataShowAstheta):
         super().__init__(value=value, **kwds)
 
 
+class ScaleInvalidDataShowAstime(VegaLiteSchema):
+    """ScaleInvalidDataShowAstime schema wrapper."""
+
+    _schema = {"$ref": '#/definitions/ScaleInvalidDataShowAs<"time">'}
+
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+
+
+class ScaleInvalidDataShowAsValuetime(ScaleInvalidDataShowAstime):
+    """
+    ScaleInvalidDataShowAsValuetime schema wrapper.
+
+    Parameters
+    ----------
+    value : float
+
+    """
+
+    _schema = {"$ref": '#/definitions/ScaleInvalidDataShowAsValue<"time">'}
+
+    def __init__(self, value: Optional[float] = Undefined, **kwds):
+        super().__init__(value=value, **kwds)
+
+
 class ScaleInvalidDataShowAsx(VegaLiteSchema):
     """ScaleInvalidDataShowAsx schema wrapper."""
 
@@ -19667,6 +19883,8 @@ class ScaleResolveMap(VegaLiteSchema):
 
     theta : :class:`ResolveMode`, Literal['independent', 'shared']
 
+    time : :class:`ResolveMode`, Literal['independent', 'shared']
+
     x : :class:`ResolveMode`, Literal['independent', 'shared']
 
     xOffset : :class:`ResolveMode`, Literal['independent', 'shared']
@@ -19694,6 +19912,7 @@ class ScaleResolveMap(VegaLiteSchema):
         strokeOpacity: Optional[SchemaBase | ResolveMode_T] = Undefined,
         strokeWidth: Optional[SchemaBase | ResolveMode_T] = Undefined,
         theta: Optional[SchemaBase | ResolveMode_T] = Undefined,
+        time: Optional[SchemaBase | ResolveMode_T] = Undefined,
         x: Optional[SchemaBase | ResolveMode_T] = Undefined,
         xOffset: Optional[SchemaBase | ResolveMode_T] = Undefined,
         y: Optional[SchemaBase | ResolveMode_T] = Undefined,
@@ -19714,6 +19933,7 @@ class ScaleResolveMap(VegaLiteSchema):
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
             theta=theta,
+            time=time,
             x=x,
             xOffset=xOffset,
             y=y,
@@ -20663,6 +20883,8 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : dict
 
+    time : dict
+
     tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
@@ -20723,6 +20945,7 @@ class SharedEncoding(VegaLiteSchema):
         text: Optional[Map] = Undefined,
         theta: Optional[Map] = Undefined,
         theta2: Optional[Map] = Undefined,
+        time: Optional[Map] = Undefined,
         tooltip: Optional[
             SchemaBase | Sequence[SchemaBase | Map] | Map | None
         ] = Undefined,
@@ -20765,6 +20988,7 @@ class SharedEncoding(VegaLiteSchema):
             text=text,
             theta=theta,
             theta2=theta2,
+            time=time,
             tooltip=tooltip,
             url=url,
             x=x,
@@ -20834,7 +21058,7 @@ class EncodingSortField(Sort):
 
         **Default value:** ``"sum"`` for stacked plots. Otherwise, ``"min"``.
     order : :class:`SortOrder`, Literal['ascending', 'descending'], None
-        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
+        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (do
         not sort).
     """
 
@@ -20888,7 +21112,7 @@ class SortByEncoding(Sort):
         <https://vega.github.io/vega-lite/docs/encoding.html#channels>`__ to sort by (e.g.,
         ``"x"``, ``"y"``)
     order : :class:`SortOrder`, Literal['ascending', 'descending'], None
-        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
+        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (do
         not sort).
     """
 
@@ -20915,7 +21139,7 @@ class SortField(VegaLiteSchema):
         The name of the field to sort.
     order : :class:`SortOrder`, Literal['ascending', 'descending'], None
         Whether to sort the field in ascending or descending order. One of ``"ascending"``
-        (default), ``"descending"``, or ``null`` (no not sort).
+        (default), ``"descending"``, or ``null`` (do not sort).
     """
 
     _schema = {"$ref": "#/definitions/SortField"}
@@ -22067,17 +22291,22 @@ class StringFieldDef(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -22290,17 +22519,22 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -22648,17 +22882,22 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         since Vega-Lite only allows at most one encoded field per encoding channel.
     datum : str, bool, dict, float, :class:`ExprRef`, :class:`DateTime`, :class:`RepeatRef`, :class:`PrimitiveValue`, None
         A constant value in data domain.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -22860,17 +23099,22 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : str, dict, :class:`Dict`
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+    format : str, dict, :class:`Dict`, :class:`Format`, :class:`TimeFormatSpecifier`
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -23384,6 +23628,8 @@ class TickConfig(AnyMarkConfig):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -23516,6 +23762,7 @@ class TickConfig(AnyMarkConfig):
         theta: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         theta2: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -23604,6 +23851,7 @@ class TickConfig(AnyMarkConfig):
             theta=theta,
             theta2=theta2,
             thickness=thickness,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -23624,6 +23872,561 @@ class TickCount(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super().__init__(*args, **kwds)
+
+
+class TimeDef(VegaLiteSchema):
+    r"""
+    TimeDef schema wrapper.
+
+    Parameters
+    ----------
+    shorthand : str, dict, Sequence[str], :class:`RepeatRef`
+        shorthand for field, aggregate, and type
+    aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
+        Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
+        ``"min"``, ``"max"``, ``"count"``).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    bin : bool, dict, :class:`BinParams`, None
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite (``"binned"``).
+
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
+
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    field : str, dict, :class:`Field`, :class:`FieldName`, :class:`RepeatRef`
+        **Required.** A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
+        field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
+        about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
+        if ``aggregate`` is ``count``.
+    rescale : bool
+
+    scale : dict, :class:`Scale`, None
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
+        field. or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : str, :class:`Text`, Sequence[str], None
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
+        Otherwise, the title is simply the field name.
+
+        **Notes**:
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain (``datum``):
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y``).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+
+    _schema = {"$ref": "#/definitions/TimeDef"}
+
+    def __init__(
+        self,
+        shorthand: Optional[str | SchemaBase | Sequence[str] | Map] = Undefined,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
+        bandPosition: Optional[float] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        rescale: Optional[bool] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        sort: Optional[
+            SchemaBase
+            | Sequence[str]
+            | Sequence[bool]
+            | Sequence[float]
+            | Sequence[Temporal | SchemaBase | Map]
+            | Map
+            | AllSortString_T
+            | None
+        ] = Undefined,
+        timeUnit: Optional[
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+        ] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
+        type: Optional[SchemaBase | StandardType_T] = Undefined,
+        **kwds,
+    ):
+        super().__init__(
+            shorthand=shorthand,
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            rescale=rescale,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds,
+        )
+
+
+class TimeFieldDef(VegaLiteSchema):
+    r"""
+    TimeFieldDef schema wrapper.
+
+    Parameters
+    ----------
+    aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
+        Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
+        ``"min"``, ``"max"``, ``"count"``).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bandPosition : float
+        Relative position on a band of a stacked, binned, time unit, or band scale. For
+        example, the marks will be positioned at the beginning of the band if set to ``0``,
+        and at the middle of the band if set to ``0.5``.
+    bin : bool, dict, :class:`BinParams`, None
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
+        that the data for ``x`` or ``y`` channel are binned before they are imported into
+        Vega-Lite (``"binned"``).
+
+        * If ``true``, default `binning parameters
+          <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__ will be
+          applied.
+
+        * If ``"binned"``, this indicates that the data for the ``x`` (or ``y``) channel are
+          already binned. You can map the bin-start field to ``x`` (or ``y``) and the
+          bin-end field to ``x2`` (or ``y2``). The scale and axis will be formatted similar
+          to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can
+          also set the axis's `tickMinStep
+          <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    field : str, dict, :class:`Field`, :class:`FieldName`, :class:`RepeatRef`
+        **Required.** A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:** 1)  Dots (``.``) and brackets (``[`` and ``]``) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"``). If
+        field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"``). See more details
+        about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
+        if ``aggregate`` is ``count``.
+    rescale : bool
+
+    scale : dict, :class:`Scale`, None
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : dict, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text', 'ascending', 'descending', 'x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], None
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"``) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__. In addition, for time
+          units ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"``).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : dict, :class:`TimeUnit`, :class:`MultiTimeUnit`, :class:`BinnedTimeUnit`, :class:`SingleTimeUnit`, :class:`TimeUnitParams`, :class:`UtcMultiTimeUnit`, :class:`UtcSingleTimeUnit`, :class:`LocalMultiTimeUnit`, :class:`LocalSingleTimeUnit`, Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear', 'utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds', 'year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds', 'yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours``) for a temporal
+        field. or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : str, :class:`Text`, Sequence[str], None
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function
+        (``aggregate``, ``bin`` and ``timeUnit``). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"``). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"``).
+        Otherwise, the title is simply the field name.
+
+        **Notes**:
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/usage/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
+        The type of measurement (``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
+        ``"nominal"``) for the encoded field or constant value (``datum``). It can also be a
+        ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        Vega-Lite automatically infers data types in many cases as discussed below. However,
+        type is required for a field if: (1) the field is not nominal and the field encoding
+        has no specified ``aggregate`` (except ``argmin`` and ``argmax``), ``bin``, scale
+        type, custom ``sort`` order, nor ``timeUnit`` or (2) if you wish to use an ordinal
+        scale for a field with ``bin`` or ``timeUnit``.
+
+        **Default value:**
+
+        1) For a data ``field``, ``"nominal"`` is the default data type unless the field
+        encoding has ``aggregate``, ``channel``, ``bin``, scale type, ``sort``, or
+        ``timeUnit`` that satisfies the following criteria:
+
+        * ``"quantitative"`` is the default type if (1) the encoded field contains ``bin``
+          or ``aggregate`` except ``"argmin"`` and ``"argmax"``, (2) the encoding channel is
+          ``latitude`` or ``longitude`` channel or (3) if the specified scale type is `a
+          quantitative scale <https://vega.github.io/vega-lite/docs/scale.html#type>`__.
+        * ``"temporal"`` is the default type if (1) the encoded field contains ``timeUnit``
+          or (2) the specified scale type is a time or utc scale
+        * ``"ordinal"`` is the default type if (1) the encoded field contains a `custom sort
+          order
+          <https://vega.github.io/vega-lite/docs/sort.html#specifying-custom-sort-order>`__,
+          (2) the specified scale type is an ordinal/point/band scale, or (3) the encoding
+          channel is ``order``.
+
+        2) For a constant value in data domain (``datum``):
+
+        * ``"quantitative"`` if the datum is a number
+        * ``"nominal"`` if the datum is a string
+        * ``"temporal"`` if the datum is `a date time object
+          <https://vega.github.io/vega-lite/docs/datetime.html>`__
+
+        **Note:**
+
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"``) or a
+          timestamp number (e.g., ``1552199579097``).
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (default, for using a temporal scale) or `"ordinal"
+          (for using an ordinal scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat"}``. The ``"type"`` of the aggregate output is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError``) do not have
+          ``type`` as they must have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y``).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+
+    _schema = {"$ref": "#/definitions/TimeFieldDef"}
+
+    def __init__(
+        self,
+        aggregate: Optional[SchemaBase | Map | NonArgAggregateOp_T] = Undefined,
+        bandPosition: Optional[float] = Undefined,
+        bin: Optional[bool | SchemaBase | Map | None] = Undefined,
+        field: Optional[str | SchemaBase | Map] = Undefined,
+        rescale: Optional[bool] = Undefined,
+        scale: Optional[SchemaBase | Map | None] = Undefined,
+        sort: Optional[
+            SchemaBase
+            | Sequence[str]
+            | Sequence[bool]
+            | Sequence[float]
+            | Sequence[Temporal | SchemaBase | Map]
+            | Map
+            | AllSortString_T
+            | None
+        ] = Undefined,
+        timeUnit: Optional[
+            SchemaBase | Map | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
+        ] = Undefined,
+        title: Optional[str | SchemaBase | Sequence[str] | None] = Undefined,
+        type: Optional[SchemaBase | StandardType_T] = Undefined,
+        **kwds,
+    ):
+        super().__init__(
+            aggregate=aggregate,
+            bandPosition=bandPosition,
+            bin=bin,
+            field=field,
+            rescale=rescale,
+            scale=scale,
+            sort=sort,
+            timeUnit=timeUnit,
+            title=title,
+            type=type,
+            **kwds,
+        )
+
+
+class TimeFormatSpecifier(Format):
+    """
+    TimeFormatSpecifier schema wrapper.
+
+    Parameters
+    ----------
+    date : str
+
+    day : str
+
+    hours : str
+
+    milliseconds : str
+
+    minutes : str
+
+    month : str
+
+    quarter : str
+
+    seconds : str
+
+    week : str
+
+    year : str
+
+    """
+
+    _schema = {"$ref": "#/definitions/TimeFormatSpecifier"}
+
+    def __init__(
+        self,
+        date: Optional[str] = Undefined,
+        day: Optional[str] = Undefined,
+        hours: Optional[str] = Undefined,
+        milliseconds: Optional[str] = Undefined,
+        minutes: Optional[str] = Undefined,
+        month: Optional[str] = Undefined,
+        quarter: Optional[str] = Undefined,
+        seconds: Optional[str] = Undefined,
+        week: Optional[str] = Undefined,
+        year: Optional[str] = Undefined,
+        **kwds,
+    ):
+        super().__init__(
+            date=date,
+            day=day,
+            hours=hours,
+            milliseconds=milliseconds,
+            minutes=minutes,
+            month=month,
+            quarter=quarter,
+            seconds=seconds,
+            week=week,
+            year=year,
+            **kwds,
+        )
 
 
 class TimeInterval(TickCount):
@@ -24392,7 +25195,7 @@ class TopLevelConcatSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -24567,7 +25370,7 @@ class TopLevelFacetSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -24698,7 +25501,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -24856,7 +25659,7 @@ class TopLevelLayerSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -25069,7 +25872,7 @@ class TopLevelUnitSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -25206,7 +26009,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
     $schema : str
         URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
         Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v5.json``. Setting the ``$schema``
+        ``https://vega.github.io/schema/vega-lite/v6.json``. Setting the ``$schema``
         property allows automatic validation and autocomplete in editors that support JSON
         schema.
     """
@@ -26959,12 +27762,12 @@ class ViewConfig(VegaLiteSchema):
         The default height when the plot has a continuous y-field for x or latitude, or has
         arc marks.
 
-        **Default value:** ``200``
+        **Default value:** ``300``
     continuousWidth : float
         The default width when the plot has a continuous field for x or longitude, or has
         arc marks.
 
-        **Default value:** ``200``
+        **Default value:** ``300``
     cornerRadius : dict, float, :class:`ExprRef`
         The radius in pixels of rounded rectangles or arcs' corners.
 
