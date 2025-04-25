@@ -28,8 +28,8 @@ if TYPE_CHECKING:
 
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
-    from altair.vegalite.v5.api import Bin, Impute, IntoCondition
-    from altair.vegalite.v5.schema.core import (
+    from altair.vegalite.v6.api import Bin, Impute, IntoCondition
+    from altair.vegalite.v6.schema.core import (
         Axis,
         DateTime,
         EncodingSortField,
