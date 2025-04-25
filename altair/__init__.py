@@ -632,7 +632,7 @@ __all__ = [
     "topo_feature",
     "typing",
     "utils",
-    "v5",
+    "v6",
     "value",
     "vconcat",
     "vegalite",
@@ -647,7 +647,7 @@ def __dir__():
 
 
 from altair.vegalite import *
-from altair.vegalite.v5.schema.core import Dict
+from altair.vegalite.v6.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined
