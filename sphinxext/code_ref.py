@@ -9,7 +9,7 @@ from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
-from altair.vegalite.v5.schema._typing import VegaThemes
+from altair.vegalite.v6.schema._typing import VegaThemes
 from tools.codemod import extract_func_def, extract_func_def_embed
 
 if TYPE_CHECKING:
