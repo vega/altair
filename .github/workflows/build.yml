@@ -78,4 +78,4 @@ jobs:
           # uri-reference check is disabled as the URIs in the Vega-Lite schema do
           # not conform RFC 3986.
           uv pip install 'jsonschema[format]' check-jsonschema --upgrade
-          uv run check-jsonschema --check-metaschema altair/vegalite/v5/schema/vega-lite-schema.json --disable-formats uri-reference
+          uv run check-jsonschema --check-metaschema altair/vegalite/v6/schema/vega-lite-schema.json --disable-formats uri-reference
