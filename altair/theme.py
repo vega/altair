@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 from typing import overload as _overload
 
-from altair.vegalite.v5.schema._config import (
+from altair.vegalite.v6.schema._config import (
     AreaConfigKwds,
     AutoSizeParamsKwds,
     AxisConfigKwds,
@@ -77,7 +77,7 @@ from altair.vegalite.v5.schema._config import (
     ViewBackgroundKwds,
     ViewConfigKwds,
 )
-from altair.vegalite.v5.theme import themes as _themes
+from altair.vegalite.v6.theme import themes as _themes
 
 if TYPE_CHECKING:
     import sys

@@ -182,7 +182,7 @@ def default_renderer_base(
     how to render the custom VegaLite MIME type listed above.
     """
     # Local import to avoid circular ImportError
-    from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
+    from altair.vegalite.v6.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
 
     assert isinstance(spec, dict)
     bundle: dict[str, str | dict] = {}
