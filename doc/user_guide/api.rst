@@ -107,6 +107,7 @@ Encoding Channels
    Theta2Value
    ThetaDatum
    ThetaValue
+   Time
    Tooltip
    TooltipValue
    Url
@@ -439,6 +440,7 @@ Low-Level Schema Wrappers
    FoldTransform
    FontStyle
    FontWeight
+   Format
    FormatConfig
    Generator
    GenericUnitSpecEncodingAnyMark
@@ -591,6 +593,7 @@ Low-Level Schema Wrappers
    ScaleInvalidDataShowAsValuestrokeOpacity
    ScaleInvalidDataShowAsValuestrokeWidth
    ScaleInvalidDataShowAsValuetheta
+   ScaleInvalidDataShowAsValuetime
    ScaleInvalidDataShowAsValuex
    ScaleInvalidDataShowAsValuexOffset
    ScaleInvalidDataShowAsValuey
@@ -608,6 +611,7 @@ Low-Level Schema Wrappers
    ScaleInvalidDataShowAsstrokeOpacity
    ScaleInvalidDataShowAsstrokeWidth
    ScaleInvalidDataShowAstheta
+   ScaleInvalidDataShowAstime
    ScaleInvalidDataShowAsx
    ScaleInvalidDataShowAsxOffset
    ScaleInvalidDataShowAsy
@@ -660,6 +664,9 @@ Low-Level Schema Wrappers
    TextDirection
    TickConfig
    TickCount
+   TimeDef
+   TimeFieldDef
+   TimeFormatSpecifier
    TimeInterval
    TimeIntervalStep
    TimeLocale
