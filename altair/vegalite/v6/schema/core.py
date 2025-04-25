@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
     from altair import Parameter
     from altair.typing import Optional
-    from altair.vegalite.v5.api import ChartDataType
+    from altair.vegalite.v6.api import ChartDataType
 
     from ._typing import *  # noqa: F403
 
