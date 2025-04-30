@@ -83,6 +83,7 @@ __all__ = [
     "StyleConfigIndexKwds",
     "ThemeConfig",
     "TickConfigKwds",
+    "TimeFormatSpecifierKwds",
     "TimeIntervalStepKwds",
     "TimeLocaleKwds",
     "TitleConfigKwds",
@@ -445,6 +446,8 @@ class AreaConfigKwds(TypedDict, total=False):
     theta2
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -557,6 +560,7 @@ class AreaConfigKwds(TypedDict, total=False):
     text: str | Sequence[str]
     theta: float
     theta2: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -655,16 +659,21 @@ class AxisConfigKwds(TypedDict, total=False):
 
         **Default value:** ``1``
     format
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -988,7 +997,7 @@ class AxisConfigKwds(TypedDict, total=False):
     domainDashOffset: float
     domainOpacity: float
     domainWidth: float
-    format: str
+    format: str | TimeFormatSpecifierKwds
     formatType: str
     grid: bool
     gridCap: StrokeCap_T
@@ -1418,6 +1427,8 @@ class BarConfigKwds(TypedDict, total=False):
     theta2
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -1533,6 +1544,7 @@ class BarConfigKwds(TypedDict, total=False):
     text: str | Sequence[str]
     theta: float
     theta2: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -2302,7 +2314,7 @@ class ErrorBandConfigKwds(TypedDict, total=False):
     extent
         The extent of the band. Available options include:
 
-        * ``"ci"``: Extend the band to the confidence interval of the mean.
+        * ``"ci"``: Extend the band to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of band are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of band are set to the value of standard deviation,
@@ -2368,7 +2380,7 @@ class ErrorBarConfigKwds(TypedDict, total=False):
     extent
         The extent of the rule. Available options include:
 
-        * ``"ci"``: Extend the rule to the confidence interval of the mean.
+        * ``"ci"``: Extend the rule to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of rule are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of rule are set to the value of standard deviation,
@@ -2423,7 +2435,11 @@ class FeatureGeometryGeoJsonPropertiesKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     id
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
@@ -2527,7 +2543,11 @@ class GeoJsonFeatureKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     id
         A value that uniquely identifies this feature in a
         https://tools.ietf.org/html/rfc7946#section-3.2.
@@ -2560,7 +2580,11 @@ class GeoJsonFeatureCollectionKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     features: Sequence[FeatureGeometryGeoJsonPropertiesKwds]
@@ -2580,7 +2604,11 @@ class GeometryCollectionKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     geometries: Sequence[
@@ -2619,16 +2647,21 @@ class HeaderConfigKwds(TypedDict, total=False):
     Parameters
     ----------
     format
-        When used with the default ``"number"`` and ``"time"`` format type, the text
-        formatting pattern for labels of guides (axes, legends, headers) and text marks.
+        The text format specifier for formatting number and date/time in labels of guides
+        (axes, legends, headers) and text marks.
 
-        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
-          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
-        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
-          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+        If the format type is ``"number"`` (e.g., for quantitative fields), this is a D3's
+        `number format pattern string <https://github.com/d3/d3-format#locale_format>`__.
 
-        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more examples.
+        If the format type is ``"time"`` (e.g., for temporal fields), this is either:   a)
+        D3's `time format pattern <https://d3js.org/d3-time-format#locale_format>`__ if you
+        desire to set a static time format.
+
+        b) `dynamic time format specifier object
+        <https://vega.github.io/vega-lite/docs/format.html#dynamic-time-format>`__ if you
+        desire to set a dynamic time format that uses different formats depending on the
+        granularity of the input date (e.g., if the date lies on a year, month, date, hour,
+        etc. boundary).
 
         When used with a `custom formatType
         <https://vega.github.io/vega-lite/docs/config.html#custom-format-type>`__, this
@@ -2753,7 +2786,7 @@ class HeaderConfigKwds(TypedDict, total=False):
         **Default value:** ``10``
     """
 
-    format: str
+    format: str | TimeFormatSpecifierKwds
     formatType: str
     labelAlign: Align_T
     labelAnchor: TitleAnchor_T
@@ -3135,7 +3168,7 @@ class LegendConfigKwds(TypedDict, total=False):
         scan of the labels is performed, removing any label that overlaps with the last
         visible label (this often works better for log-scaled axes).
 
-        **Default value:** ``"greedy"`` for ``log scales otherwise ``true`.
+        **Default value:** ``"greedy"`` for log scales otherwise ``true``.
     labelPadding
         Padding in pixels between the legend and legend labels.
     labelSeparation
@@ -3382,6 +3415,8 @@ class LegendResolveMapKwds(TypedDict, total=False):
 
     strokeWidth
 
+    time
+
     """
 
     angle: ResolveMode_T
@@ -3395,6 +3430,7 @@ class LegendResolveMapKwds(TypedDict, total=False):
     strokeDash: ResolveMode_T
     strokeOpacity: ResolveMode_T
     strokeWidth: ResolveMode_T
+    time: ResolveMode_T
 
 
 class LegendStreamBindingKwds(TypedDict, total=False):
@@ -3750,6 +3786,8 @@ class LineConfigKwds(TypedDict, total=False):
     theta2
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -3861,6 +3899,7 @@ class LineConfigKwds(TypedDict, total=False):
     text: str | Sequence[str]
     theta: float
     theta2: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -3884,7 +3923,11 @@ class LineStringKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[Sequence[float]]
@@ -4273,6 +4316,8 @@ class MarkConfigKwds(TypedDict, total=False):
     theta2
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -4383,6 +4428,7 @@ class MarkConfigKwds(TypedDict, total=False):
     text: str | Sequence[str]
     theta: float
     theta2: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -4440,7 +4486,11 @@ class MultiLineStringKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[Sequence[Sequence[float]]]
@@ -4460,7 +4510,11 @@ class MultiPointKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[Sequence[float]]
@@ -4480,7 +4534,11 @@ class MultiPolygonKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[Sequence[Sequence[Sequence[float]]]]
@@ -4872,6 +4930,8 @@ class OverlayMarkDefKwds(TypedDict, total=False):
         Offset for theta2.
     thetaOffset
         Offset for theta.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -4996,6 +5056,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     theta2: float
     theta2Offset: float
     thetaOffset: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -5023,11 +5084,31 @@ class PointKwds(TypedDict, total=False):
         and three elements. The previous GeoJSON specification allowed more elements (e.g.,
         which could be used to represent M values), but the current specification only
         allows X, Y, and (optionally) Z to be defined.
+
+        Note: the type will not be narrowed down to ``[number, number] | [number, number,
+        number]`` due to marginal benefits and the large impact of breaking change.
+
+        See previous discussions on the type narrowing:
+
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/pull/21590 Nov 2017 }
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/67773 Dec
+          2023 }
+        * {@link  https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/71441 Dec
+          2024 }
+
+        One can use a  {@link
+        https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
+        user-defined type guard that returns a type predicate }  to determine if a position
+        is a 2D or 3D position.
     type
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[float]
@@ -5255,7 +5336,11 @@ class PolygonKwds(TypedDict, total=False):
         Specifies the type of GeoJSON object.
     bbox
         Bounding box of the coordinate range of the object's Geometries, Features, or
-        Feature Collections. https://tools.ietf.org/html/rfc7946#section-5
+        Feature Collections. The value of the bbox member is an array of length 2*n where n
+        is the number of dimensions represented in the contained geometries, with all axes
+        of the most southwesterly point followed by all axes of the more northeasterly
+        point. The axes order of a bbox follows the axes order of geometries.
+        https://tools.ietf.org/html/rfc7946#section-5
     """
 
     coordinates: Sequence[Sequence[Sequence[float]]]
@@ -5998,6 +6083,8 @@ class RectConfigKwds(TypedDict, total=False):
     theta2
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -6112,6 +6199,7 @@ class RectConfigKwds(TypedDict, total=False):
     text: str | Sequence[str]
     theta: float
     theta2: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -6148,6 +6236,11 @@ class ScaleConfigKwds(TypedDict, total=False):
 
     Parameters
     ----------
+    animationDuration
+        Default animation duration (in seconds) for time encodings, except for `band
+        <https://vega.github.io/vega-lite/docs/scale.html#band>`__ scales.
+
+        **Default value:** ``5``
     bandPaddingInner
         Default inner padding for ``x`` and ``y`` band scales.
 
@@ -6183,6 +6276,11 @@ class ScaleConfigKwds(TypedDict, total=False):
 
         **Default:** The bar width for continuous x-scale of a vertical bar and continuous
         y-scale of a horizontal bar.; ``0`` otherwise.
+    framesPerSecond
+        Default framerate (frames per second) for time `band
+        <https://vega.github.io/vega-lite/docs/scale.html#band>`__ scales.
+
+        **Default value:** ``2``
     invalid
         An object that defines scale outputs per channel for invalid values (nulls and NaNs
         on a continuous scale).
@@ -6294,6 +6392,7 @@ class ScaleConfigKwds(TypedDict, total=False):
         **Default value:** ``true``
     """
 
+    animationDuration: float
     bandPaddingInner: float
     bandPaddingOuter: float
     bandWithNestedOffsetPaddingInner: float
@@ -6301,6 +6400,7 @@ class ScaleConfigKwds(TypedDict, total=False):
     barBandPaddingInner: float
     clamp: bool
     continuousPadding: float
+    framesPerSecond: float
     invalid: ScaleInvalidDataConfigKwds
     maxBandSize: float
     maxFontSize: float
@@ -6357,6 +6457,8 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
 
     theta
 
+    time
+
     x
 
     xOffset
@@ -6389,6 +6491,7 @@ class ScaleInvalidDataConfigKwds(TypedDict, total=False):
     strokeOpacity: Value[float] | Literal["zero-or-min"]
     strokeWidth: Value[float] | Literal["zero-or-min"]
     theta: Value[float] | Literal["zero-or-min"]
+    time: Value[float] | Literal["zero-or-min"]
     x: Literal["zero-or-min"] | Value[float | Literal["width"]]
     xOffset: Value[float] | Literal["zero-or-min"]
     y: Literal["zero-or-min"] | Value[float | Literal["height"]]
@@ -6427,6 +6530,8 @@ class ScaleResolveMapKwds(TypedDict, total=False):
 
     theta
 
+    time
+
     x
 
     xOffset
@@ -6450,6 +6555,7 @@ class ScaleResolveMapKwds(TypedDict, total=False):
     strokeOpacity: ResolveMode_T
     strokeWidth: ResolveMode_T
     theta: ResolveMode_T
+    time: ResolveMode_T
     x: ResolveMode_T
     xOffset: ResolveMode_T
     y: ResolveMode_T
@@ -6925,6 +7031,8 @@ class TickConfigKwds(TypedDict, total=False):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+    time
+
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -7041,6 +7149,7 @@ class TickConfigKwds(TypedDict, total=False):
     theta: float
     theta2: float
     thickness: float
+    time: float
     timeUnitBandPosition: float
     timeUnitBandSize: float
     tooltip: str | bool | float | TooltipContentKwds | None
@@ -7050,6 +7159,46 @@ class TickConfigKwds(TypedDict, total=False):
     x2: float | Literal["width"]
     y: float | Literal["height"]
     y2: float | Literal["height"]
+
+
+class TimeFormatSpecifierKwds(TypedDict, total=False):
+    """
+    :class:`altair.TimeFormatSpecifier` ``TypedDict`` wrapper.
+
+    Parameters
+    ----------
+    date
+
+    day
+
+    hours
+
+    milliseconds
+
+    minutes
+
+    month
+
+    quarter
+
+    seconds
+
+    week
+
+    year
+
+    """
+
+    date: str
+    day: str
+    hours: str
+    milliseconds: str
+    minutes: str
+    month: str
+    quarter: str
+    seconds: str
+    week: str
+    year: str
 
 
 class TimeIntervalStepKwds(TypedDict, total=False):
@@ -7551,12 +7700,12 @@ class ViewConfigKwds(TypedDict, total=False):
         The default height when the plot has a continuous y-field for x or latitude, or has
         arc marks.
 
-        **Default value:** ``200``
+        **Default value:** ``300``
     continuousWidth
         The default width when the plot has a continuous field for x or longitude, or has
         arc marks.
 
-        **Default value:** ``200``
+        **Default value:** ``300``
     cornerRadius
         The radius in pixels of rounded rectangles or arcs' corners.
 

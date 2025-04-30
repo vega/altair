@@ -1,10 +1,10 @@
 import pytest
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 
 
 def test_layer_props():
-    """Beginning in Vega-Lite v5, the properties "height" and "width" were no longer allowed in a subchart within a LayerChart.  We check here that these are moved to the top level by Altair."""
+    """Beginning in Vega-Lite v6, the properties "height" and "width" were no longer allowed in a subchart within a LayerChart.  We check here that these are moved to the top level by Altair."""
     base = alt.Chart().mark_point()
 
     # Allowed

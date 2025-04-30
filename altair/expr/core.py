@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Literal, Union
 from altair.utils import SchemaBase
 
 if TYPE_CHECKING:
-    from altair.vegalite.v5.schema._typing import Map, PrimitiveValue_T
+    from altair.vegalite.v6.schema._typing import Map, PrimitiveValue_T
 
     if sys.version_info >= (3, 10):
         from typing import TypeAlias

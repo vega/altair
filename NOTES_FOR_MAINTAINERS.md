@@ -4,7 +4,7 @@
 
 The core Python API for Altair can be found in the following locations:
 
-- ``altair/vegalite/v5/schema/``
+- ``altair/vegalite/v6/schema/``
 
 All the files within these directories are created automatically by running
 the following script:
@@ -81,7 +81,7 @@ The Vega-Lite version for the Python code propagates to `tools.generate_schema_w
 This will update all of the automatically-generated files in the ``schema``
 directory for each version, but please note that it will *not* update other
 pieces (for example, the core of the Altair API, including methods and
-doc strings within ``altair/vegalite/v5/api.py``).
+doc strings within ``altair/vegalite/v6/api.py``).
 These additional methods have fairly good test coverage, so running the test
 suite should identify any inconsistencies:
 

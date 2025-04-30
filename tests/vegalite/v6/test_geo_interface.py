@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 import pytest
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 
 if TYPE_CHECKING:
     from collections.abc import MutableMapping

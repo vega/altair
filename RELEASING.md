@@ -50,8 +50,8 @@
 
 12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
-       git tag -a v5.0.0 -m "Version 5.0.0 release"
-       git push origin v5.0.0
+       git tag -a v6.0.0 -m "Version 5.0.0 release"
+       git push origin v6.0.0
 
 13. Create a new branch:
        

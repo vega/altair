@@ -218,7 +218,7 @@ def _spec_to_mimebundle_with_engine(
                 vg = spec
             else:
                 vg = vlc.vegalite_to_vega(spec, vl_version=vl_version)
-            return {"application/vnd.vega.v5+json": vg}
+            return {"application/vnd.vega.v6+json": vg}
         elif format == "svg":
             if mode == "vega":
                 svg = vlc.vega_to_svg(

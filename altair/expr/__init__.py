@@ -9,7 +9,7 @@ import sys
 from typing import TYPE_CHECKING, Any
 
 from altair.expr.core import ConstExpression, FunctionExpression
-from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
+from altair.vegalite.v6.schema.core import ExprRef as _ExprRef
 
 if sys.version_info >= (3, 12):
     from typing import override

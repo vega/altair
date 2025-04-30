@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Any
 
 import pytest
 
-from altair.vegalite.v5.display import VegaLite
+from altair.vegalite.v6.display import VegaLite
 from tests import skip_requires_ipython
 
 if TYPE_CHECKING:
@@ -29,7 +29,7 @@ def records() -> list[dict[str, Any]]:
 @pytest.fixture
 def vl_spec(records) -> dict[str, Any]:
     return {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
         "data": {"values": records},
         "description": "A simple bar chart with embedded data.",
         "encoding": {

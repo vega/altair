@@ -85,7 +85,7 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # ==============================================================================
 
 P = ParamSpec("P")
-# NOTE: `Any` required due to the complexity of existing signatures imported in `altair.vegalite.v5.data.py`
+# NOTE: `Any` required due to the complexity of existing signatures imported in `altair.vegalite.v6.data.py`
 R = TypeVar("R", VegaLiteDataDict, Any)
 DataTransformerType = Callable[Concatenate[DataType, P], R]
 
