@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
 VEGA_VERSION: Final = "5"
-VEGAEMBED_VERSION: Final = "6"
+VEGAEMBED_VERSION: Final = "7"
 
 
 # ==============================================================================
