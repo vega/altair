@@ -441,8 +441,10 @@ containing the 2008 financial crisis:
     date_range = (dt.date(2007, 6, 30), dt.date(2009, 6, 30))
 
     # Create interval selection with initial value
-    brush = alt.selection_interval(encodings=['x'],
-                                value={'x': date_range})
+    brush = alt.selection_interval(
+        encodings=['x'],
+        value={'x': date_range}
+    )
 
     # Create base chart for both panels
     base = alt.Chart(source, width=600, height=200).mark_area().encode(
