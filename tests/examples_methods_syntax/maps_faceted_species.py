@@ -12,7 +12,7 @@ import pandas as pd
 from vega_datasets import data
 
 # Load the CSV data
-url = "https://raw.githubusercontent.com/vega/vega-datasets/8551a8d7fcdef2efa28c845f80963e3c1636f34a/data/species.csv" # temporary until vega/vega-datasets#684 is merged
+url = "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/species.csv"
 df = pd.read_csv(url)
 
 # Disable row limit for Altair
