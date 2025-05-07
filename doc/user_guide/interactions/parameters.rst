@@ -485,7 +485,7 @@ You can also set initial values of a selection with categorical data. In this ca
 
     cylinder_select = alt.selection_interval(
         encodings=['x'],
-        value={"x": [4, 6]}  # Select 4 and 6 cylinder cars
+        value={"x": [4, 6]}  # Select 4 and 6 (but not 5) cylinder cars
     )
     make_example(cylinder_select)
 
