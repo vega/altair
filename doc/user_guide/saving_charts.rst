@@ -91,7 +91,7 @@ javascript-enabled web browser:
     <head>
       <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
       <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
     </head>
     <body>
       <div id="vis"></div>

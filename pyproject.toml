@@ -105,7 +105,7 @@ doc = [
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
 vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
-vega-embed        = "6"       # https://github.com/vega/vega-embed
+vega-embed        = "7"       # https://github.com/vega/vega-embed
 vega-lite         = "v5.21.0" # https://github.com/vega/vega-lite
 
 [tool.hatch]
@@ -124,7 +124,7 @@ features = ["all", "dev", "doc"]
 matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.ruff]
-exclude = [
+extend-exclude = [
     ".git",
     "__pycache__",
     "build",
