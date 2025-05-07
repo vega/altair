@@ -408,11 +408,11 @@ This affects what happens when no data points are selected yet::
 
     brush = alt.selection_interval()
 
-    # Default behavior (empty=True): When nothing is selected, all points are gray
+    # Default behavior (empty=True): When no selection is made in this example, all points will be colored according to their "Origin" category (they are considered as *selected*, and colored according to the `then` clause)
     color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
 
-    # Custom behavior (empty=False): When nothing is selected, points keep their category colors
-    color=alt.when(brush, empty=False).then(alt.value("steelblue")).otherwise("Origin:N")
+    # Custom behavior (empty=False): When no selection is made in this example, all points will be lightgray (they are considered as *unselected*, and colored according to the `otherwise` clause )
+    color=alt.when(brush, empty=False)..then("Origin:N").otherwise(alt.value("lightgray"))
 
 Setting Initial Values
 """""""""""""""""""""
