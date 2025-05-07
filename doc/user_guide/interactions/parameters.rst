@@ -479,7 +479,7 @@ The format of the ``value`` parameter depends on the encodings used in the selec
 - For selections with `y` encoding: ``value={'y': [min, max]}``
 - For selections with both: ``value={'x': [xmin, xmax], 'y': [ymin, ymax]}``
 
-You can also use this feature with categorical data by specifying the categories to select. For example, to initially select only cars with 4 or 6 cylinders:
+You can also set initial values of a selection with categorical data. In this case the list/tuple specifies the exact categories to be selection rather than a range of categories. For example, to initially select only cars with 4 or 6 cylinders:
 
 .. altair-plot::
 
