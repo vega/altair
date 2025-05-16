@@ -40,7 +40,7 @@ Text Mark Properties
     align_var = alt.param(bind=align_select, value="left", name="align")
 
     baseline_select = alt.binding_select(options=["alphabetic", "top", "middle", "bottom"])
-    baseline_var = alt.param(bind=baseline_select, value="midle", name="baseline")
+    baseline_var = alt.param(bind=baseline_select, value="middle", name="baseline")
 
     font_select = alt.binding_select(options=["sans-serif", "serif", "monospace"])
     font_var = alt.param(bind=font_select, value="sans-serif", name="font")

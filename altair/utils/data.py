@@ -352,7 +352,7 @@ def _compute_data_hash(data_str: str) -> str:
 
 def _from_geo_interface(data: SupportsGeoInterface) -> dict[str, Any]:
     """
-    Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
+    Sanitize a ``__geo_interface__`` w/ pre-sanitize step for ``pandas`` if needed.
 
     Introduces an intersection type::
 

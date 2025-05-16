@@ -163,7 +163,7 @@ class _TypeAliasTracer:
             # Handles one very specific edge case `WindowFieldDef`
             # - Has an anonymous enum union
             # - One of the members is declared afterwards
-            # - SchemaBase needs to be first, as the union wont be internally sorted
+            # - SchemaBase needs to be first, as the union won't be internally sorted
             it = (
                 self.add_literal(el, spell_literal(el.literal), replace=True)
                 for el in info.anyOf
@@ -245,7 +245,7 @@ class _TypeAliasTracer:
 
     @property
     def n_entries(self) -> int:
-        """Number of unique `TypeAlias` defintions collected."""
+        """Number of unique `TypeAlias` definitions collected."""
         return len(self._literals)
 
 

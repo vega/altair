@@ -283,7 +283,7 @@ def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]
     Parameters
     ----------
     vega_spec : dict
-        Top-leve Vega specification
+        Top-level Vega specification
     scope : tuple of int
         Scope tuple. If empty, the names of top-level datasets are returned
         Otherwise, the names of the datasets defined in the nested group mark

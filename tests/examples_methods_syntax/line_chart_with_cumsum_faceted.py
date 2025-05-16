@@ -4,7 +4,7 @@ Faceted Line Chart with Cumulative Sum
 This chart creates one facet per natural disaster and shows the cumulative number of deaths for that category.
 Note the use of different predicates to filter based on both a list and a range.
 """
-# category: advanced calcuations
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 

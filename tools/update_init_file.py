@@ -118,7 +118,7 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
 
 
 def _is_hashable(obj: t.Any) -> bool:
-    """Guard to prevent an `in` check occuring on mutable objects."""
+    """Guard to prevent an `in` check occurring on mutable objects."""
     try:
         return bool(hash(obj))
     except TypeError:

@@ -125,7 +125,7 @@ class RSTParseVegaLite(RSTParse):
             _RE_SPECIAL.sub("", d) if i % 2 else d
             for i, d in enumerate(_RE_LINK.split(s))
         )
-        # NOTE: Some entries in the Vega-Lite schema miss the second occurence of '__'
+        # NOTE: Some entries in the Vega-Lite schema miss the second occurrence of '__'
         # (Needs to happen pre-parse to convert into `**Default value:**` for `.rst`)
         description = description.replace("__Default value: ", "__Default value:__ ")
 

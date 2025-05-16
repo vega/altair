@@ -1,5 +1,5 @@
 """
-Versioning utils, specfic to `vega projects`_.
+Versioning utils, specific to `vega projects`_.
 
 Includes non-`python` projects.
 

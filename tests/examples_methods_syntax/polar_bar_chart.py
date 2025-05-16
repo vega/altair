@@ -47,7 +47,7 @@ axis_lines_labels = axis_lines.mark_text(
         color='grey',
         radiusOffset=5,
         thetaOffset=-math.pi / 4,
-        # These adjustments could be left out with a larger radius offset, but they make the label positioning a bit clearner
+        # These adjustments could be left out with a larger radius offset, but they make the label positioning a bit cleaner
         align=alt.expr('datum.hour == "18:00" ? "right" : datum.hour == "06:00" ? "left" : "center"'),
         baseline=alt.expr('datum.hour == "00:00" ? "bottom" : datum.hour == "12:00" ? "top" : "middle"'),
     ).encode(text="hour")

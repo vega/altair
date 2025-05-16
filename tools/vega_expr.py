@@ -306,7 +306,7 @@ class ReplaceMany:
             Special characters must be escaped **first**, if present.
 
     fmt_replace
-        Format string applied to a succesful match, after substition.
+        Format string applied to a successful match, after substitution.
         Receives ``self._mapping[key]`` as a positional argument.
 
     .. _dict:
@@ -873,9 +873,9 @@ def format_doc(doc: str, /) -> str:
     - Source is very different to `vega-lite`
     - There are no real sections, so these are created here
     - Single line docs are unchanged
-    - Multi-line have everything following the first line wrappped.
+    - Multi-line have everything following the first line wrapped.
         - With a double break inserted for a summary line
-    - Reference-like links section (if present) are also ommitted from wrapping
+    - Reference-like links section (if present) are also omitted from wrapping
 
     .. _summary line:
         https://numpydoc.readthedocs.io/en/latest/format.html#short-summary
