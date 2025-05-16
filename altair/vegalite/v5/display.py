@@ -36,7 +36,7 @@ VEGA_MIME_TYPE: Final = "application/vnd.vega.v5+json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
-# allowed by the PluginRegistery API.
+# allowed by the PluginRegistry API.
 ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
 
 # The display message when rendering fails
