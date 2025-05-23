@@ -284,7 +284,7 @@ class Ruff(CodeMod):
         `rule codes`_ to use **on top of** the default config.
     ignore
         `rule codes`_ to `ignore`_.
-    skip_magic_traling_comma
+    skip_magic_trailing_comma
         Enables `skip-magic-trailing-comma`_ during formatting.
 
         .. note::
@@ -314,7 +314,7 @@ class Ruff(CodeMod):
         self,
         *extend_select: str,
         ignore: OneOrIterV[str] | None = None,
-        skip_magic_traling_comma: bool = False,
+        skip_magic_trailing_comma: bool = False,
     ) -> None:
         self.check_args: deque[str] = deque(self._check_args)
         self.format_args: deque[str] = deque()
@@ -324,7 +324,7 @@ class Ruff(CodeMod):
             self.check_args.extend(
                 ("--ignore", ",".join(s for s in iter_flatten(ignore)))
             )
-        if skip_magic_traling_comma:
+        if skip_magic_trailing_comma:
             self.format_args.extend(
                 ("--config", "format.skip-magic-trailing-comma = true")
             )
@@ -433,5 +433,5 @@ class Ruff(CodeMod):
         return self.format(self.check(code, decode=False))
 
 
-ruff_inline_docs = Ruff(ignore="E711", skip_magic_traling_comma=True)
+ruff_inline_docs = Ruff(ignore="E711", skip_magic_trailing_comma=True)
 ruff = Ruff()

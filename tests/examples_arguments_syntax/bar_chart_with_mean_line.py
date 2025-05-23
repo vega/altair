@@ -1,7 +1,7 @@
 """
 Bar Chart with Line at Mean
 ---------------------------
-This example shows the mean value overlayed on a bar chart.
+This example shows the mean value overlaid on a bar chart.
 """
 # category: bar charts
 import altair as alt
