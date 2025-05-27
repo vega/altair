@@ -134,7 +134,7 @@ class FieldChannelMixin:
 
         if shorthand is Undefined:
             parsed = {}
-        elif isinstance(shorthand, str):
+        elif isinstance(shorthand, (str, dict)):
             data: nw.DataFrame | Any = context.get("data", None)
             parsed = parse_shorthand(shorthand, data=data)
             type_required = "type" in self._kwds  # type: ignore[attr-defined]
