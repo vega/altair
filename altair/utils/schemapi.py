@@ -414,7 +414,7 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
     """
-    Groups the errors by the json schema "validator" that casued the error.
+    Groups the errors by the json schema "validator" that caused the error.
 
     For example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
@@ -1429,7 +1429,7 @@ def _replace_parsed_shorthand(
     not passed to child `to_dict` function calls.
     """
     # Prevent that pandas categorical data is automatically sorted
-    # when a non-ordinal data type is specifed manually
+    # when a non-ordinal data type is specified manually
     # or if the encoding channel does not support sorting
     if "sort" in parsed_shorthand and (
         "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}

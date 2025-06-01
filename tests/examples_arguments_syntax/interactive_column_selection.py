@@ -68,7 +68,7 @@ dynamic_title = alt.Title(alt.expr(f'"Difference " + {select_x.name}.level_0 + "
 # We pivot transform to get each category as a column
 lines_diff = base.transform_pivot(
     'category', 'value', groupby=['date']
-# In the calculate transform we use the values from the selection to subset the columns to substract
+# In the calculate transform we use the values from the selection to subset the columns to subtract
 ).transform_calculate(
     difference = f'datum[{select_x.name}.level_0] - datum[{select_y.name}.level_1]'
 ).mark_line(color='grey').encode(
