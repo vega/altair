@@ -1692,7 +1692,7 @@ VERSIONS: Mapping[
     "vega-embed": "v7",
     "vega-lite": "v6.1.0",
     "vegafusion": "1.6.6",
-    "vl-convert-python": "1.7.0",
+    "vl-convert-python": "1.8.0",
 }
 """
 Version pins for non-``python`` `vega projects`_.
