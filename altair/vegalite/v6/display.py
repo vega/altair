@@ -29,10 +29,10 @@ VEGAEMBED_VERSION: Final = "7"
 
 
 # The MIME type for Vega-Lite 6.x releases.
-VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v6+json"
+VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v6.json"
 
 # The MIME type for Vega 6.x releases.
-VEGA_MIME_TYPE: Final = "application/vnd.vega.v6+json"
+VEGA_MIME_TYPE: Final = "application/vnd.vega.v6.json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
