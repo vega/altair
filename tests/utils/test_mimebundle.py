@@ -175,7 +175,7 @@ def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
         engine="vl-convert",
     )
 
-    assert bundle == {"application/vnd.vega.v6json": vega_spec}
+    assert bundle == {"application/vnd.vega.v6+json": vega_spec}
 
 
 def test_spec_to_vegalite_mimebundle(vegalite_spec):
@@ -235,7 +235,7 @@ def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
             format="vega",
         )
         # Returned bundle will be vega
-        vega_spec = bundle["application/vnd.vega.v6json"]
+        vega_spec = bundle["application/vnd.vega.v6+json"]
         check_pre_transformed_vega_spec(vega_spec)
 
 
