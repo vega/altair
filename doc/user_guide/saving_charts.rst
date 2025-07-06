@@ -144,7 +144,7 @@ change to ``svg`` rendering, use the ``embed_options`` as such:
    This is not the same as ``alt.renderers.enable('svg')``, what renders the 
    chart as a static ``svg`` image within a Jupyter notebook.
 
-Another method provided by Altair is `Chart.to_html()`. This method returns a `html` object string that represents the chart content. Depending on your requirements, this `html` object can be used for further processing to embed Charts in custom HTML reports.
+Another method provided by Altair is ``Chart.to_html()``. This method returns a ``html`` object string that represents the chart content. Depending on your requirements, this ``html`` object can be used for further processing to embed Charts in custom HTML reports.
 
 Offline HTML support
 ^^^^^^^^^^^^^^^^^^^^
