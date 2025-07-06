@@ -1174,7 +1174,7 @@ def path_to_module_str(
     root: Literal["altair", "doc", "sphinxext", "tests", "tools"] = "altair",
 ) -> str:
     # NOTE: GH runner has 3x altair, local is 2x
-    # - Needs to be the last occurence
+    # - Needs to be the last occurrence
     idx = fp.parts.index(root)
     start = idx + fp.parts.count(root) - 1 if root == "altair" else idx
     parents = fp.parts[start:-1]

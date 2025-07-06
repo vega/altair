@@ -14,7 +14,7 @@ import geopandas as gpd
 gdf_quakies = gpd.read_file(data.earthquakes.url)
 gdf_world = gpd.read_file(data.world_110m.url, layer="countries")
 
-# defintion for interactive brush
+# definition for interactive brush
 brush = alt.selection_interval(
     encodings=["longitude"], 
     empty=False, 
