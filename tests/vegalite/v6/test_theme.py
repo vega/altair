@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, get_args
 
 import pytest
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 from altair import theme
 from altair.theme import ConfigKwds, ThemeConfig
-from altair.vegalite.v5 import schema
-from altair.vegalite.v5.schema._typing import VegaThemes, is_color_hex
-from altair.vegalite.v5.theme import VEGA_THEMES
+from altair.vegalite.v6 import schema
+from altair.vegalite.v6.schema._typing import VegaThemes, is_color_hex
+from altair.vegalite.v6.theme import VEGA_THEMES
 from tests import slow
 
 if TYPE_CHECKING:

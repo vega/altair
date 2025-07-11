@@ -770,7 +770,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
+            f"from altair.vegalite.v6.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
         f"\n__all__ = {all_}\n",
@@ -906,8 +906,8 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             "from collections.abc import Sequence",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
-            f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
+            f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
+            f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
             textwrap.indent(
                 import_typing_extensions((3, 11), "Self")
                 + import_typing_extensions((3, 10), "TypeAlias"),
@@ -1139,7 +1139,7 @@ def generate_schema__init__(
     package
         Absolute, dotted path for `schema`, e.g::
 
-            "altair.vegalite.v5.schema"
+            "altair.vegalite.v6.schema"
     expand
         Required for 2nd-pass, which explicitly defines the new ``__all__``, using newly generated names.
 
@@ -1174,7 +1174,7 @@ def path_to_module_str(
     root: Literal["altair", "doc", "sphinxext", "tests", "tools"] = "altair",
 ) -> str:
     # NOTE: GH runner has 3x altair, local is 2x
-    # - Needs to be the last occurence
+    # - Needs to be the last occurrence
     idx = fp.parts.index(root)
     start = idx + fp.parts.count(root) - 1 if root == "altair" else idx
     parents = fp.parts[start:-1]

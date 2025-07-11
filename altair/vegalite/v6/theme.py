@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any, Final, Literal, get_args
 
 from altair.utils.deprecation import deprecated_static_only
 from altair.utils.plugin_registry import Plugin, PluginRegistry
-from altair.vegalite.v5.schema._config import ThemeConfig
-from altair.vegalite.v5.schema._typing import VegaThemes
+from altair.vegalite.v6.schema._config import ThemeConfig
+from altair.vegalite.v6.schema._typing import VegaThemes
 
 if TYPE_CHECKING:
     import sys
@@ -99,7 +99,7 @@ class VegaTheme:
 # The entry point group that can be used by other packages to declare other
 # themes that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistry API.
-ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.theme"
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 
 # NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)

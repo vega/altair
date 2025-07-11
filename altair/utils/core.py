@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from narwhals.stable.v1.typing import IntoExpr
 
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
+    from altair.vegalite.v6.schema._typing import StandardType_T as InferredVegaLiteType
 
     _PandasDataFrameT = TypeVar("_PandasDataFrameT", bound="pd.DataFrame")
 
@@ -289,7 +289,7 @@ def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
 
 def sanitize_geo_interface(geo: MutableMapping[Any, Any]) -> dict[str, Any]:
     """
-    Santize a geo_interface to prepare it for serialization.
+    Sanitize a geo_interface to prepare it for serialization.
 
     * Make a copy
     * Convert type array or _Array to list
@@ -912,7 +912,7 @@ def _init_channel_to_name():
     -------
         mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
     """
-    from altair.vegalite.v5.schema import channels as ch
+    from altair.vegalite.v6.schema import channels as ch
 
     mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
 

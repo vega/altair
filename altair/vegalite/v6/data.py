@@ -13,11 +13,11 @@ from altair.vegalite.data import (
 )
 
 # ==============================================================================
-# VegaLite 5 data transformers
+# VegaLite 6 data transformers
 # ==============================================================================
 
 
-ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.data_transformer"
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.data_transformer"
 
 
 data_transformers = DataTransformerRegistry(entry_point_group=ENTRY_POINT_GROUP)

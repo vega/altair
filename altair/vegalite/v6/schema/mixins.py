@@ -424,6 +424,8 @@ class _MarkDef(SchemaBase):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+    time : dict, float, :class:`ExprRef`
+
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
         positioned at the beginning of the time unit band step. If set to ``0.5``, the marks
@@ -576,6 +578,7 @@ class _MarkDef(SchemaBase):
         theta2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thetaOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         thickness: Optional[float] = Undefined,
+        time: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
         tooltip: Optional[
@@ -675,6 +678,7 @@ class _MarkDef(SchemaBase):
             theta2Offset=theta2Offset,
             thetaOffset=thetaOffset,
             thickness=thickness,
+            time=time,
             timeUnitBandPosition=timeUnitBandPosition,
             timeUnitBandSize=timeUnitBandSize,
             tooltip=tooltip,
@@ -832,7 +836,7 @@ class _ErrorBarDef(SchemaBase):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the rule. Available options include:
 
-        * ``"ci"``: Extend the rule to the confidence interval of the mean.
+        * ``"ci"``: Extend the rule to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of rule are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of rule are set to the value of standard deviation,
@@ -910,7 +914,7 @@ class _ErrorBandDef(SchemaBase):
     extent : :class:`ErrorBarExtent`, Literal['ci', 'iqr', 'stderr', 'stdev']
         The extent of the band. Available options include:
 
-        * ``"ci"``: Extend the band to the confidence interval of the mean.
+        * ``"ci"``: Extend the band to the 95% bootstrapped confidence interval of the mean.
         * ``"stderr"``: The size of band are set to the value of standard error, extending
           from the mean.
         * ``"stdev"``: The size of band are set to the value of standard deviation,

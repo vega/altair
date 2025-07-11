@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 import pytest
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 
 if TYPE_CHECKING:
     from collections.abc import MutableMapping
@@ -176,7 +176,7 @@ def test_geo_interface_feature_collection() -> None:
 
 
 # typical output of a __geo_interface__ from geopandas GeoDataFrame
-# notic that the index value is registerd as a commonly used identifier
+# notice that the index value is registered as a commonly used identifier
 # with the name "id" (in this case 49). Similar to serialization of a
 # pandas DataFrame is the index not included in the output
 def test_geo_interface_feature_collection_gdf() -> None:

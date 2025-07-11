@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from altair.vegalite.v5 import data as alt
+from altair.vegalite.v6 import data as alt
 
 
 @pytest.fixture
