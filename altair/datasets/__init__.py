@@ -173,6 +173,9 @@ def __getattr__(name):
         from altair.datasets._loader import load
 
         return load
+    elif name == "__all__":
+        # Define __all__ dynamically to avoid ruff errors
+        return ["Loader", "data", "load", "url"]
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
         raise AttributeError(msg)

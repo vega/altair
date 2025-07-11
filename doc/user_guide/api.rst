@@ -802,6 +802,7 @@ Datasets
    :nosignatures:
 
    Loader
+   data
    load
    url
 
