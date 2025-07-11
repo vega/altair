@@ -23,6 +23,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
       - name: Install dependencies
         run: uv pip install -e ".[dev, all]"
+
       - name: Install specific jsonschema
         # Only have to execute this if we don't want the latest jsonschema version
         if: ${{ matrix.jsonschema-version != 'latest' }}
