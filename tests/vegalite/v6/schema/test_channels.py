@@ -7,13 +7,13 @@ from typing import TYPE_CHECKING
 import pytest
 
 from altair.utils.schemapi import SchemaValidationError
-from altair.vegalite.v5.schema import channels as alt
-from altair.vegalite.v5.schema.core import DateTime
+from altair.vegalite.v6.schema import channels as alt
+from altair.vegalite.v6.schema.core import DateTime
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from altair.vegalite.v5.schema._typing import Temporal
+    from altair.vegalite.v6.schema._typing import Temporal
 
 
 def test_channels_typing() -> None:

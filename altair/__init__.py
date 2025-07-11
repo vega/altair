@@ -202,6 +202,7 @@ __all__ = [
     "FoldTransform",
     "FontStyle",
     "FontWeight",
+    "Format",
     "FormatConfig",
     "Generator",
     "GenericUnitSpecEncodingAnyMark",
@@ -389,6 +390,7 @@ __all__ = [
     "ScaleInvalidDataShowAsValuestrokeOpacity",
     "ScaleInvalidDataShowAsValuestrokeWidth",
     "ScaleInvalidDataShowAsValuetheta",
+    "ScaleInvalidDataShowAsValuetime",
     "ScaleInvalidDataShowAsValuex",
     "ScaleInvalidDataShowAsValuexOffset",
     "ScaleInvalidDataShowAsValuey",
@@ -406,6 +408,7 @@ __all__ = [
     "ScaleInvalidDataShowAsstrokeOpacity",
     "ScaleInvalidDataShowAsstrokeWidth",
     "ScaleInvalidDataShowAstheta",
+    "ScaleInvalidDataShowAstime",
     "ScaleInvalidDataShowAsx",
     "ScaleInvalidDataShowAsxOffset",
     "ScaleInvalidDataShowAsy",
@@ -489,6 +492,10 @@ __all__ = [
     "ThetaValue",
     "TickConfig",
     "TickCount",
+    "Time",
+    "TimeDef",
+    "TimeFieldDef",
+    "TimeFormatSpecifier",
     "TimeInterval",
     "TimeIntervalStep",
     "TimeLocale",
@@ -632,7 +639,7 @@ __all__ = [
     "topo_feature",
     "typing",
     "utils",
-    "v5",
+    "v6",
     "value",
     "vconcat",
     "vegalite",
@@ -647,7 +654,7 @@ def __dir__():
 
 
 from altair.vegalite import *
-from altair.vegalite.v5.schema.core import Dict
+from altair.vegalite.v6.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning, parse_shorthand, Undefined

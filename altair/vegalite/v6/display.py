@@ -19,25 +19,25 @@ if TYPE_CHECKING:
 
 
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
-VEGA_VERSION: Final = "5"
+VEGA_VERSION: Final = "6"
 VEGAEMBED_VERSION: Final = "7"
 
 
 # ==============================================================================
-# VegaLite v5 renderer logic
+# VegaLite v6 renderer logic
 # ==============================================================================
 
 
-# The MIME type for Vega-Lite 5.x releases.
-VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v5+json"
+# The MIME type for Vega-Lite 6.x releases.
+VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v6.json"
 
-# The MIME type for Vega 5.x releases.
-VEGA_MIME_TYPE: Final = "application/vnd.vega.v5+json"
+# The MIME type for Vega 6.x releases.
+VEGA_MIME_TYPE: Final = "application/vnd.vega.v6.json"
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
-# allowed by the PluginRegistry API.
-ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.renderer"
+# allowed by the PluginRegistery API.
+ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.renderer"
 
 # The display message when rendering fails
 DEFAULT_DISPLAY: Final = f"""\
@@ -167,7 +167,7 @@ renderers.enable("default")
 
 
 class VegaLite(Displayable):
-    """An IPython/Jupyter display class for rendering VegaLite 5."""
+    """An IPython/Jupyter display class for rendering VegaLite 6."""
 
     renderers = renderers
     schema_path = (__name__, "schema/vega-lite-schema.json")
@@ -175,16 +175,16 @@ class VegaLite(Displayable):
 
 def vegalite(spec: dict, validate: bool = True) -> None:
     """
-    Render and optionally validate a VegaLite 5 spec.
+    Render and optionally validate a VegaLite 6 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
     ----------
     spec: dict
-        A fully compliant VegaLite 5 spec, with the data portion fully processed.
+        A fully compliant VegaLite 6 spec, with the data portion fully processed.
     validate: bool
-        Should the spec be validated against the VegaLite 5 schema?
+        Should the spec be validated against the VegaLite 6 schema?
     """
     from IPython.display import display
 

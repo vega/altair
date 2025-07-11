@@ -6,7 +6,7 @@ import warnings
 import pandas as pd
 import pytest
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 from altair.utils.deprecation import AltairDeprecationWarning
 
 

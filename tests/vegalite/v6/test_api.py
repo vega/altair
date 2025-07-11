@@ -33,8 +33,8 @@ from tests import skip_requires_pyarrow, skip_requires_vl_convert, slow
 if TYPE_CHECKING:
     from typing import Any
 
-    from altair.vegalite.v5.api import _Conditional, _Conditions
-    from altair.vegalite.v5.schema._typing import Map
+    from altair.vegalite.v6.api import _Conditional, _Conditions
+    from altair.vegalite.v6.schema._typing import Map
 
 
 PANDAS_VERSION = Version(importlib_version("pandas"))
@@ -886,8 +886,8 @@ def test_save_html(basic_chart, inline):
     if inline:
         assert '<script type="text/javascript">' in content
     else:
-        assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
-        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega@6' in content
+        assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@6' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@7' in content
 
 

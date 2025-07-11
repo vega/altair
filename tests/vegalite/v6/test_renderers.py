@@ -6,7 +6,7 @@ from importlib.metadata import version as importlib_version
 import pytest
 from packaging.version import Version
 
-import altair.vegalite.v5 as alt
+import altair.vegalite.v6 as alt
 from tests import skip_requires_vl_convert
 
 try:
@@ -57,7 +57,7 @@ def test_html_renderer_embed_options(chart):
 
 def test_mimetype_renderer_embed_options(chart):
     # check that metadata is passed appropriately
-    from altair.vegalite.v5.display import VEGALITE_MIME_TYPE
+    from altair.vegalite.v6.display import VEGALITE_MIME_TYPE
 
     mimetype = VEGALITE_MIME_TYPE
     spec = chart.to_dict()

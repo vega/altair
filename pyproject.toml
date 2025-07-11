@@ -55,7 +55,7 @@ Source = "https://github.com/vega/altair"
 
 [project.optional-dependencies]
 save = [
-    "vl-convert-python>=1.7.0",
+    "vl-convert-python>=1.8.0",
 ]
 all = [
     "altair[save]",
@@ -104,9 +104,9 @@ doc = [
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
-vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
-vega-embed        = "7"       # https://github.com/vega/vega-embed
-vega-lite         = "v5.21.0" # https://github.com/vega/vega-lite
+vega-datasets     = "v3" # https://github.com/vega/vega-datasets
+vega-embed        = "v7"       # https://github.com/vega/vega-embed
+vega-lite         = "v6.1.0" # https://github.com/vega/vega-lite
 
 [tool.hatch]
 build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
@@ -247,7 +247,7 @@ See https://github.com/vega/altair/pull/3449
 """
 
 [tool.ruff.lint.per-file-ignores]
-"!altair/vegalite/v5/api.py" = ["ANN"]  # Only enforce annotation rules on public api
+"!altair/vegalite/v6/api.py" = ["ANN"]  # Only enforce annotation rules on public api
 "tests/**/*.py"              = ["C901"] # Allow complex if/elif branching during tests
 
 [tool.ruff.format]
@@ -344,8 +344,8 @@ include=[
     "./sphinxext/**/*.py",
 ]
 ignore=[
-    "./altair/vegalite/v5/schema/channels.py",  # 716 warns
-    "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
+    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
     "../../../**/Lib",                          # stdlib

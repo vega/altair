@@ -31,8 +31,8 @@ from altair.utils.schemapi import (
     UndefinedType,
     _FromDict,
 )
-from altair.vegalite.v5.schema.channels import X
-from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
+from altair.vegalite.v6.schema.channels import X
+from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
 
 if TYPE_CHECKING:

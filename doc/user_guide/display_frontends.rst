@@ -139,7 +139,7 @@ Displaying in nteract
 ---------------------
 nteract_ cannot display HTML outputs natively, and so Altair's default ``html`` renderer
 will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
-To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v5
+To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v6
 mimetype, and use::
 
     alt.renderers.enable('mimetype')
