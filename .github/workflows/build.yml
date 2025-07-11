@@ -23,10 +23,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
       - name: Install dependencies
         run: uv pip install -e ".[dev, all]"
-      - name: Temporary ruff pin
-        # DON'T MERGE THIS, bump `ruff` instead
-        # Fixes: https://github.com/vega/altair/actions/runs/14478364865/job/40609439929
-        run: uv pip install ruff==0.9.5 --reinstall
+
       - name: Install specific jsonschema
         # Only have to execute this if we don't want the latest jsonschema version
         if: ${{ matrix.jsonschema-version != 'latest' }}
