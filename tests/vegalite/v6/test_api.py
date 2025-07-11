@@ -762,7 +762,7 @@ def test_when_condition_parity(
 
 def test_when_then_interactive() -> None:
     """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
-    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/movies.json"
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.0/data/movies.json"
     predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
         alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
     )
