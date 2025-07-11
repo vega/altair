@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import sys
-import warnings
 from enum import Enum
 from functools import partial, wraps
 from importlib.util import find_spec
@@ -24,6 +23,7 @@ from altair.datasets._constraints import (
     is_not_tabular,
     is_parquet,
     is_spatial,
+    is_topo,
     is_tsv,
 )
 from altair.datasets._exceptions import AltairDatasetsError
@@ -277,7 +277,8 @@ def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]
     pl_read_json = read(_pl_read_json_roundtrip(get_polars()), is_json)
     if is_available("polars_st"):
         fn_json: Sequence[Read[pl.DataFrame]] = (
-            _pl_read_json_polars_st_impl(),
+            _pl_read_json_polars_st_topo_impl(),  # TopoJSON files first
+            _pl_read_json_polars_st_impl(),  # Then other spatial JSON
             pl_read_json,
         )
     else:
@@ -363,8 +364,10 @@ def _pa_read_json_impl() -> Read[pa.Table]:
         https://arrow.apache.org/docs/python/json.html#reading-json-files
     """
     if is_available("polars"):
-        return read(_pl_read_json_roundtrip_to_arrow(get_polars()), is_json)
-    elif is_available("pandas"):
+        polars_ns = get_polars()
+        if polars_ns is not None:
+            return read(_pl_read_json_roundtrip_to_arrow(polars_ns), is_json)
+    if is_available("pandas"):
         return read(_pd_read_json_to_arrow(get_pandas()), is_json, exclude=is_spatial)
     return read(_stdlib_read_json_to_arrow, is_json, exclude=is_not_tabular)
 
@@ -382,9 +385,7 @@ def _pd_read_json_geopandas_impl() -> Read[pd.DataFrame]:
 
     @wraps(geopandas.read_file)
     def fn(source: Path | Any, /, schema: Any = None, **kwds: Any) -> pd.DataFrame:
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", r"More than one layer found", UserWarning)
-            return geopandas.read_file(source, **kwds)
+        return geopandas.read_file(source, **kwds)
 
     return read(fn, is_meta(is_spatial=True, suffix=".json"))
 
@@ -418,11 +419,22 @@ def _pl_read_json_polars_st_impl() -> Read[pl.DataFrame]:
 
     @wraps(st.read_file)
     def fn(source: Path | Any, /, schema: Any = None, **kwds: Any) -> pl.DataFrame:
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", r"More than one layer found", UserWarning)
-            return st.read_file(source, **kwds)
+        return st.read_file(source, **kwds)
 
     return read(fn, is_meta(is_spatial=True, suffix=".json"))
+
+
+def _pl_read_json_polars_st_topo_impl() -> Read[pl.DataFrame]:
+    import polars_st as st
+
+    @wraps(st.read_file)
+    def fn(source: Path | Any, /, schema: Any = None, **kwds: Any) -> pl.DataFrame:
+        # Add TopoJSON driver prefix for URLs
+        if isinstance(source, str) and source.startswith("http"):
+            source = f"TopoJSON:{source}"
+        return st.read_file(source, **kwds)
+
+    return read(fn, is_topo)
 
 
 def _pl_read_json_roundtrip(ns: ModuleType, /) -> Callable[..., pl.DataFrame]:

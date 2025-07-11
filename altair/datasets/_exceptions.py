@@ -90,8 +90,8 @@ def _suggest_url(meta: Metadata, *install_other: str) -> str:
         other = f" installing {others}, or use"
     return (
         f"\n\nInstead, try{other}:\n"
-        "    from altair.datasets import url\n"
-        f"    url({meta['dataset_name']!r})"
+        "    from altair.datasets import data\n"
+        f"    data.{meta['dataset_name']}.url"
     )
 
 

@@ -245,8 +245,8 @@ fmt = col("format")
 DataPackage.with_columns(
     Column(
         "dataset_name",
-        path_stem("path"),
-        "Name of the dataset/`Path.stem`_.",
+        col("name"),
+        "Name of the dataset from the resource name field.",
         tp_str="Dataset | LiteralString",
     ),
     Column(

@@ -33,6 +33,7 @@ __all__ = [
     "is_not_tabular",
     "is_parquet",
     "is_spatial",
+    "is_topo",
     "is_tsv",
 ]
 
@@ -116,4 +117,5 @@ is_tsv = is_meta(suffix=".tsv")
 is_arrow = is_meta(suffix=".arrow")
 is_parquet = is_meta(suffix=".parquet")
 is_spatial = is_meta(is_spatial=True)
+is_topo = is_meta(is_topo=True)
 is_not_tabular = is_meta(is_tabular=False)
