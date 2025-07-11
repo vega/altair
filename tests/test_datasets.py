@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
 
     from altair.datasets._reader import _Backend, _PandasAny, _Polars, _PyArrow
-    from altair.vegalite.v5.schema._typing import OneOrSeq
+    from altair.vegalite.v6.schema._typing import OneOrSeq
 
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
@@ -431,7 +431,7 @@ def test_reader_cache_disable(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
     load("cars")
     assert not load.cache.is_empty()
     # ISSUE: https://github.com/python/mypy/issues/3004
-    load.cache.path = None  # type: ignore[assignment]
+    load.cache.path = None
     assert load.cache.is_not_active()
     with pytest.raises(
         ValueError,

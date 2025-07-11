@@ -120,7 +120,7 @@ Examples
         >>> from altair.datasets import data
         >>> cars_url = data.cars.url
         >>> print(cars_url)
-        https://cdn.jsdelivr.net/npm/vega-datasets@3.2.0/data/cars.json
+        https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.0/data/cars.json
         """
         if self._default_loader is None:
             self._default_loader = Loader.from_backend(self._default_backend)
