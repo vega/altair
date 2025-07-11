@@ -47,7 +47,7 @@ class DatasetAccessor:
     >>> # Load with specific backend
     >>> cars_polars = data.cars(engine="polars")
     >>> cars_pandas = data.cars(engine="pandas")
-    >>> cars_pyarrow = data.cars(engine="pandas[pyarrow]")
+    >>> # Note: pandas[pyarrow] backend requires pyarrow package
     >>>
     >>> # Get URL
     >>> url = data.cars.url
