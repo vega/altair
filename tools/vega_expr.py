@@ -637,7 +637,13 @@ class VegaExprDef:
             if len(s) == 1:
                 yield s
             elif len(s) > 1:
-                yield from VegaExprDef._split_markers(s)
+                # Only recurse if we actually modified the string by removing a marker
+                # This prevents infinite recursion when the string doesn't end with any marker
+                if len(end) > 0:
+                    yield from VegaExprDef._split_markers(s)
+                else:
+                    # If no marker was found, just yield the string as-is to avoid infinite recursion
+                    yield s
             yield from end
 
     def _doc_tokens(self) -> Sequence[Token]:
