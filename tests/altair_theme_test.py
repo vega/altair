@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 def alt_theme_test() -> ChartType:
     import altair as alt
 
-    VEGA_DATASETS = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/"
+    VEGA_DATASETS = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.0/data/"
     us_10m = f"{VEGA_DATASETS}us-10m.json"
     unemployment = f"{VEGA_DATASETS}unemployment.tsv"
     movies = f"{VEGA_DATASETS}movies.json"

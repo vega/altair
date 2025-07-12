@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import datetime as dt
+import sys
 from typing import TYPE_CHECKING, Any, Literal, Union
 
 from altair.utils import SchemaBase
 
 if TYPE_CHECKING:
-    import sys
-
-    from altair.vegalite.v5.schema._typing import Map, PrimitiveValue_T
+    from altair.vegalite.v6.schema._typing import Map, PrimitiveValue_T
 
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
@@ -50,6 +49,8 @@ def _js_repr(val) -> str:
         return val._to_expr()
     elif isinstance(val, dt.date):
         return _from_date_datetime(val)
+    elif _is_numpy_generic(val):
+        return repr(val.item())
     else:
         return repr(val)
 
@@ -80,6 +81,15 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
         ms = us if us == 0 else us // 1_000
         args = *args, obj.hour, obj.minute, obj.second, ms
     return FunctionExpression(fn_name, args)._to_expr()
+
+
+def _is_numpy_generic(obj: Any) -> bool:
+    """
+    Check if an object is a numpy generic (scalar) type.
+
+    This function can be used without importing numpy when it is not available.
+    """
+    return (np := sys.modules.get("numpy")) is not None and isinstance(obj, np.generic)
 
 
 # Designed to work with Expression and VariableParameter

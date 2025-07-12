@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from functools import wraps as _wraps
 from typing import TYPE_CHECKING, Any
 from typing import overload as _overload
 
-from altair.vegalite.v5.schema._config import (
+from altair.vegalite.v6.schema._config import (
     AreaConfigKwds,
     AutoSizeParamsKwds,
     AxisConfigKwds,
@@ -78,7 +77,7 @@ from altair.vegalite.v5.schema._config import (
     ViewBackgroundKwds,
     ViewConfigKwds,
 )
-from altair.vegalite.v5.theme import themes as _themes
+from altair.vegalite.v6.theme import themes as _themes
 
 if TYPE_CHECKING:
     import sys
@@ -89,14 +88,8 @@ if TYPE_CHECKING:
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import ParamSpec
-    else:
-        from typing_extensions import ParamSpec
-
     from altair.utils.plugin_registry import Plugin
 
-    P = ParamSpec("P")
 
 __all__ = [
     "AreaConfigKwds",
@@ -246,12 +239,7 @@ def register(
         _register(name, func)
         if enable:
             _themes.enable(name)
-
-        @_wraps(func)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> ThemeConfig:
-            return func(*args, **kwargs)
-
-        return wrapper
+        return func
 
     return decorate
 

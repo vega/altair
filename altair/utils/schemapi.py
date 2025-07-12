@@ -27,12 +27,12 @@ from typing import (
     cast,
     overload,
 )
-from typing_extensions import TypeAlias
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+from narwhals.stable.v1.dependencies import is_narwhals_series
 from packaging.version import Version
 
 if sys.version_info >= (3, 12):
@@ -58,6 +58,11 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
     _OptionalModule: TypeAlias = "ModuleType | None"
 
 ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
@@ -409,7 +414,7 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
     """
-    Groups the errors by the json schema "validator" that casued the error.
+    Groups the errors by the json schema "validator" that caused the error.
 
     For example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
@@ -483,21 +488,24 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
+    seen = {cls}
     current_set = {cls}
     while current_set:
-        seen |= current_set
-        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
-        for cls in current_set - seen:
-            yield cls
+        next_set = set()
+        for base in current_set:
+            for sub in base.__subclasses__():
+                if sub not in seen:
+                    yield sub
+                    seen.add(sub)
+                    next_set.add(sub)
+        current_set = next_set
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
-    try:
-        ser = nw.from_native(obj, strict=True, series_only=True)
-        return ser.to_list()
-    except TypeError:
-        return list(obj)
+    # TODO @dangotbanned: Review after available (https://github.com/narwhals-dev/narwhals/pull/2110)
+    # See for what this silences for `narwhals` CI (https://github.com/narwhals-dev/narwhals/pull/2110#issuecomment-2687936504)
+    maybe_ser: Any = nw.from_native(obj, pass_through=True)
+    return maybe_ser.to_list() if is_narwhals_series(maybe_ser) else list(obj)
 
 
 def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
@@ -1421,7 +1429,7 @@ def _replace_parsed_shorthand(
     not passed to child `to_dict` function calls.
     """
     # Prevent that pandas categorical data is automatically sorted
-    # when a non-ordinal data type is specifed manually
+    # when a non-ordinal data type is specified manually
     # or if the encoding channel does not support sorting
     if "sort" in parsed_shorthand and (
         "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
@@ -1684,11 +1692,11 @@ VERSIONS: Mapping[
     ],
     str,
 ] = {
-    "vega-datasets": "v2.11.0",
-    "vega-embed": "6",
-    "vega-lite": "v5.21.0",
+    "vega-datasets": "v3.2.0",
+    "vega-embed": "v7",
+    "vega-lite": "v6.1.0",
     "vegafusion": "1.6.6",
-    "vl-convert-python": "1.7.0",
+    "vl-convert-python": "1.8.0",
 }
 """
 Version pins for non-``python`` `vega projects`_.

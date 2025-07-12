@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, get_args
+from typing import TYPE_CHECKING, Literal, cast, get_args
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
-from altair.vegalite.v5.schema._typing import VegaThemes
+from altair.vegalite.v6.schema._typing import VegaThemes
 from tools.codemod import extract_func_def, extract_func_def_embed
 
 if TYPE_CHECKING:
@@ -42,7 +42,7 @@ _OUTPUT_REMAP: Mapping[_OutputShort, _OutputLong] = {
 _Option: TypeAlias = Literal["output", "fold", "summary"]
 
 _PYSCRIPT_URL_FMT = "https://pyscript.net/releases/{0}/core.js"
-_PYSCRIPT_VERSION = "2024.10.1"
+_PYSCRIPT_VERSION = "2025.2.2"
 _PYSCRIPT_URL = _PYSCRIPT_URL_FMT.format(_PYSCRIPT_VERSION)
 
 
@@ -52,7 +52,7 @@ def validate_output(output: Any) -> _OutputLong:
         msg = f":output: option must be one of {get_args(_OutputShort)!r}"
         raise TypeError(msg)
     else:
-        short: _OutputShort = output
+        short = cast("_OutputShort", output)
         return _OUTPUT_REMAP[short]
 
 
