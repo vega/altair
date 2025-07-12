@@ -43,7 +43,7 @@ _TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAliasType,
 }
 
-DYNAMIC_ALL: tuple[te.LiteralString, ...] = ("altair.vegalite.v5",)
+DYNAMIC_ALL: tuple[te.LiteralString, ...] = ("altair.vegalite.v6",)
 
 
 def update__all__variable() -> None:
@@ -98,7 +98,7 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
     namespace
         A module dict, like `altair.__dict__`
     """
-    from altair.vegalite.v5.schema import _typing
+    from altair.vegalite.v6.schema import _typing
 
     # NOTE: Exclude any `TypeAlias` that were reused in a runtime definition.
     # Required for imports from `_typing`, outside of a `TYPE_CHECKING` block.
@@ -118,7 +118,7 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
 
 
 def _is_hashable(obj: t.Any) -> bool:
-    """Guard to prevent an `in` check occuring on mutable objects."""
+    """Guard to prevent an `in` check occurring on mutable objects."""
     try:
         return bool(hash(obj))
     except TypeError:

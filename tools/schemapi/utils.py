@@ -163,7 +163,7 @@ class _TypeAliasTracer:
             # Handles one very specific edge case `WindowFieldDef`
             # - Has an anonymous enum union
             # - One of the members is declared afterwards
-            # - SchemaBase needs to be first, as the union wont be internally sorted
+            # - SchemaBase needs to be first, as the union won't be internally sorted
             it = (
                 self.add_literal(el, spell_literal(el.literal), replace=True)
                 for el in info.anyOf
@@ -245,7 +245,7 @@ class _TypeAliasTracer:
 
     @property
     def n_entries(self) -> int:
-        """Number of unique `TypeAlias` defintions collected."""
+        """Number of unique `TypeAlias` definitions collected."""
         return len(self._literals)
 
 
@@ -1225,6 +1225,26 @@ def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
     """
     it_el: Iterable[str] = (f"{s!r}" for s in it) if quote else it
     return f"Literal[{', '.join(it_el)}]"
+
+
+def spell_literal_alias(
+    alias_name: str, members: Iterable[str], /, *, quote: bool = True
+) -> str:
+    """
+    Wraps ``utils.spell_literal`` as a ``TypeAlias``.
+
+    Examples
+    --------
+    >>> spell_literal_alias("Animals", ("Dog", "Cat", "Fish"))
+    "Animals: TypeAlias = Literal['Dog', 'Cat', 'Fish']"
+
+    >>> spell_literal_alias("Digits", "0123456789")
+    "Digits: TypeAlias = Literal['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
+
+    >>> spell_literal_alias("LessThanFive", (repr(i) for i in range(5)))
+    "LessThanFive: TypeAlias = Literal['0', '1', '2', '3', '4']"
+    """
+    return f"{alias_name}: TypeAlias = {spell_literal(members, quote=quote)}"
 
 
 def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:

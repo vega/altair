@@ -55,7 +55,7 @@ Source = "https://github.com/vega/altair"
 
 [project.optional-dependencies]
 save = [
-    "vl-convert-python>=1.7.0",
+    "vl-convert-python>=1.8.0",
 ]
 all = [
     "altair[save]",
@@ -69,7 +69,7 @@ all = [
 ]
 dev = [
     "hatch>=1.13.0",
-    "ruff>=0.8.4",
+    "ruff>=0.9.5",
     "duckdb>=1.0",
     "ipython[kernel]",
     "pandas>=1.1.3",
@@ -101,12 +101,18 @@ doc = [
     "scipy",
     "scipy-stubs; python_version>=\"3.10\"",
 ]
+[dependency-groups]
+geospatial = [
+    "geopandas>=0.14.3",
+    "polars-st>=0.1.0a27 ; python_full_version >= '3.10'",
+]
+
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
-vega-datasets     = "v2.11.0" # https://github.com/vega/vega-datasets
-vega-embed        = "7"       # https://github.com/vega/vega-embed
-vega-lite         = "v5.21.0" # https://github.com/vega/vega-lite
+vega-datasets     = "v3.2.0" # https://github.com/vega/vega-datasets
+vega-embed        = "v7"       # https://github.com/vega/vega-embed
+vega-lite         = "v6.1.0" # https://github.com/vega/vega-lite
 
 [tool.hatch]
 build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
@@ -137,7 +143,8 @@ target-version = "py39"
 
 [tool.ruff.lint]
 extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
-    "ANN204",  # missing-return-type-special-method 
+    "ANN204",  # missing-return-type-special-method
+    "C405",    # unnecessary-literal-set
     "C419",    # unnecessary-comprehension-in-call
     "C420",    # unnecessary-dict-comprehension-for-iterable
     "D200",    # fits-on-one-line
@@ -247,7 +254,7 @@ See https://github.com/vega/altair/pull/3449
 """
 
 [tool.ruff.lint.per-file-ignores]
-"!altair/vegalite/v5/api.py" = ["ANN"]  # Only enforce annotation rules on public api
+"!altair/vegalite/v6/api.py" = ["ANN"]  # Only enforce annotation rules on public api
 "tests/**/*.py"              = ["C901"] # Allow complex if/elif branching during tests
 
 [tool.ruff.format]
@@ -261,15 +268,19 @@ cwd = "."
 [tool.taskipy.tasks]
 lint       = "ruff check"
 format     = "ruff format --diff --check"
+ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
 type-check = "mypy altair tests"
 
-pytest    = "pytest"
-test      = "task lint && task format && task type-check && task pytest"
-test-fast = "task ruff-fix && pytest -m \"not slow\""
-test-slow = "task ruff-fix && pytest -m \"slow\""
-test-min  = "task lint && task format && task type-check && hatch test --python 3.9"
-test-all  = "task lint && task format && task type-check && hatch test --all"
+pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
+pytest        = "pytest && task pytest-serial"
+test          = "task ruff-check && task type-check && task pytest"
+test-fast     = "task ruff-fix && pytest -m \"not slow and not datasets_debug and not no_xdist\""
+test-slow     = "task ruff-fix && pytest -m \"slow and not datasets_debug and not no_xdist\""
+test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdist\" && task pytest-serial"
+test-min      = "task ruff-check && task type-check && hatch test --python 3.9"
+test-all      = "task ruff-check && task type-check && hatch test --all"
+
 
 generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
@@ -294,10 +305,19 @@ publish = "task build && uv publish"
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
-addopts = ["--numprocesses=logical", "--doctest-modules", "tests", "altair", "tools"]
+addopts = [
+    "--numprocesses=logical",
+    "--doctest-modules",
+    "tests",
+    "altair",
+    "tools",
+    "-m not datasets_debug and not no_xdist",
+]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
 markers = [
-    "slow: Label tests as slow (deselect with '-m \"not slow\"')"
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')",
+    "datasets_debug: Disabled by default due to high number of requests",
+    "no_xdist: Unsafe to run in parallel"
 ]
 
 [tool.mypy]
@@ -315,7 +335,8 @@ module = [
     "ipykernel.*",
     "ibis.*",
     "vegafusion.*",
-    "scipy.*"
+    "scipy.*",
+    "polars_st.*",
 ]
 ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
@@ -344,10 +365,11 @@ include=[
     "./sphinxext/**/*.py",
 ]
 ignore=[
-    "./altair/vegalite/v5/schema/channels.py",  # 716 warns
-    "./altair/vegalite/v5/schema/mixins.py",    # 1001 warns
+    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
     "../../../**/Lib",                          # stdlib
     "../../../**/typeshed*"                     # typeshed-fallback
 ]
+
