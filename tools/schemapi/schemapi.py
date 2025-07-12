@@ -412,7 +412,7 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
     """
-    Groups the errors by the json schema "validator" that casued the error.
+    Groups the errors by the json schema "validator" that caused the error.
 
     For example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
@@ -486,13 +486,17 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
+    seen = {cls}
     current_set = {cls}
     while current_set:
-        seen |= current_set
-        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
-        for cls in current_set - seen:
-            yield cls
+        next_set = set()
+        for base in current_set:
+            for sub in base.__subclasses__():
+                if sub not in seen:
+                    yield sub
+                    seen.add(sub)
+                    next_set.add(sub)
+        current_set = next_set
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
@@ -1423,7 +1427,7 @@ def _replace_parsed_shorthand(
     not passed to child `to_dict` function calls.
     """
     # Prevent that pandas categorical data is automatically sorted
-    # when a non-ordinal data type is specifed manually
+    # when a non-ordinal data type is specified manually
     # or if the encoding channel does not support sorting
     if "sort" in parsed_shorthand and (
         "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}

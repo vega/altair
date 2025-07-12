@@ -7,14 +7,13 @@ is adjusted by interacting with the map on the left.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
-import geopandas as gpd
+from altair.datasets import data
 
 # load data
-gdf_quakies = gpd.read_file(data.earthquakes.url)
-gdf_world = gpd.read_file(data.world_110m.url, layer="countries")
+gdf_quakies = data.earthquakes()
+gdf_world = data.world_110m(layer="countries")
 
-# defintion for interactive brush
+# definition for interactive brush
 brush = alt.selection_interval(
     encodings=["longitude"], 
     empty=False, 
