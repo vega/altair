@@ -10,10 +10,10 @@ Each choropleth map uses color intensity to represent the percentage values with
 import altair as alt
 from altair.datasets import data
 
-# Parse county_id as number for lookup (URL ref)
+# Load species data with county_id as number
 csv_data = alt.UrlData(data.species.url, format=alt.CsvDataFormat(parse={'county_id': 'number'}))
 
-# Load US counties topology (URL ref)
+# Load US counties topology
 counties = alt.topo_feature(data.us_10m.url, 'counties')
 
 chart = alt.Chart(csv_data).mark_geoshape().encode(
