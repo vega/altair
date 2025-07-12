@@ -283,7 +283,7 @@ def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict[str, Any]:
     return transformed_vega_spec
 
 
-def handle_row_limit_exceeded(row_limit: int, warnings: list):
+def handle_row_limit_exceeded(row_limit: int | None, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
             msg = (
