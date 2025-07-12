@@ -8,12 +8,10 @@ Each choropleth map uses color intensity to represent the percentage values with
 # category: maps
 
 import altair as alt
-import pandas as pd
-from vega_datasets import data
+from altair.datasets import data
 
 # Load the CSV data
-url = "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/species.csv"
-df = pd.read_csv(url)
+df = data.species()
 
 # Disable row limit for Altair
 alt.data_transformers.disable_max_rows()
