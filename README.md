@@ -57,7 +57,7 @@ brush = alt.selection_interval()
 points = alt.Chart(source).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
-    color=alt.condition(brush, 'Origin', alt.value('lightgray'))
+    color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray"))
 ).add_params(
     brush
 )
@@ -108,18 +108,9 @@ you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/al
 For bugs and feature requests, please open a [Github Issue](https://github.com/vega/altair/issues).
 
 ## Development
-
-[![Hatch project](https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg)](https://github.com/pypa/hatch)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pytest](https://img.shields.io/badge/logo-pytest-blue?logo=pytest&labelColor=5c5c5c&label=%20)](https://github.com/pytest-dev/pytest)
-
-You can find the instructions on how to install the package for development in [the documentation](https://altair-viz.github.io/getting_started/installation.html).
-
-To run the tests and linters, use
-
-```bash
-hatch test
-```
 
 For information on how to contribute your developments back to the Vega-Altair repository, see
 [`CONTRIBUTING.md`](https://github.com/vega/altair/blob/main/CONTRIBUTING.md)

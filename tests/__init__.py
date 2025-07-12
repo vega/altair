@@ -2,27 +2,46 @@ from __future__ import annotations
 
 import pkgutil
 import re
+import sys
 from importlib.util import find_spec
-from typing import TYPE_CHECKING
+from pathlib import Path
+from typing import TYPE_CHECKING, overload
 
 import pytest
 
 from tests import examples_arguments_syntax, examples_methods_syntax
 
 if TYPE_CHECKING:
-    import sys
+    from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
-    from typing import Collection, Iterator, Mapping
 
     if sys.version_info >= (3, 11):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    from _pytest.mark import ParameterSet
+    from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
+    from _pytest.mark.structures import (
+        Markable,  # pyright: ignore[reportPrivateImportUsage]
+    )
 
     MarksType: TypeAlias = (
         "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
     )
+
+
+def windows_has_tzdata() -> bool:
+    """
+    From PyArrow: python/pyarrow/tests/util.py.
+
+    This is the default location where tz.cpp will look for (until we make
+    this configurable at run-time)
+
+    Skip test on Windows when the tz database is not configured.
+
+    See https://github.com/vega/altair/issues/3050.
+    """
+    return (Path.home() / "Downloads" / "tzdata").exists()
+
 
 slow: pytest.MarkDecorator = pytest.mark.slow()
 """
@@ -43,6 +62,27 @@ Either script can accept ``pytest`` args::
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
 """
 
+no_xdist: pytest.MarkDecorator = pytest.mark.no_xdist()
+"""
+Custom ``pytest.mark`` decorator.
+
+Each marked test will run **serially**, after all other selected tests.
+
+.. tip::
+   Use as a last resort when a test depends on manipulating global state.
+"""
+
+skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("IPython") is None, reason="`IPython` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `IPython`_ import would fail.
+
+.. _IPython:
+   https://github.com/ipython/ipython
+"""
 
 skip_requires_vl_convert: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("vl_convert") is None, reason="`vl_convert` not installed."
@@ -56,18 +96,60 @@ Applies when `vl-convert`_ import would fail.
    https://github.com/vega/vl-convert
 """
 
-
-skip_requires_pyarrow: pytest.MarkDecorator = pytest.mark.skipif(
-    find_spec("pyarrow") is None, reason="`pyarrow` not installed."
+skip_requires_vegafusion: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("vegafusion") is None, reason="`vegafusion` not installed."
 )
 """
 ``pytest.mark.skipif`` decorator.
 
-Applies when `pyarrow`_ import would fail.
+Applies when `vegafusion`_ import would fail.
 
-.. _pyarrow:
-   https://pypi.org/project/pyarrow/
+.. _vegafusion:
+    https://github.com/vega/vegafusion
 """
+
+skip_requires_scipy: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("scipy") is None, reason="`scipy` not installed."
+)
+
+
+@overload
+def skip_requires_pyarrow(
+    fn: None = ..., /, *, requires_tzdata: bool = ...
+) -> pytest.MarkDecorator: ...
+
+
+@overload
+def skip_requires_pyarrow(
+    fn: Markable, /, *, requires_tzdata: bool = ...
+) -> Markable: ...
+
+
+def skip_requires_pyarrow(
+    fn: Markable | None = None, /, *, requires_tzdata: bool = False
+) -> pytest.MarkDecorator | Markable:
+    """
+    ``pytest.mark.skipif`` decorator.
+
+    Applies when `pyarrow`_ import would fail.
+
+    Additionally, we mark as expected to fail on `Windows`.
+
+    https://github.com/vega/altair/issues/3050
+
+    .. _pyarrow:
+        https://pypi.org/project/pyarrow/
+    """
+    composed = pytest.mark.skipif(
+        find_spec("pyarrow") is None, reason="`pyarrow` not installed."
+    )
+    if requires_tzdata:
+        composed = pytest.mark.xfail(
+            sys.platform == "win32" and not windows_has_tzdata(),
+            reason="Timezone database is not installed on Windows",
+        )(composed)
+
+    return composed if fn is None else composed(fn)
 
 
 def id_func_str_only(val) -> str:
@@ -170,6 +252,7 @@ distributed_examples: pytest.MarkDecorator = pytest.mark.parametrize(
                 "wind_vector_map": slow,
                 r"\.point_map\.py": slow,
                 "line_chart_with_color_datum": slow,
+                "deviation_ellipses": skip_requires_scipy,
             },
         )
     ),

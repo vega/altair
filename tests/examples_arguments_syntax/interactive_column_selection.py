@@ -37,7 +37,7 @@ heatmap = alt.Chart(
     alt.X('level_0', title=None),
     alt.Y('level_1', title=None),
     alt.Color('correlation', scale=alt.Scale(domain=[-1, 1], scheme='blueorange')),
-    opacity=alt.condition(select_x & select_y, alt.value(1), alt.value(0.4))
+    opacity=alt.when(select_x, select_y).then(alt.value(1)).otherwise(alt.value(0.4)),
 ).add_params(
     select_x, select_y
 )
@@ -68,7 +68,7 @@ dynamic_title = alt.Title(alt.expr(f'"Difference " + {select_x.name}.level_0 + "
 # We pivot transform to get each category as a column
 lines_diff = base.transform_pivot(
     'category', 'value', groupby=['date']
-# In the calculate transform we use the values from the selection to subset the columns to substract
+# In the calculate transform we use the values from the selection to subset the columns to subtract
 ).transform_calculate(
     difference = f'datum[{select_x.name}.level_0] - datum[{select_y.name}.level_1]'
 ).mark_line(color='grey').encode(

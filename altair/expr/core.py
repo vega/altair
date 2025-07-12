@@ -1,9 +1,18 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Union
-from typing_extensions import TypeAlias
+import datetime as dt
+import sys
+from typing import TYPE_CHECKING, Any, Literal, Union
 
 from altair.utils import SchemaBase
+
+if TYPE_CHECKING:
+    from altair.vegalite.v6.schema._typing import Map, PrimitiveValue_T
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 
 class DatumType:
@@ -38,8 +47,49 @@ def _js_repr(val) -> str:
         return "null"
     elif isinstance(val, OperatorMixin):
         return val._to_expr()
+    elif isinstance(val, dt.date):
+        return _from_date_datetime(val)
+    elif _is_numpy_generic(val):
+        return repr(val.item())
     else:
         return repr(val)
+
+
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
+    """
+    Parse native `datetime.(date|datetime)` into a `datetime expression`_ string.
+
+    **Month is 0-based**
+
+    .. _datetime expression:
+        https://vega.github.io/vega/docs/expressions/#datetime
+    """
+    fn_name: Literal["datetime", "utc"] = "datetime"
+    args: tuple[int, ...] = obj.year, obj.month - 1, obj.day
+    if isinstance(obj, dt.datetime):
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                fn_name = "utc"
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
+        us = obj.microsecond
+        ms = us if us == 0 else us // 1_000
+        args = *args, obj.hour, obj.minute, obj.second, ms
+    return FunctionExpression(fn_name, args)._to_expr()
+
+
+def _is_numpy_generic(obj: Any) -> bool:
+    """
+    Check if an object is a numpy generic (scalar) type.
+
+    This function can be used without importing numpy when it is not available.
+    """
+    return (np := sys.modules.get("numpy")) is not None and isinstance(obj, np.generic)
 
 
 # Designed to work with Expression and VariableParameter
@@ -237,4 +287,6 @@ class GetItemExpression(Expression):
         return f"{self.group}[{self.name!r}]"
 
 
-IntoExpression: TypeAlias = Union[bool, None, str, float, OperatorMixin, Dict[str, Any]]
+IntoExpression: TypeAlias = Union[
+    "PrimitiveValue_T", dt.date, dt.datetime, OperatorMixin, "Map"
+]

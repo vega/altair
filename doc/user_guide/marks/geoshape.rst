@@ -251,10 +251,9 @@ Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the 
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
-    gdf_us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+    gdf_us_counties = data.us_10m(layer="counties")
     df_us_unemp = data.unemployment()
 
     alt.Chart(gdf_us_counties).mark_geoshape().transform_lookup(
@@ -289,8 +288,7 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     def classify(type, domain=None, nice=False, title=None):
         # define data
@@ -439,7 +437,7 @@ the color encoding as ``alt.repeat('row')``
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     states = alt.topo_feature(data.us_10m.url, 'states')
     source = data.population_engineers_hurricanes.url
@@ -470,7 +468,7 @@ regular faceting will not work for geographic visualization:
 .. altair-plot::
 
     source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
-    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
+    us_states = data.us_10m(layer="states")
     gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
@@ -492,6 +490,10 @@ and create a small multiples chart via concatenation
 as in the following example:
 
 .. altair-plot::
+
+    source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
+    us_states = data.us_10m(layer="states")
+    gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.concat(
         *(
@@ -520,18 +522,18 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     # load the data
-    us_states = gpd.read_file(data.us_10m.url, driver="TopoJSON", layer="states")
+    us_states = data.us_10m(layer="states")
     us_population = data.population_engineers_hurricanes()[["state", "id", "population"]]
 
     # define a pointer selection
     click_state = alt.selection_point(fields=["state"])
+    # define a condition on the opacity encoding depending on the selection
+    opacity = alt.when(click_state).then(alt.value(1)).otherwise(alt.value(0.2))
 
     # create a choropleth map using a lookup transform
-    # define a condition on the opacity encoding depending on the selection
     choropleth = (
         alt.Chart(us_states)
         .mark_geoshape()
@@ -540,13 +542,13 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
         )
         .encode(
             color="population:Q",
-            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            opacity=opacity,
             tooltip=["state:N", "population:Q"],
         )
         .project(type="albersUsa")
     )
 
-    # create a bar chart with a similar condition on the opacity encoding.
+    # create a bar chart with the same conditional ``opacity`` encoding.
     bars = (
         alt.Chart(
             us_population.nlargest(15, "population"), title="Top 15 states by population"
@@ -554,7 +556,7 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
         .mark_bar()
         .encode(
             x="population",
-            opacity=alt.condition(click_state, alt.value(1), alt.value(0.2)),
+            opacity=opacity,
             color="population",
             y=alt.Y("state").sort("-x"),
         )
@@ -578,12 +580,11 @@ We use here an elegant way to access the nested point coordinates from the geome
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     # load data
-    gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-    gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+    gdf_quakies = data.earthquakes()
+    gdf_world = data.world_110m(layer="countries")
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5, name='rotate longitude ')
@@ -616,7 +617,7 @@ We use here an elegant way to access the nested point coordinates from the geome
         .encode(
             longitude="lon:Q",
             latitude="lat:Q",
-            strokeWidth=alt.condition(hover, alt.value(1, empty=False), alt.value(0)),
+            strokeWidth=alt.when(hover, empty=False).then(alt.value(1)).otherwise(alt.value(0)),
             size=alt.Size(
                 "mag:Q",
                 scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 6], exponent=4),

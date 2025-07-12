@@ -28,7 +28,7 @@ points = alt.Chart().mark_point().encode(
         title='Maximum Daily Temperature (C)',
         scale=alt.Scale(domain=[-5, 40])
     ),
-    color=alt.condition(brush, color, alt.value('lightgray')),
+    color=alt.when(brush).then(color).otherwise(alt.value("lightgray")),
     size=alt.Size('precipitation:Q', scale=alt.Scale(range=[5, 200]))
 ).properties(
     width=550,
@@ -43,7 +43,7 @@ points = alt.Chart().mark_point().encode(
 bars = alt.Chart().mark_bar().encode(
     x='count()',
     y='weather:N',
-    color=alt.condition(click, color, alt.value('lightgray')),
+    color=alt.when(click).then(color).otherwise(alt.value("lightgray")),
 ).transform_filter(
     brush
 ).properties(

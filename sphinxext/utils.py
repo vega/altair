@@ -30,7 +30,7 @@ def create_thumbnail(
         final_height = height
         final_width = int(im_width * height_factor)
 
-    thumb = im.resize((final_width, final_height), Image.ANTIALIAS)
+    thumb = im.resize((final_width, final_height), Image.Resampling.LANCZOS)
     thumb.save(thumb_filename)
 
 
@@ -46,7 +46,7 @@ def create_generic_image(
     arr = np.zeros((shape[0], shape[1], 3))
     if gradient:
         # gradient from gray to white
-        arr += np.linspace(128, 255, shape[1])[:, None]
+        arr += np.linspace(128, 255, shape[1])[:, None]  # pyright: ignore[reportCallIssue,reportArgumentType]
     im = Image.fromarray(arr.astype("uint8"))
     im.save(filename)
 
@@ -58,7 +58,7 @@ Example script with invalid Python syntax
 """
 
 
-def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
+def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     """
     Parse source file into AST node.
 
@@ -88,7 +88,7 @@ def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
+def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -138,12 +138,12 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error
-        docstring = node.docstring
+        docstring = node.docstring  # pyright: ignore[reportAttributeAccessIssue]
 
         import tokenize
         from io import BytesIO
 
-        ts = tokenize.tokenize(BytesIO(content).readline)
+        ts = tokenize.tokenize(BytesIO(content).readline)  # pyright: ignore[reportArgumentType]
         ds_lines = 0
         # find the first string according to the tokenizer and get
         # it's end row
@@ -160,10 +160,10 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
         if (
             node.body
             and isinstance(node.body[0], ast.Expr)
-            and isinstance(node.body[0].value, (ast.Str, ast.Constant))
+            and isinstance(node.body[0].value, ast.Constant)
         ):
             docstring_node = node.body[0]
-            docstring = docstring_node.value.s
+            docstring = docstring_node.value.s  # pyright: ignore[reportAttributeAccessIssue]
             # python2.7: Code was read in bytes needs decoding to utf-8
             # unless future unicode_literals is imported in source which
             # make ast output unicode strings
@@ -203,8 +203,8 @@ def dict_hash(dct: dict[Any, Any]) -> Any:
     serialized = json.dumps(dct, sort_keys=True)
 
     try:
-        m = hashlib.sha256(serialized)[:32]
+        m = hashlib.sha256(serialized)[:32]  # pyright: ignore[reportArgumentType,reportIndexIssue]
     except TypeError:
-        m = hashlib.sha256(serialized.encode())[:32]
+        m = hashlib.sha256(serialized.encode())[:32]  # pyright: ignore[reportIndexIssue]
 
     return m.hexdigest()

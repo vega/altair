@@ -24,29 +24,14 @@ and non-notebook IDEs, see :ref:`displaying-charts`.
 If you wish to install Altair with only the required dependencies,
 you can omit the ``[all]``/``-all`` suffix.
 
+Altair can also be installed with just the dependencies necessary for saving charts to offline HTML files or PNG/SVG/PDF formats, using:
+
+.. code-block:: bash
+
+    pip install "altair[save]"
+
 Development Installation
 ========================
-
-The `Altair source repository`_ is available on GitHub. Once you have cloned the
-repository and installed all the above dependencies, run the following command
-from the root of the repository to install the main version of Altair:
-
-.. code-block:: bash
-
-    pip install -e .
-
-To install optional and development dependencies as well, run
-
-.. code-block:: bash
-
-    pip install -e ".[all, dev]"
-
-If you do not wish to clone the source repository, you can install the
-development version directly from GitHub using:
-
-.. code-block:: bash
-
-    pip install -e git+https://github.com/vega/altair.git
 
 Please see `CONTRIBUTING.md <https://github.com/vega/altair/blob/main/CONTRIBUTING.md>`_
 for details on how to contribute to the Altair project.
@@ -56,4 +41,3 @@ for details on how to contribute to the Altair project.
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 .. _JupyterLab: http://jupyterlab.readthedocs.io/
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/
-.. _Altair source repository: http://github.com/vega/altair

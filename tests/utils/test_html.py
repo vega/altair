@@ -20,8 +20,8 @@ def spec():
 def test_spec_to_html(requirejs, fullhtml, spec):
     # We can't test that the html actually renders, but we'll test aspects of
     # it to make certain that the keywords are respected.
-    vegaembed_version = ("3.12",)
-    vegalite_version = ("3.0",)
+    vegaembed_version = "3.12"
+    vegalite_version = "3.0"
     vega_version = "4.0"
 
     html = spec_to_html(

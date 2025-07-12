@@ -14,7 +14,7 @@ import jinja2
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
-from docutils.statemachine import ViewList
+from docutils.statemachine import StringList
 from sphinx.util.nodes import nested_parse_with_titles
 
 from altair.utils.execeval import eval_block
@@ -184,7 +184,7 @@ def save_example_pngs(
         else:
             # the file changed or the image file does not exist. Generate it.
             print(f"-> saving {image_file!s}")
-            chart = eval_block(code)
+            chart = eval_block(code, strict=True)
             try:
                 chart.save(image_file)
                 hashes[filename] = example_hash
@@ -303,7 +303,7 @@ class AltairMiniGalleryDirective(Directive):
         )
 
         # parse and return documentation
-        result = ViewList()
+        result = StringList()
         for line in include.split("\n"):
             result.append(line, "<altair-minigallery>")
         node = nodes.paragraph()

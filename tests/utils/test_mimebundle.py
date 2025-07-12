@@ -1,24 +1,19 @@
+from __future__ import annotations
+
+from typing import Any
+
 import pytest
 
 import altair as alt
 from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
-
-try:
-    import vl_convert as vlc
-except ImportError:
-    vlc = None
-
-try:
-    import vegafusion as vf  # type: ignore
-except ImportError:
-    vf = None
+from tests import skip_requires_vegafusion, skip_requires_vl_convert
 
 
 @pytest.fixture
-def vegalite_spec():
+def vegalite_spec() -> dict[str, Any]:
     return {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
         "description": "A simple bar chart with embedded data.",
         "data": {
             "values": [
@@ -44,7 +39,7 @@ def vegalite_spec():
 @pytest.fixture
 def vega_spec():
     return {
-        "$schema": "https://vega.github.io/schema/vega/v5.json",
+        "$schema": "https://vega.github.io/schema/vega/v6.json",
         "axes": [
             {
                 "aria": False,
@@ -116,7 +111,7 @@ def vega_spec():
             },
         ],
         "description": "A simple bar chart with embedded data.",
-        "height": 200,
+        "height": 300,
         "marks": [
             {
                 "encode": {
@@ -168,10 +163,8 @@ def vega_spec():
     }
 
 
+@skip_requires_vl_convert
 def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
-    if vlc is None:
-        pytest.skip("vl_convert not importable; cannot run mimebundle tests")
-
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
@@ -182,7 +175,7 @@ def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
         engine="vl-convert",
     )
 
-    assert bundle == {"application/vnd.vega.v5+json": vega_spec}
+    assert bundle == {"application/vnd.vega.v6+json": vega_spec}
 
 
 def test_spec_to_vegalite_mimebundle(vegalite_spec):
@@ -192,21 +185,21 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
         format="vega-lite",
         vegalite_version=alt.VEGALITE_VERSION,
     )
-    assert bundle == {"application/vnd.vegalite.v5+json": vegalite_spec}
+    assert bundle == {"application/vnd.vegalite.v6+json": vegalite_spec}
 
 
 def test_spec_to_vega_mimebundle(vega_spec):
     # ValueError: mode must be 'vega-lite'
     with pytest.raises(ValueError):  # noqa: PT011
-        spec_to_mimebundle(
+        spec_to_mimebundle(  # pyright: ignore[reportCallIssue]
             spec=vega_spec,
-            mode="vega",
+            mode="vega",  # pyright: ignore[reportArgumentType]
             format="vega",
             vega_version=alt.VEGA_VERSION,
         )
 
 
-def test_spec_to_json_mimebundle():
+def test_spec_to_json_mimebundle(vegalite_spec):
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         mode="vega-lite",
@@ -233,7 +226,7 @@ def check_pre_transformed_vega_spec(vega_spec):
     assert len(data_0.get("transform", [])) == 0
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion is not installed")
+@skip_requires_vegafusion
 def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
     with alt.data_transformers.enable("vegafusion"):
         bundle = spec_to_mimebundle(
@@ -242,14 +235,15 @@ def test_vegafusion_spec_to_vega_mime_bundle(vegalite_spec):
             format="vega",
         )
         # Returned bundle will be vega
-        vega_spec = bundle["application/vnd.vega.v5+json"]
+        vega_spec = bundle["application/vnd.vega.v6+json"]
         check_pre_transformed_vega_spec(vega_spec)
 
 
-@pytest.mark.skipif(vf is None, reason="vegafusion is not installed")
+@skip_requires_vegafusion
 def test_vegafusion_chart_to_vega_mime_bundle(vegalite_spec):
     chart = alt.Chart.from_dict(vegalite_spec)
     with alt.data_transformers.enable("vegafusion"), alt.renderers.enable("json"):
         bundle = chart._repr_mimebundle_()
+        assert isinstance(bundle, tuple)
         vega_spec = bundle[0]["application/json"]
         check_pre_transformed_vega_spec(vega_spec)

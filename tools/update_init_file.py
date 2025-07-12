@@ -2,30 +2,37 @@
 
 from __future__ import annotations
 
+import collections.abc as cabc
 import typing as t
 import typing_extensions as te
+from collections.abc import Sequence
+from importlib import import_module as _import_module
+from importlib.util import find_spec as _find_spec
 from inspect import getattr_static, ismodule
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from tools.schemapi.utils import ruff_write_lint_format_str
+from tools.codemod import ruff
 
-_TYPING_CONSTRUCTS = {
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+_TYPING_CONSTRUCTS: set[t.Any] = {
     te.TypeAlias,
     t.TypeVar,
     t.cast,
     t.overload,
     te.runtime_checkable,
-    t.List,
-    t.Dict,
-    t.Tuple,
+    list,
+    dict,
+    tuple,
     t.Any,
     t.Literal,
     t.Union,
-    t.Iterable,
+    cabc.Iterable,
     t.Protocol,
     te.Protocol,
-    t.Sequence,
+    Sequence,
     t.IO,
     annotations,
     te.Required,
@@ -35,6 +42,8 @@ _TYPING_CONSTRUCTS = {
     te.deprecated,
     te.TypeAliasType,
 }
+
+DYNAMIC_ALL: tuple[te.LiteralString, ...] = ("altair.vegalite.v6",)
 
 
 def update__all__variable() -> None:
@@ -47,11 +56,8 @@ def update__all__variable() -> None:
     # Read existing file content
     import altair as alt
 
-    encoding = "utf-8"
-    init_path = Path(alt.__file__)
-    with init_path.open(encoding=encoding) as f:
-        lines = f.readlines()
-    lines = [line.strip("\n") for line in lines]
+    init_path = normalize_source("altair")
+    lines = extract_lines(init_path, strip_chars="\n")
 
     # Find first and last line of the definition of __all__
     first_definition_line = None
@@ -74,7 +80,11 @@ def update__all__variable() -> None:
     ]
     # Write new version of altair/__init__.py
     # Format file content with ruff
-    ruff_write_lint_format_str(init_path, new_lines)
+    ruff.write_lint_format(init_path, new_lines)
+
+    for source in DYNAMIC_ALL:
+        print(f"Updating `__all__`\n {source!r}\n  ->{normalize_source(source)!s}")
+        update_dynamic__all__(source)
 
 
 def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
@@ -88,7 +98,7 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
     namespace
         A module dict, like `altair.__dict__`
     """
-    from altair.vegalite.v5.schema import _typing
+    from altair.vegalite.v6.schema import _typing
 
     # NOTE: Exclude any `TypeAlias` that were reused in a runtime definition.
     # Required for imports from `_typing`, outside of a `TYPE_CHECKING` block.
@@ -108,7 +118,7 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
 
 
 def _is_hashable(obj: t.Any) -> bool:
-    """Guard to prevent an `in` check occuring on mutable objects."""
+    """Guard to prevent an `in` check occurring on mutable objects."""
     try:
         return bool(hash(obj))
     except TypeError:
@@ -132,6 +142,104 @@ def _is_relevant(attr: t.Any, name: str, /) -> bool:
         return getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
     else:
         return True
+
+
+def _retrieve_all(name: str, /) -> list[str]:
+    """Import `name` and return a defined ``__all__``."""
+    found = _import_module(name).__all__
+    if not found:
+        msg = (
+            f"Expected to find a populated `__all__` for {name!r},\nbut got: {found!r}"
+        )
+        raise AttributeError(msg)
+    return found
+
+
+def normalize_source(src: str | Path, /) -> Path:
+    """
+    Return the ``Path`` representation of a module/package.
+
+    Returned unchanged if already a ``Path``.
+    """
+    if isinstance(src, str):
+        if src == "altair" or src.startswith("altair."):
+            if (spec := _find_spec(src)) and (origin := spec.origin):
+                src = origin
+            else:
+                raise ModuleNotFoundError(src, spec)
+        return Path(src)
+    else:
+        return src
+
+
+def extract_lines(fp: Path, /, strip_chars: str | None = None) -> list[str]:
+    """Return all lines in ``fp`` with whitespace stripped."""
+    with Path(fp).open(encoding="utf-8") as f:
+        lines = f.readlines()
+        if not lines:
+            msg = f"Found no content when reading lines for:\n{lines!r}"
+            raise NotImplementedError(msg)
+    return [line.strip(strip_chars) for line in lines]
+
+
+def _normalize_import_lines(lines: Iterable[str]) -> Iterator[str]:
+    """
+    Collapses file content to contain one line per import source.
+
+    Preserves only lines **before** an existing ``__all__``.
+    """
+    it: Iterator[str] = iter(lines)
+    for line in it:
+        if line.endswith("("):
+            line = line.rstrip("( ")
+            for s_line in it:
+                if s_line.endswith(","):
+                    line = f"{line} {s_line}"
+                elif s_line.endswith(")"):
+                    break
+                else:
+                    NotImplementedError(f"Unexpected line:\n{s_line!r}")
+            yield line.rstrip(",")
+        elif line.startswith("__all__"):
+            break
+        else:
+            yield line
+
+
+def process_lines(lines: Iterable[str], /) -> Iterator[str]:
+    """Normalize imports, follow ``*``(s), reconstruct `__all__``."""
+    _all: set[str] = set()
+    for line in _normalize_import_lines(lines):
+        if line.startswith("#") or line == "":
+            yield line
+        elif "import" in line:
+            origin_stmt, members = line.split(" import ", maxsplit=1)
+            if members == "*":
+                _, origin = origin_stmt.split("from ")
+                targets = _retrieve_all(origin)
+            else:
+                targets = members.split(", ")
+            _all.update(targets)
+            yield line
+        else:
+            msg = f"Unexpected line:\n{line!r}"
+            raise NotImplementedError(msg)
+    yield f"__all__ = {sorted(_all)}"
+
+
+def update_dynamic__all__(source: str | Path, /) -> None:
+    """
+    ## Relies on all `*` imports leading to an `__all__`.
+
+    Acceptable `source`:
+
+        "altair.package.subpackage.etc"
+        Path(...)
+
+    """
+    fp = normalize_source(source)
+    content = process_lines(extract_lines(fp))
+    ruff.write_lint_format(fp, content)
 
 
 if __name__ == "__main__":
