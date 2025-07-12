@@ -412,7 +412,7 @@ This affects what happens when no data points are selected yet::
     color=alt.when(brush).then("Origin:N").otherwise(alt.value("lightgray"))
 
     # Custom behavior (empty=False): When no selection is made in this example, all points will be lightgray (they are considered as *unselected*, and colored according to the `otherwise` clause )
-    color=alt.when(brush, empty=False)..then("Origin:N").otherwise(alt.value("lightgray"))
+    color=alt.when(brush, empty=False).then("Origin:N").otherwise(alt.value("lightgray"))
 
 Setting Initial Values
 """""""""""""""""""""
