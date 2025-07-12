@@ -379,7 +379,7 @@ This is often referred to as a "brush" selection and is commonly used for filter
 zooming, or highlighting ranges of data points.
 
 Basic Interval Selection
-"""""""""""""""""""""""
+""""""""""""""""""""""""
 The simplest interval selection is created with the :func:`selection_interval` function:
 
 .. altair-plot::
@@ -391,7 +391,7 @@ As you click and drag on the plot, your mouse creates a selection region that ca
 moved to change which data points are selected.
 
 Customizing Interval Behavior
-""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""
 The :func:`selection_interval` function accepts several arguments for customization.
 For example, you can limit the selection to only the x-axis and set it so that
 an empty selection contains no points:
@@ -418,7 +418,7 @@ This affects what happens when no data points are selected yet::
     color=alt.when(brush, empty=False).then("Origin:N").otherwise(alt.value("lightgray"))
 
 Setting Initial Values
-"""""""""""""""""""""
+""""""""""""""""""""""
 When creating interactive visualizations, you often want to guide users by
 starting with a pre-selected region rather than an empty selection. You can do this
 using the ``value`` parameter of :func:`selection_interval`.
@@ -501,7 +501,7 @@ data points, making them ideal for interactive legends, tooltips, and highlighti
 specific data points.
 
 Basic Point Selection
-""""""""""""""""""""
+"""""""""""""""""""""
 The simplest point selection is created with the :func:`selection_point` function. 
 By default, points are selected on click:
 
