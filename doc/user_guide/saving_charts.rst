@@ -138,6 +138,18 @@ change to ``svg`` rendering, use the ``embed_options`` as such:
 
     chart.save('chart.html', embed_options={'renderer':'svg'})
 
+If you need an HTML string object for further processing in custom HTML reports,
+you can use the :meth:`Chart.to_html` method:
+
+.. code-block:: python
+
+    html_string = chart.to_html()
+    # Use html_string in your custom HTML generation
+
+The :meth:`Chart.to_html` method returns a string containing the HTML representation
+of the chart, which can be embedded into larger HTML documents or processed
+programmatically.
+
 
 .. note::
 
