@@ -107,6 +107,7 @@ Encoding Channels
    Theta2Value
    ThetaDatum
    ThetaValue
+   Time
    Tooltip
    TooltipValue
    Url
@@ -439,6 +440,7 @@ Low-Level Schema Wrappers
    FoldTransform
    FontStyle
    FontWeight
+   Format
    FormatConfig
    Generator
    GenericUnitSpecEncodingAnyMark
@@ -591,6 +593,7 @@ Low-Level Schema Wrappers
    ScaleInvalidDataShowAsValuestrokeOpacity
    ScaleInvalidDataShowAsValuestrokeWidth
    ScaleInvalidDataShowAsValuetheta
+   ScaleInvalidDataShowAsValuetime
    ScaleInvalidDataShowAsValuex
    ScaleInvalidDataShowAsValuexOffset
    ScaleInvalidDataShowAsValuey
@@ -608,6 +611,7 @@ Low-Level Schema Wrappers
    ScaleInvalidDataShowAsstrokeOpacity
    ScaleInvalidDataShowAsstrokeWidth
    ScaleInvalidDataShowAstheta
+   ScaleInvalidDataShowAstime
    ScaleInvalidDataShowAsx
    ScaleInvalidDataShowAsxOffset
    ScaleInvalidDataShowAsy
@@ -660,6 +664,9 @@ Low-Level Schema Wrappers
    TextDirection
    TickConfig
    TickCount
+   TimeDef
+   TimeFieldDef
+   TimeFormatSpecifier
    TimeInterval
    TimeIntervalStep
    TimeLocale
@@ -791,5 +798,22 @@ Typing
    Optional
    is_chart_type
 
+.. _api-datasets:
+
+Datasets
+--------
+.. currentmodule:: altair.datasets
+
+.. autosummary::
+   :toctree: generated/datasets/
+   :nosignatures:
+
+   Loader
+   data
+   load
+   url
+
 .. _Generic:
     https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+.. _vega-datasets:
+    https://github.com/vega/vega-datasets

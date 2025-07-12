@@ -102,7 +102,7 @@ import sys
 from typing import Any, TYPE_CHECKING
 
 from altair.expr.core import {const}, {func}
-from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
+from altair.vegalite.v6.schema.core import ExprRef as _ExprRef
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -623,22 +623,33 @@ class VegaExprDef:
         """  # noqa: D400
         if s.isalnum():
             yield s
-        else:
-            end: list[str] = []
-            if s.endswith((CLOSE_PAREN, CLOSE_BRACKET)):
-                end.append(s[-1])
-                s = s[:-1]
-            elif s.endswith(ELLIPSIS):
-                end.append(s[-3:])
-                s = s[:-3]
-            elif s.endswith(INLINE_OVERLOAD):
-                end.append(s[-2:])
-                s = s[:-2]
-            if len(s) == 1:
-                yield s
-            elif len(s) > 1:
-                yield from VegaExprDef._split_markers(s)
-            yield from end
+            return
+
+        end: list[str] = []
+        original = s  # Save original string to detect changes
+
+        if s.endswith(CLOSE_PAREN):
+            end.append(CLOSE_PAREN)
+            s = s[:-1]
+        elif s.endswith(CLOSE_BRACKET):
+            end.append(CLOSE_BRACKET)
+            s = s[:-1]
+        elif s.endswith(ELLIPSIS):
+            end.append(ELLIPSIS)
+            s = s[:-3]
+        elif s.endswith(INLINE_OVERLOAD):
+            end.append(INLINE_OVERLOAD)
+            s = s[:-2]
+
+        if s == original:
+            # Nothing was removed; avoid infinite recursion
+            yield s
+        elif len(s) == 1:
+            yield s
+        elif len(s) > 1:
+            yield from VegaExprDef._split_markers(s)
+
+        yield from end
 
     def _doc_tokens(self) -> Sequence[Token]:
         """Return the slice of `self.children` that contains docstring content."""

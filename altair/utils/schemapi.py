@@ -488,13 +488,17 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
+    seen = {cls}
     current_set = {cls}
     while current_set:
-        seen |= current_set
-        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
-        for cls in current_set - seen:
-            yield cls
+        next_set = set()
+        for base in current_set:
+            for sub in base.__subclasses__():
+                if sub not in seen:
+                    yield sub
+                    seen.add(sub)
+                    next_set.add(sub)
+        current_set = next_set
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
@@ -1688,11 +1692,11 @@ VERSIONS: Mapping[
     ],
     str,
 ] = {
-    "vega-datasets": "v2.11.0",
-    "vega-embed": "7",
-    "vega-lite": "v5.21.0",
+    "vega-datasets": "v3.2.0",
+    "vega-embed": "v7",
+    "vega-lite": "v6.1.0",
     "vegafusion": "1.6.6",
-    "vl-convert-python": "1.7.0",
+    "vl-convert-python": "1.8.0",
 }
 """
 Version pins for non-``python`` `vega projects`_.

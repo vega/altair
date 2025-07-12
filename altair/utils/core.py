@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from narwhals.stable.v1.typing import IntoExpr
 
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
+    from altair.vegalite.v6.schema._typing import StandardType_T as InferredVegaLiteType
 
     _PandasDataFrameT = TypeVar("_PandasDataFrameT", bound="pd.DataFrame")
 
@@ -912,7 +912,7 @@ def _init_channel_to_name():
     -------
         mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
     """
-    from altair.vegalite.v5.schema import channels as ch
+    from altair.vegalite.v6.schema import channels as ch
 
     mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
 

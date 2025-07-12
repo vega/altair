@@ -1,2 +1,2 @@
 # ruff: noqa
-from .v5.api import *
+from .v6.api import *

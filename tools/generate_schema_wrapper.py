@@ -189,7 +189,7 @@ class ValueChannelMixin:
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
                 copy = self.copy(deep=["condition"])  # type: ignore[attr-defined]
-                copy["condition"].update(kwds)  # type: ignore[index]
+                copy["condition"].update(kwds)
         return super(ValueChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
@@ -770,7 +770,7 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
+            f"from altair.vegalite.v6.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
         f"\n__all__ = {all_}\n",
@@ -906,8 +906,8 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             "from collections.abc import Sequence",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
-            f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
+            f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
+            f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
             textwrap.indent(
                 import_typing_extensions((3, 11), "Self")
                 + import_typing_extensions((3, 10), "TypeAlias"),
@@ -1139,7 +1139,7 @@ def generate_schema__init__(
     package
         Absolute, dotted path for `schema`, e.g::
 
-            "altair.vegalite.v5.schema"
+            "altair.vegalite.v6.schema"
     expand
         Required for 2nd-pass, which explicitly defines the new ``__all__``, using newly generated names.
 
@@ -1392,6 +1392,8 @@ def generate_encoding_artifacts(
 
 
 def main() -> None:
+    from tools import datasets
+
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
     )
@@ -1403,6 +1405,7 @@ def main() -> None:
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     write_expr_module(VERSIONS.vlc_vega, output=EXPR_FILE, header=HEADER_COMMENT)
+    datasets.app.refresh(VERSIONS["vega-datasets"], include_typing=True)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
