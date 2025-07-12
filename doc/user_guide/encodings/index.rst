@@ -455,7 +455,7 @@ x-axis, using the barley dataset:
     )
 
 The last two charts are the same because the default aggregation
-(see :doc:`transform/aggregate`) is ``mean``. To highlight the
+(see :ref:`agg-func-table`) is ``mean``. To highlight the
 difference between sorting via channel and sorting via field consider the
 following example where we don't aggregate the data
 and use the `op` parameter to specify a different aggregation than `mean`

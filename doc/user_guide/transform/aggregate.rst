@@ -77,8 +77,9 @@ Pandas, and then plot the resulting DataFrame:
       x='mean_acc:Q'
    )
 
-**Note:** As mentioned in :doc:`../data`, this approach of transforming the
-data with Pandas is preferable if we already have the DataFrame at hand.
+.. note::
+   Altair transforms are great for quick exploration, while upfront analysis using
+   dedicated dataframe libraries can be faster for large datasets. See :doc:`../data_transformers` for details.
 
 Because :code:`Cylinders` is of type :code:`int64` in the :code:`source`
 DataFrame, Altair would have treated it as a :code:`qualitative` --instead of
@@ -92,8 +93,8 @@ Functions Without Arguments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Aggregate functions can be used without arguments. 
-In such cases, the function will automatically aggregate 
-the data from the column specified in the other axis.
+In such cases, the function operates directly on the input objects 
+and returns the same value regardless of the provided field.
 
 The following chart demonstrates this by counting the number of cars with
 respect to their country of origin.
@@ -102,20 +103,20 @@ respect to their country of origin.
 
    alt.Chart(cars).mark_bar().encode(
       y='Origin:N',
-      # shorthand form of alt.Y(aggregate='count')
+      # shorthand form of alt.X(aggregate='count')
       x='count()'
    )
 
-**Note:** The :code:`count` aggregate function is of type
-:code:`quantitative` by default, it does not matter if the source data is a
-DataFrame, URL pointer, CSV file or JSON file.
+.. note::
+   The :code:`count` aggregate function is of type :code:`quantitative` by default,
+   it does not matter if the source data is a DataFrame, URL pointer, CSV file or JSON file.
 
 Functions that handle categorical data (such as :code:`count`,
 :code:`missing`, :code:`distinct` and :code:`valid`) are the ones that get
 the most out of this feature.
 
 Argmin and Argmax Functions
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The :code:`argmin` and :code:`argmax` functions help you find values from
 one field that correspond to the minimum or maximum values in another
 field. For example, you might want to find the production budget of
