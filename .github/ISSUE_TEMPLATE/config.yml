@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question
+    url: https://stackoverflow.com/tags/altair
+    about: Please ask questions such as "How do I do X?" or "Why does this not work?" on Stack Overflow using the `altair` tag.
+  - name: Discussion
+    url: https://github.com/vega/altair/discussions
+    about: If you want to discuss a topic or ask a question that is not a good fit for Stack Overflow, please open a new disscussion here on GitHub.

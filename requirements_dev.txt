@@ -1,9 +1,0 @@
-black
-docutils
-ipython
-flake8
-pytest
-sphinx
-m2r
-vega_datasets
-recommonmark

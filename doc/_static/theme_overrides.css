@@ -23,3 +23,8 @@
 img.logo {
     width: 120px !important;
 }
+
+/* Increase max-width of the content area slightly to accommodate larger screens */
+.bd-main .bd-content .bd-article-container {
+    max-width: 1000px;
+}

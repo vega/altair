@@ -1,12 +1,12 @@
 .. _data-transformers:
 
-Data transformers
+Data Transformers
 =================
 
 Before a Vega-Lite or Vega specification can be passed to a renderer, it typically
 has to be transformed in a number of ways:
 
-* Pandas Dataframe has to be sanitized and serialized to JSON.
+* pandas Dataframe has to be sanitized and serialized to JSON.
 * The rows of a Dataframe might need to be sampled or limited to a maximum number.
 * The Dataframe might be written to a ``.csv`` of ``.json`` file for performance
   reasons.
@@ -19,7 +19,7 @@ These data transformations are managed by the data transformation API of Altair.
     API of Vega and Vega-Lite.
 
 A data transformer is a Python function that takes a Vega-Lite data ``dict`` or
-Pandas ``DataFrame`` and returns a transformed version of either of these types::
+pandas ``DataFrame`` and returns a transformed version of either of these types::
 
     from typing import Union
     Data = Union[dict, pd.DataFrame]
@@ -30,7 +30,7 @@ Pandas ``DataFrame`` and returns a transformed version of either of these types:
 
 Dataset Consolidation
 ~~~~~~~~~~~~~~~~~~~~~
-Datasets passed as Pandas dataframes can be represented in the chart in two
+Datasets passed as pandas dataframes can be represented in the chart in two
 ways:
 
 - As literal dataset values in the ``data`` attribute at any level of the
@@ -95,7 +95,7 @@ individual layer. This duplication of data is the reason that dataset
 consolidation is set to ``True`` by default.
 
 
-Built-in data transformers
+Built-in Data Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Altair includes a default set of data transformers with the following signatures.
@@ -129,7 +129,7 @@ Multiple data transformers can be piped together using ``pipe``::
     from toolz.curried import pipe
     pipe(data, limit_rows(10000), to_values)
 
-Managing data transformers
+Managing Data Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Altair maintains a registry of data transformers, which includes a default
@@ -174,7 +174,7 @@ be registered and enabled as::
     alt.data_transformers.enable('s3')
 
 
-Storing JSON data in a separate directory
+Storing JSON Data in a Separate Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When creating many charts with ``alt.data_transformers.enable('json')`` the

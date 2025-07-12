@@ -1,0 +1,13 @@
+<div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="{{ pathto('index') }}">
+      {% if logo %}
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        {% set logo_url=logo %}
+      {% endif %}
+      {% if logo_url %}
+      <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      <br>
+      <p class="site-version" id="site-version">{{ version }}</p>
+      {% endif %}
+    </a>
+</div>

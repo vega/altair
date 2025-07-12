@@ -1,14 +1,15 @@
-from .core import FunctionExpression
-
+from __future__ import annotations
 
 FUNCTION_LISTING = {
     "isArray": r"Returns true if _value_ is an array, false otherwise.",
     "isBoolean": r"Returns true if _value_ is a boolean (`true` or `false`), false otherwise.",
     "isDate": r"Returns true if _value_ is a Date object, false otherwise. This method will return false for timestamp numbers or date-formatted strings; it recognizes Date objects only.",
+    "isDefined": r"Returns true if _value_ is a defined value, false if _value_ equals `undefined`. This method will return true for `null` and `NaN` values.",
     "isNumber": r"Returns true if _value_ is a number, false otherwise. `NaN` and `Infinity` are considered numbers.",
     "isObject": r"Returns true if _value_ is an object (including arrays and Dates), false otherwise.",
     "isRegExp": r"Returns true if _value_ is a RegExp (regular expression) object, false otherwise.",
     "isString": r"Returns true if _value_ is a string, false otherwise.",
+    "isValid": r"Returns true if _value_ is not `null`, `undefined`, or `NaN`, false otherwise.",
     "toBoolean": r"Coerces the input _value_ to a string. Null values and empty strings are mapped to `null`.",
     "toDate": r"Coerces the input _value_ to a Date instance. Null values and empty strings are mapped to `null`. If an optional _parser_ function is provided, it is used to perform date parsing, otherwise `Date.parse` is used. Be aware that `Date.parse` has different implementations across browsers!",
     "toNumber": r"Coerces the input _value_ to a number. Null values and empty strings are mapped to `null`.",
@@ -26,6 +27,7 @@ FUNCTION_LISTING = {
     "cos": r"Trigonometric cosine. Same as JavaScript's `Math.cos`.",
     "exp": r"Returns the value of _e_ raised to the provided _exponent_. Same as JavaScript's `Math.exp`.",
     "floor": r"Rounds _value_ to the nearest integer of equal or lower value. Same as JavaScript's `Math.floor`.",
+    "hypot": r"Returns the square root of the sum of squares of its arguments. Same as JavaScript's `Math.hypot`.",
     "log": r"Returns the natural logarithm of _value_. Same as JavaScript's `Math.log`.",
     "max": r"Returns the maximum argument value. Same as JavaScript's `Math.max`.",
     "min": r"Returns the minimum argument value. Same as JavaScript's `Math.min`.",
@@ -35,29 +37,49 @@ FUNCTION_LISTING = {
     "sin": r"Trigonometric sine. Same as JavaScript's `Math.sin`.",
     "sqrt": r"Square root function. Same as JavaScript's `Math.sqrt`.",
     "tan": r"Trigonometric tangent. Same as JavaScript's `Math.tan`.",
+    "sampleNormal": r"Returns a sample from a univariate [normal (Gaussian) probability distribution](https://en.wikipedia.org/wiki/Normal_distribution) with specified _mean_ and standard deviation _stdev_. If unspecified, the mean defaults to `0` and the standard deviation defaults to `1`.",
+    "cumulativeNormal": r"Returns the value of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function) at the given input domain _value_ for a normal distribution with specified _mean_ and standard deviation _stdev_. If unspecified, the mean defaults to `0` and the standard deviation defaults to `1`.",
+    "densityNormal": r"Returns the value of the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) at the given input domain _value_, for a normal distribution with specified _mean_ and standard deviation _stdev_. If unspecified, the mean defaults to `0` and the standard deviation defaults to `1`.",
+    "quantileNormal": r"Returns the quantile value (the inverse of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)) for the given input _probability_, for a normal distribution with specified _mean_ and standard deviation _stdev_. If unspecified, the mean defaults to `0` and the standard deviation defaults to `1`.",
+    "sampleLogNormal": r"Returns a sample from a univariate [log-normal probability distribution](https://en.wikipedia.org/wiki/Log-normal_distribution) with specified log _mean_ and log standard deviation _stdev_. If unspecified, the log mean defaults to `0` and the log standard deviation defaults to `1`.",
+    "cumulativeLogNormal": r"Returns the value of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function) at the given input domain _value_ for a log-normal distribution with specified log _mean_ and log standard deviation _stdev_. If unspecified, the log mean defaults to `0` and the log standard deviation defaults to `1`.",
+    "densityLogNormal": r"Returns the value of the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) at the given input domain _value_, for a log-normal distribution with specified log _mean_ and log standard deviation _stdev_. If unspecified, the log mean defaults to `0` and the log standard deviation defaults to `1`.",
+    "quantileLogNormal": r"Returns the quantile value (the inverse of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)) for the given input _probability_, for a log-normal distribution with specified log _mean_ and log standard deviation _stdev_. If unspecified, the log mean defaults to `0` and the log standard deviation defaults to `1`.",
+    "sampleUniform": r"Returns a sample from a univariate [continuous uniform probability distribution](https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)) over the interval [_min_, _max_). If unspecified, _min_ defaults to `0` and _max_ defaults to `1`. If only one argument is provided, it is interpreted as the _max_ value.",
+    "cumulativeUniform": r"Returns the value of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function) at the given input domain _value_ for a uniform distribution over the interval [_min_, _max_). If unspecified, _min_ defaults to `0` and _max_ defaults to `1`. If only one argument is provided, it is interpreted as the _max_ value.",
+    "densityUniform": r"Returns the value of the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) at the given input domain _value_,  for a uniform distribution over the interval [_min_, _max_). If unspecified, _min_ defaults to `0` and _max_ defaults to `1`. If only one argument is provided, it is interpreted as the _max_ value.",
+    "quantileUniform": r"Returns the quantile value (the inverse of the [cumulative distribution function](https://en.wikipedia.org/wiki/Cumulative_distribution_function)) for the given input _probability_,  for a uniform distribution over the interval [_min_, _max_). If unspecified, _min_ defaults to `0` and _max_ defaults to `1`. If only one argument is provided, it is interpreted as the _max_ value.",
     "now": r"Returns the timestamp for the current time.",
     "datetime": r"Returns a new `Date` instance. The _month_ is 0-based, such that `1` represents February.",
     "date": r"Returns the day of the month for the given _datetime_ value, in local time.",
     "day": r"Returns the day of the week for the given _datetime_ value, in local time.",
+    "dayofyear": r"Returns the one-based day of the year for the given _datetime_ value, in local time.",
     "year": r"Returns the year for the given _datetime_ value, in local time.",
     "quarter": r"Returns the quarter of the year (0-3) for the given _datetime_ value, in local time.",
     "month": r"Returns the (zero-based) month for the given _datetime_ value, in local time.",
+    "week": r"Returns the week number of the year for the given _datetime_, in local time. This function assumes Sunday-based weeks. Days before the first Sunday of the year are considered to be in week 0, the first Sunday of the year is the start of week 1, the second Sunday week 2, _etc._.",
     "hours": r"Returns the hours component for the given _datetime_ value, in local time.",
     "minutes": r"Returns the minutes component for the given _datetime_ value, in local time.",
     "seconds": r"Returns the seconds component for the given _datetime_ value, in local time.",
     "milliseconds": r"Returns the milliseconds component for the given _datetime_ value, in local time.",
     "time": r"Returns the epoch-based timestamp for the given _datetime_ value.",
     "timezoneoffset": r"Returns the timezone offset from the local timezone to UTC for the given _datetime_ value.",
+    "timeOffset": r"Returns a new `Date` instance that offsets the given _date_ by the specified time [_unit_](../api/time/#time-units) in the local timezone. The optional _step_ argument indicates the number of time unit steps to offset by (default 1).",
+    "timeSequence": r"Returns an array of `Date` instances from _start_ (inclusive) to _stop_ (exclusive), with each entry separated by the given time [_unit_](../api/time/#time-units) in the local timezone. The optional _step_ argument indicates the number of time unit steps to take between each sequence entry (default 1).",
     "utc": r"Returns a timestamp for the given UTC date. The _month_ is 0-based, such that `1` represents February.",
     "utcdate": r"Returns the day of the month for the given _datetime_ value, in UTC time.",
     "utcday": r"Returns the day of the week for the given _datetime_ value, in UTC time.",
+    "utcdayofyear": r"Returns the one-based day of the year for the given _datetime_ value, in UTC time.",
     "utcyear": r"Returns the year for the given _datetime_ value, in UTC time.",
     "utcquarter": r"Returns the quarter of the year (0-3) for the given _datetime_ value, in UTC time.",
     "utcmonth": r"Returns the (zero-based) month for the given _datetime_ value, in UTC time.",
+    "utcweek": r"Returns the week number of the year for the given _datetime_, in UTC time. This function assumes Sunday-based weeks. Days before the first Sunday of the year are considered to be in week 0, the first Sunday of the year is the start of week 1, the second Sunday week 2, _etc._.",
     "utchours": r"Returns the hours component for the given _datetime_ value, in UTC time.",
     "utcminutes": r"Returns the minutes component for the given _datetime_ value, in UTC time.",
     "utcseconds": r"Returns the seconds component for the given _datetime_ value, in UTC time.",
     "utcmilliseconds": r"Returns the milliseconds component for the given _datetime_ value, in UTC time.",
+    "utcOffset": r"Returns a new `Date` instance that offsets the given _date_ by the specified time [_unit_](../api/time/#time-units) in UTC time. The optional _step_ argument indicates the number of time unit steps to offset by (default 1).",
+    "utcSequence": r"Returns an array of `Date` instances from _start_ (inclusive) to _stop_ (exclusive), with each entry separated by the given time [_unit_](../api/time/#time-units) in UTC time. The optional _step_ argument indicates the number of time unit steps to take between each sequence entry (default 1).",
     "extent": r"Returns a new _[min, max]_ array with the minimum and maximum values of the input array, ignoring `null`, `undefined`, and `NaN` values.",
     "clampRange": r"Clamps a two-element _range_ array in a span-preserving manner. If the span of the input _range_ is less than _(max - min)_ and an endpoint exceeds either the _min_ or _max_ value, the range is translated such that the span is preserved and one endpoint touches the boundary of the _[min, max]_ range. If the span exceeds _(max - min)_, the range _[min, max]_ is returned.",
     "indexof": r"Returns the first index of _value_ in the input _array_, or the first index of _substring_ in the input _string_..",
@@ -67,6 +89,7 @@ FUNCTION_LISTING = {
     "length": r"Returns the length of the input _array_, or the length of the input _string_.",
     "lerp": r"Returns the linearly interpolated value between the first and last entries in the _array_ for the provided interpolation _fraction_ (typically between 0 and 1). For example, `lerp([0, 50], 0.5)` returns 25.",
     "peek": r"Returns the last element in the input _array_. Similar to the built-in `Array.pop` method, except that it does not remove the last element. This method is a convenient shorthand for `array[array.length - 1]`.",
+    "pluck": r"Retrieves the value for the specified *field* from a given *array* of objects. The input *field* string may include nested properties (e.g., `foo.bar.bz`).",
     "reverse": r"Returns a new array with elements in a reverse order of the input _array_. The first array element becomes the last, and the last array element becomes the first.",
     "sequence": r"Returns an array containing an arithmetic sequence of numbers. If _step_ is omitted, it defaults to 1. If _start_ is omitted, it defaults to 0. The _stop_ value is exclusive; it is not included in the result. If _step_ is positive, the last element is the largest _start + i * step_ less than _stop_; if _step_ is negative, the last element is the smallest _start + i * step_ greater than _stop_. If the returned array would contain an infinite number of values, an empty range is returned. The arguments are not required to be integers.",
     "slice": r"Returns a section of _array_ between the _start_ and _end_ indices. If the _end_ argument is negative, it is treated as an offset from the end of the array (_length(array) + end_).",
@@ -87,6 +110,7 @@ FUNCTION_LISTING = {
     "format": r"Formats a numeric _value_ as a string. The _specifier_ must be a valid [d3-format specifier](https://github.com/d3/d3-format/) (e.g., `format(value, ',.2f')`.",
     "monthFormat": r"Formats a (zero-based) _month_ number as a full month name, according to the current locale. For example: `monthFormat(0) -> \"January\"`.",
     "monthAbbrevFormat": r"Formats a (zero-based) _month_ number as an abbreviated month name, according to the current locale. For example: `monthAbbrevFormat(0) -> \"Jan\"`.",
+    "timeUnitSpecifier": r"Returns a time format specifier string for the given time [_units_](../api/time/#time-units). The optional _specifiers_ object provides a set of specifier sub-strings for customizing the format; for more, see the [timeUnitSpecifier API documentation](../api/time/#timeUnitSpecifier). The resulting specifier string can then be used as input to the [timeFormat](#timeFormat) or [utcFormat](#utcFormat) functions, or as the _format_ parameter of an axis or legend. For example: `timeFormat(date, timeUnitSpecifier('year'))` or `timeFormat(date, timeUnitSpecifier(['hours', 'minutes']))`.",
     "timeFormat": r"Formats a datetime _value_ (either a `Date` object or timestamp) as a string, according to the local time. The _specifier_ must be a valid [d3-time-format specifier](https://github.com/d3/d3-time-format/). For example: `timeFormat(timestamp, '%A')`.",
     "timeParse": r"Parses a _string_ value to a Date object, according to the local time. The _specifier_ must be a valid [d3-time-format specifier](https://github.com/d3/d3-time-format/). For example: `timeParse('June 30, 2015', '%B %d, %Y')`.",
     "utcFormat": r"Formats a datetime _value_ (either a `Date` object or timestamp) as a string, according to [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) time. The _specifier_ must be a valid [d3-time-format specifier](https://github.com/d3/d3-time-format/). For example: `utcFormat(timestamp, '%A')`.",
@@ -97,6 +121,8 @@ FUNCTION_LISTING = {
     "hsl": r"Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. If _h_, _s_ and _l_ are specified, these represent the channel values of the returned color; an _opacity_ may also be specified. If a CSS Color Module Level 3 _specifier_ string is specified, it is parsed and then converted to the HSL color space. Uses [d3-color's hsl function](https://github.com/d3/d3-color#hsl).",
     "lab": r"Constructs a new [CIE LAB](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) color. If _l_, _a_ and _b_ are specified, these represent the channel values of the returned color; an _opacity_ may also be specified. If a CSS Color Module Level 3 _specifier_ string is specified, it is parsed and then converted to the LAB color space. Uses [d3-color's lab function](https://github.com/d3/d3-color#lab).",
     "hcl": r"Constructs a new [HCL](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) (hue, chroma, luminance) color. If _h_, _c_ and _l_ are specified, these represent the channel values of the returned color; an _opacity_ may also be specified. If a CSS Color Module Level 3 _specifier_ string is specified, it is parsed and then converted to the HCL color space. Uses [d3-color's hcl function](https://github.com/d3/d3-color#hcl).",
+    "luminance": r"Returns the luminance for the given color _specifier_ (compatible with [d3-color's rgb function](https://github.com/d3/d3-color#rgb)). The luminance is calculated according to the [W3C Web Content Accessibility Guidelines](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef).",
+    "contrast": r"Returns the contrast ratio between the input color specifiers as a float between 1 and 21. The contrast is calculated according to the [W3C Web Content Accessibility Guidelines](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef).",
     "item": r"Returns the current scenegraph item that is the target of the event.",
     "group": r"Returns the scenegraph group mark item in which the current event has occurred. If no arguments are provided, the immediate parent group is returned. If a group name is provided, the matching ancestor group item is returned.",
     "xy": r"Returns the x- and y-coordinates for the current event as a two-element array. If no arguments are provided, the top-level coordinate space of the view is used. If a scenegraph _item_ (or string group name) is provided, the coordinate space of the group item is used.",
@@ -128,41 +154,14 @@ FUNCTION_LISTING = {
     "geoCentroid": r"Returns the projected planar centroid (typically in pixels) for the specified GeoJSON _feature_, according to the named _projection_. If the _projection_ argument is `null`, computes the spherical centroid using unprojected longitude, latitude coordinates. The optional _group_ argument takes a scenegraph group mark item to indicate the specific scope in which to look up the projection. Uses d3-geo's [geoCentroid](https://github.com/d3/d3-geo#geoCentroid) and [path.centroid](https://github.com/d3/d3-geo#path_centroid) methods.",
     "treePath": r"For the hierarchy data set with the given _name_, returns the shortest path through from the _source_ node id to the _target_ node id. The path starts at the _source_ node, ascends to the least common ancestor of the _source_ node and the _target_ node, and then descends to the _target_ node.",
     "treeAncestors": r"For the hierarchy data set with the given _name_, returns the array of ancestors nodes, starting with the input _node_, then followed by each parent up to the root.",
+    "containerSize": r"Returns the current CSS box size (`[el.clientWidth, el.clientHeight]`) of the parent DOM element that contains the Vega view. If there is no container element, returns `[undefined, undefined]`.",
+    "screen": r"Returns the [`window.screen`](https://developer.mozilla.org/en-US/docs/Web/API/Window/screen) object, or `{}` if Vega is not running in a browser environment.",
+    "windowSize": r"Returns the current window size (`[window.innerWidth, window.innerHeight]`) or `[undefined, undefined]` if Vega is not running in a browser environment.",
     "warn": r"Logs a warning message and returns the last argument. For the message to appear in the console, the visualization view must have the appropriate logging level set.",
     "info": r"Logs an informative message and returns the last argument. For the message to appear in the console, the visualization view must have the appropriate logging level set.",
     "debug": r"Logs a debugging message and returns the last argument. For the message to appear in the console, the visualization view must have the appropriate logging level set.",
-    "eventGroup": "returns the scenegraph group mark item within which the current event has occurred. If no arguments are provided, the immediate parent group is returned. If a group name is provided, the matching ancestor group item is returned.",
-    "eventItem": "a zero-argument function that returns the current scenegraph item that is the subject of the event.",
-    "eventX": "returns the x-coordinate for the current event. If no arguments are provided, the top-level coordinate space of the visualization is used. If a group name is provided, the coordinate-space of the matching ancestor group item is used.",
-    "eventY": "returns the y-coordinate for the current event. If no arguments are provided, the top-level coordinate space of the visualization is used. If a group name is provided, the coordinate-space of the matching ancestor group item is used.",
-    "iscale": 'applies an inverse scale transform to a specified value; by default, looks for the scale at the top-level of the specification, but an optional signal can also be supplied corresponding to the group which contains the scale (i.e., `iscale("x", val, group)`). *Note:* This function is only legal within signal stream handlers and mark [production rules](https://github.com/vega/vega/wiki/Marks#production-rules). Invoking this function elsewhere (e.g., with filter or formula transforms) will result in an error.',
-    "open": "opens a hyperlink (alias to `window.open`). This function is only valid when running in the browser. It should not be invoked within a server-side (e.g., node.js) environment.",
 }
 
 
 # This maps vega expression function names to the Python name
 NAME_MAP = {"if": "if_"}
-
-
-class ExprFunc(object):
-    def __init__(self, name, doc):
-        self.name = name
-        self.doc = doc
-        self.__doc__ = """{}(*args)\n    {}""".format(name, doc)
-
-    def __call__(self, *args):
-        return FunctionExpression(self.name, args)
-
-    def __repr__(self):
-        return "<function expr.{}(*args)>".format(self.name)
-
-
-def _populate_namespace():
-    globals_ = globals()
-    for name, doc in FUNCTION_LISTING.items():
-        py_name = NAME_MAP.get(name, name)
-        globals_[py_name] = ExprFunc(name, doc)
-        yield py_name
-
-
-__all__ = list(_populate_namespace())

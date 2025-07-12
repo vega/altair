@@ -1,21 +1,375 @@
-[tool.black]
-line-length = 88
-target-version = ['py36', 'py37', 'py38']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | build
-  | dist
-  | doc
-  | altair/examples
-  | altair/vega/v\d*/schema
-  | altair/vegalite/v\d*/schema
-)/
-'''
+# this file contains:
+# 1 build system configuration
+# 2 project configuration
+# 3 tool configuration, for:
+# - hatch
+# - ruff
+# - pytest
+# - mypy
 
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "altair"
+authors = [{ name = "Vega-Altair Contributors" }]
+dependencies = [
+    "typing_extensions>=4.10.0; python_version<\"3.14\"",
+    "jinja2",
+    # If you update the minimum required jsonschema version, also update it in build.yml
+    "jsonschema>=3.0",
+    "packaging",
+    "narwhals>=1.27.1"
+]
+description = "Vega-Altair: A declarative statistical visualization library for Python."
+readme = "README.md"
+keywords = [
+    "declarative",
+    "statistics",
+    "visualization",
+    "interactive",
+    "json",
+    "vega-lite",
+]
+requires-python = ">=3.9"
+dynamic = ["version"]
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Documentation = "https://altair-viz.github.io"
+Source = "https://github.com/vega/altair"
+
+[project.optional-dependencies]
+save = [
+    "vl-convert-python>=1.8.0",
+]
+all = [
+    "altair[save]",
+    "vega_datasets>=0.9.0",
+    "pandas>=1.1.3",
+    "numpy",
+    "pyarrow>=11",
+    "vegafusion[embed]>=1.6.6",
+    "anywidget>=0.9.0",
+    "altair_tiles>=0.3.0"
+]
+dev = [
+    "hatch>=1.13.0",
+    "ruff>=0.9.5",
+    "duckdb>=1.0",
+    "ipython[kernel]",
+    "pandas>=1.1.3",
+    "pyarrow-stubs",
+    "pytest",
+    "pytest-cov",
+    "pytest-xdist[psutil]~=3.5",
+    "mistune",
+    "mypy",
+    "pandas-stubs",
+    "types-jsonschema",
+    "types-setuptools",
+    "geopandas",
+    "polars>=0.20.3",
+    "taskipy>=1.14.1",
+    "tomli>=2.2.1",
+]
+doc = [
+    "sphinx",
+    "docutils",
+    "sphinxext_altair",
+    "jinja2",
+    "numpydoc",
+    "pillow",
+    "pydata-sphinx-theme>=0.14.1",
+    "myst-parser",
+    "sphinx_copybutton",
+    "sphinx-design",
+    "scipy",
+    "scipy-stubs; python_version>=\"3.10\"",
+]
+[dependency-groups]
+geospatial = [
+    "geopandas>=0.14.3",
+    "polars-st>=0.1.0a27 ; python_full_version >= '3.10'",
+]
+
+
+[tool.altair.vega]
+# Minimum/exact versions, for projects under the `vega` organization
+vega-datasets     = "v3.2.0" # https://github.com/vega/vega-datasets
+vega-embed        = "v7"       # https://github.com/vega/vega-embed
+vega-lite         = "v6.1.0" # https://github.com/vega/vega-lite
+
+[tool.hatch]
+build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
+metadata = { allow-direct-references = true }
+version  = { path = "altair/__init__.py" }
+
+[tool.hatch.envs]
+# https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
+default = { features = ["all", "dev"], installer = "uv" }
+doc     = { features = ["all", "dev", "doc"] }
+
+[tool.hatch.envs.hatch-test]
+# https://hatch.pypa.io/latest/tutorials/testing/overview/
+features = ["all", "dev", "doc"]
+matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
+
+[tool.ruff]
+extend-exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax",
+]
+indent-width = 4
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+    "ANN204",  # missing-return-type-special-method
+    "C405",    # unnecessary-literal-set
+    "C419",    # unnecessary-comprehension-in-call
+    "C420",    # unnecessary-dict-comprehension-for-iterable
+    "D200",    # fits-on-one-line
+    "D301",    # escape-sequence-in-docstring
+    "D400",    # ends-in-period
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
+    "PLR6201", # literal-membership
+    "TC",      # flake8-type-checking
+    "UP006",   # non-pep585-annotation
+    "UP007",   # non-pep604-annotation-union
+    "UP008",   # super-call-with-parameters
+    "W291",    # trailing-whitespace
+    "W293",    # blank line contains whitespace
+]
+extend-select = [ # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+    "FURB",    # refurb
+    "PLC2801", # unnecessary-dunder-call
+    "PLR1733", # unnecessary-dict-index-lookup
+    "PLR1736", # unnecessary-list-index-lookup
+    "PLR6201", # literal-membership
+    "PLW1514", # unspecified-encoding
+]
+ignore = [
+    "ANN401", # any-type
+    "D100",   # undocumented-public-module
+    "D101",   # undocumented-public-class
+    "D102",   # undocumented-public-method
+    "D103",   # undocumented-public-function
+    "D104",   # undocumented-public-package
+    "D105",   # undocumented-magic-method
+    "D107",   # undocumented-public-init
+    "D206",   # indent-with-spaces
+    "D212",   # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D401",   # non-imperative-mood  
+    "D413",   # missing-blank-line-after-last-section
+    "E501",   # line-too-long (https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules)
+    "RUF012", # mutable-class-default
+    "RUF052", # used-dummy-variable
+    "SIM105", # suppressible-exception (https://github.com/vega/altair/pull/3431#discussion_r1629808660)
+    "W505",   # doc-line-too-long
+]
+mccabe.max-complexity = 10
+preview = true # https://docs.astral.sh/ruff/preview/
+pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
+select = [
+    "ANN",     # flake8-annotations
+    "B",       # flake8-bugbear
+    "C4",      # flake8-comprehensions
+    "C901",    # complex-structure
+    "D",       # pydocstyle
+    "D213",    # multi-line-summary-second-line
+    "E",       # pycodestyle-error
+    "EM",      # flake8-errmsg
+    "F",       # pyflakes
+    "FA",      # flake8-future-annotations
+    "FLY",     # flynt
+    "I001",    # unsorted-imports
+    "NPY",     # numpy-specific-rules
+    "PIE",     # flake8-pie
+    "PLC0208", # iteration-over-set
+    "PLR0402", # manual-from-import
+    "PLR1711", # useless-return
+    "PLR1714", # repeated-equality-comparison
+    "PLR5501", # collapsible-else-if
+    "PLW0120", # useless-else-on-loop
+    "PLW1510", # subprocess-run-without-check
+    "PLW3301", # nested-min-max
+    "PT",      # flake8-pytest-style
+    "PTH",     # flake8-use-pathlib
+    "RUF",     # Ruff-specific rules
+    "SIM",     # flake8-simplify
+    "TC",      # flake8-type-checking
+    "TID",     # flake8-tidy-imports
+    "UP",      # pyupgrade
+    "W",       # pycodestyle-warning
+]
+
+[tool.ruff.lint.isort]
+classes = ["datum", "expr"]
+extra-standard-library = ["typing_extensions"]
+known-first-party = [
+    "altair_tiles",
+    "sphinxext_altair",
+    "vega_datasets",
+    "vegafusion",
+    "vl_convert",
+]
+split-on-trailing-comma = false
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+# https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
+"narwhals.dependencies".msg = """
+Import `dependencies` from `narwhals.stable.v1` instead.
+"""
+"narwhals.dtypes".msg = """
+Import `dtypes` from `narwhals.stable.v1` instead.
+"""
+"narwhals.typing".msg = """
+Import `typing` from `narwhals.stable.v1` instead.
+"""
+"typing.Optional".msg = """
+Use `Union[T, None]` instead.
+`typing.Optional` is likely to be confused with `altair.typing.Optional`, \
+which have a similar but different semantic meaning.
+See https://github.com/vega/altair/pull/3449
+"""
+
+[tool.ruff.lint.per-file-ignores]
+"!altair/vegalite/v6/api.py" = ["ANN"]  # Only enforce annotation rules on public api
+"tests/**/*.py"              = ["C901"] # Allow complex if/elif branching during tests
+
+[tool.ruff.format]
+docstring-code-format      = true # https://docs.astral.sh/ruff/formatter/#docstring-formatting
+docstring-code-line-length = 88
+line-ending                = "lf"
+
+[tool.taskipy.settings]
+cwd = "."
+
+[tool.taskipy.tasks]
+lint       = "ruff check"
+format     = "ruff format --diff --check"
+ruff-check = "task lint && task format"
+ruff-fix   = "task lint && ruff format"
+type-check = "mypy altair tests"
+
+pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
+pytest        = "pytest && task pytest-serial"
+test          = "task ruff-check && task type-check && task pytest"
+test-fast     = "task ruff-fix && pytest -m \"not slow and not datasets_debug and not no_xdist\""
+test-slow     = "task ruff-fix && pytest -m \"slow and not datasets_debug and not no_xdist\""
+test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdist\" && task pytest-serial"
+test-min      = "task ruff-check && task type-check && hatch test --python 3.9"
+test-all      = "task ruff-check && task type-check && hatch test --all"
+
+
+generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
+update-init-file        = "python tools/update_init_file.py && task ruff-fix"
+
+doc-clean               = "python -c \"import tools;tools.fs.rm('doc/_build')\""
+doc-clean-generated     = "python -c \"import tools;tools.fs.rm('doc/user_guide/generated', 'doc/gallery')\""
+doc-clean-images        = "python -c \"import tools;tools.fs.rm('doc/_images')\""
+doc-clean-all           = "task doc-clean && task doc-clean-generated && task doc-clean-images"
+doc-mkdir               = "python -c \"import tools;tools.fs.mkdir('doc/_images')\""
+doc-build-html          = "task doc-mkdir && sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
+doc-clean-build         = "task doc-clean-all && task doc-build-html"
+doc-serve               = "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000"
+doc-publish             = "python tools/sync_website.py"
+doc-publish-clean-build = "task doc-clean-build && task doc-publish"
+
+clean   = "python -c \"import tools;tools.fs.rm('dist')\""
+build   = "task clean && uv build"
+publish = "task build && uv publish"
+
+[tool.pytest.ini_options]
+# Pytest does not need to search these folders for test functions.
+# They contain examples which are being executed by the
+# test_examples tests.
+norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+addopts = [
+    "--numprocesses=logical",
+    "--doctest-modules",
+    "tests",
+    "altair",
+    "tools",
+    "-m not datasets_debug and not no_xdist",
+]
+# https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
+markers = [
+    "slow: Label tests as slow (deselect with '-m \"not slow\"')",
+    "datasets_debug: Disabled by default due to high number of requests",
+    "no_xdist: Unsafe to run in parallel"
+]
+
+[tool.mypy]
+warn_unused_ignores = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = [
+    "vega_datasets.*",
+    "pyarrow.*",
+    "yaml.*",
+    "pandas.lib.*",
+    "geopandas.*",
+    "nbformat.*",
+    "ipykernel.*",
+    "ibis.*",
+    "vegafusion.*",
+    "scipy.*",
+    "polars_st.*",
+]
+ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = [
+    "tests/examples_arguments_syntax.*",
+    "tests/examples_methods_syntax.*",
+]
+disable_error_code = ["annotation-unchecked"]
+
+[tool.pyright]
+enableExperimentalFeatures=true
+extraPaths=["./tools"]
+pythonPlatform="All"
+pythonVersion="3.9"
+reportTypedDictNotRequiredAccess="none"
+reportIncompatibleMethodOverride="none"
+reportUnusedExpression="none"
+reportUnsupportedDunderAll="none"
+include=[
+    "./altair/**/*.py",
+    "./doc/*.py",
+	"./tests/**/*.py",
+	"./tools/**/*.py",
+    "./sphinxext/**/*.py",
+]
+ignore=[
+    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
+    "./altair/jupyter/",                        # Mostly untyped
+    "./tests/test_jupyter_chart.py",            # Based on untyped module
+    "../../../**/Lib",                          # stdlib
+    "../../../**/typeshed*"                     # typeshed-fallback
+]
+

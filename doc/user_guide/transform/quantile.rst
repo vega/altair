@@ -2,8 +2,8 @@
 
 .. _user-guide-quantile-transform:
 
-Quantile Transform
-~~~~~~~~~~~~~~~~~~
+Quantile
+~~~~~~~~
 The quantile transform calculates empirical `quantile <https://en.wikipedia.org/wiki/Quantile>`_
 values for input data. If a groupby parameter is provided, quantiles are estimated
 separately per group. Among other uses, the quantile transform is useful for creating

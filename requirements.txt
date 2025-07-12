@@ -1,6 +1,0 @@
-entrypoints
-jinja2
-jsonschema
-numpy
-pandas>=0.18
-toolz

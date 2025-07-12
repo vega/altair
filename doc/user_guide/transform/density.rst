@@ -2,8 +2,8 @@
 
 .. _user-guide-density-transform:
 
-Density Transform
-~~~~~~~~~~~~~~~~~
+Density
+~~~~~~~
 The density transform performs one-dimensional
 `kernel density estimation <https://en.wikipedia.org/wiki/Kernel_density_estimation>`_
 over input data and generates a new column of samples of the estimated densities.
@@ -12,10 +12,10 @@ Here is a simple example, showing the distribution of IMDB ratings from the movi
 dataset:
 
 .. altair-plot::
-   
+
    import altair as alt
    from vega_datasets import data
-   
+
    alt.Chart(data.movies.url).transform_density(
        'IMDB_Rating',
        as_=['IMDB_Rating', 'density'],
@@ -31,7 +31,7 @@ argument. Here we split the above density computation across movie genres:
 
    import altair as alt
    from vega_datasets import data
-   
+
    alt.Chart(
        data.movies.url,
        width=120,

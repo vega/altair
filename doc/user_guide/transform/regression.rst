@@ -2,11 +2,11 @@
 
 .. _user-guide-regression-transform:
 
-Regression Transform
-~~~~~~~~~~~~~~~~~~~~
+Regression
+~~~~~~~~~~
 
 The regression transform fits two-dimensional regression models to smooth and
-predict data. This transform can fit multiple models for input data (one per group) 
+predict data. This transform can fit multiple models for input data (one per group)
 and generates new data objects that represent points for summary trend lines.
 Alternatively, this transform can be used to generate a set of objects containing
 regression model parameters, one per group.
@@ -15,10 +15,10 @@ This transform supports parametric models for the following functional forms:
 
 - linear (``linear``): *y = a + b * x*
 - logarithmic (``log``): *y = a + b * log(x)*
-- exponential (``exp``): *y = a + eb * x*
-- power (``pow``): *y = a * xb*
-- quadratic (``quad``): *y = a + b * x + c * x2*
-- polynomial (``poly``): *y = a + b * x + … + k * xorder*
+- exponential (``exp``): * y = a * e^(b * x)*
+- power (``pow``): *y = a * x^b*
+- quadratic (``quad``): *y = a + b * x + c * x^2*
+- polynomial (``poly``): *y = a + b * x + … + k * x^(order)*
 
 All models are fit using ordinary least squares.
 For non-parametric locally weighted regression, see the

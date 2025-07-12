@@ -2,8 +2,8 @@
 
 .. _user-guide-lookup-transform:
 
-Lookup Transform
-~~~~~~~~~~~~~~~~
+Lookup
+~~~~~~
 The Lookup transform extends a primary data source by looking up values from
 another data source; it is similar to a one-sided join. A lookup can be added
 at the top level of a chart using the :meth:`Chart.transform_lookup` method.
@@ -27,8 +27,8 @@ We know how to visualize each of these datasets separately; for example:
     import altair as alt
 
     top = alt.Chart(people).mark_square(size=200).encode(
-        x=alt.X('age:Q', scale=alt.Scale(zero=False)),
-        y=alt.Y('height:Q', scale=alt.Scale(zero=False)),
+        x=alt.X('age:Q').scale(zero=False),
+        y=alt.Y('height:Q').scale(zero=False),
         color='name:N',
         tooltip='name:N'
     ).properties(
@@ -47,12 +47,12 @@ We know how to visualize each of these datasets separately; for example:
 If we would like to plot features that reference both datasets (for example, the
 average age within each group), we need to combine the two datasets.
 This can be done either as a data preprocessing step, using tools available
-in Pandas, or as part of the visualization using a :class:`~LookupTransform`
+in pandas, or as part of the visualization using a :class:`~LookupTransform`
 in Altair.
 
 Combining Datasets with pandas.merge
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Pandas provides a wide range of tools for merging and joining datasets; see
+pandas provides a wide range of tools for merging and joining datasets; see
 `Merge, Join, and Concatenate <https://pandas.pydata.org/pandas-docs/stable/merging.html>`_
 for some detailed examples.
 For the above data, we can merge the data and create a combined chart as follows:
@@ -76,7 +76,7 @@ Combining Datasets with a Lookup Transform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 For some data sources (e.g. data available at a URL, or data that is streaming),
 it is desirable to have a means of joining data without having to download
-it for pre-processing in Pandas.
+it for pre-processing in pandas.
 This is where Altair's :meth:`~Chart.transform_lookup` comes in.
 To reproduce the above combined plot by combining datasets within the
 chart specification itself, we can do the following:

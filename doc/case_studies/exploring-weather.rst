@@ -1,7 +1,7 @@
 .. _exploring-weather:
 
 Exploring Seattle Weather
-=========================
+-------------------------
 
 (This tutorial is adapted from `Vega-Lite's documentation
 <http://vega.github.io/vega-lite/tutorials/explore.html>`_)
@@ -17,7 +17,7 @@ The dataset is a CSV file with columns for the temperature
 wind speed (in meter/second), and weather type.
 We have one row for each day from January 1st, 2012 to December 31st, 2015.
 
-Altair is designed to work with data in the form of Pandas_
+Altair is designed to work with data in the form of pandas_
 dataframes, and contains a loader for this and other built-in datasets:
 
 .. altair-plot::
@@ -28,7 +28,7 @@ dataframes, and contains a loader for this and other built-in datasets:
     df = data.seattle_weather()
     df.head()
 
-The data is loaded from the web and stored in a Pandas DataFrame, and from
+The data is loaded from the web and stored in a pandas DataFrame, and from
 here we can explore it with Altair.
 
 Let’s start by looking at the precipitation, using tick marks to see the
@@ -54,7 +54,7 @@ The result is a histogram of precipitation values:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        alt.X('precipitation', bin=True),
+        alt.X('precipitation').bin(),
         y='count()'
     )
 
@@ -135,7 +135,7 @@ Note that this calculation doesn't actually do any data manipulation in Python,
 but rather encodes and stores the operations within the plot specification,
 where they will be calculated by the renderer.
 
-Of course, the same calculation could be done by using Pandas manipulations to
+Of course, the same calculation could be done by using pandas manipulations to
 explicitly add a column to the dataframe; the disadvantage there is that the
 derived values would have to be stored in the plot specification
 rather than computed on-demand in the browser.
@@ -177,7 +177,7 @@ meaning of the plot more clear:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('month(date):N', title='Month of the year'),
+        x=alt.X('month(date):N').title('Month of the year'),
         y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
@@ -191,10 +191,10 @@ and to allow interactive panning and zooming with the mouse:
 .. altair-plot::
 
     alt.Chart(df).mark_point().encode(
-        alt.X('temp_max', title='Maximum Daily Temperature (C)'),
-        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
-        alt.Color('weather', scale=scale),
-        alt.Size('precipitation', scale=alt.Scale(range=[1, 200]))
+        alt.X('temp_max').title('Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q').title('Daily Temperature Range (C)'),
+        alt.Color('weather').scale(scale),
+        alt.Size('precipitation').scale(range=[1, 200])
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
@@ -215,7 +215,7 @@ by weather type:
     alt.Chart(df).mark_bar().encode(
         x='count()',
         y='weather:N',
-        color=alt.Color('weather:N', scale=scale),
+        color=alt.Color('weather:N').scale(scale),
     )
 
 And now we can vertically concatenate this histogram to the points plot above,
@@ -225,32 +225,29 @@ of the selection (for more information on selections, see
 
 .. altair-plot::
 
-    brush = alt.selection(type='interval')
+    brush = alt.selection_interval()
+    color = alt.Color("weather:N").scale(scale)
+    temp_range = alt.datum["temp_max"] - alt.datum["temp_min"]
 
-    points = alt.Chart().mark_point().encode(
-        alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),
-        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
-        color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
-        size=alt.Size('precipitation:Q', scale=alt.Scale(range=[1, 200]))
+    points = alt.Chart(width=600, height=400).mark_point().encode(
+        alt.X("temp_max:Q").title("Maximum Daily Temperature (C)"),
+        alt.Y("temp_range:Q").title("Daily Temperature Range (C)"),
+        color=alt.when(brush).then(color).otherwise(alt.value("lightgray")),
+        size=alt.Size("precipitation:Q").scale(range=[1, 200]),
     ).transform_calculate(
-        "temp_range", "datum.temp_max - datum.temp_min"
-    ).properties(
-        width=600,
-        height=400
-    ).add_selection(
+        temp_range=temp_range
+    ).add_params(
         brush
     )
 
-    bars = alt.Chart().mark_bar().encode(
-        x='count()',
-        y='weather:N',
-        color=alt.Color('weather:N', scale=scale),
+    bars = alt.Chart(width=600).mark_bar().encode(
+        x="count()",
+        y="weather:N",
+        color=color
     ).transform_calculate(
-        "temp_range", "datum.temp_max - datum.temp_min"
+        temp_range=temp_range
     ).transform_filter(
         brush
-    ).properties(
-        width=600
     )
 
     alt.vconcat(points, bars, data=df)
@@ -263,6 +260,6 @@ This is the end of this tutorial where you have seen various ways to bin
 and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
-:ref:`API`.
+:ref:`api`.
 
-.. _Pandas: http://pandas.pydata.org/
+.. _pandas: http://pandas.pydata.org/

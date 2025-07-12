@@ -1,3 +1,15 @@
+html[data-theme="light"] {
+  --pst-color-primary: rgb(93, 154, 181);
+  --pst-color-secondary: rgb(93, 154, 181);
+  --pst-color-secondary-bg: rgb(223, 235, 240);
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: rgb(93, 155, 182);
+  --pst-color-secondary: rgb(93, 155, 182);
+  --pst-color-secondary-bg: rgb(33, 45, 51);
+}
+
 .wy-nav-side p.caption {
   color: #F5F5F5;
 }
@@ -24,3 +36,79 @@ table.docutils td li {
   line-height: 18px;
 
 }
+
+table td.vl-type-def {
+  max-width: 170px;
+  overflow-x: clip;
+}
+
+/* Hide this empty container as it leads to a vertical scrollbar in 
+the primary sidebar even if there is no need for such a scrollbar as all content
+would fit onto the screen */
+#rtd-footer-container {
+  display: none;
+}
+
+/* Default for the pydata theme is 25% */
+.bd-sidebar-primary {
+  max-width: 20%
+}
+
+/* By providing max-width above for .bd-sidebar-primary, we also overwrite
+the setting from the template for small screens, e.g. mobile phones. The values below
+are copied out of pydata-sphinx-theme.css so that the sidebar is again
+properly displayed on mobile devices and not restricted to 20% */
+@media (max-width: 959.98px) {
+  .bd-sidebar-primary {
+      max-width: 350px;
+  }
+}
+
+.properties-example .vega-bind-name {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.properties-example .vega-bindings {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.properties-example .vega-bindings select {
+  max-width: 180px;
+}
+
+.properties-example .vega-bindings input {
+  vertical-align: text-bottom;
+  margin-right: 3px;
+}
+
+.full-width-plot {
+  width: 100%;
+}
+
+/* This hides the Ctrl + K from the search box on the start page
+ * to make it less distracting on the home page.
+ * The shortcut still shows up when clicking the search box */
+.search-button-field > .search-button__kbd-shortcut {
+    display: none;
+}
+
+/* Configurations for the start page
+------------------------------------ */
+.lead {
+  font-size: 1.3em;
+  font-weight: 300;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  /* This pushes down the lead so that it is not rendered on top of
+  the gallery (showcase) which has an absolute position. The value is calculated
+  as height (showcase) + margin-bottom (showcase) + margin-top (lead) */
+  padding-top: 332px;
+}
+
+.lead strong {
+  /* Default is bolder which is less */
+  font-weight: bold;
+}
+/* ---------------------------------- */

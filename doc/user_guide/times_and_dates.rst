@@ -2,8 +2,8 @@
 
 .. _user-guide-time:
 
-Times and Dates in Altair
-=========================
+Times & Dates
+=============
 Working with dates, times, and timezones is often one of the more challenging
 aspects of data analysis. In Altair, the difficulties are compounded by the
 fact that users are writing Python code, which outputs JSON-serialized
@@ -13,73 +13,11 @@ Altair and Vega-Lite do their best to ensure that dates are interpreted and
 visualized in a consistent way.
 
 
-.. _note-browser-compliance:
-
-Note on Browser Compliance
---------------------------
-
-.. note:: Warning about non-ES6 Browsers
-
-   The discussion below applies to modern browsers which support `ECMAScript 6`_,
-   in which time strings like ``"2018-01-01T12:00:00"`` without a trailing ``"Z"``
-   are treated as local time rather than `Coordinated Universal Time (UTC)`_.
-   For example, recent versions of Chrome and Firefox are ES6-compliant,
-   while Safari 11 is not.
-   If you are using a non-ES6 browser, this means that times displayed in Altair
-   charts may be rendered with a timezone offset, unless you explicitly use
-   UTC time (see :ref:`explicit-utc-time`).
-
-The following chart will help you determine if your browser parses dates in the
-way that Altair expects:
-
-.. altair-plot::
-    :links: none
-
-    import altair as alt
-    import pandas as pd
-
-    df = pd.DataFrame({'local': ['2018-01-01T00:00:00'],
-                       'utc': ['2018-01-01T00:00:00Z']})
-
-    alt.Chart(df).transform_calculate(
-        compliant="hours(datum.local) != hours(datum.utc) ? true : false",
-    ).mark_text(size=20, baseline='middle').encode(
-        text=alt.condition('datum.compliant', alt.value('OK'), alt.value('not OK')),
-        color=alt.condition('datum.compliant', alt.value('green'), alt.value('red'))
-    ).properties(width=80, height=50)
-
-If the above output contains a red "not OK":
-
-.. altair-plot::
-   :hide-code:
-   :links: none
-
-   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
-       alt.TextValue('not OK'),
-       alt.ColorValue('red')
-   ).properties(width=40, height=25)
-
-it means that your browser's date parsing is not ES6-compliant.
-If it contains a green "OK":
-
-.. altair-plot::
-   :hide-code:
-   :links: none
-
-   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
-       alt.TextValue('OK'),
-       alt.ColorValue('green')
-   ).properties(width=40, height=25)
-
-then it means that your browser parses dates as Altair expects, either because
-it is ES6-compliant or because your computer locale happens to be set to
-the UTC+0 (GMT) timezone.
-
-Altair and Pandas Datetimes
+Altair and pandas Datetimes
 ---------------------------
 
-Altair is designed to work best with `Pandas timeseries`_. A standard
-timezone-agnostic date/time column in a Pandas dataframe will be both
+Altair is designed to work best with `pandas timeseries`_. A standard
+timezone-agnostic date/time column in a pandas dataframe will be both
 interpreted and displayed as local user time. For example, here is a dataset
 containing hourly temperatures measured in Seattle:
 
@@ -112,9 +50,12 @@ example, we'll limit ourselves to the first two weeks of data:
         y='temp:Q'
     )
 
-(notice that for date/time values we use the ``T`` to indicate a temporal
+Notice that for date/time values we use the ``T`` to indicate a temporal
 encoding: while this is optional for pandas datetime input, it is good practice
-to specify a type explicitly; see :ref:`encoding-data-types` for more discussion).
+to specify a type explicitly; see :ref:`encoding-data-types` for more discussion.
+If you want Altair to plot four digit integers as years,
+you need to cast them as strings before changing the data type to temporal,
+please see the :ref:`type-axis-scale` for details.
 
 For date-time inputs like these, it can sometimes be useful to extract particular
 time units (e.g. hours of the day, dates of the month, etc.).
@@ -126,9 +67,9 @@ x-axis, and day of the month on the y-axis:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('hoursminutes(date):O', title='hour of day'),
-        alt.Y('monthdate(date):O', title='date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('hoursminutes(date):O').title('hour of day'),
+        alt.Y('monthdate(date):O').title('date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 Unless you are using a non-ES6 browser (See :ref:`note-browser-compliance`),
@@ -140,7 +81,7 @@ local time.
 Specifying Time Zones
 ---------------------
 If you are viewing the above visualizations in a supported browser (see
-:ref:`note-browser-compliance` above), the times are both serialized and
+:ref:`note-browser-compliance`), the times are both serialized and
 rendered in local time, so that the ``January 1st 00:00:00`` row renders in
 the chart as ``00:00`` on ``January 1st``.
 
@@ -150,7 +91,7 @@ time of the browser that does the rendering.
 
 If you would like your dates to instead be time-zone aware, you can set the
 timezone explicitly in the input dataframe. Since Seattle is in the
-``US/Pacific`` timezone, we can localize the timestamps in Pandas as follows:
+``US/Pacific`` timezone, we can localize the timestamps in pandas as follows:
 
 .. altair-plot::
    :output: repr
@@ -165,9 +106,9 @@ render **according to the timezone of the browser rendering it**:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('hoursminutes(date_pacific):O', title='hour of day'),
-        alt.Y('monthdate(date_pacific):O', title='date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('hoursminutes(date_pacific):O').title('hour of day'),
+        alt.Y('monthdate(date_pacific):O').title('date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 If you are viewing this chart on a computer whose time is set to the west coast
@@ -193,14 +134,14 @@ regardless of the system location:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('utchoursminutes(date_pacific):O', title='UTC hour of day'),
-        alt.Y('utcmonthdate(date_pacific):O', title='UTC date'),
-        alt.Color('temp:Q', title='temperature (F)')
+        alt.X('utchoursminutes(date_pacific):O').title('UTC hour of day'),
+        alt.Y('utcmonthdate(date_pacific):O').title('UTC date'),
+        alt.Color('temp:Q').title('temperature (F)')
     )
 
 To make your charts as portable as possible (even in non-ES6 browsers which parse
 timezone-agnostic times as UTC), you can explicitly work
-in UTC time, both on the Pandas side and on the Vega-Lite side:
+in UTC time, both on the pandas side and on the Vega-Lite side:
 
 
 .. altair-plot::
@@ -208,18 +149,80 @@ in UTC time, both on the Pandas side and on the Vega-Lite side:
    temps['date_utc'] = temps['date'].dt.tz_localize('UTC')
 
    alt.Chart(temps).mark_rect().encode(
-       alt.X('utchoursminutes(date_utc):O', title='hour of day'),
-       alt.Y('utcmonthdate(date_utc):O', title='date'),
-       alt.Color('temp:Q', title='temperature (F)')
+       alt.X('utchoursminutes(date_utc):O').title('hour of day'),
+       alt.Y('utcmonthdate(date_utc):O').title('date'),
+       alt.Color('temp:Q').title('temperature (F)')
    )
 
 This is somewhat less convenient than the default behavior for timezone-agnostic
-dates, in which both Pandas and Vega-Lite assume times are local
+dates, in which both pandas and Vega-Lite assume times are local
 (except in non-ES6 browsers; see :ref:`note-browser-compliance`),
 but it gets around browser incompatibilities by explicitly working in UTC, which
 gives similar results even in older browsers.
 
+.. _note-browser-compliance:
+
+Note on Browser Compliance
+--------------------------
+
+.. note:: Warning about non-ES6 Browsers
+
+   The discussion below applies to modern browsers which support `ECMAScript 6`_,
+   in which time strings like ``"2018-01-01T12:00:00"`` without a trailing ``"Z"``
+   are treated as local time rather than `Coordinated Universal Time (UTC)`_.
+   For example, recent versions of Chrome and Firefox are ES6-compliant,
+   while Safari 11 is not.
+   If you are using a non-ES6 browser, this means that times displayed in Altair
+   charts may be rendered with a timezone offset, unless you explicitly use
+   UTC time (see :ref:`explicit-utc-time`).
+
+The following chart will help you determine if your browser parses dates in the
+way that Altair expects:
+
+.. altair-plot::
+    :links: none
+
+    import altair as alt
+    import pandas as pd
+
+    df = pd.DataFrame({'local': ['2018-01-01T00:00:00'],
+                       'utc': ['2018-01-01T00:00:00Z']})
+    when_compliant = alt.when(compliant=True)
+
+    alt.Chart(df).transform_calculate(
+        compliant="hours(datum.local) != hours(datum.utc) ? true : false",
+    ).mark_text(size=20, baseline="middle").encode(
+        text=when_compliant.then(alt.value("OK")).otherwise(alt.value("not OK")),
+        color=when_compliant.then(alt.value("green")).otherwise(alt.value("red")),
+    ).properties(width=80, height=50)
+
+If the above output contains a red "not OK":
+
+.. altair-plot::
+   :hide-code:
+   :links: none
+
+   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
+       alt.TextValue('not OK'),
+       alt.ColorValue('red')
+   ).properties(width=40, height=25)
+
+it means that your browser's date parsing is not ES6-compliant.
+If it contains a green "OK":
+
+.. altair-plot::
+   :hide-code:
+   :links: none
+
+   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
+       alt.TextValue('OK'),
+       alt.ColorValue('green')
+   ).properties(width=40, height=25)
+
+then it means that your browser parses dates as Altair expects, either because
+it is ES6-compliant or because your computer locale happens to be set to
+the UTC+0 (GMT) timezone.
 
 .. _Coordinated Universal Time (UTC): https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-.. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/timeseries.html
+.. _pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
 .. _ECMAScript 6: http://www.ecma-international.org/ecma-262/6.0/

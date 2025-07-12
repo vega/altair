@@ -1,95 +1,69 @@
-Altair: Declarative Visualization in Python
-===========================================
+:html_theme.sidebar_secondary.remove:
+
+Vega-Altair: Declarative Visualization in Python
+================================================
 .. role:: raw-html(raw)
    :format: html
 
-
 .. altair-minigallery::
-   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
-   :size: 15
+   :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, errorbars_with_ci, scatter_linked_brush, line_with_ci, natural_disasters, bar_rounded, streamgraph, multiline_tooltip, choropleth, select_detail, interactive_cross_highlight, seattle_weather_interactive, london_tube, ridgeline_plot, violin_plot, strip_plot, table_bubble_plot_github, radial_chart, boxplot, mosaic_with_labels
+   :size: 24
 
-Altair is a declarative statistical visualization library for Python, based on
-Vega_ and Vega-Lite_, and the source is available on
-`GitHub <http://github.com/altair-viz/altair>`_.
 
-With Altair, you can spend more time understanding your data and its meaning.
-Altair's API is simple, friendly and consistent and built on top of the
-powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
-beautiful and effective visualizations with a minimal amount of code.
+.. rst-class:: lead
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Started
+   **Vega-Altair** is a declarative visualization library for Python. Its simple, friendly and consistent API, built on top of the powerful Vega-Lite_ grammar, empowers you to spend less time writing code and more time exploring your data.
 
-   getting_started/overview
-   getting_started/installation
-   getting_started/starting
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Gallery
+.. grid:: 1 1 2 2
+   :padding: 0 2 3 5
+   :gutter: 2 2 3 3
+   :class-container: startpage-grid
 
-   gallery/index
+   .. grid-item-card:: Getting Started
+      :link: overview
+      :link-type: ref
+      :link-alt: Getting started
 
-.. toctree::
-   :maxdepth: 1
-   :caption: User Guide
+      In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
 
-   user_guide/data
-   user_guide/encoding
-   user_guide/marks
-   user_guide/transform/index
-   user_guide/interactions
-   user_guide/configuration
-   user_guide/compound_charts
-   user_guide/scale_resolve
-   user_guide/saving_charts
-   user_guide/customization
-   user_guide/times_and_dates
-   user_guide/faq
-   user_guide/troubleshooting
-   user_guide/internals
-   user_guide/API
-   user_guide/ecosystem
+   .. grid-item-card:: User Guide
+      :link: user-guide-data
+      :link-type: ref
+      :link-alt: User guide
+
+      Check out the User Guides for in-depth information on the key concepts of Vega-Altair.
+
+   .. grid-item-card:: Examples
+      :link: example-gallery
+      :link-type: ref
+      :link-alt: Examples
+
+      The Examples gallery contains a selection of different visualizations which you can create with Vega-Altair.
+
+   .. grid-item-card:: API
+      :link: api
+      :link-type: ref
+      :link-alt: api
+
+      The API reference guide contains detailed information on all of Vega-Altair's methods and classes.
+
+
+*The Vega-Altair open-source project is not affiliated with Altair Engineering, Inc.*
 
 .. toctree::
    :maxdepth: 1
-   :caption: Case Studies
+   :hidden:
 
-   case_studies/exploring-weather
+   Getting Started <getting_started/overview>
+   User Guide <user_guide/data>
+   Examples <gallery/index>
+   API <user_guide/api>
+   Release Notes <https://github.com/vega/altair/releases>
+   About <about/roadmap>
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Advanced Usage
-
-   user_guide/importing
-   user_guide/display_frontends
-   user_guide/custom_renderers
-   user_guide/data_transformers
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Release Notes
-   
-   releases/changes
-
-Bug Reports & Questions
------------------------
-
-Altair is BSD-licensed and the source is available on `GitHub`_. If any
-questions or issues come up as you use Altair, please get in touch via
-`Git Issues`_ or our `Google Group`_.
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-
-
-.. _GitHub: http://github.com/altair-viz/altair
-.. _Git Issues: http://github.com/altair-viz/altair/issues
-.. _Vega: http://vega.github.io/vega
+.. _GitHub: http://github.com/vega/altair
+.. _Git Issues: http://github.com/vega/altair/issues
 .. _Vega-Lite: http://vega.github.io/vega-lite
-.. _Google Group: https://groups.google.com/forum/#!forum/altair-viz
+.. _bugs and feature requests: https://github.com/vega/altair/issues/new/choose
+.. _StackOverflow: https://stackoverflow.com/tags/altair
