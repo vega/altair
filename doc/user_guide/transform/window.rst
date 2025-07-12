@@ -32,7 +32,7 @@ Finally, we pass a window field definition, which indicates how data objects sho
 Here, the number of movies should be counted.
 
 There are many aggregation functions built into Altair.
-As well as those given in :ref:`encoding-aggregates`, we can use the following within window field definitions:
+As well as those given in :ref:`agg-func-table`, we can use the following within window field definitions:
 
 ============  =========  =========================================================================================================================================================================================================================================================================================================================
 Aggregate     Parameter  Description
