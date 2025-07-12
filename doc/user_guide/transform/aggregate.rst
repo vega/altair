@@ -162,36 +162,71 @@ The :class:`~AggregatedFieldDef` objects have the following options:
 
 .. _agg-func-table:
 
-List of Aggregation Functions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aggregation Functions
+^^^^^^^^^^^^^^^^^^^^^
 
 In addition to ``count`` and ``average``, there are a large number of available
-aggregation functions built into Altair; they are listed in the following table:
+aggregation functions built into Altair; they are listed in the following tables:
+
+Count-related Functions
+"""""""""""""""""""""""
 
 =========  ===========================================================================  =====================================
 Aggregate  Description                                                                  Example
 =========  ===========================================================================  =====================================
-argmin     An input data object containing the minimum field value.                     N/A
-argmax     An input data object containing the maximum field value.                     :ref:`gallery_line_chart_with_custom_legend`
-average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
 count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
-distinct   The count of distinct field values.                                          N/A
-max        The maximum field value.                                                     :ref:`gallery_boxplot`
-mean       The mean (average) field value.                                              :ref:`gallery_scatter_with_layered_histogram`
-median     The median field value                                                       :ref:`gallery_boxplot`
-min        The minimum field value.                                                     :ref:`gallery_boxplot`
+valid      The count of field values that are not null or undefined.                    N/A
 missing    The count of null or undefined field values.                                 N/A
+distinct   The count of distinct field values.                                          N/A
+values     A list of data objects in the group.                                         N/A
+=========  ===========================================================================  =====================================
+
+Basic Mathematical Operations
+"""""""""""""""""""""""""""""
+
+=========  ===========================================================================  =====================================
+Aggregate  Description                                                                  Example
+=========  ===========================================================================  =====================================
+sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
+product    The product of field values.                                                 N/A
+=========  ===========================================================================  =====================================
+
+Central Tendency Measures
+"""""""""""""""""""""""""
+
+=========  ===========================================================================  =====================================
+Aggregate  Description                                                                  Example
+=========  ===========================================================================  =====================================
+mean       The mean (average) field value.                                              :ref:`gallery_scatter_with_layered_histogram`
+average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
+median     The median field value                                                       :ref:`gallery_boxplot`
+variance   The sample variance of field values.                                         N/A
+variancep  The population variance of field values.                                     N/A
+stdev      The sample standard deviation of field values.                               N/A
+stdevp     The population standard deviation of field values.                           N/A
+stderr     The standard error of the field values.                                      N/A
+=========  ===========================================================================  =====================================
+
+Distribution Statistics
+"""""""""""""""""""""""
+
+=========  ===========================================================================  =====================================
+Aggregate  Description                                                                  Example
+=========  ===========================================================================  =====================================
 q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot`
 q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot`
 ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
 ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
-stderr     The standard error of the field values.                                      N/A
-stdev      The sample standard deviation of field values.                               N/A
-stdevp     The population standard deviation of field values.                           N/A
-sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
-product    The product of field values.                                                 N/A
-valid      The count of field values that are not null or undefined.                    N/A
-values     A list of data objects in the group.                                         N/A
-variance   The sample variance of field values.                                         N/A
-variancep  The population variance of field values.                                     N/A
+=========  ===========================================================================  =====================================
+
+Range Functions
+"""""""""""""""
+
+=========  ===========================================================================  =====================================
+Aggregate  Description                                                                  Example
+=========  ===========================================================================  =====================================
+min        The minimum field value.                                                     :ref:`gallery_boxplot`
+max        The maximum field value.                                                     :ref:`gallery_boxplot`
+argmin     An input data object containing the minimum field value.                     N/A
+argmax     An input data object containing the maximum field value.                     :ref:`gallery_line_chart_with_custom_legend`
 =========  ===========================================================================  =====================================
