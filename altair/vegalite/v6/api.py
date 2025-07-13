@@ -32,6 +32,11 @@ from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map, PrimitiveValue_T, SingleDefUnitChannel_T, Temporal
+from .schema.core import (
+    SelectionParameter,
+    TopLevelSelectionParameter,
+    VariableParameter,
+)
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -60,6 +65,12 @@ if TYPE_CHECKING:
     from typing import IO
 
     from altair.utils.core import DataFrameLike
+
+    from .schema.core import (
+        SelectionParameter,
+        TopLevelSelectionParameter,
+        VariableParameter,
+    )
 
     if sys.version_info >= (3, 13):
         from typing import Required, TypeIs
@@ -131,16 +142,13 @@ if TYPE_CHECKING:
         ProjectionType,
         RepeatMapping,
         RepeatRef,
-        SelectionParameter,
         SequenceGenerator,
         SortField,
         SphereGenerator,
         Step,
         TimeUnit,
-        TopLevelSelectionParameter,
         Transform,
         UrlData,
-        VariableParameter,
         Vector2number,
         Vector2Vector2number,
         Vector3number,
@@ -1394,6 +1402,33 @@ def value(value: Any, **kwargs: Any) -> _Value:
     return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
 
+def _make_param_obj(
+    temp_name: str,
+    value: Optional[Any],
+    bind: Optional[Binding],
+    expr: Optional[str | Expr | Expression],
+    kwds: dict,
+) -> tuple[
+    VariableParameter | TopLevelSelectionParameter | SelectionParameter,
+    Literal["variable", "selection"],
+]:
+    if "select" in kwds:
+        select = kwds.pop("select")
+        param_obj: (
+            VariableParameter | TopLevelSelectionParameter | SelectionParameter
+        ) = core.SelectionParameter(name=temp_name, select=select, **kwds)
+        param_type: Literal["variable", "selection"] = "selection"
+    elif "views" in kwds:
+        param_obj = core.TopLevelSelectionParameter(name=temp_name, **kwds)
+        param_type = "selection"
+    else:
+        param_obj = core.VariableParameter(
+            name=temp_name, value=value, bind=bind, expr=expr, **kwds
+        )
+        param_type = "variable"
+    return param_obj, param_type
+
+
 def param(
     name: str | None = None,
     value: Optional[Any] = Undefined,
@@ -1402,45 +1437,8 @@ def param(
     expr: Optional[str | Expr | Expression] = Undefined,
     **kwds: Any,
 ) -> Parameter:
-    """
-    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions/parameters.html for examples.
-
-    Although both variable parameters and selection parameters can be created using
-    this 'param' function, to create a selection parameter, it is recommended to use
-    either 'selection_point' or 'selection_interval' instead.
-
-    Parameters
-    ----------
-    name : string (optional)
-        The name of the parameter. If not specified, a unique name will be
-        created.
-    value : any (optional)
-        The default value of the parameter. If not specified, the parameter
-        will be created without a default value.
-    bind : :class:`Binding` (optional)
-        Binds the parameter to an external input element such as a slider,
-        selection list or radio button group.
-    empty : boolean (optional)
-        For selection parameters, the predicate of empty selections returns
-        True by default. Override this behavior, by setting this property
-        'empty=False'.
-    expr : str, Expression (optional)
-        An expression for the value of the parameter. This expression may
-        include other parameters, in which case the parameter will
-        automatically update in response to upstream parameter changes.
-    **kwds :
-        additional keywords will be used to construct a parameter.  If 'select'
-        is among the keywords, then a selection parameter will be created.
-        Otherwise, a variable parameter will be created.
-
-    Returns
-    -------
-    parameter: Parameter
-        The parameter object that can be used in chart creation.
-    """
-    warn_msg = "The value of `empty` should be True or False."
-    empty_remap = {"none": False, "all": True}
     temp_name = "__TEMP__"
+    # Always use a string for the name
 
     if _init := kwds.pop("init", None):
         utils.deprecated_warn(
@@ -1450,46 +1448,33 @@ def param(
         if utils.is_undefined(value):
             value = _init
 
-    # Create underlying parameter object with temp_name
-    if "select" in kwds:
-        # Selection parameter with select keyword
-        select = kwds.pop("select")
-        param_obj = core.SelectionParameter(name=temp_name, select=select, **kwds)
-        param_type = "selection"
-    elif "views" in kwds:
-        # Top-level selection parameter with views
-        param_obj = core.TopLevelSelectionParameter(name=temp_name, **kwds)
-        param_type = "selection"
-    else:
-        # Variable parameter (including when expr is provided)
-        param_obj = core.VariableParameter(
-            name=temp_name, value=value, bind=bind, expr=expr, **kwds
-        )
-        param_type = "variable"
+    # Create underlying parameter object with temp_name using helper
+    param_obj, param_type = _make_param_obj(temp_name, value, bind, expr, kwds)
 
     # Construct Parameter with temp_name and param_obj
     parameter = Parameter(
         name=temp_name, empty=empty, param=param_obj, param_type=param_type
     )
 
-    if not utils.is_undefined(empty):
-        if isinstance(empty, bool) and not isinstance(empty, str):
-            parameter.empty = empty
-        elif empty in empty_remap:
-            utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[empty]
-        else:
-            raise ValueError(warn_msg)
-
-    # If explicit name is given, use it
+    # Set the final name on both Parameter and underlying param object
     if name is not None:
         parameter.name = str(name)
-        parameter.param.name = str(name)
+        if parameter.param is not Undefined:
+            param_obj = t.cast(
+                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                parameter.param,
+            )
+            param_obj.name = str(name)
     else:
         # Compute hash-based name
         hash_name = parameter._get_hash_name()
         parameter.name = hash_name
-        parameter.param.name = hash_name
+        if parameter.param is not Undefined:
+            param_obj = t.cast(
+                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                parameter.param,
+            )
+            param_obj.name = hash_name
 
     return parameter
 
@@ -3686,7 +3671,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``false``
         sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
-            objects are considered equal by the comparator, they are considered “peer” values of
+            objects are considered equal by the comparator, they are considered "peer" values of
             equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).
