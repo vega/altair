@@ -1416,10 +1416,10 @@ def _make_param_obj(
         select = kwds.pop("select")
         param_obj: (
             VariableParameter | TopLevelSelectionParameter | SelectionParameter
-        ) = core.SelectionParameter(name=temp_name, select=select, **kwds)
+        ) = core.SelectionParameter(name=temp_name, select=select, value=value, **kwds)
         param_type: Literal["variable", "selection"] = "selection"
     elif "views" in kwds:
-        param_obj = core.TopLevelSelectionParameter(name=temp_name, **kwds)
+        param_obj = core.TopLevelSelectionParameter(name=temp_name, value=value, **kwds)
         param_type = "selection"
     else:
         param_obj = core.VariableParameter(

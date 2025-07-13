@@ -1019,12 +1019,17 @@ def test_selection():
     assert "or" in (single | multi).to_dict()
     assert "not" in (~single).to_dict()
 
-    # test that default names increment (regression for #1454)
+    # test that default names are deterministic and unique for different types
     sel1 = alt.selection_point()
     sel2 = alt.selection_point()
     sel3 = alt.selection_interval()
     names = {s.name for s in (sel1, sel2, sel3)}
-    assert len(names) == 3
+    # With hash-based naming, identical specifications get the same name
+    # sel1 and sel2 are identical selection_point() calls, so they get the same name
+    # sel3 is a selection_interval(), so it gets a different name
+    assert len(names) == 2
+    assert sel1.name == sel2.name  # Identical specifications get same name
+    assert sel1.name != sel3.name  # Different specifications get different names
 
 
 def test_transforms():

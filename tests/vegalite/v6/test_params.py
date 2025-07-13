@@ -104,16 +104,17 @@ def test_parameter_naming():
     prm = alt.param(name="some_name")
     assert prm.param.name == "some_name"
 
-    # test automatic naming which has the form such as param_5
+    # test automatic naming which now uses hash-based naming
     prm0, prm1, prm2 = (alt.param() for _ in range(3))
 
-    res = re.match(r"param_([0-9]+)", prm0.param.name)
+    # Check that all parameters have hash-based names (16 character hex)
+    res = re.match(r"param_([0-9a-f]{16})", prm0.param.name)
+    assert res, f"Expected hash-based name, got: {prm0.param.name}"
 
-    assert res
-
-    num = int(res[1])
-    assert prm1.param.name == f"param_{num + 1}"
-    assert prm2.param.name == f"param_{num + 2}"
+    # With hash-based naming, identical specifications get the same name
+    assert prm0.param.name == prm1.param.name == prm2.param.name, (
+        "Identical parameters should have same hash-based name"
+    )
 
 
 def test_selection_expression():
