@@ -1394,7 +1394,9 @@ def _make_param_obj(
         select = kwds.pop("select")
         param_obj: (
             VariableParameter | TopLevelSelectionParameter | SelectionParameter
-        ) = core.SelectionParameter(name=temp_name, select=select, value=value, **kwds)
+        ) = core.SelectionParameter(
+            name=temp_name, select=select, value=value, bind=bind, **kwds
+        )
         param_type: Literal["variable", "selection"] = "selection"
     elif "views" in kwds:
         param_obj = core.TopLevelSelectionParameter(name=temp_name, value=value, **kwds)
@@ -1495,9 +1497,11 @@ def param(
 
 def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
+    # param_kwds_names contains keywords that should be passed to param() function
+    # The remaining kwds are used to create the selection config (PointSelectionConfig, etc.)
 
-    select_kwds = {"name", "bind", "value", "empty", "init", "views"}
-    param_kwds = {key: kwds.pop(key) for key in select_kwds & kwds.keys()}
+    param_kwds_names = {"name", "bind", "value", "empty", "init", "views"}
+    param_kwds = {key: kwds.pop(key) for key in param_kwds_names & kwds.keys()}
 
     select: IntervalSelectionConfig | PointSelectionConfig
     if type == "interval":
@@ -1515,7 +1519,21 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Para
         msg = """'type' must be 'point' or 'interval'"""
         raise ValueError(msg)
 
-    return param(select=select, **param_kwds)
+    # Extract all expected parameters from param_kwds and pass them as direct parameters
+    name = param_kwds.pop("name", None)
+    value = param_kwds.pop("value", Undefined)
+    bind = param_kwds.pop("bind", Undefined)
+    empty = param_kwds.pop("empty", Undefined)
+    expr = param_kwds.pop("expr", Undefined)
+    return param(
+        select=select,
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        **param_kwds,
+    )
 
 
 @utils.deprecated(
@@ -4027,11 +4045,11 @@ class Chart(
         """Compute a deterministic hash of the chart specification."""
         # Get data name if available, otherwise use data object
         data = getattr(self, "data", None)
-        if hasattr(data, "name") and data.name is not None:
+        if data is not None and hasattr(data, "name") and data.name is not None:
             data_for_hash = data.name
         else:
             data_for_hash = data
-            
+
         # Use basic chart attributes for hash computation.
         hash_data = {
             "class": self.__class__.__name__,
