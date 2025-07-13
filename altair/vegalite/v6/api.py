@@ -1462,11 +1462,15 @@ def param(
         param_type = "selection"
     else:
         # Variable parameter (including when expr is provided)
-        param_obj = core.VariableParameter(name=temp_name, value=value, bind=bind, expr=expr, **kwds)
+        param_obj = core.VariableParameter(
+            name=temp_name, value=value, bind=bind, expr=expr, **kwds
+        )
         param_type = "variable"
 
     # Construct Parameter with temp_name and param_obj
-    parameter = Parameter(name=temp_name, empty=empty, param=param_obj, param_type=param_type)
+    parameter = Parameter(
+        name=temp_name, empty=empty, param=param_obj, param_type=param_type
+    )
 
     if not utils.is_undefined(empty):
         if isinstance(empty, bool) and not isinstance(empty, str):
