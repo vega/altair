@@ -376,31 +376,31 @@ class Parameter(_expr_core.OperatorMixin):
     def _compute_hash(self) -> str:
         """
         Compute a deterministic hash of the parameter specification.
-        
+
         Includes parameter type, configuration, and context to ensure uniqueness.
         """
         # Access attributes directly to avoid triggering __getattr__
         param_type = getattr(self, "param_type", None)
         empty = getattr(self, "empty", None)
         param = getattr(self, "param", None)
-        
+
         # Create a hash data structure with parameter information
         hash_data = {
             "param_type": param_type,
             "empty": empty,
         }
-        
+
         if param is not None and hasattr(param, "to_dict"):
             param_dict = param.to_dict()
-            
+
             # Create a copy of param_dict without the name field for hash computation
             # The name should not be part of the hash since it's what we're trying to generate
             param_dict_for_hash = param_dict.copy()
             if isinstance(param_dict_for_hash, dict):
                 param_dict_for_hash.pop("name", None)
-            
+
             hash_data["param"] = param_dict_for_hash
-            
+
             # Include more detailed information to ensure uniqueness
             if isinstance(param_dict_for_hash, dict):
                 # Include all fields that could make parameters unique
@@ -413,15 +413,15 @@ class Parameter(_expr_core.OperatorMixin):
                     "select": param_dict_for_hash.get("select"),
                     "class": param.__class__.__name__,
                 }
-                
+
                 # Include the full param_dict as a string for more uniqueness
                 hash_data["full_param_str"] = str(param_dict_for_hash)
         else:
             hash_data["param"] = param
-        
+
         # Serialize to JSON with sorted keys for consistency
         hash_json = json.dumps(hash_data, sort_keys=True, default=str)
-        
+
         # Compute hash and truncate to 16 characters for readability
         hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
         return f"param_{hsh}"
@@ -443,13 +443,13 @@ class Parameter(_expr_core.OperatorMixin):
         self.empty = empty
         self.param = param
         self.param_type = param_type
-        
+
         # Generate name after attributes are set
         if name is None:
             # Use hash-based naming for deterministic names
             name = self._get_hash_name()
         self.name = name
-        
+
         # Update the underlying param object's name to match
         if self.param is not None and not utils.is_undefined(self.param):
             self.param.name = self.name
