@@ -4025,28 +4025,17 @@ class Chart(
 
     def _compute_hash(self) -> str:
         """Compute a deterministic hash of the chart specification."""
-        try:
-            spec = self.to_dict(validate=False, context={})
-            spec_copy = spec.copy()
-            # Exclude fields that shouldn't be part of the hash
-            exclude_fields = {"name", "counter", "_counter"}
-            for field in exclude_fields:
-                spec_copy.pop(field, None)
-            spec_json = json.dumps(spec_copy, sort_keys=True, default=str)
-            hsh = hashlib.sha256(spec_json.encode()).hexdigest()[:16]
-            return f"view_{hsh}"
-        except (ValueError, TypeError, AttributeError):
-            # If to_dict fails (e.g., during construction), use a fallback hash
-            # based on the chart's basic attributes
-            fallback_data = {
-                "class": self.__class__.__name__,
-                "id": id(self),
-                "mark": getattr(self, "mark", None),
-                "encoding": getattr(self, "encoding", None),
-            }
-            fallback_json = json.dumps(fallback_data, sort_keys=True, default=str)
-            hsh = hashlib.sha256(fallback_json.encode()).hexdigest()[:16]
-            return f"view_{hsh}"
+        # Use basic chart attributes for hash computation.
+        hash_data = {
+            "class": self.__class__.__name__,
+            "mark": getattr(self, "mark", None),
+            "encoding": getattr(self, "encoding", None),
+            "data": getattr(self, "data", None),
+            "transform": getattr(self, "transform", None),
+        }
+        hash_json = json.dumps(hash_data, sort_keys=True, default=str)
+        hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
+        return f"view_{hsh}"
 
     def _get_hash_name(self) -> str:
         """Get a deterministic name based on the chart specification hash."""
