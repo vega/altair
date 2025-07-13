@@ -4025,12 +4025,19 @@ class Chart(
 
     def _compute_hash(self) -> str:
         """Compute a deterministic hash of the chart specification."""
+        # Get data name if available, otherwise use data object
+        data = getattr(self, "data", None)
+        if hasattr(data, "name") and data.name is not None:
+            data_for_hash = data.name
+        else:
+            data_for_hash = data
+            
         # Use basic chart attributes for hash computation.
         hash_data = {
             "class": self.__class__.__name__,
             "mark": getattr(self, "mark", None),
             "encoding": getattr(self, "encoding", None),
-            "data": getattr(self, "data", None),
+            "data": data_for_hash,
             "transform": getattr(self, "transform", None),
         }
         hash_json = json.dumps(hash_data, sort_keys=True, default=str)
