@@ -374,12 +374,6 @@ class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
     _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
-    _counter: int = 0
-
-    @classmethod
-    def _get_name(cls) -> str:
-        cls._counter += 1
-        return f"param_{cls._counter}"
 
     def _compute_hash(self) -> str:
         """
@@ -408,22 +402,6 @@ class Parameter(_expr_core.OperatorMixin):
                 param_dict_for_hash.pop("name", None)
 
             hash_data["param"] = param_dict_for_hash
-
-            # Include more detailed information to ensure uniqueness
-            if isinstance(param_dict_for_hash, dict):
-                # Include all fields that could make parameters unique
-                hash_data["unique_fields"] = {
-                    "type": param_dict_for_hash.get("type"),
-                    "fields": param_dict_for_hash.get("fields"),
-                    "encodings": param_dict_for_hash.get("encodings"),
-                    "bind": param_dict_for_hash.get("bind"),
-                    "value": param_dict_for_hash.get("value"),
-                    "select": param_dict_for_hash.get("select"),
-                    "class": param.__class__.__name__,
-                }
-
-                # Include the full param_dict as a string for more uniqueness
-                hash_data["full_param_str"] = str(param_dict_for_hash)
         else:
             hash_data["param"] = param
 
@@ -1437,6 +1415,42 @@ def param(
     expr: Optional[str | Expr | Expression] = Undefined,
     **kwds: Any,
 ) -> Parameter:
+    """
+    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions/parameters.html for examples.
+
+    Although both variable parameters and selection parameters can be created using
+    this 'param' function, to create a selection parameter, it is recommended to use
+    either 'selection_point' or 'selection_interval' instead.
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the parameter. If not specified, a unique name will be
+        created.
+    value : any (optional)
+        The default value of the parameter. If not specified, the parameter
+        will be created without a default value.
+    bind : :class:`Binding` (optional)
+        Binds the parameter to an external input element such as a slider,
+        selection list or radio button group.
+    empty : boolean (optional)
+        For selection parameters, the predicate of empty selections returns
+        True by default. Override this behavior, by setting this property
+        'empty=False'.
+    expr : str, Expression (optional)
+        An expression for the value of the parameter. This expression may
+        include other parameters, in which case the parameter will
+        automatically update in response to upstream parameter changes.
+    **kwds :
+        additional keywords will be used to construct a parameter.  If 'select'
+        is among the keywords, then a selection parameter will be created.
+        Otherwise, a variable parameter will be created.
+
+    Returns
+    -------
+    parameter: Parameter
+        The parameter object that can be used in chart creation.
+    """
     temp_name = "__TEMP__"
     # Always use a string for the name
 
@@ -4009,13 +4023,6 @@ class Chart(
             **kwargs,
         )
 
-    _counter: int = 0
-
-    @classmethod
-    def _get_name(cls) -> str:
-        cls._counter += 1
-        return f"view_{cls._counter}"
-
     def _compute_hash(self) -> str:
         """Compute a deterministic hash of the chart specification."""
         try:
@@ -4028,9 +4035,18 @@ class Chart(
             spec_json = json.dumps(spec_copy, sort_keys=True, default=str)
             hsh = hashlib.sha256(spec_json.encode()).hexdigest()[:16]
             return f"view_{hsh}"
-        except Exception:
-            # Fall back to counter-based naming if hash computation fails
-            return self._get_name()
+        except (ValueError, TypeError, AttributeError):
+            # If to_dict fails (e.g., during construction), use a fallback hash
+            # based on the chart's basic attributes
+            fallback_data = {
+                "class": self.__class__.__name__,
+                "id": id(self),
+                "mark": getattr(self, "mark", None),
+                "encoding": getattr(self, "encoding", None),
+            }
+            fallback_json = json.dumps(fallback_data, sort_keys=True, default=str)
+            hsh = hashlib.sha256(fallback_json.encode()).hexdigest()[:16]
+            return f"view_{hsh}"
 
     def _get_hash_name(self) -> str:
         """Get a deterministic name based on the chart specification hash."""
@@ -5067,7 +5083,13 @@ def _combine_subchart_params(  # noqa: C901
             continue
 
         if _needs_name(subchart):
-            subchart.name = subchart._get_name()
+            if hasattr(subchart, "_get_hash_name"):
+                subchart.name = subchart._get_hash_name()
+            else:
+                # For chart types that don't support hash-based naming,
+                # generate a simple deterministic name based on chart type
+                chart_type = subchart.__class__.__name__
+                subchart.name = f"{chart_type.lower()}_{id(subchart):x}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)

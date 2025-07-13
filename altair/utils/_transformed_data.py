@@ -166,13 +166,22 @@ def transformed_data(chart, row_limit=None, exclude=None):
 def _assign_chart_name(chart: ChartType) -> None:
     """Assign a name to a chart if it doesn't have one."""
     if chart.name in {None, Undefined}:
-        # Use hash-based naming for deterministic names
-        # Only Chart instances have _get_hash_name method
+        # Use hash-based naming for Altair Chart objects
         if hasattr(chart, "_get_hash_name"):
             chart.name = chart._get_hash_name()
         else:
-            # Fall back to counter-based naming for non-Chart objects
-            chart.name = Chart._get_name()
+            # For Vega-Lite schema objects (UnitSpec, FacetedUnitSpec, etc.),
+            # use simple naming since these are already unique by design
+            chart_type = chart.__class__.__name__.lower()
+            # Clean up the type name for readability
+            chart_type = (
+                chart_type.replace("spec", "")
+                .replace("generic", "")
+                .replace("concat", "")
+            )
+            chart_type = chart_type.removesuffix("_")
+            # Use object ID for uniqueness - these objects are already unique
+            chart.name = f"view_{chart_type}_{id(chart):x}"
 
 
 def _get_subcharts(chart: ChartType) -> list[Any]:
