@@ -410,7 +410,7 @@ class Parameter(_expr_core.OperatorMixin):
 
     def __invert__(self) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            param_dict = {"param": self.name}
+            param_dict: dict[str, str | bool] = {"param": self.name}
             if isinstance(self.empty, bool):
                 param_dict["empty"] = self.empty
             return core.PredicateComposition({"not": param_dict})
@@ -419,11 +419,11 @@ class Parameter(_expr_core.OperatorMixin):
 
     def __and__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            self_dict = {"param": self.name}
+            self_dict: dict[str, str | bool] = {"param": self.name}
             if isinstance(self.empty, bool):
                 self_dict["empty"] = self.empty
             if isinstance(other, Parameter):
-                other_dict = {"param": other.name}
+                other_dict: dict[str, str | bool] = {"param": other.name}
                 if isinstance(other.empty, bool):
                     other_dict["empty"] = other.empty
                 other = other_dict
@@ -433,11 +433,11 @@ class Parameter(_expr_core.OperatorMixin):
 
     def __or__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            self_dict = {"param": self.name}
+            self_dict: dict[str, str | bool] = {"param": self.name}
             if isinstance(self.empty, bool):
                 self_dict["empty"] = self.empty
             if isinstance(other, Parameter):
-                other_dict = {"param": other.name}
+                other_dict: dict[str, str | bool] = {"param": other.name}
                 if isinstance(other.empty, bool):
                     other_dict["empty"] = other.empty
                 other = other_dict
