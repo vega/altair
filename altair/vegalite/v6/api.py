@@ -5092,13 +5092,16 @@ def _combine_subchart_params(  # noqa: C901
 
     subcharts = [subchart.copy() for subchart in subcharts]
 
-    for subchart in subcharts:
+    for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
         if _needs_name(subchart):
             if hasattr(subchart, "_get_hash_name"):
-                subchart.name = subchart._get_hash_name()
+                # For concatenated charts, we need unique names even for identical charts
+                # Use the hash as a base but append the position to ensure uniqueness
+                base_name = subchart._get_hash_name()
+                subchart.name = f"{base_name}_{i}"
             else:
                 # For chart types that don't support hash-based naming,
                 # generate a simple deterministic name based on chart type
