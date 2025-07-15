@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Generic, final, overload
+import typing as t
+from typing import Generic, final, overload
 
 from narwhals.stable.v1.typing import IntoDataFrameT
 
 from altair.datasets import _reader
 from altair.datasets._reader import IntoFrameT
 
-if TYPE_CHECKING:
+if t.TYPE_CHECKING:
     import sys
     from typing import Any, Literal
 
@@ -163,7 +164,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
             from altair.datasets import Loader
 
             load = Loader.from_backend("polars")
-            source = load("iowa-electricity")
+            source = load("iowa_electricity")
 
             source.columns
             ['year', 'source', 'net_generation']
@@ -185,7 +186,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pandas``::
 
             load = Loader.from_backend("pandas")
-            source = load("iowa-electricity")
+            source = load("iowa_electricity")
 
             source.columns
             Index(['year', 'source', 'net_generation'], dtype='object')
@@ -201,7 +202,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         Using ``pyarrow``::
 
             load = Loader.from_backend("pyarrow")
-            source = load("iowa-electricity")
+            source = load("iowa_electricity")
 
             source.column_names
             ['year', 'source', 'net_generation']

@@ -49,7 +49,7 @@ if TYPE_CHECKING:
 
     from altair.datasets._readimpl import BaseImpl, R, Read, Scan
     from altair.datasets._typing import Dataset, Extension, Metadata
-    from altair.vegalite.v5.schema._typing import OneOrSeq
+    from altair.vegalite.v6.schema._typing import OneOrSeq
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs, TypeVar

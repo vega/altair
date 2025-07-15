@@ -25,9 +25,8 @@ else:
 __all__ = ["Dataset", "Extension", "Metadata"]
 
 Dataset: TypeAlias = Literal[
-    "7zip",
     "airports",
-    "annual-precip",
+    "annual_precip",
     "anscombe",
     "barley",
     "birdstrikes",
@@ -35,7 +34,7 @@ Dataset: TypeAlias = Literal[
     "budgets",
     "burtin",
     "cars",
-    "co2-concentration",
+    "co2_concentration",
     "countries",
     "crimea",
     "disasters",
@@ -43,59 +42,61 @@ Dataset: TypeAlias = Literal[
     "earthquakes",
     "ffox",
     "flare",
-    "flare-dependencies",
-    "flights-10k",
-    "flights-200k",
-    "flights-20k",
-    "flights-2k",
-    "flights-3m",
-    "flights-5k",
-    "flights-airport",
+    "flare_dependencies",
+    "flights_10k",
+    "flights_200k_arrow",
+    "flights_200k_json",
+    "flights_20k",
+    "flights_2k",
+    "flights_3m",
+    "flights_5k",
+    "flights_airport",
     "football",
     "gapminder",
-    "gapminder-health-income",
+    "gapminder_health_income",
     "gimp",
     "github",
-    "global-temp",
+    "global_temp",
+    "icon_7zip",
     "income",
-    "iowa-electricity",
+    "iowa_electricity",
     "jobs",
-    "la-riots",
-    "londonBoroughs",
-    "londonCentroids",
-    "londonTubeLines",
+    "la_riots",
+    "london_boroughs",
+    "london_centroids",
+    "london_tube_lines",
     "lookup_groups",
     "lookup_people",
     "miserables",
     "monarchs",
     "movies",
-    "normal-2d",
+    "normal_2d",
     "obesity",
     "ohlc",
     "penguins",
-    "platformer-terrain",
-    "political-contributions",
+    "platformer_terrain",
+    "political_contributions",
     "population",
     "population_engineers_hurricanes",
-    "seattle-weather",
-    "seattle-weather-hourly-normals",
+    "seattle_weather",
+    "seattle_weather_hourly_normals",
     "sp500",
-    "sp500-2000",
+    "sp500_2000",
     "species",
     "stocks",
     "udistrict",
     "unemployment",
-    "unemployment-across-industries",
-    "uniform-2d",
-    "us-10m",
-    "us-employment",
-    "us-state-capitals",
+    "unemployment_across_industries",
+    "uniform_2d",
+    "us_10m",
+    "us_employment",
+    "us_state_capitals",
     "volcano",
     "weather",
-    "weekly-weather",
+    "weekly_weather",
     "wheat",
     "windvectors",
-    "world-110m",
+    "world_110m",
     "zipcodes",
 ]
 Extension: TypeAlias = Literal[".arrow", ".csv", ".json", ".parquet", ".png", ".tsv"]
@@ -108,7 +109,7 @@ class Metadata(TypedDict, total=False):
     Parameters
     ----------
     dataset_name
-        Name of the dataset/`Path.stem`_.
+        Name of the dataset from the resource name field.
     suffix
         File extension/`Path.suffix`_.
     file_name
@@ -162,24 +163,24 @@ class Metadata(TypedDict, total=False):
     │ ---            ┆ ---    ┆ ---            ┆   ┆ ---           ┆ ---           │
     │ str            ┆ str    ┆ str            ┆   ┆ str           ┆ str           │
     ╞════════════════╪════════╪════════════════╪═══╪═══════════════╪═══════════════╡
-    │ 7zip           ┆ .png   ┆ 7zip.png       ┆ … ┆ 6586d6c00887c ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ d48850099c17… ┆ sdelivr.net/… │
     │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 608ba6d51fa70 ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ 584c3fa1d31e… ┆ sdelivr.net/… │
-    │ annual-precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://cdn.j │
+    │ annual_precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://cdn.j │
     │                ┆        ┆ json           ┆   ┆ 8f16dda65151… ┆ sdelivr.net/… │
     │ anscombe       ┆ .json  ┆ anscombe.json  ┆ … ┆ 11ae97090b626 ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ 3bdf0c866115… ┆ sdelivr.net/… │
     │ barley         ┆ .json  ┆ barley.json    ┆ … ┆ 8dc50de2509b6 ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ e197ce95c24c… ┆ sdelivr.net/… │
+    │ birdstrikes    ┆ .csv   ┆ birdstrikes.cs ┆ … ┆ 1b8b190c9bc02 ┆ https://cdn.j │
+    │                ┆        ┆ v              ┆   ┆ ef7bcbfe5a8a… ┆ sdelivr.net/… │
     │ …              ┆ …      ┆ …              ┆ … ┆ …             ┆ …             │
-    │ weekly-weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://cdn.j │
+    │ weekly_weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://cdn.j │
     │                ┆        ┆ .json          ┆   ┆ ccd6baaa89f9… ┆ sdelivr.net/… │
     │ wheat          ┆ .json  ┆ wheat.json     ┆ … ┆ cde46b43fc82f ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ 4c3c2a37ddcf… ┆ sdelivr.net/… │
     │ windvectors    ┆ .csv   ┆ windvectors.cs ┆ … ┆ ed686b0ba613a ┆ https://cdn.j │
     │                ┆        ┆ v              ┆   ┆ bd59d09fcd94… ┆ sdelivr.net/… │
-    │ world-110m     ┆ .json  ┆ world-110m.jso ┆ … ┆ a1ce852de6f27 ┆ https://cdn.j │
+    │ world_110m     ┆ .json  ┆ world-110m.jso ┆ … ┆ a1ce852de6f27 ┆ https://cdn.j │
     │                ┆        ┆ n              ┆   ┆ 13c94c0c2840… ┆ sdelivr.net/… │
     │ zipcodes       ┆ .csv   ┆ zipcodes.csv   ┆ … ┆ d3df33e12be0d ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ 0544c95f1bd4… ┆ sdelivr.net/… │

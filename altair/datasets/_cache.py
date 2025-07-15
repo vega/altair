@@ -48,7 +48,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
     from altair.datasets._typing import FlFieldStr
-    from altair.vegalite.v5.schema._typing import OneOrSeq
+    from altair.vegalite.v6.schema._typing import OneOrSeq
 
     _Dataset: TypeAlias = "Dataset | LiteralString"
     _FlSchema: TypeAlias = Mapping[str, FlFieldStr]

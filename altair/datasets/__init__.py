@@ -7,27 +7,28 @@ You can learn more about each dataset at `datapackage.md`_.
 
 Examples
 --------
-Load a dataset as a ``DataFrame``/``Table``::
+**Primary Interface - Data Object**::
 
-    from altair.datasets import load
+    from altair.datasets import data
 
-    load("cars")
+    # Load with default engine (pandas)
+    cars_df = data.cars()
 
-.. note::
-   Requires installation of either `polars`_, `pandas`_, or `pyarrow`_.
+    # Load with specific engine
+    cars_polars = data.cars(engine="polars")
+    cars_pyarrow = data.cars(engine="pyarrow")
 
-Get the remote address of a dataset and use directly in a :class:`altair.Chart`::
+    # Get URL
+    cars_url = data.cars.url
 
-    import altair as alt
-    from altair.datasets import url
+    # Set default engine for all datasets
+    data.set_default_engine("polars")
+    movies_df = data.movies()  # Uses polars engine
 
-    source = url("co2-concentration")
-    alt.Chart(source).mark_line(tooltip=True).encode(x="Date:T", y="CO2:Q")
+    # List available datasets
+    available_datasets = data.list_datasets()
 
-.. note::
-   Works without any additional dependencies.
-
-For greater control over the backend library use::
+**Expert Interface - Loader**::
 
     from altair.datasets import Loader
 
@@ -44,6 +45,19 @@ This method also provides *precise* <kbd>Tab</kbd> completions on the returned o
     #            drop_nans
     #            dtypes
     #            ...
+
+**Expert Interface - Direct Functions**::
+
+    from altair.datasets import load, url
+
+    # Load a dataset
+    cars_df = load("cars", backend="polars")
+
+    # Get dataset URL
+    cars_url = url("cars")
+
+.. note::
+   Requires installation of either `polars`_, `pandas`_, or `pyarrow`_.
 
 .. _vega-datasets:
     https://github.com/vega/vega-datasets
@@ -63,7 +77,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from altair.datasets._loader import Loader
+from altair.datasets._loader import Loader as Loader
 
 if TYPE_CHECKING:
     import sys
@@ -78,12 +92,15 @@ if TYPE_CHECKING:
     from altair.datasets._typing import Dataset, Extension
 
 
-__all__ = ["Loader", "load", "url"]
-
-
+# Expert interface - direct load function
 load: _Load[Any, Any]
 """
 Get a remote dataset and load as tabular data.
+
+This is an expert interface. For most users, the data object interface is recommended::
+
+    from altair.datasets import data
+    cars = data.cars(engine="polars")
 
 For full <kbd>Tab</kbd> completions, instead use::
 
@@ -107,6 +124,12 @@ def url(
 ) -> str:
     """
     Return the address of a remote dataset.
+
+    This is an expert interface. For most users, the data object interface is recommended::
+
+        from altair.datasets import data
+
+        cars_url = data.cars.url
 
     Parameters
     ----------
@@ -142,10 +165,17 @@ def url(
 
 
 def __getattr__(name):
-    if name == "load":
+    if name == "data":
+        from altair.datasets._data import data
+
+        return data
+    elif name == "load":
         from altair.datasets._loader import load
 
         return load
+    elif name == "__all__":
+        # Define __all__ dynamically to avoid ruff errors
+        return ["Loader", "data", "load", "url"]
     else:
         msg = f"module {__name__!r} has no attribute {name!r}"
         raise AttributeError(msg)
