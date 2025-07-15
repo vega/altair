@@ -50,7 +50,7 @@ def eval_block(
     namespace: dict[str, Any] | None = ...,
     filename: str | ReadableBuffer | PathLike[Any] = ...,
     *,
-    strict: Literal[True] = ...,
+    strict: Literal[True],
 ) -> Any: ...
 def eval_block(
     code: str | Any,
