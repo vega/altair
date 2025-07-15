@@ -4173,8 +4173,16 @@ class Chart(
         if copy.params is Undefined:
             copy.params = []
 
-        for s in params:
-            copy.params.append(s.param)
+        # Use a set to track existing parameter names for deduplication
+        # The params list contains underlying parameter objects, so we check their names
+        existing_names = {param.name for param in copy.params}
+        
+        # Only add parameters that aren't already present
+        for param in params:
+            if param.name not in existing_names:
+                copy.params.append(param.param)
+                existing_names.add(param.name)
+        
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
