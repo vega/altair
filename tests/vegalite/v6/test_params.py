@@ -233,3 +233,70 @@ def test_creation_views_params_layered_repeat_chart():
 
     dct = c.to_dict()
     assert "child__column_distance_view_" in dct["params"][0]["views"][0]
+
+
+def test_parameter_deduplication():
+    """Test that hash-based parameters are deduplicated to avoid duplicate signal names."""
+    # Test with hash-based naming - these should be deduplicated
+    param1 = alt.param()  # Will get hash-based name
+    param2 = alt.param()  # Will get same hash-based name
+
+    chart = alt.Chart().mark_point().add_params(param1, param2)
+
+    # Check that only one parameter was added
+    assert len(chart.params) == 1
+    assert param1.name == param2.name  # Should have same hash-based name
+    assert chart.params[0].name == param1.name
+
+    # Test that the spec doesn't have duplicate parameter names
+    spec = chart.to_dict()
+    param_names = [p["name"] for p in spec["params"]]
+    assert len(param_names) == len(set(param_names)), (
+        "Duplicate parameter names found in spec"
+    )
+
+
+def test_explicitly_named_parameters_error():
+    """Test that explicitly named parameters with duplicate names raise an error."""
+    # Create two parameters with explicit names - this should raise an error
+    param1 = alt.param(name="my_param_1")
+    param2 = alt.param(name="my_param_1")
+
+    # Create a chart and add both parameters - should raise an error
+    with pytest.raises(
+        ValueError, match="Duplicate explicit parameter name: my_param_1"
+    ):
+        alt.Chart().mark_point().add_params(param1, param2)
+
+
+def test_identical_hash_based_parameters_deduplication():
+    """Test that identical parameters with hash-based names are deduplicated."""
+    from altair.datasets import data
+
+    cars = data.cars.url
+    param_opacity = alt.param(value=1)
+    param_size = alt.param(value=1)
+
+    # Create chart with same parameter added twice
+    chart = (
+        alt.Chart(cars)
+        .mark_circle(opacity=param_opacity, size=param_size)
+        .encode(x="Horsepower:Q", y="Miles_per_Gallon:Q", color="Origin:N")
+        .add_params(param_opacity, param_size)
+    )
+
+    # Check that only one parameter was added
+    assert len(chart.params) == 1
+
+    # Get the spec and verify it has only one parameter
+    spec = chart.to_dict()
+    assert len(spec["params"]) == 1
+
+    # Verify the parameter name is hash-based
+    param_name = spec["params"][0]["name"]
+    assert param_name.startswith("param_")
+    assert len(param_name) == 22  # "param_" + 16 hex chars
+
+    # Verify both opacity and size reference the same parameter
+    assert spec["mark"]["opacity"]["expr"] == param_name
+    assert spec["mark"]["size"]["expr"] == param_name

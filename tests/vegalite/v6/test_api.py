@@ -1341,7 +1341,9 @@ def test_add_selection():
         .add_params(selections[0])
         .add_params(selections[1], selections[2])
     )
-    expected = [s.param for s in selections]
+    # The second and third selections are identical (same hash-based name),
+    # so only the first two unique selections should be added
+    expected = [selections[0].param, selections[1].param]
     assert chart.params == expected
 
 

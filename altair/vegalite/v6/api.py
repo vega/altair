@@ -434,6 +434,9 @@ class Parameter(_expr_core.OperatorMixin):
         if name is None:
             # Use hash-based naming for deterministic names
             name = self._get_hash_name()
+            self._name_is_hashed = True
+        else:
+            self._name_is_hashed = False
         self.name = name
 
         # Update the underlying param object's name to match
@@ -1406,6 +1409,7 @@ def _make_param_obj(
             name=temp_name, value=value, bind=bind, expr=expr, **kwds
         )
         param_type = "variable"
+
     return param_obj, param_type
 
 
@@ -1485,6 +1489,7 @@ def param(
         # Compute hash-based name
         hash_name = parameter._get_hash_name()
         parameter.name = hash_name
+        parameter._name_is_hashed = True
         if parameter.param is not Undefined:
             param_obj = t.cast(
                 "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
@@ -4173,16 +4178,19 @@ class Chart(
         if copy.params is Undefined:
             copy.params = []
 
-        # Use a set to track existing parameter names for deduplication
-        # The params list contains underlying parameter objects, so we check their names
+        # Track existing parameter names
         existing_names = {param.name for param in copy.params}
-        
-        # Only add parameters that aren't already present
+
         for param in params:
-            if param.name not in existing_names:
-                copy.params.append(param.param)
-                existing_names.add(param.name)
-        
+            if param.name in existing_names:
+                if param._name_is_hashed:
+                    continue  # deduplicate hash-based
+                else:
+                    # If we see a duplicate explicit name, raise
+                    msg = f"Duplicate explicit parameter name: {param.name}"
+                    raise ValueError(msg)
+            copy.params.append(param.param)
+            existing_names.add(param.name)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
