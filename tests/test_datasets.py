@@ -717,8 +717,8 @@ def test_pandas_date_parse(
     assert set(date_columns).issubset(nw_schema)
     # Note: Automatic date detection may not work in all cases
     # The important thing is that explicit date parsing works
-    # for column in date_columns:
-    #     assert nw_schema[column] in {nw.Date, nw.Datetime}
+    for column in date_columns:
+        assert nw_schema[column] in {nw.Date, nw.Datetime}
 
     # Check that explicit date parsing produces datetime columns
     manual_schema = nw.from_native(df_manually_specified).schema
