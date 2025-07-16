@@ -10,7 +10,7 @@ of encodings. For example, consider this stacked bar chart:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -28,7 +28,7 @@ We can construct that same chart manually using the stack transform:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 

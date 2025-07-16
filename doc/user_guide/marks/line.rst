@@ -84,7 +84,7 @@ Using line with one temporal or ordinal field (typically on ``x``) and another q
 .. altair-plot::
     import altair as alt
     from altair import datum
-    from vega_datasets import data
+    from altair.datasets import data
 
 
     source = data.stocks()
@@ -102,7 +102,7 @@ Adding a field to a mark property channel such as ``color`` groups data points i
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -116,7 +116,7 @@ We can further apply selection to highlight a certain line on hover.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -150,7 +150,7 @@ Adding a field to ``strokeDash`` also produces a multi-series line chart.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -184,7 +184,7 @@ To group lines by a field without mapping the field to any visual properties, we
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -198,7 +198,7 @@ The same method can be used to group lines for a ranged dot plot.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.countries()
 
@@ -235,7 +235,7 @@ By setting the ``point`` property of the mark definition to ``True`` or an objec
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -253,7 +253,7 @@ Here we create stroked points by setting ``filled`` to ``False`` and ``fill`` to
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -276,7 +276,7 @@ datapoint (2010) is the other endpoint of the line.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.driving()
 
@@ -293,7 +293,7 @@ The ``interpolate`` property of a mark definition can be used to change line int
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -308,7 +308,7 @@ We can also set ``interpolate`` to ``"step-after"`` to create a step-chart.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -327,7 +327,7 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     import pandas as pd
 
     airports = data.airports.url

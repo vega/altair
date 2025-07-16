@@ -5,7 +5,7 @@ This example shows a ranged dot plot to convey changing life expectancy for the 
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.countries.url
 

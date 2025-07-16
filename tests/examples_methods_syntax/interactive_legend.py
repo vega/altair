@@ -7,7 +7,7 @@ binding the selection to ``"legend"``. Such a binding only works with
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.unemployment_across_industries.url
 

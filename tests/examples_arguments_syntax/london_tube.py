@@ -7,7 +7,7 @@ https://vega.github.io/vega-lite/examples/geo_layer_line_london.html.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 boroughs = alt.topo_feature(data.londonBoroughs.url, 'boroughs')
 tubelines = alt.topo_feature(data.londonTubeLines.url, 'line')

@@ -8,6 +8,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair.datasets import data
 from altair.utils.execeval import eval_block
 from tests import (
     examples_methods_syntax,
@@ -15,7 +16,6 @@ from tests import (
     skip_requires_vegafusion,
     slow,
 )
-from vega_datasets import data
 
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""

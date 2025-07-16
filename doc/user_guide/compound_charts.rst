@@ -34,7 +34,7 @@ same data; for example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     stocks = data.stocks.url
 
@@ -76,7 +76,7 @@ heat-map:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies.url
 
@@ -121,7 +121,7 @@ distribution of its points:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     penguins = data.penguins.url
 
@@ -174,7 +174,7 @@ with a ``brush`` selection to add interaction:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.sp500.url
 
@@ -219,7 +219,7 @@ showing how ``repeat`` can be used to build the chart more efficiently:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     penguins = data.penguins.url
 
@@ -251,7 +251,7 @@ method, makes this type of chart a bit easier to produce:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     penguins = data.penguins.url
 
     alt.Chart(penguins).mark_point().encode(
@@ -277,7 +277,7 @@ using ``alt.repeat('layer')``:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies()
 

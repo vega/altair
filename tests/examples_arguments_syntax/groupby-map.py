@@ -5,7 +5,7 @@ This is a layered geographic visualization that groups points by state.
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 airports = data.airports.url
 states = alt.topo_feature(data.us_10m.url, feature='states')

@@ -25,7 +25,7 @@ containing hourly temperatures measured in Seattle:
     :output: repr
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     temps = data.seattle_temps()
     temps.head()

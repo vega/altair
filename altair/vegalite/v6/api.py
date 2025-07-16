@@ -942,7 +942,7 @@ class When(_BaseWhen):
         Simple conditions may be expressed without defining a default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
             predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
@@ -1018,7 +1018,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Points outside of ``brush`` will not appear highlighted::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             brush = alt.selection_interval()
@@ -1105,7 +1105,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Chain calls to express precise queries::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             color = (
@@ -1210,7 +1210,7 @@ class ChainedWhen(_BaseWhen):
         Multiple conditions with an implicit default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
             predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
@@ -1290,7 +1290,7 @@ def when(
     Setting up a common chart::
 
         import altair as alt
-        from vega_datasets import data
+        from altair.datasets import data
 
         source = data.cars()
         brush = alt.selection_interval()
@@ -3058,7 +3058,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             import altair as alt
             from altair import datum
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.population.url
             chart = (

@@ -29,7 +29,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -52,7 +52,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -73,7 +73,7 @@ If the data is not aggregated yet, Altair will aggregate the data based on the `
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -165,7 +165,7 @@ The orientation of an error bar is automatically determined by the continuous fi
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -188,7 +188,7 @@ For 2D error bars with one continuous field and one discrete field, the error ba
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -215,7 +215,7 @@ Here is an example of a ``errorbar`` with the ``color`` encoding channel set to 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -241,7 +241,7 @@ You can add custom tooltips to error bars. The custom tooltip will override the 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 

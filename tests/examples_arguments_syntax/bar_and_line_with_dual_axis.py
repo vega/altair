@@ -7,7 +7,7 @@ For a more polished version of this chart, see :ref:`gallery_wheat_wages`.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.wheat()
 

@@ -49,7 +49,7 @@ Mapping a quantitative field to either ``x`` or ``y`` of the ``bar`` mark produc
 .. altair-plot::
     import altair as alt
     from altair import datum
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.population.url
 
@@ -67,7 +67,7 @@ If we map a different discrete field to the ``y`` channel, we can produce a hori
 .. altair-plot::
     import altair as alt
     from altair import datum
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.population.url
 
@@ -90,7 +90,7 @@ bars on continuous scales will be set based on the ``continuousBandSize`` config
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.seattle_weather()
 
@@ -107,7 +107,7 @@ If the data is not pre-aggregated (i.e. each record in the data field represents
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies.url
 
@@ -122,7 +122,7 @@ Adding color to the bar chart (by using the ``color`` attribute) creates a stack
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 

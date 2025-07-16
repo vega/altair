@@ -11,7 +11,7 @@ This example shows how to use two areas, one on top of the other, and a
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.unemployment_across_industries.url
 

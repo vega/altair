@@ -6,7 +6,7 @@ A quantile-quantile plot comparing input data to theoretical distributions.
 # category: distributions
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.normal_2d.url
 

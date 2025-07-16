@@ -16,7 +16,7 @@ to. This example data is available in ``vega_datasets``:
 .. altair-plot::
    :output: none
 
-   from vega_datasets import data
+   from altair.datasets import data
    people = data.lookup_people()
    groups = data.lookup_groups()
 
@@ -107,7 +107,7 @@ of unemployment rates per county in the US:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     counties = alt.topo_feature(data.us_10m.url, 'counties')
     unemp_data = data.unemployment.url

@@ -5,7 +5,7 @@ This chart shows a line chart with the path interpolated. A full list of interpo
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

@@ -7,7 +7,7 @@ remaining directors as 'All Others'.
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 

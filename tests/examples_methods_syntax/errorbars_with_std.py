@@ -6,7 +6,7 @@ in the years of 1930s.
 """
 # category: uncertainties and trends
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

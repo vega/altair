@@ -13,7 +13,7 @@ For example, consider the following cumulative frequency distribution:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     alt.Chart(data.movies.url).transform_window(
         sort=[{'field': 'IMDB_Rating'}],
@@ -57,7 +57,7 @@ For example, consider the following time series of stock prices:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     alt.Chart(data.stocks.url).mark_line().encode(
         x='date:T',
@@ -71,7 +71,7 @@ If we plot the `z-scores`_ of the stock prices, rather than the stock prices the
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     alt.Chart(data.stocks.url).transform_window(
         mean_price='mean(price)',

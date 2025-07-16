@@ -11,7 +11,7 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 movies = alt.UrlData(
     data.movies.url,

@@ -7,7 +7,7 @@ see a detail of the distribution in the upper panel.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 

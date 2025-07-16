@@ -6,7 +6,7 @@ The low-high IMDB rating is represented with the color scheme `pinkyellowgreen`.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 

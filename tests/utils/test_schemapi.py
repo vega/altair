@@ -23,6 +23,7 @@ import pytest
 
 import altair as alt
 from altair import load_schema
+from altair.datasets import data
 from altair.utils.schemapi import (
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
     SchemaBase,
@@ -33,7 +34,6 @@ from altair.utils.schemapi import (
 )
 from altair.vegalite.v6.schema.channels import X
 from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
-from vega_datasets import data
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Sequence

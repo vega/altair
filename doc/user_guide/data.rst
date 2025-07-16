@@ -70,7 +70,7 @@ Similarly, we must also specify the data type when referencing data by URL:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     url = data.cars.url
 
     alt.Chart(url).mark_point().encode(
@@ -493,7 +493,7 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 .. altair-plot::
    :output: repr
 
-   from vega_datasets import data
+   from altair.datasets import data
 
    url_topojson = data.londonBoroughs.url
 
@@ -537,7 +537,7 @@ without fill color.
 
 .. altair-plot::
 
-   from vega_datasets import data
+   from altair.datasets import data
 
    url_topojson = data.londonBoroughs.url
 

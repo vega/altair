@@ -13,7 +13,7 @@ An common application of a bin transform is when creating a histogram:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     movies = data.movies.url
 
@@ -28,7 +28,7 @@ bin a continuous field to create a discrete color map:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     cars = data.cars.url
 
@@ -52,7 +52,7 @@ Here is the above histogram created using a top-level bin transform:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     movies = data.movies.url
 
@@ -68,7 +68,7 @@ And here is the transformed color scale using a top-level bin transform:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     cars = data.cars.url
 

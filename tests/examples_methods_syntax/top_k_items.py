@@ -7,7 +7,7 @@ Here we sort the top 10 highest ranking movies of IMDB.
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 

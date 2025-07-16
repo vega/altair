@@ -10,7 +10,7 @@ Adapted from `Calculate Residuals <https://vega.github.io/vega-lite/examples/joi
 # category: advanced calculations
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 imdb_rating = alt.datum["IMDB_Rating"]
 source = data.movies.url

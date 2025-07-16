@@ -8,7 +8,7 @@ while the thin bar shows intraday high and low prices; if the index closed highe
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.ohlc()
 
