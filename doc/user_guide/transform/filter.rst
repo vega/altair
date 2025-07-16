@@ -20,6 +20,8 @@ expressions and objects:
 
 We'll show a brief example of each of these in the following sections
 
+.. _filter-expression:
+
 Filter Expression
 ^^^^^^^^^^^^^^^^^
 A filter expression uses the `Vega expression`_ language, either specified
@@ -135,62 +137,80 @@ to select the data to be shown in the top chart:
 
     selection = alt.selection_point(fields=['year'])
 
-    top = alt.Chart().mark_line().encode(
-        x='age:O',
-        y='sum(people):Q',
-        color='year:O'
-    ).properties(
-        width=600, height=200
+    top = alt.Chart(width=600, height=200).mark_line().encode(
+        x="age:O",
+        y="sum(people):Q",
+        color="year:O"
     ).transform_filter(
         selection
     )
 
-    bottom = alt.Chart().mark_bar().encode(
-        x='year:O',
-        y='sum(people):Q',
-        color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
-    ).properties(
-        width=600, height=100
+    color = alt.when(selection).then(alt.value("steelblue")).otherwise(alt.value("lightgray"))
+    bottom = alt.Chart(width=600, height=100).mark_bar().encode(
+        x="year:O",
+        y="sum(people):Q",
+        color=color
     ).add_params(
         selection
     )
 
-    alt.vconcat(
-        top, bottom,
-        data=pop
-    )
+    alt.vconcat(top, bottom, data=pop)
 
 Logical Operands
 ^^^^^^^^^^^^^^^^
 At times it is useful to combine several types of predicates into a single
-selection. This can be accomplished using the various logical operand classes:
+selection. We can use ``&``, ``|`` and ``~`` for respectively 
+``AND``, ``OR`` and ``NOT`` logical composition operands.
 
-- :class:`~LogicalOrPredicate`
-- :class:`~LogicalAndPredicate`
-- :class:`~LogicalNotPredicate`
+For example, here we wish to plot US population distributions for all data *except* the years *1950-1960*.
 
-These are not yet part of the Altair interface
-(see `Issue 695 <https://github.com/vega/altair/issues/695>`_)
-but can be constructed explicitly; for example, here we plot US population
-distributions for all data *except* the years 1950-1960,
-by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
+First, we use a :class:`~FieldRangePredicate` to select *1950-1960*:
 
 .. altair-plot::
-
+    :output: none
+    
     import altair as alt
     from vega_datasets import data
 
-    pop = data.population.url
-
-    alt.Chart(pop).mark_line().encode(
-        x='age:O',
-        y='sum(people):Q',
-        color='year:O'
+    source = data.population.url
+    chart = alt.Chart(source).mark_line().encode(
+        x="age:O",
+        y="sum(people):Q",
+        color="year:O"
     ).properties(
         width=600, height=200
-    ).transform_filter(
-        {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     )
+
+    between_1950_60 = alt.FieldRangePredicate(field="year", range=[1950, 1960])
+
+Then, we can *invert* this selection using ``~``:
+
+.. altair-plot::
+
+    # NOT between 1950-1960
+    chart.transform_filter(~between_1950_60)
+
+We can further refine our filter by *composing* multiple predicates together.
+In this case, using ``datum``:
+
+.. altair-plot::
+
+    chart.transform_filter(~between_1950_60 & (datum.age <= 70))
+
+When passing multiple predicates they will be reduced with ``&``:
+
+.. altair-plot::
+
+    chart.transform_filter(datum.year > 1980, datum.age != 90)
+
+Using keyword-argument ``constraints`` can simplify our first example in :ref:`filter-expression`:
+
+.. altair-plot::
+
+    alt.Chart(source).mark_area().encode(
+        x="age:O",
+        y="people:Q",
+    ).transform_filter(year=2000, sex=1)
 
 Transform Options
 ^^^^^^^^^^^^^^^^^

@@ -7,7 +7,7 @@ from typing import IO, TYPE_CHECKING, Any, Literal
 
 from altair.utils._vegafusion_data import using_vegafusion
 from altair.utils.deprecation import deprecated_warn
-from altair.vegalite.v5.data import data_transformers
+from altair.vegalite.v6.data import data_transformers
 
 from .mimebundle import spec_to_mimebundle
 
@@ -65,7 +65,7 @@ def set_inspect_mode_argument(
             mode = "vega-lite"
 
     if mode != "vega-lite":
-        msg = "mode must be 'vega-lite', " f"not '{mode}'"
+        msg = f"mode must be 'vega-lite', not '{mode}'"
         raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:

@@ -4,7 +4,7 @@ Faceted Line Chart with Cumulative Sum
 This chart creates one facet per natural disaster and shows the cumulative number of deaths for that category.
 Note the use of different predicates to filter based on both a list and a range.
 """
-# category: advanced calcuations
+# category: advanced calculations
 import altair as alt
 from vega_datasets import data
 
@@ -12,10 +12,8 @@ source = data.disasters()
 columns_sorted = ['Drought', 'Epidemic', 'Earthquake', 'Flood']
 
 alt.Chart(source).transform_filter(
-    {'and': [
-        alt.FieldOneOfPredicate(field='Entity', oneOf=columns_sorted), # Filter data to show only disasters in columns_sorted
-        alt.FieldRangePredicate(field='Year', range=[1900, 2000]) # Filter data to show only 20th century
-    ]}
+    alt.FieldOneOfPredicate(field='Entity', oneOf=columns_sorted), 
+    alt.FieldRangePredicate(field='Year', range=[1900, 2000])
 ).transform_window(
     cumulative_deaths='sum(Deaths)', groupby=['Entity'] # Calculate cumulative sum of Deaths by Entity
 ).mark_line().encode( 

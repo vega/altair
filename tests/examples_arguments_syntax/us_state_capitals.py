@@ -1,8 +1,8 @@
 """
-U.S. State Capitals Overlayed on a Map of the U.S
+U.S. State Capitals Overlaid on a Map of the U.S
 -------------------------------------------------
 This is a layered geographic visualization that shows US capitals
-overlayed on a map.
+overlaid on a map.
 """
 # category: case studies
 import altair as alt
@@ -32,12 +32,12 @@ base = alt.Chart(capitals).encode(
 
 text = base.mark_text(dy=-5, align='right').encode( 
     alt.Text('city', type='nominal'),
-    opacity=alt.condition(~hover, alt.value(0), alt.value(1))
+    opacity=alt.when(~hover).then(alt.value(0)).otherwise(alt.value(1))
 )
 
 points = base.mark_point().encode(
     color=alt.value('black'),
-    size=alt.condition(~hover, alt.value(30), alt.value(100))
+    size=alt.when(~hover).then(alt.value(30)).otherwise(alt.value(100))
 ).add_params(hover)
 
 background + points + text

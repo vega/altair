@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import ast
 import sys
-from typing import TYPE_CHECKING, Any, Callable, Literal, overload
+from typing import TYPE_CHECKING, Any, Literal, overload
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from os import PathLike
 
     from _typeshed import ReadableBuffer
@@ -49,7 +50,7 @@ def eval_block(
     namespace: dict[str, Any] | None = ...,
     filename: str | ReadableBuffer | PathLike[Any] = ...,
     *,
-    strict: Literal[True] = ...,
+    strict: Literal[True],
 ) -> Any: ...
 def eval_block(
     code: str | Any,

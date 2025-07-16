@@ -1,34 +1,29 @@
 """Magic functions for rendering vega-lite specifications."""
 
-__all__ = ["vegalite"]
+from __future__ import annotations
 
 import json
 import warnings
+from importlib.util import find_spec
+from typing import Any
 
-import IPython
 from IPython.core import magic_arguments
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
+from narwhals.stable.v1.dependencies import is_pandas_dataframe
 
-from altair.vegalite import v5 as vegalite_v5
+from altair.vegalite import v6 as vegalite_v6
 
-try:
-    import yaml
-
-    YAML_AVAILABLE = True
-except ImportError:
-    YAML_AVAILABLE = False
-
+__all__ = ["vegalite"]
 
 RENDERERS = {
     "vega-lite": {
-        "5": vegalite_v5.VegaLite,
+        "6": vegalite_v6.VegaLite,
     },
 }
 
 
 TRANSFORMERS = {
     "vega-lite": {
-        "5": vegalite_v5.data_transformers,
+        "6": vegalite_v6.data_transformers,
     },
 }
 
@@ -37,7 +32,7 @@ def _prepare_data(data, data_transformers):
     """Convert input data to data for use within schema."""
     if data is None or isinstance(data, dict):
         return data
-    elif _is_pandas_dataframe(data):
+    elif is_pandas_dataframe(data):
         if func := data_transformers.get():
             data = func(data)
         return data
@@ -48,19 +43,21 @@ def _prepare_data(data, data_transformers):
         return data
 
 
-def _get_variable(name):
+def _get_variable(name: str) -> Any:
     """Get a variable from the notebook namespace."""
-    ip = IPython.get_ipython()
-    if ip is None:
+    from IPython.core.getipython import get_ipython
+
+    if ip := get_ipython():
+        if name not in ip.user_ns:
+            msg = f"argument '{name}' does not match the name of any defined variable"
+            raise NameError(msg)
+        return ip.user_ns[name]
+    else:
         msg = (
             "Magic command must be run within an IPython "
             "environment, in which get_ipython() is defined."
         )
         raise ValueError(msg)
-    if name not in ip.user_ns:
-        msg = f"argument '{name}' does not match the name of any defined variable"
-        raise NameError(msg)
-    return ip.user_ns[name]
 
 
 @magic_arguments.magic_arguments()
@@ -69,13 +66,13 @@ def _get_variable(name):
     nargs="?",
     help="local variablename of a pandas DataFrame to be used as the dataset",
 )
-@magic_arguments.argument("-v", "--version", dest="version", default="v5")
+@magic_arguments.argument("-v", "--version", dest="version", default="v6")
 @magic_arguments.argument("-j", "--json", dest="json", action="store_true")
-def vegalite(line, cell):
+def vegalite(line, cell) -> vegalite_v6.VegaLite:
     """
     Cell magic for displaying vega-lite visualizations in CoLab.
 
-    %%vegalite [dataframe] [--json] [--version='v5']
+    %%vegalite [dataframe] [--json] [--version='v6']
 
     Visualize the contents of the cell using Vega-Lite, optionally
     specifying a pandas DataFrame object to be used as the dataset.
@@ -83,7 +80,7 @@ def vegalite(line, cell):
     if --json is passed, then input is parsed as json rather than yaml.
     """
     args = magic_arguments.parse_argstring(vegalite, line)
-    existing_versions = {"v5": "5"}
+    existing_versions = {"v6": "6"}
     version = existing_versions[args.version]
     assert version in RENDERERS["vega-lite"]
     VegaLite = RENDERERS["vega-lite"][version]
@@ -91,7 +88,7 @@ def vegalite(line, cell):
 
     if args.json:
         spec = json.loads(cell)
-    elif not YAML_AVAILABLE:
+    elif not find_spec("yaml"):
         try:
             spec = json.loads(cell)
         except json.JSONDecodeError as err:
@@ -101,6 +98,8 @@ def vegalite(line, cell):
             )
             raise ValueError(msg) from err
     else:
+        import yaml
+
         spec = yaml.load(cell, Loader=yaml.SafeLoader)
 
     if args.data is not None:

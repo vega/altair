@@ -123,21 +123,21 @@ distribution of its points:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    chart1 = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    chart1 = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         height=300,
         width=300
     )
 
-    chart2 = alt.Chart(iris).mark_bar().encode(
+    chart2 = alt.Chart(penguins).mark_bar().encode(
         x='count()',
-        y=alt.Y('petalWidth:Q').bin(maxbins=30),
-        color='species:N'
+        y=alt.Y('Body Mass (g):Q', bin=alt.Bin(maxbins=30)),
+        color='Species:N'
     ).properties(
         height=300,
         width=100
@@ -221,20 +221,23 @@ showing how ``repeat`` can be used to build the chart more efficiently:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
     base = alt.Chart().mark_point().encode(
-        color='species:N'
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).interactive()
 
-    chart = alt.vconcat(data=iris)
-    for y_encoding in ['petalLength:Q', 'petalWidth:Q']:
+    chart = alt.vconcat(data=penguins)
+    for y_encoding in ['Flipper Length (mm):Q', 'Body Mass (g):Q']:
         row = alt.hconcat()
-        for x_encoding in ['sepalLength:Q', 'sepalWidth:Q']:
-            row |= base.encode(x=x_encoding, y=y_encoding)
+        for x_encoding in ['Beak Length (mm):Q', 'Beak Depth (mm):Q']:
+            row |= base.encode(
+                       x=alt.X(x_encoding, scale=alt.Scale(zero=False)),
+                       y=alt.Y(y_encoding, scale=alt.Scale(zero=False)),
+                   )
         chart &= row
     chart
 
@@ -249,18 +252,18 @@ method, makes this type of chart a bit easier to produce:
 
     import altair as alt
     from vega_datasets import data
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    alt.Chart(iris).mark_point().encode(
-        alt.X(alt.repeat("column"), type='quantitative'),
-        alt.Y(alt.repeat("row"), type='quantitative'),
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        alt.X(alt.repeat("column"), type='quantitative', scale=alt.Scale(zero=False)),
+        alt.Y(alt.repeat("row"), type='quantitative', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).repeat(
-        row=['petalLength', 'petalWidth'],
-        column=['sepalLength', 'sepalWidth']
+        row=['Flipper Length (mm)', 'Body Mass (g)'],
+        column=['Beak Length (mm)', 'Beak Depth (mm)']
     ).interactive()
 
 The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
@@ -295,7 +298,7 @@ Faceted Charts
 Like repeated charts, Faceted charts provide multiple views of a dataset.
 But instead of having different panels for different encodings,
 we have different panels for different subsets of data. For example,
-one panel for each of the three species of flower in the iris dataset.
+one panel for each of the three species of penguin in the penguins dataset.
 
 This is also called a `small multiple <https://en.wikipedia.org/wiki/Small_multiple>`_
 chart, trellis chart, lattice chart, grid chart, or panel chart.
@@ -306,22 +309,21 @@ concatenation:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
+    penguins = data.penguins.url
 
-    iris = data.iris.url
-
-    base = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    base = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color='Species:N'
     ).properties(
         width=160,
         height=160
     )
 
     chart = alt.hconcat()
-    for species in ['setosa', 'versicolor', 'virginica']:
-        chart |= base.transform_filter(alt.datum.species == species)
+    for species in ['Adelie', 'Chinstrap', 'Gentoo']:
+        chart |= base.transform_filter(alt.datum.Species == species)
     chart
 
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,
@@ -331,15 +333,15 @@ Using ``.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q')scale(zero=False),
+        color='Species:N'
     ).properties(
         width=180,
         height=180
     ).facet(
-        column='species:N'
+        column='Species:N'
     )
 
 For simple charts like this, there is also a ``column`` encoding channel that
@@ -347,11 +349,11 @@ can give the same results:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N',
-        column='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color='Species:N',
+        column='Species:N'
     ).properties(
         width=180,
         height=180
@@ -364,27 +366,26 @@ layered chart with a hover selection:
 .. altair-plot::
 
     hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
+    when_hover = alt.when(hover)
 
-    base = alt.Chart(iris).encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color=alt.condition(hover, 'species:N', alt.value('lightgray'))
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color=alt.condition(hover, 'Species:N', alt.value('lightgray'))
     ).properties(
         width=180,
         height=180,
     )
 
-    points = base.mark_point().add_params(
-        hover
-    )
+    points = base.mark_point().add_params(hover)
 
     text = base.mark_text(dy=-5).encode(
-        text = 'species:N',
+        text = 'Species:N',
         opacity = alt.condition(hover, alt.value(1), alt.value(0))
     )
 
     alt.layer(points, text).facet(
-        'species:N',
+        'Species:N',
     )
 
 Though each of the above examples have faceted the data across columns,

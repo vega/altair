@@ -37,7 +37,7 @@ The contents of the resulting file will look something like this:
 .. code-block:: json
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
       "config": {
         "view": {
           "continuousHeight": 300,
@@ -89,15 +89,15 @@ javascript-enabled web browser:
     <!DOCTYPE html>
     <html>
     <head>
-      <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@6"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
     </head>
     <body>
       <div id="vis"></div>
       <script type="text/javascript">
         var spec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
           "config": {
             "view": {
               "continuousHeight": 300,
@@ -138,6 +138,18 @@ change to ``svg`` rendering, use the ``embed_options`` as such:
 
     chart.save('chart.html', embed_options={'renderer':'svg'})
 
+If you need an HTML string object for further processing in custom HTML reports,
+you can use the :meth:`Chart.to_html` method:
+
+.. code-block:: python
+
+    html_string = chart.to_html()
+    # Use html_string in your custom HTML generation
+
+The :meth:`Chart.to_html` method returns a string containing the HTML representation
+of the chart, which can be embedded into larger HTML documents or processed
+programmatically.
+
 
 .. note::
 
@@ -157,7 +169,7 @@ As an alternative, the ``inline=True`` keyword argument may be provided to ``cha
 
 .. note::
 
-   Calling ``chart.save`` with ``inline=True`` requires the :ref:`install-vl-convert` package.
+   Calling ``chart.save`` with ``inline=True`` requires :ref:`additional-dependencies`.
 
 
 .. _saving-png:
@@ -172,25 +184,11 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
     chart.save('chart.svg')
     chart.save('chart.pdf')
 
-Saving these images requires an additional extension vl-convert_ to run the
-javascript code necessary to interpret the Vega-Lite specification and output
-it in the form of an image.
+.. note::
 
-.. _install-vl-convert:
+   :ref:`additional-dependencies` are required to save charts as images by running the javascript
+   code necessary to interpret the Vega-Lite specification and output it in the form of an image.
 
-vl-convert
-^^^^^^^^^^
-The vl-convert_ package can be installed with::
-
-    conda install -c conda-forge vl-convert-python
-
-or::
-
-    pip install vl-convert-python
-
-vl-convert_ does not require any external dependencies.
-See the vl-convert documentation for information and for known
-`limitations <https://github.com/vega/vl-convert#limitations>`_.
 
 altair_saver
 ^^^^^^^^^^^^
@@ -215,6 +213,22 @@ To change the physical size of the resulting image while preserving the resoluti
 size at the default resolution of 72 ppi::
 
     chart.save('chart.png', scale_factor=2)
+
+.. _additional-dependencies:
+
+Additional Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~
+Saving charts to images or offline HTML files requires the vl-convert_ package::
+
+    conda install -c conda-forge vl-convert-python
+
+or::
+
+    pip install vl-convert-python
+
+vl-convert_ does not require any external dependencies.
+See the vl-convert documentation for information and for known
+`limitations <https://github.com/vega/vl-convert#limitations>`_.
 
 Sharable URL
 ~~~~~~~~~~~~

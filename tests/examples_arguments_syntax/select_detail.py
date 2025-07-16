@@ -42,6 +42,11 @@ data = pd.merge(timeseries, locations, on='id')
 # Data is prepared, now make a chart
 
 selector = alt.selection_point(fields=['id'])
+color = (
+    alt.when(selector)
+    .then(alt.Color("id:O", legend=None))
+    .otherwise(alt.value("lightgray"))
+)
 
 base = alt.Chart(data).properties(
     width=250,
@@ -51,7 +56,7 @@ base = alt.Chart(data).properties(
 points = base.mark_point(filled=True, size=200).encode(
     x='mean(x)',
     y='mean(y)',
-    color=alt.condition(selector, 'id:O', alt.value('lightgray'), legend=None),
+    color=color,
 )
 
 line = base.mark_line().encode(

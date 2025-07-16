@@ -39,6 +39,7 @@ extensions = [
     "sphinxext_altair.altairplot",
     "sphinxext.altairgallery",
     "sphinxext.schematable",
+    "sphinxext.code_ref",
     "sphinx_copybutton",
     "sphinx_design",
 ]
@@ -78,7 +79,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.5.0dev"
+version = "5.6.0dev"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 
@@ -369,4 +370,4 @@ altairplot_links = {"editor": True, "source": True, "export": True}
 # Defaults for below are drawn from Altair; override here.
 # altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@5"
 # altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@4"
-# altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@6"
+# altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@7"

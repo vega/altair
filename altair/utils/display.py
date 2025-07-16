@@ -4,13 +4,21 @@ import json
 import pkgutil
 import textwrap
 import uuid
-from typing import Any, Callable, Dict, Tuple, Union
-from typing_extensions import TypeAlias
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, Union
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
 from .mimebundle import spec_to_mimebundle
 from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
 # ==============================================================================
 # Renderer registry
@@ -18,16 +26,16 @@ from .schemapi import validate_jsonschema
 # MimeBundleType needs to be the same as what are acceptable return values
 # for _repr_mimebundle_,
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
-MimeBundleDataType: TypeAlias = Dict[str, Any]
-MimeBundleMetaDataType: TypeAlias = Dict[str, Any]
+MimeBundleDataType: TypeAlias = dict[str, Any]
+MimeBundleMetaDataType: TypeAlias = dict[str, Any]
 MimeBundleType: TypeAlias = Union[
-    MimeBundleDataType, Tuple[MimeBundleDataType, MimeBundleMetaDataType]
+    MimeBundleDataType, tuple[MimeBundleDataType, MimeBundleMetaDataType]
 ]
 RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
 
-DefaultRendererReturnType: TypeAlias = Tuple[
-    Dict[str, Union[str, Dict[str, Any]]], Dict[str, Dict[str, Any]]
+DefaultRendererReturnType: TypeAlias = tuple[
+    dict[str, Union[str, dict[str, Any]]], dict[str, dict[str, Any]]
 ]
 
 
@@ -174,7 +182,7 @@ def default_renderer_base(
     how to render the custom VegaLite MIME type listed above.
     """
     # Local import to avoid circular ImportError
-    from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
+    from altair.vegalite.v6.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
 
     assert isinstance(spec, dict)
     bundle: dict[str, str | dict] = {}

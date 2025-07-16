@@ -2,15 +2,17 @@
 from __future__ import annotations
 
 import copy
+import datetime as dt
 import inspect
 import io
 import json
 import pickle
+import re
 import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+from typing import TYPE_CHECKING, Any
 
 import jsonschema
 import jsonschema.exceptions
@@ -29,12 +31,14 @@ from altair.utils.schemapi import (
     UndefinedType,
     _FromDict,
 )
-from altair.vegalite.v5.schema.channels import X
-from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
+from altair.vegalite.v6.schema.channels import X
+from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
 from vega_datasets import data
 
 if TYPE_CHECKING:
-    from narwhals.typing import IntoDataFrame
+    from collections.abc import Callable, Iterable, Sequence
+
+    from narwhals.stable.v1.typing import IntoDataFrame
 
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
@@ -248,15 +252,15 @@ def test_simple_type():
 
 def test_simple_array():
     assert SimpleArray([4, 5, "six"]).to_dict() == [4, 5, "six"]
-    assert SimpleArray.from_dict(list("abc")).to_dict() == list("abc")
+    assert SimpleArray.from_dict(list("abc")).to_dict() == list("abc")  # pyright: ignore[reportArgumentType]
 
 
 def test_definition_union():
-    obj = DefinitionUnion.from_dict("A")
+    obj = DefinitionUnion.from_dict("A")  # pyright: ignore[reportArgumentType]
     assert isinstance(obj, Bar)
     assert obj.to_dict() == "A"
 
-    obj = DefinitionUnion.from_dict("B")
+    obj = DefinitionUnion.from_dict("B")  # pyright: ignore[reportArgumentType]
     assert isinstance(obj, Bar)
     assert obj.to_dict() == "B"
 
@@ -358,9 +362,7 @@ def test_attribute_error():
     invalid_attr = "invalid_attribute"
     with pytest.raises(AttributeError) as err:
         getattr(m, invalid_attr)
-    assert str(err.value) == (
-        "'MySchema' object has no attribute " "'invalid_attribute'"
-    )
+    assert str(err.value) == ("'MySchema' object has no attribute 'invalid_attribute'")
 
 
 def test_to_from_json(dct):
@@ -442,7 +444,7 @@ def chart_error_example__hconcat():
         alt.Chart(source)
         .mark_text()
         .encode(
-            alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})
+            alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -457,7 +459,7 @@ def chart_error_example__invalid_y_option_value_unknown_x_option():
         .mark_bar()
         .encode(
             x=alt.X("variety", unknown=2),
-            y=alt.Y("sum(yield)", stack="asdf"),
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -469,7 +471,7 @@ def chart_error_example__invalid_y_option_value():
         .mark_bar()
         .encode(
             x=alt.X("variety"),
-            y=alt.Y("sum(yield)", stack="asdf"),
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -483,7 +485,7 @@ def chart_error_example__invalid_y_option_value_with_condition():
         .mark_bar()
         .encode(
             x="variety",
-            y=alt.Y("sum(yield)", stack="asdf"),
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
             opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
         )
     )
@@ -491,7 +493,7 @@ def chart_error_example__invalid_y_option_value_with_condition():
 
 def chart_error_example__invalid_timeunit_value():
     # Error: Invalid value for Angle.timeUnit
-    return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))
+    return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))  # pyright: ignore[reportArgumentType]
 
 
 def chart_error_example__invalid_sort_value():
@@ -504,18 +506,23 @@ def chart_error_example__invalid_bandposition_value():
     return (
         alt.Chart(data.cars())
         .mark_text(align="right")
-        .encode(alt.Text("Horsepower:N", bandPosition="4"))
+        .encode(alt.Text("Horsepower:N", bandPosition="4"))  # pyright: ignore[reportArgumentType]
     )
 
 
 def chart_error_example__invalid_type():
     # Error: Invalid value for type
-    return alt.Chart().encode(alt.X(type="unknown"))
+    return alt.Chart().encode(alt.X(type="unknown"))  # pyright: ignore[reportArgumentType]
 
 
 def chart_error_example__additional_datum_argument():
     # Error: wrong_argument is not a valid argument to datum
     return alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
+
+
+def chart_error_example__additional_value_argument():
+    # Error: `ColorValue` has no parameter named 'predicate'
+    return alt.Chart().mark_point().encode(color=alt.value("red", predicate=True))
 
 
 def chart_error_example__invalid_value_type():
@@ -536,21 +543,21 @@ def chart_error_example__wrong_tooltip_type_in_faceted_chart():
     return (
         alt.Chart(pd.DataFrame({"a": [1]}))
         .mark_point()
-        .encode(tooltip=[{"wrong"}])
+        .encode(tooltip=[{"wrong"}])  # pyright: ignore[reportArgumentType]
         .facet()
     )
 
 
 def chart_error_example__wrong_tooltip_type_in_layered_chart():
     # Error: Wrong data type to pass to tooltip
-    return alt.layer(alt.Chart().mark_point().encode(tooltip=[{"wrong"}]))
+    return alt.layer(alt.Chart().mark_point().encode(tooltip=[{"wrong"}]))  # pyright: ignore[reportArgumentType]
 
 
 def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
     # Error 2: `Color` has no parameter named 'invalidArgument'
     return alt.layer(
-        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
+        alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),  # pyright: ignore[reportArgumentType]
         alt.Chart().mark_line().encode(alt.Color(invalidArgument="unknown")),
     )
 
@@ -592,7 +599,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
     blue_bars = (
         alt.Chart(source)
-        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))
+        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))  # pyright: ignore[reportCallIssue]
         .mark_bar()
     )
     red_bars = (
@@ -632,7 +639,7 @@ def chart_error_example__four_errors_hide_fourth():
         .mark_bar()
         .encode(
             x=alt.X("variety", unknown=2),
-            y=alt.Y("sum(yield)", stack="asdf"),
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
             color=alt.Color("variety", another_unknown=2),
             opacity=alt.Opacity("variety", fourth_error=1),
         )
@@ -658,7 +665,7 @@ def id_func_chart_error_example(val) -> str:
 chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     (
         chart_error_example__invalid_y_option_value_unknown_x_option,
-        r"""Multiple errors were found.
+        rf"""Multiple errors were found.
 
                 Error 1: `X` has no parameter named 'unknown'
 
@@ -673,21 +680,21 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                     - One of \['zero', 'center', 'normalize'\]
-                    - Of type 'null' or 'boolean'$""",
+                    - Of type {re.escape("`bool | None`")}$""",
     ),
     (
         chart_error_example__wrong_tooltip_type_in_faceted_chart,
-        r"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
+        rf"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type {re.escape("`str | Mapping[str, Any]`")}.$""",
     ),
     (
         chart_error_example__wrong_tooltip_type_in_layered_chart,
-        r"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.$""",
+        rf"""'\['wrong'\]' is an invalid value for `field`. Valid values are of type {re.escape("`str | Mapping[str, Any]`")}.$""",
     ),
     (
         chart_error_example__two_errors_in_layered_chart,
-        r"""Multiple errors were found.
+        rf"""Multiple errors were found.
 
-                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type {re.escape("`str | Mapping[str, Any]`")}.
 
                 Error 2: `Color` has no parameter named 'invalidArgument'
 
@@ -700,17 +707,17 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__two_errors_in_complex_concat_layered_chart,
-        r"""Multiple errors were found.
+        rf"""Multiple errors were found.
 
-                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type {re.escape("`str | Mapping[str, Any]`")}.
 
-                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+                Error 2: '4' is an invalid value for `bandPosition`. Valid values are of type `float`.$""",
     ),
     (
         chart_error_example__three_errors_in_complex_concat_layered_chart,
-        r"""Multiple errors were found.
+        rf"""Multiple errors were found.
 
-                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
+                Error 1: '\['wrong'\]' is an invalid value for `field`. Valid values are of type {re.escape("`str | Mapping[str, Any]`")}.
 
                 Error 2: `Color` has no parameter named 'invalidArgument'
 
@@ -721,7 +728,7 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
 
                     See the help for `Color` to read the full description of these parameters
 
-                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type `float`.$""",
     ),
     (
         chart_error_example__two_errors_with_one_in_nested_layered_chart,
@@ -761,46 +768,45 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__invalid_y_option_value,
-        r"""'asdf' is an invalid value for `stack`. Valid values are:
+        rf"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$""",
+                - Of type {re.escape("`bool | None`")}$""",
     ),
     (
         chart_error_example__invalid_y_option_value_with_condition,
-        r"""'asdf' is an invalid value for `stack`. Valid values are:
+        rf"""'asdf' is an invalid value for `stack`. Valid values are:
 
                 - One of \['zero', 'center', 'normalize'\]
-                - Of type 'null' or 'boolean'$""",
+                - Of type {re.escape("`bool | None`")}$""",
     ),
     (
         chart_error_example__hconcat,
-        r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$""",
+        rf"""'{{'text': 'Horsepower', 'align': 'right'}}' is an invalid value for `title`. Valid values are of type {re.escape("`str | Sequence | None`")}.$""",
     ),
     (
         chart_error_example__invalid_timeunit_value,
-        r"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
+        rf"""'invalid_value' is an invalid value for `timeUnit`. Valid values are:
 
                 - One of \['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'\]
                 - One of \['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'\]
                 - One of \['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weekdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'\]
                 - One of \['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweekdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'\]
-                - One of \['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'\]
-                - One of \['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'\]
-                - Of type 'object'$""",
+                - One of \['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear', 'binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'\]
+                - Of type {re.escape("`Mapping[str, Any]`")}$""",
     ),
     (
         chart_error_example__invalid_sort_value,
-        r"""'invalid_value' is an invalid value for `sort`. Valid values are:
+        rf"""'invalid_value' is an invalid value for `sort`. Valid values are:
 
                 - One of \['ascending', 'descending'\]
                 - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
                 - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
-                - Of type 'array', 'object', or 'null'$""",
+                - Of type {re.escape("`Sequence | Mapping[str, Any] | None`")}$""",
     ),
     (
         chart_error_example__invalid_bandposition_value,
-        r"""'4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$""",
+        r"""'4' is an invalid value for `bandPosition`. Valid values are of type `float`.$""",
     ),
     (
         chart_error_example__invalid_type,
@@ -808,19 +814,27 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     ),
     (
         chart_error_example__additional_datum_argument,
-        r"""`X` has no parameter named 'wrong_argument'
+        r"""`XDatum` has no parameter named 'wrong_argument'
 
                 Existing parameter names are:
-                shorthand      bin      scale   timeUnit   
-                aggregate      field    sort    title      
-                axis           impute   stack   type       
-                bandPosition                               
+                datum          impute   title   
+                axis           scale    type    
+                bandPosition   stack            
 
-                See the help for `X` to read the full description of these parameters$""",
+                See the help for `XDatum` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__additional_value_argument,
+        r"""`ColorValue` has no parameter named 'predicate'
+
+                Existing parameter names are:
+                value   condition   
+
+                See the help for `ColorValue` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_value_type,
-        r"""'1' is an invalid value for `value`. Valid values are of type 'object', 'string', or 'null'.$""",
+        rf"""'1' is an invalid value for `value`. Valid values are of type {re.escape("`str | Mapping[str, Any] | None`")}.$""",
     ),
     (
         chart_error_example__four_errors_hide_fourth,
@@ -1022,3 +1036,138 @@ def test_to_dict_range(tp) -> None:
     x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
     actual = x_dict["sort"]  # type: ignore
     assert actual == expected
+
+
+@pytest.fixture
+def stocks() -> alt.Chart:
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.0/data/sp500.csv"
+    return alt.Chart(source).mark_area().encode(x="date:T", y="price:Q")
+
+
+def DateTime(
+    year: int,
+    month: int,
+    day: int,
+    hour: int = 0,
+    minute: int = 0,
+    second: int = 0,
+    milliseconds: int = 0,
+    *,
+    utc: bool | None = None,
+) -> alt.DateTime:
+    """Factory for positionally aligning `datetime.datetime`/ `alt.DateTime`."""
+    kwds: dict[str, Any] = {}
+    if utc is True:
+        kwds.update(utc=utc)
+    if (hour, minute, second, milliseconds) != (0, 0, 0, 0):
+        kwds.update(
+            hours=hour, minutes=minute, seconds=second, milliseconds=milliseconds
+        )
+    return alt.DateTime(year=year, month=month, date=day, **kwds)
+
+
+@pytest.mark.parametrize(
+    ("window", "expected"),
+    [
+        (
+            (dt.date(2005, 1, 1), dt.date(2009, 1, 1)),
+            (DateTime(2005, 1, 1), DateTime(2009, 1, 1)),
+        ),
+        (
+            (dt.datetime(2005, 1, 1), dt.datetime(2009, 1, 1)),
+            (
+                # NOTE: Keep this to test truncating independently!
+                alt.DateTime(year=2005, month=1, date=1),
+                alt.DateTime(year=2009, month=1, date=1),
+            ),
+        ),
+        (
+            (
+                dt.datetime(2001, 1, 1, 9, 30, 0, 2999),
+                dt.datetime(2002, 1, 1, 17, 0, 0, 5000),
+            ),
+            (
+                DateTime(2001, 1, 1, 9, 30, 0, 2),
+                DateTime(2002, 1, 1, 17, 0, 0, 5),
+            ),
+        ),
+        (
+            (
+                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.timezone.utc),
+                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.timezone.utc),
+            ),
+            (
+                DateTime(2003, 5, 1, 1, 30, 0, 0, utc=True),
+                DateTime(2003, 6, 3, 4, 3, 0, 0, utc=True),
+            ),
+        ),
+    ],
+    ids=["date", "datetime (no time)", "datetime (microseconds)", "datetime (UTC)"],
+)
+def test_to_dict_datetime(
+    stocks, window: tuple[dt.date, dt.date], expected: tuple[alt.DateTime, alt.DateTime]
+) -> None:
+    """
+    Includes `datetime.datetime` with an empty time component.
+
+    This confirms that conversion matches how `alt.DateTime` omits `Undefined`.
+    """
+    expected_dicts = [e.to_dict() for e in expected]
+    brush = alt.selection_interval(encodings=["x"], value={"x": window})
+    base = stocks
+
+    upper = base.encode(alt.X("date:T").scale(domain=brush))
+    lower = base.add_params(brush)
+    chart = upper & lower
+    mapping = chart.to_dict()
+    params_value = mapping["params"][0]["value"]["x"]
+
+    assert isinstance(params_value, list)
+    assert params_value == expected_dicts
+
+
+@pytest.mark.parametrize(
+    "tzinfo",
+    [
+        dt.timezone(dt.timedelta(hours=2), "UTC+2"),
+        dt.timezone(dt.timedelta(hours=1), "BST"),
+        dt.timezone(dt.timedelta(hours=-7), "pdt"),
+        dt.timezone(dt.timedelta(hours=-3), "BRT"),
+        dt.timezone(dt.timedelta(hours=9), "UTC"),
+        dt.timezone(dt.timedelta(minutes=60), "utc"),
+    ],
+)
+def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+
+    result = alt.FieldEqualPredicate(datetime, "column 1")
+    assert result.to_dict()
+
+    with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
+        alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
+
+
+def test_to_dict_datetime_typing() -> None:
+    """
+    Enumerating various places that need updated annotations.
+
+    All work at runtime, just need to give the type checkers the new info.
+
+    Sub-issue of https://github.com/vega/altair/issues/3650
+    """
+    datetime = dt.datetime(2003, 5, 1, 1, 30)
+    datetime_seq = [datetime, datetime.replace(2005), datetime.replace(2008)]
+    assert alt.FieldEqualPredicate(datetime, field="column 1")
+    assert alt.FieldOneOfPredicate(oneOf=datetime_seq, field="column 1")
+
+    assert alt.Legend(values=datetime_seq)
+
+    assert alt.Scale(domain=datetime_seq)
+    assert alt.Scale(domainMin=datetime_seq[0], domainMax=datetime_seq[2])
+
+    # NOTE: `datum` is not annotated?
+    assert alt.XDatum(datum=datetime).to_dict()
+
+    # NOTE: `*args` is not annotated?
+    # - All of these uses *args incorrectly
+    assert alt.Vector2DateTime(datetime_seq[:2])

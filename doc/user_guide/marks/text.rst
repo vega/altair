@@ -40,7 +40,7 @@ Text Mark Properties
     align_var = alt.param(bind=align_select, value="left", name="align")
 
     baseline_select = alt.binding_select(options=["alphabetic", "top", "middle", "bottom"])
-    baseline_var = alt.param(bind=baseline_select, value="midle", name="baseline")
+    baseline_var = alt.param(bind=baseline_select, value="middle", name="baseline")
 
     font_select = alt.binding_select(options=["sans-serif", "serif", "monospace"])
     font_var = alt.param(bind=font_select, value="sans-serif", name="font")
@@ -127,13 +127,10 @@ Text Table Heatmap
             .legend(direction="horizontal")
     )
 
+    predicate = alt.datum.num_cars > 100
     text = base.mark_text(baseline="middle").encode(
         text="num_cars:Q",
-        color=alt.condition(
-            alt.datum.num_cars > 100,
-            alt.value("black"),
-            alt.value("white"),
-        ),
+        color=alt.when(predicate).then(alt.value("black")).otherwise(alt.value("white")),
     )
 
     heatmap + text

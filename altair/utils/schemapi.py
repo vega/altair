@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import datetime as dt
 import inspect
 import json
+import operator
 import sys
 import textwrap
 from collections import defaultdict
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
@@ -16,32 +19,21 @@ from math import ceil
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     Final,
     Generic,
-    Iterable,
-    Iterator,
-    List,
     Literal,
-    Mapping,
-    Sequence,
     TypeVar,
     Union,
     cast,
     overload,
 )
-from typing_extensions import TypeAlias
 
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+from narwhals.stable.v1.dependencies import is_narwhals_series
 from packaging.version import Version
-
-# This leads to circular imports with the vegalite module. Currently, this works
-# but be aware that when you access it in this script, the vegalite module might
-# not yet be fully instantiated in case your code is being executed during import time
-from altair import vegalite
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
@@ -52,6 +44,7 @@ if TYPE_CHECKING:
     from types import ModuleType
     from typing import ClassVar
 
+    from jsonschema.exceptions import ValidationError
     from referencing import Registry
 
     from altair.typing import ChartType
@@ -65,10 +58,15 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
+
     _OptionalModule: TypeAlias = "ModuleType | None"
 
-ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
+ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -416,7 +414,7 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
     """
-    Groups the errors by the json schema "validator" that casued the error.
+    Groups the errors by the json schema "validator" that caused the error.
 
     For example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
@@ -490,21 +488,52 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
 
 def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
-    seen = set()
+    seen = {cls}
     current_set = {cls}
     while current_set:
-        seen |= current_set
-        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
-        for cls in current_set - seen:
-            yield cls
+        next_set = set()
+        for base in current_set:
+            for sub in base.__subclasses__():
+                if sub not in seen:
+                    yield sub
+                    seen.add(sub)
+                    next_set.add(sub)
+        current_set = next_set
 
 
 def _from_array_like(obj: Iterable[Any], /) -> list[Any]:
-    try:
-        ser = nw.from_native(obj, strict=True, series_only=True)
-        return ser.to_list()
-    except TypeError:
-        return list(obj)
+    # TODO @dangotbanned: Review after available (https://github.com/narwhals-dev/narwhals/pull/2110)
+    # See for what this silences for `narwhals` CI (https://github.com/narwhals-dev/narwhals/pull/2110#issuecomment-2687936504)
+    maybe_ser: Any = nw.from_native(obj, pass_through=True)
+    return maybe_ser.to_list() if is_narwhals_series(maybe_ser) else list(obj)
+
+
+def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
+    """
+    Parse native `datetime.(date|datetime)` into a `DateTime`_ schema.
+
+    .. _DateTime:
+        https://vega.github.io/vega-lite/docs/datetime.html
+    """
+    result: dict[str, Any] = {"year": obj.year, "month": obj.month, "date": obj.day}
+    if isinstance(obj, dt.datetime):
+        if obj.time() != dt.time.min:
+            us = obj.microsecond
+            ms = us if us == 0 else us // 1_000
+            result.update(
+                hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
+            )
+        if tzinfo := obj.tzinfo:
+            if tzinfo is dt.timezone.utc:
+                result["utc"] = True
+            else:
+                msg = (
+                    f"Unsupported timezone {tzinfo!r}.\n"
+                    "Only `'UTC'` or naive (local) datetimes are permitted.\n"
+                    "See https://altair-viz.github.io/user_guide/generated/core/altair.DateTime.html"
+                )
+                raise TypeError(msg)
+    return result
 
 
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
@@ -537,6 +566,8 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
         return pd_opt.Timestamp(obj).isoformat()
     elif _is_iterable(obj, exclude=(str, bytes)):
         return _todict(_from_array_like(obj), context, np_opt, pd_opt)
+    elif isinstance(obj, dt.date):
+        return _from_date_datetime(obj)
     else:
         return obj
 
@@ -563,7 +594,59 @@ def _resolve_references(
     return schema
 
 
+def _validator_values(errors: Iterable[ValidationError], /) -> Iterator[str]:
+    """Unwrap each error's ``.validator_value``, convince ``mypy`` it stores a string."""
+    for err in errors:
+        yield cast("str", err.validator_value)
+
+
+def _iter_channels(tp: type[Any], spec: Mapping[str, Any], /) -> Iterator[type[Any]]:
+    from altair import vegalite
+
+    for channel_type in ("datum", "value"):
+        if channel_type in spec:
+            name = f"{tp.__name__}{channel_type.capitalize()}"
+            if narrower := getattr(vegalite, name, None):
+                yield narrower
+
+
+def _is_channel(obj: Any) -> TypeIs[dict[str, Any]]:
+    props = {"datum", "value"}
+    return (
+        _is_dict(obj)
+        and all(isinstance(k, str) for k in obj)
+        and not (props.isdisjoint(obj))
+    )
+
+
+def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
+    """
+    Replace a channel type with a `more specific`_ one or passthrough unchanged.
+
+    Parameters
+    ----------
+    tp
+        An imported ``SchemaBase`` class.
+    spec
+        The instance that failed validation.
+
+    .. _more specific:
+        https://github.com/vega/altair/issues/2913#issuecomment-2571762700
+    """
+    return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
+
+
 class SchemaValidationError(jsonschema.ValidationError):
+    _JS_TO_PY: ClassVar[Mapping[str, str]] = {
+        "boolean": "bool",
+        "integer": "int",
+        "number": "float",
+        "string": "str",
+        "null": "None",
+        "object": "Mapping[str, Any]",
+        "array": "Sequence",
+    }
+
     def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
         """
         A wrapper for ``jsonschema.ValidationError`` with friendlier traceback.
@@ -664,20 +747,19 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         Try to get the lowest class possible in the chart hierarchy so it can be displayed in the error message.
 
         This should lead to more informative error messages pointing the user closer to the source of the issue.
+
+        If we did not find a suitable class based on traversing the path so we fall
+        back on the class of the top-level object which created the SchemaValidationError
         """
+        from altair import vegalite
+
         for prop_name in reversed(error.absolute_path):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
-                potential_class_name = prop_name[0].upper() + prop_name[1:]
-                cls = getattr(vegalite, potential_class_name, None)
-                if cls is not None:
-                    break
-        else:
-            # Did not find a suitable class based on traversing the path so we fall
-            # back on the class of the top-level object which created
-            # the SchemaValidationError
-            cls = self.obj.__class__
-        return cls
+                candidate = prop_name[0].upper() + prop_name[1:]
+                if tp := getattr(vegalite, candidate, None):
+                    return _maybe_channel(tp, self.instance)
+        return type(self.obj)
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
@@ -697,7 +779,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
-        square_columns = int(ceil(num_param_names**0.5))
+        square_columns = ceil(num_param_names**0.5)
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
@@ -736,26 +818,39 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                     param_names_table += "\n"
         return param_names_table
 
+    def _format_type_reprs(self, errors: Iterable[ValidationError], /) -> str:
+        """
+        Translate jsonschema types to how they appear in annotations.
+
+        Adapts parts of:
+        - `tools.schemapi.utils.sort_type_reprs`_
+        - `tools.schemapi.utils.SchemaInfo.to_type_repr`_
+
+        .. _tools.schemapi.utils.sort_type_reprs:
+            https://github.com/vega/altair/blob/48e976ef9388ce08a2e871a0f67ed012b914597a/tools/schemapi/utils.py#L1106-L1146
+        .. _tools.schemapi.utils.SchemaInfo.to_type_repr:
+            https://github.com/vega/altair/blob/48e976ef9388ce08a2e871a0f67ed012b914597a/tools/schemapi/utils.py#L449-L543
+        """
+        to_py_types = (
+            self._JS_TO_PY.get(val, val) for val in _validator_values(errors)
+        )
+        it = sorted(to_py_types, key=str.lower)
+        it = sorted(it, key=len)
+        it = sorted(it, key=partial(operator.eq, "None"))
+        return f"of type `{' | '.join(it)}`"
+
     def _get_default_error_message(
         self,
         errors: ValidationErrorList,
     ) -> str:
         bullet_points: list[str] = []
         errors_by_validator = _group_errors_by_validator(errors)
-        if "enum" in errors_by_validator:
-            for error in errors_by_validator["enum"]:
-                bullet_points.append(f"one of {error.validator_value}")
-
-        if "type" in errors_by_validator:
-            types = [f"'{err.validator_value}'" for err in errors_by_validator["type"]]
-            point = "of type "
-            if len(types) == 1:
-                point += types[0]
-            elif len(types) == 2:
-                point += f"{types[0]} or {types[1]}"
-            else:
-                point += ", ".join(types[:-1]) + f", or {types[-1]}"
-            bullet_points.append(point)
+        if errs_enum := errors_by_validator.get("enum", None):
+            bullet_points.extend(
+                f"one of {val}" for val in _validator_values(errs_enum)
+            )
+        if errs_type := errors_by_validator.get("type", None):
+            bullet_points.append(self._format_type_reprs(errs_type))
 
         # It should not matter which error is specifically used as they are all
         # about the same offending instance (i.e. invalid value), so we can just
@@ -1334,7 +1429,7 @@ def _replace_parsed_shorthand(
     not passed to child `to_dict` function calls.
     """
     # Prevent that pandas categorical data is automatically sorted
-    # when a non-ordinal data type is specifed manually
+    # when a non-ordinal data type is specified manually
     # or if the encoding channel does not support sorting
     if "sort" in parsed_shorthand and (
         "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
@@ -1351,7 +1446,7 @@ def _replace_parsed_shorthand(
 
 TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
 
-_CopyImpl = TypeVar("_CopyImpl", SchemaBase, Dict[Any, Any], List[Any])
+_CopyImpl = TypeVar("_CopyImpl", SchemaBase, dict[Any, Any], list[Any])
 """
 Types which have an implementation in ``SchemaBase.copy()``.
 
@@ -1540,14 +1635,15 @@ class _PropertySetter:
         self.schema = schema
 
     def __get__(self, obj, cls):
+        from altair import vegalite
+
         self.obj = obj
         self.cls = cls
         # The docs from the encoding class parameter (e.g. `bin` in X, Color,
         # etc); this provides a general description of the parameter.
         self.__doc__ = self.schema["description"].replace("__", "**")
         property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
-        if hasattr(vegalite, property_name):
-            altair_prop = getattr(vegalite, property_name)
+        if altair_prop := getattr(vegalite, property_name, None):
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
@@ -1588,3 +1684,27 @@ def with_property_setters(cls: type[TSchemaBase]) -> type[TSchemaBase]:
     for prop, propschema in schema.get("properties", {}).items():
         setattr(cls, prop, _PropertySetter(prop, propschema))
     return cls
+
+
+VERSIONS: Mapping[
+    Literal[
+        "vega-datasets", "vega-embed", "vega-lite", "vegafusion", "vl-convert-python"
+    ],
+    str,
+] = {
+    "vega-datasets": "v3.2.0",
+    "vega-embed": "v7",
+    "vega-lite": "v6.1.0",
+    "vegafusion": "1.6.6",
+    "vl-convert-python": "1.8.0",
+}
+"""
+Version pins for non-``python`` `vega projects`_.
+
+Notes
+-----
+When cutting a new release, make sure to update ``[tool.altair.vega]`` in ``pyproject.toml``.
+
+.. _vega projects:
+    https://github.com/vega
+"""

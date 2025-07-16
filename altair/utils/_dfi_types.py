@@ -7,7 +7,10 @@
 from __future__ import annotations
 
 import enum
-from typing import Any, Iterable, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 class DtypeKind(enum.IntEnum):
@@ -76,6 +79,7 @@ class Column(Protocol):
             - Data types not included: complex, Arrow-style null, binary, decimal,
               and nested (list, struct, map, union) dtypes.
         """
+        ...
 
     # Have to use a generic Any return type as not all libraries who implement
     # the dataframe interchange protocol implement the TypedDict that is usually
@@ -103,6 +107,7 @@ class Column(Protocol):
 
         TBD: are there any other in-memory representations that are needed?
         """
+        ...
 
 
 class DataFrame(Protocol):
@@ -134,12 +139,15 @@ class DataFrame(Protocol):
         necessary if a library supports strided buffers, given that this protocol
         specifies contiguous buffers.
         """
+        ...
 
     def column_names(self) -> Iterable[str]:
         """Return an iterator yielding the column names."""
+        ...
 
     def get_column_by_name(self, name: str) -> Column:
         """Return the column whose name is the indicated name."""
+        ...
 
     def get_chunks(self, n_chunks: int | None = None) -> Iterable[DataFrame]:
         """
@@ -153,3 +161,4 @@ class DataFrame(Protocol):
         Note that the producer must ensure that all columns are chunked the
         same way.
         """
+        ...

@@ -5,9 +5,12 @@ from __future__ import annotations
 import types
 from pathlib import Path
 from types import ModuleType
-from typing import Final, Iterator
+from typing import TYPE_CHECKING, Final
 
 import altair as alt
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 API_FILENAME: Final = str(Path.cwd() / "doc" / "user_guide" / "api.rst")
 
@@ -23,6 +26,8 @@ Please refer to the `full user guide <http://altair-viz.github.io>`_ for
 further details, as this low-level documentation may not be enough to give
 full guidelines on their use.
 
+.. _api-toplevel:
+
 Top-Level Objects
 -----------------
 .. currentmodule:: altair
@@ -32,6 +37,8 @@ Top-Level Objects
    :nosignatures:
 
    {toplevel_charts}
+
+.. _api-channels:
 
 Encoding Channels
 -----------------
@@ -43,6 +50,8 @@ Encoding Channels
 
    {encoding_wrappers}
 
+.. _api-functions:
+
 API Functions
 -------------
 .. currentmodule:: altair
@@ -52,6 +61,20 @@ API Functions
    :nosignatures:
 
    {api_functions}
+
+.. _api-theme:
+
+Theme
+-----
+.. currentmodule:: altair.theme
+
+.. autosummary::
+   :toctree: generated/theme/
+   :nosignatures:
+
+   {theme_objects}
+
+.. _api-core:
 
 Low-Level Schema Wrappers
 -------------------------
@@ -63,6 +86,8 @@ Low-Level Schema Wrappers
 
    {lowlevel_wrappers}
 
+.. _api-cls:
+
 API Utility Classes
 -------------------
 .. currentmodule:: altair
@@ -72,6 +97,8 @@ API Utility Classes
    :nosignatures:
 
    {api_classes}
+
+.. _api-typing:
 
 Typing
 ------
@@ -83,6 +110,22 @@ Typing
 
    {typing_objects}
 
+.. _api-datasets:
+
+Datasets
+--------
+.. currentmodule:: altair.datasets
+
+.. autosummary::
+   :toctree: generated/datasets/
+   :nosignatures:
+
+   {datasets_objects}
+
+.. _Generic:
+    https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+.. _vega-datasets:
+    https://github.com/vega/vega-datasets
 """
 
 
@@ -108,19 +151,19 @@ def iter_objects(
 
 
 def toplevel_charts() -> list[str]:
-    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))  # type: ignore[attr-defined]
+    return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))
 
 
 def encoding_wrappers() -> list[str]:
-    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
+    return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))
 
 
 def api_functions() -> list[str]:
     # Exclude `typing` functions/SpecialForm(s)
-    KEEP = set(alt.api.__all__) - set(alt.typing.__all__)  # type: ignore[attr-defined]
+    KEEP = set(alt.api.__all__) - set(alt.typing.__all__)
     return sorted(
         name
-        for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
+        for name in iter_objects(alt.api, restrict_to_type=types.FunctionType)
         if name in KEEP
     )
 
@@ -134,8 +177,20 @@ def type_hints() -> list[str]:
     return sorted(s for s in iter_objects(alt.typing) if s in alt.typing.__all__)
 
 
+def theme() -> list[str]:
+    sort_1 = sorted(s for s in iter_objects(alt.theme) if s in alt.theme.__all__)
+    # Display functions before `TypedDict`, but show `ThemeConfig` before `Kwds`
+    sort_2 = sorted(sort_1, key=lambda s: s.endswith("Kwds"))
+    sort_3 = sorted(sort_2, key=lambda s: not s.islower())
+    return sort_3
+
+
+def datasets() -> list[str]:
+    return alt.datasets.__all__
+
+
 def lowlevel_wrappers() -> list[str]:
-    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
+    objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
     # The names of these two classes are also used for classes in alt.channels. Due to
     # how imports are set up, these channel classes overwrite the two low-level classes
     # in the top-level Altair namespace. Therefore, they cannot be imported as e.g.
@@ -156,6 +211,8 @@ def write_api_file() -> None:
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
             api_classes=sep.join(api_classes()),
             typing_objects=sep.join(type_hints()),
+            theme_objects=sep.join(theme()),
+            datasets_objects=sep.join(datasets()),
         ),
         encoding="utf-8",
     )

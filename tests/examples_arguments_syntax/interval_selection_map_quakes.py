@@ -7,14 +7,13 @@ is adjusted by interacting with the map on the left.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
-import geopandas as gpd
+from altair.datasets import data
 
 # load data
-gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+gdf_quakies = data.earthquakes()
+gdf_world = data.world_110m(layer="countries")
 
-# defintion for interactive brush
+# definition for interactive brush
 brush = alt.selection_interval(
     encodings=["longitude"], 
     empty=False, 
@@ -38,7 +37,7 @@ quakes = alt.Chart(gdf_quakies).transform_calculate(
 ).mark_circle(opacity=0.35, tooltip=True).encode(
     longitude="lon:Q",
     latitude="lat:Q",
-    color=alt.condition(brush, alt.value("goldenrod"), alt.value("steelblue")),
+    color=alt.when(brush).then(alt.value("goldenrod")).otherwise(alt.value("steelblue")),
     size=alt.Size("mag:Q", scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 7], exponent=4)),
 ).add_params(brush)
 

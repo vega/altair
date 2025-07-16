@@ -4,40 +4,30 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
 import sys
 import textwrap
 import urllib.parse
-from html import unescape
+from collections import deque
+from collections.abc import Sequence
+from contextlib import AbstractContextManager
+from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    ClassVar,
-    Iterable,
-    Iterator,
-    Literal,
-    Mapping,
-    MutableSequence,
-    Sequence,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
 
-import mistune
-from mistune.renderers.rst import RSTRenderer as _RSTRenderer
-
+from tools.codemod import ruff
+from tools.markup import RSTParseVegaLite, rst_syntax_for_class
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
-    from _collections_abc import KeysView
+    from collections.abc import Callable, Iterable, Iterator, KeysView, Mapping
     from pathlib import Path
     from re import Pattern
+    from typing import Any, ClassVar
 
-    from mistune import BlockState
+    from _typeshed import SupportsKeysAndGetItem
+
 
 if sys.version_info >= (3, 12):
     from typing import TypeAliasType
@@ -74,10 +64,26 @@ jsonschema_to_python_types: dict[str, str] = {
     "array": "list",
     "null": "None",
 }
+_STDLIB_TYPE_NAMES = frozenset(
+    (
+        "int",
+        "float",
+        "str",
+        "None",
+        "bool",
+        "date",
+        "datetime",
+        "time",
+        "tuple",
+        "list",
+        "deque",
+        "dict",
+        "set",
+    )
+)
 
 _VALID_IDENT: Pattern[str] = re.compile(r"^[^\d\W]\w*\Z", re.ASCII)
-_RE_LINK: Pattern[str] = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
-_RE_SPECIAL: Pattern[str] = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
+
 _RE_LIST_MISSING_ASTERISK: Pattern[str] = re.compile(r"^-(?=[ `\"a-z])", re.MULTILINE)
 _RE_LIST_MISSING_WHITESPACE: Pattern[str] = re.compile(r"^\*(?=[`\"a-z])", re.MULTILINE)
 
@@ -96,13 +102,6 @@ class _TypeAliasTracer:
         A format specifier to produce the `TypeAlias` name.
 
         Will be provided a `SchemaInfo.title` as a single positional argument.
-    *ruff_check
-        Optional [ruff rule codes](https://docs.astral.sh/ruff/rules/),
-        each prefixed with `--select ` and follow a `ruff check --fix ` call.
-
-        If not provided, uses `[tool.ruff.lint.select]` from `pyproject.toml`.
-    ruff_format
-        Optional argument list supplied to [ruff format](https://docs.astral.sh/ruff/formatter/#ruff-format)
 
     Attributes
     ----------
@@ -116,12 +115,7 @@ class _TypeAliasTracer:
         Prefined import statements to appear at beginning of module.
     """
 
-    def __init__(
-        self,
-        fmt: str = "{}_T",
-        *ruff_check: str,
-        ruff_format: Sequence[str] | None = None,
-    ) -> None:
+    def __init__(self, fmt: str = "{}_T") -> None:
         self.fmt: str = fmt
         self._literals: dict[str, str] = {}
         self._literals_invert: dict[str, str] = {}
@@ -129,7 +123,9 @@ class _TypeAliasTracer:
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Any, Generic, Literal, Mapping, TypeVar, Sequence, Union",
+            "from datetime import date, datetime",
+            "from collections.abc import Sequence, Mapping",
+            "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -138,12 +134,7 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
             import_typing_extensions((3, 10), "TypeAlias"),
-            import_typing_extensions((3, 9), "Annotated", "get_args"),
         )
-        self._cmd_check: list[str] = ["--fix"]
-        self._cmd_format: Sequence[str] = ruff_format or ()
-        for c in ruff_check:
-            self._cmd_check.extend(("--extend-select", c))
 
     def _update_literals(self, name: str, tp: str, /) -> None:
         """Produces an inverted index, to reuse a `Literal` when `SchemaInfo.title` is empty."""
@@ -172,13 +163,27 @@ class _TypeAliasTracer:
             # Handles one very specific edge case `WindowFieldDef`
             # - Has an anonymous enum union
             # - One of the members is declared afterwards
-            # - SchemaBase needs to be first, as the union wont be internally sorted
+            # - SchemaBase needs to be first, as the union won't be internally sorted
             it = (
                 self.add_literal(el, spell_literal(el.literal), replace=True)
                 for el in info.anyOf
             )
             tp = f"Union[SchemaBase, {', '.join(it)}]"
         return tp
+
+    def add_union(
+        self, info: SchemaInfo, tp_iter: Iterator[str], /, *, replace: bool = False
+    ) -> str:
+        if title := info.title:
+            alias = self.fmt.format(title)
+            if alias not in self._aliases:
+                self.update_aliases(
+                    (alias, f"Union[{', '.join(sort_type_reprs(tp_iter))}]")
+                )
+            return alias if replace else title
+        else:
+            msg = f"Unsupported operation.\nRequires a title.\n\n{info!r}"
+            raise NotImplementedError(msg)
 
     def update_aliases(self, *name_statement: tuple[str, str]) -> None:
         """
@@ -228,13 +233,6 @@ class _TypeAliasTracer:
         extra
             `tools.generate_schema_wrapper.TYPING_EXTRA`.
         """
-        ruff_format: MutableSequence[str | Path] = ["ruff", "format", fp]
-        if self._cmd_format:
-            ruff_format.extend(self._cmd_format)
-        commands: tuple[Sequence[str | Path], ...] = (
-            ["ruff", "check", fp, *self._cmd_check],
-            ruff_format,
-        )
         static = (header, "\n", *self._imports, "\n\n")
         self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
         all_ = [*iter(self._aliases), *extra_all]
@@ -243,14 +241,11 @@ class _TypeAliasTracer:
             [f"__all__ = {all_}", "\n\n", extra],
             self.generate_aliases(),
         )
-        fp.write_text("\n".join(it), encoding="utf-8")
-        for cmd in commands:
-            r = subprocess.run(cmd, check=True)
-            r.check_returncode()
+        ruff.write_lint_format(fp, it)
 
     @property
     def n_entries(self) -> int:
-        """Number of unique `TypeAlias` defintions collected."""
+        """Number of unique `TypeAlias` definitions collected."""
         return len(self._literals)
 
 
@@ -494,7 +489,7 @@ class SchemaInfo:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
             tps.add(tp_str)
         elif FOR_TYPE_HINTS and self.is_union_literal():
-            it = chain.from_iterable(el.literal for el in self.anyOf)
+            it: Iterator[str] = chain.from_iterable(el.literal for el in self.anyOf)
             tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             tps.add(tp_str)
         elif self.is_anyOf():
@@ -503,6 +498,14 @@ class SchemaInfo:
                 for s in self.anyOf
             )
             tps.update(maybe_rewrap_literal(chain.from_iterable(it_nest)))
+        elif FOR_TYPE_HINTS and self.is_type_alias_union():
+            it = (
+                SchemaInfo(dict(self.schema, type=tp)).to_type_repr(
+                    target=target, use_concrete=use_concrete
+                )
+                for tp in self.type
+            )
+            tps.add(TypeAliasTracer.add_union(self, it, replace=True))
         elif isinstance(self.type, list):
             # We always use title if possible for nested objects
             tps.update(
@@ -540,6 +543,47 @@ class SchemaInfo:
             else sort_type_reprs(tps)
         )
 
+    @classmethod
+    def to_type_repr_batched(
+        cls,
+        infos: Iterable[SchemaInfo],
+        /,
+        *,
+        target: TargetType = "doc",
+        use_concrete: bool = False,
+        use_undefined: bool = False,
+    ) -> str:
+        """
+        Return the python type representation of multiple ``SchemaInfo``.
+
+        Intended to handle a subset of a ``Union``.
+
+        Parameters
+        ----------
+        infos
+            Schemas to collapse into a single representation.
+        target: {"annotation", "doc"}
+            Where the representation will be used.
+        use_concrete
+            Avoid base classes/wrappers that don't provide type info.
+        use_undefined
+            Wrap the result in ``altair.typing.Optional``.
+
+        See Also
+        --------
+        - ``SchemaInfo.to_type_repr``
+        """
+        it: Iterator[str] = chain.from_iterable(
+            info.to_type_repr(
+                as_str=False,
+                target=target,
+                use_concrete=use_concrete,
+                use_undefined=False,
+            )
+            for info in infos
+        )
+        return finalize_type_reprs(it, target=target, use_undefined=use_undefined)
+
     def title_to_type_reprs(self, *, use_concrete: bool) -> set[str]:
         """
         Possibly use ``self.title`` as a type, or provide alternative(s).
@@ -568,6 +612,10 @@ class SchemaInfo:
             # NOTE: To keep type hints simple, we annotate with `SchemaBase` for all subclasses.
             if title in tp_param:
                 tps.add("Parameter")
+            if self.is_datetime():
+                tps.add("Temporal")
+            if self.is_top_level_spec_data():
+                tps.add("ChartDataType")
         elif self.is_value():
             value = self.properties["value"]
             t = value.to_type_repr(target="annotation", use_concrete=use_concrete)
@@ -695,6 +743,21 @@ class SchemaInfo:
         return "const" in self.schema
 
     def is_literal(self) -> bool:
+        """
+        Return True for `const`_ or `enum`_ values.
+
+        JSON Schema distinguishes between singular/multiple values.
+
+        But we annotate them both the same way:
+
+            ConstInfo = Literal["single value"]
+            EnumInfo = Literal["value 1", "value 2", "value 3"]
+
+        .. _const:
+            https://json-schema.org/understanding-json-schema/reference/const
+        .. _enum:
+            https://json-schema.org/understanding-json-schema/reference/enum
+        """
         return not ({"enum", "const"}.isdisjoint(self.schema))
 
     def is_empty(self) -> bool:
@@ -761,6 +824,66 @@ class SchemaInfo:
         """
         return self.is_union() and all(el.is_literal() for el in self.anyOf)
 
+    def is_primitive(self) -> bool:
+        """
+        A basic JSON Schema `type`_ or an array of **only** basic types.
+
+        .. _type:
+        https://json-schema.org/understanding-json-schema/reference/type
+        """
+        TP = "type"
+        return (self.schema.keys() == {TP}) or (
+            self.is_array() and self.child(self.items).is_primitive()
+        )
+
+    def is_flattenable(self) -> bool:
+        """
+        Represents a range of cases we want to annotate in ``@overload``(s).
+
+        Examples
+        --------
+        The following are non-exhaustive examples, using ``python`` types.
+
+        Base cases look like:
+
+            Literal["left", "center", "right"]
+            float
+            Sequence[str]
+
+        We also include compound cases, but only when **every** member meets these criteria:
+
+            Literal["pad", "none", "fit"] | None
+            float | Sequence[float]
+            Sequence[str] | str | bool | float | None
+        """
+        return self.is_literal() or self.is_primitive() or self.is_union_flattenable()
+
+    def is_union_flattenable(self) -> bool:
+        """
+        Represents a fully flattenable ``Union``.
+
+        Used to prevent ``@overload`` explosion in ``channels.py``
+
+        Requires **every** member of the ``Union`` satisfies *at least* **one** the criteria.
+
+        See Also
+        --------
+        - ``SchemaInfo.is_literal``
+        - ``SchemaInfo.is_array``
+        - ``SchemaInfo.is_primitive``
+        - ``SchemaInfo.is_flattenable``
+        """
+        if not self.is_union():
+            return False
+        else:
+            fns = (
+                SchemaInfo.is_literal,
+                SchemaInfo.is_array,
+                SchemaInfo.is_primitive,
+                SchemaInfo.is_union_flattenable,
+            )
+            return all(any(fn(el) for fn in fns) for el in self.anyOf)
+
     def is_format(self) -> bool:
         """
         Represents a string format specifier.
@@ -808,6 +931,25 @@ class SchemaInfo:
             and self.type in jsonschema_to_python_types
         )
 
+    def is_type_alias_union(self) -> bool:
+        """
+        Represents a name assigned to a list of literal types.
+
+        Example:
+
+            {"PrimitiveValue": {"type": ["number", "string", "boolean", "null"]}}
+
+        Translating from JSON -> Python, this is the same as an ``"anyOf"`` -> ``Union``.
+
+        The distinction in the schema is purely due to these types being defined in the draft, rather than definitions.
+        """
+        TP = "type"
+        return (
+            self.schema.keys() == {TP}
+            and isinstance(self.type, list)
+            and bool(self.title)
+        )
+
     def is_theme_config_target(self) -> bool:
         """
         Return `True` for candidates  classes in ``ThemeConfig`` hierarchy of ``TypedDict``(s).
@@ -826,6 +968,77 @@ class SchemaInfo:
             and "field" not in self.required
             and not (iskeyword(next(iter(self.required), "")))
         )
+
+    def is_datetime(self) -> bool:
+        return self.refname == "DateTime"
+
+    def is_top_level_spec_data(self) -> bool:
+        return self.refname == "Data"
+
+
+class Grouped(Generic[T]):
+    """
+    Simple group-by like utility.
+
+    Intended for consuming an iterator in full, splitting into true/false cases.
+
+    Parameters
+    ----------
+    iterable
+        Elements to divide into two groups.
+    predicate
+        Function to classify each element.
+
+    Attributes
+    ----------
+    truthy: deque[T]
+        Elements which pass ``predicate``.
+    falsy: deque[T]
+        Elements which fail ``predicate``.
+    """
+
+    def __init__(
+        self, iterable: Iterable[T], /, predicate: Callable[[T], bool]
+    ) -> None:
+        truthy, falsy = deque[T](), deque[T]()
+        for el in iterable:
+            if predicate(el):
+                truthy.append(el)
+            else:
+                falsy.append(el)
+        self.truthy: deque[T] = truthy
+        self.falsy: deque[T] = falsy
+
+
+class RemapContext(AbstractContextManager):
+    """
+    Context Manager to temporarily apply substitution rules for ``SchemaInfo``.
+
+    Upon exiting, the original rules will be in effect.
+
+    Notes
+    -----
+    The constructor accepts arguments exactly the same way as ``dict``.
+    """
+
+    def __init__(
+        self,
+        m: SupportsKeysAndGetItem[str, Sequence[str]]
+        | Iterable[tuple[str, Sequence[str]]] = (),
+        /,
+        **kwds: Sequence[str],
+    ) -> None:
+        self._mapping: Mapping[str, Sequence[str]] = dict(m, **kwds)
+        self._orig: Mapping[str, Sequence[str]]
+
+    def __enter__(self) -> Any:
+        self._orig = deepcopy(SchemaInfo._remap_title)
+        SchemaInfo._remap_title.update(self._mapping)
+        return self
+
+    def __exit__(self, *args) -> None:
+        SchemaInfo._remap_title = dict(**self._orig)
+        del self._orig
 
 
 def flatten(container: Iterable) -> Iterable:
@@ -903,13 +1116,25 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
     We use `set`_ for unique elements, but the lack of ordering requires additional sorts:
     - If types have same length names, order would still be non-deterministic
     - Hence, we sort as well by type name as a tie-breaker, see `sort-stability`_.
-    - Using ``str.lower`` gives priority to `builtins`_ over ``None``.
-    - Lowest priority is given to generated aliases from ``TypeAliasTracer``.
+    - Using ``str.lower`` gives priority to `builtins`_.
+    - Lower priority is given to generated aliases from ``TypeAliasTracer``.
         - These are purely to improve autocompletion
+    - ``None`` will always appear last.
 
     Related
     -------
     - https://github.com/vega/altair/pull/3573#discussion_r1747121600
+
+    Examples
+    --------
+    >>> sort_type_reprs(["float", "None", "bool", "Chart", "float", "bool", "Chart", "str"])
+    ['str', 'bool', 'float', 'Chart', 'None']
+
+    >>> sort_type_reprs(("None", "int", "Literal[5]", "int", "float"))
+    ['int', 'float', 'Literal[5]', 'None']
+
+    >>> sort_type_reprs({"date", "int", "str", "datetime", "Date"})
+    ['int', 'str', 'date', 'datetime', 'Date']
 
     .. _set:
         https://docs.python.org/3/tutorial/datastructures.html#sets
@@ -919,9 +1144,30 @@ def sort_type_reprs(tps: Iterable[str], /) -> list[str]:
         https://docs.python.org/3/library/functions.html
     """
     dedup = tps if isinstance(tps, set) else set(tps)
-    it = sorted(dedup, key=str.lower)  # Tertiary sort
-    it = sorted(it, key=len)  # Secondary sort
-    return sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
+    it = sorted(dedup, key=str.lower)  # Quinary sort
+    it = sorted(it, key=len)  # Quaternary sort
+    it = sorted(it, key=TypeAliasTracer.is_cached)  # Tertiary sort
+    it = sorted(it, key=is_not_stdlib)  # Secondary sort
+    it = sorted(it, key=is_none)  # Primary sort
+    return it
+
+
+def is_not_stdlib(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Places a subset of stdlib types at the **start** of list.
+    """
+    return s not in _STDLIB_TYPE_NAMES
+
+
+def is_none(s: str, /) -> bool:
+    """
+    Sort key.
+
+    Always places ``None`` at the **end** of list.
+    """
+    return s == "None"
 
 
 def spell_nested_sequence(
@@ -981,6 +1227,26 @@ def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
     return f"Literal[{', '.join(it_el)}]"
 
 
+def spell_literal_alias(
+    alias_name: str, members: Iterable[str], /, *, quote: bool = True
+) -> str:
+    """
+    Wraps ``utils.spell_literal`` as a ``TypeAlias``.
+
+    Examples
+    --------
+    >>> spell_literal_alias("Animals", ("Dog", "Cat", "Fish"))
+    "Animals: TypeAlias = Literal['Dog', 'Cat', 'Fish']"
+
+    >>> spell_literal_alias("Digits", "0123456789")
+    "Digits: TypeAlias = Literal['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
+
+    >>> spell_literal_alias("LessThanFive", (repr(i) for i in range(5)))
+    "LessThanFive: TypeAlias = Literal['0', '1', '2', '3', '4']"
+    """
+    return f"{alias_name}: TypeAlias = {spell_literal(members, quote=quote)}"
+
+
 def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:
     """
     Where `it` may contain one or more `"enum"`, `"const"`, flatten to a single `Literal[...]`.
@@ -1002,53 +1268,15 @@ def unwrap_literal(tp: str, /) -> str:
     return re.sub(r"Literal\[(.+)\]", r"\g<1>", tp)
 
 
-def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
-    """
-    Format an existing file.
-
-    Running on `win32` after writing lines will ensure "lf" is used before:
-    ```bash
-    ruff format --diff --check .
-    ```
-    """
-    cmd: MutableSequence[str | Path] = ["ruff", "format", fp]
-    if extra_args:
-        cmd.extend(extra_args)
-    r = subprocess.run(cmd, check=True)
-    r.check_returncode()
-
-
-def ruff_write_lint_format_str(
-    fp: Path, code: str | Iterable[str], /, *, encoding: str = "utf-8"
-) -> None:
-    """
-    Combined steps of writing, `ruff check`, `ruff format`.
-
-    Notes
-    -----
-    - `fp` is written to first, as the size before formatting will be the smallest
-        - Better utilizes `ruff` performance, rather than `python` str and io
-    - `code` is no longer bound to `list`
-    - Encoding set as default
-    - `I001/2` are `isort` rules, to sort imports.
-    """
-    commands: Iterable[Sequence[str | Path]] = (
-        ["ruff", "check", fp, "--fix"],
-        ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
-    )
-    if not isinstance(code, str):
-        code = "\n".join(code)
-    fp.write_text(code, encoding=encoding)
-    for cmd in commands:
-        r = subprocess.run(cmd, check=True)
-        r.check_returncode()
-    ruff_format_py(fp)
-
-
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
     imps = "\n".join(f"    {s}" for s in imports)
-    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imps}\n"
+    return (
+        f"from typing import TYPE_CHECKING\n\n"
+        f"if TYPE_CHECKING:\n"
+        f"    # ruff: noqa: F405\n"
+        f"{imps}\n"
+    )
 
 
 def import_typing_extensions(
@@ -1071,7 +1299,7 @@ def import_typing_extensions(
     )
 
 
-TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T")
 """An instance of `_TypeAliasTracer`.
 
 Collects a cache of unique `Literal` types used globally.
@@ -1081,30 +1309,6 @@ These are then converted to `TypeAlias` statements, written to another module.
 Allows for a single definition to be reused multiple times,
 rather than repeating long literals in every method definition.
 """
-
-
-class RSTRenderer(_RSTRenderer):
-    def __init__(self) -> None:
-        super().__init__()
-
-    def inline_html(self, token: dict[str, Any], state: BlockState) -> str:
-        html = token["raw"]
-        return rf"\ :raw-html:`{html}`\ "
-
-
-class RSTParse(mistune.Markdown):
-    def __init__(
-        self,
-        renderer: mistune.BaseRenderer,
-        block: mistune.BlockParser | None = None,
-        inline: mistune.InlineParser | None = None,
-        plugins=None,
-    ) -> None:
-        super().__init__(renderer, block, inline, plugins)
-
-    def __call__(self, s: str) -> str:
-        s = super().__call__(s)  # pyright: ignore[reportAssignmentType]
-        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
 
 
 def indent_docstring(  # noqa: C901
@@ -1192,31 +1396,10 @@ def fix_docstring_issues(docstring: str) -> str:
     )
 
 
-def rst_syntax_for_class(class_name: str) -> str:
-    return f":class:`{class_name}`"
-
-
-rst_parse: RSTParse = RSTParse(RSTRenderer())
+rst_parse: RSTParseVegaLite = RSTParseVegaLite()
 
 
 # TODO: Investigate `mistune.Markdown.(before|after)_render_hooks`.
 def process_description(description: str) -> str:
     """Parse a JSON encoded markdown description into an `RST` string."""
-    # remove formatting from links
-    description = "".join(
-        _RE_SPECIAL.sub("", d) if i % 2 else d
-        for i, d in enumerate(_RE_LINK.split(description))
-    )
-    description = rst_parse(description)
-    # Some entries in the Vega-Lite schema miss the second occurence of '__'
-    description = description.replace("__Default value: ", "__Default value:__ ")
-    # Links to the vega-lite documentation cannot be relative but instead need to
-    # contain the full URL.
-    description = description.replace(
-        "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
-    )
-    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
-    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
-    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
-    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
-    return description.strip()
+    return rst_parse(description)

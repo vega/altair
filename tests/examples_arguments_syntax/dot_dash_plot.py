@@ -12,28 +12,30 @@ source = data.cars()
 
 # Configure the options common to all layers
 brush = alt.selection_interval()
+brush_origin = alt.when(brush).then("Origin")
 base = alt.Chart(source).add_params(brush)
 
 # Configure the points
 points = base.mark_point().encode(
     x=alt.X('Miles_per_Gallon', title=''),
     y=alt.Y('Horsepower', title=''),
-    color=alt.condition(brush, 'Origin', alt.value('grey'))
+    color=brush_origin.otherwise(alt.value("grey")),
 )
 
 # Configure the ticks
 tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
+tick_color = brush_origin.otherwise(alt.value("lightgrey"))
 
 x_ticks = base.mark_tick().encode(
     alt.X('Miles_per_Gallon', axis=tick_axis),
     alt.Y('Origin', title='', axis=tick_axis),
-    color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
+    color=tick_color
 )
 
 y_ticks = base.mark_tick().encode(
     alt.X('Origin', title='', axis=tick_axis),
     alt.Y('Horsepower', axis=tick_axis),
-    color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
+    color=tick_color
 )
 
 # Build the chart

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, overload
+from typing import TYPE_CHECKING, overload
 
 from altair.utils.core import sanitize_pandas_dataframe
 from altair.utils.data import DataTransformerRegistry as _DataTransformerRegistry
@@ -15,6 +15,8 @@ from altair.utils.data import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from altair.utils.data import DataType, ToValuesReturnType
     from altair.utils.plugin_registry import PluginEnabler
 
