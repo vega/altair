@@ -13,7 +13,7 @@ from altair.datasets import data
 source = data.movies()
 
 alt.Chart(source).mark_line().encode(
-    x=alt.X("IMDB_Rating", bin=True),
+    x=alt.X("IMDB Rating", bin=True),
     y=alt.Y(
         alt.repeat("layer"), aggregate="mean", title="Mean of US and Worldwide Gross"
     ),

@@ -16,10 +16,10 @@ from altair.datasets import data
 source = data.movies.url
 
 gaussian_jitter = alt.Chart(source, title='Normally distributed jitter').mark_circle(size=8).encode(
-    y="Major_Genre:N",
-    x="IMDB_Rating:Q",
+    y="Major Genre:N",
+    x="IMDB Rating:Q",
     yOffset="jitter:Q",
-    color=alt.Color('Major_Genre:N').legend(None)
+    color=alt.Color('Major Genre:N').legend(None)
 ).transform_calculate(
     # Generate Gaussian jitter with a Box-Muller transform
     jitter="sqrt(-2*log(random()))*cos(2*PI*random())"
@@ -29,7 +29,7 @@ uniform_jitter = gaussian_jitter.transform_calculate(
     # Generate uniform jitter
     jitter='random()'
 ).encode(
-    alt.Y('Major_Genre:N').axis(None)
+    alt.Y('Major Genre:N').axis(None)
 ).properties(
     title='Uniformly distributed jitter'
 )

@@ -14,8 +14,8 @@ source = data.movies.url
 pts = alt.selection_point(encodings=['x'])
 
 rect = alt.Chart(data.movies.url).mark_rect().encode(
-    alt.X('IMDB_Rating:Q').bin(),
-    alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+    alt.X('IMDB Rating:Q').bin(),
+    alt.Y('Rotten Tomatoes Rating:Q').bin(),
     alt.Color('count()').scale(scheme='greenblue').title('Total Records')
 )
 
@@ -27,7 +27,7 @@ circ = rect.mark_point().encode(
 )
 
 bar = alt.Chart(source, width=550, height=200).mark_bar().encode(
-    x='Major_Genre:N',
+    x='Major Genre:N',
     y='count()',
     color=alt.when(pts).then(alt.ColorValue("steelblue")).otherwise(alt.ColorValue("grey"))
 ).add_params(pts)

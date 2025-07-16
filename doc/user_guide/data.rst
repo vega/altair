@@ -495,7 +495,7 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 
    from altair.datasets import data
 
-   url_topojson = data.londonBoroughs.url
+   url_topojson = data.london_boroughs.url
 
    data_url_topojson = alt.Data(
        url=url_topojson, format=alt.DataFormat(feature="boroughs", type="topojson")
@@ -539,7 +539,7 @@ without fill color.
 
    from altair.datasets import data
 
-   url_topojson = data.londonBoroughs.url
+   url_topojson = data.london_boroughs.url
 
    data_url_topojson_mesh = alt.Data(
        url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")
