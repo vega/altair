@@ -5130,16 +5130,10 @@ def _combine_subchart_params(  # noqa: C901
             continue
 
         if _needs_name(subchart):
-            if hasattr(subchart, "_get_view_hash_name"):
-                # For concatenated charts, we need unique names even for identical charts
-                # Use the hash as a base but append the position to ensure uniqueness
-                base_name = subchart._get_view_hash_name()
-                subchart.name = f"{base_name}_{i}"
-            else:
-                # For chart types that don't support hash-based naming,
-                # generate a simple deterministic name based on chart type
-                chart_type = subchart.__class__.__name__
-                subchart.name = f"{chart_type.lower()}_{id(subchart):x}"
+            # For concatenated charts, we need unique names even for identical charts
+            # Use the hash as a base but append the position to ensure uniqueness
+            base_name = subchart._get_view_hash_name()
+            subchart.name = f"{base_name}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)
