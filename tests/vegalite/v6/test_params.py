@@ -300,3 +300,22 @@ def test_identical_hash_based_parameters_deduplication():
     # Verify both opacity and size reference the same parameter
     assert spec["mark"]["opacity"]["expr"] == param_name
     assert spec["mark"]["size"]["expr"] == param_name
+
+
+def test_interactive_name_respected():
+    import altair as alt
+    from altair.datasets import data
+
+    cars = data.cars.url
+
+    chart = (
+        alt.Chart(cars)
+        .mark_point()
+        .encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+        .interactive(name="MY_CHART")
+    )
+
+    spec = (chart & chart).to_dict()
+    # There should be a single parameter with the name 'MY_CHART'
+    param_names = [p["name"] for p in spec["params"]]
+    assert param_names == ["MY_CHART"], f"Expected ['MY_CHART'], got {param_names}"

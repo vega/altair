@@ -167,8 +167,8 @@ def _assign_chart_name(chart: ChartType) -> None:
     """Assign a name to a chart if it doesn't have one."""
     if chart.name in {None, Undefined}:
         # Use hash-based naming for Altair Chart objects
-        if hasattr(chart, "_get_hash_name"):
-            chart.name = chart._get_hash_name()
+        if hasattr(chart, "_get_view_hash_name"):
+            chart.name = chart._get_view_hash_name()
         else:
             # For Vega-Lite schema objects (UnitSpec, FacetedUnitSpec, etc.),
             # use simple naming since these are already unique by design

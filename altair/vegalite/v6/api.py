@@ -412,7 +412,7 @@ class Parameter(_expr_core.OperatorMixin):
         hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
         return f"param_{hsh}"
 
-    def _get_hash_name(self) -> str:
+    def _get_param_hash_name(self) -> str:
         """Get a deterministic name based on the parameter specification hash."""
         return self._compute_hash()
 
@@ -433,7 +433,7 @@ class Parameter(_expr_core.OperatorMixin):
         # Generate name after attributes are set
         if name is None:
             # Use hash-based naming for deterministic names
-            name = self._get_hash_name()
+            name = self._get_param_hash_name()
             self._name_is_hashed = True
         else:
             self._name_is_hashed = False
@@ -1502,7 +1502,7 @@ def param(
             param_obj.name = str(name)
     else:
         # Compute hash-based name
-        hash_name = parameter._get_hash_name()
+        hash_name = parameter._get_param_hash_name()
         parameter.name = hash_name
         parameter._name_is_hashed = True
         if parameter.param is not Undefined:
@@ -4082,7 +4082,7 @@ class Chart(
         hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
         return f"view_{hsh}"
 
-    def _get_hash_name(self) -> str:
+    def _get_view_hash_name(self) -> str:
         """Get a deterministic name based on the chart specification hash."""
         return self._compute_hash()
 
@@ -4240,7 +4240,9 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        return self.add_params(
+            selection_interval(name=name, bind="scales", encodings=encodings)
+        )
 
 
 def _check_if_valid_subspec(
@@ -5128,10 +5130,10 @@ def _combine_subchart_params(  # noqa: C901
             continue
 
         if _needs_name(subchart):
-            if hasattr(subchart, "_get_hash_name"):
+            if hasattr(subchart, "_get_view_hash_name"):
                 # For concatenated charts, we need unique names even for identical charts
                 # Use the hash as a base but append the position to ensure uniqueness
-                base_name = subchart._get_hash_name()
+                base_name = subchart._get_view_hash_name()
                 subchart.name = f"{base_name}_{i}"
             else:
                 # For chart types that don't support hash-based naming,
