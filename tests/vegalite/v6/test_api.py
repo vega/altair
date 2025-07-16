@@ -1032,6 +1032,91 @@ def test_selection():
     assert sel1.name != sel3.name  # Different specifications get different names
 
 
+def test_selection_empty_property_preservation():
+    """Test that the empty property is preserved in logical operations on selections."""
+    # Test basic selection with empty=False
+    click = alt.selection_point("click", empty=False)
+    ctrl_click = alt.selection_point(
+        name="ctrl_click", on="click[event.ctrlKey]", empty=True
+    )
+
+    # Test AND operation preserves empty properties
+    and_result = (click & ctrl_click).to_dict()
+    expected_and = {
+        "and": [
+            {"param": "click", "empty": False},
+            {"param": "ctrl_click", "empty": True},
+        ]
+    }
+    assert and_result == expected_and
+
+    # Test with both selections having empty=False
+    ctrl_click_false = alt.selection_point(
+        name="ctrl_click_false", on="click[event.ctrlKey]", empty=False
+    )
+    and_result_false = (ctrl_click_false & ctrl_click).to_dict()
+    expected_and_false = {
+        "and": [
+            {"param": "ctrl_click_false", "empty": False},
+            {"param": "ctrl_click", "empty": True},
+        ]
+    }
+    assert and_result_false == expected_and_false
+
+    # Test OR operation preserves empty properties
+    or_result = (click | ctrl_click).to_dict()
+    expected_or = {
+        "or": [
+            {"param": "click", "empty": False},
+            {"param": "ctrl_click", "empty": True},
+        ]
+    }
+    assert or_result == expected_or
+
+    # Test NOT operation preserves empty property
+    not_result = (~click).to_dict()
+    expected_not = {"not": {"param": "click", "empty": False}}
+    assert not_result == expected_not
+
+    # Test complex nested operations
+    complex_result = ((click & ctrl_click) | (~ctrl_click_false)).to_dict()
+    expected_complex = {
+        "or": [
+            {
+                "and": [
+                    {"param": "click", "empty": False},
+                    {"param": "ctrl_click", "empty": True},
+                ]
+            },
+            {"not": {"param": "ctrl_click_false", "empty": False}},
+        ]
+    }
+    assert complex_result == expected_complex
+
+    # Test with interval selections
+    interval_false = alt.selection_interval(name="interval_false", empty=False)
+    interval_true = alt.selection_interval(name="interval_true", empty=True)
+
+    interval_and = (interval_false & interval_true).to_dict()
+    expected_interval_and = {
+        "and": [
+            {"param": "interval_false", "empty": False},
+            {"param": "interval_true", "empty": True},
+        ]
+    }
+    assert interval_and == expected_interval_and
+
+    # Test mixed selection types
+    mixed_result = (click & interval_true).to_dict()
+    expected_mixed = {
+        "and": [
+            {"param": "click", "empty": False},
+            {"param": "interval_true", "empty": True},
+        ]
+    }
+    assert mixed_result == expected_mixed
+
+
 def test_transforms():
     # aggregate transform
     agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})

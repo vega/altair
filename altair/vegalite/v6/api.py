@@ -464,23 +464,38 @@ class Parameter(_expr_core.OperatorMixin):
 
     def __invert__(self) -> PredicateComposition | Any:
         if self.param_type == "selection":
-            return core.PredicateComposition({"not": {"param": self.name}})
+            param_dict: dict[str, str | bool] = {"param": self.name}
+            if isinstance(self.empty, bool):
+                param_dict["empty"] = self.empty
+            return core.PredicateComposition({"not": param_dict})
         else:
             return _expr_core.OperatorMixin.__invert__(self)
 
     def __and__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
+            self_dict: dict[str, str | bool] = {"param": self.name}
+            if isinstance(self.empty, bool):
+                self_dict["empty"] = self.empty
             if isinstance(other, Parameter):
-                other = {"param": other.name}
-            return core.PredicateComposition({"and": [{"param": self.name}, other]})
+                other_dict: dict[str, str | bool] = {"param": other.name}
+                if isinstance(other.empty, bool):
+                    other_dict["empty"] = other.empty
+                other = other_dict
+            return core.PredicateComposition({"and": [self_dict, other]})
         else:
             return _expr_core.OperatorMixin.__and__(self, other)
 
     def __or__(self, other: Any) -> PredicateComposition | Any:
         if self.param_type == "selection":
+            self_dict: dict[str, str | bool] = {"param": self.name}
+            if isinstance(self.empty, bool):
+                self_dict["empty"] = self.empty
             if isinstance(other, Parameter):
-                other = {"param": other.name}
-            return core.PredicateComposition({"or": [{"param": self.name}, other]})
+                other_dict: dict[str, str | bool] = {"param": other.name}
+                if isinstance(other.empty, bool):
+                    other_dict["empty"] = other.empty
+                other = other_dict
+            return core.PredicateComposition({"or": [self_dict, other]})
         else:
             return _expr_core.OperatorMixin.__or__(self, other)
 
