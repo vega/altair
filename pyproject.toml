@@ -300,6 +300,9 @@ clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"
 publish = "task build && uv publish"
 
+nightly-build = "python tools/generate_nightly_version.py --update && task build"
+nightly-release = "task nightly-build && echo 'Package built, ready for GitHub release'"
+
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
 # They contain examples which are being executed by the
