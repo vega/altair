@@ -319,32 +319,46 @@ def test_interactive_name_respected():
     # There should be a single parameter with the name 'MY_CHART'
     param_names = [p["name"] for p in spec["params"]]
     assert param_names == ["MY_CHART"], f"Expected ['MY_CHART'], got {param_names}"
-    
+
     # Check that the parameter has the correct view IDs
     # The view IDs should be deterministic and consistent across OS/chart types
     param = spec["params"][0]
     assert "views" in param, "Parameter should have 'views' field"
     view_ids = param["views"]
     assert len(view_ids) == 2, f"Expected 2 view IDs, got {len(view_ids)}"
-    
+
     # The view IDs should follow the pattern: view_<hash>_<position>
     # where <hash> is the same for both charts (they're identical)
     # and <position> is 0 and 1 for the two concatenated charts
-    assert view_ids[0].endswith("_0"), f"First view ID should end with '_0', got {view_ids[0]}"
-    assert view_ids[1].endswith("_1"), f"Second view ID should end with '_1', got {view_ids[1]}"
-    
+    assert view_ids[0].endswith("_0"), (
+        f"First view ID should end with '_0', got {view_ids[0]}"
+    )
+    assert view_ids[1].endswith("_1"), (
+        f"Second view ID should end with '_1', got {view_ids[1]}"
+    )
+
     # Both view IDs should have the same base hash name
     base_name_0 = view_ids[0].rsplit("_", 1)[0]
     base_name_1 = view_ids[1].rsplit("_", 1)[0]
-    assert base_name_0 == base_name_1, f"View IDs should have same base name: {base_name_0} vs {base_name_1}"
-    
+    assert base_name_0 == base_name_1, (
+        f"View IDs should have same base name: {base_name_0} vs {base_name_1}"
+    )
+
     # The base name should start with 'view_' and contain a hex hash
-    assert base_name_0.startswith("view_"), f"Base name should start with 'view_', got {base_name_0}"
+    assert base_name_0.startswith("view_"), (
+        f"Base name should start with 'view_', got {base_name_0}"
+    )
     hash_part = base_name_0[5:]  # Remove 'view_' prefix
-    assert len(hash_part) == 16, f"Hash part should be 16 characters, got {len(hash_part)}: {hash_part}"
-    assert all(c in '0123456789abcdef' for c in hash_part), f"Hash part should be hex, got {hash_part}"
-    
+    assert len(hash_part) == 16, (
+        f"Hash part should be 16 characters, got {len(hash_part)}: {hash_part}"
+    )
+    assert all(c in "0123456789abcdef" for c in hash_part), (
+        f"Hash part should be hex, got {hash_part}"
+    )
+
     # For this specific chart configuration, we expect a consistent hash
     # This ensures the hash is deterministic across different runs/OS
     expected_base_name = "view_6e7cfb454e831ee6"
-    assert base_name_0 == expected_base_name, f"Expected base name {expected_base_name}, got {base_name_0}"
+    assert base_name_0 == expected_base_name, (
+        f"Expected base name {expected_base_name}, got {base_name_0}"
+    )
