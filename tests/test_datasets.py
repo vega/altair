@@ -715,20 +715,11 @@ def test_pandas_date_parse(
     df_dates_empty: pd.DataFrame = load(name, **kwds_empty)
 
     assert set(date_columns).issubset(nw_schema)
-    # Note: Automatic date detection may not work in all cases
-    # The important thing is that explicit date parsing works
     for column in date_columns:
         assert nw_schema[column] in {nw.Date, nw.Datetime}
 
-    # Check that explicit date parsing produces datetime columns
-    manual_schema = nw.from_native(df_manually_specified).schema
-    for column in date_columns:
-        assert manual_schema[column] in {nw.Date, nw.Datetime}
-
-    # Check that disabling date parsing produces string columns
-    empty_schema = nw.from_native(df_dates_empty).schema
-    for column in date_columns:
-        assert empty_schema[column] == nw.String
+    assert nw_schema == nw.from_native(df_manually_specified).schema
+    assert nw_schema != nw.from_native(df_dates_empty).schema
 
     # NOTE: Checking `polars` infers the same[1] as what `pandas` needs a hint for
     # [1] Doesn't need to be exact, just recognize as *some kind* of date/datetime
