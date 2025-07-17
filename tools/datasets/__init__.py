@@ -25,7 +25,6 @@ from typing import TYPE_CHECKING, Any, ClassVar, Literal
 from tools import fs
 from tools.codemod import ruff
 from tools.datasets.npm import Npm
-from tools.datasets.stub_generator import generate_stub_file
 from tools.schemapi import utils
 
 if TYPE_CHECKING:
@@ -41,9 +40,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    _PathAlias: TypeAlias = Literal[
-        "typing", "metadata-csv", "metadata", "schemas", "stub"
-    ]
+    _PathAlias: TypeAlias = Literal["typing", "metadata-csv", "metadata", "schemas"]
     PathMap: TypeAlias = Mapping[_PathAlias, Path]
 
 __all__ = ["app"]
@@ -68,7 +65,6 @@ class Application:
                 "metadata-csv": out_meta / f"{METADATA}.csv.gz",
                 "metadata": out_meta / f"{METADATA}.parquet",
                 "schemas": out_meta / "schemas.json.gz",
-                "stub": self.OUT_DIR / "__init__.pyi",
             }
         )
         self._npm: Npm = Npm(self.paths)
@@ -97,8 +93,6 @@ class Application:
 
         if include_typing:
             self.generate_typing(dpkg)
-            # Generate stub file after typing is updated
-            generate_stub_file(dpkg)
         return dpkg.core.collect()
 
     def reset(self) -> None:
