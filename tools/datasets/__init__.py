@@ -41,7 +41,9 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-    _PathAlias: TypeAlias = Literal["typing", "metadata-csv", "metadata", "schemas", "stub"]
+    _PathAlias: TypeAlias = Literal[
+        "typing", "metadata-csv", "metadata", "schemas", "stub"
+    ]
     PathMap: TypeAlias = Mapping[_PathAlias, Path]
 
 __all__ = ["app"]
