@@ -749,7 +749,7 @@ class TestDataObject:
         """Test that list_datasets returns a list of available datasets."""
         from altair.datasets import data
 
-        datasets = data.list_datasets()
+        datasets = data.list_datasets()  # pyright: ignore[reportAttributeAccessIssue]
         assert isinstance(datasets, list)
         assert len(datasets) > 0
         # Check that common datasets are present
@@ -764,25 +764,25 @@ class TestDataObject:
         """Test getting the default engine."""
         from altair.datasets import data
 
-        default_engine = data.get_default_engine()
+        default_engine = data.get_default_engine()  # pyright: ignore[reportAttributeAccessIssue]
         assert default_engine in {"pandas", "polars", "pandas[pyarrow]", "pyarrow"}
 
     def test_set_default_engine(self):
         """Test setting the default engine."""
         from altair.datasets import data
 
-        original_engine = data.get_default_engine()
+        original_engine = data.get_default_engine()  # pyright: ignore[reportAttributeAccessIssue]
 
         # Test setting to polars
-        data.set_default_engine("polars")
-        assert data.get_default_engine() == "polars"
+        data.set_default_engine("polars")  # pyright: ignore[reportAttributeAccessIssue]
+        assert data.get_default_engine() == "polars"  # pyright: ignore[reportAttributeAccessIssue]
 
         # Test setting to pandas
-        data.set_default_engine("pandas")
-        assert data.get_default_engine() == "pandas"
+        data.set_default_engine("pandas")  # pyright: ignore[reportAttributeAccessIssue]
+        assert data.get_default_engine() == "pandas"  # pyright: ignore[reportAttributeAccessIssue]
 
         # Restore original engine
-        data.set_default_engine(original_engine)
+        data.set_default_engine(original_engine)  # pyright: ignore[reportAttributeAccessIssue]
 
     def test_nonexistent_dataset_attribute(self):
         """Test that accessing nonexistent dataset raises AttributeError."""
@@ -791,7 +791,7 @@ class TestDataObject:
         with pytest.raises(
             AttributeError, match="Dataset 'nonexistent_dataset' not found"
         ):
-            _ = data.nonexistent_dataset
+            _ = data.nonexistent_dataset  # pyright: ignore[reportAttributeAccessIssue]
 
 
 class TestDataAPIIntegration:
@@ -802,7 +802,7 @@ class TestDataAPIIntegration:
         from altair.datasets import data
 
         # Load through data API
-        cars_data_api = data.cars()
+        cars_data_api = data.cars()  # pyright: ignore[reportAttributeAccessIssue]
 
         # Load through direct loader
         from altair.datasets import Loader
@@ -819,4 +819,4 @@ def test_unsupported_engine():
     from altair.datasets import data
 
     with pytest.raises(TypeError, match="Unknown backend"):
-        data.cars(engine="unsupported_engine")
+        data.cars(engine="unsupported_engine")  # pyright: ignore[reportAttributeAccessIssue, reportArgumentType, reportCallIssue]
