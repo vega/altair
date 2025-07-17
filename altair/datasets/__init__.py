@@ -88,11 +88,11 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
 
+    from altair.datasets._data import DataObject
     from altair.datasets._loader import _Load
     from altair.datasets._typing import Dataset, Extension
 
 
-# Expert interface - direct load function
 load: _Load[Any, Any]
 """
 Get a remote dataset and load as tabular data.
@@ -115,6 +115,8 @@ Alternatively, specify ``backend`` during a call::
     cars = load("cars", backend="polars")
     movies = load("movies", backend="polars")
 """
+
+data: DataObject
 
 
 def url(
