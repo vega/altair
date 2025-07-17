@@ -32,7 +32,7 @@ from ._loader import Loader, _Load
 
 # Type for the data object with all available dataset attributes
 class DataObjectWithDatasets(DataObject):
-    # All available datasets from _typing.py Dataset type
+    # All available datasets from DataPackage metadata
 '''
 
 STUB_FOOTER = """# Export the data object with proper typing
