@@ -6,7 +6,7 @@ This example is a fully developed bar chart with negative values using the sampl
 # category: case studies
 import altair as alt
 import pandas as pd
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.us_employment()
 presidents = pd.DataFrame([

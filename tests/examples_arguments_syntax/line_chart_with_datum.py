@@ -8,7 +8,7 @@ This is adapted from two corresponding Vega-Lite Examples:
 # category: line charts
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

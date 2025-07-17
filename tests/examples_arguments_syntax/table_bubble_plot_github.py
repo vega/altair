@@ -5,7 +5,7 @@ This example shows github contributions by the day of week and hour of the day.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.github.url
 

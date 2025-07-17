@@ -7,7 +7,7 @@ change on the top panel.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.flights_5k.url
 

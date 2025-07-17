@@ -6,7 +6,7 @@ using a wrapped faceting of the data by decade.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.population.url
 

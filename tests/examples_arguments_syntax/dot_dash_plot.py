@@ -6,7 +6,7 @@ on a JavaScript implementation by `g3o2 <https://bl.ocks.org/g3o2/bd436257413706
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

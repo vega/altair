@@ -6,7 +6,7 @@ This example shows how to make a line chart with multiple series of data.
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

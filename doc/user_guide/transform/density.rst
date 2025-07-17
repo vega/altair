@@ -14,7 +14,7 @@ dataset:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    alt.Chart(data.movies.url).transform_density(
        'IMDB_Rating',
@@ -30,7 +30,7 @@ argument. Here we split the above density computation across movie genres:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    alt.Chart(
        data.movies.url,

@@ -12,7 +12,7 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 movies = alt.UrlData(
     data.movies.url,
@@ -24,16 +24,16 @@ genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
        'Romantic Comedy', 'Thriller/Suspense', 'Western']
 
 base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transform_calculate(
-    Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)",
+    Rounded_IMDB_Rating = "floor(datum['IMDB Rating'])",
     Hundred_Million_Production =  "datum.Production_Budget > 100000000.0 ? 100 : 10",
     Release_Year = "year(datum.Release_Date)"
 ).transform_filter(
-    alt.datum.IMDB_Rating > 0
+    alt.datum['IMDB Rating'] > 0
 ).transform_filter(
     alt.FieldOneOfPredicate(field='MPAA_Rating', oneOf=ratings)
 ).encode(
     x=alt.X('Worldwide_Gross:Q', scale=alt.Scale(domain=(100000,10**9), clamp=True)),
-    y='IMDB_Rating:Q',
+    y='IMDB Rating:Q',
     tooltip="Title:N"
 )
 
@@ -49,7 +49,7 @@ filter_year = base.add_params(
 
 # A dropdown filter
 genre_dropdown = alt.binding_select(options=genres, name="Genre")
-genre_select = alt.selection_point(fields=['Major_Genre'], bind=genre_dropdown)
+genre_select = alt.selection_point(fields=['Major Genre'], bind=genre_dropdown)
 
 filter_genres = base.add_params(
     genre_select
