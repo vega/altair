@@ -25,9 +25,10 @@ The contents of this file are automatically generated from the dataset
 metadata. Do not modify directly.
 """
 
-from typing import Any, Union
+from typing import Any
+
 from ._data import DataObject, DatasetAccessor
-from ._loader import Loader
+from ._loader import Loader, _Load
 
 # Type for the data object with all available dataset attributes
 class DataObjectWithDatasets(DataObject):
@@ -38,7 +39,8 @@ STUB_FOOTER = """# Export the data object with proper typing
 data: DataObjectWithDatasets
 
 # Export functions defined in __init__.py
-def load(name: str, backend: str | None = None, **kwargs: Any) -> Any: ...
+load: _Load[Any, Any]
+
 def url(name: str, suffix: str | None = None, /) -> str: ...
 
 # Export other functions and classes
