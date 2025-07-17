@@ -99,11 +99,11 @@ Examples
         """Internal implementation of the call method."""
         if engine is None:
             if self._default_loader is None:
-                self._default_loader = Loader.from_backend(self._default_backend)
-            return self._default_loader(self._name, **kwds)
+                self._default_loader = Loader.from_backend(self._default_backend)  # pyright: ignore[reportArgumentType, reportCallIssue]
+            return self._default_loader(self._name, **kwds)  # pyright: ignore[reportArgumentType, reportOptionalCall]
         else:
             loader = Loader.from_backend(engine)
-            return loader(self._name, **kwds)
+            return loader(self._name, **kwds)  # pyright: ignore[reportArgumentType]
 
     @property
     def url(self) -> str:
@@ -123,8 +123,8 @@ Examples
         https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.0/data/cars.json
         """
         if self._default_loader is None:
-            self._default_loader = Loader.from_backend(self._default_backend)
-        return self._default_loader.url(self._name)
+            self._default_loader = Loader.from_backend(self._default_backend)  # pyright: ignore[reportArgumentType, reportCallIssue]
+        return self._default_loader.url(self._name)  # pyright: ignore[reportArgumentType, reportOptionalMemberAccess]
 
     def load(self, *, engine: _Backend | None = None, **kwds: t.Any) -> t.Any:
         """
@@ -289,7 +289,7 @@ class DataObject:
             )
             raise AttributeError(error_msg)
 
-        self._accessors[name] = DatasetAccessor(name, self._default_backend)
+        self._accessors[name] = DatasetAccessor(name, self._default_backend)  # pyright: ignore[reportArgumentType]
         return self._accessors[name]
 
     def set_default_engine(self, engine: _Backend) -> None:
@@ -352,7 +352,7 @@ class DataObject:
         >>> print(data.get_default_engine())
         polars
         """
-        return self._default_backend
+        return self._default_backend  # pyright: ignore[reportReturnType]
 
     def __repr__(self) -> str:
         """String representation of the data object."""
