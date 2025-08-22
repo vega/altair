@@ -368,7 +368,9 @@ def _pa_read_json_impl() -> Read[pa.Table]:
         if polars_ns is not None:
             return read(_pl_read_json_roundtrip_to_arrow(polars_ns), is_json)
     if is_available("pandas"):
-        return read(_pd_read_json_to_arrow(get_pandas()), is_json, exclude=is_spatial)
+        pandas_ns = get_pandas()
+        if pandas_ns is not None:
+            return read(_pd_read_json_to_arrow(pandas_ns), is_json, exclude=is_spatial)
     return read(_stdlib_read_json_to_arrow, is_json, exclude=is_not_tabular)
 
 

@@ -283,6 +283,9 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
                 if suffix in {".csv", ".tsv"}:
                     from pyarrow.csv import ConvertOptions
 
+                    # For pyarrow CSV reading, use the schema as intended
+                    # This will fail for non-ISO date formats, but that's the correct behavior
+                    # Users can handle this by using a different backend or converting dates manually
                     return {"convert_options": ConvertOptions(column_types=schema)}  # pyright: ignore[reportCallIssue]
                 elif suffix == ".parquet":
                     return {"schema": schema}
