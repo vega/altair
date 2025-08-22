@@ -163,6 +163,46 @@ def transformed_data(chart, row_limit=None, exclude=None):
 # a very consistent behavior for overloaded functions.
 # The same error appeared when trying it with Protocols for the concat and layer charts.
 # This function is only used internally and so we accept this inconsistency for now.
+def _assign_chart_name(chart: ChartType) -> None:
+    """Assign a name to a chart if it doesn't have one."""
+    if chart.name in {None, Undefined}:
+        # Use hash-based naming for Altair Chart objects
+        if hasattr(chart, "_get_view_hash_name"):
+            chart.name = chart._get_view_hash_name()
+        else:
+            # For Vega-Lite schema objects (UnitSpec, FacetedUnitSpec, etc.),
+            # use simple naming since these are already unique by design
+            chart_type = chart.__class__.__name__.lower()
+            # Clean up the type name for readability
+            chart_type = (
+                chart_type.replace("spec", "")
+                .replace("generic", "")
+                .replace("concat", "")
+            )
+            chart_type = chart_type.removesuffix("_")
+            # Use object ID for uniqueness - these objects are already unique
+            chart.name = f"view_{chart_type}_{id(chart):x}"
+
+
+def _get_subcharts(chart: ChartType) -> list[Any]:
+    """Get the subcharts for a composite chart."""
+    if isinstance(chart, _chart_class_mapping[LayerChart]):
+        return chart.layer
+    elif isinstance(chart, _chart_class_mapping[HConcatChart]):
+        return chart.hconcat
+    elif isinstance(chart, _chart_class_mapping[VConcatChart]):
+        return chart.vconcat
+    elif isinstance(chart, _chart_class_mapping[ConcatChart]):
+        return chart.concat
+    else:
+        msg = (
+            "transformed_data accepts an instance of "
+            "Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, or ConcatChart\n"
+            f"Received value of type: {type(chart)}"
+        )
+        raise ValueError(msg)
+
+
 def name_views(
     chart: ChartType, i: int = 0, exclude: Iterable[str] | None = None
 ) -> list[str]:
@@ -190,39 +230,23 @@ def name_views(
         List of the names of the charts and subcharts
     """
     exclude = set(exclude) if exclude is not None else set()
+
+    # Handle simple charts (Chart and FacetChart)
     if isinstance(
         chart, (_chart_class_mapping[Chart], _chart_class_mapping[FacetChart])
     ):
         if chart.name not in exclude:
-            if chart.name in {None, Undefined}:
-                # Add name since none is specified
-                chart.name = Chart._get_name()
+            _assign_chart_name(chart)
             return [chart.name]
-        else:
-            return []
-    else:
-        subcharts: list[Any]
-        if isinstance(chart, _chart_class_mapping[LayerChart]):
-            subcharts = chart.layer
-        elif isinstance(chart, _chart_class_mapping[HConcatChart]):
-            subcharts = chart.hconcat
-        elif isinstance(chart, _chart_class_mapping[VConcatChart]):
-            subcharts = chart.vconcat
-        elif isinstance(chart, _chart_class_mapping[ConcatChart]):
-            subcharts = chart.concat
-        else:
-            msg = (
-                "transformed_data accepts an instance of "
-                "Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, or ConcatChart\n"
-                f"Received value of type: {type(chart)}"
-            )
-            raise ValueError(msg)
+        return []
 
-        chart_names: list[str] = []
-        for subchart in subcharts:
-            for name in name_views(subchart, i=i + len(chart_names), exclude=exclude):
-                chart_names.append(name)
-        return chart_names
+    # Handle composite charts
+    subcharts = _get_subcharts(chart)
+    chart_names: list[str] = []
+    for subchart in subcharts:
+        for name in name_views(subchart, i=i + len(chart_names), exclude=exclude):
+            chart_names.append(name)
+    return chart_names
 
 
 def get_group_mark_for_scope(

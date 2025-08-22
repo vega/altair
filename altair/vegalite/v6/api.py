@@ -32,6 +32,11 @@ from .data import data_transformers
 from .display import VEGA_VERSION, VEGAEMBED_VERSION, VEGALITE_VERSION, renderers
 from .schema import SCHEMA_URL, channels, core, mixins
 from .schema._typing import Map, PrimitiveValue_T, SingleDefUnitChannel_T, Temporal
+from .schema.core import (
+    SelectionParameter,
+    TopLevelSelectionParameter,
+    VariableParameter,
+)
 
 if sys.version_info >= (3, 14):
     from typing import TypedDict
@@ -60,6 +65,12 @@ if TYPE_CHECKING:
     from typing import IO
 
     from altair.utils.core import DataFrameLike
+
+    from .schema.core import (
+        SelectionParameter,
+        TopLevelSelectionParameter,
+        VariableParameter,
+    )
 
     if sys.version_info >= (3, 13):
         from typing import Required, TypeIs
@@ -131,16 +142,13 @@ if TYPE_CHECKING:
         ProjectionType,
         RepeatMapping,
         RepeatRef,
-        SelectionParameter,
         SequenceGenerator,
         SortField,
         SphereGenerator,
         Step,
         TimeUnit,
-        TopLevelSelectionParameter,
         Transform,
         UrlData,
-        VariableParameter,
         Vector2number,
         Vector2Vector2number,
         Vector3number,
@@ -366,12 +374,47 @@ class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
     _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
-    _counter: int = 0
 
-    @classmethod
-    def _get_name(cls) -> str:
-        cls._counter += 1
-        return f"param_{cls._counter}"
+    def _compute_hash(self) -> str:
+        """
+        Compute a deterministic hash of the parameter specification.
+
+        Includes parameter type, configuration, and context to ensure uniqueness.
+        """
+        # Access attributes directly to avoid triggering __getattr__
+        param_type = getattr(self, "param_type", None)
+        empty = getattr(self, "empty", None)
+        param = getattr(self, "param", None)
+
+        # Create a hash data structure with parameter information
+        hash_data = {
+            "param_type": param_type,
+            "empty": empty,
+        }
+
+        if param is not None and hasattr(param, "to_dict"):
+            param_dict = param.to_dict()
+
+            # Create a copy of param_dict without the name field for hash computation
+            # The name should not be part of the hash since it's what we're trying to generate
+            param_dict_for_hash = param_dict.copy()
+            if isinstance(param_dict_for_hash, dict):
+                param_dict_for_hash.pop("name", None)
+
+            hash_data["param"] = param_dict_for_hash
+        else:
+            hash_data["param"] = param
+
+        # Serialize to JSON with sorted keys for consistency
+        hash_json = json.dumps(hash_data, sort_keys=True, default=str)
+
+        # Compute hash and truncate to 16 characters for readability
+        hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
+        return f"param_{hsh}"
+
+    def _get_param_hash_name(self) -> str:
+        """Get a deterministic name based on the parameter specification hash."""
+        return self._compute_hash()
 
     def __init__(
         self,
@@ -382,12 +425,23 @@ class Parameter(_expr_core.OperatorMixin):
         ] = Undefined,
         param_type: Optional[Literal["variable", "selection"]] = Undefined,
     ) -> None:
-        if name is None:
-            name = self._get_name()
-        self.name = name
+        # Set attributes first
         self.empty = empty
         self.param = param
         self.param_type = param_type
+
+        # Generate name after attributes are set
+        if name is None:
+            # Use hash-based naming for deterministic names
+            name = self._get_param_hash_name()
+            self._name_is_hashed = True
+        else:
+            self._name_is_hashed = False
+        self.name = name
+
+        # Update the underlying param object's name to match
+        if self.param is not None and not utils.is_undefined(self.param):
+            self.param.name = self.name
 
     @utils.deprecated(
         version="5.0.0",
@@ -1344,6 +1398,36 @@ def value(value: Any, **kwargs: Any) -> _Value:
     return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
 
+def _make_param_obj(
+    temp_name: str,
+    value: Optional[Any],
+    bind: Optional[Binding],
+    expr: Optional[str | Expr | Expression],
+    kwds: dict,
+) -> tuple[
+    VariableParameter | TopLevelSelectionParameter | SelectionParameter,
+    Literal["variable", "selection"],
+]:
+    if "select" in kwds:
+        select = kwds.pop("select")
+        param_obj: (
+            VariableParameter | TopLevelSelectionParameter | SelectionParameter
+        ) = core.SelectionParameter(
+            name=temp_name, select=select, value=value, bind=bind, **kwds
+        )
+        param_type: Literal["variable", "selection"] = "selection"
+    elif "views" in kwds:
+        param_obj = core.TopLevelSelectionParameter(name=temp_name, value=value, **kwds)
+        param_type = "selection"
+    else:
+        param_obj = core.VariableParameter(
+            name=temp_name, value=value, bind=bind, expr=expr, **kwds
+        )
+        param_type = "variable"
+
+    return param_obj, param_type
+
+
 def param(
     name: str | None = None,
     value: Optional[Any] = Undefined,
@@ -1388,54 +1472,56 @@ def param(
     parameter: Parameter
         The parameter object that can be used in chart creation.
     """
-    warn_msg = "The value of `empty` should be True or False."
-    empty_remap = {"none": False, "all": True}
-    parameter = Parameter(name)
-
-    if not utils.is_undefined(empty):
-        if isinstance(empty, bool) and not isinstance(empty, str):
-            parameter.empty = empty
-        elif empty in empty_remap:
-            utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[t.cast("str", empty)]
-        else:
-            raise ValueError(warn_msg)
+    temp_name = "__TEMP__"
+    # Always use a string for the name
 
     if _init := kwds.pop("init", None):
-        utils.deprecated_warn("Use `value` instead of `init`.", version="5.0.0")
-        # If both 'value' and 'init' are set, we ignore 'init'.
-        if value is Undefined:
-            kwds["value"] = _init
+        utils.deprecated_warn(
+            "The 'init' argument is deprecated. Use 'value' instead.",
+            version="5.0.0",
+        )
+        if utils.is_undefined(value):
+            value = _init
 
-    # ignore[arg-type] comment is needed because we can also pass _expr_core.Expression
-    if "select" not in kwds:
-        parameter.param = core.VariableParameter(
-            name=parameter.name,
-            bind=bind,
-            value=value,
-            expr=expr,
-            **kwds,
-        )
-        parameter.param_type = "variable"
-    elif "views" in kwds:
-        parameter.param = core.TopLevelSelectionParameter(
-            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
-        )
-        parameter.param_type = "selection"
+    # Create underlying parameter object with temp_name using helper
+    param_obj, param_type = _make_param_obj(temp_name, value, bind, expr, kwds)
+
+    # Construct Parameter with temp_name and param_obj
+    parameter = Parameter(
+        name=temp_name, empty=empty, param=param_obj, param_type=param_type
+    )
+
+    # Set the final name on both Parameter and underlying param object
+    if name is not None:
+        parameter.name = str(name)
+        if parameter.param is not Undefined:
+            param_obj = t.cast(
+                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                parameter.param,
+            )
+            param_obj.name = str(name)
     else:
-        parameter.param = core.SelectionParameter(
-            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
-        )
-        parameter.param_type = "selection"
+        # Compute hash-based name
+        hash_name = parameter._get_param_hash_name()
+        parameter.name = hash_name
+        parameter._name_is_hashed = True
+        if parameter.param is not Undefined:
+            param_obj = t.cast(
+                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                parameter.param,
+            )
+            param_obj.name = hash_name
 
     return parameter
 
 
 def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
+    # param_kwds_names contains keywords that should be passed to param() function
+    # The remaining kwds are used to create the selection config (PointSelectionConfig, etc.)
 
-    select_kwds = {"name", "bind", "value", "empty", "init", "views"}
-    param_kwds = {key: kwds.pop(key) for key in select_kwds & kwds.keys()}
+    param_kwds_names = {"name", "bind", "value", "empty", "init", "views"}
+    param_kwds = {key: kwds.pop(key) for key in param_kwds_names & kwds.keys()}
 
     select: IntervalSelectionConfig | PointSelectionConfig
     if type == "interval":
@@ -1453,7 +1539,21 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Para
         msg = """'type' must be 'point' or 'interval'"""
         raise ValueError(msg)
 
-    return param(select=select, **param_kwds)
+    # Extract all expected parameters from param_kwds and pass them as direct parameters
+    name = param_kwds.pop("name", None)
+    value = param_kwds.pop("value", Undefined)
+    bind = param_kwds.pop("bind", Undefined)
+    empty = param_kwds.pop("empty", Undefined)
+    expr = param_kwds.pop("expr", Undefined)
+    return param(
+        select=select,
+        name=name,
+        value=value,
+        bind=bind,
+        empty=empty,
+        expr=expr,
+        **param_kwds,
+    )
 
 
 @utils.deprecated(
@@ -3623,7 +3723,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``false``
         sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
-            objects are considered equal by the comparator, they are considered “peer” values of
+            objects are considered equal by the comparator, they are considered "peer" values of
             equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).
@@ -3961,12 +4061,30 @@ class Chart(
             **kwargs,
         )
 
-    _counter: int = 0
+    def _compute_hash(self) -> str:
+        """Compute a deterministic hash of the chart specification."""
+        # Get data name if available, otherwise use data object
+        data = getattr(self, "data", None)
+        if data is not None and hasattr(data, "name") and data.name is not None:
+            data_for_hash = data.name
+        else:
+            data_for_hash = data
 
-    @classmethod
-    def _get_name(cls) -> str:
-        cls._counter += 1
-        return f"view_{cls._counter}"
+        # Use basic chart attributes for hash computation.
+        hash_data = {
+            "class": self.__class__.__name__,
+            "mark": getattr(self, "mark", None),
+            "encoding": getattr(self, "encoding", None),
+            "data": data_for_hash,
+            "transform": getattr(self, "transform", None),
+        }
+        hash_json = json.dumps(hash_data, sort_keys=True, default=str)
+        hsh = hashlib.sha256(hash_json.encode()).hexdigest()[:16]
+        return f"view_{hsh}"
+
+    def _get_view_hash_name(self) -> str:
+        """Get a deterministic name based on the chart specification hash."""
+        return self._compute_hash()
 
     @classmethod
     def from_dict(
@@ -4075,8 +4193,19 @@ class Chart(
         if copy.params is Undefined:
             copy.params = []
 
-        for s in params:
-            copy.params.append(s.param)
+        # Track existing parameter names
+        existing_names = {param.name for param in copy.params}
+
+        for param in params:
+            if param.name in existing_names:
+                if param._name_is_hashed:
+                    continue  # deduplicate hash-based
+                else:
+                    # If we see a duplicate explicit name, raise
+                    msg = f"Duplicate explicit parameter name: {param.name}"
+                    raise ValueError(msg)
+            copy.params.append(param.param)
+            existing_names.add(param.name)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4111,7 +4240,9 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        return self.add_params(
+            selection_interval(name=name, bind="scales", encodings=encodings)
+        )
 
 
 def _check_if_valid_subspec(
@@ -4994,12 +5125,15 @@ def _combine_subchart_params(  # noqa: C901
 
     subcharts = [subchart.copy() for subchart in subcharts]
 
-    for subchart in subcharts:
+    for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
         if _needs_name(subchart):
-            subchart.name = subchart._get_name()
+            # For concatenated charts, we need unique names even for identical charts
+            # Use the hash as a base but append the position to ensure uniqueness
+            base_name = subchart._get_view_hash_name()
+            subchart.name = f"{base_name}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)

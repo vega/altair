@@ -104,16 +104,17 @@ def test_parameter_naming():
     prm = alt.param(name="some_name")
     assert prm.param.name == "some_name"
 
-    # test automatic naming which has the form such as param_5
+    # test automatic naming which now uses hash-based naming
     prm0, prm1, prm2 = (alt.param() for _ in range(3))
 
-    res = re.match(r"param_([0-9]+)", prm0.param.name)
+    # Check that all parameters have hash-based names (16 character hex)
+    res = re.match(r"param_([0-9a-f]{16})", prm0.param.name)
+    assert res, f"Expected hash-based name, got: {prm0.param.name}"
 
-    assert res
-
-    num = int(res[1])
-    assert prm1.param.name == f"param_{num + 1}"
-    assert prm2.param.name == f"param_{num + 2}"
+    # With hash-based naming, identical specifications get the same name
+    assert prm0.param.name == prm1.param.name == prm2.param.name, (
+        "Identical parameters should have same hash-based name"
+    )
 
 
 def test_selection_expression():
@@ -232,3 +233,132 @@ def test_creation_views_params_layered_repeat_chart():
 
     dct = c.to_dict()
     assert "child__column_distance_view_" in dct["params"][0]["views"][0]
+
+
+def test_parameter_deduplication():
+    """Test that hash-based parameters are deduplicated to avoid duplicate signal names."""
+    # Test with hash-based naming - these should be deduplicated
+    param1 = alt.param()  # Will get hash-based name
+    param2 = alt.param()  # Will get same hash-based name
+
+    chart = alt.Chart().mark_point().add_params(param1, param2)
+
+    # Check that only one parameter was added
+    assert len(chart.params) == 1
+    assert param1.name == param2.name  # Should have same hash-based name
+    assert chart.params[0].name == param1.name
+
+    # Test that the spec doesn't have duplicate parameter names
+    spec = chart.to_dict()
+    param_names = [p["name"] for p in spec["params"]]
+    assert len(param_names) == len(set(param_names)), (
+        "Duplicate parameter names found in spec"
+    )
+
+
+def test_explicitly_named_parameters_error():
+    """Test that explicitly named parameters with duplicate names raise an error."""
+    # Create two parameters with explicit names - this should raise an error
+    param1 = alt.param(name="my_param_1")
+    param2 = alt.param(name="my_param_1")
+
+    # Create a chart and add both parameters - should raise an error
+    with pytest.raises(
+        ValueError, match="Duplicate explicit parameter name: my_param_1"
+    ):
+        alt.Chart().mark_point().add_params(param1, param2)
+
+
+def test_identical_hash_based_parameters_deduplication():
+    """Test that identical parameters with hash-based names are deduplicated."""
+    from altair.datasets import data
+
+    cars = data.cars.url
+    param_opacity = alt.param(value=1)
+    param_size = alt.param(value=1)
+
+    # Create chart with same parameter added twice
+    chart = (
+        alt.Chart(cars)
+        .mark_circle(opacity=param_opacity, size=param_size)
+        .encode(x="Horsepower:Q", y="Miles_per_Gallon:Q", color="Origin:N")
+        .add_params(param_opacity, param_size)
+    )
+
+    # Check that only one parameter was added
+    assert len(chart.params) == 1
+
+    # Get the spec and verify it has only one parameter
+    spec = chart.to_dict()
+    assert len(spec["params"]) == 1
+
+    # Verify the parameter name is hash-based
+    param_name = spec["params"][0]["name"]
+    assert param_name.startswith("param_")
+    assert len(param_name) == 22  # "param_" + 16 hex chars
+
+    # Verify both opacity and size reference the same parameter
+    assert spec["mark"]["opacity"]["expr"] == param_name
+    assert spec["mark"]["size"]["expr"] == param_name
+
+
+def test_interactive_name_respected():
+    import altair as alt
+    from altair.datasets import data
+
+    cars = data.cars.url
+
+    chart = (
+        alt.Chart(cars)
+        .mark_point()
+        .encode(x="Horsepower:Q", y="Miles_per_Gallon:Q")
+        .interactive(name="MY_CHART")
+    )
+
+    spec = (chart & chart).to_dict()
+    # There should be a single parameter with the name 'MY_CHART'
+    param_names = [p["name"] for p in spec["params"]]
+    assert param_names == ["MY_CHART"], f"Expected ['MY_CHART'], got {param_names}"
+
+    # Check that the parameter has the correct view IDs
+    # The view IDs should be deterministic and consistent across OS/chart types
+    param = spec["params"][0]
+    assert "views" in param, "Parameter should have 'views' field"
+    view_ids = param["views"]
+    assert len(view_ids) == 2, f"Expected 2 view IDs, got {len(view_ids)}"
+
+    # The view IDs should follow the pattern: view_<hash>_<position>
+    # where <hash> is the same for both charts (they're identical)
+    # and <position> is 0 and 1 for the two concatenated charts
+    assert view_ids[0].endswith("_0"), (
+        f"First view ID should end with '_0', got {view_ids[0]}"
+    )
+    assert view_ids[1].endswith("_1"), (
+        f"Second view ID should end with '_1', got {view_ids[1]}"
+    )
+
+    # Both view IDs should have the same base hash name
+    base_name_0 = view_ids[0].rsplit("_", 1)[0]
+    base_name_1 = view_ids[1].rsplit("_", 1)[0]
+    assert base_name_0 == base_name_1, (
+        f"View IDs should have same base name: {base_name_0} vs {base_name_1}"
+    )
+
+    # The base name should start with 'view_' and contain a hex hash
+    assert base_name_0.startswith("view_"), (
+        f"Base name should start with 'view_', got {base_name_0}"
+    )
+    hash_part = base_name_0[5:]  # Remove 'view_' prefix
+    assert len(hash_part) == 16, (
+        f"Hash part should be 16 characters, got {len(hash_part)}: {hash_part}"
+    )
+    assert all(c in "0123456789abcdef" for c in hash_part), (
+        f"Hash part should be hex, got {hash_part}"
+    )
+
+    # For this specific chart configuration, we expect a consistent hash
+    # This ensures the hash is deterministic across different runs/OS
+    expected_base_name = "view_6e7cfb454e831ee6"
+    assert base_name_0 == expected_base_name, (
+        f"Expected base name {expected_base_name}, got {base_name_0}"
+    )
