@@ -230,10 +230,19 @@ def test_load_call(backend: _Backend, monkeypatch: pytest.MonkeyPatch) -> None:
 @backends
 def test_loader_call(backend: _Backend) -> None:
     load = Loader.from_backend(backend)
-    frame = load("stocks", ".csv")
-    assert nw_dep.is_into_dataframe(frame)
-    nw_frame = nw.from_native(frame)
-    assert set(nw_frame.columns) == {"symbol", "date", "price"}
+    
+    if backend == "pyarrow":
+        # PyArrow has a known limitation with non-ISO date formats in CSV
+        # The stocks dataset has dates like "Jan 1 2000" which PyArrow cannot parse
+        # This should raise an informative AltairDatasetsError
+        with pytest.raises(AltairDatasetsError, match="PyArrow cannot parse date format"):
+            load("stocks", ".csv")
+    else:
+        # Other backends should work normally
+        frame = load("stocks", ".csv")
+        assert nw_dep.is_into_dataframe(frame)
+        nw_frame = nw.from_native(frame)
+        assert set(nw_frame.columns) == {"symbol", "date", "price"}
 
 
 # =============================================================================
