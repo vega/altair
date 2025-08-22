@@ -181,6 +181,22 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     def cache(self) -> DatasetCache:
         return DatasetCache(self)
 
+    def _handle_pyarrow_date_error(self, e: Exception, name: str) -> None:
+        """Handle PyArrow date parsing errors with informative error messages, see https://github.com/apache/arrow/issues/41488."""
+        if "CSV conversion error to date" in str(e) and "pyarrow" in str(
+            type(e).__module__
+        ):
+            message = (
+                f"PyArrow cannot parse date format in dataset '{name}'. "
+                f"This is a known limitation of PyArrow's CSV reader for non-ISO date formats.\n\n"
+                f"Alternatives:\n"
+                f"1. Use a different backend: data.{name}(engine='pandas') or data.{name}(engine='polars')\n"
+                f"2. Convert dates manually after loading as strings\n\n"
+                f"Original error: {e}"
+            )
+            raise AltairDatasetsError(message) from e
+        raise e
+
     def dataset(
         self,
         name: Dataset | LiteralString,
@@ -194,10 +210,18 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         fn_kwds = self._merge_kwds(meta, kwds)
         if self.cache.is_active():
             fp = self.cache._maybe_download(meta)
-            return fn(fp, **fn_kwds)
+            try:
+                return fn(fp, **fn_kwds)
+            except Exception as e:
+                self._handle_pyarrow_date_error(e, name)
+                raise
         else:
             with self._opener.open(meta["url"]) as f:
-                return fn(f, **fn_kwds)
+                try:
+                    return fn(f, **fn_kwds)
+                except Exception as e:
+                    self._handle_pyarrow_date_error(e, name)
+                    raise
 
     def url(
         self, name: Dataset | LiteralString, suffix: Extension | None = None, /

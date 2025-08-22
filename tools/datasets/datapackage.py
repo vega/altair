@@ -10,7 +10,6 @@ from __future__ import annotations
 import textwrap
 from collections import deque
 from functools import cached_property
-from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal
 
 import polars as pl
@@ -20,6 +19,7 @@ from tools.schemapi import utils
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Mapping, Sequence
+    from pathlib import Path
 
     from altair.datasets._typing import Dataset, FlFieldStr
     from tools.datasets.models import Package, Resource
@@ -95,7 +95,7 @@ class DataPackage:
     def schemas(self) -> Mapping[Dataset, Mapping[str, FlFieldStr]]:
         """Reduce all datasets with schemas to a minimal mapping."""
         m: Any = {
-            Path(rsrc["path"]).stem: {f["name"]: f["type"] for f in s["fields"]}
+            rsrc["name"]: {f["name"]: f["type"] for f in s["fields"]}
             for rsrc in self._resources
             if (s := rsrc.get("schema"))
         }

@@ -7,18 +7,19 @@ and calling them with backend options, similar to the vega_datasets interface.
 
 from __future__ import annotations
 
-import inspect
 import typing as t
-from typing import TYPE_CHECKING
 
 from altair.datasets._loader import Loader
 
-if TYPE_CHECKING:
+if t.TYPE_CHECKING:
+    from typing_extensions import LiteralString
+
     import pandas as pd
     import polars as pl
     import pyarrow as pa
 
     from altair.datasets._reader import _Backend
+    from altair.datasets._typing import Dataset
 
 
 class DatasetAccessor:
@@ -56,15 +57,14 @@ class DatasetAccessor:
     >>> cars_df = data.cars.load(engine="polars")
     """
 
-    def __init__(self, name: str, default_backend: _Backend = "pandas"):
-        self._name = name
-        self._default_backend = default_backend
-        self._default_loader: Loader[t.Any, t.Any] | None = None
+    def __init__(self, name: Dataset, backend: _Backend = "pandas") -> None:
+        import inspect
 
-        # Create a proper signature for better IDE support
+        self._name: Dataset = name
+        self._backend: _Backend = backend
+        self._prev_loader: Loader[t.Any, t.Any]
         self.__signature__ = inspect.signature(self._call_impl)
 
-        # Set docstring for Jupyter autocompletion
         docstring = f"""Load the '{name}' dataset.
 
 Parameters
@@ -87,7 +87,6 @@ Examples
 >>> data.{name}.load(engine="polars")  # Explicit load method
 """
 
-        # Set docstring for better Jupyter support
         self.__doc__ = docstring
 
     def _call_impl(
@@ -96,14 +95,19 @@ Examples
         engine: _Backend | None = None,
         **kwds: t.Any,
     ) -> t.Any:
-        """Internal implementation of the call method."""
-        if engine is None:
-            if self._default_loader is None:
-                self._default_loader = Loader.from_backend(self._default_backend)
-            return self._default_loader(self._name, **kwds)
-        else:
-            loader = Loader.from_backend(engine)
-            return loader(self._name, **kwds)
+        load = Loader.from_backend(engine) if engine else self._loader
+        return load(self._name, **kwds)
+
+    @property
+    def _loader(self) -> Loader[t.Any, t.Any]:
+        if hasattr(self, "_prev_loader"):
+            return self._prev_loader
+        self._prev_loader = Loader.from_backend(self._backend)
+        return self._prev_loader
+
+    @_loader.setter
+    def _loader(self, value: Loader[t.Any, t.Any]) -> None:
+        self._prev_loader = value
 
     @property
     def url(self) -> str:
@@ -122,9 +126,7 @@ Examples
         >>> print(cars_url)
         https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json
         """
-        if self._default_loader is None:
-            self._default_loader = Loader.from_backend(self._default_backend)
-        return self._default_loader.url(self._name)
+        return self._loader.url(self._name)
 
     def load(self, *, engine: _Backend | None = None, **kwds: t.Any) -> t.Any:
         """
@@ -154,10 +156,7 @@ Examples
         return self._call_impl(engine=engine, **kwds)
 
     def __repr__(self) -> str:
-        """String representation of the dataset accessor."""
-        return (
-            f"DatasetAccessor('{self._name}', default_engine='{self._default_backend}')"
-        )
+        return f"DatasetAccessor('{self._name}', default_engine='{self._backend}')"
 
     @t.overload
     def __call__(
@@ -253,12 +252,12 @@ class DataObject:
     Available datasets: 72
     """
 
-    def __init__(self, default_backend: _Backend = "pandas"):
-        self._default_backend = default_backend
-        self._accessors: dict[str, DatasetAccessor] = {}
-        self._dataset_names: list[str] | None = None
+    def __init__(self, backend: _Backend = "pandas") -> None:
+        self._backend: _Backend = backend
+        self._accessors: dict[Dataset, DatasetAccessor] = {}
+        self._dataset_names: list[Dataset | LiteralString] | None = None
 
-    def _get_dataset_names(self) -> list[str]:
+    def _get_dataset_names(self) -> list[Dataset | LiteralString]:
         """Get the list of available dataset names from metadata."""
         if self._dataset_names is None:
             try:
@@ -277,19 +276,16 @@ class DataObject:
         dataset_names = self._get_dataset_names()
         return standard_attrs + dataset_names
 
-    def __getattr__(self, name: str) -> DatasetAccessor:
-        """Get a dataset accessor for the given name."""
+    def __getattr__(self, name: Dataset) -> DatasetAccessor:  # type: ignore[misc]
         dataset_names = self._get_dataset_names()
         if name not in dataset_names:
             available_datasets = dataset_names[:10]
-            if len(dataset_names) > 10:
-                available_datasets.append("...")
             error_msg = (
                 f"Dataset '{name}' not found. Available datasets: {available_datasets}"
             )
             raise AttributeError(error_msg)
 
-        self._accessors[name] = DatasetAccessor(name, self._default_backend)
+        self._accessors[name] = DatasetAccessor(name, self._backend)
         return self._accessors[name]
 
     def set_default_engine(self, engine: _Backend) -> None:
@@ -309,11 +305,11 @@ class DataObject:
         >>> cars_df = data.cars()  # Uses polars
         >>> movies_df = data.movies()  # Uses polars
         """
-        self._default_backend = engine
+        self._backend = engine
         # Clear cached accessors so they use the new default
         self._accessors.clear()
 
-    def list_datasets(self) -> list[str]:
+    def list_datasets(self) -> list[Dataset | LiteralString]:
         """
         Get a list of all available dataset names.
 
@@ -352,13 +348,11 @@ class DataObject:
         >>> print(data.get_default_engine())
         polars
         """
-        return self._default_backend
+        return self._backend
 
     def __repr__(self) -> str:
-        """String representation of the data object."""
         dataset_count = len(self._get_dataset_names())
-        return f"AltairDataObject(default_engine='{self._default_backend}', datasets={dataset_count})"
+        return f"AltairDataObject(default_engine='{self._backend}', datasets={dataset_count})"
 
 
-# Create the main data object
 data = DataObject()
