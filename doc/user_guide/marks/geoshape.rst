@@ -17,7 +17,7 @@ Altair can work with many different geographical data formats, including geojson
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     import geopandas as gpd
 
     url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"

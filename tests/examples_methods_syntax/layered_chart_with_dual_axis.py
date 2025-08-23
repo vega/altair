@@ -6,7 +6,7 @@ This example shows how to create a second independent y axis.
 # category: advanced calculations
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 

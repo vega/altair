@@ -7,7 +7,7 @@ is used to calculate the mean of the maximum temperature around each date.
 # category: scatter plots
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 

@@ -22,7 +22,7 @@ The following dot plot uses tick marks to show the distribution of precipitation
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.seattle_weather()
 
@@ -36,7 +36,7 @@ By adding a ``y`` field, a strip plot can be created that shows the distribution
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -50,7 +50,7 @@ Customizing Tick’s Size and Thickness
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.seattle_weather()
 

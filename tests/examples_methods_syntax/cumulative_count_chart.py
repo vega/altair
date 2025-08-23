@@ -8,7 +8,7 @@ Adapted from https://vega.github.io/vega-lite/examples/area_cumulative_freq.html
 # category: distributions
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 

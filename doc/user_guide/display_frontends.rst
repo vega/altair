@@ -321,7 +321,7 @@ output displayed. This turns out to be true of Altair charts as well:
     :output: none
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     cars = data.cars.url
 
     chart = alt.Chart(cars).mark_point().encode(

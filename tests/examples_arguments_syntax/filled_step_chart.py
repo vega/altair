@@ -5,7 +5,7 @@ This example shows Google's stock price over time as a step chart with its area 
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

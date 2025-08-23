@@ -49,7 +49,7 @@ standard deviation, which requires calculations on the joined data:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    alt.Chart(data.movies.url).transform_filter(
        'datum.IMDB_Rating != null  && datum.Rotten_Tomatoes_Rating != null'

@@ -4,7 +4,7 @@ Lasagna Plot (Dense Time-Series Heatmap)
 """
 # category: tables
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

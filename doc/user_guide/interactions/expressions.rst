@@ -126,7 +126,7 @@ We also need to reference the field specified by the selection parameter
 
 .. altair-plot::
 
-    from vega_datasets import data
+    from altair.datasets import data
     
     cars = data.cars.url
     input_dropdown = alt.binding_select(options=['Europe', 'Japan', 'USA'], name='Region ')

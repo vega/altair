@@ -221,7 +221,7 @@ def register(
 
     Until another theme has been enabled, all charts will use defaults set in ``custom_theme()``::
 
-        from vega_datasets import data
+        from altair.datasets import data
 
         source = data.stocks()
         lines = (

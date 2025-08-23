@@ -4,7 +4,7 @@ Annual Weather Heatmap
 """
 # category: tables
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 

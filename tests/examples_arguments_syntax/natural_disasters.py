@@ -5,7 +5,7 @@ This example shows a proportional symbols visualization of deaths from natural d
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.disasters.url
 

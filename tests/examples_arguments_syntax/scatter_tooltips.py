@@ -8,7 +8,7 @@ easier to hover over them.
 # category: simple charts
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

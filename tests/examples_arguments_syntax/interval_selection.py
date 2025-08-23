@@ -8,7 +8,7 @@ selection range is set using Python's native datetime objects.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 import datetime as dt
 
 source = data.sp500.url
