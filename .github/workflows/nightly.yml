@@ -14,7 +14,7 @@ jobs:
       last-nightly-commit: '${{ steps.check.outputs.last-nightly-commit }}'
       current-commit: '${{ steps.check.outputs.current-commit }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Check for changes since last nightly
@@ -70,7 +70,7 @@ jobs:
           - '3.13'
     name: 'Test py ${{ matrix.python-version }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: 'Set up Python ${{ matrix.python-version }}'
         uses: actions/setup-python@v5
         with:
@@ -97,7 +97,7 @@ jobs:
     if: needs.check-changes.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set up Python
