@@ -1070,8 +1070,9 @@ def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
 def config_keys() -> frozenset[str]:
     return ConfigKwds.__required_keys__.union(
         ConfigKwds.__optional_keys__,
-        ConfigKwds.__readonly_keys__,  # type: ignore[attr-defined]
-        ConfigKwds.__mutable_keys__,  # type: ignore[attr-defined]
+        # TODO: Remove [attr-defined,unused-ignore] when mypy properly supports TypedDict attributes
+        ConfigKwds.__readonly_keys__,  # type: ignore[attr-defined,unused-ignore]
+        ConfigKwds.__mutable_keys__,  # type: ignore[attr-defined,unused-ignore]
     )
 
 
