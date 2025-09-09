@@ -2273,7 +2273,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **kwargs,
         )
 
-    def to_url(self, *, fullscreen: bool = False) -> str:
+    def to_url(self, *, fullscreen: bool = False, validate: bool = True) -> str:
         """
         Convert a chart to a URL that opens the chart specification in the Vega chart editor.
 
@@ -2285,16 +2285,22 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
+        validate : boolean
+            If True, then validate the input against the schema.
         """
         from altair.utils._importers import import_vl_convert
 
         vlc = import_vl_convert()
         if _using_vegafusion():
-            return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
+            return vlc.vega_to_url(
+                self.to_dict(format="vega", validate=validate), fullscreen=fullscreen
+            )
         else:
-            return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
+            return vlc.vegalite_to_url(
+                self.to_dict(validate=validate), fullscreen=fullscreen
+            )
 
-    def open_editor(self, *, fullscreen: bool = False) -> None:
+    def open_editor(self, *, fullscreen: bool = False, validate: bool = True) -> None:
         """
         Opens the chart specification in the Vega chart editor using the default browser.
 
@@ -2302,10 +2308,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
+        validate : boolean
+            If True, then validate the input against the schema.
         """
         import webbrowser
 
-        webbrowser.open(self.to_url(fullscreen=fullscreen))
+        webbrowser.open(self.to_url(fullscreen=fullscreen, validate=validate))
 
     def save(
         self,
