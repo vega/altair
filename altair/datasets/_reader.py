@@ -25,7 +25,7 @@ from importlib import import_module
 from importlib.util import find_spec
 from itertools import chain
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, ClassVar, Generic, Literal, cast, overload
+from typing import TYPE_CHECKING, Any, ClassVar, Generic, Literal, overload
 from urllib.request import build_opener as _build_opener
 
 from narwhals.stable import v1 as nw
@@ -391,7 +391,7 @@ class _NoParquetReader(Reader[IntoDataFrameT]):
 
     @property
     def _metadata_frame(self) -> nw.LazyFrame[Any]:
-        data = cast("dict[str, Any]", self.csv_cache.rotated)
+        data = self.csv_cache.rotated
         impl = self._implementation
         return nw.maybe_convert_dtypes(nw.from_dict(data, backend=impl)).lazy()
 
