@@ -379,7 +379,7 @@ def _dataset_names(
     )
 
 
-class _NoParquetReader(Reader[IntoDataFrameT, IntoLazyFrameT]):
+class _NoParquetReader(Reader[IntoDataFrameT]):
     def __repr__(self) -> str:
         return f"{super().__repr__()}\ncsv_cache\n    {self.csv_cache!r}"
 
@@ -390,7 +390,7 @@ class _NoParquetReader(Reader[IntoDataFrameT, IntoLazyFrameT]):
         return self._csv_cache
 
     @property
-    def _metadata_frame(self) -> nw.LazyFrame[IntoLazyFrameT]:
+    def _metadata_frame(self) -> nw.LazyFrame[Any]:
         data = cast("dict[str, Any]", self.csv_cache.rotated)
         impl = self._implementation
         return nw.maybe_convert_dtypes(nw.from_dict(data, backend=impl)).lazy()
@@ -403,7 +403,7 @@ def reader(
     *,
     name: str | None = ...,
     implementation: nw.Implementation = ...,
-) -> Reader[IntoDataFrameT, Any]: ...
+) -> Reader[IntoDataFrameT]: ...
 
 
 @overload
@@ -422,7 +422,7 @@ def reader(
     *,
     name: str | None = None,
     implementation: nw.Implementation = nw.Implementation.UNKNOWN,
-) -> Reader[IntoDataFrameT, IntoLazyFrameT] | Reader[IntoDataFrameT, Any]:
+) -> Reader[IntoDataFrameT, IntoLazyFrameT] | Reader[IntoDataFrameT]:
     name = name or Counter(el._inferred_package for el in read_fns).most_common(1)[0][0]
     if not _is_eager_allowed(implementation):
         implementation = _into_implementation(Requirement(name))
