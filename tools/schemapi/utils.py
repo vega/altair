@@ -128,7 +128,7 @@ class _TypeAliasTracer:
             "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
-                (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
+                (3, 15), "TypedDict", reason="https://peps.python.org/pep-0728/"
             ),
             import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),

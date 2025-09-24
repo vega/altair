@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar
 from urllib import request
 
-if sys.version_info >= (3, 14):
+if sys.version_info >= (3, 15):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
@@ -1273,7 +1273,7 @@ def vegalite_main(skip_download: bool = False) -> None:
             "from collections.abc import Sequence",
             "from ._typing import * # noqa: F403",
         ),
-        import_typing_extensions((3, 14), "TypedDict"),
+        import_typing_extensions((3, 15), "TypedDict"),
         "\n\n",
         *generate_config_typed_dicts(schemafile),
     ]

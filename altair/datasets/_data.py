@@ -124,7 +124,7 @@ Examples
         >>> from altair.datasets import data
         >>> cars_url = data.cars.url
         >>> print(cars_url)
-        https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json
+        https://raw.githubusercontent.com/vega/vega-datasets/v3.2.1/data/cars.json
         """
         return self._loader.url(self._name)
 

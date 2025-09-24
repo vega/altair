@@ -183,7 +183,7 @@ class Application:
             "from __future__ import annotations\n",
             "import sys",
             "from typing import Literal, TYPE_CHECKING",
-            utils.import_typing_extensions((3, 14), "TypedDict"),
+            utils.import_typing_extensions((3, 15), "TypedDict"),
             utils.import_typing_extensions((3, 11), "LiteralString"),
             utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
