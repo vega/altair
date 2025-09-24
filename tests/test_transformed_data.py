@@ -27,6 +27,11 @@ xfail_vegafusion_2: pytest.MarkDecorator = pytest.mark.xfail(
     reason="https://github.com/vega/altair/issues/3701",
 )
 
+skip_vegafusion_http: pytest.MarkDecorator = pytest.mark.skip(
+    reason="Skipped due to vega_datasets using jsdelivr URLs incompatible with VegaFusion HTTP client. "
+    "See https://github.com/vega/vegafusion/issues/569"
+)
+
 
 # fmt: off
 @ignore_DataFrameGroupBy
@@ -42,7 +47,7 @@ xfail_vegafusion_2: pytest.MarkDecorator = pytest.mark.xfail(
     ("comet_chart.py", 120, ["variety", "delta"]),
     ("diverging_stacked_bar_chart.py", 40, ["value", "percentage_start"]),
     ("donut_chart.py", 6, ["value_start", "value_end"]),
-    ("gapminder_bubble_plot.py", 187, ["income", "population"]),
+    pytest.param("gapminder_bubble_plot.py", 187, ["income", "population"], marks=skip_vegafusion_http),
     ("grouped_bar_chart2.py", 9, ["Group", "Value_start"]),
     ("hexbins.py", 84, ["xFeaturePos", "mean_temp_max"]),
     pytest.param("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"], marks=slow),
@@ -103,14 +108,14 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
 @pytest.mark.parametrize(("filename", "all_rows", "all_cols"), [
     ("errorbars_with_std.py", [10, 10], [["upper_yield"], ["extent_yield"]]),
     ("candlestick_chart.py", [44, 44], [["low"], ["close"]]),
-    ("co2_concentration.py", [713, 7, 7], [["first_date"], ["scaled_date"], ["end"]]),
+    pytest.param("co2_concentration.py", [713, 7, 7], [["first_date"], ["scaled_date"], ["end"]], marks=skip_vegafusion_http),
     pytest.param("falkensee.py", [2, 38, 38], [["event"], ["population"], ["population"]], marks=xfail_vegafusion_2),
     ("heat_lane.py", [10, 10], [["bin_count_start"], ["y2"]]),
     ("histogram_responsive.py", [20, 20], [["__count"], ["__count"]]),
     ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB_Rating"]]),
     ("horizon_graph.py", [20, 20], [["x"], ["ny"]]),
     pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]], marks=slow),
-    ("interval_selection.py", [123, 123], [["price_start"], ["date"]]),
+    pytest.param("interval_selection.py", [123, 123], [["price_start"], ["date"]], marks=skip_vegafusion_http),
     ("layered_chart_with_dual_axis.py", [12, 12], [["month_date"], ["average_precipitation"]]),
     ("layered_heatmap_text.py", [9, 9], [["Cylinders"], ["mean_horsepower"]]),
     ("multiline_highlight.py", [560, 560], [["price"], ["date"]]),
