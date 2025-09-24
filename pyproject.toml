@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.10.0; python_version<\"3.14\"",
+    "typing_extensions>=4.10.0; python_version<\"3.15\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
@@ -128,7 +128,7 @@ doc     = { features = ["all", "dev", "doc"] }
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
-matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13"] }]
+matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.3"] }]
 
 [tool.ruff]
 extend-exclude = [
