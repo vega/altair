@@ -97,7 +97,7 @@ We map the ``symbol`` variable to ``detail`` to use them to group lines.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
     alt.Chart(source).mark_line().encode(
@@ -117,7 +117,7 @@ For stacked marks, this controls the order of components of the stack. Here, the
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     barley = data.barley()
 
@@ -133,7 +133,7 @@ The order can be reversed by changing the sort option to `descending`.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     barley = data.barley()
 
@@ -149,7 +149,7 @@ The same approach works for other mark types, like stacked areas charts.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     barley = data.barley()
 
@@ -170,7 +170,7 @@ For line marks, the :class:`Order` channel encodes the order in which data point
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     driving = data.driving()
 

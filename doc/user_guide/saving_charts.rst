@@ -22,7 +22,7 @@ For example, here we save a simple scatter-plot to JSON:
 .. code-block:: python
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     chart = alt.Chart(data.cars.url).mark_point().encode(
         x='Horsepower:Q',
@@ -239,7 +239,7 @@ specification in the online Vega editor_.
     :output: repr
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     chart = alt.Chart(data.cars.url).mark_point().encode(
         x='Horsepower:Q',

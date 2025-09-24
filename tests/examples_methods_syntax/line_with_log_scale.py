@@ -5,7 +5,7 @@ How to make a line chart on a `Logarithmic scale <https://en.wikipedia.org/wiki/
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.population()
 

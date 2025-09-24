@@ -59,7 +59,7 @@ the following area chart shows a number of unemployment people in the US over ti
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.unemployment_across_industries.url
 
@@ -77,7 +77,7 @@ to ``true`` or an object defining a property of the overlaying point marks, we c
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks.url
 
@@ -94,7 +94,7 @@ In this example, we are also customizing the overlay. For more information about
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -123,7 +123,7 @@ Adding a color field to area chart creates stacked area chart by default. For ex
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.unemployment_across_industries.url
 
@@ -141,7 +141,7 @@ You can also create a normalized stacked area chart by setting ``stack`` to ``"n
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.unemployment_across_industries.url
 
@@ -160,7 +160,7 @@ Adding the ``interactive`` method allows for zooming and panning the x-scale.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.unemployment_across_industries.url
 
@@ -177,7 +177,7 @@ Specifying ``X2`` or ``Y2`` for the quantitative axis of area marks produce rang
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.seattle_weather()
 

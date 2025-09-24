@@ -5,7 +5,7 @@ This example shows a bar chart with both positive and negative values.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.us_employment()
 

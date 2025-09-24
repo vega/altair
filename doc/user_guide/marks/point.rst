@@ -13,7 +13,7 @@ Point Mark Properties
     :div_class: properties-example
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -70,7 +70,7 @@ Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies()
     alt.Chart(source).mark_point().encode(
@@ -83,7 +83,7 @@ Mapping fields to both the ``x`` and ``y`` channels creates a scatter plot.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -96,7 +96,7 @@ By default, ``point`` marks only have borders and are transparent inside. You ca
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -111,7 +111,7 @@ By mapping a third field to the ``size`` channel in the scatter plot, we can cre
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -128,7 +128,7 @@ Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -146,7 +146,7 @@ To jitter points on a discrete scale, you can add a random offset:
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -167,7 +167,7 @@ We can also use point mark with ``wedge`` as ``shape`` and ``angle`` encoding to
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.windvectors()
 
@@ -185,7 +185,7 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     airports = data.airports()
     states = alt.topo_feature(data.us_10m.url, feature="states")

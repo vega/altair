@@ -31,7 +31,7 @@ Here is an example using Vega-Altair to quickly visualize and display a dataset 
 import altair as alt
 
 # load a simple dataset as a pandas DataFrame
-from vega_datasets import data
+from altair.datasets import data
 cars = data.cars()
 
 alt.Chart(cars).mark_point().encode(
@@ -48,7 +48,7 @@ With a few modifications to the example above we can create a linked histogram t
 
 ```python 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

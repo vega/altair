@@ -35,7 +35,7 @@ For example:
     import altair as alt
     from altair import datum
 
-    from vega_datasets import data
+    from altair.datasets import data
     pop = data.population.url
 
     alt.Chart(pop).mark_area().encode(
@@ -75,7 +75,7 @@ values from year 2000 as in the above chart:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     pop = data.population.url
 
     alt.Chart(pop).mark_line().encode(
@@ -92,7 +92,7 @@ of specific values:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     pop = data.population.url
 
     alt.Chart(pop).mark_line().encode(
@@ -109,7 +109,7 @@ particular continuous range:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     pop = data.population.url
 
     alt.Chart(pop).mark_line().encode(
@@ -132,7 +132,7 @@ to select the data to be shown in the top chart:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     pop = data.population.url
 
     selection = alt.selection_point(fields=['year'])
@@ -170,7 +170,7 @@ First, we use a :class:`~FieldRangePredicate` to select *1950-1960*:
     :output: none
     
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.population.url
     chart = alt.Chart(source).mark_line().encode(

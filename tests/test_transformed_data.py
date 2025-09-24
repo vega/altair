@@ -8,6 +8,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
+from altair.datasets import data
 from altair.utils.execeval import eval_block
 from tests import (
     examples_methods_syntax,
@@ -15,7 +16,6 @@ from tests import (
     skip_requires_vegafusion,
     slow,
 )
-from vega_datasets import data
 
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
@@ -50,8 +50,8 @@ skip_vegafusion_http: pytest.MarkDecorator = pytest.mark.skip(
     pytest.param("gapminder_bubble_plot.py", 187, ["income", "population"], marks=skip_vegafusion_http),
     ("grouped_bar_chart2.py", 9, ["Group", "Value_start"]),
     ("hexbins.py", 84, ["xFeaturePos", "mean_temp_max"]),
-    pytest.param("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten_Tomatoes_Rating", "__count"], marks=slow),
-    ("histogram_scatterplot.py", 64, ["bin_maxbins_10_Rotten_Tomatoes_Rating", "__count"]),
+    pytest.param("histogram_heatmap.py", 378, ["bin_maxbins_40_Rotten Tomatoes Rating", "__count"], marks=slow),
+    ("histogram_scatterplot.py", 64, ["bin_maxbins_10_Rotten Tomatoes Rating", "__count"]),
     pytest.param("interactive_legend.py", 1708, ["sum_count_start", "series"], marks=slow),
     ("iowa_electricity.py", 51, ["net_generation_start", "year"]),
     ("isotype.py", 37, ["animal", "x"]),
@@ -75,7 +75,7 @@ skip_vegafusion_http: pytest.MarkDecorator = pytest.mark.skip(
     ("stacked_bar_chart_sorted_segments.py", 60, ["variety", "site"]),
     ("stem_and_leaf.py", 100, ["stem", "leaf"]),
     pytest.param("streamgraph.py", 1708, ["series", "sum_count"], marks=slow),
-    ("top_k_items.py", 10, ["rank", "IMDB_Rating_start"]),
+    ("top_k_items.py", 10, ["rank", "IMDB Rating_start"]),
     ("top_k_letters.py", 9, ["rank", "letters"]),
     pytest.param("top_k_with_others.py", 10, ["ranked_director", "mean_aggregate_gross"], marks=slow),
     ("area_faceted.py", 492, ["date", "price"]),
@@ -111,10 +111,10 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     pytest.param("co2_concentration.py", [713, 7, 7], [["first_date"], ["scaled_date"], ["end"]], marks=skip_vegafusion_http),
     pytest.param("falkensee.py", [2, 38, 38], [["event"], ["population"], ["population"]], marks=xfail_vegafusion_2),
     ("heat_lane.py", [10, 10], [["bin_count_start"], ["y2"]]),
-    ("histogram_responsive.py", [20, 20], [["__count"], ["__count"]]),
-    ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB_Rating"]]),
+    ("histogram_responsive.py", [23, 23], [["__count"], ["__count"]]),
+    ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB Rating"]]),
     ("horizon_graph.py", [20, 20], [["x"], ["ny"]]),
-    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]], marks=slow),
+    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major Genre"]], marks=slow),
     pytest.param("interval_selection.py", [123, 123], [["price_start"], ["date"]], marks=skip_vegafusion_http),
     ("layered_chart_with_dual_axis.py", [12, 12], [["month_date"], ["average_precipitation"]]),
     ("layered_heatmap_text.py", [9, 9], [["Cylinders"], ["mean_horsepower"]]),

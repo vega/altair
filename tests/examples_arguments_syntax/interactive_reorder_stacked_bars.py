@@ -12,7 +12,7 @@ by holding down the shift key while clicking the legend.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 selection = alt.selection_point(fields=['site'], bind='legend')
 

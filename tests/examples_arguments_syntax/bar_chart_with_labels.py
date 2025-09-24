@@ -5,7 +5,7 @@ This example shows a basic horizontal bar chart with labels created with Altair.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 
 source = data.wheat()

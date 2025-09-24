@@ -34,7 +34,7 @@ measurements in Seattle during the year 2010:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     temps = data.seattle_temps.url
 

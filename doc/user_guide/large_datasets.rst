@@ -278,7 +278,7 @@ using the ``url`` attribute:
 
 .. code-block:: python
 
-   from vega_datasets import data
+   from altair.datasets import data
    source = data.cars.url
 
    alt.Chart(source).mark_point() # etc.
@@ -310,7 +310,7 @@ it is convenient to pass the unaggregated data to Altair:
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -337,7 +337,7 @@ You could also precalculate the sum in pandas which would reduce the size of the
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
     source_aggregated = (
@@ -357,7 +357,7 @@ in Altair.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     df = data.cars()
 
@@ -378,7 +378,7 @@ to calculate the boundaries of the whiskers.
     
     import altair as alt
     import pandas as pd
-    from vega_datasets import data
+    from altair.datasets import data
 
     k = 1.5
     group_by_column = "Origin"

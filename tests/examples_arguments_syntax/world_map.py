@@ -8,7 +8,7 @@ different background layers.
 # category: maps
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Data generators for the background
 sphere = alt.sphere()

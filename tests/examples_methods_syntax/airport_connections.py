@@ -7,7 +7,7 @@ are displayed on pointerover via a single selection.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Since these data are each more than 5,000 rows we'll import from the URLs
 airports = data.airports.url
