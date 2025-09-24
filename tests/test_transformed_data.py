@@ -114,7 +114,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("histogram_responsive.py", [23, 23], [["__count"], ["__count"]]),
     ("histogram_with_a_global_mean_overlay.py", [9, 1], [["__count"], ["mean_IMDB Rating"]]),
     ("horizon_graph.py", [20, 20], [["x"], ["ny"]]),
-    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major_Genre"]], marks=slow),
+    pytest.param("interactive_cross_highlight.py", [64, 64, 13], [["__count"], ["__count"], ["Major Genre"]], marks=slow),
     pytest.param("interval_selection.py", [123, 123], [["price_start"], ["date"]], marks=skip_vegafusion_http),
     ("layered_chart_with_dual_axis.py", [12, 12], [["month_date"], ["average_precipitation"]]),
     ("layered_heatmap_text.py", [9, 9], [["Cylinders"], ["mean_horsepower"]]),
