@@ -6,7 +6,7 @@ from __future__ import annotations
 import sys
 from typing import Literal
 
-if sys.version_info >= (3, 14):
+if sys.version_info >= (3, 15):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
@@ -163,27 +163,27 @@ class Metadata(TypedDict, total=False):
     │ ---            ┆ ---    ┆ ---            ┆   ┆ ---           ┆ ---           │
     │ str            ┆ str    ┆ str            ┆   ┆ str           ┆ str           │
     ╞════════════════╪════════╪════════════════╪═══╪═══════════════╪═══════════════╡
-    │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 608ba6d51fa70 ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ 584c3fa1d31e… ┆ sdelivr.net/… │
-    │ annual_precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://cdn.j │
-    │                ┆        ┆ json           ┆   ┆ 8f16dda65151… ┆ sdelivr.net/… │
-    │ anscombe       ┆ .json  ┆ anscombe.json  ┆ … ┆ 11ae97090b626 ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ 3bdf0c866115… ┆ sdelivr.net/… │
-    │ barley         ┆ .json  ┆ barley.json    ┆ … ┆ 8dc50de2509b6 ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ e197ce95c24c… ┆ sdelivr.net/… │
-    │ birdstrikes    ┆ .csv   ┆ birdstrikes.cs ┆ … ┆ 1b8b190c9bc02 ┆ https://cdn.j │
-    │                ┆        ┆ v              ┆   ┆ ef7bcbfe5a8a… ┆ sdelivr.net/… │
+    │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 608ba6d51fa70 ┆ https://raw.g │
+    │                ┆        ┆                ┆   ┆ 584c3fa1d31e… ┆ ithubusercon… │
+    │ annual_precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://raw.g │
+    │                ┆        ┆ json           ┆   ┆ 8f16dda65151… ┆ ithubusercon… │
+    │ anscombe       ┆ .json  ┆ anscombe.json  ┆ … ┆ 11ae97090b626 ┆ https://raw.g │
+    │                ┆        ┆                ┆   ┆ 3bdf0c866115… ┆ ithubusercon… │
+    │ barley         ┆ .json  ┆ barley.json    ┆ … ┆ 8dc50de2509b6 ┆ https://raw.g │
+    │                ┆        ┆                ┆   ┆ e197ce95c24c… ┆ ithubusercon… │
+    │ birdstrikes    ┆ .csv   ┆ birdstrikes.cs ┆ … ┆ 1b8b190c9bc02 ┆ https://raw.g │
+    │                ┆        ┆ v              ┆   ┆ ef7bcbfe5a8a… ┆ ithubusercon… │
     │ …              ┆ …      ┆ …              ┆ … ┆ …             ┆ …             │
-    │ weekly_weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://cdn.j │
-    │                ┆        ┆ .json          ┆   ┆ ccd6baaa89f9… ┆ sdelivr.net/… │
-    │ wheat          ┆ .json  ┆ wheat.json     ┆ … ┆ cde46b43fc82f ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ 4c3c2a37ddcf… ┆ sdelivr.net/… │
-    │ windvectors    ┆ .csv   ┆ windvectors.cs ┆ … ┆ ed686b0ba613a ┆ https://cdn.j │
-    │                ┆        ┆ v              ┆   ┆ bd59d09fcd94… ┆ sdelivr.net/… │
-    │ world_110m     ┆ .json  ┆ world-110m.jso ┆ … ┆ a1ce852de6f27 ┆ https://cdn.j │
-    │                ┆        ┆ n              ┆   ┆ 13c94c0c2840… ┆ sdelivr.net/… │
-    │ zipcodes       ┆ .csv   ┆ zipcodes.csv   ┆ … ┆ d3df33e12be0d ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ 0544c95f1bd4… ┆ sdelivr.net/… │
+    │ weekly_weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://raw.g │
+    │                ┆        ┆ .json          ┆   ┆ ccd6baaa89f9… ┆ ithubusercon… │
+    │ wheat          ┆ .json  ┆ wheat.json     ┆ … ┆ cde46b43fc82f ┆ https://raw.g │
+    │                ┆        ┆                ┆   ┆ 4c3c2a37ddcf… ┆ ithubusercon… │
+    │ windvectors    ┆ .csv   ┆ windvectors.cs ┆ … ┆ ed686b0ba613a ┆ https://raw.g │
+    │                ┆        ┆ v              ┆   ┆ bd59d09fcd94… ┆ ithubusercon… │
+    │ world_110m     ┆ .json  ┆ world-110m.jso ┆ … ┆ a1ce852de6f27 ┆ https://raw.g │
+    │                ┆        ┆ n              ┆   ┆ 13c94c0c2840… ┆ ithubusercon… │
+    │ zipcodes       ┆ .csv   ┆ zipcodes.csv   ┆ … ┆ d3df33e12be0d ┆ https://raw.g │
+    │                ┆        ┆                ┆   ┆ 0544c95f1bd4… ┆ ithubusercon… │
     └────────────────┴────────┴────────────────┴───┴───────────────┴───────────────┘
     ```
     """
