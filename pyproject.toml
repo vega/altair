@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.10.0; python_version<\"3.14\"",
+    "typing_extensions>=4.10.0; python_version<\"3.15\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
@@ -180,7 +180,7 @@ ignore = [
     "D107",   # undocumented-public-init
     "D206",   # indent-with-spaces
     "D212",   # multi-line-summary-first-line ((D213) is the opposite of this)
-    "D401",   # non-imperative-mood  
+    "D401",   # non-imperative-mood
     "D413",   # missing-blank-line-after-last-section
     "E501",   # line-too-long (https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules)
     "RUF012", # mutable-class-default
@@ -376,4 +376,3 @@ ignore=[
     "../../../**/Lib",                          # stdlib
     "../../../**/typeshed*"                     # typeshed-fallback
 ]
-
