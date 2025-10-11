@@ -102,13 +102,13 @@ The VegaFusion dependencies can be installed using pip
 
 .. code-block:: none
 
-   pip install "vegafusion[embed]"
+   pip install vegafusion
 
 or conda
 
 .. code-block:: none
 
-   conda install -c conda-forge vegafusion vegafusion-python-embed vl-convert-python
+   conda install -c conda-forge vegafusion vl-convert-python
 
 Enabling the VegaFusion Data Transformer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

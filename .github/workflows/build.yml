@@ -36,7 +36,7 @@ jobs:
         # Also see https://github.com/vega/altair/pull/3114
         if: ${{ matrix.python-version == '3.9' }}
         run: |
-          uv pip uninstall pyarrow vegafusion vegafusion-python-embed vl-convert-python anywidget
+          uv pip uninstall pyarrow vegafusion vl-convert-python anywidget
       - name: Maybe install lowest supported pandas version
         # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
