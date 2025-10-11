@@ -46,11 +46,7 @@ GALLERY_TEMPLATE = jinja2.Template(
 
 This gallery contains a selection of examples of the plots Altair can create. Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
-Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/vega/>`_ project. To access them yourself, install `vega_datasets <https://github.com/altair-viz/vega_datasets>`_.
-
-.. code-block:: none
-
-   python -m pip install vega_datasets
+Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/vega/>`_ project.
 
 If you can't find the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
 

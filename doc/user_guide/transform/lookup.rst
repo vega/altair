@@ -11,7 +11,7 @@ at the top level of a chart using the :meth:`Chart.transform_lookup` method.
 By way of example, imagine you have two sources of data that you would like
 to combine and plot: one is a list of names of people along with their height
 and weight, and the other is some information about which groups they belong
-to. This example data is available in ``vega_datasets``:
+to. This example data is available in the `altair.datasets` package:
 
 .. altair-plot::
    :output: none
