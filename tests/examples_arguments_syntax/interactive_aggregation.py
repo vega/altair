@@ -18,18 +18,18 @@ threshold = alt.param(name="threshold", value=5, bind=slider)
 
 alt.layer(
     alt.Chart(source).mark_circle().encode(
-        x=alt.X("IMDB_Rating:Q", title="IMDB Rating"),
-        y=alt.Y("Rotten_Tomatoes_Rating:Q", title="Rotten Tomatoes Rating")
+        x=alt.X("IMDB Rating:Q", title="IMDB Rating"),
+        y=alt.Y("Rotten Tomatoes Rating:Q", title="Rotten Tomatoes Rating")
     ).transform_filter(
-        alt.datum["IMDB_Rating"] >= threshold
+        alt.datum["IMDB Rating"] >= threshold
     ),
 
     alt.Chart(source).mark_circle().encode(
-        x=alt.X("IMDB_Rating:Q", bin=alt.Bin(maxbins=10)),
-        y=alt.Y("Rotten_Tomatoes_Rating:Q", bin=alt.Bin(maxbins=10)),
+        x=alt.X("IMDB Rating:Q", bin=alt.Bin(maxbins=10)),
+        y=alt.Y("Rotten Tomatoes Rating:Q", bin=alt.Bin(maxbins=10)),
         size=alt.Size("count():Q", scale=alt.Scale(domain=[0,160]))
     ).transform_filter(
-        alt.datum["IMDB_Rating"] < threshold
+        alt.datum["IMDB Rating"] < threshold
     ),
 
     alt.Chart().mark_rule(color="gray").encode(

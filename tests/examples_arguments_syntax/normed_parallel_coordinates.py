@@ -22,7 +22,7 @@ source = data.penguins()
 alt.Chart(source).transform_window(
     index='count()'
 ).transform_fold(
-    ['Beak Length (mm)', 'Beak Depth (mm)', 'Flipper Length (mm)', 'Body Mass (g)']
+    ['Beak Length (mm)', 'Beak Depth (mm)', 'Flipper Length (mm)']
 ).transform_joinaggregate(
      min='min(value)', 
      max='max(value)',

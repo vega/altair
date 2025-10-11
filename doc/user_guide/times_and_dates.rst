@@ -27,7 +27,7 @@ containing hourly temperatures measured in Seattle:
     import altair as alt
     from altair.datasets import data
 
-    temps = data.seattle_temps()
+    temps = data.seattle_weather_hourly_normals()
     temps.head()
 
 We can see from the ``dtypes`` attribute that the times are encoded as a standard
@@ -47,7 +47,7 @@ example, we'll limit ourselves to the first two weeks of data:
 
     alt.Chart(temps).mark_line().encode(
         x='date:T',
-        y='temp:Q'
+        y='temperature:Q'
     )
 
 Notice that for date/time values we use the ``T`` to indicate a temporal

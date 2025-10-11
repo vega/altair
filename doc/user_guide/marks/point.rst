@@ -74,7 +74,7 @@ Mapping a field to either only ``x`` or only ``y`` of point marks creates a dot 
 
     source = data.movies()
     alt.Chart(source).mark_point().encode(
-        x="IMDB_Rating:Q"
+        x="IMDB Rating:Q"
     )
 
 Scatter Plot

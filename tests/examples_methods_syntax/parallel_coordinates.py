@@ -18,7 +18,7 @@ source = data.penguins()
 alt.Chart(source, width=500).transform_window(
     index='count()'
 ).transform_fold(
-    ['Beak Length (mm)', 'Beak Depth (mm)', 'Flipper Length (mm)', 'Body Mass (g)']
+    ['Beak Length (mm)', 'Beak Depth (mm)', 'Flipper Length (mm)']
 ).mark_line().encode(
     x='key:N',
     y='value:Q',

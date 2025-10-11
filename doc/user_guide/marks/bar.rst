@@ -112,7 +112,7 @@ If the data is not pre-aggregated (i.e. each record in the data field represents
     source = data.movies.url
 
     alt.Chart(source).mark_bar().encode(
-        alt.X("IMDB_Rating:Q").bin(),
+        alt.X("IMDB Rating:Q").bin(),
         y='count()',
     )
 

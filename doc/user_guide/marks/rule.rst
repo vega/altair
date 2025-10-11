@@ -114,11 +114,11 @@ We can also use a rule mark to show global mean value over a histogram.
 
     base = alt.Chart(source)
     bar = base.mark_bar().encode(
-        x=alt.X("IMDB_Rating:Q").bin().axis(None),
+        x=alt.X("IMDB Rating:Q").bin().axis(None),
         y="count()"
     )
     rule = base.mark_rule(color="red").encode(
-        x="mean(IMDB_Rating):Q",
+        x="mean(IMDB Rating):Q",
         size=alt.value(5),
     )
 

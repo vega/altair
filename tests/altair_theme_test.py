@@ -77,16 +77,16 @@ def alt_theme_test() -> ChartType:
     point = (
         alt.Chart(movies, height=STANDARD, width=STANDARD, title="Point")
         .mark_point(tooltip=True)
-        .transform_filter(alt.datum["IMDB_Rating"] != None)
+        .transform_filter(alt.datum["IMDB Rating"] != None)
         .transform_filter(
-            alt.FieldRangePredicate("Release_Date", [None, 2019], timeUnit="year")
+            alt.FieldRangePredicate("Release Date", [None, 2019], timeUnit="year")
         )
-        .transform_joinaggregate(Average_Rating="mean(IMDB_Rating)")
+        .transform_joinaggregate(Average_Rating="mean(IMDB Rating)")
         .transform_calculate(
-            Rating_Delta=alt.datum["IMDB_Rating"] - alt.datum.Average_Rating
+            Rating_Delta=alt.datum["IMDB Rating"] - alt.datum.Average_Rating
         )
         .encode(
-            x=alt.X("Release_Date:T").title("Release Date"),
+            x=alt.X("Release Date:T").title("Release Date"),
             y=alt.Y("Rating_Delta:Q").title("Rating Delta"),
             color=alt.Color("Rating_Delta:Q").title("Rating Delta").scale(domainMid=0),
         )

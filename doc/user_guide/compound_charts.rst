@@ -81,8 +81,8 @@ heat-map:
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q').bin(),
-        alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+        alt.X('IMDB Rating:Q').bin(),
+        alt.Y('Rotten Tomatoes Rating:Q').bin(),
         alt.Color('count()').scale(scheme='greenblue')
     )
 
@@ -90,8 +90,8 @@ heat-map:
         color='black',
         size=5,
     ).encode(
-        x='IMDB_Rating:Q',
-        y='Rotten_Tomatoes_Rating:Q',
+        x='IMDB Rating:Q',
+        y='Rotten Tomatoes Rating:Q',
     )
 
     heatmap + points
@@ -282,7 +282,7 @@ using ``alt.repeat('layer')``:
     source = data.movies()
 
     alt.Chart(source).mark_line().encode(
-        x=alt.X("IMDB_Rating").bin(),
+        x=alt.X("IMDB Rating").bin(),
         y=alt.Y(alt.repeat('layer')).aggregate('mean').title("Mean of US and Worldwide Gross"),
         color=alt.ColorDatum(alt.repeat('layer'))
     ).repeat(layer=["US_Gross", "Worldwide_Gross"])

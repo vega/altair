@@ -63,7 +63,7 @@ xfail_vegafusion_2: pytest.MarkDecorator = pytest.mark.xfail(
     pytest.param("natural_disasters.py", 686, ["Deaths", "Year"], marks=xfail_vegafusion_2),
     ("normalized_stacked_area_chart.py", 51, ["source", "net_generation_start"]),
     ("normalized_stacked_bar_chart.py", 60, ["site", "sum_yield_start"]),
-    ("parallel_coordinates.py", 1376, ["key", "value"]),
+    ("parallel_coordinates.py", 1032, ["key", "value"]),
     ("percentage_of_total.py", 5, ["PercentOfTotal", "TotalTime"]),
     ("pie_chart.py", 6, ["category", "value_start"]),
     ("pyramid.py", 3, ["category", "value_start"]),
