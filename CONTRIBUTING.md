@@ -229,7 +229,7 @@ Some additional notes:
   If you are using the `vega_datasets` package there are multiple ways to refer
   to a data source. If the dataset you would like to use is included in local
   installation (`vega_datasets.local_data.list_datasets()`) then the data can
-  be referenced directly, such as `source = data.iris()`. If the data is not
+  be referenced directly, such as `source = data.penguins()`. If the data is not
   included then it should be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.

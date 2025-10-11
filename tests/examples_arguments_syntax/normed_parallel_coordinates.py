@@ -8,21 +8,21 @@ a single line for each of them.
 Such a chart can be created in Altair by first transforming the data into a
 suitable representation.
 
-This example shows a modified parallel coordinates chart with the Iris dataset,
+This example shows a modified parallel coordinates chart with the Penguins dataset,
 where the y-axis shows the value after min-max rather than the raw value. It's a
 simplified Altair version of `the VegaLite version <https://vega.github.io/vega-lite/examples/parallel_coordinate.html>`_
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 from altair import datum
 
-source = data.iris()
+source = data.penguins()
 
 alt.Chart(source).transform_window(
     index='count()'
 ).transform_fold(
-    ['petalLength', 'petalWidth', 'sepalLength', 'sepalWidth']
+    ['Beak Length (mm)', 'Beak Depth (mm)', 'Flipper Length (mm)', 'Body Mass (g)']
 ).transform_joinaggregate(
      min='min(value)', 
      max='max(value)',
@@ -33,7 +33,7 @@ alt.Chart(source).transform_window(
 ).mark_line().encode(
     x='key:N',
     y='minmax_value:Q',
-    color='species:N',
+    color='Species:N',
     detail='index:N',
     opacity=alt.value(0.5)
 ).properties(width=500)

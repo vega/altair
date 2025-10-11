@@ -361,12 +361,12 @@ A legend is added to the chart automatically when the ``color``, ``shape`` or ``
   import altair as alt
   from altair.datasets import data
 
-  iris = data.iris()
+  cars = data.cars()
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color='species'
+  alt.Chart(cars).mark_point().encode(
+      x='Horsepower:Q',
+      y='Miles_per_Gallon:Q',
+      color='Origin:N'
   )
 
 In this case, the legend can be customized by introducing the :class:`Color` class and taking advantage of its :meth:`legend` method. The ``shape`` and ``size`` arguments have their own corresponding classes.
@@ -378,12 +378,12 @@ The legend option on all of them expects a :class:`Legend` object as its input, 
   import altair as alt
   from altair.datasets import data
 
-  iris = data.iris()
+  cars = data.cars()
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').legend(orient="left")
+  alt.Chart(cars).mark_point().encode(
+      x='Horsepower:Q',
+      y='Miles_per_Gallon:Q',
+      color=alt.Color('Origin:N').legend(orient="left")
   )
 
 Another thing you can do is set a ``title``; in this case we can use the :meth:`title` method directly as a shortcut or specify the ``title`` parameter inside the :meth:`legend` method:.
@@ -393,12 +393,12 @@ Another thing you can do is set a ``title``; in this case we can use the :meth:`
   import altair as alt
   from altair.datasets import data
 
-  iris = data.iris()
+  cars = data.cars()
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').title("Species by color")
+  alt.Chart(cars).mark_point().encode(
+      x='Horsepower:Q',
+      y='Miles_per_Gallon:Q',
+      color=alt.Color('Origin:N').title("Origin")
   )
 
 
@@ -409,12 +409,12 @@ You can remove the legend entirely by submitting a null value.
   import altair as alt
   from altair.datasets import data
 
-  iris = data.iris()
+  cars = data.cars()
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').legend(None),
+  alt.Chart(cars).mark_point().encode(
+      x='Horsepower:Q',
+      y='Miles_per_Gallon:Q',
+      color=alt.Color('Origin:N').legend(None),
   )
 
 Removing the Chart Border
@@ -429,12 +429,12 @@ As an example, let's start with a simple scatter plot.
     import altair as alt
     from altair.datasets import data
 
-    iris = data.iris()
+    cars = data.cars()
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalWidth',
-        y='petalLength',
-        color='species'
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
     )
 
 First remove the grid using the :meth:`configure_axis` method.
@@ -444,12 +444,12 @@ First remove the grid using the :meth:`configure_axis` method.
     import altair as alt
     from altair.datasets import data
 
-    iris = data.iris()
+    cars = data.cars()
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalWidth',
-        y='petalLength',
-        color='species'
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
     ).configure_axis(
         grid=False
     )
@@ -463,12 +463,12 @@ Hide it by setting ``stroke=None`` inside :meth:`configure_view`
     import altair as alt
     from altair.datasets import data
 
-    iris = data.iris()
+    cars = data.cars()
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalWidth',
-        y='petalLength',
-        color='species'
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
     ).configure_axis(
         grid=False
     ).configure_view(
@@ -484,12 +484,12 @@ combining the above option with setting ``axis`` to ``None`` during encoding.
     import altair as alt
     from altair.datasets import data
 
-    iris = data.iris()
+    cars = data.cars()
 
-    alt.Chart(iris).mark_point().encode(
-        alt.X('petalWidth').axis(None),
-        alt.Y('petalLength').axis(None),
-        color='species'
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Horsepower:Q').axis(None),
+        alt.Y('Miles_per_Gallon:Q').axis(None),
+        color='Origin:N'
     ).configure_axis(
         grid=False
     ).configure_view(
