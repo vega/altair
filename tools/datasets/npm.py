@@ -36,11 +36,7 @@ class NpmUrl(NamedTuple):
 
 
 class Npm:
-    """
-    CDN access for vega-datasets with VegaFusion compatibility.
-
-    Uses GitHub Raw as the primary CDN for VegaFusion compatibility.
-    """
+    """https://www.jsdelivr.com/docs/data.jsdelivr.com#overview."""
 
     _opener: ClassVar[OpenerDirector] = urllib.request.build_opener()
 
@@ -48,20 +44,18 @@ class Npm:
         self,
         paths: PathMap,
         *,
+        jsdelivr: Literal["jsdelivr"] = "jsdelivr",
+        npm: Literal["npm"] = "npm",
         package: LiteralString = "vega-datasets",
     ) -> None:
         self.paths: PathMap = paths
         self._url: NpmUrl = NpmUrl(
-            CDN=f"https://cdn.jsdelivr.net/npm/{package}@",
-            GH=f"https://raw.githubusercontent.com/vega/{package}/",
+            CDN=f"https://cdn.{jsdelivr}.net/{npm}/{package}@",
+            GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
         )
 
     def _prefix(self, version: BranchOrTag, /) -> LiteralString:
-        # Use GitHub Raw for all versions (VegaFusion compatible)
-        # TODO: Track VegaFusion HTTP client issue: https://github.com/vega/vegafusion/issues/569
-        #       jsdelivr CDN URLs cause "Content-Length Header missing from response" errors
-        #       Previous code: return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/"
-        return f"{self.url.GH}{version}/"
+        return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/"
 
     def dataset_base_url(self, version: BranchOrTag, /) -> LiteralString:
         """Common url prefix for all datasets derived from ``version``."""
@@ -78,7 +72,7 @@ class Npm:
         /,
     ) -> Any:
         """
-        Request a file from GitHub Raw or jsdelivr endpoints.
+        Request a file from `jsdelivr` `npm`_ or `GitHub`_ endpoints.
 
         Parameters
         ----------
@@ -87,10 +81,10 @@ class Npm:
         path
             Relative filepath from the root of the repo.
 
-        Notes
-        -----
-        Uses GitHub Raw as primary CDN for VegaFusion compatibility.
-
+        .. _npm:
+            https://www.jsdelivr.com/documentation#id-npm
+        .. _GitHub:
+            https://www.jsdelivr.com/documentation#id-github
         .. _branches:
             https://github.com/vega/vega-datasets/branches
         .. _tags:
