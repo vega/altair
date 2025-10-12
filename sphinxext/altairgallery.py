@@ -50,6 +50,13 @@ Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/veg
 
 If you can't find the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
 
+.. note::
+
+    With the release of Altair 6, the documentation was updated to use
+    ``from altair.datasets import data`` instead of ``from vega_datasets import data``.
+    This change also introduced updated column names in some datasets (e.g., spaces
+    instead of underscores).
+
 {% for grouper, group in examples %}
 
 .. _gallery-category-{{ grouper }}:
