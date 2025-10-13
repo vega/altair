@@ -200,6 +200,9 @@ def save(
             )
             if format == "pdf":
                 write_file_or_filename(fp, mb_any["application/pdf"], mode="wb")
+            elif format == "vega":
+                json_spec = json.dumps(mb_any["application/vnd.vega.v5+json"], **json_kwds)
+                write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
             else:
                 write_file_or_filename(
                     fp, mb_any["image/svg+xml"], mode="w", encoding=encoding
