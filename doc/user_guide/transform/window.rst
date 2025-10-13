@@ -21,7 +21,7 @@ For example, consider the following cumulative frequency distribution:
         cumulative_count="count()",
         sort=[{"field": "IMDB_Rating"}],
     ).mark_area().encode(
-        x="IMDB_Rating:Q",
+        x="IMDB Rating:Q",
         y=alt.Y("cumulative_count:Q").stack(False)
     )
 
