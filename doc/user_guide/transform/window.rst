@@ -14,14 +14,15 @@ For example, consider the following cumulative frequency distribution:
 
     import altair as alt
     from vega_datasets import data
-
-    alt.Chart(data.movies.url).transform_window(
-        sort=[{'field': 'IMDB_Rating'}],
-        frame=[None, 0],
-        cumulative_count='count(*)',
+    
+    source = data.movies.url
+    
+    alt.Chart(source).transform_window(
+        cumulative_count="count()",
+        sort=[{"field": "IMDB_Rating"}],
     ).mark_area().encode(
-        x='IMDB_Rating:Q',
-        y='cumulative_count:Q',
+        x="IMDB_Rating:Q",
+        y=alt.Y("cumulative_count:Q").stack(False)
     )
 
 First, we pass a sort field definition, which indicates how data objects should be sorted within the window.
