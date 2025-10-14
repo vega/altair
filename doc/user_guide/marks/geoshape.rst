@@ -111,6 +111,10 @@ In the following example the input geometry is not projected and is instead rend
         reflectY=True
     )
 
+.. note::
+
+    When working with spatial data, it's important to be aware of coordinate reference systems and geometry winding order. For detailed information on projections and winding order, see the :ref:`Spatial Data <spatial-data>` section in the data guide.
+
 Mapping Polygons
 ^^^^^^^^^^^^^^^^
 The following example maps the visual property of the ``NAME`` column using the ``color`` encoding.
