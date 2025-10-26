@@ -114,12 +114,18 @@ jobs:
         id: version
         run: |
           # Generate weekly version based on current date and commit
-          # Get base version from pyproject.toml
-          BASE_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
+          # Get base version from altair/__init__.py
+          BASE_VERSION=$(grep '__version__ = ' altair/__init__.py | sed 's/__version__ = "\(.*\)"/\1/')
           DATE=$(date +%Y%m%d)
           COMMIT=$(git rev-parse --short HEAD)
-          # PEP 440 compliant dev version
-          VERSION="${BASE_VERSION}.dev${DATE}"
+          # PEP 440 compliant dev version - handle cases where base version already has 'dev'
+          if [[ "$BASE_VERSION" == *"dev" ]]; then
+            # If base version already has 'dev', replace it with proper dev format
+            VERSION=$(echo "$BASE_VERSION" | sed 's/dev$/.dev'${DATE}'/')
+          else
+            # If base version doesn't have 'dev', add it
+            VERSION="${BASE_VERSION}.dev${DATE}"
+          fi
           TAG_NAME="weekly-${DATE}-${COMMIT}"
           echo "Generated weekly version: ${VERSION}"
           echo "Generated tag name: ${TAG_NAME}"
