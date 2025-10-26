@@ -4060,8 +4060,8 @@ class Chart(
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
         mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
-        width: Optional[int | dict | Step | Literal["container"]] = Undefined,
-        height: Optional[int | dict | Step | Literal["container"]] = Undefined,
+        width: Optional[float | dict | Step | Literal["container"]] = Undefined,
+        height: Optional[float | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
         super().__init__(
