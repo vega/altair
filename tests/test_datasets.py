@@ -755,7 +755,7 @@ class TestDataObject:
         assert isinstance(datasets, list)
         assert len(datasets) > 0
         # Check that common datasets are present
-        common_datasets = ["cars", "movies", "stocks", "iris"]
+        common_datasets = ["cars", "movies", "stocks", "penguins"]
         for dataset in common_datasets:
             if dataset in datasets:
                 break

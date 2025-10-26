@@ -204,7 +204,7 @@ def test_selection_interval_value_typing() -> None:
 
 def test_creation_views_params_layered_repeat_chart():
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = alt.UrlData(data.flights_2k.url, format={"parse": {"date": "date"}})
 

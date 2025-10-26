@@ -5,7 +5,7 @@ This example shows a geographical plot with one dot per zipcode.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Since the data is more than 5,000 rows we'll import it from a URL
 source = data.zipcodes.url

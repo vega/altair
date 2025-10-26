@@ -5,7 +5,7 @@ This is an example of a stacked-bar chart with the segments of each bar resorted
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

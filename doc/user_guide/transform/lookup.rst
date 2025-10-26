@@ -11,12 +11,12 @@ at the top level of a chart using the :meth:`Chart.transform_lookup` method.
 By way of example, imagine you have two sources of data that you would like
 to combine and plot: one is a list of names of people along with their height
 and weight, and the other is some information about which groups they belong
-to. This example data is available in ``vega_datasets``:
+to. This example data is available in the `altair.datasets` package:
 
 .. altair-plot::
    :output: none
 
-   from vega_datasets import data
+   from altair.datasets import data
    people = data.lookup_people()
    groups = data.lookup_groups()
 
@@ -107,7 +107,7 @@ of unemployment rates per county in the US:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     counties = alt.topo_feature(data.us_10m.url, 'counties')
     unemp_data = data.unemployment.url

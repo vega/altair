@@ -70,7 +70,7 @@ Similarly, we must also specify the data type when referencing data by URL:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     url = data.cars.url
 
     alt.Chart(url).mark_point().encode(
@@ -312,6 +312,7 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 .. _pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
 
+.. _spatial-data:
 
 Spatial Data
 ~~~~~~~~~~~~
@@ -493,9 +494,9 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 .. altair-plot::
    :output: repr
 
-   from vega_datasets import data
+   from altair.datasets import data
 
-   url_topojson = data.londonBoroughs.url
+   url_topojson = data.london_boroughs.url
 
    data_url_topojson = alt.Data(
        url=url_topojson, format=alt.DataFormat(feature="boroughs", type="topojson")
@@ -537,9 +538,9 @@ without fill color.
 
 .. altair-plot::
 
-   from vega_datasets import data
+   from altair.datasets import data
 
-   url_topojson = data.londonBoroughs.url
+   url_topojson = data.london_boroughs.url
 
    data_url_topojson_mesh = alt.Data(
        url=url_topojson, format=alt.DataFormat(mesh="boroughs", type="topojson")

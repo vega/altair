@@ -71,7 +71,7 @@ We can use rules to show the average price of different stocks akin to ``tick`` 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -86,7 +86,7 @@ The fact that rule marks span the width or the height of a single view make them
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
 
@@ -108,17 +108,17 @@ We can also use a rule mark to show global mean value over a histogram.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies.url
 
     base = alt.Chart(source)
     bar = base.mark_bar().encode(
-        x=alt.X("IMDB_Rating:Q").bin().axis(None),
+        x=alt.X("IMDB Rating:Q").bin().axis(None),
         y="count()"
     )
     rule = base.mark_rule(color="red").encode(
-        x="mean(IMDB_Rating):Q",
+        x="mean(IMDB Rating):Q",
         size=alt.value(5),
     )
 
@@ -133,7 +133,7 @@ For example, we can use ``y`` and ``y2`` show the ``"min"`` and ``"max"`` values
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 

@@ -5,7 +5,7 @@ This example shows a range bar chart where each bar displays information of a lo
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 
