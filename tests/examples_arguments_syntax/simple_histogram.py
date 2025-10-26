@@ -6,11 +6,11 @@ https://vega.github.io/vega-lite/examples/histogram.html
 """
 # category: simple charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 
 alt.Chart(source).mark_bar().encode(
-    alt.X("IMDB_Rating:Q", bin=True),
+    alt.X("IMDB Rating:Q", bin=True),
     y='count()',
 )

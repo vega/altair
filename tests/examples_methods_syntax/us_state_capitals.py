@@ -6,7 +6,7 @@ overlaid on a map.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 states = alt.topo_feature(data.us_10m.url, 'states')
 capitals = data.us_state_capitals.url

@@ -16,7 +16,7 @@ See https://archive.nytimes.com/www.nytimes.com/imagepages/2010/05/02/business/0
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.driving()
 

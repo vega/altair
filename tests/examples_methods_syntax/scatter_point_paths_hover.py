@@ -13,7 +13,7 @@ enabling dynamic, flexible data point selection to enhance exploratory analysis.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Data source
 source = data.gapminder.url

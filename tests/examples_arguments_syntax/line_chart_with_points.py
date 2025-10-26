@@ -5,7 +5,7 @@ This chart shows a simple line chart with points marking each value.
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

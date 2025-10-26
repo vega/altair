@@ -7,7 +7,7 @@ in Lisa Charlotte Rost's blog post `'One Chart, Twelve Charting Libraries' <http
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.gapminder_health_income.url
 

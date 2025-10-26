@@ -22,7 +22,7 @@ Here is an example scatter plot with ``circle`` marks:
 
 .. altair-plot::
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    source = data.cars.url
 

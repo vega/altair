@@ -38,6 +38,5 @@ for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
 .. _Vega-Lite: http://vega.github.io/vega-lite
-.. _vega_datasets: https://github.com/altair-viz/vega_datasets
 .. _JupyterLab: http://jupyterlab.readthedocs.io/
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/

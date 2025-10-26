@@ -241,7 +241,7 @@ the legend.
 .. code-block:: python
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
     brush = alt.selection_point(name="point", encodings=["color"], bind="legend")
@@ -294,7 +294,7 @@ extract the selected rows in the input DataFrame.
 .. code-block:: python
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
     brush = alt.selection_point(name="point")
@@ -332,7 +332,7 @@ is a dictionary from column names to selection intervals
 .. code-block:: python
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
     brush = alt.selection_interval(name="interval")
@@ -387,7 +387,7 @@ is used to combine the chart and HTML table in a column layout.
     from ipywidgets import HTML, VBox
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
     brush = alt.selection_interval(name="brush")

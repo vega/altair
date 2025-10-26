@@ -44,7 +44,7 @@ values on multiple lines:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    source = data.stocks()
    base = alt.Chart(source).encode(x='date:T')

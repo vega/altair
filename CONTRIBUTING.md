@@ -198,7 +198,7 @@ Every example should:
 - not make any external calls to download data within the script (i.e. don't
   use urllib). You can define your data directly within the example file,
   generate your data using pandas and numpy, or you can use data
-  available in the `vega_datasets` package.
+  available in the `altair.datasets` module.
 
 The easiest way to get started would be to adapt examples from the [Vega-Lite
 example gallery](https://vega.github.io/vega-lite/examples/) which are missing
@@ -225,12 +225,9 @@ Some additional notes:
   If the example requires multiple dataframes then this does not apply. See
   other examples for guidance. 
 - Example code should not require downloading external datasets. We suggest
-  using the `vega_datasets` package if possible.
-  If you are using the `vega_datasets` package there are multiple ways to refer
-  to a data source. If the dataset you would like to use is included in local
-  installation (`vega_datasets.local_data.list_datasets()`) then the data can
-  be referenced directly, such as `source = data.iris()`. If the data is not
-  included then it should be referenced by URL, such as `source =
+  using the `altair.datasets` module if possible.
+  If you are using the `altair.datasets` module there are multiple ways to refer
+  to a data source. The data can be referenced directly, such as `source = data.penguins()`, or it can be referenced by URL, such as `source =
   data.movies.url`. This is to ensure that Altair's automated test suite does
   not depend on availability of external HTTP resources.
 - If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
