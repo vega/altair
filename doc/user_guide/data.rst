@@ -312,6 +312,7 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 .. _pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
 
+.. _spatial-data:
 
 Spatial Data
 ~~~~~~~~~~~~
