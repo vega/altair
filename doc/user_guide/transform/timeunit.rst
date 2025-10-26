@@ -77,7 +77,7 @@ to give a profile of Seattle temperatureeratures through the year:
         alt.Y('month(date):O').title('month'),
         color='max(temperature):Q'
     ).properties(
-        title="2010 Daily High Temperatures in Seattle (F)"
+        title="2010 Daily High Temperatures in Seattle (C)"
     )
 
 TimeUnit as a Transform

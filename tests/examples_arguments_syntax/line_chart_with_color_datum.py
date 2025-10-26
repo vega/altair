@@ -18,4 +18,4 @@ alt.Chart(source).mark_line().encode(
         alt.repeat("layer"), aggregate="mean", title="Mean of US and Worldwide Gross"
     ),
     color=alt.datum(alt.repeat("layer")),
-).repeat(layer=["US_Gross", "Worldwide_Gross"])
+).repeat(layer=["US Gross", "Worldwide Gross"])

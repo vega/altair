@@ -158,7 +158,6 @@ html_theme_options = {
         },
     ],
     "header_links_before_dropdown": 4,
-    "announcement": """This website is for version 5 & 6. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
     "analytics": {
         "plausible_analytics_domain": "altair-viz.github.io",
         "plausible_analytics_url": ("https://views.scientific-python.org/js/script.js"),

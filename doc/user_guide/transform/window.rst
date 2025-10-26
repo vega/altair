@@ -15,21 +15,26 @@ For example, consider the following cumulative frequency distribution:
     import altair as alt
     from altair.datasets import data
 
-    alt.Chart(data.movies.url).transform_window(
+    alt.Chart(data.movies.url).transform_aggregate(
+        count='count(*)',
+        groupby=['IMDB Rating']
+    ).transform_window(
         sort=[{'field': 'IMDB Rating'}],
         frame=[None, 0],
-        cumulative_count='count(*)',
+        cumulative_count='sum(count)',
     ).mark_area().encode(
         x='IMDB Rating:Q',
         y='cumulative_count:Q',
     )
 
-First, we pass a sort field definition, which indicates how data objects should be sorted within the window.
+First, we aggregate the data to count movies grouped by IMDB Rating.
+This creates a dataset where each row represents a unique IMDB Rating and its count.
+Next, we apply the window transform with a sort field definition, which indicates how data objects should be sorted within the window.
 Here, movies should be sorted by their IMDB rating.
-Next, we pass the frame, which indicates how many data objects before and after the current data object should be included within the window.
+We then pass the frame, which indicates how many data objects before and after the current data object should be included within the window.
 Here, all movies up to and including the current movie should be included.
 Finally, we pass a window field definition, which indicates how data objects should be aggregated within the window.
-Here, the number of movies should be counted.
+Here, we sum the counts to create a cumulative count.
 
 There are many aggregation functions built into Altair.
 As well as those given in :ref:`agg-func-table`, we can use the following within window field definitions:
