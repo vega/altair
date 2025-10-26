@@ -5,7 +5,7 @@ This chart shows a line chart with a label annotating the final value
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Import example data
 source = data.stocks()

@@ -34,7 +34,7 @@ same data; for example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     stocks = data.stocks.url
 
@@ -76,13 +76,13 @@ heat-map:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q').bin(),
-        alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+        alt.X('IMDB Rating:Q').bin(),
+        alt.Y('Rotten Tomatoes Rating:Q').bin(),
         alt.Color('count()').scale(scheme='greenblue')
     )
 
@@ -90,8 +90,8 @@ heat-map:
         color='black',
         size=5,
     ).encode(
-        x='IMDB_Rating:Q',
-        y='Rotten_Tomatoes_Rating:Q',
+        x='IMDB Rating:Q',
+        y='Rotten Tomatoes Rating:Q',
     )
 
     heatmap + points
@@ -121,7 +121,7 @@ distribution of its points:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     penguins = data.penguins.url
 
@@ -174,7 +174,7 @@ with a ``brush`` selection to add interaction:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.sp500.url
 
@@ -219,7 +219,7 @@ showing how ``repeat`` can be used to build the chart more efficiently:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     penguins = data.penguins.url
 
@@ -251,7 +251,7 @@ method, makes this type of chart a bit easier to produce:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     penguins = data.penguins.url
 
     alt.Chart(penguins).mark_point().encode(
@@ -271,21 +271,21 @@ encodings for the row and/or column which can be referred to in the chart's
 encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
 Another option to use the ``repeat`` method is for layering. Here below the
-columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
+columns ``US Gross`` and ``Worldwide Gross`` are layered on the ``y``-axis
 using ``alt.repeat('layer')``:
 
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies()
 
     alt.Chart(source).mark_line().encode(
-        x=alt.X("IMDB_Rating").bin(),
+        x=alt.X("IMDB Rating").bin(),
         y=alt.Y(alt.repeat('layer')).aggregate('mean').title("Mean of US and Worldwide Gross"),
         color=alt.ColorDatum(alt.repeat('layer'))
-    ).repeat(layer=["US_Gross", "Worldwide_Gross"])
+    ).repeat(layer=["US Gross", "Worldwide Gross"])
 
 Currently ``repeat`` can only be encodings (not, e.g., data transforms)
 but there is discussion within the Vega-Lite community about making this pattern

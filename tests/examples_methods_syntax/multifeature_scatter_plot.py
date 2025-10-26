@@ -5,13 +5,13 @@ This example shows how to make a scatter plot with multiple feature encodings.
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
-source = data.iris()
+source = data.penguins()
 
 alt.Chart(source).mark_circle().encode(
-    alt.X('sepalLength').scale(zero=False),
-    alt.Y('sepalWidth').scale(zero=False, padding=1),
-    color='species',
-    size='petalWidth'
+    alt.X('Flipper Length (mm)').scale(zero=False),
+    alt.Y('Body Mass (g)').scale(zero=False, padding=1),
+    alt.Size('Beak Depth (mm)').scale(zero=False),
+    color='Species'
 )

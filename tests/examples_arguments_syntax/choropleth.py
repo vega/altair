@@ -5,7 +5,7 @@ A choropleth map of unemployment rate per county in the US
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 counties = alt.topo_feature(data.us_10m.url, 'counties')
 source = data.unemployment.url

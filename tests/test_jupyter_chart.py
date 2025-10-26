@@ -5,7 +5,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # If anywidget is not installed, we will skip the tests in this file.
 try:

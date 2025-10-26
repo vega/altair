@@ -26,7 +26,7 @@ alt.Chart(source).transform_fold(
 ).mark_area().encode(
     alt.X("value:Q"),
     alt.Y("density:Q"),
-    alt.Row("Measurement Type:N", header=alt.Header(labelAngle=0, labelAlign="left"))
+    alt.Row("Measurement Type:N").header(labelAngle=0, labelAlign="left")
 ).properties(
     width=300,
     height=50

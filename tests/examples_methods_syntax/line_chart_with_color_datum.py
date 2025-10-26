@@ -8,16 +8,16 @@ This is adapted from this corresponding Vega-Lite Example:
 # category: line charts
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies()
 
 alt.Chart(source).mark_line().encode(
-    alt.X("IMDB_Rating").bin(True),
+    alt.X("IMDB Rating").bin(True),
     alt.Y(alt.repeat("layer"))
         .aggregate("mean")
         .title("Mean of US and Worldwide Gross"),
     color=alt.datum(alt.repeat("layer")),
 ).repeat(
-    layer=["US_Gross", "Worldwide_Gross"]
+    layer=["US Gross", "Worldwide Gross"]
 )

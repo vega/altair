@@ -30,7 +30,7 @@ from which we can output the JSON representation:
     :output: stdout
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     chart = alt.Chart(data.cars.url).mark_point().encode(
         x='Horsepower:Q',
