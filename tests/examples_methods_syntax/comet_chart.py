@@ -1,7 +1,7 @@
 """
 Comet Chart
 -----------
-Inspired by `Zan Armstrong's comet chart <https://www.zanarmstrong.com/infovisresearch>`_
+Inspired by `Zan Armstrong's comet chart <https://www.zanarmstrong.com/>`_
 this plot uses ``mark_trail`` to visualize change of grouped data over time.
 A more elaborate example and explanation of creating comet charts in Altair
 is shown in `this blogpost <https://medium.com/de-dataverbinders/comet-charts-in-python-visualizing-statistical-mix-effects-and-simpsons-paradox-with-altair-6cd51fb58b7c>`_.

@@ -1,7 +1,7 @@
 """
 Ridgeline plot
 --------------
-A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_
+A `Ridgeline plot <https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/>`_
 lets you visualize distribution of a numeric value for different
 subsets of data (what we call "facets" in Altair).
 
