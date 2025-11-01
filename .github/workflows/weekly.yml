@@ -118,6 +118,7 @@ jobs:
           BASE_VERSION=$(grep '__version__ = ' altair/__init__.py | sed 's/__version__ = "\(.*\)"/\1/')
           DATE=$(date +%Y%m%d)
           COMMIT=$(git rev-parse --short HEAD)
+          COMMIT_SHA=$(git rev-parse HEAD)
           # PEP 440 compliant dev version - handle cases where base version already has 'dev'
           if [[ "$BASE_VERSION" == *"dev" ]]; then
             # If base version already has 'dev', replace it with proper dev format
@@ -131,6 +132,7 @@ jobs:
           echo "Generated tag name: ${TAG_NAME}"
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "commit_sha=${COMMIT_SHA}" >> $GITHUB_OUTPUT
       - name: Update version files
         run: |
           # Update version in __init__.py
@@ -199,13 +201,54 @@ jobs:
           tag_name: ${{ steps.version.outputs.tag_name }}
           name: Weekly Build ${{ steps.version.outputs.version }}
           body: |
-            Weekly pre-release build of Altair
-
-            **Version:** ${{ steps.version.outputs.version }}
-            **Tag:** ${{ steps.version.outputs.tag_name }}
-            **Previous Weekly Tag:** ${{ needs.check-changes.outputs.last-weekly-tag || 'None (first build)' }}
+            ## Weekly Pre-Release Build of Altair
 
             This is a pre-release version for testing purposes.
+
+            ### Build Information
+
+            **Version:** ${{ steps.version.outputs.version }}  
+            **Tag:** ${{ steps.version.outputs.tag_name }}  
+            **Previous Weekly Tag:** ${{ needs.check-changes.outputs.last-weekly-tag || 'None (first build)' }}
+
+            ## Installation
+
+            ### From GitHub Repository (direct install)
+
+            Install directly from the tagged commit without downloading the wheel:
+
+            **Command line (pip or uv):**
+            ```bash
+            pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            # or
+            uv pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            ```
+
+            **Add to pyproject.toml (pip/uv):**
+            ```toml
+            [project]
+            dependencies = [
+                "altair @ git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}",
+            ]
+            ```
+
+            **Add to pixi.toml (pixi):**
+            ```toml
+            [pypi-dependencies]
+            altair = { git = "https://github.com/${{ github.repository }}.git", rev = "${{ steps.version.outputs.tag_name }}" }
+            ```
+
+            ### From GitHub Release (manual download)
+
+            Download the wheel file from the assets below and install:
+
+            ```bash
+            pip install altair-${{ steps.version.outputs.version }}-py3-none-any.whl
+            ```
+
+            ## Testing & Feedback
+
+            **Please note:** This is a testing version. If you encounter any issues or unexpected behavior, we would greatly appreciate if you [open an issue](https://github.com/${{ github.repository }}/issues) to report it. Your feedback helps improve Altair!
           draft: false
           prerelease: true
           files: |
