@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        jsonschema-version: ["3.0", "latest"]
-    name: py ${{ matrix.python-version }} js ${{ matrix.jsonschema-version }}
+        required-dependencies: ["minimum", "latest"]
+    name: py ${{ matrix.python-version }} with ${{ matrix.required-dependencies }} required deps
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
@@ -21,14 +21,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+
+      # Install dependencies from pyproject.toml (latest versions for all matrix jobs)        
       - name: Install dependencies
         run: uv pip install -e ".[dev, all]"
 
-      - name: Install specific jsonschema
-        # Only have to execute this if we don't want the latest jsonschema version
-        if: ${{ matrix.jsonschema-version != 'latest' }}
+      # Install minimum required versions for compatibility testing (only for 'minimum' matrix value)
+      - name: Pin minimum dependency versions
+        if: ${{ matrix.required-dependencies == 'minimum' }}
         run: |
-          uv pip install jsonschema==${{ matrix.jsonschema-version }}
+          # Keep in sync with versions in `pyproject.toml`
+          uv pip install jsonschema==3.0 narwhals==1.27.1 typing_extensions==4.12.0
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
@@ -80,3 +83,5 @@ jobs:
           # not conform RFC 3986.
           uv pip install 'jsonschema[format]' check-jsonschema --upgrade
           uv run check-jsonschema --check-metaschema altair/vegalite/v6/schema/vega-lite-schema.json --disable-formats uri-reference
+      - name: Show installed versions
+        run: uv pip list
