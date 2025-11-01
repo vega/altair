@@ -20,8 +20,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
-      # Install dependencies from pyproject.toml (latest versions for all matrix jobs)
+        uses: astral-sh/setup-uv@v7
+
+      # Install dependencies from pyproject.toml (latest versions for all matrix jobs)        
       - name: Install dependencies
         run: uv pip install -e ".[dev, all]"
 
