@@ -170,7 +170,7 @@ def test_expression_getitem():
 
 
 def test_expression_function_expr():
-    # test including a expr.<CONSTANT> should return an ExprRef
+    # test including an expr.<CONSTANT> should return an ExprRef
     er = expr(expr.PI * 2)
     assert isinstance(er, ExprRef)
     assert repr(er) == "ExprRef({\n  expr: (PI * 2)\n})"
