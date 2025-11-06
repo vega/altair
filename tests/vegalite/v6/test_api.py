@@ -27,7 +27,12 @@ from packaging.version import Version
 import altair as alt
 from altair.utils.core import use_signature
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
-from tests import skip_requires_duckdb, skip_requires_pyarrow, skip_requires_vl_convert, slow
+from tests import (
+    skip_requires_duckdb,
+    skip_requires_pyarrow,
+    skip_requires_vl_convert,
+    slow,
+)
 
 if TYPE_CHECKING:
     from typing import Any
