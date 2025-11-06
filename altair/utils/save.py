@@ -75,6 +75,81 @@ def set_inspect_mode_argument(
     return mode
 
 
+def _save_mimebundle_format(
+    spec: dict[str, Any],
+    format: Literal["html", "png", "svg", "pdf", "vega"],
+    fp: str | Path | IO,
+    inner_mode: Literal["vega-lite"],
+    vega_version: str | None,
+    vegalite_version: str | None,
+    vegaembed_version: str | None,
+    embed_options: dict[str, Any] | None,
+    json_kwds: dict[str, Any],
+    encoding: str,
+    scale_factor: float,
+    engine: Literal["vl-convert"] | None,
+    inline: bool,
+    **kwargs: Any,
+) -> None:
+    """Save chart using spec_to_mimebundle for formats that require it."""
+    if format == "html" and inline:
+        kwargs["template"] = "inline"
+
+    common_kwargs = {
+        "spec": spec,
+        "format": format,
+        "mode": inner_mode,
+        "vega_version": vega_version,
+        "vegalite_version": vegalite_version,
+        "vegaembed_version": vegaembed_version,
+        "embed_options": embed_options,
+    }
+
+    if format == "html":
+        common_kwargs["json_kwds"] = json_kwds
+        mb_result = spec_to_mimebundle(**common_kwargs, **kwargs)
+        write_file_or_filename(fp, mb_result["text/html"], mode="w", encoding=encoding)
+    elif format == "png":
+        common_kwargs.update(
+            {
+                "scale_factor": scale_factor,
+                "engine": engine,
+            }
+        )
+        mb_result = spec_to_mimebundle(**common_kwargs, **kwargs)
+        write_file_or_filename(fp, mb_result[0]["image/png"], mode="wb")
+    elif format == "svg":
+        common_kwargs.update(
+            {
+                "scale_factor": scale_factor,
+                "engine": engine,
+            }
+        )
+        mb_result = spec_to_mimebundle(**common_kwargs, **kwargs)
+        write_file_or_filename(
+            fp, mb_result["image/svg+xml"], mode="w", encoding=encoding
+        )
+    elif format == "pdf":
+        common_kwargs.update(
+            {
+                "scale_factor": scale_factor,
+                "engine": engine,
+            }
+        )
+        mb_result = spec_to_mimebundle(**common_kwargs, **kwargs)
+        write_file_or_filename(fp, mb_result["application/pdf"], mode="wb")
+    else:  # vega
+        common_kwargs.update(
+            {
+                "scale_factor": scale_factor,
+                "engine": engine,
+            }
+        )
+        mb_result = spec_to_mimebundle(**common_kwargs, **kwargs)
+        json_spec = json.dumps(mb_result["application/vnd.vega.v6+json"], **json_kwds)
+        write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
+
+
 def save(
     chart,
     fp: str | Path | IO,
@@ -154,59 +229,23 @@ def save(
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
             write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
-        elif format == "html":
-            if inline:
-                kwargs["template"] = "inline"
-            mb_html = spec_to_mimebundle(
+        elif format in {"html", "png", "svg", "pdf", "vega"}:
+            _save_mimebundle_format(
                 spec=spec,
                 format=format,
-                mode=inner_mode,
+                fp=fp,
+                inner_mode=inner_mode,
                 vega_version=vega_version,
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
                 embed_options=embed_options,
                 json_kwds=json_kwds,
-                **kwargs,
-            )
-            write_file_or_filename(
-                fp, mb_html["text/html"], mode="w", encoding=encoding
-            )
-        elif format == "png":
-            mb_png = spec_to_mimebundle(
-                spec=spec,
-                format=format,
-                mode=inner_mode,
-                vega_version=vega_version,
-                vegalite_version=vegalite_version,
-                vegaembed_version=vegaembed_version,
-                embed_options=embed_options,
+                encoding=encoding,
                 scale_factor=scale_factor,
                 engine=engine,
+                inline=inline,
                 **kwargs,
             )
-            write_file_or_filename(fp, mb_png[0]["image/png"], mode="wb")
-        elif format in {"svg", "pdf", "vega"}:
-            mb_any = spec_to_mimebundle(
-                spec=spec,
-                format=format,
-                mode=inner_mode,
-                vega_version=vega_version,
-                vegalite_version=vegalite_version,
-                vegaembed_version=vegaembed_version,
-                embed_options=embed_options,
-                scale_factor=scale_factor,
-                engine=engine,
-                **kwargs,
-            )
-            if format == "pdf":
-                write_file_or_filename(fp, mb_any["application/pdf"], mode="wb")
-            elif format == "vega":
-                json_spec = json.dumps(mb_any["application/vnd.vega.v6+json"], **json_kwds)
-                write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
-            else:
-                write_file_or_filename(
-                    fp, mb_any["image/svg+xml"], mode="w", encoding=encoding
-                )
         else:
             msg = f"Unsupported format: '{format}'"
             raise ValueError(msg)
