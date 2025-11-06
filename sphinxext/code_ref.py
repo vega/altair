@@ -58,7 +58,7 @@ def validate_output(output: Any) -> _OutputLong:
 
 def validate_packages(packages: Any) -> str:
     if packages is None:
-        return '["altair"]'
+        return '["altair", "vega-datasets"]'
     else:
         split = [pkg.strip() for pkg in packages.split(",")]
         if len(split) == 1:
@@ -221,6 +221,35 @@ class ThemeDirective(SphinxDirective):
             assign_to="chart",
             indent=4,
         )
+        # For PyScript/Pyodide compatibility, use vega_datasets until new Altair is published
+        py_code = py_code.replace(
+            "from altair.datasets import data", "from vega_datasets import data"
+        )
+        # vega_datasets uses underscores in column names, not spaces
+        # Order matters: do aggregation functions first (they contain field names)
+        py_code = py_code.replace("mean(IMDB Rating)", "mean(IMDB_Rating)")
+        py_code = py_code.replace(
+            "mean(Rotten Tomatoes Rating)", "mean(Rotten_Tomatoes_Rating)"
+        )
+        py_code = py_code.replace('datum["IMDB Rating"]', "datum.IMDB_Rating")
+        py_code = py_code.replace(
+            'datum["Rotten Tomatoes Rating"]', "datum.Rotten_Tomatoes_Rating"
+        )
+        py_code = py_code.replace('datum["IMDB Votes"]', "datum.IMDB_Votes")
+        # Field references in encodings (remaining ones)
+        py_code = py_code.replace('"IMDB Rating"', '"IMDB_Rating"')
+        py_code = py_code.replace(
+            '"Rotten Tomatoes Rating"', '"Rotten_Tomatoes_Rating"'
+        )
+        py_code = py_code.replace('"IMDB Votes"', '"IMDB_Votes"')
+        py_code = py_code.replace('"Release Date"', '"Release_Date"')
+        py_code = py_code.replace("'IMDB Rating'", "'IMDB_Rating'")
+        py_code = py_code.replace(
+            "'Rotten Tomatoes Rating'", "'Rotten_Tomatoes_Rating'"
+        )
+        py_code = py_code.replace("'IMDB Votes'", "'IMDB_Votes'")
+        py_code = py_code.replace("'Release Date'", "'Release_Date'")
+
         results.extend(
             pyscript(packages, TARGET_DIV_ID, loading_label, py_code=py_code)
         )

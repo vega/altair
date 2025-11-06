@@ -17,7 +17,7 @@ from narwhals.stable.v1 import dependencies as nw_dep
 from altair.datasets import Loader
 from altair.datasets._exceptions import AltairDatasetsError
 from altair.datasets._typing import Dataset, Metadata
-from tests import no_xdist, skip_requires_pyarrow
+from tests import no_xdist, skip_requires_geopandas, skip_requires_pyarrow
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -548,6 +548,8 @@ def test_pyarrow_read_json(
 
 @datasets_spatial
 @backends_no_polars
+@pytest.mark.geospatial
+@skip_requires_geopandas
 def test_spatial(backend: _Backend, name: Dataset) -> None:
     load = Loader.from_backend(backend)
 
@@ -755,7 +757,7 @@ class TestDataObject:
         assert isinstance(datasets, list)
         assert len(datasets) > 0
         # Check that common datasets are present
-        common_datasets = ["cars", "movies", "stocks", "iris"]
+        common_datasets = ["cars", "movies", "stocks", "penguins"]
         for dataset in common_datasets:
             if dataset in datasets:
                 break

@@ -7,7 +7,7 @@ Here we sort the top 10 highest ranking movies of IMDB.
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 
@@ -16,12 +16,12 @@ alt.Chart(
     source,
 ).mark_bar().encode(
     alt.X('Title:N').sort('-y'),
-    alt.Y('IMDB_Rating:Q'),
-    alt.Color('IMDB_Rating:Q')
+    alt.Y('IMDB Rating:Q'),
+alt.Color('IMDB Rating:Q')
     
 ).transform_window(
-    rank='rank(IMDB_Rating)',
-    sort=[alt.SortField('IMDB_Rating', order='descending')]
+    rank='rank(IMDB Rating)',
+sort=[alt.SortField('IMDB Rating', order='descending')]
 ).transform_filter(
     (alt.datum.rank < 10)
 )

@@ -21,7 +21,7 @@ grouped by the number of Cylinders.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     cars = data.cars.url
 

@@ -433,5 +433,7 @@ class Ruff(CodeMod):
         return self.format(self.check(code, decode=False))
 
 
-ruff_inline_docs = Ruff(ignore="E711", skip_magic_trailing_comma=True)
+ruff_inline_docs = Ruff(
+    ignore=("E711", "F821", "E402", "B018"), skip_magic_trailing_comma=True
+)
 ruff = Ruff()

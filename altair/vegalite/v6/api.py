@@ -996,14 +996,16 @@ class When(_BaseWhen):
         Simple conditions may be expressed without defining a default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
-            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            predicate = (alt.datum["IMDB Rating"] == None) | (
+                alt.datum["Rotten Tomatoes Rating"] == None
+            )
 
             alt.Chart(source).mark_point(invalid=None).encode(
-                x="IMDB_Rating:Q",
-                y="Rotten_Tomatoes_Rating:Q",
+                x="IMDB Rating:Q",
+                y="Rotten Tomatoes Rating:Q",
                 color=alt.when(predicate).then(alt.value("grey")),
             )
         """
@@ -1072,7 +1074,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Points outside of ``brush`` will not appear highlighted::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             brush = alt.selection_interval()
@@ -1159,7 +1161,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Chain calls to express precise queries::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             color = (
@@ -1264,19 +1266,21 @@ class ChainedWhen(_BaseWhen):
         Multiple conditions with an implicit default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
-            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            predicate = (alt.datum["IMDB Rating"] == None) | (
+                alt.datum["Rotten Tomatoes Rating"] == None
+            )
             color = (
                 alt.when(predicate)
                 .then(alt.value("grey"))
-                .when(alt.datum.IMDB_Votes < 5000)
+                .when(alt.datum["IMDB Votes"] < 5000)
                 .then(alt.value("lightblue"))
             )
 
             alt.Chart(source).mark_point(invalid=None).encode(
-                x="IMDB_Rating:Q", y="Rotten_Tomatoes_Rating:Q", color=color
+                x="IMDB Rating:Q", y="Rotten Tomatoes Rating:Q", color=color
             )
         """
         condition = self._when_then(statement, kwds)
@@ -1344,7 +1348,7 @@ def when(
     Setting up a common chart::
 
         import altair as alt
-        from vega_datasets import data
+        from altair.datasets import data
 
         source = data.cars()
         brush = alt.selection_interval()
@@ -3166,7 +3170,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             import altair as alt
             from altair import datum
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.population.url
             chart = (
@@ -4056,8 +4060,8 @@ class Chart(
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
         mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
-        width: Optional[int | dict | Step | Literal["container"]] = Undefined,
-        height: Optional[int | dict | Step | Literal["container"]] = Undefined,
+        width: Optional[float | dict | Step | Literal["container"]] = Undefined,
+        height: Optional[float | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
         super().__init__(
@@ -5167,6 +5171,15 @@ def _combine_subchart_params(  # noqa: C901
                 _, _, old_views = param_info[i]
                 new_views = [v for v in p.views if v not in old_views]
                 old_views += new_views
+
+                # Warn when parameters get deduplicated
+                warnings.warn(
+                    "Automatically deduplicated selection parameter with identical configuration. "
+                    "If you want independent parameters, explicitly name them differently (e.g., "
+                    "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
+                    category=UserWarning,
+                    stacklevel=5,
+                )
             else:
                 param_info.append((p, pd, p.views))
 

@@ -109,7 +109,7 @@ Text Table Heatmap
 ^^^^^^^^^^^^^^^^^^
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -196,7 +196,7 @@ Mapping a field to ``text`` channel of text mark sets the mark's text value. For
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     from altair import datum
 
     source = data.cars()
@@ -214,7 +214,7 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     states = alt.topo_feature(data.us_10m.url, feature="states")
 

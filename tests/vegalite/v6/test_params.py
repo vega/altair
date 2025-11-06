@@ -204,7 +204,7 @@ def test_selection_interval_value_typing() -> None:
 
 def test_creation_views_params_layered_repeat_chart():
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = alt.UrlData(data.flights_2k.url, format={"parse": {"date": "date"}})
 
@@ -315,7 +315,10 @@ def test_interactive_name_respected():
         .interactive(name="MY_CHART")
     )
 
-    spec = (chart & chart).to_dict()
+    # Suppress warning since this deduplication is intentional (same chart concatenated)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        spec = (chart & chart).to_dict()
     # There should be a single parameter with the name 'MY_CHART'
     param_names = [p["name"] for p in spec["params"]]
     assert param_names == ["MY_CHART"], f"Expected ['MY_CHART'], got {param_names}"

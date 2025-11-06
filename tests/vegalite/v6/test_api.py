@@ -17,7 +17,6 @@ from importlib.metadata import version as importlib_version
 from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
-import duckdb
 import jsonschema
 import narwhals.stable.v1 as nw
 import pandas as pd
@@ -28,10 +27,17 @@ from packaging.version import Version
 import altair as alt
 from altair.utils.core import use_signature
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
-from tests import skip_requires_pyarrow, skip_requires_vl_convert, slow
+from tests import (
+    skip_requires_duckdb,
+    skip_requires_pyarrow,
+    skip_requires_vl_convert,
+    slow,
+)
 
 if TYPE_CHECKING:
     from typing import Any
+
+    import duckdb
 
     from altair.vegalite.v6.api import _Conditional, _Conditions
     from altair.vegalite.v6.schema._typing import Map
@@ -763,16 +769,16 @@ def test_when_condition_parity(
 def test_when_then_interactive() -> None:
     """Copy-related regression found in https://github.com/vega/altair/pull/3394#issuecomment-2302995453."""
     source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/movies.json"
-    predicate = (alt.datum.IMDB_Rating == None) | (  # noqa: E711
-        alt.datum.Rotten_Tomatoes_Rating == None  # noqa: E711
+    predicate = (alt.datum["IMDB Rating"] == None) | (  # noqa: E711
+        alt.datum["Rotten Tomatoes Rating"] == None  # noqa: E711
     )
 
     chart = (
         alt.Chart(source)
         .mark_point(invalid=None)
         .encode(
-            x="IMDB_Rating:Q",
-            y="Rotten_Tomatoes_Rating:Q",
+            x="IMDB Rating:Q",
+            y="Rotten Tomatoes Rating:Q",
             color=alt.when(predicate).then(alt.value("grey")),
         )
     )
@@ -1833,9 +1839,12 @@ def test_polars_date_32():
 
 
 @skip_requires_pyarrow(requires_tzdata=True)
+@skip_requires_duckdb
 def test_interchange_with_date_32():
     # Test that objects which Narwhals only supports at the interchange
     # level can be plotted when they contain date32 columns.
+    import duckdb
+
     df = pl.DataFrame(  # noqa: F841
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
@@ -1849,6 +1858,7 @@ def test_interchange_with_date_32():
 
 
 @skip_requires_pyarrow(requires_tzdata=True)
+@skip_requires_duckdb
 def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
     # Test that objects which Narwhals only supports at the interchange
     # level don't get converted to PyArrow unnecessarily when plotted
@@ -1856,6 +1866,8 @@ def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
     # TODO: this test can be drastically simplified when some level of
     # DuckDB support in VegaFusion, as it can then just be `alt.Chart(rel_df)`
     # without DuckDBWithInterchangeSupport.
+    import duckdb
+
     df = pl.DataFrame(  # noqa: F841
         {
             "a": [1, 2, 3],

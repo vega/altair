@@ -112,6 +112,30 @@ skip_requires_scipy: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("scipy") is None, reason="`scipy` not installed."
 )
 
+skip_requires_geopandas: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("geopandas") is None, reason="`geopandas` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `geopandas`_ import would fail.
+
+.. _geopandas:
+    https://geopandas.org/
+"""
+
+skip_requires_duckdb: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("duckdb") is None, reason="`duckdb` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `duckdb`_ import would fail.
+
+.. _duckdb:
+    https://duckdb.org/
+"""
+
 
 @overload
 def skip_requires_pyarrow(

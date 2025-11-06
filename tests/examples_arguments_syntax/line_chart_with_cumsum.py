@@ -5,7 +5,7 @@ This chart creates a simple line chart from the cumulative sum of a fields.
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.wheat()
 

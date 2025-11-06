@@ -9,13 +9,13 @@ if TYPE_CHECKING:
 
 def alt_theme_test() -> ChartType:
     import altair as alt
+    from altair.datasets import data
 
-    VEGA_DATASETS = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/"
-    us_10m = f"{VEGA_DATASETS}us-10m.json"
-    unemployment = f"{VEGA_DATASETS}unemployment.tsv"
-    movies = f"{VEGA_DATASETS}movies.json"
-    barley = f"{VEGA_DATASETS}barley.json"
-    iowa_electricity = f"{VEGA_DATASETS}iowa-electricity.csv"
+    us_10m = data.us_10m.url
+    unemployment = data.unemployment.url
+    movies = data.movies.url
+    barley = data.barley.url
+    iowa_electricity = data.iowa_electricity.url
     common_data = alt.InlineData(
         [
             {"Index": 1, "Value": 28, "Position": 1, "Category": "A"},
@@ -77,16 +77,16 @@ def alt_theme_test() -> ChartType:
     point = (
         alt.Chart(movies, height=STANDARD, width=STANDARD, title="Point")
         .mark_point(tooltip=True)
-        .transform_filter(alt.datum["IMDB_Rating"] != None)
+        .transform_filter(alt.datum["IMDB Rating"] != None)
         .transform_filter(
-            alt.FieldRangePredicate("Release_Date", [None, 2019], timeUnit="year")
+            alt.FieldRangePredicate("Release Date", [None, 2019], timeUnit="year")
         )
-        .transform_joinaggregate(Average_Rating="mean(IMDB_Rating)")
+        .transform_joinaggregate(Average_Rating="mean(IMDB Rating)")
         .transform_calculate(
-            Rating_Delta=alt.datum["IMDB_Rating"] - alt.datum.Average_Rating
+            Rating_Delta=alt.datum["IMDB Rating"] - alt.datum.Average_Rating
         )
         .encode(
-            x=alt.X("Release_Date:T").title("Release Date"),
+            x=alt.X("Release Date:T").title("Release Date"),
             y=alt.Y("Rating_Delta:Q").title("Rating Delta"),
             color=alt.Color("Rating_Delta:Q").title("Rating Delta").scale(domainMid=0),
         )

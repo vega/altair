@@ -18,7 +18,7 @@ For example, here we will visualize the cars dataset using four of the available
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
 
    cars = data.cars()
@@ -198,7 +198,7 @@ Effect of Data Type on Axis Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
-difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for an column
+difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for a column
 that contains integers specifying a year:
 
 .. altair-plot::
@@ -399,7 +399,7 @@ x-axis, using the barley dataset:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     barley = data.barley()
 
@@ -464,7 +464,7 @@ to use when sorting:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     barley = data.barley()
     base = alt.Chart(barley).mark_point().encode(
@@ -537,7 +537,7 @@ threshold value (e.g., 300 dollars stock price).
 .. altair-plot::
     
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
     base = alt.Chart(source)
@@ -571,7 +571,7 @@ with ``alt.datum("MSFT")``.
 .. altair-plot::
     
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
     base = alt.Chart(source)
@@ -598,7 +598,7 @@ the color scale used for the lines, you can use ``value``, e.g. ``alt.value("red
 .. altair-plot::
     
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.stocks()
     base = alt.Chart(source)

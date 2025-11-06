@@ -6,7 +6,7 @@ This example shows how to show error bars using confidence intervals, while also
 # category: advanced calculations
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

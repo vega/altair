@@ -27,7 +27,7 @@ By default, the extent is ``1.5``.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -40,7 +40,7 @@ By default, the extent is ``1.5``.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -59,7 +59,7 @@ A box plot’s orientation is automatically determined by the continuous field a
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -80,7 +80,7 @@ An example of a box plot where the ``color`` encoding channel is specified.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -100,7 +100,7 @@ If the field in the tooltip encoding is unaggregated, it replaces the tooltips o
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
