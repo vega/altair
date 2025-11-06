@@ -315,7 +315,10 @@ def test_interactive_name_respected():
         .interactive(name="MY_CHART")
     )
 
-    spec = (chart & chart).to_dict()
+    # Suppress warning since this deduplication is intentional (same chart concatenated)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        spec = (chart & chart).to_dict()
     # There should be a single parameter with the name 'MY_CHART'
     param_names = [p["name"] for p in spec["params"]]
     assert param_names == ["MY_CHART"], f"Expected ['MY_CHART'], got {param_names}"

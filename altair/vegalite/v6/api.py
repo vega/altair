@@ -5171,6 +5171,15 @@ def _combine_subchart_params(  # noqa: C901
                 _, _, old_views = param_info[i]
                 new_views = [v for v in p.views if v not in old_views]
                 old_views += new_views
+
+                # Warn when parameters get deduplicated
+                warnings.warn(
+                    "Automatically deduplicated selection parameter with identical configuration. "
+                    "If you want independent parameters, explicitly name them differently (e.g., "
+                    "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
+                    category=UserWarning,
+                    stacklevel=5,
+                )
             else:
                 param_info.append((p, pd, p.views))
 
