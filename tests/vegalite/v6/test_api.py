@@ -825,7 +825,9 @@ def test_selection_expression():
         getattr(selection, magic_attr)
 
 
-@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "vega", "bogus"])
+@pytest.mark.parametrize(
+    "format", ["html", "json", "png", "svg", "pdf", "vega", "bogus"]
+)
 @pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
     if format in {"pdf", "png"}:
