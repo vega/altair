@@ -819,7 +819,7 @@ def test_selection_expression():
         getattr(selection, magic_attr)
 
 
-@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
+@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "vega", "bogus"])
 @pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
     if format in {"pdf", "png"}:
@@ -829,7 +829,7 @@ def test_save(format, engine, basic_chart):
         out = io.StringIO()
         mode = "r"
 
-    if format in {"svg", "png", "pdf", "bogus"} and engine == "vl-convert":
+    if format in {"svg", "png", "pdf", "vega", "bogus"} and engine == "vl-convert":
         if format == "bogus":
             with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
@@ -847,6 +847,15 @@ def test_save(format, engine, basic_chart):
 
     if format == "json":
         assert "$schema" in json.loads(content)
+    elif format == "vega":
+        vega_spec = json.loads(content)
+        assert "$schema" in vega_spec
+        # Verify it's a Vega schema, not Vega-Lite
+        assert "vega/v" in vega_spec["$schema"]
+        assert "vega-lite" not in vega_spec["$schema"]
+        # Verify it has Vega-specific structures
+        assert "marks" in vega_spec
+        assert "scales" in vega_spec
     elif format == "html":
         assert isinstance(content, str)
         assert content.startswith("<!DOCTYPE html>")

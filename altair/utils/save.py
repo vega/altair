@@ -80,7 +80,7 @@ def save(
     fp: str | Path | IO,
     vega_version: str | None,
     vegaembed_version: str | None,
-    format: Literal["json", "html", "png", "svg", "pdf"] | None = None,
+    format: Literal["json", "html", "png", "svg", "pdf", "vega"] | None = None,
     mode: Literal["vega-lite"] | None = None,
     vegalite_version: str | None = None,
     embed_options: dict | None = None,
@@ -93,7 +93,7 @@ def save(
     """
     Save a chart to file in a variety of formats.
 
-    Supported formats are [json, html, png, svg, pdf]
+    Supported formats are [json, html, png, svg, pdf, vega]
 
     Parameters
     ----------
@@ -102,7 +102,7 @@ def save(
     fp : string filename, pathlib.Path or file-like object
         file to which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'svg', 'pdf'].
+        the format to write: one of ['json', 'html', 'png', 'svg', 'pdf', 'vega'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
         Must be 'vega-lite'. If not specified, then infer the mode from
@@ -123,7 +123,7 @@ def save(
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert'}
-        the conversion engine to use for 'png', 'svg', and 'pdf' formats
+        the conversion engine to use for 'png', 'svg', 'pdf', and 'vega' formats
     inline: bool (optional)
         If False (default), the required JavaScript libraries are loaded
         from a CDN location in the resulting html file.
@@ -201,7 +201,7 @@ def save(
             if format == "pdf":
                 write_file_or_filename(fp, mb_any["application/pdf"], mode="wb")
             elif format == "vega":
-                json_spec = json.dumps(mb_any["application/vnd.vega.v5+json"], **json_kwds)
+                json_spec = json.dumps(mb_any["application/vnd.vega.v6+json"], **json_kwds)
                 write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
             else:
                 write_file_or_filename(
