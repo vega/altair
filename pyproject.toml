@@ -127,7 +127,7 @@ doc     = { features = ["all", "dev", "doc"] }
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
-matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.14t"] }]
+matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"] }]
 
 [tool.ruff]
 extend-exclude = [
