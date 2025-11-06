@@ -198,7 +198,7 @@ Effect of Data Type on Axis Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
-difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for an column
+difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for a column
 that contains integers specifying a year:
 
 .. altair-plot::
