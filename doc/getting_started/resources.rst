@@ -104,14 +104,6 @@ Altair backend for the pandas plotting API.
 .. List of links.
 .. _altair_pandas: https://github.com/altair-viz/altair_pandas
 
-vega_datasets_
-~~~~~~~~~~~~~~
-
-Offline access to the Vega datasets used in the Altair documentation.
-
-.. List of links.
-.. _vega_datasets: https://github.com/altair-viz/vega_datasets
-
 altair_recipes_
 ~~~~~~~~~~~~~~~
 

@@ -6,32 +6,32 @@ with faceted marginal histograms that share their respective x- and y-limits.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
-source = data.iris()
+source = data.penguins()
 
 base = alt.Chart(source)
 base_bar = base.mark_bar(opacity=0.3, binSpacing=0)
 
-xscale = alt.Scale(domain=(4.0, 8.0))
-yscale = alt.Scale(domain=(1.9, 4.55))
+xscale = alt.Scale(domain=(170, 235))
+yscale = alt.Scale(domain=(2500, 6500))
 
 points = base.mark_circle().encode(
-    alt.X("sepalLength").scale(xscale),
-    alt.Y("sepalWidth").scale(yscale),
-    color="species",
+    alt.X("Flipper Length (mm)").scale(xscale),
+    alt.Y("Body Mass (g)").scale(yscale),
+    color="Species",
 )
 
 top_hist = (
     base_bar
     .encode(
-        alt.X("sepalLength:Q")
+        alt.X("Flipper Length (mm):Q")
             # when using bins, the axis scale is set through
             # the bin extent, so we do not specify the scale here
             # (which would be ignored anyway)
             .bin(maxbins=20, extent=xscale.domain).stack(None).title(""),
         alt.Y("count()").stack(None).title(""),
-        alt.Color("species:N"),
+        alt.Color("Species:N"),
     )
     .properties(height=60)
 )
@@ -39,12 +39,12 @@ top_hist = (
 right_hist = (
     base_bar
     .encode(
-        alt.Y("sepalWidth:Q")
+        alt.Y("Body Mass (g):Q")
             .bin(maxbins=20, extent=yscale.domain)
             .stack(None)
             .title(""),
         alt.X("count()").stack(None).title(""),
-        alt.Color("species:N"),
+        alt.Color("Species:N"),
     )
     .properties(width=60)
 )

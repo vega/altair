@@ -1,0 +1,295 @@
+---
+name: Weekly Build and Publish
+'on':
+  schedule:
+    - cron: '0 3 * * 1'  # Weekly on Mondays at 3am UTC
+  workflow_dispatch:
+    inputs:
+      force_build:
+        description: 'Force build even if no changes detected'
+        type: boolean
+        default: false
+        required: false
+env:
+  UV_SYSTEM_PYTHON: 1
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: '${{ steps.check.outputs.has-changes }}'
+      last-weekly-tag: '${{ steps.check.outputs.last-weekly-tag }}'
+      current-commit: '${{ steps.check.outputs.current-commit }}'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Check for changes since last weekly build
+        id: check
+        run: |
+          # Get the latest weekly release tag
+          LATEST_WEEKLY_TAG=$(git tag --list "weekly-*" --sort=-version:refname | head -n 1)
+
+          if [ -z "$LATEST_WEEKLY_TAG" ]; then
+            echo "No weekly tags found, will build (first time)"
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+            echo "last-weekly-tag=" >> $GITHUB_OUTPUT
+            echo "current-commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Get the commit hash from the latest weekly tag
+          LATEST_WEEKLY_COMMIT=$(git rev-list -n 1 "$LATEST_WEEKLY_TAG")
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+
+          echo "last-weekly-tag=${LATEST_WEEKLY_TAG}" >> $GITHUB_OUTPUT
+          echo "current-commit=${CURRENT_COMMIT}" >> $GITHUB_OUTPUT
+
+          # Check if there are any commits since the last weekly build
+          if [ "$LATEST_WEEKLY_COMMIT" = "$CURRENT_COMMIT" ]; then
+            echo "No changes since last weekly build"
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected since last weekly build"
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          fi
+  weekly-build:
+    needs: check-changes
+    if: needs.check-changes.outputs.has-changes == 'true' || github.event.inputs.force_build == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+          - '3.13'
+    name: 'Test py ${{ matrix.python-version }}'
+    steps:
+      - uses: actions/checkout@v5
+      - name: 'Set up Python ${{ matrix.python-version }}'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '${{ matrix.python-version }}'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+      - name: Test with pytest
+        run: |
+          uv run task test
+  weekly-publish:
+    needs:
+      - check-changes
+      - weekly-build
+    if: needs.check-changes.outputs.has-changes == 'true' || github.event.inputs.force_build == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+      - name: Generate weekly version and tag
+        id: version
+        run: |
+          # Generate weekly version based on current date and commit
+          # Get base version from altair/__init__.py
+          BASE_VERSION=$(grep '__version__ = ' altair/__init__.py | sed 's/__version__ = "\(.*\)"/\1/')
+          DATE=$(date +%Y%m%d)
+          COMMIT=$(git rev-parse --short HEAD)
+          COMMIT_SHA=$(git rev-parse HEAD)
+          # PEP 440 compliant dev version - handle cases where base version already has 'dev'
+          if [[ "$BASE_VERSION" == *"dev" ]]; then
+            # If base version already has 'dev', replace it with proper dev format
+            VERSION=$(echo "$BASE_VERSION" | sed 's/dev$/.dev'${DATE}'/')
+          else
+            # If base version doesn't have 'dev', add it
+            VERSION="${BASE_VERSION}.dev${DATE}"
+          fi
+          TAG_NAME="weekly-${DATE}-${COMMIT}"
+          echo "Generated weekly version: ${VERSION}"
+          echo "Generated tag name: ${TAG_NAME}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "commit_sha=${COMMIT_SHA}" >> $GITHUB_OUTPUT
+      - name: Update version files
+        run: |
+          # Update version in __init__.py
+          sed -i "s/__version__ = .*/__version__ = \"${{ steps.version.outputs.version }}\"/" altair/__init__.py
+          # Update version in conf.py
+          sed -i "s/release = .*/release = \"${{ steps.version.outputs.version }}\"/" doc/conf.py
+      - name: Build package
+        run: |
+          uv run task build
+      - name: Generate dependency snapshot
+        id: deps
+        run: |
+          # Get current dependencies
+          uv pip freeze > current_deps.txt
+
+          # Check if we can compare with previous weekly release
+          LATEST_WEEKLY_TAG="${{ needs.check-changes.outputs.last-weekly-tag }}"
+          if [ -n "$LATEST_WEEKLY_TAG" ]; then
+            echo "Comparing dependencies with previous tag: ${LATEST_WEEKLY_TAG}"
+            # Try to get previous uv.lock from git history
+            if git show ${LATEST_WEEKLY_TAG}:uv.lock > previous_uv.lock 2>/dev/null; then
+              if diff -u previous_uv.lock uv.lock > dependency_changes.txt 2>&1; then
+                echo "No dependency changes detected"
+                echo "dependency_changes=false" >> $GITHUB_OUTPUT
+              else
+                echo "Dependency changes detected"
+                echo "dependency_changes=true" >> $GITHUB_OUTPUT
+              fi
+            else
+              echo "No previous uv.lock found at ${LATEST_WEEKLY_TAG}" > dependency_changes.txt
+              echo "dependency_changes=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "First weekly build - no previous dependencies to compare" > dependency_changes.txt
+            echo "dependency_changes=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Generate binary file checksums
+        id: checksums
+        run: |
+          # Find all binary files in the project (with proper parentheses for OR operations)
+          find . \( -name "*.csv.gz" -o -name "*.parquet" -o -name "*.json.gz" \) -type f | while read file; do
+            sha256sum "$file" >> binary_checksums.txt
+            echo "Processed: $file"
+          done
+
+          # Ensure file exists even if no binary files found
+          touch binary_checksums.txt
+
+          # Note: We cannot compare with previous checksums since binary_checksums.txt
+          # is generated during the workflow and not committed to git.
+          # Instead, we just upload the current checksums for reference.
+          echo "Generated checksums for $(wc -l < binary_checksums.txt) binary files" > binary_changes.txt
+          echo "binary_changes=false" >> $GITHUB_OUTPUT
+      - name: Prepare release assets
+        run: |
+          # Ensure all text files exist to avoid upload errors
+          touch dependency_changes.txt current_deps.txt binary_checksums.txt binary_changes.txt
+          
+          # List files that will be uploaded
+          echo "Release assets:"
+          ls -lh dist/
+          ls -lh *.txt 2>/dev/null || echo "No text files"
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag_name }}
+          name: Weekly Build ${{ steps.version.outputs.version }}
+          body: |
+            ## Weekly Pre-Release Build of Altair
+
+            This is a pre-release version for testing purposes.
+
+            ### Build Information
+
+            **Version:** ${{ steps.version.outputs.version }}  
+            **Tag:** ${{ steps.version.outputs.tag_name }}  
+            **Previous Weekly Tag:** ${{ needs.check-changes.outputs.last-weekly-tag || 'None (first build)' }}
+
+            ## Installation
+
+            ### From GitHub Repository (direct install)
+
+            Install directly from the tagged commit without downloading the wheel:
+
+            **Command line (pip or uv):**
+            ```bash
+            pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            # or
+            uv pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            ```
+
+            **Add to pyproject.toml (pip/uv):**
+            ```toml
+            [project]
+            dependencies = [
+                "altair @ git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}",
+            ]
+            ```
+
+            **Add to pixi.toml (pixi):**
+            ```toml
+            [pypi-dependencies]
+            altair = { git = "https://github.com/${{ github.repository }}.git", rev = "${{ steps.version.outputs.tag_name }}" }
+            ```
+
+            ### From GitHub Release (manual download)
+
+            Download the wheel file from the assets below and install:
+
+            ```bash
+            pip install altair-${{ steps.version.outputs.version }}-py3-none-any.whl
+            ```
+
+            ## Testing & Feedback
+
+            **Please note:** This is a testing version. If you encounter any issues or unexpected behavior, we would greatly appreciate if you [open an issue](https://github.com/${{ github.repository }}/issues) to report it. Your feedback helps improve Altair!
+          draft: false
+          prerelease: true
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+            dependency_changes.txt
+            current_deps.txt
+            binary_checksums.txt
+            binary_changes.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cleanup old weekly releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Wait a moment to ensure the new release is fully created
+          sleep 5
+          
+          # Get all weekly releases sorted by creation date (newest first)
+          echo "Fetching all weekly releases..."
+          WEEKLY_RELEASES=$(gh release list --limit 100 --json tagName,isPrerelease,createdAt --jq '.[] | select(.tagName | startswith("weekly-")) | .tagName' | head -n 100)
+
+          # Count total weekly releases (handle empty list)
+          if [ -z "$WEEKLY_RELEASES" ]; then
+            echo "No weekly releases found"
+            exit 0
+          fi
+          
+          TOTAL_WEEKLY=$(echo "$WEEKLY_RELEASES" | wc -l | tr -d ' ')
+          echo "Found ${TOTAL_WEEKLY} weekly releases"
+
+          # Keep only the 7 most recent, delete the rest
+          if [ "$TOTAL_WEEKLY" -gt 7 ]; then
+            echo "Keeping 7 most recent weekly releases, deleting $(($TOTAL_WEEKLY - 7)) old ones..."
+            echo "$WEEKLY_RELEASES" | tail -n +8 | while read -r tag; do
+              if [ -n "$tag" ]; then
+                echo "Deleting release and tag: $tag"
+                gh release delete "$tag" --yes --cleanup-tag 2>&1 || echo "Warning: Failed to delete $tag, continuing..."
+              fi
+            done
+            echo "Cleanup complete!"
+          else
+            echo "Only ${TOTAL_WEEKLY} weekly releases found, no cleanup needed (keeping max 7)"
+          fi

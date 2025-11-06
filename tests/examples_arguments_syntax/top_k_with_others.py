@@ -7,7 +7,7 @@ remaining directors as 'All Others'.
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 
@@ -19,7 +19,7 @@ alt.Chart(source).mark_bar().encode(
         title=None,
     ),
 ).transform_aggregate(
-    aggregate_gross='mean(Worldwide_Gross)',
+    aggregate_gross='mean(Worldwide Gross)',
     groupby=["Director"],
 ).transform_window(
     rank='row_number()',

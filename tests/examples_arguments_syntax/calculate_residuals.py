@@ -8,11 +8,10 @@ The graph is for all Movies before 2019.
 Adapted from `Calculate Residuals <https://vega.github.io/vega-lite/examples/joinaggregate_residual_graph.html>`_.
 """
 # category: advanced calculations
-
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
-imdb_rating = alt.datum["IMDB_Rating"]
+imdb_rating = alt.datum["IMDB Rating"]
 source = data.movies.url
 
 chart = (
@@ -20,12 +19,12 @@ chart = (
     .mark_point()
     .transform_filter(imdb_rating != None)
     .transform_filter(
-        alt.FieldRangePredicate("Release_Date", [None, 2019], timeUnit="year")
+        alt.FieldRangePredicate("Release Date", [None, 2019], timeUnit="year")
     )
-    .transform_joinaggregate(Average_Rating="mean(IMDB_Rating)")
+    .transform_joinaggregate(Average_Rating="mean(IMDB Rating)")
     .transform_calculate(Rating_Delta=imdb_rating - alt.datum.Average_Rating)
     .encode(
-        x=alt.X("Release_Date:T", title="Release Date"),
+        x=alt.X("Release Date:T", title="Release Date"),
         y=alt.Y("Rating_Delta:Q", title="Rating Delta"),
         color=alt.Color(
             "Rating_Delta:Q",

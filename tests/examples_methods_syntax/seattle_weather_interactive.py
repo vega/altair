@@ -7,7 +7,7 @@ see the distribution of weather types in a particular date range.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 

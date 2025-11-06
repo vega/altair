@@ -9,7 +9,7 @@ from collections.abc import Mapping, Sequence
 from datetime import date, datetime
 from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args
 
-if sys.version_info >= (3, 14):  # https://peps.python.org/pep-0728/
+if sys.version_info >= (3, 15):  # https://peps.python.org/pep-0728/
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict

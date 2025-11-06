@@ -38,7 +38,7 @@ from .schema.core import (
     VariableParameter,
 )
 
-if sys.version_info >= (3, 14):
+if sys.version_info >= (3, 15):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
@@ -996,14 +996,16 @@ class When(_BaseWhen):
         Simple conditions may be expressed without defining a default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
-            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            predicate = (alt.datum["IMDB Rating"] == None) | (
+                alt.datum["Rotten Tomatoes Rating"] == None
+            )
 
             alt.Chart(source).mark_point(invalid=None).encode(
-                x="IMDB_Rating:Q",
-                y="Rotten_Tomatoes_Rating:Q",
+                x="IMDB Rating:Q",
+                y="Rotten Tomatoes Rating:Q",
                 color=alt.when(predicate).then(alt.value("grey")),
             )
         """
@@ -1072,7 +1074,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Points outside of ``brush`` will not appear highlighted::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             brush = alt.selection_interval()
@@ -1159,7 +1161,7 @@ class Then(ConditionLike, t.Generic[_C]):
         Chain calls to express precise queries::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.cars()
             color = (
@@ -1264,19 +1266,21 @@ class ChainedWhen(_BaseWhen):
         Multiple conditions with an implicit default::
 
             import altair as alt
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.movies()
-            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            predicate = (alt.datum["IMDB Rating"] == None) | (
+                alt.datum["Rotten Tomatoes Rating"] == None
+            )
             color = (
                 alt.when(predicate)
                 .then(alt.value("grey"))
-                .when(alt.datum.IMDB_Votes < 5000)
+                .when(alt.datum["IMDB Votes"] < 5000)
                 .then(alt.value("lightblue"))
             )
 
             alt.Chart(source).mark_point(invalid=None).encode(
-                x="IMDB_Rating:Q", y="Rotten_Tomatoes_Rating:Q", color=color
+                x="IMDB Rating:Q", y="Rotten Tomatoes Rating:Q", color=color
             )
         """
         condition = self._when_then(statement, kwds)
@@ -1344,7 +1348,7 @@ def when(
     Setting up a common chart::
 
         import altair as alt
-        from vega_datasets import data
+        from altair.datasets import data
 
         source = data.cars()
         brush = alt.selection_interval()
@@ -2273,7 +2277,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **kwargs,
         )
 
-    def to_url(self, *, fullscreen: bool = False) -> str:
+    def to_url(self, *, fullscreen: bool = False, validate: bool = True) -> str:
         """
         Convert a chart to a URL that opens the chart specification in the Vega chart editor.
 
@@ -2285,16 +2289,22 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
+        validate : boolean
+            If True, then validate the input against the schema.
         """
         from altair.utils._importers import import_vl_convert
 
         vlc = import_vl_convert()
         if _using_vegafusion():
-            return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
+            return vlc.vega_to_url(
+                self.to_dict(format="vega", validate=validate), fullscreen=fullscreen
+            )
         else:
-            return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
+            return vlc.vegalite_to_url(
+                self.to_dict(validate=validate), fullscreen=fullscreen
+            )
 
-    def open_editor(self, *, fullscreen: bool = False) -> None:
+    def open_editor(self, *, fullscreen: bool = False, validate: bool = True) -> None:
         """
         Opens the chart specification in the Vega chart editor using the default browser.
 
@@ -2302,10 +2312,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
+        validate : boolean
+            If True, then validate the input against the schema.
         """
         import webbrowser
 
-        webbrowser.open(self.to_url(fullscreen=fullscreen))
+        webbrowser.open(self.to_url(fullscreen=fullscreen, validate=validate))
 
     def save(
         self,
@@ -3158,7 +3170,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             import altair as alt
             from altair import datum
-            from vega_datasets import data
+            from altair.datasets import data
 
             source = data.population.url
             chart = (
@@ -4048,8 +4060,8 @@ class Chart(
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
         mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
-        width: Optional[int | dict | Step | Literal["container"]] = Undefined,
-        height: Optional[int | dict | Step | Literal["container"]] = Undefined,
+        width: Optional[float | dict | Step | Literal["container"]] = Undefined,
+        height: Optional[float | dict | Step | Literal["container"]] = Undefined,
         **kwargs: Any,
     ) -> None:
         super().__init__(

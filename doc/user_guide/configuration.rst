@@ -98,7 +98,7 @@ the :meth:`Chart.configure_header` method. Here is an example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -142,7 +142,7 @@ Here is an example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -270,7 +270,7 @@ Here is an example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -305,7 +305,7 @@ be controlled:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 

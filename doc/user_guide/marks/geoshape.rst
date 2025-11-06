@@ -17,7 +17,7 @@ Altair can work with many different geographical data formats, including geojson
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     import geopandas as gpd
 
     url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
@@ -110,6 +110,10 @@ In the following example the input geometry is not projected and is instead rend
         type='identity',
         reflectY=True
     )
+
+.. note::
+
+    When working with spatial data, it's important to be aware of coordinate reference systems and geometry winding order. For detailed information on projections and winding order, see the :ref:`Spatial Data <spatial-data>` section in the data guide.
 
 Mapping Polygons
 ^^^^^^^^^^^^^^^^

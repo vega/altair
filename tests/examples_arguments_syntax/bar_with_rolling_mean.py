@@ -5,7 +5,7 @@ A bar chart overlaid with a rolling mean. In this example the average of values 
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.wheat()
 
