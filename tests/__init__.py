@@ -124,6 +124,18 @@ Applies when `geopandas`_ import would fail.
     https://geopandas.org/
 """
 
+skip_requires_duckdb: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("duckdb") is None, reason="`duckdb` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `duckdb`_ import would fail.
+
+.. _duckdb:
+    https://duckdb.org/
+"""
+
 
 @overload
 def skip_requires_pyarrow(

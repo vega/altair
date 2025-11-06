@@ -69,7 +69,7 @@ all = [
 dev = [
     "hatch>=1.13.0",
     "ruff>=0.9.5",
-    "duckdb>=1.0",
+    "duckdb>=1.0; python_version<\"3.14\"",
     "ipython",
     "ipykernel",
     "pandas>=1.1.3",
