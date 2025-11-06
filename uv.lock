@@ -70,9 +70,9 @@ all = [
     { name = "vl-convert-python" },
 ]
 dev = [
-    { name = "duckdb" },
+    { name = "duckdb", marker = "python_full_version < '3.14'" },
     { name = "geopandas", version = "1.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "geopandas", version = "1.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "geopandas", version = "1.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10' and python_full_version < '3.14'" },
     { name = "hatch" },
     { name = "ipykernel" },
     { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -130,8 +130,8 @@ requires-dist = [
     { name = "altair-tiles", marker = "extra == 'all'", specifier = ">=0.3.0" },
     { name = "anywidget", marker = "extra == 'all'", specifier = ">=0.9.0" },
     { name = "docutils", marker = "extra == 'doc'" },
-    { name = "duckdb", marker = "extra == 'dev'", specifier = ">=1.0" },
-    { name = "geopandas", marker = "extra == 'dev'" },
+    { name = "duckdb", marker = "python_full_version < '3.14' and extra == 'dev'", specifier = ">=1.0" },
+    { name = "geopandas", marker = "python_full_version < '3.14' and extra == 'dev'", specifier = ">=0.14.3" },
     { name = "hatch", marker = "extra == 'dev'", specifier = ">=1.13.0" },
     { name = "ipykernel", marker = "extra == 'dev'" },
     { name = "ipython", marker = "extra == 'dev'" },
