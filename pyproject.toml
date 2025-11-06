@@ -82,7 +82,7 @@ dev = [
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "geopandas",
+    "geopandas>=0.14.3; python_version<\"3.14\"",
     "polars>=0.20.3",
     "taskipy>=1.14.1",
     "tomli>=2.2.1",
@@ -319,7 +319,8 @@ addopts = [
 markers = [
     "slow: Label tests as slow (deselect with '-m \"not slow\"')",
     "datasets_debug: Disabled by default due to high number of requests",
-    "no_xdist: Unsafe to run in parallel"
+    "no_xdist: Unsafe to run in parallel",
+    "geospatial: Tests that require geopandas (deselect with '-m \"not geospatial\"')"
 ]
 
 [tool.mypy]
