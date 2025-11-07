@@ -1,0 +1,49 @@
+name: build-free-threaded
+
+on:
+  workflow_dispatch:  # Manual trigger only; no automatic CI runs
+
+env:
+  UV_SYSTEM_PYTHON: 1
+
+jobs:
+  free-threaded:
+    runs-on: ubuntu-latest
+    name: py 3.14t free-threaded
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python 3.14t
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14t"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Install targeted dependencies
+        run: |
+          set -xe
+          uv pip install -e .
+          # From [project.optional-dependencies].dev in pyproject.toml
+          uv pip install pytest
+          uv pip install pytest-cov
+          uv pip install pytest-run-parallel
+          # uv pip install hatch>=1.13.0
+          # uv pip install ruff>=0.9.5
+          # uv pip install 'duckdb>=1.0; python_version<"3.14"'
+          # uv pip install ipython
+          # uv pip install ipykernel
+          # uv pip install pandas>=1.1.3
+          # uv pip install pyarrow-stubs
+          # uv pip install 'pytest-xdist[psutil]~=3.5'
+          # uv pip install mistune
+          # uv pip install mypy
+          # uv pip install pandas-stubs
+          # uv pip install types-jsonschema
+          # uv pip install types-setuptools
+          # uv pip install geopandas>=0.14.3
+          # uv pip install polars>=0.20.3
+          # uv pip install taskipy>=1.14.1
+          # uv pip install tomli>=2.2.1
+      - name: Run pytest with pytest-run-parallel
+        run: |
+          uv run pytest -o addopts= --pyargs --doctest-modules --doctest-ignore-import-errors --iterations=8 --parallel-threads=auto tests
+
