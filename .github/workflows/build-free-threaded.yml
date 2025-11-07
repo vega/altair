@@ -26,6 +26,7 @@ jobs:
           uv pip install pytest
           uv pip install pytest-cov
           uv pip install pytest-run-parallel
+          uv pip install ipywidgets
           # uv pip install hatch>=1.13.0
           # uv pip install ruff>=0.9.5
           # uv pip install 'duckdb>=1.0; python_version<"3.14"'
