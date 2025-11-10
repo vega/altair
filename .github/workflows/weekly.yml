@@ -90,8 +90,12 @@ jobs:
       - weekly-build
     if: needs.check-changes.outputs.has-changes == 'true' || github.event.inputs.force_build == 'true'
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/altair
     permissions:
       contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@v5
         with:
@@ -195,6 +199,11 @@ jobs:
           echo "Release assets:"
           ls -lh dist/
           ls -lh *.txt 2>/dev/null || echo "No text files"
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+          skip-existing: true
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
@@ -213,6 +222,18 @@ jobs:
 
             ## Installation
 
+            ### From PyPI (recommended)
+
+            Install the latest weekly build directly from PyPI:
+
+            ```bash
+            pip install altair==${{ steps.version.outputs.version }}
+            # or
+            uv pip install altair==${{ steps.version.outputs.version }}
+            ```
+
+            _Note_: Weekly builds use timestamped development versions (for example `${{ steps.version.outputs.version }}`) for the PyPI artifacts. Installing from PyPI with an exact version pin picks up the full dev version automatically—no `--pre` flag required.
+
             ### From GitHub Repository (direct install)
 
             Install directly from the tagged commit without downloading the wheel:
@@ -223,6 +244,8 @@ jobs:
             # or
             uv pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
             ```
+
+            _Note_: Installing directly from the `weekly-...` tag will surface the base development version (without the timestamp suffix) because the version file edits are not committed.
 
             **Add to pyproject.toml (pip/uv):**
             ```toml
