@@ -161,6 +161,10 @@ jobs:
               if diff -u previous_uv.lock uv.lock > dependency_changes.txt 2>&1; then
                 echo "No dependency changes detected"
                 echo "dependency_changes=false" >> $GITHUB_OUTPUT
+                # Ensure the artifact has content even when there are no changes
+                if [ ! -s dependency_changes.txt ]; then
+                  echo "No dependency changes detected" > dependency_changes.txt
+                fi
               else
                 echo "Dependency changes detected"
                 echo "dependency_changes=true" >> $GITHUB_OUTPUT
@@ -232,7 +236,7 @@ jobs:
             uv pip install altair==${{ steps.version.outputs.version }}
             ```
 
-            _Note_: Weekly builds use timestamped development versions (for example `${{ steps.version.outputs.version }}`) for the PyPI artifacts. Installing from PyPI with an exact version pin picks up the full dev version automatically—no `--pre` flag required.
+            _Note_: Weekly builds publish timestamped development versions (for example `${{ steps.version.outputs.version }}`) to PyPI. When you pin that exact version, `pip` installs the dev build automatically, without the need for a `--pre` flag.
 
             ### From GitHub Repository (direct install)
 
