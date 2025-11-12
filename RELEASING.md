@@ -19,9 +19,9 @@
 
 5. Create a new release branch:
        
-        git switch -c version_5.0.0
+        git switch -c version_6.0.0
 
-6. Update version to, e.g. 5.0.0:
+6. Update version to, e.g. 6.0.0:
 
    - in ``altair/__init__.py``
    - in ``doc/conf.py``
@@ -29,7 +29,7 @@
 7. Commit changes and push:
 
         git add . -u
-        git commit -m "chore: Bump version to 5.0.0"
+        git commit -m "chore: Bump version to 6.0.0"
         git push
 
 8. Merge release branch into main, make sure that all required checks pass
@@ -50,14 +50,14 @@
 
 12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
-       git tag -a v6.0.0 -m "Version 5.0.0 release"
+       git tag -a v6.0.0 -m "Version 6.0.0 release"
        git push origin v6.0.0
 
 13. Create a new branch:
        
-       git switch -c maint_5.1.0dev
+       git switch -c maint_6.1.0dev
 
-14. Update version and add 'dev' suffix, e.g. 5.1.0dev:
+14. Update version and add 'dev' suffix, e.g. 6.1.0dev:
 
     - in ``altair/__init__.py``
     - in ``doc/conf.py``
@@ -65,7 +65,7 @@
 15. Commit changes and push:
 
         git add . -u
-        git commit -m "chore: Bump version to 5.1.0dev"
+        git commit -m "chore: Bump version to 6.1.0dev"
         git push
         
 16. Merge maintenance branch into main
