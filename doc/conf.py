@@ -71,7 +71,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Vega-Altair"
-copyright = f"2016-{datetime.now().year}, Vega-Altair Developers"
+copyright = f"2015-{datetime.now().year}, Vega-Altair Developers"
 author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -79,7 +79,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.6.0dev"
+version = "6.0.0"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 
