@@ -335,7 +335,7 @@ Using ``.facet`` it becomes a bit cleaner:
 
     alt.Chart(penguins).mark_point().encode(
         x=alt.X('Flipper Length (mm):Q').scale(zero=False),
-        y=alt.Y('Body Mass (g):Q')scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
         color='Species:N'
     ).properties(
         width=180,
