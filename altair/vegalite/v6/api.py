@@ -4507,7 +4507,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         Evaluate a ConcatChart's transforms.
 
         Evaluate the data transforms associated with a ConcatChart and return the
-        transformed data for each subplot as a list of DataFrames
+        transformed data for each subplot as a list of DataFrames.
 
         Parameters
         ----------
@@ -4608,10 +4608,10 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> list[DataFrameLike]:
         """
-        Evaluate a HConcatChart's transforms.
+        Evaluate an HConcatChart's transforms.
 
-        Evaluate the data transforms associated with a HConcatChart and return the
-        transformed data for each subplot as a list of DataFrames
+        Evaluate the data transforms associated with an HConcatChart and return the
+        transformed data for each subplot as a list of DataFrames.
 
         Parameters
         ----------
