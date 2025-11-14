@@ -23,7 +23,7 @@ chart = alt.Chart(csv_data).mark_geoshape().encode(
     .title(['Suitable Habitat', '% of County'])
     .legend(format='.0%'),
     tooltip=[
-        alt.Tooltip('id:N').title('County ID'),
+        alt.Tooltip('county_id:N').title('County ID'),
         alt.Tooltip('habitat_yearround_pct:Q').title('Habitat %').format('.2%')
     ],
     facet=alt.Facet('common_name:N', columns=2).title(None),
