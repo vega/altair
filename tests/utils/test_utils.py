@@ -11,7 +11,7 @@ from altair.utils import (
     sanitize_narwhals_dataframe,
     sanitize_pandas_dataframe,
 )
-from tests import skip_requires_pyarrow
+from tests import skip_requires_polars, skip_requires_pyarrow
 
 
 def test_infer_vegalite_type():
@@ -166,6 +166,30 @@ def test_sanitize_pyarrow_table_columns() -> None:
 
     # Make sure we can serialize to JSON without error
     json.dumps(values)
+
+
+@skip_requires_polars
+def test_sanitize_polars_datetime_timezone_preserved() -> None:
+    import polars as pl
+
+    start = pl.datetime(2023, 11, 5, time_zone="US/Mountain")
+    df = pl.DataFrame(
+        {
+            "datetime": pl.datetime_range(
+                start, start.dt.offset_by("3h"), "1h", closed="both", eager=True
+            ),
+            "value": [10, 20, 30, 40],
+        }
+    )
+
+    sanitized = sanitize_narwhals_dataframe(nw.from_native(df, eager_only=True))
+
+    assert sanitized.rows(named=True) == [
+        {"datetime": "2023-11-05T00:00:00-0600", "value": 10},
+        {"datetime": "2023-11-05T01:00:00-0600", "value": 20},
+        {"datetime": "2023-11-05T01:00:00-0700", "value": 30},
+        {"datetime": "2023-11-05T02:00:00-0700", "value": 40},
+    ]
 
 
 def test_sanitize_dataframe_colnames():

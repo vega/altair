@@ -481,7 +481,12 @@ def sanitize_narwhals_dataframe(
         elif dtype == nw.Date:
             columns.append(nw.col(name).dt.to_string(local_iso_fmt_string))
         elif dtype == nw.Datetime:
-            columns.append(nw.col(name).dt.to_string(f"{local_iso_fmt_string}%.f"))
+            # Preserve timezone information when present so Vega-Lite can disambiguate
+            # repeated local times during DST transitions.
+            fmt = f"{local_iso_fmt_string}%.f"
+            if getattr(dtype, "time_zone", None) is not None:
+                fmt = f"{fmt}%z"
+            columns.append(nw.col(name).dt.to_string(fmt))
         elif dtype == nw.Duration:
             msg = (
                 f'Field "{name}" has type "{dtype}" which is '
