@@ -729,7 +729,11 @@ def infer_vegalite_type_for_narwhals(
         raise ValueError(msg)
 
 
-def use_signature(tp: Callable[P, Any], /):
+class _SignatureCopier(Protocol[P]):
+    def __call__(self, cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+
+
+def use_signature(tp: Callable[P, Any], /) -> _SignatureCopier[P]:
     """
     Use the signature and doc of ``tp`` for the decorated callable ``cb``.
 
@@ -738,18 +742,10 @@ def use_signature(tp: Callable[P, Any], /):
 
     Returns
     -------
-    **Adding the annotation breaks typing**:
-
-        Overload[Callable[[WrapsMethod[T, R]], WrappedMethod[T, P, R]], Callable[[WrapsFunc[R]], WrappedFunc[P, R]]]
+    A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
     """
 
-    @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
-
-    @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
-
-    def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]:
         """
         Raises when no doc was found.
 
