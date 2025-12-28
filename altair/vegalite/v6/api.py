@@ -1911,25 +1911,25 @@ def binding(
     )
 
 
-@utils.use_signature(core.BindCheckbox)
+@utils.use_signature_func(core.BindCheckbox)
 def binding_checkbox(**kwargs: Any) -> BindCheckbox:
     """A checkbox binding."""
     return core.BindCheckbox(input="checkbox", **kwargs)
 
 
-@utils.use_signature(core.BindRadioSelect)
+@utils.use_signature_func(core.BindRadioSelect)
 def binding_radio(**kwargs: Any) -> BindRadioSelect:
     """A radio button binding."""
     return core.BindRadioSelect(input="radio", **kwargs)
 
 
-@utils.use_signature(core.BindRadioSelect)
+@utils.use_signature_func(core.BindRadioSelect)
 def binding_select(**kwargs: Any) -> BindRadioSelect:
     """A select binding."""
     return core.BindRadioSelect(input="select", **kwargs)
 
 
-@utils.use_signature(core.BindRange)
+@utils.use_signature_func(core.BindRange)
 def binding_range(**kwargs: Any) -> BindRange:
     """A range binding."""
     return core.BindRange(input="range", **kwargs)
@@ -5318,7 +5318,7 @@ def _remove_layer_props(  # noqa: C901
     return output_dict, subcharts
 
 
-@utils.use_signature(core.SequenceParams)
+@utils.use_signature_func(core.SequenceParams)
 def sequence(
     start: Optional[float],
     stop: Optional[float | None] = None,
@@ -5333,7 +5333,7 @@ def sequence(
     return core.SequenceGenerator(sequence=params, **kwds)
 
 
-@utils.use_signature(core.GraticuleParams)
+@utils.use_signature_func(core.GraticuleParams)
 def graticule(**kwds: Any) -> GraticuleGenerator:
     """Graticule generator."""
     # graticule: True indicates default parameters

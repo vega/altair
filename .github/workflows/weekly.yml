@@ -20,7 +20,7 @@ jobs:
       last-weekly-tag: '${{ steps.check.outputs.last-weekly-tag }}'
       current-commit: '${{ steps.check.outputs.current-commit }}'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Check for changes since last weekly build
@@ -66,7 +66,7 @@ jobs:
           - '3.13'
     name: 'Test py ${{ matrix.python-version }}'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: 'Set up Python ${{ matrix.python-version }}'
         uses: actions/setup-python@v6
         with:
@@ -97,7 +97,7 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set up Python
