@@ -769,7 +769,7 @@ def use_signature(tp: Callable[P, Any], /) -> _MethodSignatureCopier[P]:
 
 
 class _FunctionSignatureCopier(Protocol[P]):
-    def __call__(self, cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...
+    def __call__(self, cb: Callable[..., R], /) -> Callable[P, R]: ...
 
 
 def use_signature_func(tp: Callable[P, Any], /) -> _FunctionSignatureCopier[P]:
@@ -781,7 +781,7 @@ def use_signature_func(tp: Callable[P, Any], /) -> _FunctionSignatureCopier[P]:
     A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
     """
 
-    def decorate(fn: WrapsFunc[R], /) -> WrappedFunc[P, R]:
+    def decorate(fn: Callable[..., R], /) -> Callable[P, R]:
         _wrap_and_copy_doc(tp, fn)
         return fn
 
