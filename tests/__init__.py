@@ -136,6 +136,18 @@ Applies when `duckdb`_ import would fail.
     https://duckdb.org/
 """
 
+skip_requires_polars: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("polars") is None, reason="`polars` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `polars`_ import would fail.
+
+.. _polars:
+    https://pola.rs/
+"""
+
 
 @overload
 def skip_requires_pyarrow(
