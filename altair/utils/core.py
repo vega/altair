@@ -729,44 +729,61 @@ def infer_vegalite_type_for_narwhals(
         raise ValueError(msg)
 
 
-def use_signature(tp: Callable[P, Any], /):
+def _wrap_and_copy_doc(tp: Callable[..., Any], cb: Callable[..., Any]) -> None:
     """
-    Use the signature and doc of ``tp`` for the decorated callable ``cb``.
+    Raises when no doc was found.
 
-    - **Overload 1**: Decorating method
-    - **Overload 2**: Decorating function
+    Notes
+    -----
+    - Reference to ``tp`` is stored in ``cb.__wrapped__``.
+    - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
+    """
+    cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+
+    if doc_in := tp.__doc__:
+        line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"
+        cb.__doc__ = "".join((line_1, *doc_in.splitlines(keepends=True)[1:]))
+    else:
+        msg = f"Found no doc for {tp!r}"
+        raise AttributeError(msg)
+
+
+class _MethodSignatureCopier(Protocol[P]):
+    def __call__(self, cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+
+
+def use_signature(tp: Callable[P, Any], /) -> _MethodSignatureCopier[P]:
+    """
+    Use the signature and doc of ``tp`` for the decorated method ``cb``.
 
     Returns
     -------
-    **Adding the annotation breaks typing**:
-
-        Overload[Callable[[WrapsMethod[T, R]], WrappedMethod[T, P, R]], Callable[[WrapsFunc[R]], WrappedFunc[P, R]]]
+    A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
     """
 
-    @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]:
+        _wrap_and_copy_doc(tp, cb)
+        return cb
 
-    @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
+    return decorate
 
-    def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
-        """
-        Raises when no doc was found.
 
-        Notes
-        -----
-        - Reference to ``tp`` is stored in ``cb.__wrapped__``.
-        - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
-        """
-        cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+class _FunctionSignatureCopier(Protocol[P]):
+    def __call__(self, cb: Callable[..., R], /) -> Callable[P, R]: ...
 
-        if doc_in := tp.__doc__:
-            line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"
-            cb.__doc__ = "".join((line_1, *doc_in.splitlines(keepends=True)[1:]))
-            return cb
-        else:
-            msg = f"Found no doc for {tp!r}"
-            raise AttributeError(msg)
+
+def use_signature_func(tp: Callable[P, Any], /) -> _FunctionSignatureCopier[P]:
+    """
+    Use the signature and doc of ``tp`` for the decorated function ``cb``.
+
+    Returns
+    -------
+    A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
+    """
+
+    def decorate(fn: Callable[..., R], /) -> Callable[P, R]:
+        _wrap_and_copy_doc(tp, fn)
+        return fn
 
     return decorate
 
