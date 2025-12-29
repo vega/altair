@@ -33,7 +33,11 @@ Altair can also be installed with just the dependencies necessary for saving cha
 Installing Altair in WASM / Pyodide environments
 -----------------------------------------------
 
-Altair can be installed in browser-based Python environments such as
+Altair is included in the official Pyodide distribution. The version of Altair
+available in Pyodide can be found in the Pyodide package list:
+https://pyodide.org/en/stable/usage/packages-in-pyodide.html
+
+Altair can also be installed in browser-based Python environments such as
 Pyodide, PyScript, or other WebAssembly (WASM) runtimes using ``micropip``.
 
 For example, in a Pyodide-based environment:
@@ -47,7 +51,7 @@ To install a specific version of Altair, specify the version explicitly:
 
 .. code-block:: python
 
-    await micropip.install("altair==5.3.0")
+    await micropip.install("altair==6.0.0")
 
 Development Installation
 ========================
