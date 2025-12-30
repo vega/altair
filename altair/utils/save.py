@@ -235,7 +235,7 @@ def save(
 
     json_kwds = json_kwds or {}
     encoding = kwargs.get("encoding", "utf-8")
-    format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
+    format = set_inspect_format_argument(format, fp, inline)  # type: ignore
 
     def perform_save() -> None:
         spec = chart.to_dict(context={"pre_transform": False})
