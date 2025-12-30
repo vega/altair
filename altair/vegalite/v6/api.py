@@ -243,7 +243,7 @@ def _consolidate_data(
 
     This function will modify context in-place, and return a new version of data
     """
-    values: Any = Undefined
+    values: dict[str, Any] | list | InlineDataset | None = None
     kwds = {}
 
     if isinstance(data, core.InlineData):
@@ -258,7 +258,7 @@ def _consolidate_data(
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
-    if not utils.is_undefined(values):
+    if values is not None:
         name = _dataset_name(values)
         data = core.NamedData(name=name, **kwds)
         context.setdefault("datasets", {})[name] = values
@@ -2321,7 +2321,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: str | Path | IO,
+        fp: str | Path | IO[Any],
         format: Literal["json", "html", "png", "svg", "pdf"] | None = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
@@ -2329,8 +2329,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         vegalite_version: str = VEGALITE_VERSION,
         vega_version: str = VEGA_VERSION,
         vegaembed_version: str = VEGAEMBED_VERSION,
-        embed_options: dict | None = None,
-        json_kwds: dict | None = None,
+        embed_options: dict[str, Any] | None = None,
+        json_kwds: dict[str, Any] | None = None,
         engine: str | None = None,
         inline: bool = False,
         **kwargs: Any,
