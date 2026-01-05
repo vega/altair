@@ -243,7 +243,7 @@ def _consolidate_data(
 
     This function will modify context in-place, and return a new version of data
     """
-    values: dict[str, Any] | list | InlineDataset | None = None
+    values: Any = Undefined
     kwds = {}
 
     if isinstance(data, core.InlineData):
@@ -258,7 +258,7 @@ def _consolidate_data(
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
-    if values is not None:
+    if not utils.is_undefined(values):
         name = _dataset_name(values)
         data = core.NamedData(name=name, **kwds)
         context.setdefault("datasets", {})[name] = values
