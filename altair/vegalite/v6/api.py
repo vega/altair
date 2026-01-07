@@ -456,7 +456,7 @@ class Parameter(_expr_core.OperatorMixin):
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
-            nm: Any = self.name
+            nm: str = self.name
             return {"param": nm.to_dict() if hasattr(nm, "to_dict") else nm}
         else:
             msg = f"Unrecognized parameter type: {self.param_type}"
@@ -2118,7 +2118,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
+        vegalite_spec = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
@@ -5199,7 +5199,7 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str]:
+) -> list[str] | list:
     if isinstance(repeat, list):
         return repeat
     elif isinstance(repeat, core.LayerRepeatMapping):
@@ -5208,7 +5208,8 @@ def _get_repeat_strings(
         klist = ["row", "column"]
     rclist = [k for k in klist if repeat[k] is not Undefined]
     rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
-    return ["".join(s) for s in itertools.product(*rcstrings)]
+    retstr: list[str] = ["".join(s) for s in itertools.product(*rcstrings)]
+    return retstr
 
 
 def _extend_view_name(v: str, r: str, spec: Chart | LayerChart) -> str:
@@ -5311,7 +5312,7 @@ def _remove_layer_props(  # noqa: C901
             # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
-            msg = f"There are inconsistent values {values} for {prop}"  # pyright: ignore[reportPossiblyUnboundVariable]
+            msg = f"There are inconsistent values for {prop}"
             raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 
