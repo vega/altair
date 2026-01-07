@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 def write_file_or_filename(
-    fp: str | Path | IO,
+    fp: str | Path | IO[Any],
     content: str | bytes,
     mode: str = "w",
     encoding: str | None = None,
@@ -30,7 +30,7 @@ def write_file_or_filename(
 
 
 def set_inspect_format_argument(
-    format: str | None, fp: str | Path | IO, inline: bool
+    format: str | None, fp: str | Path | IO[Any], inline: bool
 ) -> str:
     """Inspect the format argument in the save function."""
     if format is None:
@@ -78,7 +78,7 @@ def set_inspect_mode_argument(
 def _save_mimebundle_format(
     spec: dict[str, Any],
     format: Literal["html", "png", "svg", "pdf", "vega"],
-    fp: str | Path | IO,
+    fp: str | Path | IO[Any],
     inner_mode: Literal["vega-lite"],
     vega_version: str | None,
     vegalite_version: str | None,
@@ -170,14 +170,14 @@ def _save_mimebundle_format(
 
 def save(
     chart,
-    fp: str | Path | IO,
+    fp: str | Path | IO[Any],
     vega_version: str | None,
     vegaembed_version: str | None,
     format: Literal["json", "html", "png", "svg", "pdf", "vega"] | None = None,
     mode: Literal["vega-lite"] | None = None,
     vegalite_version: str | None = None,
-    embed_options: dict | None = None,
-    json_kwds: dict | None = None,
+    embed_options: dict[str, Any] | None = None,
+    json_kwds: dict[str, Any] | None = None,
     scale_factor: float = 1,
     engine: Literal["vl-convert"] | None = None,
     inline: bool = False,
@@ -235,7 +235,7 @@ def save(
 
     json_kwds = json_kwds or {}
     encoding = kwargs.get("encoding", "utf-8")
-    format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
+    format = set_inspect_format_argument(format, fp, inline)  # type: ignore
 
     def perform_save() -> None:
         spec = chart.to_dict(context={"pre_transform": False})

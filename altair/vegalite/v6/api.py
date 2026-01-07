@@ -2321,7 +2321,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: str | Path | IO,
+        fp: str | Path | IO[Any],
         format: Literal["json", "html", "png", "svg", "pdf"] | None = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
@@ -2329,8 +2329,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         vegalite_version: str = VEGALITE_VERSION,
         vega_version: str = VEGA_VERSION,
         vegaembed_version: str = VEGAEMBED_VERSION,
-        embed_options: dict | None = None,
-        json_kwds: dict | None = None,
+        embed_options: dict[str, Any] | None = None,
+        json_kwds: dict[str, Any] | None = None,
         engine: str | None = None,
         inline: bool = False,
         **kwargs: Any,
