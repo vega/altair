@@ -368,7 +368,10 @@ class SchemaGenerator:
         )
 
         if arg_info.additional:
-            args.append(DOUBLESTAR_ARGS)
+            if self.kwargs.get("annotate_var_kwds"):
+                args.append(f"{DOUBLESTAR_ARGS}: Any")
+            else:
+                args.append(DOUBLESTAR_ARGS)
             super_args.append(DOUBLESTAR_ARGS)
         return args, super_args
 
