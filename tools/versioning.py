@@ -32,7 +32,7 @@ if sys.version_info >= (3, 11):
     import tomllib
 else:
     # NOTE: See https://github.com/hukkin/tomli?tab=readme-ov-file#building-a-tomlitomllib-compatibility-layer
-    import tomli as tomllib  # type: ignore
+    import tomli as tomllib
 from packaging.requirements import Requirement
 from packaging.version import parse as parse_version
 
