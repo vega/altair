@@ -163,11 +163,11 @@ extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-f
 ]
 extend-select = [ # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
     "FURB",    # refurb
-    "PLC2801", # unnecessary-dunder-call
+    # "PLC2801", # unnecessary-dunder-call
     "PLR1733", # unnecessary-dict-index-lookup
     "PLR1736", # unnecessary-list-index-lookup
-    "PLR6201", # literal-membership
-    "PLW1514", # unspecified-encoding
+    # "PLR6201", # literal-membership
+    # "PLW1514", # unspecified-encoding
 ]
 ignore = [
     "ANN401", # any-type
@@ -189,7 +189,7 @@ ignore = [
     "W505",   # doc-line-too-long
 ]
 mccabe.max-complexity = 10
-preview = true # https://docs.astral.sh/ruff/preview/
+preview = false # https://docs.astral.sh/ruff/preview/
 pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 select = [
     "ANN",     # flake8-annotations
