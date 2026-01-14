@@ -368,7 +368,9 @@ class SchemaGenerator:
         )
 
         if arg_info.additional:
-            if self.kwargs.get("annotate_var_kwds"):
+            # Annotate **kwds argument when annotate_kwds_flag is set in
+            # generate_schema_wrapper.py.
+            if self.kwargs.get("annotate_kwds_flag"):
                 args.append(f"{DOUBLESTAR_ARGS}: Any")
             else:
                 args.append(DOUBLESTAR_ARGS)
