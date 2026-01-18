@@ -936,6 +936,7 @@ def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
             schemarepr={"$ref": "#/definitions/" + mark_def},
             exclude_properties={"type"},
             summary=f"{mark_def} schema wrapper.",
+            annotate_kwds_flag=True,  # add Any type annotation to **kwds
         ).schema_class()
         for mark_def in markdefs.values()
     )

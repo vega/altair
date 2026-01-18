@@ -602,7 +602,7 @@ class _MarkDef(SchemaBase):
         ] = Undefined,
         y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        **kwds,
+        **kwds: Any,
     ):
         super().__init__(
             align=align,
@@ -795,7 +795,7 @@ class _BoxPlotDef(SchemaBase):
         rule: Optional[bool | SchemaBase | Map] = Undefined,
         size: Optional[float] = Undefined,
         ticks: Optional[bool | SchemaBase | Map] = Undefined,
-        **kwds,
+        **kwds: Any,
     ):
         super().__init__(
             box=box,
@@ -872,7 +872,7 @@ class _ErrorBarDef(SchemaBase):
         size: Optional[float] = Undefined,
         thickness: Optional[float] = Undefined,
         ticks: Optional[bool | SchemaBase | Map] = Undefined,
-        **kwds,
+        **kwds: Any,
     ):
         super().__init__(
             clip=clip,
@@ -966,7 +966,7 @@ class _ErrorBandDef(SchemaBase):
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
         tension: Optional[float] = Undefined,
-        **kwds,
+        **kwds: Any,
     ):
         super().__init__(
             band=band,
