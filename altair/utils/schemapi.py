@@ -525,7 +525,7 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
                 hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
             )
         if tzinfo := obj.tzinfo:
-            if tzinfo in [dt.timezone.utc, zoneinfo.ZoneInfo(key="UTC")]:
+            if tzinfo in [dt.timezone.utc, zoneinfo.ZoneInfo("UTC")]:
                 result["utc"] = True
             else:
                 msg = (
