@@ -102,7 +102,7 @@ by the user (e.g., via mouse clicks or drags).
 There are two types of selections:
 :func:`selection_interval` and :func:`selection_point`.
 
-Here we will create a simple chart and then add an selection interval to it.
+Here we will create a simple chart and then add a selection interval to it.
 We could create a selection interval via ``param(select="interval")``,
 but it is more convenient to use the shorter ``selection_interval``.
 
