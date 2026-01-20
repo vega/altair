@@ -5005,7 +5005,7 @@ def topo_feature(url: str, feature: str, **kwargs: Any) -> UrlData:
     Parameters
     ----------
     url : string
-        An URL from which to load the data set.
+        A URL from which to load the data set.
 
     feature : string
         The name of the TopoJSON object set to convert to a GeoJSON feature collection. For
