@@ -84,7 +84,8 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3; python_version<\"3.14\"",
-    "polars>=0.20.3",
+    # Pin <1.38 until string_view/Utf8View breakage fixed (narwhals#3450, polars#26435)
+    "polars>=0.20.3,<1.38",
     "taskipy>=1.14.1",
     "tomli>=2.2.1",
 ]
