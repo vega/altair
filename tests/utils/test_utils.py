@@ -70,8 +70,9 @@ def test_sanitize_dataframe():
     # Re-order the columns to match df
     df2 = df2[df.columns]
 
-    # pandas doesn't properly recognize np.array(np.nan), so change it here
+    # pandas doesn't properly recognize np.array(np.nan); use float64 so df matches read_json
     df.iloc[0, df.columns.get_loc("o")] = np.nan
+    df["o"] = df["o"].astype(np.float64)
 
     # Re-apply original types
     for col in df:
@@ -80,9 +81,6 @@ def test_sanitize_dataframe():
             # to_datetime() does not.
             utc = isinstance(df[col].dtype, pd.DatetimeTZDtype)
             df2[col] = pd.to_datetime(df2[col], utc=utc)
-        elif col == "o":
-            # read_json gives float64/int64 for 'o'; cast to object to match df
-            df2[col] = pd.to_numeric(df2[col], errors="coerce").astype(object)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
