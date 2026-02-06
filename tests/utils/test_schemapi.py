@@ -372,6 +372,20 @@ def test_to_from_json(dct):
     assert new_dct == dct
 
 
+def test_to_json_ensure_ascii():
+    """Test that to_json preserves UTF-8 characters by default (ensure_ascii=False)."""
+    # Create a schema with non-ASCII characters
+    dct = {"name": "test", "title": "中文标题"}
+    json_str = MySchema.from_dict(dct).to_json()
+
+    # By default, UTF-8 characters should be preserved
+    assert "中文标题" in json_str
+
+    # With ensure_ascii=True, characters should be escaped
+    json_str_ascii = MySchema.from_dict(dct).to_json(ensure_ascii=True)
+    assert "\\u4e2d" in json_str_ascii  # Unicode escape sequence for 中
+
+
 def test_to_from_pickle(dct):
     myschema = MySchema.from_dict(dct)
     output = io.BytesIO()
