@@ -392,7 +392,7 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
             # We can probably remove this part once we require pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name == "string":
+        elif dtype_name in ("string", "str"):
             # dedicated string datatype (since 1.0)
             # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
             col = df[col_name].astype(object)
