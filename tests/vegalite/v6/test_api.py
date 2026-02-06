@@ -234,11 +234,10 @@ def test_chart_data_types():
     assert dct["data"] == {"name": "Foo"}
 
 
-@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_infer_types():
     data = pd.DataFrame(
         {
-            "x": pd.date_range("2012", periods=10, freq="Y"),
+            "x": pd.date_range("2012", periods=10, freq="YE"),
             "y": range(10),
             "c": list("abcabcabca"),
             "s": pd.Categorical([1, 2] * 5, categories=[2, 1], ordered=True),
