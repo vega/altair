@@ -721,18 +721,17 @@ def test_pandas_date_parse(
         if url.endswith(".json")
         else {"parse_dates": date_columns}
     )
-    kwds_empty: dict[str, Any] = {k: [] for k in kwds}
     df_schema_derived: pd.DataFrame = load(name)
     nw_schema = nw.from_native(df_schema_derived).schema
     df_manually_specified: pd.DataFrame = load(name, **kwds)
-    df_dates_empty: pd.DataFrame = load(name, **kwds_empty)
 
     assert set(date_columns).issubset(nw_schema)
     for column in date_columns:
         assert nw_schema[column] in {nw.Date, nw.Datetime}
 
     assert nw_schema == nw.from_native(df_manually_specified).schema
-    assert nw_schema != nw.from_native(df_dates_empty).schema
+    # We do not assert that loading with parse_dates=[]/convert_dates=[] yields a
+    # different schema: backends may still infer date columns from the file.
 
     # NOTE: Checking `polars` infers the same[1] as what `pandas` needs a hint for
     # [1] Doesn't need to be exact, just recognize as *some kind* of date/datetime
