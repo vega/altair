@@ -1243,6 +1243,7 @@ class SchemaBase:
         indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
+        ensure_ascii: bool = False,
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
         **kwargs,
@@ -1258,6 +1259,9 @@ class SchemaBase:
             The number of spaces of indentation to use. The default is 2.
         sort_keys : bool, optional
             If True (default), sort keys in the output.
+        ensure_ascii : bool, optional
+            If False (default), non-ASCII characters are output as-is.
+            If True, non-ASCII characters are escaped as \\uXXXX sequences.
         ignore : list[str], optional
             A list of keys to ignore.
         context : dict[str, Any], optional
@@ -1280,7 +1284,9 @@ class SchemaBase:
         if context is None:
             context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
-        return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
+        return json.dumps(
+            dct, indent=indent, sort_keys=sort_keys, ensure_ascii=ensure_ascii, **kwargs
+        )
 
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:
