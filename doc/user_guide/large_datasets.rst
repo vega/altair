@@ -214,24 +214,6 @@ This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
 
-Local Data Server
-^^^^^^^^^^^^^^^^^
-A convenient way to do this is by using the `altair_data_server <https://github.com/altair-viz/altair_data_server>`_
-package. It serves your data from a local threaded server. First install the package:
-
-.. code-block:: none
-
-   pip install altair_data_server
-
-And then enable the data transformer::
-
-    import altair as alt
-    alt.data_transformers.enable('data_server')
-
-Note that this approach may not work on some cloud-based Jupyter notebook services.
-A disadvantage of this method is that if you reopen the notebook, the plot may no longer display
-as the data server is no longer running.
-
 Local Filesystem
 ^^^^^^^^^^^^^^^^
 You can also persist the data to disk and then pass the path to Altair:
