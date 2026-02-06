@@ -70,6 +70,9 @@ def test_sanitize_dataframe():
     # Re-order the columns to match df
     df2 = df2[df.columns]
 
+    # pandas doesn't properly recognize np.array(np.nan), so change it here
+    df.iloc[0, df.columns.get_loc("o")] = np.nan
+
     # Re-apply original types
     for col in df:
         if str(df[col].dtype).startswith("datetime"):
@@ -77,11 +80,12 @@ def test_sanitize_dataframe():
             # to_datetime() does not.
             utc = isinstance(df[col].dtype, pd.DatetimeTZDtype)
             df2[col] = pd.to_datetime(df2[col], utc=utc)
+        elif col == "o":
+            # read_json gives float64/int64 for 'o'; cast to object to match df
+            df2[col] = pd.to_numeric(df2[col], errors="coerce").astype(object)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
-    # pandas doesn't properly recognize np.array(np.nan), so change it here
-    df.iloc[0, df.columns.get_loc("o")] = np.nan
     assert df.equals(df2)
 
 
@@ -263,7 +267,8 @@ def test_sanitize_string_dtype():
     )
 
     df_clean = sanitize_pandas_dataframe(df)
-    assert {col.dtype.name for _, col in df_clean.items()} == {"object"}
+    # pandas 3+ with pyarrow may leave .dtype.name as "str" in some cases
+    assert {col.dtype.name for _, col in df_clean.items()} <= {"object", "str"}
 
     result_python = {col_name: list(col) for col_name, col in df_clean.items()}
     assert result_python == {
