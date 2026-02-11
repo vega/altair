@@ -345,7 +345,7 @@ class FacetMapping(core.FacetMapping):
         row: Optional[str | FacetFieldDef | Row] = Undefined,
         **kwargs: Any,
     ) -> None:
-        super().__init__(column=column, row=row, **kwargs)  # type: ignore[arg-type]
+        super().__init__(column=column, row=row, **kwargs)  # type: ignore
 
     def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
@@ -696,13 +696,13 @@ def _condition_to_selection(
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore
     else:
         raise TypeError(if_false)
     return selection
 
 
-class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     # Likely a Field predicate
     empty: Optional[bool]
@@ -728,7 +728,7 @@ but not a `Conditional Value`_.
 """
 
 
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     # Parameter {"param", "value", "empty"}
     # Predicate {"test", "value"}
@@ -777,7 +777,7 @@ Represents all outputs from `when-then-otherwise` conditions, which are not ``Sc
 """
 
 
-class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _Value(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     value: Required[Any]
     __extra_items__: Any
@@ -921,7 +921,7 @@ def _parse_otherwise(
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, SchemaBase):
         selection = statement.copy()
-        conditions.update(**kwds)  # type: ignore[call-arg]
+        conditions.update(**kwds)  # type: ignore
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, Mapping):
@@ -1400,7 +1400,7 @@ def when(
 
 def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
-    return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
+    return _Value(value=value, **kwargs)  # type: ignore
 
 
 def _make_param_obj(
@@ -3794,7 +3794,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN002, ANN003
+    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -4168,7 +4168,12 @@ class Chart(
         - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         context = context or {}
-        kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
+        kwds: Map = {
+            "validate": validate,
+            "format": format,
+            "ignore": ignore,
+            "context": context,
+        }
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
