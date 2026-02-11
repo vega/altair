@@ -5204,13 +5204,13 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str] | list:
+) -> list[str]:
     if isinstance(repeat, list):
         return repeat
-    elif isinstance(repeat, core.LayerRepeatMapping):
+
+    klist = ["row", "column"]  # RepeatMapping
+    if isinstance(repeat, LayerRepeatMapping):
         klist = ["row", "column", "layer"]
-    elif isinstance(repeat, core.RepeatMapping):
-        klist = ["row", "column"]
     rclist = [k for k in klist if repeat[k] is not Undefined]
     rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
     retstr: list[str] = ["".join(s) for s in itertools.product(*rcstrings)]
