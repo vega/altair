@@ -213,7 +213,7 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(values: dict[str, Any] | list | InlineDataset) -> str:
+def _dataset_name(values: dict[str, Any] | list[str] | InlineDataset) -> str:
     """
     Generate a unique hash of the data.
 
@@ -1408,7 +1408,7 @@ def _make_param_obj(
     value: Optional[Any],
     bind: Optional[Binding],
     expr: Optional[str | Expr | Expression],
-    kwds: dict,
+    kwds: dict[str, Any],
 ) -> tuple[
     VariableParameter | TopLevelSelectionParameter | SelectionParameter,
     Literal["variable", "selection"],
@@ -2220,8 +2220,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         base_url: str = "https://cdn.jsdelivr.net/npm",
         output_div: str = "vis",
-        embed_options: dict | None = None,
-        json_kwds: dict | None = None,
+        embed_options: dict[str, Any] | None = None,
+        json_kwds: dict[str, Any] | None = None,
         fullhtml: bool = True,
         requirejs: bool = False,
         inline: bool = False,
@@ -3811,7 +3811,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         renderer: Optional[Literal["canvas", "svg"]] = Undefined,
         theme: Optional[str] = Undefined,
-        actions: Optional[bool | dict] = Undefined,
+        actions: Optional[bool | dict[str, Any]] = Undefined,
         **kwargs: Any,
     ) -> None:
         """
@@ -4061,8 +4061,12 @@ class Chart(
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
         mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
-        width: Optional[float | dict | Step | Literal["container"]] = Undefined,
-        height: Optional[float | dict | Step | Literal["container"]] = Undefined,
+        width: Optional[
+            float | dict[str, Any] | Step | Literal["container"]
+        ] = Undefined,
+        height: Optional[
+            float | dict[str, Any] | Step | Literal["container"]
+        ] = Undefined,
         **kwargs: Any,
     ) -> None:
         super().__init__(
@@ -4322,26 +4326,26 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         self,
         repeat: Optional[list[str] | LayerRepeatMapping | RepeatMapping] = Undefined,
         spec: Optional[ChartType] = Undefined,
-        align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
-        autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
+        align: Optional[dict[str, Any] | SchemaBase | LayoutAlign_T] = Undefined,
+        autosize: Optional[dict[str, Any] | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | dict[str, Any] | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
-        center: Optional[bool | dict | SchemaBase] = Undefined,
+        center: Optional[bool | dict[str, Any] | SchemaBase] = Undefined,
         columns: Optional[int] = Undefined,
-        config: Optional[dict | SchemaBase] = Undefined,
+        config: Optional[dict[str, Any] | SchemaBase] = Undefined,
         data: Optional[ChartDataType] = Undefined,
-        datasets: Optional[dict | SchemaBase] = Undefined,
+        datasets: Optional[dict[str, Any] | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[dict[str, Any] | float | Parameter | SchemaBase] = Undefined,
         params: Optional[Sequence[_Parameter]] = Undefined,
-        resolve: Optional[dict | SchemaBase] = Undefined,
-        spacing: Optional[dict | float | SchemaBase] = Undefined,
-        title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
-        usermeta: Optional[dict | SchemaBase] = Undefined,
+        resolve: Optional[dict[str, Any] | SchemaBase] = Undefined,
+        spacing: Optional[dict[str, Any] | float | SchemaBase] = Undefined,
+        title: Optional[str | dict[str, Any] | SchemaBase | Sequence[str]] = Undefined,
+        transform: Optional[Sequence[dict[str, Any] | SchemaBase]] = Undefined,
+        usermeta: Optional[dict[str, Any] | SchemaBase] = Undefined,
         **kwds: Any,
     ) -> None:
         tp_name = type(self).__name__
@@ -4918,7 +4922,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         self,
         data: Optional[ChartDataType] = Undefined,
         spec: Optional[ChartType] = Undefined,
-        facet: Optional[dict | SchemaBase] = Undefined,
+        facet: Optional[dict[str, Any] | SchemaBase] = Undefined,
         params: Optional[Sequence[_Parameter]] = Undefined,
         **kwargs: Any,
     ) -> None:
