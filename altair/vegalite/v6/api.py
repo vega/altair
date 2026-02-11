@@ -133,7 +133,6 @@ if TYPE_CHECKING:
         InlineDataset,
         IntervalSelectionConfig,
         JoinAggregateFieldDef,
-        LayerRepeatMapping,
         LookupSelection,
         NamedData,
         ParameterName,
@@ -154,6 +153,8 @@ if TYPE_CHECKING:
         Vector3number,
         WindowFieldDef,
     )
+
+from .schema.core import LayerRepeatMapping
 
 __all__ = [
     "TOPLEVEL_ONLY_KEYS",
