@@ -23,7 +23,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
 
-      # Install dependencies from pyproject.toml (latest versions for all matrix jobs)        
+      # Install dependencies from pyproject.toml (latest versions for all matrix jobs)
       - name: Install dependencies
         run: uv pip install -e ".[dev, all]"
 
@@ -32,7 +32,7 @@ jobs:
         if: ${{ matrix.required-dependencies == 'minimum' }}
         run: |
           # Keep in sync with versions in `pyproject.toml`
-          uv pip install jsonschema==3.0 narwhals==1.27.1 typing_extensions==4.12.0
+          uv pip install jsonschema==3.0 narwhals==1.27.1 typing_extensions==4.12.0 setuptools==81.0.0
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
