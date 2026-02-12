@@ -1501,7 +1501,7 @@ def param(
         parameter.name = str(name)
         if parameter.param is not Undefined:
             param_obj = t.cast(
-                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
                 parameter.param,
             )
             param_obj.name = str(name)
@@ -1512,7 +1512,7 @@ def param(
         parameter._name_is_hashed = True
         if parameter.param is not Undefined:
             param_obj = t.cast(
-                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
                 parameter.param,
             )
             param_obj.name = hash_name
