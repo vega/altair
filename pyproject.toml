@@ -6,6 +6,7 @@
 # - ruff
 # - pytest
 # - mypy
+# - pyright (experimental)
 
 [build-system]
 requires = ["hatchling"]
@@ -34,7 +35,7 @@ keywords = [
 ]
 requires-python = ">=3.9"
 dynamic = ["version"]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -70,7 +71,7 @@ all = [
 dev = [
     "hatch>=1.13.0",
     "ruff>=0.9.5",
-    "duckdb>=1.0; python_version<\"3.14\"",
+    "duckdb>=1.0; python_version<'3.14'",
     "ipython",
     "ipykernel",
     "pandas>=1.1.3",
@@ -83,7 +84,7 @@ dev = [
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "geopandas>=0.14.3; python_version<\"3.14\"",
+    "geopandas>=0.14.3; python_version<'3.14'",
     # Pin <1.38 until string_view/Utf8View breakage fixed (narwhals#3450, polars#26435)
     "polars>=0.20.3,<1.38",
     "taskipy>=1.14.1",
@@ -101,20 +102,20 @@ doc = [
     "sphinx_copybutton",
     "sphinx-design",
     "scipy",
-    "scipy-stubs; python_version>=\"3.10\"",
+    "scipy-stubs; python_version>='3.10'",
 ]
+
 [dependency-groups]
 geospatial = [
     "geopandas>=0.14.3",
-    "polars-st>=0.1.0a27 ; python_full_version >= '3.10'",
+    "polars-st>=0.1.0a27 ; python_full_version>='3.10'",
 ]
-
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
-vega-datasets     = "v3.2.1" # https://github.com/vega/vega-datasets
-vega-embed        = "v7"       # https://github.com/vega/vega-embed
-vega-lite         = "v6.1.0" # https://github.com/vega/vega-lite
+vega-datasets = "v3.2.1" # https://github.com/vega/vega-datasets
+vega-embed    = "v7"     # https://github.com/vega/vega-embed
+vega-lite     = "v6.1.0" # https://github.com/vega/vega-lite
 
 [tool.hatch]
 build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
@@ -144,7 +145,8 @@ line-length = 88
 target-version = "py39"
 
 [tool.ruff.lint]
-extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+extend-safe-fixes = [
+    # https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
     "ANN204",  # missing-return-type-special-method
     "C405",    # unnecessary-literal-set
     "C419",    # unnecessary-comprehension-in-call
@@ -162,7 +164,8 @@ extend-safe-fixes = [ # https://docs.astral.sh/ruff/settings/#lint_extend-safe-f
     "W291",    # trailing-whitespace
     "W293",    # blank line contains whitespace
 ]
-extend-select = [ # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+extend-select = [
+    # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
     "FURB",    # refurb
     # "PLC2801", # unnecessary-dunder-call
     "PLR1733", # unnecessary-dict-index-lookup
@@ -190,7 +193,7 @@ ignore = [
     "W505",   # doc-line-too-long
 ]
 mccabe.max-complexity = 10
-preview = false # https://docs.astral.sh/ruff/preview/
+preview               = false   # https://docs.astral.sh/ruff/preview/
 pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 select = [
     "ANN",     # flake8-annotations
@@ -282,7 +285,6 @@ test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdis
 test-min      = "task ruff-check && task type-check && hatch test --python 3.9"
 test-all      = "task ruff-check && task type-check && hatch test --all"
 
-
 generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
 
@@ -301,14 +303,17 @@ clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"
 publish = "task build && uv publish"
 
-nightly-build = "python tools/generate_nightly_version.py --update && task build"
+nightly-build   = "python tools/generate_nightly_version.py --update && task build"
 nightly-release = "task nightly-build && echo 'Package built, ready for GitHub release'"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
 # They contain examples which are being executed by the
 # test_examples tests.
-norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+norecursedirs = [
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax"
+]
 addopts = [
     "--numprocesses=logical",
     "--doctest-modules",
@@ -353,22 +358,22 @@ module = [
 disable_error_code = ["annotation-unchecked"]
 
 [tool.pyright]
-enableExperimentalFeatures=true
-extraPaths=["./tools"]
-pythonPlatform="All"
-pythonVersion="3.9"
-reportTypedDictNotRequiredAccess="none"
-reportIncompatibleMethodOverride="none"
-reportUnusedExpression="none"
-reportUnsupportedDunderAll="none"
-include=[
+enableExperimentalFeatures = true
+extraPaths = ["./tools"]
+pythonPlatform = "All"
+pythonVersion = "3.9"
+reportTypedDictNotRequiredAccess = "none"
+reportIncompatibleMethodOverride = "none"
+reportUnusedExpression = "none"
+reportUnsupportedDunderAll = "none"
+include = [
     "./altair/**/*.py",
     "./doc/*.py",
-	"./tests/**/*.py",
-	"./tools/**/*.py",
+    "./tests/**/*.py",
+    "./tools/**/*.py",
     "./sphinxext/**/*.py",
 ]
-ignore=[
+ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 716 warns
     "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
