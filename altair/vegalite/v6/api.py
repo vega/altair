@@ -133,7 +133,6 @@ if TYPE_CHECKING:
         InlineDataset,
         IntervalSelectionConfig,
         JoinAggregateFieldDef,
-        LayerRepeatMapping,
         LookupSelection,
         NamedData,
         ParameterName,
@@ -154,6 +153,8 @@ if TYPE_CHECKING:
         Vector3number,
         WindowFieldDef,
     )
+
+from .schema.core import LayerRepeatMapping
 
 __all__ = [
     "TOPLEVEL_ONLY_KEYS",
@@ -212,7 +213,7 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(values: dict[str, Any] | list | InlineDataset) -> str:
+def _dataset_name(values: dict[str, Any] | list[str] | InlineDataset) -> str:
     """
     Generate a unique hash of the data.
 
@@ -344,7 +345,7 @@ class FacetMapping(core.FacetMapping):
         row: Optional[str | FacetFieldDef | Row] = Undefined,
         **kwargs: Any,
     ) -> None:
-        super().__init__(column=column, row=row, **kwargs)  # type: ignore[arg-type]
+        super().__init__(column=column, row=row, **kwargs)  # type: ignore
 
     def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
@@ -695,13 +696,13 @@ def _condition_to_selection(
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore
     else:
         raise TypeError(if_false)
     return selection
 
 
-class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     # Likely a Field predicate
     empty: Optional[bool]
@@ -727,7 +728,7 @@ but not a `Conditional Value`_.
 """
 
 
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     # Parameter {"param", "value", "empty"}
     # Predicate {"test", "value"}
@@ -776,7 +777,7 @@ Represents all outputs from `when-then-otherwise` conditions, which are not ``Sc
 """
 
 
-class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class _Value(TypedDict, closed=True, total=False):  # type: ignore
     # https://peps.python.org/pep-0728/
     value: Required[Any]
     __extra_items__: Any
@@ -920,7 +921,7 @@ def _parse_otherwise(
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, SchemaBase):
         selection = statement.copy()
-        conditions.update(**kwds)  # type: ignore[call-arg]
+        conditions.update(**kwds)  # type: ignore
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, Mapping):
@@ -1399,7 +1400,7 @@ def when(
 
 def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
-    return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
+    return _Value(value=value, **kwargs)  # type: ignore
 
 
 def _make_param_obj(
@@ -1407,7 +1408,7 @@ def _make_param_obj(
     value: Optional[Any],
     bind: Optional[Binding],
     expr: Optional[str | Expr | Expression],
-    kwds: dict,
+    kwds: dict[str, Any],
 ) -> tuple[
     VariableParameter | TopLevelSelectionParameter | SelectionParameter,
     Literal["variable", "selection"],
@@ -1500,7 +1501,7 @@ def param(
         parameter.name = str(name)
         if parameter.param is not Undefined:
             param_obj = t.cast(
-                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
                 parameter.param,
             )
             param_obj.name = str(name)
@@ -1511,7 +1512,7 @@ def param(
         parameter._name_is_hashed = True
         if parameter.param is not Undefined:
             param_obj = t.cast(
-                "Union[VariableParameter, TopLevelSelectionParameter, SelectionParameter]",
+                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
                 parameter.param,
             )
             param_obj.name = hash_name
@@ -2223,8 +2224,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         base_url: str = "https://cdn.jsdelivr.net/npm",
         output_div: str = "vis",
-        embed_options: dict | None = None,
-        json_kwds: dict | None = None,
+        embed_options: dict[str, Any] | None = None,
+        json_kwds: dict[str, Any] | None = None,
         fullhtml: bool = True,
         requirejs: bool = False,
         inline: bool = False,
@@ -3797,7 +3798,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN002, ANN003
+    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -3814,7 +3815,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         renderer: Optional[Literal["canvas", "svg"]] = Undefined,
         theme: Optional[str] = Undefined,
-        actions: Optional[bool | dict] = Undefined,
+        actions: Optional[bool | dict[str, Any]] = Undefined,
         **kwargs: Any,
     ) -> None:
         """
@@ -4064,8 +4065,12 @@ class Chart(
         data: Optional[ChartDataType] = Undefined,
         encoding: Optional[FacetedEncoding] = Undefined,
         mark: Optional[AnyMark | Mark_T | CompositeMark_T] = Undefined,
-        width: Optional[float | dict | Step | Literal["container"]] = Undefined,
-        height: Optional[float | dict | Step | Literal["container"]] = Undefined,
+        width: Optional[
+            float | dict[str, Any] | Step | Literal["container"]
+        ] = Undefined,
+        height: Optional[
+            float | dict[str, Any] | Step | Literal["container"]
+        ] = Undefined,
         **kwargs: Any,
     ) -> None:
         super().__init__(
@@ -4167,7 +4172,12 @@ class Chart(
         - *Technical*: ``ignore`` will **not** be passed to child :meth:`.to_dict()`.
         """
         context = context or {}
-        kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
+        kwds: Map = {
+            "validate": validate,
+            "format": format,
+            "ignore": ignore,
+            "context": context,
+        }
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
@@ -4325,26 +4335,26 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         self,
         repeat: Optional[list[str] | LayerRepeatMapping | RepeatMapping] = Undefined,
         spec: Optional[ChartType] = Undefined,
-        align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
-        autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
+        align: Optional[dict[str, Any] | SchemaBase | LayoutAlign_T] = Undefined,
+        autosize: Optional[dict[str, Any] | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
+            str | dict[str, Any] | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
-        center: Optional[bool | dict | SchemaBase] = Undefined,
+        center: Optional[bool | dict[str, Any] | SchemaBase] = Undefined,
         columns: Optional[int] = Undefined,
-        config: Optional[dict | SchemaBase] = Undefined,
+        config: Optional[dict[str, Any] | SchemaBase] = Undefined,
         data: Optional[ChartDataType] = Undefined,
-        datasets: Optional[dict | SchemaBase] = Undefined,
+        datasets: Optional[dict[str, Any] | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         name: Optional[str] = Undefined,
-        padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
+        padding: Optional[dict[str, Any] | float | Parameter | SchemaBase] = Undefined,
         params: Optional[Sequence[_Parameter]] = Undefined,
-        resolve: Optional[dict | SchemaBase] = Undefined,
-        spacing: Optional[dict | float | SchemaBase] = Undefined,
-        title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
-        transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
-        usermeta: Optional[dict | SchemaBase] = Undefined,
+        resolve: Optional[dict[str, Any] | SchemaBase] = Undefined,
+        spacing: Optional[dict[str, Any] | float | SchemaBase] = Undefined,
+        title: Optional[str | dict[str, Any] | SchemaBase | Sequence[str]] = Undefined,
+        transform: Optional[Sequence[dict[str, Any] | SchemaBase]] = Undefined,
+        usermeta: Optional[dict[str, Any] | SchemaBase] = Undefined,
         **kwds: Any,
     ) -> None:
         tp_name = type(self).__name__
@@ -4921,7 +4931,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         self,
         data: Optional[ChartDataType] = Undefined,
         spec: Optional[ChartType] = Undefined,
-        facet: Optional[dict | SchemaBase] = Undefined,
+        facet: Optional[dict[str, Any] | SchemaBase] = Undefined,
         params: Optional[Sequence[_Parameter]] = Undefined,
         **kwargs: Any,
     ) -> None:
@@ -5203,13 +5213,13 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str] | list:
+) -> list[str]:
     if isinstance(repeat, list):
         return repeat
-    elif isinstance(repeat, core.LayerRepeatMapping):
+
+    klist = ["row", "column"]  # RepeatMapping
+    if isinstance(repeat, LayerRepeatMapping):
         klist = ["row", "column", "layer"]
-    elif isinstance(repeat, core.RepeatMapping):
-        klist = ["row", "column"]
     rclist = [k for k in klist if repeat[k] is not Undefined]
     rcstrings = [[f"{k}_{v}" for v in repeat[k]] for k in rclist]
     retstr: list[str] = ["".join(s) for s in itertools.product(*rcstrings)]

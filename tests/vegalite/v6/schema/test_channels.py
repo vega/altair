@@ -53,7 +53,7 @@ def test_channels_typing() -> None:
     assert angle.sort(dates_mixed).to_dict()
 
     # NOTE: Triggering static and runtime errors
-    invariant_sequence = angle.sort([*nums, *dates])  # type: ignore[arg-type] # pyright: ignore[reportCallIssue]
+    invariant_sequence = angle.sort([*nums, *dates])  # type: ignore
     with pytest.raises(SchemaValidationError):
         invariant_sequence.to_dict()
 
