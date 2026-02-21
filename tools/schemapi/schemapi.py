@@ -1284,7 +1284,9 @@ class SchemaBase:
         if context is None:
             context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
-        return json.dumps(dct, indent=indent, sort_keys=sort_keys, ensure_ascii=ensure_ascii, **kwargs)
+        return json.dumps(
+            dct, indent=indent, sort_keys=sort_keys, ensure_ascii=ensure_ascii, **kwargs
+        )
 
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:

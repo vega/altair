@@ -2218,7 +2218,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         spec = self.to_dict(
             validate=validate, format=format, ignore=ignore, context=context
         )
-        return json.dumps(spec, indent=indent, sort_keys=sort_keys, ensure_ascii=ensure_ascii, **kwargs)
+        return json.dumps(
+            spec,
+            indent=indent,
+            sort_keys=sort_keys,
+            ensure_ascii=ensure_ascii,
+            **kwargs,
+        )
 
     def to_html(
         self,
