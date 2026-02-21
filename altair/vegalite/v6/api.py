@@ -2173,6 +2173,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format: Literal["vega-lite", "vega"] = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
+        ensure_ascii: bool = False,
         **kwargs: Any,
     ) -> str:
         """
@@ -2194,6 +2195,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             A list of keys to ignore.
         context : dict[str, Any], optional
             A context dictionary.
+        ensure_ascii : bool, optional
+            If False (default), allow UTF-8 characters in the output.
+            If True, escape non-ASCII characters.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
@@ -2214,7 +2218,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         spec = self.to_dict(
             validate=validate, format=format, ignore=ignore, context=context
         )
-        return json.dumps(spec, indent=indent, sort_keys=sort_keys, **kwargs)
+        return json.dumps(
+            spec,
+            indent=indent,
+            sort_keys=sort_keys,
+            ensure_ascii=ensure_ascii,
+            **kwargs,
+        )
 
     def to_html(
         self,
