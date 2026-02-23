@@ -8,6 +8,7 @@ import json
 import operator
 import sys
 import textwrap
+import zoneinfo
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
@@ -522,7 +523,7 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
                 hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
             )
         if tzinfo := obj.tzinfo:
-            if tzinfo is dt.timezone.utc:
+            if tzinfo in [dt.timezone.utc, zoneinfo.ZoneInfo("UTC")]:
                 result["utc"] = True
             else:
                 msg = (
@@ -1244,6 +1245,7 @@ class SchemaBase:
         *,
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
+        ensure_ascii: bool = False,
         **kwargs,
     ) -> str:
         """
@@ -1261,6 +1263,9 @@ class SchemaBase:
             A list of keys to ignore.
         context : dict[str, Any], optional
             A context dictionary.
+        ensure_ascii : bool, optional
+            If False (default), allow UTF-8 characters in the output.
+            If True, escape non-ASCII characters.
         **kwargs
             Additional keyword arguments are passed to ``json.dumps()``
 
@@ -1279,7 +1284,9 @@ class SchemaBase:
         if context is None:
             context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
-        return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
+        return json.dumps(
+            dct, indent=indent, sort_keys=sort_keys, ensure_ascii=ensure_ascii, **kwargs
+        )
 
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:

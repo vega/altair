@@ -25,7 +25,7 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from altair.utils.core import use_signature
+from altair.utils.core import use_signature_func
 from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import (
     skip_requires_duckdb,
@@ -234,11 +234,15 @@ def test_chart_data_types():
     assert dct["data"] == {"name": "Foo"}
 
 
-@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_infer_types():
+    try:
+        x_dates = pd.date_range("2012", periods=10, freq="YE")
+    except (ValueError, TypeError):
+        # Older pandas may not recognize "YE"; use "Y" (year-end) instead
+        x_dates = pd.date_range("2012", periods=10, freq="Y")
     data = pd.DataFrame(
         {
-            "x": pd.date_range("2012", periods=10, freq="Y"),
+            "x": x_dates,
             "y": range(10),
             "c": list("abcabcabca"),
             "s": pd.Categorical([1, 2] * 5, categories=[2, 1], ordered=True),
@@ -1999,7 +2003,7 @@ def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_binding() -> None:
-    @use_signature(alt.Binding)
+    @use_signature_func(alt.Binding)
     def old_binding(input: Any, **kwargs: Any) -> alt.Binding:
         """A generic binding."""
         return alt.Binding(input=input, **kwargs)

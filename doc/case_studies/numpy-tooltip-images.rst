@@ -91,7 +91,7 @@ is in the form of an image and render it appropriately.
     # The column with the base64 image string must be called "image" in order for it to trigger the image rendering in the tooltip
     df['image'] = df[['image1', 'image2']].apply(create_tooltip_image, axis=1)
 
-    # Dropping the image arrays since they are large an no longer needed
+    # Dropping the image arrays since they are large and no longer needed
     df_plot = df.drop(columns=['image1', 'image2'])
     df_plot
 
@@ -153,7 +153,7 @@ instead of both the images concatenated together.
 
     # The column with the base64 image string must be called "image" in order for it to trigger the image rendering in the tooltip
     df[['image1_base64', 'image2_base64']] = df[['image1', 'image2']].map(create_tooltip_image)
-    # Dropping the image arrays since they are large an no longer needed
+    # Dropping the image arrays since they are large and no longer needed
     # Also drop the previous tooltip image for clarity
     df_plot = df.drop(columns=['image1', 'image2', 'image'])
     df_plot
