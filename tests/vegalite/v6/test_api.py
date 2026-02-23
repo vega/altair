@@ -1736,6 +1736,85 @@ def test_layer_errors():
         alt.layer(simple_chart) + facet_chart2
 
 
+def test_layer_hoist_facet_encodings():
+    """Charts with identical facet encodings can be layered directly."""
+    import pandas as pd
+
+    data = pd.DataFrame({"x": [1, 2], "y": [3, 4], "row": ["a", "b"]})
+
+    base = alt.Chart(data).encode(x="x:Q", row="row:N")
+    chart = alt.layer(
+        base.mark_point().encode(y="y:Q"),
+        base.mark_line().encode(y="y:Q"),
+    )
+
+    # Result should be a FacetChart, not a LayerChart
+    assert isinstance(chart, alt.FacetChart)
+
+    # The inner spec should be a LayerChart with no facet encodings
+    assert isinstance(chart.spec, alt.LayerChart)
+    for layer_spec in chart.spec.layer:
+        encoding = layer_spec._get("encoding")
+        assert encoding._get("row") is Undefined
+
+    # The equivalent manual construction should produce the same dict
+    manual = alt.layer(
+        alt.Chart(data).mark_point().encode(x="x:Q", y="y:Q"),
+        alt.Chart(data).mark_line().encode(x="x:Q", y="y:Q"),
+    ).facet(row="row:N")
+    assert chart.to_dict() == manual.to_dict()
+
+
+def test_layer_hoist_facet_encodings_row_column():
+    """Hoisting works for both row and column facet encodings."""
+    import pandas as pd
+
+    data = pd.DataFrame({"x": [1], "y": [2], "row": ["a"], "col": ["b"]})
+
+    base = alt.Chart(data).encode(x="x:Q", row="row:N", column="col:N")
+    chart = base.mark_point().encode(y="y:Q") + base.mark_line().encode(y="y:Q")
+
+    assert isinstance(chart, alt.FacetChart)
+    assert isinstance(chart.facet, alt.FacetMapping)
+    assert chart.facet.row is not Undefined
+    assert chart.facet.column is not Undefined
+
+
+def test_layer_hoist_wrapped_facet_encoding():
+    """Hoisting works for wrapped facet (``facet=`` channel)."""
+    import pandas as pd
+
+    data = pd.DataFrame({"x": [1], "y": [2], "cat": ["a"]})
+
+    base = alt.Chart(data).encode(x="x:Q", facet="cat:N")
+    chart = alt.layer(
+        base.mark_point().encode(y="y:Q"),
+        base.mark_line().encode(y="y:Q"),
+    )
+
+    assert isinstance(chart, alt.FacetChart)
+    # Wrapped facet produces a Facet shorthand, not a FacetMapping
+    assert not isinstance(chart.facet, alt.FacetMapping)
+
+
+def test_layer_hoist_facet_mismatched_raises():
+    """Layers with different facet encodings still raise TypeError."""
+    chart_row_a = alt.Chart("data.csv").mark_point().encode(row="a:N")
+    chart_row_b = alt.Chart("data.csv").mark_point().encode(row="b:N")
+
+    with pytest.raises(TypeError, match=r"Faceted.+cannot be layered"):
+        alt.layer(chart_row_a, chart_row_b)
+
+
+def test_layer_hoist_facet_partial_raises():
+    """A layer with facet encoding and one without still raises TypeError."""
+    chart_with_facet = alt.Chart("data.csv").mark_point().encode(row="a:N")
+    chart_without = alt.Chart("data.csv").mark_point()
+
+    with pytest.raises(TypeError, match=r"Faceted.+cannot be layered"):
+        alt.layer(chart_with_facet, chart_without)
+
+
 @pytest.mark.parametrize(
     "chart_type",
     ["layer", "hconcat", "vconcat", "concat", "facet", "facet_encoding", "repeat"],

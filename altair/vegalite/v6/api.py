@@ -2421,7 +2421,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return f"alt.{self.__class__.__name__}(...)"
 
     # Layering and stacking
-    def __add__(self, other: ChartType) -> LayerChart:
+    def __add__(self, other: ChartType) -> LayerChart | FacetChart:
         if not is_chart_type(other):
             msg = "Only Chart objects can be layered."
             raise ValueError(msg)
@@ -4904,9 +4904,78 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return self.add_params(*selections)
 
 
-def layer(*charts: LayerType, **kwargs: Any) -> LayerChart:
-    """Layer multiple charts."""
-    return LayerChart(layer=charts, **kwargs)
+_FACET_CHANNELS = ("row", "column", "facet")
+
+
+def _get_facet_spec(chart: LayerType) -> dict[str, Any]:
+    """Return the facet-related encoding channels from a chart as a plain dict."""
+    encoding = chart._get("encoding")
+    if utils.is_undefined(encoding):
+        return {}
+    d: dict[str, Any] = {}
+    for ch in _FACET_CHANNELS:
+        val = encoding._get(ch)
+        if val is not Undefined:
+            d[ch] = val
+    return d
+
+
+def _hoist_facet_encodings(
+    subcharts: Sequence[LayerType],
+) -> tuple[list[LayerType], dict[str, Any]]:
+    """
+    Extract common facet encodings from layers if all layers share them.
+
+    If all subcharts have identical facet-related encodings (``row``, ``column``,
+    ``facet``), strips those channels from each subchart's encoding and returns
+    the cleaned subcharts together with the common facet encoding dict.  Returns
+    ``(list(subcharts), {})`` when there is nothing to hoist (no facet encodings,
+    or the specs differ across layers).
+    """
+    per_chart = [_get_facet_spec(c) for c in subcharts]
+
+    # Nothing to hoist if no chart has any facet encoding.
+    if all(not d for d in per_chart):
+        return list(subcharts), {}
+
+    # Use to_dict() for robust equality comparison of SchemaBase objects.
+    def _serialize(d: dict[str, Any]) -> dict[str, Any]:
+        return {k: v.to_dict() if hasattr(v, "to_dict") else v for k, v in d.items()}
+
+    first_cmp = _serialize(per_chart[0])
+    if not all(_serialize(d) == first_cmp for d in per_chart[1:]):
+        # Facet specs differ across layers; cannot hoist — fall through to error.
+        return list(subcharts), {}
+
+    # All layers share the same facet spec — strip those channels from each layer.
+    # Use copy(deep=["encoding"]) so the original charts are not mutated and so
+    # that the data identity (needed by _combine_subchart_data) is preserved.
+    cleaned: list[Any] = []
+    for chart in subcharts:
+        chart = chart.copy(deep=["encoding"])
+        encoding = chart._get("encoding")
+        if not utils.is_undefined(encoding):
+            for ch in _FACET_CHANNELS:
+                encoding[ch] = Undefined
+        cleaned.append(chart)
+
+    return cleaned, per_chart[0]
+
+
+def layer(*charts: LayerType, **kwargs: Any) -> LayerChart | FacetChart:
+    """
+    Layer multiple charts.
+
+    When all charts share identical facet encodings (``row``, ``column``, or
+    ``facet`` channels), those encodings are automatically hoisted and the
+    result is a :class:`FacetChart` equivalent to calling
+    ``.facet(row=..., column=...)`` after layering.
+    """
+    cleaned_charts, facet_kwargs = _hoist_facet_encodings(charts)
+    result = LayerChart(layer=cleaned_charts, **kwargs)
+    if facet_kwargs:
+        return result.facet(**facet_kwargs)
+    return result
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
