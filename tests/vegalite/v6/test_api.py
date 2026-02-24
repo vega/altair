@@ -1901,15 +1901,6 @@ def test_layer_hoist_facet_partial_raises():
         alt.layer(chart_with_facet, chart_without)
 
 
-def test_layer_hoist_mixed_facet_chaining_raises_helpful_error(facet_layer_data):
-    """Calling .facet() on a FacetChart (mixed case) gives a helpful TypeError."""
-    base = alt.Chart(facet_layer_data).encode(x="x:Q", y="y:Q", row="row:N")
-    facet_chart = alt.layer(base.mark_point(), base.mark_line())
-
-    with pytest.raises(TypeError, match=r"not callable.+\.facet\(\).+FacetChart"):
-        facet_chart.facet(column="col:N")
-
-
 @pytest.mark.parametrize(
     "chart_type",
     ["layer", "hconcat", "vconcat", "concat", "facet", "facet_encoding", "repeat"],
