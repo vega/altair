@@ -427,15 +427,14 @@ The equivalent explicit form is:
 
 .. code-block:: python
 
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+    )
+
     alt.layer(
-        alt.Chart(penguins).mark_point().encode(
-            x=alt.X('Flipper Length (mm):Q').scale(zero=False),
-            y=alt.Y('Body Mass (g):Q').scale(zero=False),
-        ),
-        alt.Chart(penguins).mark_line().encode(
-            x=alt.X('Flipper Length (mm):Q').scale(zero=False),
-            y=alt.Y('Body Mass (g):Q').scale(zero=False),
-        ),
+        base.mark_point(),
+        base.mark_line(),
     ).facet(row='Species:N')
 
 If the facet encodings differ across layers, or only some layers carry them,
