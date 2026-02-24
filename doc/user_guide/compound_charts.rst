@@ -60,8 +60,11 @@ number of charts:
       base.mark_rule()
     ).interactive()
 
-The output of both of these patterns is a :class:`LayerChart` object, which
-has properties and methods similar to the :class:`Chart` object.
+Normally, the output of both of these patterns is a :class:`LayerChart` object,
+which has properties and methods similar to the :class:`Chart` object. If all
+charts share identical ``row``, ``column``, or ``facet`` encoding channels, those
+encodings are hoisted automatically and a :class:`FacetChart` is returned instead
+(see :ref:`layer-shared-facet`).
 
 Order of Layers
 ^^^^^^^^^^^^^^^
@@ -391,3 +394,49 @@ layered chart with a hover selection:
 Though each of the above examples have faceted the data across columns,
 faceting across rows (or across rows *and* columns) is supported as
 well.
+
+.. _layer-shared-facet:
+
+Layering charts that share a facet encoding
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When every chart passed to :func:`layer` (or combined with ``+``) carries
+identical ``row``, ``column``, or ``facet`` encoding channels, those encodings
+are hoisted automatically and a :class:`FacetChart` is returned. The two forms
+below produce the same Vega-Lite specification:
+
+.. altair-plot::
+
+    import altair as alt
+    from altair.datasets import data
+    penguins = data.penguins.url
+
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        row='Species:N',
+    )
+
+    # facet encoding shared on each layer — hoisted automatically
+    alt.layer(
+        base.mark_point(),
+        base.mark_line(),
+    )
+
+The equivalent explicit form is:
+
+.. code-block:: python
+
+    alt.layer(
+        alt.Chart(penguins).mark_point().encode(
+            x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+            y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        ),
+        alt.Chart(penguins).mark_line().encode(
+            x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+            y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        ),
+    ).facet(row='Species:N')
+
+If the facet encodings differ across layers, or only some layers carry them,
+a ``TypeError`` is raised as before.
