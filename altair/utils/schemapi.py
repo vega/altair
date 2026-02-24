@@ -1112,6 +1112,17 @@ class SchemaBase:
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
 
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        msg = (
+            f"{type(self).__name__!r} object is not callable. "
+            "If you are trying to call .facet() on a FacetChart, note that "
+            ".facet() is only available on LayerChart and Chart. "
+            "To facet by multiple dimensions, either encode them all on the base "
+            "chart (encode(row=..., column=...)) or pass them together to "
+            ".facet(row=..., column=...) on the LayerChart."
+        )
+        raise TypeError(msg)
+
     def copy(
         self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
