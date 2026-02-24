@@ -1744,13 +1744,17 @@ def test_layer_errors():
 def facet_layer_data():
     import pandas as pd
 
-    return pd.DataFrame({"x": [1, 2], "y": [3, 4], "row": ["a", "b"], "col": ["c", "d"]})
+    return pd.DataFrame(
+        {"x": [1, 2], "y": [3, 4], "row": ["a", "b"], "col": ["c", "d"]}
+    )
 
 
 def test_layer_hoist_row_returns_facetchart(facet_layer_data):
     """Layering charts that share a row encoding produces a FacetChart."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", row="row:N")
-    chart = alt.layer(base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q"))
+    chart = alt.layer(
+        base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q")
+    )
 
     assert isinstance(chart, alt.FacetChart)
     assert isinstance(chart.spec, alt.LayerChart)
@@ -1770,7 +1774,9 @@ def test_layer_hoist_row_column_returns_facetchart(facet_layer_data):
 def test_layer_hoist_wrapped_facet_returns_facetchart(facet_layer_data):
     """Layering charts that share a wrapped facet encoding produces a FacetChart."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", facet="row:N")
-    chart = alt.layer(base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q"))
+    chart = alt.layer(
+        base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q")
+    )
 
     assert isinstance(chart, alt.FacetChart)
     assert not isinstance(chart.facet, alt.FacetMapping)
@@ -1779,7 +1785,9 @@ def test_layer_hoist_wrapped_facet_returns_facetchart(facet_layer_data):
 def test_layer_hoist_inner_layers_have_no_facet_encoding(facet_layer_data):
     """After hoisting, the inner layer specs must not contain facet channels."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", row="row:N", column="col:N")
-    chart = alt.layer(base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q"))
+    chart = alt.layer(
+        base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q")
+    )
 
     for layer_spec in chart.spec.layer:
         encoding = layer_spec._get("encoding")
@@ -1805,7 +1813,9 @@ def test_layer_hoist_does_not_mutate_inputs(facet_layer_data):
 def test_layer_hoist_row_vega_spec_matches_manual(facet_layer_data):
     """Hoisted row spec must produce the same Vega-Lite JSON as manual .facet()."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", row="row:N")
-    auto = alt.layer(base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q"))
+    auto = alt.layer(
+        base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q")
+    )
 
     manual = alt.layer(
         alt.Chart(facet_layer_data).mark_point().encode(x="x:Q", y="y:Q"),
@@ -1831,7 +1841,9 @@ def test_layer_hoist_row_column_vega_spec_matches_manual(facet_layer_data):
 def test_layer_hoist_wrapped_facet_vega_spec_matches_manual(facet_layer_data):
     """Hoisted wrapped-facet spec must produce the same Vega-Lite JSON as manual .facet()."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", facet="row:N")
-    auto = alt.layer(base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q"))
+    auto = alt.layer(
+        base.mark_point().encode(y="y:Q"), base.mark_line().encode(y="y:Q")
+    )
 
     manual = alt.layer(
         alt.Chart(facet_layer_data).mark_point().encode(x="x:Q", y="y:Q"),
@@ -1859,8 +1871,8 @@ def test_layer_hoist_three_layers_all_matching(facet_layer_data):
 def test_layer_hoist_three_layers_partial_mismatch_raises(facet_layer_data):
     """Three layers where only two share the facet encoding still raise TypeError."""
     base = alt.Chart(facet_layer_data).encode(x="x:Q", row="row:N")
-    chart_different_row = alt.Chart(facet_layer_data).mark_point().encode(
-        x="x:Q", y="y:Q", row="col:N"
+    chart_different_row = (
+        alt.Chart(facet_layer_data).mark_point().encode(x="x:Q", y="y:Q", row="col:N")
     )
 
     with pytest.raises(TypeError, match=r"Faceted.+cannot be layered"):
