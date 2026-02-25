@@ -5168,7 +5168,8 @@ def _combine_subchart_params(  # noqa: C901
             subchart.name = f"{base_name}_{i}"
         # Increment names properly for concatenated facet charts to ensure uniqueness
         elif i > 0 and isinstance(subchart, FacetChart):
-            subchart.spec.name = f"{subchart.spec.name[:-1]}{i}"
+            name_prefix, _ = subchart.spec.name.rsplit("_", 1)
+            subchart.spec.name = f"{name_prefix}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)
