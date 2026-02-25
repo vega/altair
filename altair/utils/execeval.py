@@ -8,8 +8,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from os import PathLike
 
-    from _typeshed import ReadableBuffer
-
     if sys.version_info >= (3, 11):
         from typing import Self
     else:
@@ -40,7 +38,7 @@ class _CatchDisplay:
 def eval_block(
     code: str | Any,
     namespace: dict[str, Any] | None = ...,
-    filename: str | ReadableBuffer | PathLike[Any] = ...,
+    filename: str | bytes | PathLike[Any] = ...,
     *,
     strict: Literal[False] = ...,
 ) -> Any | None: ...
@@ -48,14 +46,14 @@ def eval_block(
 def eval_block(
     code: str | Any,
     namespace: dict[str, Any] | None = ...,
-    filename: str | ReadableBuffer | PathLike[Any] = ...,
+    filename: str | bytes | PathLike[Any] = ...,
     *,
     strict: Literal[True],
 ) -> Any: ...
 def eval_block(
     code: str | Any,
     namespace: dict[str, Any] | None = None,
-    filename: str | ReadableBuffer | PathLike[Any] = "<string>",
+    filename: str | bytes | PathLike[Any] = "<string>",
     *,
     strict: bool = False,
 ) -> Any | None:
