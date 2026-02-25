@@ -80,7 +80,7 @@ dev = [
     "pytest-cov",
     "pytest-xdist[psutil]~=3.5",
     "mistune",
-    "mypy<1.18",
+    "mypy",
     "pandas-stubs<2.3.3",
     "types-jsonschema",
     "types-setuptools",
