@@ -354,20 +354,13 @@ disable_error_code = ["annotation-unchecked"]
 
 [tool.pyright]
 enableExperimentalFeatures = true
-extraPaths = ["./tools"]
 pythonPlatform = "All"
 pythonVersion = "3.10"
 reportTypedDictNotRequiredAccess = "none"
 reportIncompatibleMethodOverride = "none"
 reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
-include = [
-    "./altair/**/*.py",
-    "./doc/*.py",
-    "./tests/**/*.py",
-    "./tools/**/*.py",
-    "./sphinxext/**/*.py",
-]
+include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 716 warns
     "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
