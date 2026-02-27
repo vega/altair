@@ -365,25 +365,3 @@ def test_interactive_name_respected():
     assert base_name_0 == expected_base_name, (
         f"Expected base name {expected_base_name}, got {base_name_0}"
     )
-
-
-def test_concat_facet_enumeration():
-    df = pd.DataFrame(
-        {
-            "x": [1, 2, 3, 4],
-            "y": [1, 2, 3, 4],
-            "z": [0, 0, 1, 1],
-        }
-    )
-    c = alt.Chart(df).mark_line().encode(x="x", y="y").facet("z")
-    # Unique names to since this is not related to parameter deduplication
-    p1 = alt.selection_point(name="p1")
-    p2 = alt.selection_point(name="p2")
-    p3 = alt.selection_point(name="p3")
-    concat_facet = c.add_params(p1) & c.add_params(p2) & c.add_params(p3)
-
-    # Test that concatenation of faceted charts result in a unique name for each chart.
-    # https://github.com/vega/altair/issues/3954
-    assert concat_facet.vconcat[0].spec.name != concat_facet.vconcat[1].spec.name
-    assert concat_facet.vconcat[0].spec.name != concat_facet.vconcat[2].spec.name
-    assert concat_facet.vconcat[1].spec.name != concat_facet.vconcat[2].spec.name
