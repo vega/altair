@@ -245,7 +245,7 @@ def _consolidate_data(
     This function will modify context in-place, and return a new version of data
     """
     values: Any = Undefined
-    kwds = {}
+    kwds: dict = {}
 
     if isinstance(data, core.InlineData):
         if utils.is_undefined(data.name) and not utils.is_undefined(data.values):
@@ -255,7 +255,7 @@ def _consolidate_data(
                 values = data.values
             kwds = {"format": data.format}
 
-    elif isinstance(data, dict) and "name" not in data and "values" in data:
+    elif isinstance(data, dict) and ("name" not in data) and ("values" in data):
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
@@ -457,7 +457,7 @@ class Parameter(_expr_core.OperatorMixin):
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
-            nm: str = self.name
+            nm: Any = self.name
             return {"param": nm.to_dict() if hasattr(nm, "to_dict") else nm}
         else:
             msg = f"Unrecognized parameter type: {self.param_type}"
@@ -2119,7 +2119,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        vegalite_spec = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
+        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
