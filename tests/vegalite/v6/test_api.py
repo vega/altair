@@ -2139,14 +2139,17 @@ def test_concat_faceted_three_params_unique_views_per_param_issue_3954():
         spec = (c.add_params(p1) & c.add_params(p2) & c.add_params(p3)).to_dict()
     params = spec["params"]
     vconcat = spec["vconcat"]
-    assert len(params) == 3 and len(vconcat) == 3
+    assert len(params) == 3
+    assert len(vconcat) == 3
     for i in range(3):
         assert params[i]["views"] == [_view_name_of_concat_cell(vconcat[i])]
 
 
 def test_concat_faceted_shared_param_both_views_issue_3954():
     """Regression for #3954: concat of two faceted charts with one shared param — param lists both cell views."""
-    data = pd.DataFrame({"x": [1, 2], "y": [3, 4], "row": ["a", "b"], "col": ["c", "d"]})
+    data = pd.DataFrame(
+        {"x": [1, 2], "y": [3, 4], "row": ["a", "b"], "col": ["c", "d"]}
+    )
     manual = alt.layer(
         alt.Chart(data).mark_point().encode(x="x:Q", y="y:Q"),
         alt.Chart(data).mark_line().encode(x="x:Q", y="y:Q"),
@@ -2156,7 +2159,8 @@ def test_concat_faceted_shared_param_both_views_issue_3954():
         spec = (manual & manual).add_params(selection).to_dict()
     params = spec["params"]
     vconcat = spec["vconcat"]
-    assert len(params) == 1 and len(vconcat) == 2
+    assert len(params) == 1
+    assert len(vconcat) == 2
     assert set(params[0]["views"]) == {
         _view_name_of_concat_cell(vconcat[0]),
         _view_name_of_concat_cell(vconcat[1]),

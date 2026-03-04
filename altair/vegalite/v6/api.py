@@ -5219,9 +5219,7 @@ def _view_base_for_chart(obj: Any) -> str:
     name = getattr(obj, "name", None)
     if name is None or name is Undefined:
         name = (
-            obj._get_view_hash_name()
-            if hasattr(obj, "_get_view_hash_name")
-            else None
+            obj._get_view_hash_name() if hasattr(obj, "_get_view_hash_name") else None
         )
     return _view_name_base(name)
 
@@ -5261,7 +5259,9 @@ def _combine_subchart_params(  # noqa: C901
         views = (
             []
             if isinstance(p, core.VariableParameter)
-            else list(p.views) if p.views else []
+            else list(p.views)
+            if p.views
+            else []
         )
         param_info.append((p, _viewless_dict(p), views))
 
