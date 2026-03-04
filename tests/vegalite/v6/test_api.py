@@ -2165,3 +2165,21 @@ def test_concat_faceted_shared_param_both_views_issue_3954():
         _view_name_of_concat_cell(vconcat[0]),
         _view_name_of_concat_cell(vconcat[1]),
     }
+
+
+def test_concat_faceted_two_shared_params_both_views_issue_3954():
+    """Regression for #3954: concat of two faceted charts with two shared params — each param must list both cell views."""
+    data = pd.DataFrame({"x": [1, 2, 3, 4], "y": [1, 2, 3, 4], "z": [0, 0, 1, 1]})
+    c = alt.Chart(data).mark_line().encode(x="x", y="y").facet("z")
+    p1 = alt.selection_point(name="p1")
+    p2 = alt.selection_point(name="p2")
+    with warnings.catch_warnings(record=True):
+        spec = (c.add_params(p1, p2) & c.add_params(p1, p2)).to_dict()
+    params = spec["params"]
+    vconcat = spec["vconcat"]
+    assert len(params) == 2
+    assert len(vconcat) == 2
+    view0 = _view_name_of_concat_cell(vconcat[0])
+    view1 = _view_name_of_concat_cell(vconcat[1])
+    for p in params:
+        assert set(p["views"]) == {view0, view1}

@@ -5204,44 +5204,30 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     return subcharts
 
 
-def _view_name_base(name: str | None) -> str:
-    """Strip a trailing _<digits> from a view name to get a reusable base."""
-    if not name:
-        return "view_0"
+def _view_base_for_chart(obj: Any) -> str:
+    """Return a base view name for a chart/layer (for building position-based names)."""
+    name = obj.name
     parts = name.rsplit("_", 1)
     if len(parts) == 2 and parts[1].isdigit():
         return parts[0] or name
     return name
 
 
-def _view_base_for_chart(obj: Any) -> str:
-    """Return a base view name for a chart/layer (for building position-based names)."""
-    name = getattr(obj, "name", None)
-    if name is None or name is Undefined:
-        name = (
-            obj._get_view_hash_name() if hasattr(obj, "_get_view_hash_name") else None
-        )
-    return _view_name_base(name)
-
-
-def _view_name_for_param(
-    subchart: ChartType, param_idx: int, is_concat: bool
-) -> str | None:
-    """View name for this subchart to add to a param's views, or None."""
+def _view_name_for_param(subchart: ChartType, is_concat: bool) -> str:
+    """View name for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
         return subchart.name
     if (
         is_concat
         and isinstance(subchart, FacetChart)
         and subchart.spec is not Undefined
-        and param_idx == 0
     ):
         spec = subchart.spec
         if isinstance(spec, Chart):
-            return getattr(spec, "name", None)
+            return spec.name
         if isinstance(spec, LayerChart) and spec.layer:
-            return getattr(spec.layer[0], "name", None)
-    return None
+            return spec.layer[0].name
+    return ""
 
 
 def _combine_subchart_params(  # noqa: C901
@@ -5288,7 +5274,7 @@ def _combine_subchart_params(  # noqa: C901
             elif isinstance(spec, Chart):
                 spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
-        for param_idx, param in enumerate(subchart.params):
+        for param in subchart.params:
             p = _prepare_to_lift(param)
             pd = _viewless_dict(p)
 
@@ -5304,7 +5290,7 @@ def _combine_subchart_params(  # noqa: C901
 
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
             # Get this subchart's view name from the subchart only (not p.views: params can share lists).
-            view_to_add = _view_name_for_param(subchart, param_idx, is_concat)
+            view_to_add = _view_name_for_param(subchart, is_concat)
             # MERGE: start from param's views; APPEND: start from [] so we don't pull in another param's views.
             views_after = list(p.views or []) if found else []
             if view_to_add and view_to_add not in views_after:
