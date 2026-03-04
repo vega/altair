@@ -5217,11 +5217,7 @@ def _view_name_for_param(subchart: ChartType, is_concat: bool) -> str:
     """View name for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
         return subchart.name
-    if (
-        is_concat
-        and isinstance(subchart, FacetChart)
-        and subchart.spec is not Undefined
-    ):
+    if is_concat and isinstance(subchart, FacetChart):
         spec = subchart.spec
         if isinstance(spec, Chart):
             return spec.name
