@@ -3,10 +3,8 @@ from __future__ import annotations
 import typing as t
 from typing import Generic, final, overload
 
-from narwhals.stable.v1.typing import IntoDataFrameT
-
 from altair.datasets import _reader
-from altair.datasets._reader import IntoFrameT
+from altair.datasets._reader import IntoDataFrameT, IntoLazyFrameT
 
 if t.TYPE_CHECKING:
     import sys
@@ -30,7 +28,7 @@ if t.TYPE_CHECKING:
 __all__ = ["Loader", "load"]
 
 
-class Loader(Generic[IntoDataFrameT, IntoFrameT]):
+class Loader(Generic[IntoDataFrameT, IntoLazyFrameT]):
     """
     Load example datasets *remotely* from `vega-datasets`_, with caching.
 
@@ -46,7 +44,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         https://github.com/vega/vega-datasets
     """
 
-    _reader: Reader[IntoDataFrameT, IntoFrameT]
+    _reader: Reader[IntoDataFrameT, IntoLazyFrameT]
 
     @overload
     @classmethod
@@ -58,13 +56,11 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
     @classmethod
     def from_backend(
         cls, backend_name: Literal["pandas", "pandas[pyarrow]"], /
-    ) -> Loader[pd.DataFrame, pd.DataFrame]: ...
+    ) -> Loader[pd.DataFrame]: ...
 
     @overload
     @classmethod
-    def from_backend(
-        cls, backend_name: Literal["pyarrow"], /
-    ) -> Loader[pa.Table, pa.Table]: ...
+    def from_backend(cls, backend_name: Literal["pyarrow"], /) -> Loader[pa.Table]: ...
 
     @classmethod
     def from_backend(
@@ -130,7 +126,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
         return cls.from_reader(_reader._from_backend(backend_name))
 
     @classmethod
-    def from_reader(cls, reader: Reader[IntoDataFrameT, IntoFrameT], /) -> Self:
+    def from_reader(cls, reader: Reader[IntoDataFrameT, IntoLazyFrameT], /) -> Self:
         obj = cls.__new__(cls)
         obj._reader = reader
         return obj
@@ -294,7 +290,7 @@ class Loader(Generic[IntoDataFrameT, IntoFrameT]):
 
 
 @final
-class _Load(Loader[IntoDataFrameT, IntoFrameT]):
+class _Load(Loader[IntoDataFrameT, IntoLazyFrameT]):
     @overload
     def __call__(  # pyright: ignore[reportOverlappingOverload]
         self,

@@ -25,18 +25,17 @@ from importlib import import_module
 from importlib.util import find_spec
 from itertools import chain
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, ClassVar, Generic, Literal, cast, overload
+from typing import TYPE_CHECKING, Any, ClassVar, Generic, Literal, overload
 from urllib.request import build_opener as _build_opener
 
 from narwhals.stable import v1 as nw
-from narwhals.stable.v1.typing import IntoDataFrameT, IntoExpr
 from packaging.requirements import Requirement
 
 from altair.datasets import _readimpl
 from altair.datasets._cache import CsvCache, DatasetCache, SchemaCache, _iter_metadata
 from altair.datasets._constraints import is_parquet
 from altair.datasets._exceptions import AltairDatasetsError, module_not_found
-from altair.datasets._readimpl import IntoFrameT, is_available
+from altair.datasets._readimpl import IntoDataFrameT, IntoLazyFrameT, is_available
 
 if TYPE_CHECKING:
     import sys
@@ -46,6 +45,7 @@ if TYPE_CHECKING:
     import pandas as pd
     import polars as pl
     import pyarrow as pa
+    from narwhals.stable.v1.typing import IntoExpr
 
     from altair.datasets._readimpl import BaseImpl, R, Read, Scan
     from altair.datasets._typing import Dataset, Extension, Metadata
@@ -91,6 +91,12 @@ if TYPE_CHECKING:
         _Ibis,
         _PySpark,
     )
+    _EagerAllowedImpl: TypeAlias = Literal[
+        nw.Implementation.PANDAS,
+        nw.Implementation.POLARS,
+        nw.Implementation.PYARROW,
+    ]
+    _EagerAllowed: TypeAlias = Literal[_Pandas, _Polars, _PyArrow]
 
 _SupportProfile: TypeAlias = Mapping[
     Literal["supported", "unsupported"], "Sequence[Dataset]"
@@ -113,7 +119,7 @@ Instead, they can be loaded via::
 """
 
 
-class Reader(Generic[IntoDataFrameT, IntoFrameT]):
+class Reader(Generic[IntoDataFrameT, IntoLazyFrameT]):
     """
     Modular file reader, targeting remote & local tabular resources.
 
@@ -124,7 +130,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     _read: Sequence[Read[IntoDataFrameT]]
     """Eager file read functions."""
 
-    _scan: Sequence[Scan[IntoFrameT]]
+    _scan: Sequence[Scan[IntoLazyFrameT]]
     """Lazy file read functions."""
 
     _name: str
@@ -134,7 +140,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     Otherwise, has no concrete meaning.
     """
 
-    _implementation: nw.Implementation
+    _implementation: _EagerAllowedImpl
     """
     Corresponding `narwhals implementation`_.
 
@@ -150,9 +156,9 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     def __init__(
         self,
         read: Sequence[Read[IntoDataFrameT]],
-        scan: Sequence[Scan[IntoFrameT]],
+        scan: Sequence[Scan[IntoLazyFrameT]],
         name: str,
-        implementation: nw.Implementation,
+        implementation: _EagerAllowedImpl,
     ) -> None:
         self._read = read
         self._scan = scan
@@ -173,7 +179,7 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
     def read_fn(self, meta: Metadata, /) -> Callable[..., IntoDataFrameT]:
         return self._solve(meta, self._read)
 
-    def scan_fn(self, meta: Metadata | Path | str, /) -> Callable[..., IntoFrameT]:
+    def scan_fn(self, meta: Metadata | Path | str, /) -> Callable[..., IntoLazyFrameT]:
         meta = meta if isinstance(meta, Mapping) else {"suffix": _into_suffix(meta)}
         return self._solve(meta, self._scan)
 
@@ -330,13 +336,13 @@ class Reader(Generic[IntoDataFrameT, IntoFrameT]):
         return kwds
 
     @property
-    def _metadata_frame(self) -> nw.LazyFrame[IntoFrameT]:
+    def _metadata_frame(self) -> nw.LazyFrame[IntoLazyFrameT]:
         fp = self._metadata_path
         return nw.from_native(self.scan_fn(fp)(fp)).lazy()
 
     def _scan_metadata(
         self, *predicates: OneOrSeq[IntoExpr], **constraints: Unpack[Metadata]
-    ) -> nw.LazyFrame[IntoFrameT]:
+    ) -> nw.LazyFrame[IntoLazyFrameT]:
         if predicates or constraints:
             return self._metadata_frame.filter(*predicates, **constraints)
         return self._metadata_frame
@@ -373,7 +379,7 @@ def _dataset_names(
     )
 
 
-class _NoParquetReader(Reader[IntoDataFrameT, IntoFrameT]):
+class _NoParquetReader(Reader[IntoDataFrameT]):
     def __repr__(self) -> str:
         return f"{super().__repr__()}\ncsv_cache\n    {self.csv_cache!r}"
 
@@ -384,8 +390,8 @@ class _NoParquetReader(Reader[IntoDataFrameT, IntoFrameT]):
         return self._csv_cache
 
     @property
-    def _metadata_frame(self) -> nw.LazyFrame[IntoFrameT]:
-        data = cast("dict[str, Any]", self.csv_cache.rotated)
+    def _metadata_frame(self) -> nw.LazyFrame[Any]:
+        data = self.csv_cache.rotated
         impl = self._implementation
         return nw.maybe_convert_dtypes(nw.from_dict(data, backend=impl)).lazy()
 
@@ -397,31 +403,28 @@ def reader(
     *,
     name: str | None = ...,
     implementation: nw.Implementation = ...,
-) -> Reader[IntoDataFrameT, nw.LazyFrame[IntoDataFrameT]]: ...
+) -> Reader[IntoDataFrameT]: ...
 
 
 @overload
 def reader(
     read_fns: Sequence[Read[IntoDataFrameT]],
-    scan_fns: Sequence[Scan[IntoFrameT]],
+    scan_fns: Sequence[Scan[IntoLazyFrameT]],
     *,
     name: str | None = ...,
     implementation: nw.Implementation = ...,
-) -> Reader[IntoDataFrameT, IntoFrameT]: ...
+) -> Reader[IntoDataFrameT, IntoLazyFrameT]: ...
 
 
 def reader(
     read_fns: Sequence[Read[IntoDataFrameT]],
-    scan_fns: Sequence[Scan[IntoFrameT]] = (),
+    scan_fns: Sequence[Scan[IntoLazyFrameT]] = (),
     *,
     name: str | None = None,
     implementation: nw.Implementation = nw.Implementation.UNKNOWN,
-) -> (
-    Reader[IntoDataFrameT, IntoFrameT]
-    | Reader[IntoDataFrameT, nw.LazyFrame[IntoDataFrameT]]
-):
+) -> Reader[IntoDataFrameT, IntoLazyFrameT] | Reader[IntoDataFrameT]:
     name = name or Counter(el._inferred_package for el in read_fns).most_common(1)[0][0]
-    if implementation is nw.Implementation.UNKNOWN:
+    if not _is_eager_allowed(implementation):
         implementation = _into_implementation(Requirement(name))
     if scan_fns:
         return Reader(read_fns, scan_fns, name, implementation)
@@ -456,9 +459,9 @@ def infer_backend(
 @overload
 def _from_backend(name: _Polars, /) -> Reader[pl.DataFrame, pl.LazyFrame]: ...
 @overload
-def _from_backend(name: _PandasAny, /) -> Reader[pd.DataFrame, pd.DataFrame]: ...
+def _from_backend(name: _PandasAny, /) -> Reader[pd.DataFrame]: ...
 @overload
-def _from_backend(name: _PyArrow, /) -> Reader[pa.Table, pa.Table]: ...
+def _from_backend(name: _PyArrow, /) -> Reader[pa.Table]: ...
 
 
 # FIXME: The order this is defined in makes splitting the module complicated
@@ -516,15 +519,28 @@ def _into_constraints(
     return m
 
 
+def _is_eager_allowed(impl: nw.Implementation, /) -> TypeIs[_EagerAllowedImpl]:
+    return impl in {
+        nw.Implementation.PANDAS,
+        nw.Implementation.POLARS,
+        nw.Implementation.PYARROW,
+    }
+
+
 def _into_implementation(
-    backend: _NwSupport | _PandasAny | Requirement, /
-) -> nw.Implementation:
-    primary = _import_guarded(backend)
+    backend: _NwSupport | _PandasAny | nw.Implementation | Requirement, /
+) -> _EagerAllowedImpl:
+    req = (
+        Requirement(str(backend)) if isinstance(backend, nw.Implementation) else backend
+    )
+    primary = _import_guarded(req)
     impl = nw.Implementation.from_backend(primary)
-    if impl is not nw.Implementation.UNKNOWN:
-        return impl
-    msg = f"Package {primary!r} is not supported by `narwhals`."
-    raise ValueError(msg)
+    if not _is_eager_allowed(impl):
+        if impl is nw.Implementation.UNKNOWN:
+            msg = f"Package {primary!r} is not supported by `narwhals`."
+            raise ValueError(msg)
+        raise NotImplementedError(impl)
+    return impl
 
 
 def _into_suffix(obj: Path | str, /) -> Any:
@@ -539,7 +555,7 @@ def _into_suffix(obj: Path | str, /) -> Any:
 
 def _steal_eager_parquet(
     read_fns: Sequence[Read[IntoDataFrameT]], /
-) -> Sequence[Scan[nw.LazyFrame[IntoDataFrameT]]] | None:
+) -> Sequence[Scan[Any]] | None:
     if convertable := next((rd for rd in read_fns if rd.include <= is_parquet), None):
         return (_readimpl.into_scan(convertable),)
     return None
