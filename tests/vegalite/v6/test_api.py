@@ -37,7 +37,7 @@ from tests import (
 if TYPE_CHECKING:
     from typing import Any
 
-    import duckdb
+    import duckdb  # pyright: ignore[reportMissingImports]
 
     from altair.vegalite.v6.api import _Conditional, _Conditions
     from altair.vegalite.v6.schema._typing import Map
@@ -2010,7 +2010,7 @@ def test_polars_date_32():
 def test_interchange_with_date_32():
     # Test that objects which Narwhals only supports at the interchange
     # level can be plotted when they contain date32 columns.
-    import duckdb
+    import duckdb  # pyright: ignore[reportMissingImports]
 
     df = pl.DataFrame(  # noqa: F841
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
@@ -2033,7 +2033,7 @@ def test_interchange_with_vegafusion(monkeypatch: pytest.MonkeyPatch):
     # TODO: this test can be drastically simplified when some level of
     # DuckDB support in VegaFusion, as it can then just be `alt.Chart(rel_df)`
     # without DuckDBWithInterchangeSupport.
-    import duckdb
+    import duckdb  # pyright: ignore[reportMissingImports]
 
     df = pl.DataFrame(  # noqa: F841
         {
