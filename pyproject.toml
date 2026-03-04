@@ -313,12 +313,10 @@ norecursedirs = [
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax"
 ]
+testpaths = ["tests","altair","tools"]
 addopts = [
     "--numprocesses=logical",
     "--doctest-modules",
-    "tests",
-    "altair",
-    "tools",
     "-m not datasets_debug and not no_xdist",
 ]
 # https://docs.pytest.org/en/stable/how-to/mark.html#registering-marks
