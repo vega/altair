@@ -21,7 +21,7 @@ dependencies = [
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
     "packaging",
-    "narwhals>=1.27.1,<2.2"
+    "narwhals>=2.4.0",
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
