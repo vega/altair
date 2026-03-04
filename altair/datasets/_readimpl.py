@@ -53,10 +53,10 @@ __all__ = ["is_available", "pa_any", "pd_only", "pd_pyarrow", "pl_only", "read",
 
 R = TypeVar(
     "R",
-    bound="nwt.NativeDataFrame | nwt.IntoLazyFrame",
+    bound="nwt.IntoDataFrame | nwt.IntoLazyFrame",
     covariant=True,
 )
-IntoDataFrameT = TypeVar("IntoDataFrameT", bound="nwt.NativeDataFrame")
+IntoDataFrameT = TypeVar("IntoDataFrameT", bound="nwt.IntoDataFrame")
 IntoLazyFrameT = TypeVar(
     "IntoLazyFrameT",
     bound="nwt.IntoLazyFrame",
