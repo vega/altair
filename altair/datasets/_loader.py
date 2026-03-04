@@ -50,7 +50,7 @@ class Loader(Generic[IntoDataFrameT, IntoLazyFrameT]):
     @classmethod
     def from_backend(
         cls, backend_name: Literal["polars"] = ..., /
-    ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...
+    ) -> Loader[pl.DataFrame, pl.LazyFrame]: ...  # pyright: ignore[reportInvalidTypeArguments]
 
     @overload
     @classmethod

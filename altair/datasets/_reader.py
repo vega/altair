@@ -457,7 +457,7 @@ def infer_backend(
 
 
 @overload
-def _from_backend(name: _Polars, /) -> Reader[pl.DataFrame, pl.LazyFrame]: ...
+def _from_backend(name: _Polars, /) -> Reader[pl.DataFrame, pl.LazyFrame]: ...  # pyright: ignore[reportInvalidTypeArguments]
 @overload
 def _from_backend(name: _PandasAny, /) -> Reader[pd.DataFrame]: ...
 @overload

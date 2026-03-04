@@ -274,7 +274,7 @@ def _unwrap_partial(fn: Any, /) -> Any:
     return func
 
 
-def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:
+def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:  # pyright: ignore[reportInvalidTypeForm]
     import polars as pl
 
     pl_read_json = read(_pl_read_json_roundtrip(get_polars()), is_json)
@@ -294,7 +294,7 @@ def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]
         read(pl.read_ipc, is_arrow),
         read(pl.read_parquet, is_parquet),
     )
-    scan_fns = (scan(pl.scan_parquet, is_parquet),)
+    scan_fns = (scan(pl.scan_parquet, is_parquet),)  # pyright: ignore[reportArgumentType]
     return read_fns, scan_fns
 
 
@@ -479,7 +479,7 @@ def _pl_read_json_roundtrip_to_arrow(ns: ModuleType, /) -> Callable[..., pa.Tabl
 
     @wraps(ns.read_json)
     def fn(source: Path | IOBase, /, **kwds: Any) -> pa.Table:
-        return eager(source).to_arrow()
+        return eager(source).to_arrow()  # pyright: ignore[reportAttributeAccessIssue]
 
     return fn
 
