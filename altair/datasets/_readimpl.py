@@ -294,7 +294,7 @@ def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]
         read(pl.read_ipc, is_arrow),
         read(pl.read_parquet, is_parquet),
     )
-    scan_fns = (scan(pl.scan_parquet, is_parquet),)  # pyright: ignore[reportArgumentType]
+    scan_fns = (scan(pl.scan_parquet, is_parquet),)
     return read_fns, scan_fns
 
 
@@ -353,7 +353,7 @@ def pa_any() -> Sequence[Read[pa.Table]]:
     return (
         read(csv.read_csv, is_csv),
         _pa_read_json_impl(),
-        read(csv.read_csv, is_tsv, parse_options=csv.ParseOptions(delimiter="\t")),  # pyright: ignore[reportCallIssue]
+        read(csv.read_csv, is_tsv, parse_options=csv.ParseOptions(delimiter="\t")),
         read(feather.read_table, is_arrow),
         read(parquet.read_table, is_parquet),
     )
@@ -479,7 +479,7 @@ def _pl_read_json_roundtrip_to_arrow(ns: ModuleType, /) -> Callable[..., pa.Tabl
 
     @wraps(ns.read_json)
     def fn(source: Path | IOBase, /, **kwds: Any) -> pa.Table:
-        return eager(source).to_arrow()  # pyright: ignore[reportAttributeAccessIssue]
+        return eager(source).to_arrow()
 
     return fn
 

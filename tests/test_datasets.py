@@ -35,7 +35,7 @@ if TYPE_CHECKING:
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
-    PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]  # pyright: ignore[reportInvalidTypeArguments]
+    PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]
 
 # =============================================================================
 # Test Configuration and Fixtures
@@ -424,7 +424,7 @@ def test_reader_cache(
             pl.DataFrame(load("lookup_groups", ".csv")),
         )
 
-    assert_frame_equal(left, right)  # pyright: ignore[reportCallIssue]
+    assert_frame_equal(left, right)
     assert len(tuple(load.cache)) == 4
     assert cached_paths == tuple(load.cache)
     load("iowa_electricity", ".csv")
@@ -652,7 +652,7 @@ def test_no_remote_connection(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         # Here, the remote conn isn't considered - we already have the file
         frame_from_cache = load("birdstrikes")
         assert len(tuple(tmp_path.iterdir())) == 4
-    assert_frame_equal(frame, frame_from_cache)  # pyright: ignore[reportCallIssue]
+    assert_frame_equal(frame, frame_from_cache)
 
 
 # =============================================================================
