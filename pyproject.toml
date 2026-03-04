@@ -85,8 +85,7 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3; python_version<'3.14'",
-    # Pin <1.38 until string_view/Utf8View breakage fixed (narwhals#3450, polars#26435)
-    "polars>=0.20.3,<1.38",
+    "polars>=0.20.3",
     "taskipy>=1.14.1",
     "tomli>=2.2.1",
 ]
@@ -362,7 +361,7 @@ disable_error_code = ["annotation-unchecked"]
 enableExperimentalFeatures = true
 extraPaths = ["./tools"]
 pythonPlatform = "All"
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 reportTypedDictNotRequiredAccess = "none"
 reportIncompatibleMethodOverride = "none"
 reportUnusedExpression = "none"
