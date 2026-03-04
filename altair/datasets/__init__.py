@@ -77,7 +77,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from altair.datasets._loader import Loader as Loader
+from altair.datasets._loader import Loader
 
 if TYPE_CHECKING:
     import sys
@@ -91,6 +91,8 @@ if TYPE_CHECKING:
     from altair.datasets._data import DataObject
     from altair.datasets._loader import _Load
     from altair.datasets._typing import Dataset, Extension
+
+__all__ = ["Loader", "data", "load", "url"]
 
 
 load: _Load[Any, Any]
@@ -166,18 +168,17 @@ def url(
     return url
 
 
-def __getattr__(name):
-    if name == "data":
-        from altair.datasets._data import data
+if not TYPE_CHECKING:
 
-        return data
-    elif name == "load":
-        from altair.datasets._loader import load
+    def __getattr__(name):
+        if name == "data":
+            from altair.datasets._data import data
 
-        return load
-    elif name == "__all__":
-        # Define __all__ dynamically to avoid ruff errors
-        return ["Loader", "data", "load", "url"]
-    else:
-        msg = f"module {__name__!r} has no attribute {name!r}"
-        raise AttributeError(msg)
+            return data
+        elif name == "load":
+            from altair.datasets._loader import load
+
+            return load
+        else:
+            msg = f"module {__name__!r} has no attribute {name!r}"
+            raise AttributeError(msg)
