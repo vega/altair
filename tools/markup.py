@@ -14,14 +14,9 @@ from mistune import Markdown as _Markdown
 from mistune.renderers.rst import RSTRenderer as _RSTRenderer
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Iterable
-
-    if sys.version_info >= (3, 11):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
     from re import Pattern
+    from typing import TypeAlias
 
     from mistune import BaseRenderer, BlockParser, BlockState, InlineState
 
