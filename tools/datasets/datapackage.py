@@ -166,7 +166,7 @@ class DataPackage:
         schema = self.core.collect_schema().to_python()
         return f"\n{INDENT}".join(
             f"{column._name}: {column._tp_str or tp.__name__}"
-            for column, tp in zip(self.columns, schema.values())
+            for column, tp in zip(self.columns, schema.values(), strict=False)
         )
 
     @property

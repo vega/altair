@@ -195,7 +195,7 @@ def prev_this_next(
     """Utility to return (prev, this, next) tuples from an iterator."""
     i1, i2, i3 = itertools.tee(it, 3)
     next(i3, None)
-    return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]))
+    return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]), strict=False)
 
 
 def dict_hash(dct: dict[Any, Any]) -> Any:
