@@ -757,7 +757,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                 (name, len(name))
                 for name in param_dict_keys
                 if name not in {"kwds", "self"}
-            ], strict=False
+            ],
+            strict=False,
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns

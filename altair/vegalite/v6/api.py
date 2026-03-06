@@ -586,7 +586,9 @@ _PredicateType: TypeAlias = Union[
 ]
 """Permitted types for `predicate`."""
 
-_ComposablePredicateType: TypeAlias = _expr_core.OperatorMixin | core.PredicateComposition
+_ComposablePredicateType: TypeAlias = (
+    _expr_core.OperatorMixin | core.PredicateComposition
+)
 """Permitted types for `&` reduced predicates."""
 
 _StatementType: TypeAlias = SchemaBase | Map | str
@@ -1583,7 +1585,14 @@ You can also provide a sequence of mappings between ``encodings`` or ``fields`` 
 
 _SelectionIntervalValueMap: TypeAlias = Mapping[
     SingleDefUnitChannel_T,
-    tuple[bool, bool] | tuple[float, float] | tuple[str, str] | tuple["Temporal | DateTime", "Temporal | DateTime"] | Sequence[bool] | Sequence[float] | Sequence[str] | Sequence["Temporal | DateTime"],
+    tuple[bool, bool]
+    | tuple[float, float]
+    | tuple[str, str]
+    | tuple["Temporal | DateTime", "Temporal | DateTime"]
+    | Sequence[bool]
+    | Sequence[float]
+    | Sequence[str]
+    | Sequence["Temporal | DateTime"],
 ]
 """
 Interval selections are initialized with a mapping between ``encodings`` to **values**:
@@ -5121,7 +5130,9 @@ def _combine_subchart_data(
     return data, subcharts
 
 
-_Parameter: TypeAlias = core.VariableParameter | core.TopLevelSelectionParameter | core.SelectionParameter
+_Parameter: TypeAlias = (
+    core.VariableParameter | core.TopLevelSelectionParameter | core.SelectionParameter
+)
 
 
 def _viewless_dict(param: _Parameter) -> dict[str, Any]:
@@ -5455,8 +5466,29 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType: TypeAlias = Chart | RepeatChart | ConcatChart | HConcatChart | VConcatChart | FacetChart | LayerChart
-ConcatType: TypeAlias = ChartType | core.FacetSpec | core.LayerSpec | core.RepeatSpec | core.FacetedUnitSpec | core.LayerRepeatSpec | core.NonNormalizedSpec | core.NonLayerRepeatSpec | core.ConcatSpecGenericSpec | core.ConcatSpecGenericSpec | core.HConcatSpecGenericSpec | core.VConcatSpecGenericSpec
+ChartType: TypeAlias = (
+    Chart
+    | RepeatChart
+    | ConcatChart
+    | HConcatChart
+    | VConcatChart
+    | FacetChart
+    | LayerChart
+)
+ConcatType: TypeAlias = (
+    ChartType
+    | core.FacetSpec
+    | core.LayerSpec
+    | core.RepeatSpec
+    | core.FacetedUnitSpec
+    | core.LayerRepeatSpec
+    | core.NonNormalizedSpec
+    | core.NonLayerRepeatSpec
+    | core.ConcatSpecGenericSpec
+    | core.ConcatSpecGenericSpec
+    | core.HConcatSpecGenericSpec
+    | core.VConcatSpecGenericSpec
+)
 LayerType: TypeAlias = ChartType | core.UnitSpec | core.LayerSpec
 
 
