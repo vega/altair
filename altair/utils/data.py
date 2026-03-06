@@ -27,11 +27,7 @@ if sys.version_info >= (3, 13):
     from typing import Protocol, runtime_checkable
 else:
     from typing_extensions import Protocol, runtime_checkable
-if sys.version_info >= (3, 10):
-    from typing import Concatenate, ParamSpec
-else:
-    from typing import Concatenate
-    from typing_extensions import ParamSpec
+from typing import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 13):
@@ -39,10 +35,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeIs
 
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
+    from typing import TypeAlias
+
     import pandas as pd
     import pyarrow as pa
 

@@ -16,10 +16,7 @@ if TYPE_CHECKING:
         from typing import NotRequired, Required
     else:
         from typing_extensions import NotRequired, Required
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
+    from typing import TypeAlias
 
     from altair.datasets._typing import Dataset, FlFieldStr
 

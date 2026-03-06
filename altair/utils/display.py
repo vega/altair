@@ -13,12 +13,8 @@ from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
 
 if TYPE_CHECKING:
-    import sys
 
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
+    from typing import TypeAlias
 
 # ==============================================================================
 # Renderer registry
