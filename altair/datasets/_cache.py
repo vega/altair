@@ -170,7 +170,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         self, header: Iterable[str], row: Iterable[str], /
     ) -> Iterator[tuple[str, Any]]:
         map_tf = {"true": True, "false": False}
-        for col, value in zip(header, row):
+        for col, value in zip(header, row, strict=False):
             if col.startswith(("is_", "has_")):
                 yield col, map_tf[value]
             elif col == "bytes":
