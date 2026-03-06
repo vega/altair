@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
-        from typing_extensions import TypeAlias
+        from typing import TypeAlias
 
     T = TypeVar("T")
     OneOrIter = TypeAliasType("OneOrIter", Union[T, Iterable[T]], type_params=(T,))

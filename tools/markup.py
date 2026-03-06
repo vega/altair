@@ -20,7 +20,7 @@ if TYPE_CHECKING:
     if sys.version_info >= (3, 11):
         from typing import TypeAlias
     else:
-        from typing_extensions import TypeAlias
+        from typing import TypeAlias
     from re import Pattern
 
     from mistune import BaseRenderer, BlockParser, BlockState, InlineState
