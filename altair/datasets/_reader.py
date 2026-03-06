@@ -64,6 +64,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import LiteralString
     from typing import TypeAlias
+
     _Polars: TypeAlias = Literal["polars"]
     _Pandas: TypeAlias = Literal["pandas"]
     _PyArrow: TypeAlias = Literal["pyarrow"]

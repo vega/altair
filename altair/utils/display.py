@@ -13,7 +13,6 @@ from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
 
 if TYPE_CHECKING:
-
     from typing import TypeAlias
 
 # ==============================================================================
@@ -24,7 +23,9 @@ if TYPE_CHECKING:
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
 MimeBundleDataType: TypeAlias = dict[str, Any]
 MimeBundleMetaDataType: TypeAlias = dict[str, Any]
-MimeBundleType: TypeAlias = MimeBundleDataType | tuple[MimeBundleDataType, MimeBundleMetaDataType]
+MimeBundleType: TypeAlias = (
+    MimeBundleDataType | tuple[MimeBundleDataType, MimeBundleMetaDataType]
+)
 RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
 

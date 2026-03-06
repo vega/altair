@@ -7,7 +7,6 @@ from ._importers import import_vl_convert, vl_version_for_vl_convert
 from .html import spec_to_html
 
 if TYPE_CHECKING:
-
     from typing import TypeAlias
 
 MimeBundleFormat: TypeAlias = Literal[

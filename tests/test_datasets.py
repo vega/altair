@@ -30,6 +30,7 @@ if TYPE_CHECKING:
 
     from altair.datasets._reader import _Backend, _PandasAny, _Polars, _PyArrow
     from altair.vegalite.v6.schema._typing import OneOrSeq
+
     PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]
 
 # =============================================================================
