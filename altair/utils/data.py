@@ -7,7 +7,16 @@ import sys
 from collections.abc import Callable, MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Concatenate,
+    Literal,
+    ParamSpec,
+    TypedDict,
+    TypeVar,
+    overload,
+)
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.dependencies import is_pandas_dataframe
@@ -27,7 +36,6 @@ if sys.version_info >= (3, 13):
     from typing import Protocol, runtime_checkable
 else:
     from typing_extensions import Protocol, runtime_checkable
-from typing import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 13):

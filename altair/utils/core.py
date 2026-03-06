@@ -12,7 +12,16 @@ from collections.abc import Callable, Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Concatenate,
+    Literal,
+    ParamSpec,
+    TypeVar,
+    cast,
+    overload,
+)
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -25,7 +34,6 @@ if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
     from typing_extensions import Protocol, TypeAliasType, runtime_checkable
-from typing import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
     import pandas as pd

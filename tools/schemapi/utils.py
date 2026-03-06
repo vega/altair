@@ -122,7 +122,7 @@ class _TypeAliasTracer:
             "import sys",
             "from datetime import date, datetime",
             "from collections.abc import Sequence, Mapping",
-            "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
+            "from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 15), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -130,7 +130,6 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
-            import_typing_extensions((3, 10), "TypeAlias"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:

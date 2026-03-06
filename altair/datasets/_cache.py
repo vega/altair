@@ -26,7 +26,7 @@ if TYPE_CHECKING:
         Sequence,
     )
     from io import IOBase
-    from typing import Any, Final
+    from typing import Any, Final, TypeAlias
     from urllib.request import OpenerDirector
 
     from _typeshed import StrPath
@@ -39,11 +39,11 @@ if TYPE_CHECKING:
         from typing import Unpack
     else:
         from typing_extensions import Unpack
+
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    from typing import TypeAlias
 
     from altair.datasets._typing import FlFieldStr
     from altair.vegalite.v6.schema._typing import OneOrSeq

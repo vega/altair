@@ -11,7 +11,7 @@ import typing as t
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypeAlias, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -54,7 +54,6 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString
 else:
     from typing_extensions import LiteralString
-from typing import TypeAlias
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator

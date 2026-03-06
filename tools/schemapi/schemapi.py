@@ -31,7 +31,7 @@ else:
 
 if TYPE_CHECKING:
     from types import ModuleType
-    from typing import ClassVar
+    from typing import ClassVar, TypeAlias
 
     from jsonschema.exceptions import ValidationError
     from referencing import Registry
@@ -47,7 +47,6 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
-    from typing import TypeAlias
 
     _OptionalModule: TypeAlias = "ModuleType | None"
 
