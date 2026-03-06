@@ -204,7 +204,7 @@ __all__ = [
     "when",
 ]
 
-ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
+ChartDataType: TypeAlias = Optional[DataType | core.Data | str | core.Generator]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 
@@ -574,9 +574,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
 # -------------------------------------------------------------------------
 # Tools for working with conditions
-_TestPredicateType: TypeAlias = Union[
-    str, _expr_core.Expression, core.PredicateComposition
-]
+_TestPredicateType: TypeAlias = str | _expr_core.Expression | core.PredicateComposition
 """https://vega.github.io/vega-lite/docs/predicate.html"""
 
 _PredicateType: TypeAlias = Union[
@@ -588,12 +586,10 @@ _PredicateType: TypeAlias = Union[
 ]
 """Permitted types for `predicate`."""
 
-_ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, core.PredicateComposition
-]
+_ComposablePredicateType: TypeAlias = _expr_core.OperatorMixin | core.PredicateComposition
 """Permitted types for `&` reduced predicates."""
 
-_StatementType: TypeAlias = Union[SchemaBase, Map, str]
+_StatementType: TypeAlias = SchemaBase | Map | str
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -764,7 +760,7 @@ class _Conditional(TypedDict, t.Generic[_C], total=False):
     value: Any
 
 
-IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+IntoCondition: TypeAlias = ConditionLike | _Conditional[Any]
 """
 Anything that can be converted into a conditional encoding or property.
 
@@ -1587,16 +1583,7 @@ You can also provide a sequence of mappings between ``encodings`` or ``fields`` 
 
 _SelectionIntervalValueMap: TypeAlias = Mapping[
     SingleDefUnitChannel_T,
-    Union[
-        tuple[bool, bool],
-        tuple[float, float],
-        tuple[str, str],
-        tuple["Temporal | DateTime", "Temporal | DateTime"],
-        Sequence[bool],
-        Sequence[float],
-        Sequence[str],
-        Sequence["Temporal | DateTime"],
-    ],
+    tuple[bool, bool] | tuple[float, float] | tuple[str, str] | tuple["Temporal | DateTime", "Temporal | DateTime"] | Sequence[bool] | Sequence[float] | Sequence[str] | Sequence["Temporal | DateTime"],
 ]
 """
 Interval selections are initialized with a mapping between ``encodings`` to **values**:
@@ -5134,9 +5121,7 @@ def _combine_subchart_data(
     return data, subcharts
 
 
-_Parameter: TypeAlias = Union[
-    core.VariableParameter, core.TopLevelSelectionParameter, core.SelectionParameter
-]
+_Parameter: TypeAlias = core.VariableParameter | core.TopLevelSelectionParameter | core.SelectionParameter
 
 
 def _viewless_dict(param: _Parameter) -> dict[str, Any]:
@@ -5470,24 +5455,9 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType: TypeAlias = Union[
-    Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
-]
-ConcatType: TypeAlias = Union[
-    ChartType,
-    core.FacetSpec,
-    core.LayerSpec,
-    core.RepeatSpec,
-    core.FacetedUnitSpec,
-    core.LayerRepeatSpec,
-    core.NonNormalizedSpec,
-    core.NonLayerRepeatSpec,
-    core.ConcatSpecGenericSpec,
-    core.ConcatSpecGenericSpec,
-    core.HConcatSpecGenericSpec,
-    core.VConcatSpecGenericSpec,
-]
-LayerType: TypeAlias = Union[ChartType, core.UnitSpec, core.LayerSpec]
+ChartType: TypeAlias = Chart | RepeatChart | ConcatChart | HConcatChart | VConcatChart | FacetChart | LayerChart
+ConcatType: TypeAlias = ChartType | core.FacetSpec | core.LayerSpec | core.RepeatSpec | core.FacetedUnitSpec | core.LayerRepeatSpec | core.NonNormalizedSpec | core.NonLayerRepeatSpec | core.ConcatSpecGenericSpec | core.ConcatSpecGenericSpec | core.HConcatSpecGenericSpec | core.VConcatSpecGenericSpec
+LayerType: TypeAlias = ChartType | core.UnitSpec | core.LayerSpec
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:

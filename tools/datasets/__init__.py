@@ -28,7 +28,6 @@ from tools.datasets.npm import Npm
 from tools.schemapi import utils
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Mapping
     from typing import TypeAlias
 

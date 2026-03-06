@@ -7,7 +7,7 @@ import sys
 from collections.abc import Callable, MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, overload
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.dependencies import is_pandas_dataframe
@@ -46,18 +46,16 @@ class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType: TypeAlias = Union[
-    dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
-]
+DataType: TypeAlias = (
+    dict[Any, Any] | IntoDataFrame | SupportsGeoInterface | DataFrameLike
+)
 
 TDataType = TypeVar("TDataType", bound=DataType)
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
-VegaLiteDataDict: TypeAlias = dict[
-    str, Union[str, dict[Any, Any], list[dict[Any, Any]]]
-]
-ToValuesReturnType: TypeAlias = dict[str, Union[dict[Any, Any], list[dict[Any, Any]]]]
-SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
+VegaLiteDataDict: TypeAlias = dict[str, str | dict[Any, Any] | list[dict[Any, Any]]]
+ToValuesReturnType: TypeAlias = dict[str, dict[Any, Any] | list[dict[Any, Any]]]
+SampleReturnType = IntoDataFrame | dict[str, Sequence] | None
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
