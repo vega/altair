@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
-        from typing_extensions import TypeAlias
+        from typing import TypeAlias
 
 MimeBundleFormat: TypeAlias = Literal[
     "html", "json", "png", "svg", "pdf", "vega", "vega-lite"

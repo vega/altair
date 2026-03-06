@@ -28,7 +28,8 @@ else:
 if sys.version_info >= (3, 10):
     from typing import Concatenate, ParamSpec
 else:
-    from typing_extensions import Concatenate, ParamSpec
+    from typing import Concatenate
+    from typing_extensions import ParamSpec
 
 
 if TYPE_CHECKING:

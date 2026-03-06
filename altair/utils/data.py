@@ -30,7 +30,8 @@ else:
 if sys.version_info >= (3, 10):
     from typing import Concatenate, ParamSpec
 else:
-    from typing_extensions import Concatenate, ParamSpec
+    from typing import Concatenate
+    from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 13):
@@ -41,7 +42,7 @@ if TYPE_CHECKING:
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
-        from typing_extensions import TypeAlias
+        from typing import TypeAlias
     import pandas as pd
     import pyarrow as pa
 
