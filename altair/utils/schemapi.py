@@ -59,10 +59,7 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
+    from typing import TypeAlias
 
     _OptionalModule: TypeAlias = "ModuleType | None"
 

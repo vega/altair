@@ -25,12 +25,7 @@ if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
     from typing_extensions import Protocol, TypeAliasType, runtime_checkable
-if sys.version_info >= (3, 10):
-    from typing import Concatenate, ParamSpec
-else:
-    from typing import Concatenate
-    from typing_extensions import ParamSpec
-
+from typing import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
     import pandas as pd

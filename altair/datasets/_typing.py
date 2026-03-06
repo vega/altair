@@ -16,11 +16,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import LiteralString
 
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing import TypeAlias
-
+from typing import TypeAlias
 
 __all__ = ["Dataset", "Extension", "Metadata"]
 

@@ -30,15 +30,11 @@ from tools.schemapi import utils
 if TYPE_CHECKING:
     import sys
     from collections.abc import Mapping
+    from typing import TypeAlias
 
     import polars as pl
 
     from tools.datasets import datapackage
-
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing import TypeAlias
 
     _PathAlias: TypeAlias = Literal["typing", "metadata-csv", "metadata", "schemas"]
     PathMap: TypeAlias = Mapping[_PathAlias, Path]

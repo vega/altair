@@ -54,10 +54,7 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString
 else:
     from typing_extensions import LiteralString
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing import TypeAlias
+from typing import TypeAlias
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
