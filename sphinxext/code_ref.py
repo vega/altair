@@ -15,7 +15,7 @@ from tools.codemod import extract_func_def, extract_func_def_embed
 if TYPE_CHECKING:
     import sys
     from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-    from typing import Any, ClassVar, TypeVar, Union
+    from typing import Any, ClassVar, TypeVar
 
     from docutils.parsers.rst.states import RSTState, RSTStateMachine
     from docutils.statemachine import StringList
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from typing import TypeAlias
 
     T = TypeVar("T")
-    OneOrIter = TypeAliasType("OneOrIter", Union[T, Iterable[T]], type_params=(T,))
+    OneOrIter = TypeAliasType("OneOrIter", T | Iterable[T], type_params=(T,))
 
 _OutputShort: TypeAlias = Literal["code", "plot"]
 _OutputLong: TypeAlias = Literal["code-block", "altair-plot"]

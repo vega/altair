@@ -14,7 +14,7 @@ from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -41,7 +41,7 @@ from typing import TypeAlias
 
 T = TypeVar("T")
 
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 TargetType: TypeAlias = Literal["annotation", "doc"]
 
 EXCLUDE_KEYS: frozenset[

@@ -15,17 +15,7 @@ from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
 from math import ceil
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Final,
-    Generic,
-    Literal,
-    TypeVar,
-    Union,
-    cast,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar, cast, overload
 
 import jsonschema
 import jsonschema.exceptions
@@ -988,7 +978,7 @@ class UndefinedType:
 
 Undefined = UndefinedType()
 T = TypeVar("T")
-Optional: TypeAlias = Union[T, UndefinedType]
+Optional: TypeAlias = T | UndefinedType
 """One of ``T`` specified type(s), or the ``Undefined`` singleton.
 
 Examples
