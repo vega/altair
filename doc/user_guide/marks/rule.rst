@@ -150,13 +150,18 @@ By using ``alt.value`` with the special ``'width'`` and ``'height'`` signals, yo
 
 .. altair-plot::
     import altair as alt
-    from altair.datasets import data
+    import pandas as pd
+    import numpy as np
 
-    source = data.cars()
+    rng = np.random.RandomState(42)
+    actual = rng.uniform(10, 90, 50)
+    predicted = actual + rng.normal(0, 8, 50)
+
+    source = pd.DataFrame({"actual": actual, "predicted": predicted})
 
     points = alt.Chart(source).mark_circle(size=60).encode(
-        x=alt.X("Horsepower:Q"),
-        y=alt.Y("Miles_per_Gallon:Q").scale(domainMax=240),
+        x=alt.X("actual:Q"),
+        y=alt.Y("predicted:Q"),
     )
 
     identity_line = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
