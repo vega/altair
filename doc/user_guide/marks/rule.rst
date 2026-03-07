@@ -144,9 +144,33 @@ For example, we can use ``y`` and ``y2`` show the ``"min"`` and ``"max"`` values
     )
 
 
-Identity Line (x=y Diagonal)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-By using ``alt.value`` with the special ``'width'`` and ``'height'`` signals, you can draw a diagonal line that spans the full extent of the chart. This is useful for comparing two variables on the same scale, where points on the identity line indicate equal values.
+Diagonal Line
+^^^^^^^^^^^^^
+By using ``alt.value`` with the special ``'width'`` and ``'height'`` signals, you can draw a diagonal line that spans the full extent of the chart from corner to corner.
+
+.. altair-plot::
+    import altair as alt
+    from altair.datasets import data
+
+    source = data.cars()
+
+    points = alt.Chart(source).mark_circle(size=60).encode(
+        x=alt.X("Horsepower:Q"),
+        y=alt.Y("Miles_per_Gallon:Q"),
+    )
+
+    diagonal = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
+        x=alt.value(0),
+        y=alt.value("height"),
+        x2=alt.value("width"),
+        y2=alt.value(0),
+    )
+
+    (points + diagonal).interactive()
+
+Identity Line (x=y)
+^^^^^^^^^^^^^^^^^^^^
+When comparing two variables on the same scale (e.g. predicted vs actual values), you can draw a true identity line using ``alt.expr`` with scale expressions. This line stays on x=y even when zooming and panning.
 
 .. altair-plot::
     import altair as alt
@@ -165,10 +189,10 @@ By using ``alt.value`` with the special ``'width'`` and ``'height'`` signals, yo
     )
 
     identity_line = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
-        x=alt.value(0),
-        y=alt.value("height"),
-        x2=alt.value("width"),
-        y2=alt.value(0),
+        x=alt.value(alt.expr("scale('x', domain('x')[0])")),
+        y=alt.value(alt.expr("scale('y', domain('x')[0])")),
+        x2=alt.value(alt.expr("scale('x', domain('x')[1])")),
+        y2=alt.value(alt.expr("scale('y', domain('x')[1])")),
     )
 
     (points + identity_line).interactive()
