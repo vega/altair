@@ -109,7 +109,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func(
         short: OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+        long: str | bool | float | Sequence[str | bool | float],
     ): ...
 """
 
