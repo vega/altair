@@ -13,7 +13,6 @@ from typing import TYPE_CHECKING, Any, Generic, Literal
 
 from narwhals.stable import v1 as nw
 from narwhals.stable.v1.dependencies import get_pandas, get_polars
-from narwhals.stable.v1.typing import IntoDataFrameT
 
 from altair.datasets._constraints import (
     is_arrow,
@@ -51,16 +50,22 @@ if TYPE_CHECKING:
 
 __all__ = ["is_available", "pa_any", "pd_only", "pd_pyarrow", "pl_only", "read", "scan"]
 
-R = TypeVar("R", bound="nwt.IntoFrame", covariant=True)
-IntoFrameT = TypeVar(
-    "IntoFrameT",
-    bound="nwt.NativeFrame | nw.DataFrame[Any] | nw.LazyFrame[Any] | nwt.DataFrameLike",
-    default=nw.LazyFrame[Any],
+
+R = TypeVar(
+    "R",
+    bound="nwt.IntoDataFrame | nwt.IntoLazyFrame",
+    covariant=True,
+)
+IntoDataFrameT = TypeVar("IntoDataFrameT", bound="nwt.IntoDataFrame")
+IntoLazyFrameT = TypeVar(
+    "IntoLazyFrameT",
+    bound="nwt.IntoLazyFrame",
+    default=Any,
 )
 Read = TypeAliasType("Read", "BaseImpl[IntoDataFrameT]", type_params=(IntoDataFrameT,))
 """An *eager* file read function."""
 
-Scan = TypeAliasType("Scan", "BaseImpl[IntoFrameT]", type_params=(IntoFrameT,))
+Scan = TypeAliasType("Scan", "BaseImpl[IntoLazyFrameT]", type_params=(IntoLazyFrameT,))
 """A *lazy* file read function."""
 
 
@@ -206,21 +211,19 @@ def read(
 
 
 def scan(
-    fn: Callable[..., IntoFrameT],
+    fn: Callable[..., IntoLazyFrameT],
     /,
     include: MetaIs,
     exclude: MetaIs | None = None,
     **kwds: Any,
-) -> Scan[IntoFrameT]:
+) -> Scan[IntoLazyFrameT]:
     return BaseImpl(fn, include, exclude, kwds)
 
 
-def into_scan(impl: Read[IntoDataFrameT], /) -> Scan[nw.LazyFrame[IntoDataFrameT]]:
-    def scan_fn(
-        fn: Callable[..., IntoDataFrameT], /
-    ) -> Callable[..., nw.LazyFrame[IntoDataFrameT]]:
+def into_scan(impl: Read[IntoDataFrameT], /) -> Scan[Any]:
+    def scan_fn(fn: Callable[..., IntoDataFrameT], /) -> Callable[..., Any]:
         @wraps(_unwrap_partial(fn))
-        def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame[IntoDataFrameT]:
+        def wrapper(*args: Any, **kwds: Any) -> nw.LazyFrame[Any]:
             return nw.from_native(fn(*args, **kwds)).lazy()
 
         return wrapper
@@ -271,7 +274,7 @@ def _unwrap_partial(fn: Any, /) -> Any:
     return func
 
 
-def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:
+def pl_only() -> tuple[Sequence[Read[pl.DataFrame]], Sequence[Scan[pl.LazyFrame]]]:  # pyright: ignore[reportInvalidTypeForm]
     import polars as pl
 
     pl_read_json = read(_pl_read_json_roundtrip(get_polars()), is_json)
@@ -350,7 +353,7 @@ def pa_any() -> Sequence[Read[pa.Table]]:
     return (
         read(csv.read_csv, is_csv),
         _pa_read_json_impl(),
-        read(csv.read_csv, is_tsv, parse_options=csv.ParseOptions(delimiter="\t")),  # pyright: ignore[reportCallIssue]
+        read(csv.read_csv, is_tsv, parse_options=csv.ParseOptions(delimiter="\t")),
         read(feather.read_table, is_arrow),
         read(parquet.read_table, is_parquet),
     )
