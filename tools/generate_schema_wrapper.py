@@ -343,7 +343,7 @@ DUNDER_PREDICATE_COMPOSITION = """
 # Revisit if this starts to become more common
 TYPING_EXTRA: Final = '''
 T = TypeVar("T")
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 """
 One of ``T`` specified type(s), or a `Sequence` of such.
 
@@ -355,7 +355,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func(
         short: OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+        long: str | bool | float | Sequence[str | bool | float],
     ): ...
 """
 
@@ -442,7 +442,7 @@ class PaddingKwds(TypedDict, total=False):
     right: float
     top: float
 
-Temporal: TypeAlias = Union[date, datetime]
+Temporal: TypeAlias = date | datetime
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
