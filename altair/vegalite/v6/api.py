@@ -5122,17 +5122,15 @@ def _combine_subchart_data(
         if subchart.data is not Undefined:
             # Before removing data, compute and cache a hash
             # if this subchart will need a name.
-            # This ensures otherwise identical charts
-            # that uses different data get unique hashes.
-            # We store it in _kwds so it survives the copy() operation
-            # and can easily be removed before serializartion validation.
-            from altair.utils.schemapi import Undefined as SchemaUndefined
-
+            # This ensures that otherwise identical charts
+            # which use different data get unique hashes.
+            # The cached hash is stored in _kwds
+            # so it survives the copy() operation
+            # and can easily be removed before serialization validation.
             cached_hash = None
             if (
                 isinstance(subchart, Chart)
-                and getattr(subchart, "name", None)
-                in (None, SchemaUndefined, Undefined)
+                and getattr(subchart, "name", None) in (None, Undefined)
                 and hasattr(subchart, "_compute_hash")
             ):
                 cached_hash = subchart._compute_hash()
