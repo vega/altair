@@ -370,8 +370,8 @@ def test_interactive_name_respected():
 
 
 def test_vconcat_different_data_unique_names():
-    import altair as alt
-
+    # This tests that charts with the same spec but different data
+    # get unique view names (issue #3981)
     df_peak = pd.DataFrame(
         {"site": [1, 2, 3, 4, 5], "escape": [0.1, 0.9, 0.1, 0.2, 0.1]}
     )
@@ -390,15 +390,7 @@ def test_vconcat_different_data_unique_names():
         points = base.encode(
             size=alt.condition(selection, alt.value(80), alt.value(30)),
         ).mark_circle(filled=True)
-        return (
-            (lines + points)
-            .add_params(selection)
-            .properties(
-                title=title,
-                width=300,
-                height=150,
-            )
-        )
+        return (lines + points).add_params(selection)
 
     chart = alt.vconcat(
         make_layered_chart(df_peak, "Peak at site 2"),
@@ -407,24 +399,17 @@ def test_vconcat_different_data_unique_names():
 
     spec = chart.to_dict()
 
-    # Check that line layers in different vconcat rows have different names
-    # This ensures that charts with the same structure but different data
-    # get unique view names (issue #3981)
+    # Check that layers in different vconcat rows have different names
     vconcat_charts = spec["vconcat"]
-
-    # Get the names of the line layers (first layer in each row)
     line_names = []
     for row in vconcat_charts:
         layers = row["layer"]
-        # The line layer is the first one in each row
         line_layer = layers[0]
         if "name" in line_layer:
             line_names.append(line_layer["name"])
 
-    # If names are auto-generated, they should be different for different data
-    # The same base name should NOT appear twice (which would indicate a collision)
     if len(line_names) >= 2:
         assert line_names[0] != line_names[1], (
-            f"Line layers should have unique names when data differs, "
+            f"Layers should have unique names when data differs, "
             f"but both got name: {line_names[0]}"
         )
