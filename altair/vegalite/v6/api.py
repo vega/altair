@@ -4090,6 +4090,11 @@ class Chart(
 
     def _compute_hash(self) -> str:
         """Compute a deterministic hash of the chart specification."""
+        # Check if we have a cached hash from before data was hoisted
+        data_hash = self._kwds.get("_data_hash", None)
+        if data_hash is not None:
+            return data_hash
+
         # Get data name if available, otherwise use data object
         data = getattr(self, "data", None)
         if data is not None and hasattr(data, "name") and data.name is not None:
@@ -5115,8 +5120,24 @@ def _combine_subchart_data(
 ) -> tuple[Optional[ChartDataType], list[ChartType]]:
     def remove_data(subchart: _TSchemaBase) -> _TSchemaBase:
         if subchart.data is not Undefined:
+            # Before removing data, cache the hash if this subchart will need a name
+            # This ensures charts with different data get unique hashes
+            # We store it in _kwds so it survives the copy() operation
+            from altair.utils.schemapi import Undefined as SchemaUndefined
+
+            cached_hash = None
+            if (
+                isinstance(subchart, Chart)
+                and getattr(subchart, "name", None)
+                in (None, SchemaUndefined, Undefined)
+                and hasattr(subchart, "_compute_hash")
+            ):
+                cached_hash = subchart._compute_hash()
+                subchart["_data_hash"] = cached_hash
+
             subchart = subchart.copy()
             subchart.data = Undefined
+
         return subchart
 
     if not subcharts:
