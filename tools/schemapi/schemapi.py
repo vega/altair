@@ -1219,7 +1219,7 @@ class SchemaBase:
             kwds = self._args[0]
         elif not self._args:
             kwds = self._kwds.copy()
-            exclude = {*ignore, "shorthand"}
+            exclude = {*ignore, "shorthand", "_cached_hash"}
             if parsed := context.pop("parsed_shorthand", None):
                 kwds = _replace_parsed_shorthand(parsed, kwds)
             kwds = {k: v for k, v in kwds.items() if k not in exclude}
