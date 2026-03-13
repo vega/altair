@@ -361,7 +361,70 @@ def test_interactive_name_respected():
 
     # For this specific chart configuration, we expect a consistent hash
     # This ensures the hash is deterministic across different runs/OS
-    expected_base_name = "view_6e7cfb454e831ee6"
+    # Note: The hash includes the data URL, ensuring charts with different data sources
+    # get different hashes (fix for issue #3981)
+    expected_base_name = "view_8d6d510abc951f94"
     assert base_name_0 == expected_base_name, (
         f"Expected base name {expected_base_name}, got {base_name_0}"
     )
+
+
+def test_vconcat_different_data_unique_names():
+    import altair as alt
+
+    df_peak = pd.DataFrame(
+        {"site": [1, 2, 3, 4, 5], "escape": [0.1, 0.9, 0.1, 0.2, 0.1]}
+    )
+    df_valley = pd.DataFrame(
+        {"site": [1, 2, 3, 4, 5], "escape": [0.9, 0.1, 0.9, 0.8, 0.9]}
+    )
+
+    selection = alt.selection_point(fields=["site"], on="mouseover", empty=False)
+
+    def make_layered_chart(df, title):
+        base = alt.Chart(df).encode(
+            x="site:O",
+            y=alt.Y("escape:Q", scale=alt.Scale(domain=[0, 1])),
+        )
+        lines = base.mark_line(size=1)
+        points = base.encode(
+            size=alt.condition(selection, alt.value(80), alt.value(30)),
+        ).mark_circle(filled=True)
+        return (
+            (lines + points)
+            .add_params(selection)
+            .properties(
+                title=title,
+                width=300,
+                height=150,
+            )
+        )
+
+    chart = alt.vconcat(
+        make_layered_chart(df_peak, "Peak at site 2"),
+        make_layered_chart(df_valley, "Valley at site 2"),
+    )
+
+    spec = chart.to_dict()
+
+    # Check that line layers in different vconcat rows have different names
+    # This ensures that charts with the same structure but different data
+    # get unique view names (issue #3981)
+    vconcat_charts = spec["vconcat"]
+
+    # Get the names of the line layers (first layer in each row)
+    line_names = []
+    for row in vconcat_charts:
+        layers = row["layer"]
+        # The line layer is the first one in each row
+        line_layer = layers[0]
+        if "name" in line_layer:
+            line_names.append(line_layer["name"])
+
+    # If names are auto-generated, they should be different for different data
+    # The same base name should NOT appear twice (which would indicate a collision)
+    if len(line_names) >= 2:
+        assert line_names[0] != line_names[1], (
+            f"Line layers should have unique names when data differs, "
+            f"but both got name: {line_names[0]}"
+        )
