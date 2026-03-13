@@ -142,3 +142,57 @@ For example, we can use ``y`` and ``y2`` show the ``"min"`` and ``"max"`` values
         y="min(Horsepower)",
         y2="max(Horsepower)",
     )
+
+
+Diagonal Line
+^^^^^^^^^^^^^
+By using ``alt.value`` with the special ``'width'`` and ``'height'`` signals, you can draw a diagonal line that spans the full extent of the chart from corner to corner regardless of the extent of the x and y domains (i.e. the line is drawn in "pixel space").
+
+.. altair-plot::
+    import altair as alt
+    from altair.datasets import data
+
+    source = data.cars()
+
+    points = alt.Chart(source).mark_circle(size=60).encode(
+        x=alt.X("Horsepower:Q"),
+        y=alt.Y("Miles_per_Gallon:Q"),
+    )
+
+    diagonal = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
+        x=alt.value(0),
+        y=alt.value("height"),
+        x2=alt.value("width"),
+        y2=alt.value(0),
+    )
+
+    (points + diagonal).interactive()
+
+Identity Line (x=y)
+^^^^^^^^^^^^^^^^^^^^
+When comparing two related variables (e.g. predicted vs actual values), drawing a line representing a perfect relationship (i.e. an "identity line" at x=y) can facilitate comparisons. In contrast to the diagonal line above that was drawn in pixel space, we now need to draw the line in data space. Therefore we use ``alt.datum`` instead of ``alt.value``. If our chart is static, we can manually enter the x and y coordinates to draw the identity line. But, if we want to draw an identity line that is robust to zooming and panning, we instead need to compute the line dynamically using the ``domain`` expression which redraws the line each time the range of the x (or y) domain changes.
+
+.. altair-plot::
+    import altair as alt
+    import pandas as pd
+    import numpy as np
+
+    rng = np.random.RandomState(42)
+    actual = rng.uniform(10, 90, 50)
+    predicted = actual + rng.normal(0, 12, 50)
+
+    source = pd.DataFrame({"actual": actual, "predicted": predicted})
+
+    points = alt.Chart(source).mark_circle(size=60).encode(
+        x=alt.X("actual:Q"),
+        y=alt.Y("predicted:Q"),
+    )
+
+    identity_line = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
+        x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+        y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+        x2=alt.datum(alt.expr("domain('x')[1]")),  # inherits "quantitative" from x
+        y2=alt.datum(alt.expr("domain('x')[1]")),  # inherits "quantitative" from y
+    )  # either the x or y domain could be used to compute the line coordinates
+
+    (points + identity_line).interactive()

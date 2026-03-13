@@ -5226,27 +5226,51 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     return subcharts
 
 
+def _view_base_for_chart(obj: Any) -> str:
+    """Return a base view name for a chart/layer (for building position-based names)."""
+    name = obj.name
+    parts = name.rsplit("_", 1)
+    if len(parts) == 2 and parts[1].isdigit():
+        return parts[0] or name
+    return name
+
+
+def _view_name_for_param(subchart: ChartType, is_concat: bool) -> str:
+    """View name for this subchart to add to a param's views."""
+    if isinstance(subchart, Chart):
+        return subchart.name
+    if is_concat and isinstance(subchart, FacetChart):
+        spec = subchart.spec
+        if isinstance(spec, Chart):
+            return spec.name
+        if isinstance(spec, LayerChart) and spec.layer:
+            return spec.layer[0].name
+    return ""
+
+
 def _combine_subchart_params(  # noqa: C901
     params: Optional[Sequence[_Parameter]], subcharts: list[ChartType]
 ) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
     if utils.is_undefined(params):
         params = []
-
     # List of triples related to params, (param, dictionary minus views, views)
     param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
-    # Put parameters already found into `param_info` list.
+    # Put parameters already found into `param_info`. Copy each param's views so we can
+    # mutate the list in the MERGE branch and so no two entries share the same list.
     for param in params:
         p = _prepare_to_lift(param)
-        param_info.append(
-            (
-                p,
-                _viewless_dict(p),
-                [] if isinstance(p, core.VariableParameter) else p.views,
-            )
+        views = (
+            []
+            if isinstance(p, core.VariableParameter)
+            else list(p.views)
+            if p.views
+            else []
         )
+        param_info.append((p, _viewless_dict(p), views))
 
     subcharts = [subchart.copy() for subchart in subcharts]
+    is_concat = len(subcharts) > 1
 
     for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
@@ -5257,6 +5281,16 @@ def _combine_subchart_params(  # noqa: C901
             # Use the hash as a base but append the position to ensure uniqueness
             base_name = subchart._get_view_hash_name()
             subchart.name = f"{base_name}_{i}"
+
+        # In concat, FacetCharts get the same content-hash view name; disambiguate by position.
+        if is_concat and isinstance(subchart, FacetChart):
+            spec = subchart.spec
+            subchart.spec = spec.copy(deep=True)
+            spec = subchart.spec
+            if isinstance(spec, LayerChart) and spec.layer:
+                spec.layer[0].name = f"{_view_base_for_chart(spec.layer[0])}_{i}"
+            elif isinstance(spec, Chart):
+                spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)
@@ -5273,14 +5307,17 @@ def _combine_subchart_params(  # noqa: C901
                 continue
 
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
-
-            if isinstance(subchart, Chart) and (subchart.name not in p.views):
-                p.views.append(subchart.name)
+            # Get this subchart's view name from the subchart only (not p.views: params can share lists).
+            view_to_add = _view_name_for_param(subchart, is_concat)
+            # MERGE: start from param's views; APPEND: start from [] so we don't pull in another param's views.
+            views_after = list(p.views or []) if found else []
+            if view_to_add and view_to_add not in views_after:
+                views_after.append(view_to_add)
 
             if found:
-                i = dlist.index(pd)
-                _, _, old_views = param_info[i]
-                new_views = [v for v in p.views if v not in old_views]
+                merge_idx = dlist.index(pd)
+                _, _, old_views = param_info[merge_idx]
+                new_views = [v for v in views_after if v not in old_views]
                 old_views += new_views
 
                 # Warn when parameters get deduplicated
@@ -5292,7 +5329,7 @@ def _combine_subchart_params(  # noqa: C901
                     stacklevel=5,
                 )
             else:
-                param_info.append((p, pd, p.views))
+                param_info.append((p, pd, views_after))
 
         subchart.params = Undefined
 
