@@ -103,11 +103,13 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 # NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
+# Both "default" and "opaque" previously set config.view.continuousWidth/Height=300
+# and "opaque" also set config.background="white". These are now vega-lite's own
+# defaults (since vega-lite v4), so both themes return {} and are kept only for
+# backwards compatibility with code that calls alt.theme.enable("default") or
+# alt.theme.enable("opaque").
 themes.register("default", ThemeConfig)
-themes.register(
-    "opaque",
-    lambda: {"config": {"background": "white"}},
-)
+themes.register("opaque", ThemeConfig)
 themes.register("none", ThemeConfig)
 
 for theme in VEGA_THEMES:
