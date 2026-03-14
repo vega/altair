@@ -711,17 +711,17 @@ Altair makes available a theme registry that lets users apply chart configuratio
 globally within any Python session. 
 The :mod:`altair.theme` module provides :ref:`helper functions <api-theme>` to interact with the registry.
 
-Each theme in the registry is a function which define a specification dictionary
-that will be added to every created chart.
-For example, the default theme configures the default size of a single chart:
+Each theme in the registry is a function which defines a specification dictionary
+that will be merged into every created chart.
+For example, the default theme returns an empty configuration since Vega-Lite's
+own defaults (such as a 300×300 continuous view size) are already in effect:
 
     >>> import altair as alt
     >>> default = alt.theme.get()
     >>> default()
-    {'config': {'view': {'continuousWidth': 300, 'continuousHeight': 300}}}
+    {}
 
-You can see that any chart you create will have this theme applied, and these configurations
-added to its specification:
+You can see that any chart you create will have the active theme applied:
 
 .. altair-plot::
     :output: repr
@@ -823,7 +823,6 @@ fill unless otherwise specified:
     def black_marks() -> alt.theme.ThemeConfig:
         return {
             "config": {
-                "view": {"continuousWidth": 300, "continuousHeight": 300},
                 "mark": {"color": "black", "fill": "black"},
             }
         }

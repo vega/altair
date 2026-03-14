@@ -89,7 +89,6 @@ class VegaTheme:
     def __call__(self) -> ThemeConfig:
         return {
             "usermeta": {"embedOptions": {"theme": self.theme}},
-            "config": {"view": {"continuousWidth": 300, "continuousHeight": 300}},
         }
 
     def __repr__(self) -> str:
@@ -104,18 +103,10 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 # NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-themes.register(
-    "default",
-    lambda: {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}},
-)
+themes.register("default", ThemeConfig)
 themes.register(
     "opaque",
-    lambda: {
-        "config": {
-            "background": "white",
-            "view": {"continuousWidth": 300, "continuousHeight": 300},
-        }
-    },
+    lambda: {"config": {"background": "white"}},
 )
 themes.register("none", ThemeConfig)
 
