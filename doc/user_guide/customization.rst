@@ -725,7 +725,7 @@ Changing the Theme
 If you would like to enable any other theme for the length of your Python session,
 you can call :func:`altair.theme.enable`:
 
-    >>> alt.theme.enable("dark")
+    >>> alt.theme.enable("dark")  # doctest: +ELLIPSIS
     ThemeRegistry.enable(...)
     >>> alt.theme.get()()
     {'usermeta': {'embedOptions': {'theme': 'dark'}}}

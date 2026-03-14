@@ -12,7 +12,6 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import doctest
 import os
 import sys
 from datetime import datetime
@@ -48,8 +47,6 @@ extensions = [
 altair_plot_links = {"editor": True, "source": False, "export": False}
 
 autodoc_default_flags = ["members", "inherited-members"]
-
-doctest_default_flags = doctest.ELLIPSIS
 
 autodoc_member_order = "groupwise"
 
