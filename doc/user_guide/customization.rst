@@ -724,7 +724,7 @@ set (a white background and a 300×300 continuous view size):
 In addition to the Altair themes, there are also themes directly from Vega, for example:
 
     >>> alt.theme.enable("quartz")
-    EnabledPlugin(...)
+    ThemeRegistry.enable(...)
     >>> alt.theme.get()()
     {'usermeta': {'embedOptions': {'theme': 'quartz'}}}
 
