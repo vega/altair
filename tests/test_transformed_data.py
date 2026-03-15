@@ -159,7 +159,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
 
         nw_dfs = (nw.from_native(d, eager_only=True) for d in dfs)
         assert len(dfs) == len(all_rows)
-        for df, rows, cols in zip(nw_dfs, all_rows, all_cols):
+        for df, rows, cols in zip(nw_dfs, all_rows, all_cols, strict=False):
             assert len(df) == rows
             assert set(cols).issubset(set(df.columns))
 

@@ -343,7 +343,7 @@ DUNDER_PREDICATE_COMPOSITION = """
 # Revisit if this starts to become more common
 TYPING_EXTRA: Final = '''
 T = TypeVar("T")
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 """
 One of ``T`` specified type(s), or a `Sequence` of such.
 
@@ -355,7 +355,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func(
         short: OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+        long: str | bool | float | Sequence[str | bool | float],
     ): ...
 """
 
@@ -442,7 +442,7 @@ class PaddingKwds(TypedDict, total=False):
     right: float
     top: float
 
-Temporal: TypeAlias = Union[date, datetime]
+Temporal: TypeAlias = date | datetime
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
@@ -908,11 +908,8 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             "from altair.typing import Optional",
             f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
             f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
-            textwrap.indent(
-                import_typing_extensions((3, 11), "Self")
-                + import_typing_extensions((3, 10), "TypeAlias"),
-                "    ",
-            ),
+            "from typing import TypeAlias",
+            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,

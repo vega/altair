@@ -14,11 +14,8 @@ from tests import examples_arguments_syntax, examples_methods_syntax
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
+    from typing import TypeAlias
 
-    if sys.version_info >= (3, 11):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
     from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
     from _pytest.mark.structures import (
         Markable,  # pyright: ignore[reportPrivateImportUsage]
