@@ -164,15 +164,12 @@ extend-safe-fixes = [
     "W293",    # blank line contains whitespace
 ]
 extend-select = [
-    # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
     "FURB",    # refurb
-    # "PLC2801", # unnecessary-dunder-call
     "PLR1733", # unnecessary-dict-index-lookup
     "PLR1736", # unnecessary-list-index-lookup
-    # "PLR6201", # literal-membership
-    # "PLW1514", # unspecified-encoding
 ]
 ignore = [
+    # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
     "ANN401", # any-type
     "D100",   # undocumented-public-module
     "D101",   # undocumented-public-class
@@ -182,16 +179,16 @@ ignore = [
     "D105",   # undocumented-magic-method
     "D107",   # undocumented-public-init
     "D206",   # indent-with-spaces
-    "D212",   # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D212",   # multi-line-summary-first-line (D213 is the opposite of this)
     "D401",   # non-imperative-mood
     "D413",   # missing-blank-line-after-last-section
-    "E501",   # line-too-long (https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules)
+    "E501",   # line-too-long
     "RUF012", # mutable-class-default
     "RUF052", # used-dummy-variable
     "SIM105", # suppressible-exception (https://github.com/vega/altair/pull/3431#discussion_r1629808660)
     "W505",   # doc-line-too-long
 ]
-mccabe.max-complexity = 10
+mccabe.max-complexity = 10      # https://docs.astral.sh/ruff/settings/#lint_mccabe_max-complexity
 preview               = false   # https://docs.astral.sh/ruff/preview/
 pydocstyle.convention = "numpy" # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 select = [
@@ -357,20 +354,13 @@ disable_error_code = ["annotation-unchecked"]
 
 [tool.pyright]
 enableExperimentalFeatures = true
-extraPaths = ["./tools"]
 pythonPlatform = "All"
 pythonVersion = "3.10"
 reportTypedDictNotRequiredAccess = "none"
 reportIncompatibleMethodOverride = "none"
 reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
-include = [
-    "./altair/**/*.py",
-    "./doc/*.py",
-    "./tests/**/*.py",
-    "./tools/**/*.py",
-    "./sphinxext/**/*.py",
-]
+include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 716 warns
     "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
