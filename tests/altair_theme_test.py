@@ -79,7 +79,7 @@ def alt_theme_test() -> ChartType:
         .mark_point(tooltip=True)
         .transform_filter(alt.datum["IMDB Rating"] != None)
         .transform_filter(
-            alt.FieldRangePredicate("Release Date", [None, 2019], timeUnit="year")
+            alt.FieldRangePredicate("Release Date", [None, alt.DateTime(year=2019)])
         )
         .transform_joinaggregate(Average_Rating="mean(IMDB Rating)")
         .transform_calculate(

@@ -242,7 +242,10 @@ class ThemeDirective(SphinxDirective):
             '"Rotten Tomatoes Rating"', '"Rotten_Tomatoes_Rating"'
         )
         py_code = py_code.replace('"IMDB Votes"', '"IMDB_Votes"')
+        py_code = py_code.replace('"Release Date:T"', '"Release_Date:T"')
         py_code = py_code.replace('"Release Date"', '"Release_Date"')
+        # Restore display titles that were caught by the broad field replacement above
+        py_code = py_code.replace('.title("Release_Date")', '.title("Release Date")')
         py_code = py_code.replace("'IMDB Rating'", "'IMDB_Rating'")
         py_code = py_code.replace(
             "'Rotten Tomatoes Rating'", "'Rotten_Tomatoes_Rating'"
