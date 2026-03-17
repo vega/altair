@@ -33,7 +33,7 @@ keywords = [
     "json",
     "vega-lite",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dynamic = ["version"]
 license = { file = "LICENSE" }
 classifiers = [
@@ -42,7 +42,6 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -129,7 +128,7 @@ doc     = { features = ["all", "dev", "doc"] }
 [tool.hatch.envs.hatch-test]
 # https://hatch.pypa.io/latest/tutorials/testing/overview/
 features = ["all", "dev", "doc"]
-matrix   = [{ python = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"] }]
+matrix   = [{ python = ["3.10", "3.11", "3.12", "3.13", "3.14"] }]
 
 [tool.ruff]
 extend-exclude = [
@@ -141,7 +140,7 @@ extend-exclude = [
 ]
 indent-width = 4
 line-length = 88
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 extend-safe-fixes = [
@@ -278,7 +277,7 @@ test          = "task ruff-check && task type-check && task pytest"
 test-fast     = "task ruff-fix && pytest -m \"not slow and not datasets_debug and not no_xdist\""
 test-slow     = "task ruff-fix && pytest -m \"slow and not datasets_debug and not no_xdist\""
 test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdist\" && task pytest-serial"
-test-min      = "task ruff-check && task type-check && hatch test --python 3.9"
+test-min      = "task ruff-check && task type-check && hatch test --python 3.10"
 test-all      = "task ruff-check && task type-check && hatch test --all"
 
 generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"

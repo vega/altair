@@ -128,10 +128,8 @@ def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):
         pattern = f"property {constname!r}.+has no setter"
-    elif sys.version_info >= (3, 10):
-        pattern = f"can't set attribute {constname!r}"
     else:
-        pattern = "can't set attribute"
+        pattern = f"can't set attribute {constname!r}"
     with pytest.raises(AttributeError, match=pattern):
         setattr(expr, constname, 2)
 

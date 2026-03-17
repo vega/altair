@@ -59,7 +59,6 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - '3.9'
           - '3.10'
           - '3.11'
           - '3.12'
@@ -198,7 +197,7 @@ jobs:
         run: |
           # Ensure all text files exist to avoid upload errors
           touch dependency_changes.txt current_deps.txt binary_checksums.txt binary_changes.txt
-          
+
           # List files that will be uploaded
           echo "Release assets:"
           ls -lh dist/
@@ -220,8 +219,8 @@ jobs:
 
             ### Build Information
 
-            **Version:** ${{ steps.version.outputs.version }}  
-            **Tag:** ${{ steps.version.outputs.tag_name }}  
+            **Version:** ${{ steps.version.outputs.version }}
+            **Tag:** ${{ steps.version.outputs.tag_name }}
             **Previous Weekly Tag:** ${{ needs.check-changes.outputs.last-weekly-tag || 'None (first build)' }}
 
             ## Installation
@@ -293,7 +292,7 @@ jobs:
         run: |
           # Wait a moment to ensure the new release is fully created
           sleep 5
-          
+
           # Get all weekly releases sorted by creation date (newest first)
           echo "Fetching all weekly releases..."
           WEEKLY_RELEASES=$(gh release list --limit 100 --json tagName,isPrerelease,createdAt --jq '.[] | select(.tagName | startswith("weekly-")) | .tagName' | head -n 100)
@@ -303,7 +302,7 @@ jobs:
             echo "No weekly releases found"
             exit 0
           fi
-          
+
           TOTAL_WEEKLY=$(echo "$WEEKLY_RELEASES" | wc -l | tr -d ' ')
           echo "Found ${TOTAL_WEEKLY} weekly releases"
 

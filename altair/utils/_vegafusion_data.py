@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, Final, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Final, TypedDict, overload
 from weakref import WeakValueDictionary
 
 from narwhals.stable.v1.dependencies import is_into_dataframe
@@ -66,7 +66,7 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
     url: str
 
 
-_VegaFusionReturnType = Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]
+_VegaFusionReturnType = _ToVegaFusionReturnUrlDict | ToValuesReturnType
 
 
 @overload
