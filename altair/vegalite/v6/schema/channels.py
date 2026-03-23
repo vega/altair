@@ -25,6 +25,7 @@ if TYPE_CHECKING:
     # ruff: noqa: F405
     import sys
     from collections.abc import Sequence
+    from typing import TypeAlias
 
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
@@ -44,10 +45,6 @@ if TYPE_CHECKING:
         from typing import Self
     else:
         from typing_extensions import Self
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
 
 __all__ = [
@@ -21911,43 +21908,41 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super().__init__(value=value, **kwds)
 
 
-AnyAngle: TypeAlias = Union[Angle, AngleDatum, AngleValue]
-AnyColor: TypeAlias = Union[Color, ColorDatum, ColorValue]
-AnyDescription: TypeAlias = Union[Description, DescriptionValue]
-AnyFill: TypeAlias = Union[Fill, FillDatum, FillValue]
-AnyFillOpacity: TypeAlias = Union[FillOpacity, FillOpacityDatum, FillOpacityValue]
-AnyHref: TypeAlias = Union[Href, HrefValue]
-AnyLatitude: TypeAlias = Union[Latitude, LatitudeDatum]
-AnyLatitude2: TypeAlias = Union[Latitude2, Latitude2Datum, Latitude2Value]
-AnyLongitude: TypeAlias = Union[Longitude, LongitudeDatum]
-AnyLongitude2: TypeAlias = Union[Longitude2, Longitude2Datum, Longitude2Value]
-AnyOpacity: TypeAlias = Union[Opacity, OpacityDatum, OpacityValue]
-AnyOrder: TypeAlias = Union[Order, OrderValue]
-AnyRadius: TypeAlias = Union[Radius, RadiusDatum, RadiusValue]
-AnyRadius2: TypeAlias = Union[Radius2, Radius2Datum, Radius2Value]
-AnyShape: TypeAlias = Union[Shape, ShapeDatum, ShapeValue]
-AnySize: TypeAlias = Union[Size, SizeDatum, SizeValue]
-AnyStroke: TypeAlias = Union[Stroke, StrokeDatum, StrokeValue]
-AnyStrokeDash: TypeAlias = Union[StrokeDash, StrokeDashDatum, StrokeDashValue]
-AnyStrokeOpacity: TypeAlias = Union[
-    StrokeOpacity, StrokeOpacityDatum, StrokeOpacityValue
-]
-AnyStrokeWidth: TypeAlias = Union[StrokeWidth, StrokeWidthDatum, StrokeWidthValue]
-AnyText: TypeAlias = Union[Text, TextDatum, TextValue]
-AnyTheta: TypeAlias = Union[Theta, ThetaDatum, ThetaValue]
-AnyTheta2: TypeAlias = Union[Theta2, Theta2Datum, Theta2Value]
-AnyTooltip: TypeAlias = Union[Tooltip, TooltipValue]
-AnyUrl: TypeAlias = Union[Url, UrlValue]
-AnyX: TypeAlias = Union[X, XDatum, XValue]
-AnyX2: TypeAlias = Union[X2, X2Datum, X2Value]
-AnyXError: TypeAlias = Union[XError, XErrorValue]
-AnyXError2: TypeAlias = Union[XError2, XError2Value]
-AnyXOffset: TypeAlias = Union[XOffset, XOffsetDatum, XOffsetValue]
-AnyY: TypeAlias = Union[Y, YDatum, YValue]
-AnyY2: TypeAlias = Union[Y2, Y2Datum, Y2Value]
-AnyYError: TypeAlias = Union[YError, YErrorValue]
-AnyYError2: TypeAlias = Union[YError2, YError2Value]
-AnyYOffset: TypeAlias = Union[YOffset, YOffsetDatum, YOffsetValue]
+AnyAngle: TypeAlias = Angle | AngleDatum | AngleValue
+AnyColor: TypeAlias = Color | ColorDatum | ColorValue
+AnyDescription: TypeAlias = Description | DescriptionValue
+AnyFill: TypeAlias = Fill | FillDatum | FillValue
+AnyFillOpacity: TypeAlias = FillOpacity | FillOpacityDatum | FillOpacityValue
+AnyHref: TypeAlias = Href | HrefValue
+AnyLatitude: TypeAlias = Latitude | LatitudeDatum
+AnyLatitude2: TypeAlias = Latitude2 | Latitude2Datum | Latitude2Value
+AnyLongitude: TypeAlias = Longitude | LongitudeDatum
+AnyLongitude2: TypeAlias = Longitude2 | Longitude2Datum | Longitude2Value
+AnyOpacity: TypeAlias = Opacity | OpacityDatum | OpacityValue
+AnyOrder: TypeAlias = Order | OrderValue
+AnyRadius: TypeAlias = Radius | RadiusDatum | RadiusValue
+AnyRadius2: TypeAlias = Radius2 | Radius2Datum | Radius2Value
+AnyShape: TypeAlias = Shape | ShapeDatum | ShapeValue
+AnySize: TypeAlias = Size | SizeDatum | SizeValue
+AnyStroke: TypeAlias = Stroke | StrokeDatum | StrokeValue
+AnyStrokeDash: TypeAlias = StrokeDash | StrokeDashDatum | StrokeDashValue
+AnyStrokeOpacity: TypeAlias = StrokeOpacity | StrokeOpacityDatum | StrokeOpacityValue
+AnyStrokeWidth: TypeAlias = StrokeWidth | StrokeWidthDatum | StrokeWidthValue
+AnyText: TypeAlias = Text | TextDatum | TextValue
+AnyTheta: TypeAlias = Theta | ThetaDatum | ThetaValue
+AnyTheta2: TypeAlias = Theta2 | Theta2Datum | Theta2Value
+AnyTooltip: TypeAlias = Tooltip | TooltipValue
+AnyUrl: TypeAlias = Url | UrlValue
+AnyX: TypeAlias = X | XDatum | XValue
+AnyX2: TypeAlias = X2 | X2Datum | X2Value
+AnyXError: TypeAlias = XError | XErrorValue
+AnyXError2: TypeAlias = XError2 | XError2Value
+AnyXOffset: TypeAlias = XOffset | XOffsetDatum | XOffsetValue
+AnyY: TypeAlias = Y | YDatum | YValue
+AnyY2: TypeAlias = Y2 | Y2Datum | Y2Value
+AnyYError: TypeAlias = YError | YErrorValue
+AnyYError2: TypeAlias = YError2 | YError2Value
+AnyYOffset: TypeAlias = YOffset | YOffsetDatum | YOffsetValue
 
 ChannelAngle: TypeAlias = Union[str, AnyAngle, "IntoCondition", Map]
 ChannelColor: TypeAlias = Union[str, AnyColor, "IntoCondition", Map]

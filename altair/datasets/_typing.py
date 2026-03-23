@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import sys
-from typing import Literal
+from typing import Literal, TypeAlias
 
 if sys.version_info >= (3, 15):
     from typing import TypedDict
@@ -15,11 +15,6 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString
 else:
     from typing_extensions import LiteralString
-
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
 
 
 __all__ = ["Dataset", "Extension", "Metadata"]

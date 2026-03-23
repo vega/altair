@@ -7,12 +7,9 @@ from typing import TYPE_CHECKING, Any, Literal, Union
 from altair.utils import SchemaBase
 
 if TYPE_CHECKING:
-    from altair.vegalite.v6.schema._typing import Map, PrimitiveValue_T
+    from typing import TypeAlias
 
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from altair.vegalite.v6.schema._typing import Map, PrimitiveValue_T
 
 
 class DatumType:

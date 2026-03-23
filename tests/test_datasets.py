@@ -22,7 +22,7 @@ from tests import no_xdist, skip_requires_geopandas, skip_requires_pyarrow
 if TYPE_CHECKING:
     from collections.abc import Mapping
     from pathlib import Path
-    from typing import Literal
+    from typing import Literal, TypeAlias
 
     import pandas as pd
     import polars as pl
@@ -31,10 +31,6 @@ if TYPE_CHECKING:
     from altair.datasets._reader import _Backend, _PandasAny, _Polars, _PyArrow
     from altair.vegalite.v6.schema._typing import OneOrSeq
 
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
     PolarsLoader: TypeAlias = Loader[pl.DataFrame, pl.LazyFrame]
 
 # =============================================================================

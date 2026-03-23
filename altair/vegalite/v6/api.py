@@ -11,7 +11,7 @@ import typing as t
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypeAlias, TypeVar, Union, overload
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -54,10 +54,6 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString
 else:
     from typing_extensions import LiteralString
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -207,7 +203,7 @@ __all__ = [
     "when",
 ]
 
-ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
+ChartDataType: TypeAlias = Optional[DataType | core.Data | str | core.Generator]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=SchemaBase)
 
 
@@ -245,7 +241,7 @@ def _consolidate_data(
     This function will modify context in-place, and return a new version of data
     """
     values: Any = Undefined
-    kwds = {}
+    kwds: dict = {}
 
     if isinstance(data, core.InlineData):
         if utils.is_undefined(data.name) and not utils.is_undefined(data.values):
@@ -255,7 +251,7 @@ def _consolidate_data(
                 values = data.values
             kwds = {"format": data.format}
 
-    elif isinstance(data, dict) and "name" not in data and "values" in data:
+    elif isinstance(data, dict) and ("name" not in data) and ("values" in data):
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
@@ -457,7 +453,7 @@ class Parameter(_expr_core.OperatorMixin):
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
-            nm: str = self.name
+            nm: Any = self.name
             return {"param": nm.to_dict() if hasattr(nm, "to_dict") else nm}
         else:
             msg = f"Unrecognized parameter type: {self.param_type}"
@@ -577,9 +573,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
 # -------------------------------------------------------------------------
 # Tools for working with conditions
-_TestPredicateType: TypeAlias = Union[
-    str, _expr_core.Expression, core.PredicateComposition
-]
+_TestPredicateType: TypeAlias = str | _expr_core.Expression | core.PredicateComposition
 """https://vega.github.io/vega-lite/docs/predicate.html"""
 
 _PredicateType: TypeAlias = Union[
@@ -591,12 +585,12 @@ _PredicateType: TypeAlias = Union[
 ]
 """Permitted types for `predicate`."""
 
-_ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, core.PredicateComposition
-]
+_ComposablePredicateType: TypeAlias = (
+    _expr_core.OperatorMixin | core.PredicateComposition
+)
 """Permitted types for `&` reduced predicates."""
 
-_StatementType: TypeAlias = Union[SchemaBase, Map, str]
+_StatementType: TypeAlias = SchemaBase | Map | str
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -767,7 +761,7 @@ class _Conditional(TypedDict, t.Generic[_C], total=False):
     value: Any
 
 
-IntoCondition: TypeAlias = Union[ConditionLike, _Conditional[Any]]
+IntoCondition: TypeAlias = ConditionLike | _Conditional[Any]
 """
 Anything that can be converted into a conditional encoding or property.
 
@@ -1590,16 +1584,14 @@ You can also provide a sequence of mappings between ``encodings`` or ``fields`` 
 
 _SelectionIntervalValueMap: TypeAlias = Mapping[
     SingleDefUnitChannel_T,
-    Union[
-        tuple[bool, bool],
-        tuple[float, float],
-        tuple[str, str],
-        tuple["Temporal | DateTime", "Temporal | DateTime"],
-        Sequence[bool],
-        Sequence[float],
-        Sequence[str],
-        Sequence["Temporal | DateTime"],
-    ],
+    tuple[bool, bool]
+    | tuple[float, float]
+    | tuple[str, str]
+    | tuple["Temporal | DateTime", "Temporal | DateTime"]
+    | Sequence[bool]
+    | Sequence[float]
+    | Sequence[str]
+    | Sequence["Temporal | DateTime"],
 ]
 """
 Interval selections are initialized with a mapping between ``encodings`` to **values**:
@@ -2119,7 +2111,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # remaining to_dict calls are not at top level
         context["top_level"] = False
 
-        vegalite_spec = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
+        vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
@@ -5159,9 +5151,9 @@ def _combine_subchart_data(
     return data, subcharts
 
 
-_Parameter: TypeAlias = Union[
-    core.VariableParameter, core.TopLevelSelectionParameter, core.SelectionParameter
-]
+_Parameter: TypeAlias = (
+    core.VariableParameter | core.TopLevelSelectionParameter | core.SelectionParameter
+)
 
 
 def _viewless_dict(param: _Parameter) -> dict[str, Any]:
@@ -5495,24 +5487,30 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType: TypeAlias = Union[
-    Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
-]
-ConcatType: TypeAlias = Union[
-    ChartType,
-    core.FacetSpec,
-    core.LayerSpec,
-    core.RepeatSpec,
-    core.FacetedUnitSpec,
-    core.LayerRepeatSpec,
-    core.NonNormalizedSpec,
-    core.NonLayerRepeatSpec,
-    core.ConcatSpecGenericSpec,
-    core.ConcatSpecGenericSpec,
-    core.HConcatSpecGenericSpec,
-    core.VConcatSpecGenericSpec,
-]
-LayerType: TypeAlias = Union[ChartType, core.UnitSpec, core.LayerSpec]
+ChartType: TypeAlias = (
+    Chart
+    | RepeatChart
+    | ConcatChart
+    | HConcatChart
+    | VConcatChart
+    | FacetChart
+    | LayerChart
+)
+ConcatType: TypeAlias = (
+    ChartType
+    | core.FacetSpec
+    | core.LayerSpec
+    | core.RepeatSpec
+    | core.FacetedUnitSpec
+    | core.LayerRepeatSpec
+    | core.NonNormalizedSpec
+    | core.NonLayerRepeatSpec
+    | core.ConcatSpecGenericSpec
+    | core.ConcatSpecGenericSpec
+    | core.HConcatSpecGenericSpec
+    | core.VConcatSpecGenericSpec
+)
+LayerType: TypeAlias = ChartType | core.UnitSpec | core.LayerSpec
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:

@@ -15,17 +15,7 @@ from functools import partial
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
 from math import ceil
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Final,
-    Generic,
-    Literal,
-    TypeVar,
-    Union,
-    cast,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar, cast, overload
 
 import jsonschema
 import jsonschema.exceptions
@@ -41,7 +31,7 @@ else:
 
 if TYPE_CHECKING:
     from types import ModuleType
-    from typing import ClassVar
+    from typing import ClassVar, TypeAlias
 
     from jsonschema.exceptions import ValidationError
     from referencing import Registry
@@ -57,10 +47,6 @@ if TYPE_CHECKING:
         from typing import Never, Self
     else:
         from typing_extensions import Never, Self
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
     _OptionalModule: TypeAlias = "ModuleType | None"
 
@@ -443,7 +429,7 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
         # which is why we can use join below
         value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
         longest_enums: ValidationErrorList = []
-        for value_str, err in zip(value_strings, errors):
+        for value_str, err in zip(value_strings, errors, strict=False):
             if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
                 longest_enums.append(err)
         errors = longest_enums
@@ -770,7 +756,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                 (name, len(name))
                 for name in param_dict_keys
                 if name not in {"kwds", "self"}
-            ]
+            ],
+            strict=False,
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
@@ -991,7 +978,7 @@ class UndefinedType:
 
 Undefined = UndefinedType()
 T = TypeVar("T")
-Optional: TypeAlias = Union[T, UndefinedType]
+Optional: TypeAlias = T | UndefinedType
 """One of ``T`` specified type(s), or the ``Undefined`` singleton.
 
 Examples

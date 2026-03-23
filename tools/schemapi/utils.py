@@ -14,7 +14,7 @@ from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -37,14 +37,11 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString, Never
 else:
     from typing_extensions import LiteralString, Never
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
+from typing import TypeAlias
 
 T = TypeVar("T")
 
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 TargetType: TypeAlias = Literal["annotation", "doc"]
 
 EXCLUDE_KEYS: frozenset[
@@ -125,7 +122,7 @@ class _TypeAliasTracer:
             "import sys",
             "from datetime import date, datetime",
             "from collections.abc import Sequence, Mapping",
-            "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
+            "from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 15), "TypedDict", reason="https://peps.python.org/pep-0728/"
@@ -133,7 +130,6 @@ class _TypeAliasTracer:
             import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
-            import_typing_extensions((3, 10), "TypeAlias"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:
