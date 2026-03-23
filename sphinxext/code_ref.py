@@ -15,7 +15,7 @@ from tools.codemod import extract_func_def, extract_func_def_embed
 if TYPE_CHECKING:
     import sys
     from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-    from typing import Any, ClassVar, TypeVar, Union
+    from typing import Any, ClassVar, TypeAlias, TypeVar
 
     from docutils.parsers.rst.states import RSTState, RSTStateMachine
     from docutils.statemachine import StringList
@@ -25,13 +25,9 @@ if TYPE_CHECKING:
         from typing import TypeAliasType
     else:
         from typing_extensions import TypeAliasType
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
     T = TypeVar("T")
-    OneOrIter = TypeAliasType("OneOrIter", Union[T, Iterable[T]], type_params=(T,))
+    OneOrIter = TypeAliasType("OneOrIter", T | Iterable[T], type_params=(T,))
 
 _OutputShort: TypeAlias = Literal["code", "plot"]
 _OutputLong: TypeAlias = Literal["code-block", "altair-plot"]
@@ -242,7 +238,10 @@ class ThemeDirective(SphinxDirective):
             '"Rotten Tomatoes Rating"', '"Rotten_Tomatoes_Rating"'
         )
         py_code = py_code.replace('"IMDB Votes"', '"IMDB_Votes"')
+        py_code = py_code.replace('"Release Date:T"', '"Release_Date:T"')
         py_code = py_code.replace('"Release Date"', '"Release_Date"')
+        # Restore display titles that were caught by the broad field replacement above
+        py_code = py_code.replace('.title("Release_Date")', '.title("Release Date")')
         py_code = py_code.replace("'IMDB Rating'", "'IMDB_Rating'")
         py_code = py_code.replace(
             "'Rotten Tomatoes Rating'", "'Rotten_Tomatoes_Rating'"

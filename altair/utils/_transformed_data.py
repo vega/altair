@@ -30,13 +30,8 @@ from altair.utils._vegafusion_data import get_inline_tables, import_vegafusion
 from altair.utils.schemapi import Undefined
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Iterable
-
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
 
     from altair.typing import ChartType
     from altair.utils.core import DataFrameLike

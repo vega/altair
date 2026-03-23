@@ -26,7 +26,7 @@ if TYPE_CHECKING:
         Sequence,
     )
     from io import IOBase
-    from typing import Any, Final
+    from typing import Any, Final, TypeAlias
     from urllib.request import OpenerDirector
 
     from _typeshed import StrPath
@@ -39,14 +39,12 @@ if TYPE_CHECKING:
         from typing import Unpack
     else:
         from typing_extensions import Unpack
+
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+
     from altair.datasets._typing import FlFieldStr
     from altair.vegalite.v6.schema._typing import OneOrSeq
 
@@ -170,7 +168,7 @@ class CsvCache(CompressedCache["_Dataset", "Metadata"]):
         self, header: Iterable[str], row: Iterable[str], /
     ) -> Iterator[tuple[str, Any]]:
         map_tf = {"true": True, "false": False}
-        for col, value in zip(header, row):
+        for col, value in zip(header, row, strict=False):
             if col.startswith(("is_", "has_")):
                 yield col, map_tf[value]
             elif col == "bytes":
@@ -286,7 +284,7 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
                     # For pyarrow CSV reading, use the schema as intended
                     # This will fail for non-ISO date formats, but that's the correct behavior
                     # Users can handle this by using a different backend or converting dates manually
-                    return {"convert_options": ConvertOptions(column_types=schema)}  # pyright: ignore[reportCallIssue]
+                    return {"convert_options": ConvertOptions(column_types=schema)}
                 elif suffix == ".parquet":
                     return {"schema": schema}
 
