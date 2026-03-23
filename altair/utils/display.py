@@ -5,7 +5,7 @@ import pkgutil
 import textwrap
 import uuid
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
 from .mimebundle import spec_to_mimebundle
@@ -13,12 +13,7 @@ from .plugin_registry import PluginEnabler, PluginRegistry
 from .schemapi import validate_jsonschema
 
 if TYPE_CHECKING:
-    import sys
-
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
 
 # ==============================================================================
 # Renderer registry
@@ -28,14 +23,14 @@ if TYPE_CHECKING:
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
 MimeBundleDataType: TypeAlias = dict[str, Any]
 MimeBundleMetaDataType: TypeAlias = dict[str, Any]
-MimeBundleType: TypeAlias = Union[
-    MimeBundleDataType, tuple[MimeBundleDataType, MimeBundleMetaDataType]
-]
+MimeBundleType: TypeAlias = (
+    MimeBundleDataType | tuple[MimeBundleDataType, MimeBundleMetaDataType]
+)
 RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
 
 DefaultRendererReturnType: TypeAlias = tuple[
-    dict[str, Union[str, dict[str, Any]]], dict[str, dict[str, Any]]
+    dict[str, str | dict[str, Any]], dict[str, dict[str, Any]]
 ]
 
 

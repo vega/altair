@@ -12,15 +12,12 @@ from altair.vegalite.v6.schema._typing import VegaThemes
 if TYPE_CHECKING:
     import sys
     from functools import partial
+    from typing import TypeAlias
 
     if sys.version_info >= (3, 11):
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
     from altair.utils.plugin_registry import PluginEnabler
 

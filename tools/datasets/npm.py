@@ -17,10 +17,8 @@ if TYPE_CHECKING:
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
+
     from tools.datasets import PathMap
     from tools.datasets.datapackage import DataPackage
 
