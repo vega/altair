@@ -7,7 +7,7 @@ import re
 import sys
 from collections.abc import Mapping, Sequence
 from datetime import date, datetime
-from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args
+from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, get_args
 
 if sys.version_info >= (3, 15):  # https://peps.python.org/pep-0728/
     from typing import TypedDict
@@ -28,11 +28,6 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString
 else:
     from typing_extensions import LiteralString
-
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
 
 
 __all__ = [
@@ -102,7 +97,7 @@ __all__ = [
 
 
 T = TypeVar("T")
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 """
 One of ``T`` specified type(s), or a `Sequence` of such.
 
@@ -114,7 +109,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func(
         short: OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+        long: str | bool | float | Sequence[str | bool | float],
     ): ...
 """
 
@@ -203,7 +198,7 @@ class PaddingKwds(TypedDict, total=False):
     top: float
 
 
-Temporal: TypeAlias = Union[date, datetime]
+Temporal: TypeAlias = date | datetime
 
 VegaThemes: TypeAlias = Literal[
     "carbong10",
@@ -222,7 +217,7 @@ VegaThemes: TypeAlias = Literal[
     "vox",
 ]
 Map: TypeAlias = Mapping[str, Any]
-PrimitiveValue_T: TypeAlias = Union[str, bool, float, None]
+PrimitiveValue_T: TypeAlias = str | bool | float | None
 AggregateOp_T: TypeAlias = Literal[
     "argmax",
     "argmin",

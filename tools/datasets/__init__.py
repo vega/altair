@@ -28,17 +28,12 @@ from tools.datasets.npm import Npm
 from tools.schemapi import utils
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Mapping
+    from typing import TypeAlias
 
     import polars as pl
 
     from tools.datasets import datapackage
-
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
     _PathAlias: TypeAlias = Literal["typing", "metadata-csv", "metadata", "schemas"]
     PathMap: TypeAlias = Mapping[_PathAlias, Path]
@@ -182,10 +177,9 @@ class Application:
             f"{HEADER_COMMENT}",
             "from __future__ import annotations\n",
             "import sys",
-            "from typing import Literal, TYPE_CHECKING",
+            "from typing import Literal, TYPE_CHECKING, TypeAlias",
             utils.import_typing_extensions((3, 15), "TypedDict"),
             utils.import_typing_extensions((3, 11), "LiteralString"),
-            utils.import_typing_extensions((3, 10), "TypeAlias"),
             "\n",
             f"__all__ = {[NAME, EXT, dpkg._NAME_TYPED_DICT]}\n",
             utils.spell_literal_alias(NAME, dpkg.dataset_names()),
