@@ -7,6 +7,7 @@
 # - pytest
 # - mypy
 # - pyright (experimental)
+# - ty (experimental)
 
 [build-system]
 requires = ["hatchling"]
@@ -81,6 +82,7 @@ dev = [
     "mistune",
     "mypy",
     "pandas-stubs<2.3.3",
+    "ty",
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3",
@@ -270,7 +272,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests"
+type-check = "mypy altair tests && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -364,3 +366,16 @@ ignore = [
     "../../../**/Lib",                          # stdlib
     "../../../**/typeshed*"                     # typeshed-fallback
 ]
+
+[tool.ty]
+src.include = ["altair/typing", "altair/expr", "altair/vegalite"]
+src.exclude = ["altair/vegalite/v6/schema"]
+analysis.respect-type-ignore-comments = true  # allow existing type: ignore
+
+[tool.ty.rules]
+unused-type-ignore-comment = "ignore"  # skip unused type: ignore
+# suppress these for now so ty check will pass
+deprecated = "ignore"
+no-matching-overload = "ignore"
+invalid-context-manager = "ignore"
+invalid-method-override = "ignore"
