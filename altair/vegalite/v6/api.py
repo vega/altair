@@ -252,6 +252,7 @@ def _consolidate_data(
             kwds = {"format": data.format}
 
     elif isinstance(data, dict) and ("name" not in data) and ("values" in data):
+        data = t.cast("dict[str, Any]", data)
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
@@ -900,7 +901,9 @@ def _parse_literal(val: Any, /) -> dict[str, Any]:
         raise TypeError(msg)
 
 
-def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
+def _parse_then(
+    statement: _StatementType, kwds: dict[str, Any], /
+) -> Mapping[str, Any]:
     if isinstance(statement, SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
@@ -5339,7 +5342,7 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str]:
+) -> list[str] | list:
     if isinstance(repeat, list):
         return repeat
 
