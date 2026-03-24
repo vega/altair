@@ -37,17 +37,16 @@ argument. Here we split the above density computation across movie genres:
        width=120,
        height=80
    ).transform_filter(
-       'isValid(datum.Major_Genre)'
+       'isValid(datum["Major Genre"])'
    ).transform_density(
        'IMDB Rating',
-       groupby=['Major_Genre'],
+       groupby=['Major Genre'],
        as_=['IMDB Rating', 'density'],
-       extent=[1, 10],
    ).mark_area().encode(
        x="IMDB Rating:Q",
        y='density:Q',
    ).facet(
-       'Major_Genre:N',
+       'Major Genre:N',
        columns=4
    )
 
