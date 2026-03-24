@@ -648,7 +648,7 @@ def _predicate_to_condition(
     elif _is_test_predicate(predicate):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
-        condition = predicate
+        condition = predicate  # ty: ignore
     elif isinstance(predicate, _expr_core.OperatorMixin):
         condition = {"test": predicate._to_expr()}
     else:
@@ -2149,7 +2149,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 )
                 raise ValueError(msg)
             else:
-                return _compile_with_vegafusion(vegalite_spec)
+                return _compile_with_vegafusion(vegalite_spec)  # ty: ignore
         elif format == "vega":
             plugin = vegalite_compilers.get()
             if plugin is None:
@@ -2157,7 +2157,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 raise ValueError(msg)
             return plugin(vegalite_spec)
         else:
-            return vegalite_spec
+            return vegalite_spec  # ty: ignore
 
     def to_json(
         self,
@@ -2501,7 +2501,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
             assert isinstance(repeat, list)
-            repeat_arg = repeat
+            repeat_arg = repeat  # ty: ignore
         elif layer_specified:
             repeat_arg = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
@@ -2764,7 +2764,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(aggregate, list)
-            aggregate.append(core.AggregatedFieldDef(**dct))
+            aggregate.append(core.AggregatedFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
@@ -3097,7 +3097,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(joinaggregate, list)
-            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
@@ -3785,7 +3785,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                w.append(core.WindowFieldDef(**kwds))
+                w.append(core.WindowFieldDef(**kwds))  # ty: ignore
 
         return self._add_transform(
             core.WindowTransform(
@@ -4132,9 +4132,8 @@ class Chart(
         jsonschema.ValidationError :
             If ``validate`` and ``dct`` does not conform to the schema
         """
-        _tp: Any
         for tp in TopLevelMixin.__subclasses__():
-            _tp = super() if tp is Chart else tp
+            _tp: Any = super() if tp is Chart else tp
             try:
                 return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
