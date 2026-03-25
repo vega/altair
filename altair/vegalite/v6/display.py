@@ -64,7 +64,7 @@ def json_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
 def png_renderer(spec: dict, **metadata) -> dict[str, bytes]:
     # To get proper return value type, would need to write complex
     # overload signatures for spec_to_mimebundle based on `format`
-    return spec_to_mimebundle(  # type: ignore[return-value]
+    return spec_to_mimebundle(  # type: ignore
         spec,
         format="png",
         mode="vega-lite",
@@ -97,7 +97,7 @@ def jupyter_renderer(spec: dict, **metadata):
     offline = metadata.get("offline", False)
 
     # mypy doesn't see the enable_offline class method for some reason
-    JupyterChart.enable_offline(offline=offline)  # type: ignore[attr-defined]
+    JupyterChart.enable_offline(offline=offline)  # type: ignore
 
     # propagate embed options
     embed_options = metadata.get("embed_options")
@@ -106,7 +106,7 @@ def jupyter_renderer(spec: dict, **metadata):
     # conditionally defined in AnyWidget
     return JupyterChart(
         chart=Chart.from_dict(spec), embed_options=embed_options
-    )._repr_mimebundle_()  # type: ignore[attr-defined]
+    )._repr_mimebundle_()  # type: ignore
 
 
 def browser_renderer(

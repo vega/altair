@@ -924,7 +924,7 @@ def _parse_otherwise(
         if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
-        selection.update(**statement, **kwds)  # type: ignore[call-arg]
+        selection.update(**statement, **kwds)  # type: ignore
     return selection
 
 
