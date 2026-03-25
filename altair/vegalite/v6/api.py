@@ -1091,7 +1091,7 @@ class Then(ConditionLike, t.Generic[_C]):
             if isinstance(current, list) and len(current) == 1:
                 # This case is guaranteed to have come from `When` and not `ChainedWhen`
                 # The `list` isn't needed if we complete the condition here
-                conditions = _Conditional(condition=current[0])  # pyright: ignore[reportArgumentType]
+                conditions = _Conditional(condition=current[0])
             elif isinstance(current, dict):
                 if not is_extra(statement):
                     conditions = self.to_dict()
@@ -3998,7 +3998,7 @@ class _EncodingMixin(channels._EncodingMixin):
             r: Any = row
             f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)  # pyright: ignore[reportArgumentType]
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
 
 
 class Chart(
