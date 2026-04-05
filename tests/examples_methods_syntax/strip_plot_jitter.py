@@ -1,7 +1,7 @@
 """
 Strip Plot with Jitter
 ----------------------
-In this chart, we encode the ``Major_Genre`` column from the ``movies`` dataset
+In this chart, we encode the ``Major Genre`` column from the ``movies`` dataset
 in the ``y``-channel. In the default presentation of this data, it would be
 difficult to gauge the relative frequencies with which different values occur
 because there would be so much overlap. To address this, we use the ``yOffset``
