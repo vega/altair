@@ -1523,7 +1523,7 @@ def test_themes():
         assert "config" not in chart.to_dict()
 
     with theme.enable("opaque"):
-        assert "config" not in chart.to_dict()
+        assert chart.to_dict()["config"] == {"background": "white"}
 
     with theme.enable("none"):
         assert "config" not in chart.to_dict()
