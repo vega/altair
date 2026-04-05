@@ -101,12 +101,20 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 # Both "default" and "opaque" previously set config.view.continuousWidth/Height=300
-# and "opaque" also set config.background="white". These are now vega-lite's own
-# defaults (since vega-lite v4), so both themes return {} and are kept only for
-# backwards compatibility with code that calls alt.theme.enable("default") or
-# alt.theme.enable("opaque").
+# These are now vega-lite's own defaults (since vega-lite v4).
+# The default theme therefore just return `{}` and is kept only for
+# backwards compatibility
 themes.register("default", ThemeConfig)
-themes.register("opaque", ThemeConfig)
+# The "opaque" theme still changes the background, so this is kept although
+# it is not that useful on its own without also changing grid lines etc.
+themes.register(
+    "opaque",
+    lambda: {
+        "config": {
+            "background": "white",
+        }
+    },
+)
 themes.register("none", ThemeConfig)
 
 for theme in VEGA_THEMES:
