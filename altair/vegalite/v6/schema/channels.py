@@ -160,7 +160,7 @@ __all__ = [
 class FieldChannelMixin:
     _encoding_name: str
 
-    def to_dict(
+    def to_dict(  # noqa: C901
         self,
         validate: bool = True,
         ignore: list[str] | None = None,

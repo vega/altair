@@ -521,6 +521,174 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
     return result
 
 
+def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
+    """
+    Infer the Vega-Lite encoding type for a Python expression object.
+
+    Returns one of ``"quantitative"``, ``"nominal"``, ``"temporal"``, or
+    ``None`` when the type cannot be determined statically.
+    """
+    from altair.expr.core import (
+        BinaryExpression,
+        ConstExpression,
+        FunctionExpression,
+        GetAttrExpression,
+        UnaryExpression,
+    )
+
+    if isinstance(expr, ConstExpression):
+        val = expr._kwds.get("name", expr._kwds.get("value"))
+        if val is not None:
+            if isinstance(val, bool):
+                return "nominal"
+            elif isinstance(val, (int, float)):
+                return "quantitative"
+            elif isinstance(val, str):
+                return "nominal"
+            elif isinstance(val, (dt.date, dt.datetime)):
+                return "temporal"
+        return None
+
+    if isinstance(expr, GetAttrExpression):
+        return None
+
+    if isinstance(expr, UnaryExpression):
+        return "quantitative"
+
+    if isinstance(expr, BinaryExpression):
+        op = expr.op
+        if op in ("+", "-", "*", "/", "%", "**", "pow"):
+            return "quantitative"
+        elif op in ("===", "!==", "<", ">", "<=", ">="):
+            return "nominal"
+        left_type = _infer_expr_type(expr.lhs)
+        if left_type:
+            return left_type
+        right_type = _infer_expr_type(expr.rhs)
+        if right_type:
+            return right_type
+        return "quantitative"
+
+    if isinstance(expr, FunctionExpression):
+        name = expr._kwds.get("name", "")
+        if name in {
+            "abs",
+            "ceil",
+            "floor",
+            "max",
+            "min",
+            "pow",
+            "round",
+            "sqrt",
+            "exp",
+            "log",
+            "sin",
+            "cos",
+            "tan",
+            "acos",
+            "asin",
+            "atan",
+            "clamp",
+            "hypot",
+            "sampleNormal",
+            "cumulativeNormal",
+            "densityNormal",
+            "quantileNormal",
+            "sampleLogNormal",
+            "cumulativeLogNormal",
+            "densityLogNormal",
+            "quantileLogNormal",
+            "sampleUniform",
+            "cumulativeUniform",
+            "densityUniform",
+            "quantileUniform",
+            "lerp",
+            "span",
+            "toNumber",
+            "parseFloat",
+            "parseInt",
+            "length",
+            "indexof",
+            "lastindexof",
+            "random",
+            "now",
+            "time",
+            "timezoneoffset",
+            "peek",
+        }:
+            return "quantitative"
+        if name in {
+            "lower",
+            "upper",
+            "pad",
+            "replace",
+            "substring",
+            "trim",
+            "truncate",
+            "btoa",
+            "atob",
+            "join",
+            "slice",
+            "sort",
+            "reverse",
+            "toString",
+            "extent",
+            "split",
+            "format",
+            "dayFormat",
+            "dayAbbrevFormat",
+            "monthFormat",
+            "monthAbbrevFormat",
+            "isArray",
+            "isBoolean",
+            "isDate",
+            "isDefined",
+            "isNumber",
+            "isObject",
+            "isRegExp",
+            "isString",
+            "isValid",
+            "isNaN",
+            "isFinite",
+            "inrange",
+            "test",
+        }:
+            return "nominal"
+        if name in {
+            "year",
+            "month",
+            "day",
+            "date",
+            "hours",
+            "minutes",
+            "seconds",
+            "milliseconds",
+            "quarter",
+            "week",
+            "dayofyear",
+            "utcyear",
+            "utcmonth",
+            "utcday",
+            "utcdate",
+            "utchours",
+            "utcminutes",
+            "utcseconds",
+            "utcmilliseconds",
+            "utcquarter",
+            "utcweek",
+            "utcdayofyear",
+            "datetime",
+            "utc",
+            "timeOffset",
+            "utcOffset",
+            "timeParse",
+            "utcParse",
+        }:
+            return "temporal"
+
+    return None
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:

@@ -523,8 +523,9 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
     return result
 
 
-def _infer_expr_type(expr: Any) -> str | None:
-    """Infer the Vega-Lite encoding type for a Python expression object.
+def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
+    """
+    Infer the Vega-Lite encoding type for a Python expression object.
 
     Returns one of ``"quantitative"``, ``"nominal"``, ``"temporal"``, or
     ``None`` when the type cannot be determined statically.
@@ -540,8 +541,6 @@ def _infer_expr_type(expr: Any) -> str | None:
     if isinstance(expr, ConstExpression):
         val = expr._kwds.get("name", expr._kwds.get("value"))
         if val is not None:
-            import datetime as dt
-
             if isinstance(val, bool):
                 return "nominal"
             elif isinstance(val, (int, float)):

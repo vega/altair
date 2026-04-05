@@ -48,6 +48,7 @@ Encoding Channels
    Description
    DescriptionValue
    Detail
+   Expression
    Facet
    Fill
    FillDatum
