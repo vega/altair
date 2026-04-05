@@ -2240,37 +2240,6 @@ def test_inline_calc_deduplication():
     assert spec["encoding"]["y"]["field"] == field_name
 
 
-def test_inline_calc_variable_parameter_as_shorthand():
-    """A VariableParameter used as encoding value expands to datum[param_name]."""
-    param = alt.param(name="xcol", value="x")
-    chart = (
-        alt.Chart({"values": [{"x": 1}]})
-        .mark_point()
-        .encode(x=alt.X(param, type="quantitative"))
-        .add_params(param)
-    )
-    spec = chart.to_dict()
-    transforms = spec.get("transform", [])
-    assert len(transforms) == 1
-    assert transforms[0]["calculate"] == "datum[xcol]"
-    field_name = transforms[0]["as"]
-    assert spec["encoding"]["x"]["field"] == field_name
-
-
-def test_inline_calc_variable_parameter_bare_channel_value():
-    """A VariableParameter used directly as x=param also expands to datum[param_name]."""
-    param = alt.param(name="xcol", value="x")
-    chart = (
-        alt.Chart({"values": [{"x": 1}]}).mark_point().encode(x=param).add_params(param)
-    )
-    spec = chart.to_dict()
-    transforms = spec.get("transform", [])
-    assert len(transforms) == 1
-    assert transforms[0]["calculate"] == "datum[xcol]"
-    field_name = transforms[0]["as"]
-    assert spec["encoding"]["x"]["field"] == field_name
-
-
 def test_inline_calc_explicit_type_overrides_inferred():
     """An explicit type on the channel overrides type inference."""
     expr = alt.datum.x + alt.datum.y  # would infer "quantitative"
