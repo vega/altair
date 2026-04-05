@@ -20,12 +20,6 @@ The :class:`X` and :class:`Y` encodings accept the following options:
 
 .. altair-object-table:: altair.PositionFieldDef
 
-If an expression is used directly as an ``X``/``Y`` field value,
-Altair generates an internal calculated field (``_calc_*``) and wires the
-encoding to that field automatically.
-To avoid exposing these generated names in guides, the default title for this
-inline-calculated path is ``None``; set ``.title("...")`` explicitly to override.
-
 Color, Fill, and Stroke
 ~~~~~~~~~~~~~~~~~~~~~~~
 

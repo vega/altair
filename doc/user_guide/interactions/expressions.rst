@@ -75,45 +75,9 @@ via this alternate approach:
 
     chart.encode(size=alt.value(alt.expr(param_width.name)))
 
-Inline Expressions in Encoding Fields
--------------------------------------
-
-Expressions can also be passed directly as channel field inputs (for example,
-``x=alt.expr.random()`` or ``x=alt.X(alt.expr.random(), type="quantitative")``).
-In this case, Altair automatically inserts an internal ``transform_calculate``
-step and points the channel ``field`` to a generated ``_calc_*`` field name.
-
-This is equivalent to manually writing a calculate transform,
-but avoids boilerplate for common expression-driven encodings.
-
-.. altair-plot::
-
-    import altair as alt
-    import pandas as pd
-
-    source = pd.DataFrame({"x": [1, 2, 3], "y": [2, 4, 6]})
-
-    chart = alt.Chart(source).mark_point().encode(
-        x=alt.X(alt.expr.random(), type="quantitative"),
-        y="y:Q",
-    )
-
-    chart
-
-To inspect the generated field and calculate expression, inspect the spec:
-
-.. code-block:: python
-
-    spec = chart.to_dict()
-    spec["encoding"]["x"]["field"]   # "_calc_..."
-    spec["transform"]                  # includes {"calculate": "random()", ...}
-
-By default, inline-calculated channels set ``title=None`` so hash-based field
-names do not appear as axis/legend titles. You can always override this:
-
-.. altair-plot::
-
-    chart.encode(x=alt.X(alt.expr.random(), type="quantitative").title("Random X"))
+For more detail on using expressions directly in encoding fields,
+including automatic calculate transforms and title behavior,
+see :ref:`encoding-inline-expressions`.
 
 `Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart.
 
