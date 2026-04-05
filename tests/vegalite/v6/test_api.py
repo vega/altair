@@ -2273,3 +2273,28 @@ def test_inline_calc_exprref_string_syntax():
     field_name = transforms[0]["as"]
     assert spec["encoding"]["x"]["field"] == field_name
     assert spec["encoding"]["x"]["type"] == "quantitative"
+    assert spec["encoding"]["x"]["title"] is None
+
+
+def test_inline_calc_default_title_is_none():
+    """Inline-calc channels default to title=None to hide hash field names."""
+    expr = alt.datum.x + alt.datum.y
+    chart = (
+        alt.Chart(pd.DataFrame({"x": [1], "y": [2]}))
+        .mark_point()
+        .encode(x=alt.X(expr, type="quantitative"))
+    )
+    spec = chart.to_dict()
+    assert spec["encoding"]["x"]["title"] is None
+
+
+def test_inline_calc_explicit_title_override_respected():
+    """An explicit title should override inline-calc default title=None."""
+    expr = alt.datum.x + alt.datum.y
+    chart = (
+        alt.Chart(pd.DataFrame({"x": [1], "y": [2]}))
+        .mark_point()
+        .encode(x=alt.X(expr, type="quantitative").title("X plus Y"))
+    )
+    spec = chart.to_dict()
+    assert spec["encoding"]["x"]["title"] == "X plus Y"
