@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
 import narwhals.stable.v1 as nw
 
-from altair.expr.core import Expression
+from altair.expr.core import Expression, GetItemExpression
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, _infer_expr_type, with_property_setters
@@ -186,12 +186,21 @@ class FieldChannelMixin:
                 for sh in shorthand
             ]
 
-        shorthand_or_kwds = shorthand
+        from altair.vegalite.v6.api import Parameter
+
+        def _param_to_expr(val: Any) -> Any:
+            """Convert a VariableParameter to a datum[param] expression."""
+            if isinstance(val, Parameter) and val.param_type == "variable":
+                return GetItemExpression("datum", val)
+            return val
+
+        shorthand_or_kwds = _param_to_expr(shorthand)
         if shorthand_or_kwds is Undefined:
-            # Look for an Expression or ExprRef in the channel kwds.
+            # Look for an Expression, ExprRef, or VariableParameter in channel kwds.
             for val in self._kwds.values():  # type: ignore[attr-defined]
-                if isinstance(val, (Expression, core.ExprRef)):
-                    shorthand_or_kwds = val
+                converted = _param_to_expr(val)
+                if isinstance(converted, (Expression, core.ExprRef)):
+                    shorthand_or_kwds = converted
                     break
 
         if isinstance(shorthand_or_kwds, (Expression, core.ExprRef)):
