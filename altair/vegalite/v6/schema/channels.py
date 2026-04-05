@@ -186,6 +186,40 @@ class FieldChannelMixin:
                 for sh in shorthand
             ]
 
+        from altair.vegalite.v6.api import Parameter
+
+        def _param_to_expr(val: Any) -> Any:
+            """Convert a VariableParameter to a datum[param] expression."""
+            if isinstance(val, Parameter) and val.param_type == "variable":
+                return GetItemExpression("datum", val)
+            return val
+
+        shorthand_or_kwds = _param_to_expr(shorthand)
+        if shorthand_or_kwds is Undefined:
+            # Look for an Expression or VariableParameter in the channel kwds.
+            for val in self._kwds.values():  # type: ignore[attr-defined]
+                converted = _param_to_expr(val)
+                if isinstance(converted, Expression):
+                    shorthand_or_kwds = converted
+                    break
+
+        if isinstance(shorthand_or_kwds, Expression):
+            vega_expr = repr(shorthand_or_kwds)
+            field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
+            calc_field_name = f"_calc_{field_hash}"
+            transforms: dict[str, dict] = context.setdefault("auto_calc_transforms", {})
+            transforms.setdefault(
+                calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
+            )
+
+            result: dict[str, Any] = {"field": calc_field_name}
+            explicit_type = self._get("type")  # type: ignore[attr-defined]
+            if explicit_type is not Undefined:
+                result["type"] = explicit_type
+            elif inferred := _infer_expr_type(shorthand_or_kwds):
+                result["type"] = inferred
+            return result
+
         if shorthand is Undefined:
             parsed = {}
         elif isinstance(shorthand, str):
@@ -219,43 +253,6 @@ class FieldChannelMixin:
             # and do not do any parsing.
             parsed = {"field": shorthand}
         context["parsed_shorthand"] = parsed
-
-        from altair.vegalite.v6.api import Parameter
-
-        def _param_to_expr(val: Any) -> Any:
-            """Convert a VariableParameter to a datum[param] expression."""
-            if isinstance(val, Parameter) and val.param_type == "variable":
-                return GetItemExpression("datum", val)
-            return val
-
-        shorthand_or_kwds = _param_to_expr(shorthand)
-        if shorthand_or_kwds is Undefined:
-            # Look for an Expression or VariableParameter in the channel kwds
-            for val in self._kwds.values():  # type: ignore[attr-defined]
-                converted = _param_to_expr(val)
-                if isinstance(converted, Expression):
-                    shorthand_or_kwds = converted
-                    break
-
-        if isinstance(shorthand_or_kwds, Expression):
-            vega_expr = repr(shorthand_or_kwds)
-            field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
-            calc_field_name = f"_calc_{field_hash}"
-            transforms: dict[str, dict] = context.setdefault("auto_calc_transforms", {})
-            transforms.setdefault(
-                calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
-            )
-
-            # Consume parsed_shorthand so it doesn't leak into subsequent to_dict calls.
-            context.pop("parsed_shorthand", None)
-
-            result: dict[str, Any] = {"field": calc_field_name}
-            explicit_type = self._get("type")  # type: ignore[attr-defined]
-            if explicit_type is not Undefined:
-                result["type"] = explicit_type
-            elif inferred := _infer_expr_type(shorthand_or_kwds):
-                result["type"] = inferred
-            return result
 
         return super().to_dict(validate=validate, ignore=ignore, context=context)
 
