@@ -2112,8 +2112,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context["top_level"] = False
 
         vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
-            validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
+            validate=validate, ignore=ignore, context=context
         )
+
+        auto_calc_transforms = context.pop("auto_calc_transforms", None)
+        if auto_calc_transforms and is_top_level:
+            vegalite_spec.setdefault("transform", [])
+            vegalite_spec["transform"].extend(auto_calc_transforms)
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:

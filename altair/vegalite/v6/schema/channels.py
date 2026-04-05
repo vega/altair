@@ -17,6 +17,7 @@ import narwhals.stable.v1 as nw
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, with_property_setters
+from altair.utils.schemapi import _infer_expr_type
 
 from . import core
 from ._typing import *  # noqa: F403
@@ -217,6 +218,54 @@ class FieldChannelMixin:
             # and do not do any parsing.
             parsed = {"field": shorthand}
         context["parsed_shorthand"] = parsed
+
+        from altair.expr.core import Expression, GetItemExpression
+        from altair.utils.schemapi import Undefined as AltairUndefined
+
+        def _param_to_expr(val: Any) -> Any:
+            """Convert a VariableParameter to a datum[param] expression."""
+            try:
+                from altair.vegalite.v6.api import Parameter
+
+                if isinstance(val, Parameter) and val.param_type == "variable":
+                    return GetItemExpression("datum", val)
+            except ImportError:
+                pass
+            return val
+
+        shorthand_or_kwds = _param_to_expr(shorthand)
+        if isinstance(shorthand_or_kwds, Expression):
+            pass  # shorthand was already an Expression or converted to one
+        elif shorthand_or_kwds is AltairUndefined:
+            # Look for an Expression or VariableParameter in the channel kwds
+            for val in self._kwds.values():  # type: ignore[attr-defined]
+                converted = _param_to_expr(val)
+                if isinstance(converted, Expression):
+                    shorthand_or_kwds = converted
+                    break
+                elif isinstance(val, Expression):
+                    shorthand_or_kwds = val
+                    break
+        else:
+            shorthand_or_kwds = shorthand
+
+        if isinstance(shorthand_or_kwds, Expression):
+            import hashlib
+
+            vega_expr = repr(shorthand_or_kwds)
+            field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
+            calc_field_name = f"_calc_{field_hash}"
+            context.setdefault("auto_calc_transforms", []).append(
+                {"calculate": vega_expr, "as": calc_field_name}
+            )
+
+            result: dict[str, Any] = {"field": calc_field_name}
+            explicit_type = self._get("type")  # type: ignore[attr-defined]
+            if explicit_type is not AltairUndefined:
+                result["type"] = explicit_type
+            elif inferred := _infer_expr_type(shorthand_or_kwds):
+                result["type"] = inferred
+            return result
 
         return super().to_dict(validate=validate, ignore=ignore, context=context)
 

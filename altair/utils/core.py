@@ -896,6 +896,30 @@ class _ChannelCache:
         raise NotImplementedError(msg)
 
     def _wrap_in_channel(self, obj: Any, encoding: str, /):
+        from altair.expr.core import Expression, GetItemExpression
+
+        if isinstance(obj, Expression):
+            # Wrap expressions in the field channel type so they flow through
+            # FieldChannelMixin.to_dict() which handles the calc transform logic.
+            if channel := self.name_to_channel.get(encoding):
+                tp = channel["field"]
+                return tp(shorthand=obj)
+            return obj
+
+        # A VariableParameter used directly as an encoding value is sugar for
+        # alt.datum[param], which generates a transform_calculate: datum[param_name].
+        try:
+            from altair.vegalite.v6.api import Parameter
+
+            if isinstance(obj, Parameter) and obj.param_type == "variable":
+                expr = GetItemExpression("datum", obj)
+                if channel := self.name_to_channel.get(encoding):
+                    tp = channel["field"]
+                    return tp(shorthand=expr)
+                return obj
+        except ImportError:
+            pass
+
         if isinstance(obj, SchemaBase):
             return obj
         elif isinstance(obj, str):
