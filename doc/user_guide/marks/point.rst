@@ -153,9 +153,7 @@ To jitter points on a discrete scale, you can add a random offset:
     alt.Chart(source).mark_point().encode(
         x="Horsepower:Q",
         y="Cylinders:O",
-        yOffset="random:Q",
-    ).transform_calculate(
-        random="random()"
+        yOffset=alt.expr.random(),
     ).properties(
         height=alt.Step(50)
     )
@@ -210,4 +208,3 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
     )
 
     background + points
-

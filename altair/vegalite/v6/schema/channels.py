@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
 import narwhals.stable.v1 as nw
 
-from altair.expr.core import Expression
+from altair.expr.core import Expression as _Expression
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, _infer_expr_type, with_property_setters
@@ -190,14 +190,14 @@ class FieldChannelMixin:
         if shorthand_or_kwds is Undefined:
             # Look for an Expression or ExprRef in the channel kwds.
             for val in self._kwds.values():  # type: ignore[attr-defined]
-                if isinstance(val, (Expression, core.ExprRef)):
+                if isinstance(val, (_Expression, core.ExprRef)):
                     shorthand_or_kwds = val
                     break
 
-        if isinstance(shorthand_or_kwds, (Expression, core.ExprRef)):
+        if isinstance(shorthand_or_kwds, (_Expression, core.ExprRef)):
             vega_expr = (
                 repr(shorthand_or_kwds)
-                if isinstance(shorthand_or_kwds, Expression)
+                if isinstance(shorthand_or_kwds, _Expression)
                 else shorthand_or_kwds.expr
             )
             field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]

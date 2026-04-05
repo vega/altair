@@ -53,6 +53,11 @@ available functions and constants.
 These expressions can also be used when constructing a
 :ref:`user-guide-filter-transform`, as we shall see next.
 
+When an expression is used directly as an encoding field value (for example,
+``x=alt.expr.random()``), Altair can automatically add a corresponding
+``transform_calculate`` under the hood and bind the channel to the generated field.
+See :ref:`expressions` for a full inline-encoding walkthrough.
+
 Transform Options
 ^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_calculate` method is built on the :class:`~CalculateTransform`
