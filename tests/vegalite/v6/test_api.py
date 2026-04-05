@@ -2304,3 +2304,17 @@ def test_inline_calc_exprref_string_syntax():
     field_name = transforms[0]["as"]
     assert spec["encoding"]["x"]["field"] == field_name
     assert spec["encoding"]["x"]["type"] == "quantitative"
+
+
+def test_inline_calc_title_none_respected_for_variable_parameter():
+    """Explicit title(None) should be preserved for inline variable-parameter channels."""
+    xcol_param = alt.param(name="xcol", value="x")
+    chart = (
+        alt.Chart(pd.DataFrame({"x": [1, 2, 3]}))
+        .mark_point()
+        .encode(x=alt.X(xcol_param).type("quantitative").title(None))
+        .add_params(xcol_param)
+    )
+
+    spec = chart.to_dict()
+    assert spec["encoding"]["x"]["title"] is None
