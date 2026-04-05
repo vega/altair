@@ -134,14 +134,18 @@ class FieldChannelMixin:
 
         shorthand_or_kwds = shorthand
         if shorthand_or_kwds is Undefined:
-            # Look for an Expression in the channel kwds.
+            # Look for an Expression or ExprRef in the channel kwds.
             for val in self._kwds.values():  # type: ignore[attr-defined]
-                if isinstance(val, Expression):
+                if isinstance(val, (Expression, core.ExprRef)):
                     shorthand_or_kwds = val
                     break
 
-        if isinstance(shorthand_or_kwds, Expression):
-            vega_expr = repr(shorthand_or_kwds)
+        if isinstance(shorthand_or_kwds, (Expression, core.ExprRef)):
+            vega_expr = (
+                repr(shorthand_or_kwds)
+                if isinstance(shorthand_or_kwds, Expression)
+                else shorthand_or_kwds.expr
+            )
             field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
             calc_field_name = f"_calc_{field_hash}"
             transforms: dict[str, dict] = context.setdefault("auto_calc_transforms", {})

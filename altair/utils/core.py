@@ -897,8 +897,9 @@ class _ChannelCache:
 
     def _wrap_in_channel(self, obj: Any, encoding: str, /):
         from altair.expr.core import Expression
+        from altair.vegalite.v6.schema.core import ExprRef
 
-        if isinstance(obj, Expression):
+        if isinstance(obj, (Expression, ExprRef)):
             # Wrap expressions in the field channel type so they flow through
             # FieldChannelMixin.to_dict() which handles the calc transform logic.
             if channel := self.name_to_channel.get(encoding):

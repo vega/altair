@@ -569,8 +569,7 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
             return right_type
         return "quantitative"
 
-    if isinstance(expr, FunctionExpression):
-        name = expr._kwds.get("name", "")
+    def _infer_function_name_type(name: str) -> str | None:
         if name in {
             "abs",
             "ceil",
@@ -685,6 +684,22 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
             "utcParse",
         }:
             return "temporal"
+        return None
+
+    if isinstance(expr, FunctionExpression):
+        name = expr._kwds.get("name", "")
+        return _infer_function_name_type(name)
+
+    # `alt.expr("...")` returns an ExprRef rather than an Expression.
+    # We support lightweight type inference for the common function-call form.
+    expr_string = getattr(expr, "expr", None)
+    if isinstance(expr_string, str):
+        stripped = expr_string.lstrip()
+        open_paren = stripped.find("(")
+        if open_paren > 0:
+            fn_name = stripped[:open_paren].strip()
+            if fn_name.isidentifier():
+                return _infer_function_name_type(fn_name)
 
     return None
 

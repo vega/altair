@@ -2259,3 +2259,17 @@ def test_inline_calc_no_type_when_uninferrable():
     chart = alt.Chart({"values": [{"foo": 1}]}).mark_point().encode(x=alt.X(expr))
     spec = chart.to_dict()
     assert "type" not in spec["encoding"]["x"]
+
+
+def test_inline_calc_exprref_string_syntax():
+    """alt.expr("...") should work equivalently to Expression-based inline calc."""
+    chart = (
+        alt.Chart({"values": [{"x": 1}]}).mark_point().encode(x=alt.expr("random()"))
+    )
+    spec = chart.to_dict()
+    transforms = spec.get("transform", [])
+    assert len(transforms) == 1
+    assert transforms[0]["calculate"] == "random()"
+    field_name = transforms[0]["as"]
+    assert spec["encoding"]["x"]["field"] == field_name
+    assert spec["encoding"]["x"]["type"] == "quantitative"
