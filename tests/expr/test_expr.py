@@ -10,6 +10,7 @@ import numpy as np
 import pytest
 from jsonschema.exceptions import ValidationError
 
+import altair as alt
 from altair import datum, expr, ExprRef
 from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
@@ -165,6 +166,12 @@ def test_datum_getattr():
 def test_expression_getitem():
     x = datum.foo[0]
     assert repr(x) == "datum.foo[0]"
+
+
+def test_datum_getitem_param():
+    xcol = alt.param(name="xcol", value="Horsepower")
+    x = datum[xcol]
+    assert repr(x) == "datum[xcol]"
 
 
 def test_expression_function_expr():

@@ -895,8 +895,9 @@ class _ChannelCache:
         msg = f"positional of type {type(tp).__name__!r}"
         raise NotImplementedError(msg)
 
-    def _wrap_in_channel(self, obj: Any, encoding: str, /):
-        from altair.expr.core import Expression
+    def _wrap_in_channel(self, obj: Any, encoding: str, /):  # noqa: C901
+        from altair.expr.core import Expression, GetItemExpression
+        from altair.vegalite.v6.api import Parameter
         from altair.vegalite.v6.schema.core import ExprRef
 
         if isinstance(obj, (Expression, ExprRef)):
@@ -905,6 +906,15 @@ class _ChannelCache:
             if channel := self.name_to_channel.get(encoding):
                 tp = channel["field"]
                 return tp(shorthand=obj)
+            return obj
+
+        # A VariableParameter used directly as an encoding value is sugar for
+        # alt.datum[param], which generates a transform_calculate: datum[param_name].
+        if isinstance(obj, Parameter) and obj.param_type == "variable":
+            expr = GetItemExpression("datum", obj)
+            if channel := self.name_to_channel.get(encoding):
+                tp = channel["field"]
+                return tp(shorthand=expr)
             return obj
 
         if isinstance(obj, SchemaBase):

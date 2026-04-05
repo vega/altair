@@ -189,7 +189,7 @@ class FieldChannelMixin:
         from altair.vegalite.v6.api import Parameter
 
         def _param_to_expr(val: Any) -> Any:
-            """Convert a VariableParameter to a datum[param] expression."""
+            # Convert a VariableParameter to a datum[param] expression.
             if isinstance(val, Parameter) and val.param_type == "variable":
                 return GetItemExpression("datum", val)
             return val
