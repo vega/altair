@@ -632,46 +632,45 @@ If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``Attr
 Inline Expressions in Encoding Fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Expressions can be passed directly as encoding field inputs
-(for example, ``x=alt.expr.random()`` or
-``x=alt.X(alt.expr.random(), type="quantitative")``).
+Expressions can be passed directly as encoding field inputs.
 In this case, Altair automatically inserts an internal
-``transform_calculate`` step and points the channel ``field`` to a generated
-``_calc_*`` field name.
-
-This is equivalent to manually writing a calculate transform,
-but avoids boilerplate for common expression-driven encodings.
+``transform_calculate`` step and points the channel ``field``
+to a generated ``_calc_<hash>`` field name.
+This is equivalent to manually writing the calculate transform,
+but provides a more convenient syntax for common scenaiors
+(for more complex scenarios, the explicit calculate transform
+can stil be used).
+To avoid exposing hash-like generated names in guides, the default title for
+this inline-calculated path is ``None``; use ``.title()`` to override.
+Likewise, the heuristic to determine the field type can be overridden
+by using ``.type()``:
 
 .. altair-plot::
 
     import altair as alt
     import pandas as pd
 
-    source = pd.DataFrame({"x": [1, 2, 3], "y": [2, 4, 6]})
+    source = pd.DataFrame({"a": [1, 2, 3], "b b": [2, 4, 6]})
 
-    chart = alt.Chart(source).mark_point().encode(
-        x=alt.X(alt.expr.random(), type="quantitative"),
-        y="y:Q",
+    chart = alt.Chart(source).mark_circle(size=80).encode(
+        x='a',
+        y=alt.Y(alt.datum.a * 2).title('b'),
+        color=alt.Color(alt.datum.a * alt.datum['b b']).type('nominal'),
+        size=alt.expr.random(),
     )
-
     chart
 
-To inspect the generated field and calculate expression, inspect the spec:
+To view the transforms and generated name hashes, you can inspect the spec:
 
 .. code-block:: python
 
     spec = chart.to_dict()
-    spec["encoding"]["x"]["field"]  # "_calc_..."
-    spec["transform"]                 # includes {"calculate": "random()", ...}
+    spec["encoding"]
 
-If an expression is used directly as an ``X``/``Y`` field value,
-Altair wires that channel to an internal calculated field automatically.
-To avoid exposing hash-like generated names in guides, the default title for
-this inline-calculated path is ``None``; set ``.title("...")`` to override.
 
-.. altair-plot::
+.. code-block:: python
+    spec["transform"]
 
-    chart.encode(x=alt.X(alt.expr.random(), type="quantitative").title("Random X"))
 
 .. toctree::
    :hidden:
