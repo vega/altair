@@ -629,8 +629,8 @@ If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``Attr
 
 .. _encoding-inline-expressions:
 
-Inline Expressions in Encoding Fields
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inline Expressions
+~~~~~~~~~~~~~~~~~~
 
 Expressions can be passed directly as encoding field inputs.
 In this case, Altair automatically inserts an internal
@@ -662,13 +662,16 @@ by using ``.type()``:
 
 To view the transforms and generated name hashes, you can inspect the spec:
 
-.. code-block:: python
+.. altair-plot::
+    :output: repr
 
     spec = chart.to_dict()
     spec["encoding"]
 
 
-.. code-block:: python
+.. altair-plot::
+    :output: repr
+
     spec["transform"]
 
 

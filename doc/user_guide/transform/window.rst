@@ -83,15 +83,16 @@ If we plot the `z-scores`_ of the stock prices, rather than the stock prices the
         stdev_price='stdev(price)',
         frame=[None, None],
         groupby=['symbol'],
-    ).transform_calculate(
-        z_score=(alt.datum.price - alt.datum.mean_price) / alt.datum.stdev_price,
     ).mark_line().encode(
         x='date:T',
-        y='z_score:Q',
+        y=alt.Y(
+            (alt.datum.price - alt.datum.mean_price) / alt.datum.stdev_price,
+        ).title('z-score'),
         color='symbol:N',
     )
 
-By using two aggregation functions (``mean`` and ``stdev``) within the window transform, we are able to compute the z-scores within the calculate transform.
+By using two aggregation functions (``mean`` and ``stdev``) within the window transform,
+we can compute the z-scores inline in the ``y`` encoding expression.
 
 For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
 

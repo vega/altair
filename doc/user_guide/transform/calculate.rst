@@ -49,14 +49,28 @@ Altair expressions are designed to output valid Vega expressions. The benefit of
 using them is that proper syntax is ensured by the Python interpreter, and tab
 completion of the :mod:`~expr` submodule can be used to explore the
 available functions and constants.
-
 These expressions can also be used when constructing a
-:ref:`user-guide-filter-transform`, as we shall see next.
+:ref:`user-guide-filter-transform`.
 
-When an expression is used directly as an encoding field value (for example,
-``x=alt.expr.random()``), Altair can automatically add a corresponding
-``transform_calculate`` under the hood and bind the channel to the generated field.
-See :ref:`expressions` for a full inline-encoding walkthrough.
+Inline expressions in encoding fields
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As a convenient alternative to writing out the full calculate transform,
+expressions can be passed directly to the encoding fields:
+
+.. altair-plot::
+
+    alt.Chart(data).mark_line().encode(
+        x=alt.expr.cos(alt.datum.t * alt.expr.PI / 50),
+        y=alt.expr.sin(alt.datum.t * alt.expr.PI / 25),
+        order='t:Q'
+    )
+
+This is functionally equivalent to the previous example,
+as Altair automatically adds a corresponding ``transform_calculate``
+internally and and binds the channel to the calculated field.
+See :ref:`encoding-inline-expressions` for a full inline-encoding walkthrough,
+including how to set titles and types.
 
 Transform Options
 ^^^^^^^^^^^^^^^^^
