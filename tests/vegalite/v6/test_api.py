@@ -2339,3 +2339,32 @@ def test_inline_calc_does_not_rewrite_datum_expression_channels():
     }
     assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x')[1]"}}
     assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x')[1]"}}
+
+
+def test_datum_channel_accepts_expression_objects_without_alt_expr_wrapper():
+    """`alt.datum(alt.expr.domain(...)[i])` should serialize as datum expr refs."""
+    x_min = alt.expr.domain("x")[0]
+    x_max = alt.expr.domain("x")[1]
+
+    chart = (
+        alt.Chart()
+        .mark_rule()
+        .encode(
+            x=alt.datum(x_min, type="quantitative"),
+            y=alt.datum(x_min, type="quantitative"),
+            x2=alt.datum(x_max),
+            y2=alt.datum(x_max),
+        )
+    )
+    spec = chart.to_dict()
+
+    assert spec["encoding"]["x"] == {
+        "datum": {"expr": "domain('x',null)[0]"},
+        "type": "quantitative",
+    }
+    assert spec["encoding"]["y"] == {
+        "datum": {"expr": "domain('x',null)[0]"},
+        "type": "quantitative",
+    }
+    assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x',null)[1]"}}
+    assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x',null)[1]"}}
