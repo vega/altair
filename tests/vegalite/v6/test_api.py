@@ -2306,8 +2306,8 @@ def test_inline_calc_datum_expr_with_explicit_type_serializes_standard_type():
         alt.Chart()
         .mark_rule()
         .encode(
-            x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
-            y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+            x=alt.datum(alt.expr.domain("x")[0], type="quantitative"),
+            y=alt.datum(alt.expr.domain("x")[0], type="quantitative"),
         )
     )
     spec = chart.to_dict()
@@ -2321,10 +2321,10 @@ def test_inline_calc_does_not_rewrite_datum_expression_channels():
         alt.Chart()
         .mark_rule()
         .encode(
-            x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
-            y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
-            x2=alt.datum(alt.expr("domain('x')[1]")),
-            y2=alt.datum(alt.expr("domain('x')[1]")),
+            x=alt.datum(alt.expr.domain("x")[0], type="quantitative"),
+            y=alt.datum(alt.expr.domain("x")[0], type="quantitative"),
+            x2=alt.datum(alt.expr.domain("x")[1]),
+            y2=alt.datum(alt.expr.domain("x")[1]),
         )
     )
     spec = chart.to_dict()
