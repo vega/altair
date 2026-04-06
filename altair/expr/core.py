@@ -283,7 +283,7 @@ class GetItemExpression(Expression):
         super().__init__(group=group, name=name)
 
     def __repr__(self) -> str:
-        return f"{self.group}[{self.name!r}]"
+        return f"{self.group}[{_js_repr(self.name)}]"
 
 
 IntoExpression: TypeAlias = Union[

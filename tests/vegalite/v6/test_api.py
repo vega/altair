@@ -2240,6 +2240,37 @@ def test_inline_calc_deduplication():
     assert spec["encoding"]["y"]["field"] == field_name
 
 
+def test_inline_calc_variable_parameter_as_shorthand():
+    """A VariableParameter used as encoding value expands to datum[param_name]."""
+    param = alt.param(name="xcol", value="x")
+    chart = (
+        alt.Chart({"values": [{"x": 1}]})
+        .mark_point()
+        .encode(x=alt.X(param, type="quantitative"))
+        .add_params(param)
+    )
+    spec = chart.to_dict()
+    transforms = spec.get("transform", [])
+    assert len(transforms) == 1
+    assert transforms[0]["calculate"] == "datum[xcol]"
+    field_name = transforms[0]["as"]
+    assert spec["encoding"]["x"]["field"] == field_name
+
+
+def test_inline_calc_variable_parameter_bare_channel_value():
+    """A VariableParameter used directly as x=param also expands to datum[param_name]."""
+    param = alt.param(name="xcol", value="x")
+    chart = (
+        alt.Chart({"values": [{"x": 1}]}).mark_point().encode(x=param).add_params(param)
+    )
+    spec = chart.to_dict()
+    transforms = spec.get("transform", [])
+    assert len(transforms) == 1
+    assert transforms[0]["calculate"] == "datum[xcol]"
+    field_name = transforms[0]["as"]
+    assert spec["encoding"]["x"]["field"] == field_name
+
+
 def test_inline_calc_explicit_type_overrides_inferred():
     """An explicit type on the channel overrides type inference."""
     expr = alt.datum.x + alt.datum.y  # would infer "quantitative"
@@ -2273,6 +2304,19 @@ def test_inline_calc_exprref_string_syntax():
     field_name = transforms[0]["as"]
     assert spec["encoding"]["x"]["field"] == field_name
     assert spec["encoding"]["x"]["type"] == "quantitative"
+
+
+def test_inline_calc_title_none_respected_for_variable_parameter():
+    """Explicit title(None) should be preserved for inline variable-parameter channels."""
+    xcol_param = alt.param(name="xcol", value="x")
+    chart = (
+        alt.Chart(pd.DataFrame({"x": [1, 2, 3]}))
+        .mark_point()
+        .encode(x=alt.X(xcol_param).type("quantitative").title(None))
+        .add_params(xcol_param)
+    )
+
+    spec = chart.to_dict()
     assert spec["encoding"]["x"]["title"] is None
 
 
@@ -2316,7 +2360,7 @@ def test_inline_calc_datum_expr_with_explicit_type_serializes_standard_type():
 
 
 def test_inline_calc_does_not_rewrite_datum_expression_channels():
-    """datum=ExprRef channels should stay datum-based (not auto-calc field rewrites)."""
+    """Datum expression channels should stay datum-based (not auto-calc rewrites)."""
     chart = (
         alt.Chart()
         .mark_rule()
@@ -2330,15 +2374,15 @@ def test_inline_calc_does_not_rewrite_datum_expression_channels():
     spec = chart.to_dict()
 
     assert spec["encoding"]["x"] == {
-        "datum": {"expr": "domain('x')[0]"},
+        "datum": {"expr": "domain('x',null)[0]"},
         "type": "quantitative",
     }
     assert spec["encoding"]["y"] == {
-        "datum": {"expr": "domain('x')[0]"},
+        "datum": {"expr": "domain('x',null)[0]"},
         "type": "quantitative",
     }
-    assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x')[1]"}}
-    assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x')[1]"}}
+    assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x',null)[1]"}}
+    assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x',null)[1]"}}
 
 
 def test_datum_channel_accepts_expression_objects_without_alt_expr_wrapper():

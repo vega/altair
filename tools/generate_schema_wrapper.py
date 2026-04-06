@@ -132,7 +132,15 @@ class FieldChannelMixin:
                 for sh in shorthand
             ]
 
-        shorthand_or_kwds = shorthand
+        from altair.vegalite.v6.api import Parameter
+
+        def _param_to_expr(val: Any) -> Any:
+            # Convert a VariableParameter to a datum[param] expression.
+            if isinstance(val, Parameter) and val.param_type == "variable":
+                return GetItemExpression("datum", val)
+            return val
+
+        shorthand_or_kwds = _param_to_expr(shorthand)
 
         if isinstance(shorthand_or_kwds, (_Expression, core.ExprRef)):
             vega_expr = (
@@ -920,7 +928,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
         "import sys",
         "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
-        "from altair.expr.core import Expression as _Expression",
+        "from altair.expr.core import Expression as _Expression, GetItemExpression",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
         "from altair.utils.schemapi import Undefined, _infer_expr_type, with_property_setters",

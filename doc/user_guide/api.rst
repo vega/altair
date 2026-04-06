@@ -55,6 +55,7 @@ Encoding Channels
    FillOpacityDatum
    FillOpacityValue
    FillValue
+   GetItemExpression
    Href
    HrefValue
    Key
