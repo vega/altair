@@ -2298,3 +2298,44 @@ def test_inline_calc_explicit_title_override_respected():
     )
     spec = chart.to_dict()
     assert spec["encoding"]["x"]["title"] == "X plus Y"
+
+
+def test_inline_calc_datum_expr_with_explicit_type_serializes_standard_type():
+    """Explicit StandardType values should serialize to schema-valid strings."""
+    chart = (
+        alt.Chart()
+        .mark_rule()
+        .encode(
+            x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+            y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+        )
+    )
+    spec = chart.to_dict()
+    assert spec["encoding"]["x"]["type"] == "quantitative"
+    assert spec["encoding"]["y"]["type"] == "quantitative"
+
+
+def test_inline_calc_does_not_rewrite_datum_expression_channels():
+    """datum=ExprRef channels should stay datum-based (not auto-calc field rewrites)."""
+    chart = (
+        alt.Chart()
+        .mark_rule()
+        .encode(
+            x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+            y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
+            x2=alt.datum(alt.expr("domain('x')[1]")),
+            y2=alt.datum(alt.expr("domain('x')[1]")),
+        )
+    )
+    spec = chart.to_dict()
+
+    assert spec["encoding"]["x"] == {
+        "datum": {"expr": "domain('x')[0]"},
+        "type": "quantitative",
+    }
+    assert spec["encoding"]["y"] == {
+        "datum": {"expr": "domain('x')[0]"},
+        "type": "quantitative",
+    }
+    assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x')[1]"}}
+    assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x')[1]"}}

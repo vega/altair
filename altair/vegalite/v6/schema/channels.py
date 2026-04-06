@@ -187,12 +187,6 @@ class FieldChannelMixin:
             ]
 
         shorthand_or_kwds = shorthand
-        if shorthand_or_kwds is Undefined:
-            # Look for an Expression or ExprRef in the channel kwds.
-            for val in self._kwds.values():  # type: ignore[attr-defined]
-                if isinstance(val, (_Expression, core.ExprRef)):
-                    shorthand_or_kwds = val
-                    break
 
         if isinstance(shorthand_or_kwds, (_Expression, core.ExprRef)):
             vega_expr = (
@@ -210,13 +204,19 @@ class FieldChannelMixin:
             result: dict[str, Any] = {"field": calc_field_name}
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
-                result["type"] = explicit_type
+                if hasattr(explicit_type, "to_dict"):
+                    result["type"] = explicit_type.to_dict()
+                else:
+                    result["type"] = explicit_type
             elif inferred := _infer_expr_type(shorthand_or_kwds):
                 result["type"] = inferred
 
             explicit_title = self._get("title")  # type: ignore[attr-defined]
             if explicit_title is not Undefined:
-                result["title"] = explicit_title
+                if hasattr(explicit_title, "to_dict"):
+                    result["title"] = explicit_title.to_dict()
+                else:
+                    result["title"] = explicit_title
             else:
                 # Hide hash-based auto-calc field names by default.
                 result["title"] = None
