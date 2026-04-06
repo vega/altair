@@ -141,18 +141,11 @@ class FieldChannelMixin:
             return val
 
         shorthand_or_kwds = _param_to_expr(shorthand)
-        if shorthand_or_kwds is Undefined:
-            # Look for an Expression, ExprRef, or VariableParameter in channel kwds.
-            for val in self._kwds.values():  # type: ignore[attr-defined]
-                converted = _param_to_expr(val)
-                if isinstance(converted, (Expression, core.ExprRef)):
-                    shorthand_or_kwds = converted
-                    break
 
-        if isinstance(shorthand_or_kwds, (Expression, core.ExprRef)):
+        if isinstance(shorthand_or_kwds, (_Expression, core.ExprRef)):
             vega_expr = (
                 repr(shorthand_or_kwds)
-                if isinstance(shorthand_or_kwds, Expression)
+                if isinstance(shorthand_or_kwds, _Expression)
                 else shorthand_or_kwds.expr
             )
             field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
@@ -165,13 +158,22 @@ class FieldChannelMixin:
             result: dict[str, Any] = {"field": calc_field_name}
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
-                result["type"] = explicit_type
+                if hasattr(explicit_type, "to_dict"):
+                    result["type"] = explicit_type.to_dict()
+                else:
+                    result["type"] = explicit_type
             elif inferred := _infer_expr_type(shorthand_or_kwds):
                 result["type"] = inferred
 
             explicit_title = self._get("title")  # type: ignore[attr-defined]
             if explicit_title is not Undefined:
-                result["title"] = explicit_title
+                if hasattr(explicit_title, "to_dict"):
+                    result["title"] = explicit_title.to_dict()
+                else:
+                    result["title"] = explicit_title
+            else:
+                # Hide hash-based auto-calc field names by default.
+                result["title"] = None
 
             return result
 
@@ -250,6 +252,7 @@ class DatumChannelMixin:
         ignore = ignore or []
         datum = self._get("datum", Undefined)  # type: ignore[attr-defined] # noqa
         copy = self  # don't copy unless we need to
+
         return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
@@ -925,7 +928,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
         "import sys",
         "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
-        "from altair.expr.core import Expression, GetItemExpression",
+        "from altair.expr.core import Expression as _Expression, GetItemExpression",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
         "from altair.utils.schemapi import Undefined, _infer_expr_type, with_property_setters",

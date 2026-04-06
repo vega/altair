@@ -75,6 +75,10 @@ via this alternate approach:
 
     chart.encode(size=alt.value(alt.expr(param_width.name)))
 
+For more detail on using expressions directly in encoding fields,
+including automatic calculate transforms and title behavior,
+see :ref:`encoding-inline-expressions`.
+
 `Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart.
 
 .. altair-plot::

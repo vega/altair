@@ -627,6 +627,54 @@ One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly in
 
 If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
 
+.. _encoding-inline-expressions:
+
+Inline Expressions
+~~~~~~~~~~~~~~~~~~
+
+Expressions can be passed directly as encoding field inputs.
+In this case, Altair automatically inserts an internal
+``transform_calculate`` step and points the channel ``field``
+to a generated ``_calc_<hash>`` field name.
+This is equivalent to manually writing the calculate transform,
+but provides a more convenient syntax for common scenaiors
+(for more complex scenarios, the explicit calculate transform
+can stil be used).
+To avoid exposing hash-like generated names in guides, the default title for
+this inline-calculated path is ``None``; use ``.title()`` to override.
+Likewise, the heuristic to determine the field type can be overridden
+by using ``.type()``:
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({"a": [1, 2, 3], "b b": [2, 4, 6]})
+
+    chart = alt.Chart(source).mark_circle(size=80).encode(
+        x='a',
+        y=alt.Y(alt.datum.a * 2).title('b'),
+        color=alt.Color(alt.datum.a * alt.datum['b b']).type('nominal'),
+        size=alt.expr.random(),
+    )
+    chart
+
+To view the transforms and generated name hashes, you can inspect the spec:
+
+.. altair-plot::
+    :output: repr
+
+    spec = chart.to_dict()
+    spec["encoding"]
+
+
+.. altair-plot::
+    :output: repr
+
+    spec["transform"]
+
+
 .. toctree::
    :hidden:
 
