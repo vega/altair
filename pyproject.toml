@@ -290,6 +290,7 @@ doc-clean-all           = "task doc-clean && task doc-clean-generated && task do
 doc-mkdir               = "python -c \"import tools;tools.fs.mkdir('doc/_images')\""
 doc-build-html          = "task doc-mkdir && sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html"
 doc-clean-build         = "task doc-clean-all && task doc-build-html"
+doc-build-html-fast     = "ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 task doc-build-html"
 doc-clean-build-fast    = "task doc-clean-all && ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 task doc-build-html"
 doc-serve               = "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000"
 doc-publish             = "python tools/sync_website.py"
