@@ -101,6 +101,7 @@ doc = [
     "sphinx-design",
     "scipy",
     "scipy-stubs; python_version>='3.10'",
+    "sphinx-autobuild",
 ]
 
 [dependency-groups]
@@ -293,6 +294,20 @@ doc-clean-build         = "task doc-clean-all && task doc-build-html"
 doc-build-html-fast     = "ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 task doc-build-html"
 doc-clean-build-fast    = "task doc-clean-all && ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 task doc-build-html"
 doc-serve               = "python -m http.server --bind \"127.0.0.1\" --directory doc/_build/html 8000"
+doc-build-watch         = '''
+task doc-mkdir \
+&& sphinx-autobuild \
+--open-browser \
+--ignore doc/gallery \
+--ignore doc/_images/ \
+--ignore doc/_build/html/gallery/ \
+--ignore doc/_build/html/user_guide/generated/ \
+--watch sphinxext/ \
+--watch tests/examples_methods_syntax/ \
+--watch tests/examples_arguments_syntax/ \
+-b html -d doc/_build/doctrees doc doc/_build/html
+'''
+doc-clean-build-watch   = "task doc-clean-all && task doc-build-watch"
 doc-publish             = "python tools/sync_website.py"
 doc-publish-clean-build = "task doc-clean-build && task doc-publish"
 
