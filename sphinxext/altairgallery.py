@@ -260,6 +260,134 @@ def _indices(x: str, /) -> list[int]:
     return [int(idx) for idx in x.split()]
 
 
+def _example_names() -> set[str]:
+    return {example["name"] for example in iter_examples_arguments_syntax()}
+
+
+def _section_context(
+    node: nodes.Node,
+    env: BuildEnvironment,
+    docname: str,
+) -> tuple[str | None, str]:
+    current: nodes.Node | None = node
+    while current is not None and not isinstance(current, nodes.section):
+        current = current.parent
+
+    doc_title_node = env.titles.get(docname)
+    doc_title = doc_title_node.astext() if doc_title_node is not None else docname
+
+    if not isinstance(current, nodes.section):
+        return None, doc_title
+
+    section_ids = current.get("ids", [])
+    section_anchor = section_ids[0] if section_ids else None
+    title_node = current.next_node(nodes.title)
+    section_title = title_node.astext() if title_node is not None else doc_title
+    return section_anchor, section_title
+
+
+def _parse_example_from_target(target: str, /) -> str | None:
+    prefix = "gallery_"
+    if target.startswith(prefix):
+        return target.removeprefix(prefix)
+    return None
+
+
+def _collect_gallery_backrefs(app: Sphinx, doctree: nodes.document) -> None:
+    env = app.env
+    docname = env.docname
+
+    refs: dict[tuple[str, str | None], str] = {}
+    valid_examples = _example_names()
+
+    for node in doctree.findall(addnodes.pending_xref):
+        target = node.get("reftarget")
+        if not isinstance(target, str):
+            continue
+        if example_name := _parse_example_from_target(target):
+            if example_name not in valid_examples:
+                continue
+            anchor, section_title = _section_context(node, env, docname)
+            refs[(example_name, anchor)] = section_title
+
+    for node in doctree.findall(nodes.Element):
+        if node.tagname != "altair_plot":
+            continue
+        source_file = node.get("code_source_file")
+        if not isinstance(source_file, str):
+            continue
+        example_name = Path(source_file).stem
+        if example_name not in valid_examples:
+            continue
+        anchor, section_title = _section_context(node, env, docname)
+        refs[(example_name, anchor)] = section_title
+
+    if not hasattr(env, "_altair_gallery_doc_backrefs"):
+        env._altair_gallery_doc_backrefs = {}
+
+    env._altair_gallery_doc_backrefs[docname] = [
+        (example_name, anchor, section_title)
+        for (example_name, anchor), section_title in refs.items()
+    ]
+
+
+def _purge_gallery_backrefs(app: Sphinx, env: BuildEnvironment, docname: str) -> None:
+    if hasattr(env, "_altair_gallery_doc_backrefs"):
+        env._altair_gallery_doc_backrefs.pop(docname, None)
+
+
+def _add_gallery_backrefs_section(
+    app: Sphinx, doctree: nodes.document, docname: str
+) -> None:
+    gallery_dir = app.config.altair_gallery_dir
+    if not docname.startswith(f"{gallery_dir}/") or docname == f"{gallery_dir}/index":
+        return
+
+    example_name = docname.rsplit("/", 1)[-1]
+    env = app.env
+    all_refs = getattr(env, "_altair_gallery_doc_backrefs", {})
+
+    matched: list[tuple[str, str | None, str]] = []
+    for source_doc, refs in all_refs.items():
+        if source_doc.startswith(f"{gallery_dir}/"):
+            continue
+        for ref_example, anchor, section_title in refs:
+            if ref_example == example_name:
+                matched.append((source_doc, anchor, section_title))
+
+    if not matched:
+        return
+
+    matched = sorted(set(matched), key=lambda x: (x[0], x[1] or "", x[2]))
+
+    section = nodes.section(ids=[f"gallery-backlinks-{example_name}"])
+    section += nodes.title(text="Referenced In")
+    bullet = nodes.bullet_list()
+
+    for source_doc, anchor, section_title in matched:
+        refuri = app.builder.get_relative_uri(docname, source_doc)
+        if anchor:
+            refuri = f"{refuri}#{anchor}"
+
+        doc_title_node = env.titles.get(source_doc)
+        doc_title = (
+            doc_title_node.astext() if doc_title_node is not None else source_doc
+        )
+        if section_title == doc_title:
+            label = doc_title
+        else:
+            label = f"{doc_title} - {section_title}"
+
+        item = nodes.list_item()
+        paragraph = nodes.paragraph()
+        paragraph += nodes.reference(text=label, refuri=refuri)
+        item += paragraph
+        bullet += item
+
+    section += bullet
+    doctree += section
+
+
 class AltairMiniGalleryDirective(Directive):
     has_content = False
 
@@ -399,6 +527,9 @@ def main(app) -> None:
 
 def setup(app) -> None:
     app.connect("builder-inited", main)
+    app.connect("doctree-read", _collect_gallery_backrefs)
+    app.connect("doctree-resolved", _add_gallery_backrefs_section)
+    app.connect("env-purge-doc", _purge_gallery_backrefs)
     app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
     app.add_config_value("altair_gallery_ref", "example-gallery", "env")
