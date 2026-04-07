@@ -107,6 +107,10 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 if not autosummary_generate:
     exclude_patterns.extend(["user_guide/generated/**"])
 
+suppress_warnings = []
+if not autosummary_generate and not altair_gallery_generate:
+    suppress_warnings.extend(["toc.not_readable", "toc.not_included"])
+
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 # default_role = None
@@ -208,6 +212,19 @@ def setup(app):
                 return []
 
         app.add_directive("autosummary", FastAutosummary, override=True)
+
+    if not autosummary_generate and not altair_gallery_generate:
+
+        def _resolve_missing_gallery_refs(app, env, node, contnode):
+            target = node.get("reftarget")
+            if isinstance(target, str) and (
+                target == "example-gallery"
+                or target.startswith(("gallery_", "gallery-category-"))
+            ):
+                return contnode
+            return None
+
+        app.connect("missing-reference", _resolve_missing_gallery_refs)
 
     app.add_css_file("theme_overrides.css")
     app.add_css_file("custom.css")
