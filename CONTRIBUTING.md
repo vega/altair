@@ -254,8 +254,25 @@ API pages and the many gallery examples. If you don't edit these as part of your
 PR, you can build without them which should drastically cut down build time:
 
 ```cmd
-uv run task doc-clean-build-fast
+ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 uv run task doc-clean-build
 uv run task doc-serve
+```
+
+It's possible to have the docs automatically open and refresh in a browser tab upon
+detecting changes. This command works best when not rendering the autosummary and
+provides a convenient workflow where changes are live in a few seconds (this 
+is probably the command you want to use most of the time):
+
+```cmd
+ALTAIR_GALLERY_GENERATE=0 ALTAIR_AUTOSUMMARY_GENERATE=0 uv run task doc-clean-build-watch
+```
+
+Watching for changing is also useful when editing the gallery. Although the initial
+build of all the examples takes over a minute, the builds upon detected changes
+only updates the gallery example(s) that changed, which makes them quick:
+
+```cmd
+ALTAIR_AUTOSUMMARY_GENERATE=0 uv run task doc-clean-build-watch
 ```
 
 > [!TIP]
