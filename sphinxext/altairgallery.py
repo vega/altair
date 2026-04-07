@@ -4,6 +4,7 @@ import collections
 import filecmp
 import hashlib
 import json
+import os
 import random
 import shutil
 import warnings
@@ -326,6 +327,16 @@ class AltairMiniGalleryDirective(Directive):
 
 
 def main(app) -> None:
+    env_flag = os.environ.get("ALTAIR_GALLERY_GENERATE")
+    if env_flag is not None:
+        should_generate = env_flag != "0"
+    else:
+        should_generate = getattr(app.builder.config, "altair_gallery_generate", True)
+
+    if not should_generate:
+        print("-> skipping Altair gallery generation")
+        return
+
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"

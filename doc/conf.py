@@ -55,6 +55,10 @@ autodoc_typehints = "none"
 # generate autosummary even if no references
 autosummary_generate = True
 
+# Local/dev speed knob for docs: set ALTAIR_GALLERY_GENERATE=0 to skip
+# regenerating gallery pages and gallery images.
+altair_gallery_generate = os.environ.get("ALTAIR_GALLERY_GENERATE", "1") != "0"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
