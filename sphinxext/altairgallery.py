@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import collections
+import filecmp
 import hashlib
 import json
+import os
 import random
 import shutil
 import warnings
@@ -202,9 +204,17 @@ def save_example_pngs(
             params = example.get("galleryParameters", {})
             if use_svg:
                 # Thumbnail for SVG is identical to original image
-                shutil.copyfile(image_file, image_dir / f"{name}-thumb.svg")
+                thumb_file = image_dir / f"{name}-thumb.svg"
+                if (
+                    not hashes_match
+                    or not thumb_file.exists()
+                    or not filecmp.cmp(image_file, thumb_file, shallow=False)
+                ):
+                    shutil.copyfile(image_file, thumb_file)
             else:
-                create_thumbnail(image_file, image_dir / f"{name}-thumb.png", **params)
+                thumb_file = image_dir / f"{name}-thumb.png"
+                if not hashes_match or not thumb_file.exists():
+                    create_thumbnail(image_file, thumb_file, **params)
 
     # Save hashes so we know whether we need to re-generate plots
     with hash_file.open("w", encoding=encoding) as f:
@@ -317,6 +327,16 @@ class AltairMiniGalleryDirective(Directive):
 
 
 def main(app) -> None:
+    env_flag = os.environ.get("ALTAIR_GALLERY_GENERATE")
+    if env_flag is not None:
+        should_generate = env_flag != "0"
+    else:
+        should_generate = getattr(app.builder.config, "altair_gallery_generate", True)
+
+    if not should_generate:
+        print("-> skipping Altair gallery generation")
+        return
+
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
@@ -353,15 +373,14 @@ def main(app) -> None:
 
     # Write the gallery index file
     fp = target_dir / "index.rst"
-    fp.write_text(
-        GALLERY_TEMPLATE.render(
-            title=gallery_title,
-            examples=examples_toc.items(),
-            image_dir="/_static",
-            gallery_ref=gallery_ref,
-        ),
-        encoding=encoding,
+    index_text = GALLERY_TEMPLATE.render(
+        title=gallery_title,
+        examples=examples_toc.items(),
+        image_dir="/_static",
+        gallery_ref=gallery_ref,
     )
+    if not fp.exists() or fp.read_text(encoding=encoding) != index_text:
+        fp.write_text(index_text, encoding=encoding)
 
     # save the images to file
     save_example_pngs(examples, image_dir)
@@ -373,7 +392,9 @@ def main(app) -> None:
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
+        page_text = EXAMPLE_TEMPLATE.render(example)
+        if not fp.exists() or fp.read_text(encoding=encoding) != page_text:
+            fp.write_text(page_text, encoding=encoding)
 
 
 def setup(app) -> None:
