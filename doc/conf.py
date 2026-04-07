@@ -52,8 +52,8 @@ autodoc_member_order = "groupwise"
 
 autodoc_typehints = "none"
 
-# generate autosummary even if no references
-autosummary_generate = True
+# generate autosummary pages (set ALTAIR_AUTOSUMMARY_GENERATE=0 for faster local builds)
+autosummary_generate = os.environ.get("ALTAIR_AUTOSUMMARY_GENERATE", "1") != "0"
 
 # Local/dev speed knob for docs: set ALTAIR_GALLERY_GENERATE=0 to skip
 # regenerating gallery pages and gallery images.
@@ -104,6 +104,8 @@ language = "en"
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+if not autosummary_generate:
+    exclude_patterns.extend(["user_guide/generated/**"])
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -196,9 +198,17 @@ html_static_path = ["_static", "_images"]
 
 
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
-# and
-# https://github.com/rtfd/sphinx_rtd_theme/issues/117
+# and https://github.com/rtfd/sphinx_rtd_theme/issues/117
 def setup(app):
+    if not autosummary_generate:
+        from sphinx.ext.autosummary import Autosummary
+
+        class FastAutosummary(Autosummary):
+            def run(self):
+                return []
+
+        app.add_directive("autosummary", FastAutosummary, override=True)
+
     app.add_css_file("theme_overrides.css")
     app.add_css_file("custom.css")
 
