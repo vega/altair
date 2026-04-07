@@ -64,7 +64,7 @@ In this example, we modify the chart above to change the size of the points base
 
 .. altair-plot::
 
-    chart.mark_point(size=alt.expr(param_width.name))
+    chart.mark_point(size=param_width)
 
 In addition to modifying the ``mark_*`` parameters,
 inline expressions can be passed to encoding channels as a value definition.
@@ -73,7 +73,7 @@ via this alternate approach:
 
 .. altair-plot::
 
-    chart.encode(size=alt.value(alt.expr(param_width.name)))
+    chart.encode(size=alt.value(param_width)
 
 `Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart.
 
