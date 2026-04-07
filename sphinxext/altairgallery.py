@@ -17,6 +17,7 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 from docutils.statemachine import StringList
+from sphinx import addnodes
 from sphinx.util.nodes import nested_parse_with_titles
 
 from altair.utils.execeval import eval_block
@@ -32,6 +33,8 @@ from .utils import (
 
 if TYPE_CHECKING:
     from docutils.nodes import Node
+    from sphinx.application import Sphinx
+    from sphinx.environment import BuildEnvironment
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -360,32 +363,36 @@ def _add_gallery_backrefs_section(
 
     matched = sorted(set(matched), key=lambda x: (x[0], x[1] or "", x[2]))
 
-    section = nodes.section(ids=[f"gallery-backlinks-{example_name}"])
-    section += nodes.title(text="Referenced In")
-    bullet = nodes.bullet_list()
+    def _build_backlink_list() -> nodes.bullet_list:
+        bullet = nodes.bullet_list()
+        for source_doc, anchor, section_title in matched:
+            refuri = app.builder.get_relative_uri(docname, source_doc)
+            if anchor:
+                refuri = f"{refuri}#{anchor}"
 
-    for source_doc, anchor, section_title in matched:
-        refuri = app.builder.get_relative_uri(docname, source_doc)
-        if anchor:
-            refuri = f"{refuri}#{anchor}"
+            doc_title_node = env.titles.get(source_doc)
+            doc_title = (
+                doc_title_node.astext() if doc_title_node is not None else source_doc
+            )
+            if section_title == doc_title:
+                label = doc_title
+            else:
+                label = f"{doc_title} - {section_title}"
 
-        doc_title_node = env.titles.get(source_doc)
-        doc_title = (
-            doc_title_node.astext() if doc_title_node is not None else source_doc
-        )
-        if section_title == doc_title:
-            label = doc_title
-        else:
-            label = f"{doc_title} - {section_title}"
+            item = nodes.list_item()
+            paragraph = nodes.paragraph()
+            paragraph += nodes.reference(text=label, refuri=refuri)
+            item += paragraph
+            bullet += item
+        return bullet
 
-        item = nodes.list_item()
-        paragraph = nodes.paragraph()
-        paragraph += nodes.reference(text=label, refuri=refuri)
-        item += paragraph
-        bullet += item
-
-    section += bullet
-    doctree += section
+    container = nodes.container(classes=["gallery-backlinks"])
+    container += nodes.raw("", "<p></p>", format="html")
+    container += nodes.paragraph(
+        text="Learn more in these related documentation sections:"
+    )
+    container += _build_backlink_list()
+    doctree += container
 
 
 class AltairMiniGalleryDirective(Directive):
