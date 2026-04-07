@@ -372,6 +372,12 @@ def _heuristic_links_for_example(
     )
     if has_interactivity:
         add("user_guide/interactions/index", "Interactive charts")
+    if "alt.when(" in code:
+        add(
+            "user_guide/interactions/parameters",
+            "Parameters: Understanding when",
+            "understanding-when",
+        )
 
     # Compound charts page
     has_compound = any(
@@ -493,13 +499,10 @@ def _add_gallery_backrefs_section(
             if ref_example == example_name:
                 matched.append((source_doc, anchor, section_title))
 
-    if not matched:
-        return
-
     matched = sorted(set(matched), key=lambda x: (x[0], x[1] or "", x[2]))
 
-    def _build_backlink_list() -> nodes.bullet_list:
-        bullet = nodes.bullet_list()
+    def _build_explicit_links() -> list[tuple[str, str]]:
+        links: list[tuple[str, str]] = []
         for source_doc, anchor, section_title in matched:
             refuri = app.builder.get_relative_uri(docname, source_doc)
             if anchor:
@@ -514,6 +517,12 @@ def _add_gallery_backrefs_section(
             else:
                 label = f"{doc_title} - {section_title}"
 
+            links.append((label, refuri))
+        return links
+
+    def _build_backlink_list(links: list[tuple[str, str]]) -> nodes.bullet_list:
+        bullet = nodes.bullet_list()
+        for label, refuri in links:
             item = nodes.list_item()
             paragraph = nodes.paragraph()
             paragraph += nodes.reference(text=label, refuri=refuri)
@@ -523,28 +532,21 @@ def _add_gallery_backrefs_section(
 
     container = nodes.container(classes=["gallery-backlinks"])
     container += nodes.raw("", "<p></p>", format="html")
-    container += nodes.paragraph(text="Learn more in these related sections:")
-    container += _build_backlink_list()
-
+    container += nodes.raw("", "<p></p>", format="html")
+    container += nodes.paragraph(text="Learn more in these related doc sections:")
     heuristic_links = _heuristic_links_for_example(app, docname, example_name)
-    explicit_uris = {
-        app.builder.get_relative_uri(docname, source_doc)
-        + (f"#{anchor}" if anchor else "")
-        for source_doc, anchor, _section_title in matched
-    }
+    explicit_links = _build_explicit_links()
+    explicit_uris = {uri for _label, uri in explicit_links}
     extra_links = [
         (label, uri) for label, uri in heuristic_links if uri not in explicit_uris
     ]
-    if extra_links:
-        container += nodes.paragraph(text="Additional related documentation:")
-        extra = nodes.bullet_list()
-        for label, uri in extra_links:
-            item = nodes.list_item()
-            paragraph = nodes.paragraph()
-            paragraph += nodes.reference(text=label, refuri=uri)
-            item += paragraph
-            extra += item
-        container += extra
+
+    if not matched and not extra_links:
+        return
+
+    merged_links = [*explicit_links, *extra_links]
+    if merged_links:
+        container += _build_backlink_list(merged_links)
 
     doctree += container
 
