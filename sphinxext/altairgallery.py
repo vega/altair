@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import shutil
 import warnings
 from operator import itemgetter
@@ -267,6 +268,140 @@ def _example_names() -> set[str]:
     return {example["name"] for example in iter_examples_arguments_syntax()}
 
 
+def _example_code_map() -> dict[str, str]:
+    return {example["name"]: example["code"] for example in populate_examples()}
+
+
+def _doc_ref(
+    app: Sphinx,
+    from_doc: str,
+    to_doc: str,
+    label: str,
+    anchor: str | None = None,
+) -> tuple[str, str] | None:
+    if to_doc not in app.env.found_docs:
+        return None
+    refuri = app.builder.get_relative_uri(from_doc, to_doc)
+    if anchor:
+        refuri = f"{refuri}#{anchor}"
+    return (label, refuri)
+
+
+def _heuristic_links_for_example(
+    app: Sphinx,
+    docname: str,
+    example_name: str,
+) -> list[tuple[str, str]]:
+    code = _example_code_map().get(example_name, "")
+    if not code:
+        return []
+
+    links: list[tuple[str, str]] = []
+
+    def add(to_doc: str, label: str, anchor: str | None = None) -> None:
+        if ref := _doc_ref(app, docname, to_doc, label, anchor):
+            if ref not in links:
+                links.append(ref)
+
+    # Mark pages
+    marks = set(re.findall(r"\.mark_([a-zA-Z0-9_]+)\(", code))
+    for mark in sorted(marks):
+        add(f"user_guide/marks/{mark}", f"Mark: {mark}")
+
+    # Transform pages
+    transforms = set(re.findall(r"\.transform_([a-zA-Z0-9_]+)\(", code))
+    for transform in sorted(transforms):
+        add(f"user_guide/transform/{transform}", f"Transform: {transform}")
+    if transforms:
+        add(
+            "user_guide/transform/index",
+            "Accessing transformed data",
+            "accessing-transformed-data",
+        )
+
+    # Encoding index headings
+    has_aggregation = (
+        "aggregate=" in code
+        or ".aggregate(" in code
+        or bool(re.search(r"\b(count|sum|mean|median|min|max|stdev|variance)\(", code))
+    )
+    has_binning = "bin=" in code or ".bin(" in code
+    has_explicit_type = "type=" in code or bool(re.search(r":[QONGT]\b", code))
+    has_special_char = bool(re.search(r"\\[:.\[\]]", code))
+    has_sort = "sort=" in code or ".sort(" in code
+    has_datum_value = "alt.datum" in code or "alt.value" in code
+
+    if has_aggregation or has_binning:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Binning and Aggregation",
+            "encoding-aggregates",
+        )
+    if has_explicit_type:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Data types",
+            "encoding-data-types",
+        )
+    if has_special_char:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Special characters in column names",
+            "escaping-special-characters-in-column-names",
+        )
+    if has_sort:
+        add("user_guide/encodings/index", "Encodings: Sort option", "sort-option")
+    if has_datum_value:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Datum and Value",
+            "datum-and-value",
+        )
+
+    # Interactivity index
+    has_interactivity = any(
+        token in code
+        for token in (
+            ".add_params(",
+            "alt.param(",
+            "selection_",
+            ".interactive(",
+            "alt.when(",
+            "condition(",
+        )
+    )
+    if has_interactivity:
+        add("user_guide/interactions/index", "Interactive charts")
+
+    # Compound charts page
+    has_compound = any(
+        token in code
+        for token in (
+            ".facet(",
+            ".repeat(",
+            "alt.concat(",
+            "alt.hconcat(",
+            "alt.vconcat(",
+            ".hconcat(",
+            ".vconcat(",
+        )
+    )
+    if has_compound:
+        add("user_guide/compound_charts", "Layered & Multi-View Charts")
+
+    # Temporal axis links
+    has_temporal = (
+        bool(re.search(r"[xy]\s*=\s*['\"][^'\"]*:[Tt]\b", code))
+        or bool(re.search(r"[xy]\s*=.*type\s*=\s*['\"]temporal['\"]", code))
+        or bool(re.search(r"alt\.(X|Y)\([^\)]*:[Tt]", code))
+    )
+    if has_temporal:
+        add("user_guide/times_and_dates", "Times & Dates")
+        add("user_guide/transform/timeunit", "Transform: timeunit")
+
+    return links
+
+
 def _section_context(
     node: nodes.Node,
     env: BuildEnvironment,
@@ -388,10 +523,29 @@ def _add_gallery_backrefs_section(
 
     container = nodes.container(classes=["gallery-backlinks"])
     container += nodes.raw("", "<p></p>", format="html")
-    container += nodes.paragraph(
-        text="Learn more in these related documentation sections:"
-    )
+    container += nodes.paragraph(text="Learn more in these related sections:")
     container += _build_backlink_list()
+
+    heuristic_links = _heuristic_links_for_example(app, docname, example_name)
+    explicit_uris = {
+        app.builder.get_relative_uri(docname, source_doc)
+        + (f"#{anchor}" if anchor else "")
+        for source_doc, anchor, _section_title in matched
+    }
+    extra_links = [
+        (label, uri) for label, uri in heuristic_links if uri not in explicit_uris
+    ]
+    if extra_links:
+        container += nodes.paragraph(text="Additional related documentation:")
+        extra = nodes.bullet_list()
+        for label, uri in extra_links:
+            item = nodes.list_item()
+            paragraph = nodes.paragraph()
+            paragraph += nodes.reference(text=label, refuri=uri)
+            item += paragraph
+            extra += item
+        container += extra
+
     doctree += container
 
 
