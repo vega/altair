@@ -172,8 +172,8 @@ we have some conventions and plugins that are used to help navigate the docs and
 generate great Altair visualizations. 
 
 Note that the [Altair website](https://altair-viz.github.io/)
-is only updated when a new version is released so your contribution might not show
-up for a while.
+is only updated when a new version is released so your contributions
+might not show immediately.
 
 ### Adding Examples
 
@@ -182,33 +182,30 @@ could be everything from simple one-panel scatter and line plots, to more
 complicated layered or stacked plots, to more advanced interactive features.
 Before submitting a new example check the [Altair Example
 Gallery](https://altair-viz.github.io/gallery/index.html) to make sure that
-your idea has not already been implemented. 
+your idea has not already been implemented.
 
-Once you have an example you would like to add there are a few guide lines to follow.
-Every example should:
-- have a `arguments_syntax` and `methods_syntax` implementation. Each implementation 
-  must be saved as a stand alone script in the `tests/examples_arguments_syntax` 
+When contributing to the gallery, there are a few guidelines each example should follow:
+
+- Have an `arguments_syntax` and `methods_syntax` implementation. Each implementation
+  must be saved as a standalone script in the `tests/examples_arguments_syntax`
   and `tests/examples_methods_syntax` directories.
-- have a descriptive docstring, which will eventually be extracted for the
+- Have a descriptive docstring, which will eventually be extracted for the
   documentation website.
-- contain a category tag.
-- define a chart variable with the main chart object (This will be used both in
-  the unit tests to confirm that the example executes properly, and also
-  eventually used to display the visualization on the documentation website).
-- not make any external calls to download data within the script (i.e. don't
+- Contain a `# :new:` tag followed by a `# category ...` tag on a separate line.
+- Define a `chart` variable with the main chart object.
+    - This will be used both in the unit tests to confirm that the example executes 
+      properly, and to display the visualization on the documentation website.
+- Avoid making any external calls to download data within the script (e.g. don't
   use urllib). You can define your data directly within the example file,
   generate your data using pandas and numpy, or you can use data
   available in the `altair.datasets` module.
+    - This is to ensure that Altair's automated test suite does not depend
+      on availability of external HTTP resources.
 
 The easiest way to get started would be to adapt examples from the [Vega-Lite
 example gallery](https://vega.github.io/vega-lite/examples/) which are missing
 in the Altair gallery. Or you can feel free to be creative and build your own
 visualizations.
-
-Often it is convenient to draft an example outside of the main repository, such
-as [Google Colab](https://colab.research.google.com/), to avoid difficulties
-when working with git. Once you have an example you would like to add, follow the
-same contribution procedure outlined above.
 
 Some additional notes:
 
@@ -224,13 +221,10 @@ Some additional notes:
   variable `source`. Then `source` is passed to the `alt.Chart` object.
   If the example requires multiple dataframes then this does not apply. See
   other examples for guidance. 
-- Example code should not require downloading external datasets. We suggest
-  using the `altair.datasets` module if possible.
-  If you are using the `altair.datasets` module there are multiple ways to refer
-  to a data source. The data can be referenced directly, such as `source = data.penguins()`,
-  or it can be referenced by URL, such as `source = data.movies.url`. This is to
-  ensure that Altair's automated test suite does not depend on availability of
-  external HTTP resources.
+- If you are using the `altair.datasets` module there are multiple ways to refer
+  to a data source. The data can be referenced directly, such as
+  `source = data.penguins()`, or it can be referenced by URL, such as
+  `source = data.movies.url`.
 - If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
   then add the name of the example to the `SVG_EXAMPLES` set in 
   `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`

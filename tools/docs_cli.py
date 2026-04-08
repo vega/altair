@@ -120,11 +120,16 @@ def publish_docs() -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(prog="build-docs")
+    parser = argparse.ArgumentParser(
+        prog="docs-cli",
+        description="Clean, build, serve, and publish the Altair documentation.",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     clean_parser = subparsers.add_parser(
-        "clean", help="Remove generated docs artifacts"
+        "clean",
+        help="Remove generated docs artifacts",
+        description="Remove generated documentation artifacts from the local checkout.",
     )
     clean_parser.add_argument("--build", action="store_true", help="Remove doc/_build")
     clean_parser.add_argument(
@@ -139,7 +144,11 @@ def parse_args() -> argparse.Namespace:
         "--all", action="store_true", help="Run all clean operations"
     )
 
-    build_parser = subparsers.add_parser("build", help="Build docs with sphinx")
+    build_parser = subparsers.add_parser(
+        "build",
+        help="Build docs with sphinx",
+        description="Build HTML documentation using Sphinx or sphinx-autobuild.",
+    )
     build_parser.add_argument(
         "--watch",
         action="store_true",
@@ -165,11 +174,19 @@ def parse_args() -> argparse.Namespace:
         help="Run clean before build; default target is all",
     )
 
-    serve_parser = subparsers.add_parser("serve", help="Serve built docs")
+    serve_parser = subparsers.add_parser(
+        "serve",
+        help="Serve built docs",
+        description="Serve an existing documentation build over HTTP.",
+    )
     serve_parser.add_argument("--bind", default="127.0.0.1", help="Bind address")
     serve_parser.add_argument("--port", type=int, default=8000, help="Port")
 
-    subparsers.add_parser("publish", help="Publish built docs")
+    subparsers.add_parser(
+        "publish",
+        help="Publish built docs",
+        description="Publish the existing HTML documentation build to the website repo.",
+    )
 
     return parser.parse_args()
 
