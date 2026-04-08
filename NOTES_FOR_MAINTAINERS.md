@@ -28,6 +28,7 @@ is not changed, then running the script should overwrite the schema wrappers
 with identical copies.
 
 ## Updating Vega versions
+
 All versions are maintained in [pyproject.toml](pyproject.toml).
 
 ### Python Packages
@@ -100,41 +101,7 @@ rewrites, because the internal structure of the schema changed appreciably.
 To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
 
-## Documentation workflow
-
-The docs workflow is now consolidated behind a single taskipy command:
-
-```bash
-uv run task doc -- <subcommand> [flags]
-```
-
-For shorter day-to-day commands, task aliases are also available:
-
-```bash
-uv run task doc-clean -- [flags]
-uv run task doc-build -- [flags]
-uv run task doc-serve
-uv run task doc-publish
-```
-
-Examples:
-
-```bash
-# clean + rebuild html docs
-uv run task doc-build -- --clean
-
-# fast local loop while editing docs (skip autosummary)
-uv run task doc-build -- --clean --no-autosummary --no-gallery --watch
-
-# serve existing build without rebuilding
-uv run task doc-serve
-
-# publish current html build
-uv run task doc-publish
-```
-
-`--no-autosummary` and `--no-gallery` are build-only flags.
-
 ## Web analytics
+
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
 It is hosted on [https://views.scientific-python.org](https://views.scientific-python.org). You can view the stats [here](https://views.scientific-python.org/altair-viz.github.io). To get an account to edit the settings of the web tracking, ask another maintainer.
