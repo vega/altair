@@ -28,6 +28,7 @@ is not changed, then running the script should overwrite the schema wrappers
 with identical copies.
 
 ## Updating Vega versions
+
 All versions are maintained in [pyproject.toml](pyproject.toml).
 
 ### Python Packages
@@ -101,5 +102,6 @@ To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
 
 ## Web analytics
+
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
 It is hosted on [https://views.scientific-python.org](https://views.scientific-python.org). You can view the stats [here](https://views.scientific-python.org/altair-viz.github.io). To get an account to edit the settings of the web tracking, ask another maintainer.
