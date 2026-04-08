@@ -100,6 +100,35 @@ rewrites, because the internal structure of the schema changed appreciably.
 To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
 
+## Documentation workflow
+
+The docs workflow is now consolidated behind a single taskipy command:
+
+```bash
+uv run task doc -- <subcommand> [flags]
+```
+
+Examples:
+
+```bash
+# clean + rebuild html docs
+uv run task doc -- build --clean
+
+# fast local loop while editing docs (skip autosummary)
+uv run task doc -- build --clean --no-autosummary --no-gallery --watch
+
+# serve existing build without rebuilding
+uv run task doc -- serve
+
+# publish current html build
+uv run task doc -- publish
+
+# clean + build + publish
+uv run task doc -- publish --clean
+```
+
+`--no-autosummary` maps to `ALTAIR_AUTOSUMMARY_GENERATE=0` and `--no-gallery` maps to `ALTAIR_GALLERY_GENERATE=0`.
+
 ## Web analytics
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
 It is hosted on [https://views.scientific-python.org](https://views.scientific-python.org). You can view the stats [here](https://views.scientific-python.org/altair-viz.github.io). To get an account to edit the settings of the web tracking, ask another maintainer.
