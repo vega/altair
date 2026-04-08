@@ -63,14 +63,12 @@ If you can't find the plots you are looking for here, make sure to check out the
 
 .. _gallery-category-recently-added:
 
-Recently Added
+.. |gallery-new-pill| raw:: html
+
+   <span class="gallery-inline-tag">new</span>
+
+Recently Added |gallery-new-pill|
 ~~~~~~~~~~~~~~
-
-.. raw:: html
-
-   <div class="gallery-recently-added-label">
-     <span class="gallery-inline-tag">new</span>
-   </div>
 
 .. raw:: html
 
