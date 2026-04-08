@@ -2,6 +2,7 @@
 Mosaic Chart with Labels
 ------------------------
 """
+# :new:
 # category: tables
 
 import altair as alt
