@@ -122,6 +122,31 @@ div.bottomnav {
   min-width: 140px;
 }
 
+.gallery .imagegroup-new .image {
+  outline: 2px solid #ff8f3f;
+  outline-offset: 0;
+  box-shadow:
+    0 0 0 2px rgba(255, 143, 63, 0.2),
+    0 0 18px rgba(255, 143, 63, 0.7);
+}
+
+.gallery .image-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f46f2b 0%, #ff8f3f 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+}
+
 .gallery .imagegroup:hover {
   text-decoration: none;
 }

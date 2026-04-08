@@ -70,9 +70,12 @@ If you can't find the plots you are looking for here, make sure to check out the
 
    <span class="gallery">
    {% for example in group %}
-   <a class="imagegroup" href="{{ example.name }}.html">
+   <a class="imagegroup{% if example['is_new'] %} imagegroup-new{% endif %}" href="{{ example.name }}.html">
+   {% if example['is_new'] %}
+   <span class="image-tag">new</span>
+   {% endif %}
    <span
-        class="image" alt="{{ example.title }}"
+         class="image" alt="{{ example.title }}"
 {% if example['use_svg'] %}
         style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.svg);"
 {% else %}
@@ -227,9 +230,11 @@ def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
     method_examples = {x["name"]: x for x in iter_examples_methods_syntax()}
 
     for example in examples:
-        docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
+        docstring, category, code, lineno, is_new = get_docstring_and_rest(
+            example["filename"]
+        )
         if example["name"] in method_examples:
-            _, _, method_code, _ = get_docstring_and_rest(
+            _, _, method_code, _, _ = get_docstring_and_rest(
                 method_examples[example["name"]]["filename"]
             )
         else:
@@ -250,6 +255,7 @@ def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
                 "method_code": method_code,
                 "category": category.title(),
                 "lineno": lineno,
+                "is_new": is_new,
             }
         )
 
@@ -368,6 +374,12 @@ def main(app) -> None:
     )
     for d in examples:
         examples_toc[d["category"]].append(d)
+
+    for category, category_examples in examples_toc.items():
+        examples_toc[category] = sorted(
+            category_examples,
+            key=lambda ex: (not ex["is_new"], ex["title"]),
+        )
 
     encoding = "utf-8"
 
