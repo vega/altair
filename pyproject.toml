@@ -285,6 +285,10 @@ generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
 
 doc = "python tools/docs_cli.py"
+doc-clean = "python tools/docs_cli.py clean"
+doc-build = "python tools/docs_cli.py build"
+doc-serve = "python tools/docs_cli.py serve"
+doc-publish = "python tools/docs_cli.py publish"
 
 clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"

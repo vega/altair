@@ -169,26 +169,7 @@ def parse_args() -> argparse.Namespace:
     serve_parser.add_argument("--bind", default="127.0.0.1", help="Bind address")
     serve_parser.add_argument("--port", type=int, default=8000, help="Port")
 
-    publish_parser = subparsers.add_parser("publish", help="Publish built docs")
-    publish_parser.add_argument(
-        "--clean",
-        nargs="?",
-        const="all",
-        default=None,
-        choices=CLEAN_CHOICES,
-        metavar="{build,generated,images,all}",
-        help="Run clean and build before publishing; default clean target is all",
-    )
-    publish_parser.add_argument(
-        "--no-autosummary",
-        action="store_true",
-        help="Set ALTAIR_AUTOSUMMARY_GENERATE=0 for the pre-publish build",
-    )
-    publish_parser.add_argument(
-        "--no-gallery",
-        action="store_true",
-        help="Set ALTAIR_GALLERY_GENERATE=0 for the pre-publish build",
-    )
+    subparsers.add_parser("publish", help="Publish built docs")
 
     return parser.parse_args()
 
@@ -219,13 +200,6 @@ def main() -> None:
         return
 
     if args.command == "publish":
-        if args.clean:
-            clean_docs(**clean_kwargs_from_target(args.clean))
-            build_docs(
-                watch=False,
-                autosummary=not args.no_autosummary,
-                gallery=not args.no_gallery,
-            )
         publish_docs()
 
 

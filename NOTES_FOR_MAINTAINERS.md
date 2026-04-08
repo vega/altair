@@ -108,26 +108,32 @@ The docs workflow is now consolidated behind a single taskipy command:
 uv run task doc -- <subcommand> [flags]
 ```
 
+For shorter day-to-day commands, task aliases are also available:
+
+```bash
+uv run task doc-clean -- [flags]
+uv run task doc-build -- [flags]
+uv run task doc-serve
+uv run task doc-publish
+```
+
 Examples:
 
 ```bash
 # clean + rebuild html docs
-uv run task doc -- build --clean
+uv run task doc-build -- --clean
 
 # fast local loop while editing docs (skip autosummary)
-uv run task doc -- build --clean --no-autosummary --no-gallery --watch
+uv run task doc-build -- --clean --no-autosummary --no-gallery --watch
 
 # serve existing build without rebuilding
-uv run task doc -- serve
+uv run task doc-serve
 
 # publish current html build
-uv run task doc -- publish
-
-# clean + build + publish
-uv run task doc -- publish --clean
+uv run task doc-publish
 ```
 
-`--no-autosummary` maps to `ALTAIR_AUTOSUMMARY_GENERATE=0` and `--no-gallery` maps to `ALTAIR_GALLERY_GENERATE=0`.
+`--no-autosummary` and `--no-gallery` are build-only flags.
 
 ## Web analytics
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
