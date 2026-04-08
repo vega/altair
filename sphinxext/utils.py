@@ -88,7 +88,7 @@ def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(
+def get_docstring_and_rest(  # noqa: C901
     filename: str | Path,
 ) -> tuple[str, str | None, str, int, bool]:
     """
