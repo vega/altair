@@ -59,6 +59,42 @@ If you can't find the plots you are looking for here, make sure to check out the
     This change also introduced updated column names in some datasets (e.g., spaces
     instead of underscores).
 
+{% if recent_examples %}
+
+.. _gallery-category-recently-added:
+
+Recently Added
+~~~~~~~~~~~~~~
+
+.. raw:: html
+
+   <div class="gallery-recently-added-label">
+     <span class="gallery-inline-tag">new</span>
+   </div>
+
+.. raw:: html
+
+   <span class="gallery">
+   {% for example in recent_examples %}
+   <a class="imagegroup{% if example['is_new'] %} imagegroup-new{% endif %}" href="{{ example.name }}.html">
+   <span
+         class="image" alt="{{ example.title }}"
+{% if example['use_svg'] %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.svg);"
+{% else %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.png);"
+{% endif %}
+    ></span>
+
+     <span class="image-title">{{ example.title }}</span>
+   </a>
+   {% endfor %}
+   </span>
+
+   <div style='clear:both;'></div>
+
+{% endif %}
+
 {% for grouper, group in examples %}
 
 .. _gallery-category-{{ grouper }}:
@@ -375,11 +411,7 @@ def main(app) -> None:
     for d in examples:
         examples_toc[d["category"]].append(d)
 
-    for category, category_examples in examples_toc.items():
-        examples_toc[category] = sorted(
-            category_examples,
-            key=lambda ex: (not ex["is_new"], ex["title"]),
-        )
+    recent_examples = [example for example in examples if example["is_new"]]
 
     encoding = "utf-8"
 
@@ -388,6 +420,7 @@ def main(app) -> None:
     index_text = GALLERY_TEMPLATE.render(
         title=gallery_title,
         examples=examples_toc.items(),
+        recent_examples=recent_examples,
         image_dir="/_static",
         gallery_ref=gallery_ref,
     )

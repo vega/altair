@@ -123,11 +123,16 @@ div.bottomnav {
 }
 
 .gallery .imagegroup-new .image {
-  outline: 2px solid #ff8f3f;
-  outline-offset: 0;
+  transition: background-position 2s, box-shadow 220ms ease;
   box-shadow:
-    0 0 0 2px rgba(255, 143, 63, 0.2),
-    0 0 18px rgba(255, 143, 63, 0.7);
+    0 0 16px rgba(110, 116, 124, 0.62),
+    0 0 30px rgba(110, 116, 124, 0.42);
+}
+
+.gallery .imagegroup-new:hover .image {
+  box-shadow:
+    0 0 24px rgba(255, 143, 63, 0.9),
+    0 0 42px rgba(255, 143, 63, 0.62);
 }
 
 .gallery .image-tag {
