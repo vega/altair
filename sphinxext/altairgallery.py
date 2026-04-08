@@ -287,7 +287,7 @@ def _doc_ref(
     return (label, refuri)
 
 
-def _heuristic_links_for_example(
+def _heuristic_links_for_example(  # noqa C901
     app: Sphinx,
     docname: str,
     example_name: str,
@@ -299,9 +299,8 @@ def _heuristic_links_for_example(
     links: list[tuple[str, str]] = []
 
     def add(to_doc: str, label: str, anchor: str | None = None) -> None:
-        if ref := _doc_ref(app, docname, to_doc, label, anchor):
-            if ref not in links:
-                links.append(ref)
+        if (ref := _doc_ref(app, docname, to_doc, label, anchor)) and ref not in links:
+            links.append(ref)
 
     # Mark pages
     marks = set(re.findall(r"\.mark_([a-zA-Z0-9_]+)\(", code))
@@ -480,7 +479,7 @@ def _purge_gallery_backrefs(app: Sphinx, env: BuildEnvironment, docname: str) ->
         env._altair_gallery_doc_backrefs.pop(docname, None)
 
 
-def _add_gallery_backrefs_section(
+def _add_gallery_backrefs_section(  # noqa C901
     app: Sphinx, doctree: nodes.document, docname: str
 ) -> None:
     gallery_dir = app.config.altair_gallery_dir
