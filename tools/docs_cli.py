@@ -147,22 +147,22 @@ def parse_args() -> argparse.Namespace:
     build_parser = subparsers.add_parser(
         "build",
         help="Build docs with sphinx",
-        description="Build HTML documentation using Sphinx or sphinx-autobuild.",
+        description="Build HTML documentation using Sphinx.",
     )
     build_parser.add_argument(
         "--watch",
         action="store_true",
-        help="Use sphinx-autobuild instead of sphinx-build",
+        help="Detect and rebuild changed doc pages incrementally. Enable hot reloading of the built docs in a browser tab.",
     )
     build_parser.add_argument(
         "--no-autosummary",
         action="store_true",
-        help="Set ALTAIR_AUTOSUMMARY_GENERATE=0 for faster local builds",
+        help="Skips creation of the API ref to reduce build time significantly",
     )
     build_parser.add_argument(
         "--no-gallery",
         action="store_true",
-        help="Set ALTAIR_GALLERY_GENERATE=0 for faster local builds",
+        help="Skips creation of the gappery to reduce build time slightly",
     )
     build_parser.add_argument(
         "--clean",
@@ -185,7 +185,7 @@ def parse_args() -> argparse.Namespace:
     subparsers.add_parser(
         "publish",
         help="Publish built docs",
-        description="Publish the existing HTML documentation build to the website repo.",
+        description="Publish the existing HTML documentation build to the website repo. Run a clean build before publishing",
     )
 
     return parser.parse_args()
