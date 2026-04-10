@@ -46,7 +46,8 @@
 
 11. Build and publish docs (Requires write-access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io)):
 
-        uv run task doc-publish-clean-build
+        uv run task doc-build -- --clean
+        uv run task doc-publish
 
 12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
