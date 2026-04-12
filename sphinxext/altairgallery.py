@@ -74,7 +74,7 @@ Recently Added |gallery-new-pill|
 
    <span class="gallery">
    {% for example in recent_examples %}
-   <a class="imagegroup{% if example['is_new'] %} imagegroup-new{% endif %}" href="{{ example.name }}.html">
+   <a class="imagegroup{% if example['is_new'] %} imagegroup-recent{% endif %}" href="{{ example.name }}.html">
    <span
          class="image" alt="{{ example.title }}"
 {% if example['use_svg'] %}
