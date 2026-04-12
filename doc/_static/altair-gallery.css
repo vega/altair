@@ -132,25 +132,25 @@ div.bottomnav {
 .gallery .image:hover {
   box-shadow:
     0 0 14px rgba(110, 116, 124, 0.5),
-    0 0 26px rgba(110, 116, 124, 0.3);
+    0 0 28px rgba(110, 116, 124, 0.3);
 }
 
 .gallery .imagegroup-new .image {
   box-shadow:
     0 0 14px rgba(255, 143, 63, 0.56),
-    0 0 26px rgba(255, 143, 63, 0.38);
+    0 0 28px rgba(255, 143, 63, 0.38);
 }
 
 .gallery .imagegroup-new .image:hover {
   box-shadow:
-    0 0 16px rgba(255, 143, 63, 0.7),
-    0 0 32px rgba(255, 143, 63, 0.45);
+    0 0 17px rgba(255, 143, 63, 0.7),
+    0 0 34px rgba(255, 143, 63, 0.45);
 }
 
 .gallery .imagegroup-recent .image:hover {
   box-shadow:
-    0 0 16px rgba(255, 143, 63, 0.7),
-    0 0 32px rgba(255, 143, 63, 0.45);
+    0 0 17px rgba(255, 143, 63, 0.7),
+    0 0 34px rgba(255, 143, 63, 0.45);
 }
 
 .gallery .image-tag {
