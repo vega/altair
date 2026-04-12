@@ -122,17 +122,29 @@ div.bottomnav {
   min-width: 140px;
 }
 
-.gallery .imagegroup-new .image {
-  transition: background-position 2s, box-shadow 220ms ease;
+.gallery .image {
   box-shadow:
-    0 0 16px rgba(110, 116, 124, 0.62),
-    0 0 30px rgba(110, 116, 124, 0.42);
+    0 0 10px rgba(110, 116, 124, 0.35),
+    0 0 20px rgba(110, 116, 124, 0.2);
+  transition: background-position 2s, box-shadow 200ms ease;
 }
 
-.gallery .imagegroup-new:hover .image {
+.gallery .image:hover {
   box-shadow:
-    0 0 24px rgba(255, 143, 63, 0.9),
-    0 0 42px rgba(255, 143, 63, 0.62);
+    0 0 14px rgba(110, 116, 124, 0.5),
+    0 0 26px rgba(110, 116, 124, 0.3);
+}
+
+.gallery .imagegroup-new .image {
+  box-shadow:
+    0 0 16px rgba(255, 143, 63, 0.72),
+    0 0 34px rgba(255, 143, 63, 0.5);
+}
+
+.gallery .imagegroup-new .image:hover {
+  box-shadow:
+    0 0 20px rgba(255, 143, 63, 0.85),
+    0 0 40px rgba(255, 143, 63, 0.6);
 }
 
 .gallery .image-tag {
@@ -179,7 +191,6 @@ div.bottomnav {
   background-repeat: no-repeat;
   margin-bottom: 5px;
   overflow: hidden;
-  transition: background-position 2s;
 }
 .gallery .image:hover {
   background-position: right bottom;
