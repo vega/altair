@@ -1687,10 +1687,10 @@ VERSIONS: Mapping[
     str,
 ] = {
     "vega-datasets": "v3.2.1",
-    "vega-embed": "v7",
-    "vega-lite": "v6.1.0",
+    "vega-embed": "v7.0.2",
+    "vega-lite": "v6.4.1",
     "vegafusion": "2.0.3",
-    "vl-convert-python": "1.8.0",
+    "vl-convert-python": "1.9.0",
 }
 """
 Version pins for non-``python`` `vega projects`_.
