@@ -6,6 +6,7 @@ This could also have been called a "pie chart with axis labels",
 but is more commonly referred to as a polar bar chart.
 The axis lines are created using pie charts with only the stroke visible.
 """
+# :new:
 # category: circular plots
 
 import math

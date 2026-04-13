@@ -7,6 +7,7 @@ and then compute the difference of the selected columns.
 It also illustrates how to use `indexof` to filter
 columns based on active selection values.
 """
+# :new:
 # category: interactive charts
 
 import pandas as pd

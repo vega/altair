@@ -2,7 +2,6 @@
 Faceted County-Level Choropleth Maps
 ------------------------------------
 A set of maps arranged in a grid, each showing the distribution of a species' projected habitat across US counties. 
-
 Each choropleth map uses color intensity to represent the percentage values within county boundaries.
 """
 # category: maps
