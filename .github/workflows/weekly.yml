@@ -10,6 +10,8 @@ name: Weekly Build and Publish
         type: boolean
         default: false
         required: false
+permissions:
+  contents: read
 env:
   UV_SYSTEM_PYTHON: 1
 jobs:
@@ -20,7 +22,7 @@ jobs:
       last-weekly-tag: '${{ steps.check.outputs.last-weekly-tag }}'
       current-commit: '${{ steps.check.outputs.current-commit }}'
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
       - name: Check for changes since last weekly build
@@ -65,54 +67,44 @@ jobs:
           - '3.13'
     name: 'Test py ${{ matrix.python-version }}'
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: 'Set up Python ${{ matrix.python-version }}'
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: '${{ matrix.python-version }}'
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
         with:
-          enable-cache: true
-          cache-dependency-glob: |
-            **/uv.lock
-            **/pyproject.toml
+          enable-cache: false
       - name: Install dependencies
         run: |
-          uv sync --all-extras
+          uv sync --frozen --all-extras
       - name: Test with pytest
         run: |
           uv run task test
-  weekly-publish:
+  weekly-package:
     needs:
       - check-changes
       - weekly-build
     if: needs.check-changes.outputs.has-changes == 'true' || github.event.inputs.force_build == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/altair
-    permissions:
-      contents: write
-      id-token: write
+    outputs:
+      version: '${{ steps.version.outputs.version }}'
+      tag_name: '${{ steps.version.outputs.tag_name }}'
+      commit_sha: '${{ steps.version.outputs.commit_sha }}'
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: '3.12'
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
         with:
-          enable-cache: true
-          cache-dependency-glob: |
-            **/uv.lock
-            **/pyproject.toml
+          enable-cache: false
       - name: Install dependencies
         run: |
-          uv sync --all-extras
+          uv sync --frozen --all-extras
       - name: Generate weekly version and tag
         id: version
         run: |
@@ -145,73 +137,52 @@ jobs:
       - name: Build package
         run: |
           uv run task build
-      - name: Generate dependency snapshot
-        id: deps
+      - name: List distribution files
         run: |
-          # Get current dependencies
-          uv pip freeze > current_deps.txt
-
-          # Check if we can compare with previous weekly release
-          LATEST_WEEKLY_TAG="${{ needs.check-changes.outputs.last-weekly-tag }}"
-          if [ -n "$LATEST_WEEKLY_TAG" ]; then
-            echo "Comparing dependencies with previous tag: ${LATEST_WEEKLY_TAG}"
-            # Try to get previous uv.lock from git history
-            if git show ${LATEST_WEEKLY_TAG}:uv.lock > previous_uv.lock 2>/dev/null; then
-              if diff -u previous_uv.lock uv.lock > dependency_changes.txt 2>&1; then
-                echo "No dependency changes detected"
-                echo "dependency_changes=false" >> $GITHUB_OUTPUT
-                # Ensure the artifact has content even when there are no changes
-                if [ ! -s dependency_changes.txt ]; then
-                  echo "No dependency changes detected" > dependency_changes.txt
-                fi
-              else
-                echo "Dependency changes detected"
-                echo "dependency_changes=true" >> $GITHUB_OUTPUT
-              fi
-            else
-              echo "No previous uv.lock found at ${LATEST_WEEKLY_TAG}" > dependency_changes.txt
-              echo "dependency_changes=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "First weekly build - no previous dependencies to compare" > dependency_changes.txt
-            echo "dependency_changes=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Generate binary file checksums
-        id: checksums
-        run: |
-          # Find all binary files in the project (with proper parentheses for OR operations)
-          find . \( -name "*.csv.gz" -o -name "*.parquet" -o -name "*.json.gz" \) -type f | while read file; do
-            sha256sum "$file" >> binary_checksums.txt
-            echo "Processed: $file"
-          done
-
-          # Ensure file exists even if no binary files found
-          touch binary_checksums.txt
-
-          # Note: We cannot compare with previous checksums since binary_checksums.txt
-          # is generated during the workflow and not committed to git.
-          # Instead, we just upload the current checksums for reference.
-          echo "Generated checksums for $(wc -l < binary_checksums.txt) binary files" > binary_changes.txt
-          echo "binary_changes=false" >> $GITHUB_OUTPUT
-      - name: Prepare release assets
-        run: |
-          # Ensure all text files exist to avoid upload errors
-          touch dependency_changes.txt current_deps.txt binary_checksums.txt binary_changes.txt
-
-          # List files that will be uploaded
-          echo "Release assets:"
           ls -lh dist/
-          ls -lh *.txt 2>/dev/null || echo "No text files"
+      - name: Record distribution checksums
+        run: |
+          sha256sum dist/* > dist_checksums.txt
+          cat dist_checksums.txt
+      - name: Upload distribution artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: weekly-dist
+          if-no-files-found: error
+          path: |
+            dist
+            dist_checksums.txt
+  weekly-publish:
+    needs:
+      - check-changes
+      - weekly-build
+      - weekly-package
+    if: needs.check-changes.outputs.has-changes == 'true' || github.event.inputs.force_build == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/altair
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Download distribution artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: weekly-dist
+      - name: Verify distribution checksums
+        run: |
+          sha256sum --check dist_checksums.txt
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
         with:
           verbose: true
-          skip-existing: true
+          print-hash: true
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
         with:
-          tag_name: ${{ steps.version.outputs.tag_name }}
-          name: Weekly Build ${{ steps.version.outputs.version }}
+          tag_name: ${{ needs.weekly-package.outputs.tag_name }}
+          name: Weekly Build ${{ needs.weekly-package.outputs.version }}
           body: |
             ## Weekly Pre-Release Build of Altair
 
@@ -219,8 +190,8 @@ jobs:
 
             ### Build Information
 
-            **Version:** ${{ steps.version.outputs.version }}
-            **Tag:** ${{ steps.version.outputs.tag_name }}
+            **Version:** ${{ needs.weekly-package.outputs.version }}
+            **Tag:** ${{ needs.weekly-package.outputs.tag_name }}
             **Previous Weekly Tag:** ${{ needs.check-changes.outputs.last-weekly-tag || 'None (first build)' }}
 
             ## Installation
@@ -230,12 +201,12 @@ jobs:
             Install the latest weekly build directly from PyPI:
 
             ```bash
-            pip install altair==${{ steps.version.outputs.version }}
+            pip install altair==${{ needs.weekly-package.outputs.version }}
             # or
-            uv pip install altair==${{ steps.version.outputs.version }}
+            uv pip install altair==${{ needs.weekly-package.outputs.version }}
             ```
 
-            _Note_: Weekly builds publish timestamped development versions (for example `${{ steps.version.outputs.version }}`) to PyPI. When you pin that exact version, `pip` installs the dev build automatically, without the need for a `--pre` flag.
+            _Note_: Weekly builds publish timestamped development versions (for example `${{ needs.weekly-package.outputs.version }}`) to PyPI. When you pin that exact version, `pip` installs the dev build automatically, without the need for a `--pre` flag.
 
             ### From GitHub Repository (direct install)
 
@@ -243,9 +214,9 @@ jobs:
 
             **Command line (pip or uv):**
             ```bash
-            pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            pip install git+https://github.com/${{ github.repository }}.git@${{ needs.weekly-package.outputs.tag_name }}
             # or
-            uv pip install git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}
+            uv pip install git+https://github.com/${{ github.repository }}.git@${{ needs.weekly-package.outputs.tag_name }}
             ```
 
             _Note_: Installing directly from the `weekly-...` tag will surface the base development version (without the timestamp suffix) because the version file edits are not committed.
@@ -254,22 +225,22 @@ jobs:
             ```toml
             [project]
             dependencies = [
-                "altair @ git+https://github.com/${{ github.repository }}.git@${{ steps.version.outputs.tag_name }}",
+                "altair @ git+https://github.com/${{ github.repository }}.git@${{ needs.weekly-package.outputs.tag_name }}",
             ]
             ```
 
             **Add to pixi.toml (pixi):**
             ```toml
             [pypi-dependencies]
-            altair = { git = "https://github.com/${{ github.repository }}.git", rev = "${{ steps.version.outputs.tag_name }}" }
+            altair = { git = "https://github.com/${{ github.repository }}.git", rev = "${{ needs.weekly-package.outputs.tag_name }}" }
             ```
 
             ### From GitHub Release (manual download)
 
-            Download the wheel file from the assets below and install:
+            Download the wheel or sdist from the release assets and install, for example:
 
             ```bash
-            pip install altair-${{ steps.version.outputs.version }}-py3-none-any.whl
+            pip install ./altair-${{ needs.weekly-package.outputs.version }}-py3-none-any.whl
             ```
 
             ## Testing & Feedback
@@ -280,10 +251,6 @@ jobs:
           files: |
             dist/*.whl
             dist/*.tar.gz
-            dependency_changes.txt
-            current_deps.txt
-            binary_checksums.txt
-            binary_changes.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Cleanup old weekly releases
