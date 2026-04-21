@@ -111,4 +111,3 @@ Latitude2, Longitude2, Radius2, Theta2, X2, Y2, XError, YError, XError2, and YEr
 The :class:`Latitude2`, :class:`Longitude2`, :class:`Radius2`, :class:`Theta2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`, :class:`XError2`, and :class:`YError2` encodings accept the following options:
 
 .. altair-object-table:: altair.SecondaryFieldDef
-
